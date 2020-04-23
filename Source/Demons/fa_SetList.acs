@@ -1,0 +1,81 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//      Unofficial Patch by t3hdoom@gmx.com
+
+// fa_SetList.acs
+// ai call set
+
+#library "fa_SetList"
+#include "zcommon.acs"
+
+
+//////////////////////////////////////////////////////////
+// NAME: VARIOUS
+// AUTHOR: WAD'A'HOLIC
+// Good typical wave set. Tries to get through most of the monsters.
+
+int set_list[64] = {
+"",
+"Annihilator",
+"ArchonOfHell",
+"BloodDemonClone",
+"Bloodfiend",
+"ChaingunGuy2",
+"ChainsawZombie",
+"Cyberbaron",
+"CyberBaron",
+"Cybruiser",
+"Hellion",
+"NailBorg",
+"NailBorgCommando",
+"NamiDarkImp",
+"sfArachnotron_tw",
+"sfArchvile",
+"sfBaronOfHell",
+"sfChaingunGuy",
+"sfCyberdemon",
+"sfDemon",
+"sfDoomImp",
+"sfFastZombie",
+"sfFatso",
+"sfHellKnight",
+"sfRevenant",
+"sfShotgunGuy",
+"sfZombieMan",
+"SlimeImp",
+"SpiderAnnihilator",
+"SSGZombie",
+"StoneDemon",
+"VoidDarkImp",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"",
+"" };

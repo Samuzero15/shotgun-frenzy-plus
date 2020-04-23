@@ -1,0 +1,117 @@
+//Frenzy player..
+ACTOR FrenzyPlayer : PlayerPawn
+{
+	Speed 1.1
+	Health 100
+	Radius 16
+	Height 56
+	Mass 100
+	damagefactor "MarineFire", 0.0
+	damagefactor "MarineFire2", 0.0
+	damagefactor "MarineFire3", 0.0667
+	damagefactor "NoProfitKill", 0.0
+	Species Marines
+	PainChance 255
+	Player.ColorRange 112, 127
+	Player.DisplayName "Frenzy Player"
+	Player.CrouchSprite "PLYC"
+	Player.ViewHeight 46
+	Player.StartItem "Beretta"
+	Player.StartItem "Clip", 50
+	//+NOSKIN
+	+MTHRUSPECIES
+	
+	States
+	{
+	Spawn:
+		PLAY A -1
+		goto Spawn
+	See:
+		PLAY ABCD 4 
+		goto See
+	Missile:
+		PLAY E 12 
+		Goto Spawn
+	Melee:
+		PLAY F 6 BRIGHT
+		Goto Missile
+	Pain:
+		PLAY G 4 
+		PLAY G 4 A_Pain
+		Goto Spawn
+	Death:
+		PLAY H 10 A_PlayerSkinCheck("AltSkinDeath")
+		PLAY I 10 A_PlayerScream
+		PLAY J 10 A_NoBlocking
+		PLAY K 10
+		PLAY LM 10
+		PLAY N -1
+                	Stop
+	XDeath:
+		PLAY H 0 A_PlayerSkinCheck("AltSkinXDeath")
+		PLAY H 0 A_XScream
+		PLAY H 0 A_NoBlocking
+		PLAY H 5 A_PlayerSkinCheck("AltSkinXDeath")
+    		PLAY H 0 A_SpawnDebris("splatBlood_Eye")
+    		PLAY H 0 A_SpawnDebris("splatBlood_Spray")
+   		PLAY H 0 A_SpawnDebris("splatBlood_Rib")
+   		PLAY H 0 A_SpawnDebris("splatBlood_Spine")
+   		NULL A -1
+            		Stop
+	AltSkinDeath:
+		PLAY H 6
+		PLAY I 6 A_PlayerScream
+		PLAY JK 6
+		PLAY L 6 A_NoBlocking
+		PLAY MNO 6
+		PLAY P -1
+		Stop
+	AltSkinXDeath:
+		PLAY Q 5 A_PlayerScream
+		PLAY R 0 A_NoBlocking
+		PLAY R 5 A_SkullPop
+		PLAY STUVWX 5
+		PLAY Y -1
+		Stop
+	}
+}
+
+actor CommanderBlocker
+{
+	mass 999999999
+	radius 16
+	height 56
+	
+	+SOLID
+	-SHOOTABLE
+	
+	states
+	{
+		Spawn:
+		TNT1 A -1
+		Goto Spawn
+	}
+}
+
+
+
+ACTOR MarinePlasma: ScriptedMarine 9109
+{
+  Game Doom
+  States
+  {
+  Missile:
+    Goto Super::Missile.Plasma
+  XDeath:
+		PLAY H 0 A_PlayerSkinCheck("AltSkinXDeath")
+		PLAY H 0 A_XScream
+		PLAY H 0 A_NoBlocking
+		PLAY H 5 A_PlayerSkinCheck("AltSkinXDeath")
+    		PLAY H 0 A_SpawnDebris("splatBlood_Eye")
+    		PLAY H 0 A_SpawnDebris("splatBlood_Spray")
+   		PLAY H 0 A_SpawnDebris("splatBlood_Rib")
+   		PLAY H 0 A_SpawnDebris("splatBlood_Spine")
+   		NULL A -1
+            		Stop
+  }
+}

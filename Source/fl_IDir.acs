@@ -1,0 +1,9 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// fl_ItemDir.acs
+// item directory
+
+#library "fl_IDir"
+#include "zcommon.acs"

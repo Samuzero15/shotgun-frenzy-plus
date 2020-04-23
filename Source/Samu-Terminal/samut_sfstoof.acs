@@ -1,0 +1,160 @@
+
+#include "samut_sfstrings.acs"
+
+#Libdefine NWpacks 8
+
+str wpstrings[NWPacks][5];
+
+function void SamuTerm_InitStrings(void){
+	addWPString(
+		WP_SHOTGUN,
+		WP_SHOTGUN_TITLE,
+		WP_SHOTGUN_DESC,
+		WP_SHOTGUN_W1D,
+		WP_SHOTGUN_W2D,
+		WP_SHOTGUN_INFO
+		);
+	addWPString(WP_ASSAULT,
+		WP_ASSAULT_TITLE,
+		WP_ASSAULT_DESC,
+		WP_ASSAULT_W1D,
+		WP_ASSAULT_W2D,
+		WP_ASSAULT_INFO);
+		
+	addWPString(WP_SUPPORT,
+		WP_SUPPORT_TITLE,
+		WP_SUPPORT_DESC,
+		WP_SUPPORT_W1D,
+		"",
+		WP_SUPPORT_INFO);
+		
+	addWPString(WP_HEAVY,
+		WP_HEAVY_TITLE,
+		WP_HEAVY_DESC,
+		WP_HEAVY_W1D,
+		WP_HEAVY_W2D,
+		WP_HEAVY_INFO);
+		
+	addWPString(WP_PLASMA,
+		WP_PLASMA_TITLE,
+		WP_PLASMA_DESC,
+		WP_PLASMA_W1D,
+		WP_PLASMA_W2D,
+		WP_PLASMA_INFO);
+		
+	addWPString(WP_COMANDO,
+		WP_COMANDO_TITLE,
+		WP_COMANDO_DESC,
+		WP_COMANDO_W1D,
+		WP_COMANDO_W2D,
+		WP_COMANDO_INFO);
+		
+	InitUpgWepList();
+	Init_ItemList();
+	MechUpList_init();
+	CMDButList_Init();
+}
+
+function void addWPString(int ind,
+	str title, str desc, str wp1desc, str wp2desc, str info){
+	WpStrings[ind][0] = title;
+	WpStrings[ind][1] = desc;
+	WpStrings[ind][2] = wp1desc;
+	WpStrings[ind][3] = wp2desc;
+	WpStrings[ind][4] = info;
+}
+
+function str getWPTitle(int ind){
+	return WpStrings[ind][0];
+}
+
+function str getWPDesc(int ind){
+	return WpStrings[ind][1];
+}
+
+function str getWPW1Desc(int ind){
+	return WpStrings[ind][2];
+}
+
+function str getWPW2Desc(int ind){
+	return WpStrings[ind][3];
+}
+
+function str getWPInfo(int ind){
+	return WpStrings[ind][4];
+}
+
+function void SyncAllShopPrices(void){
+	
+	SetInventory("shop_WP_SHOTGUN", f_Price[34]);
+	SetInventory("shop_WP_ASSAULT", f_Price[35]);
+	SetInventory("shop_WP_SUPPORT", f_Price[36]);
+	SetInventory("shop_WP_HEAVY", f_Price[37]);
+	SetInventory("shop_WP_PLASMA", f_Price[38]);
+	SetInventory("shop_WP_COMANDO", f_Price[25]);
+	SetInventory("shop_WP_BFG", f_Price[72]);
+	SetInventory("shop_WP_FLAMER", f_Price[39]);
+	
+	setInventory("shop_Item_SOULSPHERE", f_Price[19]);
+	setInventory("shop_Item_MEGASPHERE", f_Price[20]);
+	setInventory("shop_Item_QUADDAMAGE", f_Price[21]);
+	setInventory("shop_Item_GODSPHERE", f_Price[22]);
+
+	setInventory("shop_Item_BACKPACK", f_Price[23]);
+	setInventory("shop_Item_MINES", f_Price[94]);
+	setInventory("shop_Item_DRON_SAW", f_Price[50]);
+	setInventory("shop_Item_DRON_MINE", f_Price[49]);
+
+	setInventory("shop_Item_DISP_HEALTH", f_Price[92]);
+	setInventory("shop_Item_DISP_AMMO", f_Price[93]);
+
+	setInventory("shop_Item_TURR_BULLET", f_Price[95]);
+	setInventory("shop_Item_TURR_ROCKET", f_Price[96]);
+	setInventory("shop_Item_TURR_PLASMA", f_Price[97]);
+	setInventory("shop_Item_TURR_RAIL", f_Price[98]);
+	setInventory("shop_Item_TURR_FLAME", f_Price[99]);
+}
+
+function void SyncTechs(void){
+	SetInventory("g_TechFlags", g_TechFlags);
+}
+
+function void SyncAllMechaPrices(void){
+	SetInventory("mech_BUY", f_Price[52]);
+	SetInventory("mech_state", p_TankSlot[PlayerNumber()]);
+	
+}
+
+function void SyncAllCmdPrices(void){
+	SetInventory("price_build_GENLAB", f_Price[1]);
+	SetInventory("price_build_ARMORY", f_Price[2]);
+	SetInventory("price_build_MECHFA", f_Price[3]);
+	SetInventory("price_build_REFINE", f_Price[4]);
+	SetInventory("price_build_MARCOM", f_Price[5]);
+	SetInventory("price_build_NUKESY", f_Price[6]);
+}
+
+function int getWPPrice(int which){
+	int res = 0;
+	switch(which){
+		case WP_SHOTGUN: res = CheckInventory("shop_WP_SHOTGUN"); break;
+		case WP_ASSAULT: res = CheckInventory("shop_WP_ASSAULT"); break;
+		case WP_SUPPORT: res = CheckInventory("shop_WP_SUPPORT"); break;
+		case WP_COMANDO: res = CheckInventory("shop_WP_COMANDO"); break;
+		case WP_HEAVY: res = CheckInventory("shop_WP_HEAVY"); break;
+		case WP_PLASMA: res = CheckInventory("shop_WP_PLASMA"); break;
+		case WP_BFG: res = CheckInventory("shop_WP_BFG"); break;
+		case WP_FLAMER: res = CheckInventory("shop_WP_FLAMER"); break;
+	}
+	return res;
+}
+
+function int getPlayCredits(void){
+	return CheckInventory("p_Money");
+}
+
+function int getPlayUPts(void){
+	int res = CheckInventory("p_UpPoint");
+	return res;
+}
+

@@ -1,0 +1,1316 @@
+// Soulsphere
+ACTOR Inventory_Soulsphere : CustomInventory
+{
+	inventory.pickupmessage "Soulsphere!"
+	inventory.icon "ITEM01"
+	inventory.maxamount 3
+	
+	+COUNTITEM
+		
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 ABCDEFGH 2 bright
+		ITM1 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM1 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM1 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM1 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM1 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_GiveInventory("Soulsphere", 1)
+		//TNT1 A 0 A_GiveInventory("SoulSphereHealth", 1)
+		/*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 1 A_PlaySound("p/soulsphere", CHAN_AUTO, 2.0)
+        TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Megasphere
+ACTOR Inventory_Megasphere : CustomInventory
+{
+	inventory.pickupmessage "Megasphere!"
+	inventory.icon "ITEM02"
+	inventory.maxamount 3
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 ABCDEFGH 2 bright
+		ITM2 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM2 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM2 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM2 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM2 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_GiveInventory("Megasphere", 1)
+		TNT1 A 0 A_GiveInventory("Flag_BlueArmor",1) // To hold up the green armor override
+		/*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 2)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 2) */
+		TNT1 A 1 A_PlaySound("p/megasphere", CHAN_AUTO, 2.0)
+        TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Godsphere
+ACTOR Inventory_Godsphere : CustomInventory
+{
+	inventory.pickupmessage "Godsphere!"
+	inventory.icon "ITEM03"
+	inventory.maxamount 1
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 ABCDEFGH 2 bright
+		ITM3 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM3 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM3 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM3 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM3 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_GiveInventory("InvulnerabilitySphere", 1)
+		TNT1 A 1 A_PlaySound("p/godsphere", CHAN_AUTO, 2.0)
+        TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Berserk 2.0
+ACTOR Inventory_Berserk2 : CustomInventory
+{
+	inventory.pickupmessage "Berserk 2.0!"
+	inventory.icon "ITEM04"
+	inventory.maxamount 1
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 ABCDEFGH 2 bright
+		ITM4 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM4 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM4 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM4 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM4 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_TakeInventory("PowerQuadDamage", 1)
+		TNT1 A 0 A_GiveInventory("Berserk2", 1)
+		TNT1 A 1 A_PlaySound("p/berserk2", CHAN_AUTO, 2.0)
+        TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Ammo Giver
+ACTOR Inventory_AmmoGiver : CustomInventory
+{
+	inventory.pickupmessage "Backpack!"
+	inventory.icon "ITEM09"
+	inventory.maxamount 3
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM9 A 300 bright
+		ITM9 A 4 bright
+		NULL A 4 bright
+		ITM9 A 4 bright
+		NULL A 4 bright
+		ITM9 A 4 bright
+		NULL A 4 bright
+		ITM9 A 4 bright
+		NULL A 4 bright
+		ITM9 A 4 bright
+		NULL A 4 bright
+		stop
+	Use:
+		TNT1 A 1
+		/*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 1 A_GiveInventory("Backpack", 1)
+        TNT1 A 1 ACS_Execute(106, 0, 2, 1, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+actor Berserk2 : PowerupGiver 32254
+{
+ inventory.pickupmessage "Berserk 2.0! Hell yeah!"
+ powerup.color Red 0.25
+	inventory.icon "ITEM04"
+ inventory.maxamount 3
+ inventory.usesound "pickups/slowmo"
+ powerup.type QuadDamage
+ powerup.duration 1050
+ translation "128:143=120:127"
+ +AUTOACTIVATE
+inventory.maxamount 5
+   states
+ {
+ Spawn:
+   MEGA ABCD 4 bright
+   goto Spawn
+ }
+}
+
+// Saw Drone
+ACTOR Inventory_SawDrone : CustomInventory
+{
+	inventory.pickupmessage "Saw Drone!"
+	inventory.icon "ITEM05"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 ABCDEFGH 2 bright
+		ITM5 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM5 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM5 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM5 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM5 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("sf_SawDrone", 64,0,0,0,0,0,0, SXF_TransferPointers,0,ACS_NamedExecuteWithresult("SF_UniqueDrone"))
+		//TNT1 A 0 ACS_NamedExecute("SF_SpawnADrone",0)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Mine Drone
+ACTOR Inventory_MineDrone : CustomInventory
+{
+	inventory.pickupmessage "Mine Drone!"
+	inventory.icon "ITEM06"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 ABCDEFGH 2 bright
+		ITM6 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM6 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM6 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM6 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM6 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("sf_MineDrone", 64)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Special: Tesla Coil
+ACTOR Inventory_TeslaCoil : CustomInventory
+{
+	inventory.pickupmessage "TESLA COIL, make use of it!"
+	inventory.icon "ITEM07"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 ABCDEFGH 2 bright
+		ITM7 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM7 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM7 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM7 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM7 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("TurretTesla", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Special: Bullet Turret
+ACTOR Inventory_TurretBullet : CustomInventory
+{
+	inventory.pickupmessage "Bullet Turret!"
+	inventory.icon "ITEM08"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 ABCDEFGH 2 bright
+		ITM8 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM8 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM8 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM8 A 4 bright
+		NULL ABCDEFGH 2 bright
+		ITM8 A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("TurretBullet", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// other turrets
+ACTOR Inventory_TurretRocket : CustomInventory
+{
+	inventory.pickupmessage "Rocket Turret!"
+	inventory.icon "ITEMB"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB AAAAAAAA 2 bright
+		ITMB A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMB A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMB A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMB A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMB A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	   /* TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("TurretRocket", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+ACTOR Inventory_TurretPlasma : CustomInventory
+{
+	inventory.pickupmessage "Plasma Turret!"
+	inventory.icon "ITEMC"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC AAAAAAAA 2 bright
+		ITMC A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMC A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMC A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMC A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMC A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("TurretPlasma", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+ACTOR Inventory_TurretRail : CustomInventory
+{
+	inventory.pickupmessage "Rail Turret!"
+	inventory.icon "ITEMD"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD AAAAAAAA 2 bright
+		ITMD A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMD A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMD A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMD A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITMD A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("TurretRail", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+ACTOR Inventory_TurretFlame : CustomInventory
+{
+	inventory.pickupmessage "Flame Turret!"
+	inventory.icon "ITEME"
+	inventory.maxamount 8
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ITME AAAAAAAA 100 bright
+		ITME AAAAAAAA 2 bright
+		ITME AAAAAAAA 2 bright
+		ITME A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITME A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITME A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITME A 4 bright
+		NULL AAAAAAAA 2 bright
+		ITME A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+	    /*TNT1 A 0 A_GiveInventory("FriendSpawner_USMC", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_USCM", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_JSDF", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SWAT", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_NAZIS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SPEZ", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_Outlaw", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_SLDS2", 1)
+		TNT1 A 0 A_GiveInventory("FriendSpawner_DOOM", 1)*/
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("TurretFlame", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// item spawning from dead demons, increase the probability that it will NOT spawn
+ACTOR Rnd_Inventory_Soulsphere : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_Soulsphere", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_Megasphere : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_Megasphere", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	}
+}
+
+//NULL A 3 A_SpawnItemEx("Inventory_Godsphere", 0, 0, 0, 0, 0, 0, 0, 0, 170)
+// swapped with ammo giver v1.3 cf beta (swapped back)
+ACTOR Rnd_Inventory_Godsphere : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_Godsphere", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_AmmoGiver : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_AmmoGiver", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_Berserk2 : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_Berserk2", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_SawDrone : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_SawDrone", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_TurretDrone : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 3 A_SpawnItemEx("Inventory_MineDrone", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_TeslaCoil : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 1 A_JumpIf(1 == (ACS_ExecuteWithResult(769, 0, 0, 0)),"Skip")
+		NULL A 3 A_SpawnItemEx("Inventory_TeslaCoil", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	Skip:
+		NULL A 1
+		stop
+	}
+}
+
+ACTOR Rnd_Inventory_TurretBullet : CustomInventory
+{
+	radius 10
+	height 10
+	States
+	{
+	Spawn:
+		NULL A 1
+		NULL A 1 A_JumpIf(1 == (ACS_ExecuteWithResult(769, 0, 0, 0)),"Skip")
+		NULL A 3 A_SpawnItemEx("Inventory_TurretBullet", 0, 0, 0, 0, 0, 0, 0, 0, 110)
+		stop
+	Skip:
+		NULL A 1
+		stop
+	}
+}
+
+///// NEW 1.3 HOTFIX1 INVENTORY ITEMS
+
+// Special: Health Dispenser
+ACTOR Inventory_HealthDispenser : CustomInventory
+{
+	inventory.pickupmessage "Health Dispenser!"
+	inventory.icon "HDIS0"
+	inventory.maxamount 3
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		HDIS A 100 bright
+		HDIS A 100 bright
+		NULL ABCDEFGH 2 bright
+		HDIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		HDIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		HDIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		HDIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("HealthDispenser", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Special: Ammo Dispenser
+ACTOR Inventory_AmmoDispenser : CustomInventory
+{
+	inventory.pickupmessage "Ammo Dispenser!"
+	inventory.icon "ADIS0"
+	inventory.maxamount 3
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		ADIS A 100 bright
+		ADIS A 100 bright
+		NULL ABCDEFGH 2 bright
+		ADIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		ADIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		ADIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		ADIS A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("AmmoDispenser", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}
+
+// Special: Marine Mine
+ACTOR Inventory_MarineMine : CustomInventory
+{
+	inventory.pickupmessage "Your very own Mine!"
+	inventory.icon "IMIN0"
+	inventory.maxamount 16
+	
+	+COUNTITEM
+	
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		IMIN A 100 bright
+		IMIN A 100 bright
+		NULL ABCDEFGH 2 bright
+		IMIN A 4 bright
+		NULL ABCDEFGH 2 bright
+		IMIN A 4 bright
+		NULL ABCDEFGH 2 bright
+		IMIN A 4 bright
+		NULL ABCDEFGH 2 bright
+		IMIN A 4 bright
+		NULL ABCDEFGH 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_SpawnItemEx("Landmine", 64,-32,0,0,0,0,0,SXF_SETMASTER,0,tid)
+		TNT1 A 0 A_SpawnItemEx("Landmine", 64,	0,0,0,0,0,0,SXF_SETMASTER,0,tid)
+		TNT1 A 0 A_SpawnItemEx("Landmine", 64, 32,0,0,0,0,0,SXF_SETMASTER,0,tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	}
+}
+
+// AWESOME NEW 1.4 INVENTORY ITEMS
+
+// Stimpack
+ACTOR Inventory_Stimpack : CustomInventory
+{
+	inventory.pickupmessage "Soulsphere!"
+	inventory.icon "ITEM10"
+	inventory.maxamount 10
+	
+	+COUNTITEM
+		
+	-INVENTORY.AUTOACTIVATE
+	-INVENTORY.ALWAYSPICKUP
+	+INVENTORY.INVBAR
+	+INVENTORY.PICKUPFLASH
+	
+	States
+	{
+	Spawn:
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM AAAAAAAA 2 bright
+		STIM A 4 bright
+		STIM AAAAAAAA 2 bright
+		STIM A 4 bright
+		STIM AAAAAAAA 2 bright
+		STIM A 4 bright
+		STIM AAAAAAAA 2 bright
+		STIM A 4 bright
+		STIM AAAAAAAA 2 bright
+		STIM A 4 bright
+		STIM AAAAAAAA 2 bright
+		stop
+	Use:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 1 A_GiveInventory("Stimpack",1)
+		TNT1 A 1 A_PlaySound("p/specialitem", CHAN_AUTO, 2.0)
+        TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
+		stop
+	IAmOnTank:
+		TNT1 A 1 A_print("You can't use items inside a tank!")
+		fail
+	}
+}

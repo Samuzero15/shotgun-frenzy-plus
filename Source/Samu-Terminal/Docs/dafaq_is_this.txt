@@ -1,0 +1,42 @@
+// Da faq is this?
+
+This is a GUI Framework Library!
+
+The 
+Systemic 
+Advanced
+Multiplayer
+User
+Terminal
+
+Or Samu-Terminal for short :v
+
+This thing holds some objetives.
+
+-) Easy to implement!: For the ACS Coder who wants to 
+build moused terminals or GUI interfaces anytime, anywhere!.
+
+-) No need to brainstorm!: Why re-invent the wheel when 
+you ride a car already? This is a Framework! You got the tools
+to make your thing, so why the hell you want to start from 
+scratch when you have this?
+
+-) Multiplayer Support!: Moused GUIs in multiplayer are sacred 
+ things in the zandronum community, the only chance to see this
+ was in Idiotic LMS. Hopefully, lets wait for more people to get
+ the guts to implement this beauty. Also, the badwidth consuming
+ for the server is almost null! all thanks for the Clientside 
+ running loop!
+ 
+-) The simpler, the better!: Making components are simple and easy
+ to do! Just grab a paper, sketch a gui, and make it true with the
+ clear functions that this framework can offer to you!
+ 
+-) Open sauce to your chilies!: Hosted on github, and ready to be commited
+ this project can be modified by everyone!
+ 
+-) Customizable!: Want to move the toast a bit?, No backgorund?, 
+conflicting Hud IDS?, go customize it by yourself!
+
+-) ACSUtils + ACSRects are here!: Even if you switch to the acs util compiler
+you will find this useful to your project! Pretty recommended!

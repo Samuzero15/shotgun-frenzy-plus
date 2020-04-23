@@ -1,0 +1,149 @@
+
+#define MAX_QUEUE_SIZE 8
+
+int QueueElements[MAX_QUEUE_SIZE];
+int QueueFirst = 0;
+int QueueSize = 0;
+
+// DEBUG
+
+/*
+function void PrintQueueState(void)
+{
+	str s = StrParam(
+	s:"\n", s:"first=", d:QueueFirst, 
+	s:"\n", s:"size=", d:QueueSize,
+	s:"\n", s:"array: ");
+	
+	int i;
+	for (i = 0; i < MAX_QUEUE_SIZE; i++)
+	{
+		s = StrParam(s:s, d:QueueElements[i], s:" ");
+	}
+	
+	s = StrParam(s:s, s:"\nelements:");
+	for (i = 0; i < QueueSize; i++)
+	{
+		s = StrParam(s:s, d:Queue_ElementAt(i), s:" ");
+	}
+	
+	printbold(s:s);
+}
+*/
+
+
+function void Queue_Init(void)
+{
+    QueueFirst = 0;
+    QueueSize = 0;
+}
+
+function int Queue_Size(void)
+{
+	return QueueSize;
+}
+
+function bool Queue_IsEmpty(void)
+{
+    return QueueSize == 0;
+}
+
+function bool Queue_IsFull(void)
+{
+	return QueueSize == MAX_QUEUE_SIZE;
+}
+
+function void Queue_Add(int element)
+{
+	if (QueueSize == MAX_QUEUE_SIZE)
+	{
+		printbold(s:"Error: Queue_Add called on a queue that is already full");
+		return;
+	}
+
+	int index = QueueFirst + QueueSize;
+	if (index >= MAX_QUEUE_SIZE)
+		index -= MAX_QUEUE_SIZE;
+		
+	//printbold(s:"add [", d:index, s:"] = ", d:element);
+	QueueElements[index] = element;
+	QueueSize++;
+	
+	//PrintQueueState();
+}
+
+function int Queue_Take(void)
+{
+	if (QueueSize == 0)
+	{
+		printbold(s:"Error: Queke_Take called on an empty queue");
+		return 0;
+	}
+	
+	int element = QueueElements[QueueFirst];
+	//printbold(s:"take [", d:QueueFirst, s:"] = ", d:element);
+	QueueSize--;
+	QueueFirst++;
+	if (QueueFirst == MAX_QUEUE_SIZE)
+		QueueFirst = 0;
+	
+	//PrintQueueState();
+	return element;
+}
+
+function int Queue_ElementAt(int index)
+{
+	if (index < 0 || index >= QueueSize)
+	{
+		printbold(s:"Error: Queue_ElementAt(index=", d:index,
+			  s:") called on queue of size ", d:Queue_Size());
+		return 0;
+	}
+	
+	index = QueueFirst + index;
+	if (index >= MAX_QUEUE_SIZE)
+		index -= MAX_QUEUE_SIZE;
+	return QueueElements[index];
+}
+
+function void Queue_SetElement(int index, int value)
+{
+	if (index < 0 || index >= QueueSize)
+	{
+		printbold(s:"Error: Queue_SetElement(index=", d:index,
+			s:", value=", d:value,
+			s:") called on queue of size ", d:Queue_Size());
+		return;
+	}
+	
+	index = QueueFirst + index;
+	if (index >= MAX_QUEUE_SIZE)
+		index -= MAX_QUEUE_SIZE;
+	//printbold(s:"set [", d:index, s:"] = ", d:value);
+	QueueElements[index] = value;
+	
+	//PrintQueueState();
+}
+
+function int Queue_FirstElement(void)
+{
+	if (QueueSize == 0)
+	{
+		printbold(s:"Error: Queue_FirstElement called on an empty queue");
+		return 0;
+	}
+	return QueueElements[QueueFirst];
+}
+
+function int Queue_LastElement(void)
+{
+	if (QueueSize == 0)
+	{
+		printbold(s:"Error: Queue_LastElement called on an empty queue");
+		return 0;
+	}
+	int index = QueueFirst + QueueSize - 1;
+	if (index >= MAX_QUEUE_SIZE)
+		index -= MAX_QUEUE_SIZE;
+	return QueueElements[index];
+}

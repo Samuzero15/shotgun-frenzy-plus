@@ -1,0 +1,263 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_StokP.acs
+// health and ammo stock pad setup
+
+#library "f_StokP"
+
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+
+#include "zcommon.acs"
+#include "acsutils.acs"
+#include "samu_tools.acs"
+
+// a player walks onto a stock pad
+script 106 (int l_Type, int l_Give, int l_DisableFlash)
+{//Healing and stocking pads
+    // healing pad
+    if ((l_Type == 1 && isBuilt(BUILD_GENLAB)) || (l_Type == 4))
+    {
+	
+	// display what has been researched to the player
+	if (getTechFlag(TECH_HEALT2)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ HUMAN GENETICS P2"; HUDMSG_TYPEON, 0, CR_White, 600.1, 100.1, 2.0);
+	}
+	else if (getTechFlag(TECH_HEALT1)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ HUMAN GENETICS P1"; HUDMSG_TYPEON, 0, CR_White, 600.1, 100.1, 2.0);
+	}
+	if (getTechFlag(TECH_SPEEDB)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ Adrenaline"; HUDMSG_TYPEON, 0, CR_White, 600.1, 120.1, 2.0);
+	}
+	if (getTechFlag(TECH_ARMOR1)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ Steel Plating"; HUDMSG_TYPEON, 0, CR_White, 600.1, 140.1, 2.0);
+	}
+	if (getTechFlag(TECH_RESISB)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ Resister Unit"; HUDMSG_TYPEON, 0, CR_White, 600.1, 160.1, 2.0);
+	}
+	if (getTechFlag(TECH_REGENB)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ Asorber Unit"; HUDMSG_TYPEON, 0, CR_White, 600.1, 180.1, 2.0);
+	}
+
+	int hp = getActorProperty(0, APROP_Health);
+
+
+		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
+		{
+			Print(s:"Go to the marine command building to heal your tank (choose in menu)");
+			terminate;
+		}
+            if (l_DisableFlash == 0){
+			 f_CenterTip("Health Restocked!");
+             fadeto(0, 0, 255, 0.5, 0.0);
+             localambientsound("p/heal", 128);
+			}		
+            if (l_Give > 0){        
+				giveinventory("Health", 100);
+				setactorproperty(0, APROP_SpawnHealth, 100);
+				SetInventory("HUD_MaxHp", 1);
+			}
+            if (l_Give > 0 && getTechFlag(TECH_HEALT2)){
+				// [Samu] Preventing Over-Health stat resets.
+				if(hp < 140) giveinventory("Health", 140);
+				setactorproperty(0, APROP_SpawnHealth, 140);
+				SetInventory("HUD_MaxHp", 3);
+			}            
+            else if  (l_Give > 0 && getTechFlag(TECH_HEALT1)) {
+				// [Samu] Preventing Over-Health stat resets.
+				if(hp < 120) giveinventory("Health", 120);
+				setactorproperty(0, APROP_SpawnHealth, 120);
+				SetInventory("HUD_MaxHp", 2);
+			}
+            
+            // check for genetics lab updates
+            if (l_Give > 0)
+            {
+                if (getTechFlag(TECH_SPEEDB))        setactorproperty(0, APROP_SPEED, 1.3);      // adrenaline
+                if (getTechFlag(TECH_ARMOR1)){
+					// [Samu] Preventing Armor Overrides.
+					if(CheckInventory("BasicArmor") == 0) {takeInventory("Flag_BlueArmor", 1);}
+					
+					if(CheckInventory("BasicArmor") < 100 && !CheckInventory("Flag_BlueArmor")){
+						giveinventory("GreenArmor", 1);
+					}
+					// steel plating
+				}
+                if (getTechFlag(TECH_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
+                if (getTechFlag(TECH_REGENB))        giveinventory("Upgrade_Asorber", 1);        // asorber unit
+            }
+            
+            delay(2);
+            if (l_DisableFlash == 0)		fadeto(0, 0, 255, 0.0, 0.2);
+    }
+    
+    // ammo stock pad
+    if ((l_Type == 2 && isBuilt(BUILD_ARMORY)) || (l_Type == 3))
+    {
+	// display what has been researched to the player
+	if (getTechFlag(TECH_ARMSP1)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ ARMS P2"; HUDMSG_TYPEON, 0, CR_White, 600.1, 200.1, 2.0);
+	}
+	else if (getTechFlag(TECH_ARMSP2)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ ARMS P1"; HUDMSG_TYPEON, 0, CR_White, 600.1, 200.1, 2.0);
+	}
+	if (getTechFlag(TECH_BOOMRN)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ Boomshot Rounds"; HUDMSG_TYPEON, 0, CR_White, 600.1, 220.1, 2.0);
+	}
+	if (getTechFlag(TECH_AMMOBP)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ Ammo Backpack"; HUDMSG_TYPEON, 0, CR_White, 600.1, 240.1, 2.0);
+	}
+	if (getTechFlag(TECH_STIMPK)) {
+		sethudsize(800, 600, s_ScreenSize[2]);
+		setfont("CONFONT");
+		hudmessage(s:"+ 10 Stimpacks"; HUDMSG_TYPEON, 0, CR_White, 600.1, 260.1, 2.0);
+		
+		// maybe give them to the player now?
+		GiveInventory("Inventory_Stimpack", 10);
+	}
+		//[Samu] *sigh* It's time to refactor deez sheet.
+			//Bullets
+			if(l_Give > 0){
+			 if (getTechFlag(TECH_BOOMRN)) 
+				giveinventory("Upgrade_Boomshot", 1);   // boomshot rounds
+             if (getTechFlag(TECH_AMMOBP)) 
+				giveinventory("Backpack", 1);           // backpack
+			
+			
+			 GiveInventory("Clip", 9999);
+			 GiveInventory("Shell", 9999);
+			 
+			 GiveInventory("RocketAmmo", 9999);
+			 GiveInventory("GLauncher_Ammo", 9999);
+			 GiveInventory("Flinger_Ammo", 9999);
+			 
+			 GiveInventory("Cell", 9999);
+			
+			 GiveInventory("Healer_Ammo", 9999);
+			 GiveInventory("Stocker_Ammo", 9999);
+			
+			 GiveInventory("Dualshot_Ammo", 9999);
+			 
+			 GiveInventory("Supplies_Health", 9999);
+			 GiveInventory("Supplies_Ammo", 9999);
+			 GiveInventory("Supplies_Health_Big", 9999);
+			 GiveInventory("Supplies_Ammo_big", 9999);
+			 GiveInventory("Shell", 9999);
+			}
+			
+            if (l_DisableFlash == 0){
+			 f_CenterTip("Ammo Restocked!");
+             fadeto(0, 255, 0, 0.5, 0.0);
+             localambientsound("p/deploy", 128);
+			}
+            
+            delay(2);
+            if (l_DisableFlash == 0)		fadeto(0, 255, 0, 0.0, 0.2);
+    }
+	
+	//[Samu] A customized refresh-me-up.
+	if(l_Type == -1){
+		// Do Heal and Stock the player, but do not give the latest techs.
+		
+		if (l_Give > 0)        giveinventory("Health", 100);
+        if (l_Give > 0 && getTechFlag(TECH_HEALT2)){
+				giveinventory("Health", 140);
+		}            
+        else if  (l_Give > 0 && getTechFlag(TECH_HEALT1)) {
+				giveinventory("Health", 120);
+		}
+		
+		GiveInventory("Clip", 9999);
+		GiveInventory("Shell", 9999);
+			 
+		GiveInventory("RocketAmmo", 9999);
+		GiveInventory("GLauncher_Ammo", 9999);
+		GiveInventory("Flinger_Ammo", 9999);
+			 
+		GiveInventory("Cell", 9999);
+			
+		GiveInventory("Dualshot_Ammo", 9999);
+			 
+		GiveInventory("Supplies_Health", 9999);
+		GiveInventory("Supplies_Ammo", 9999);
+		GiveInventory("Supplies_Health_Big", 9999);
+		GiveInventory("Supplies_Ammo_big", 9999);
+		GiveInventory("Shell", 9999);
+			 
+		if (l_DisableFlash == 0){
+			 f_CenterTip("You feel good as new!");
+             fadeto(255, 255, 255, 0.5, 0.0);
+			 localambientsound("p/heal", 128);
+             localambientsound("p/deploy", 128);
+			}
+		delay(2);
+		if (l_DisableFlash == 0)	fadeto(255, 255, 255, 0.0, 0.2);
+	}
+	
+	//Ammo dispenser's stocker.
+	// A nerfed version of the dispenser, 
+	// just to prevent the full stocking on anywhere of the map.
+	if(l_type == -2){
+		GiveInventory("Clip", 10);
+		GiveInventory("Shell", 2);
+			 
+		GiveInventory("RocketAmmo", 1);
+		GiveInventory("GLauncher_Ammo", 1);
+		GiveInventory("Flinger_Ammo", 1);
+			 
+		GiveInventory("Cell", 20);
+			
+		GiveInventory("Dualshot_Ammo", 15);
+			 
+			 /*[Samu] Oh fuck no... You're not gonna exploit this!
+		GiveInventory("Supplies_Health", 9999);
+		GiveInventory("Supplies_Ammo", 9999);
+		GiveInventory("Supplies_Health_Big", 9999);
+		GiveInventory("Supplies_Ammo_big", 9999);
+			 */
+			 
+		if (l_DisableFlash == 0){
+			 f_SmallTip ("Reloading...", cr_green, 0);
+             fadeto(0, 255, 0, 0.3, 0.0);
+			 localambientsound("g/reloading", 64);
+			}
+		delay(2);
+		if (l_DisableFlash == 0)	fadeto(0, 255, 0, 0.0, 0.1);
+	}
+	// Health dispenser's stocker.
+	// A nerfed version of the dispenser, 
+	// just to prevent the full healing on anywhere of the map.
+	if(l_type == -3){
+		giveinventory("Health", 5);
+
+		if (l_DisableFlash == 0){
+			 f_SmallTip ("Healing...", cr_blue, 1);
+             fadeto(0, 0, 255, 0.3, 0.0);
+			 localambientsound("g/healing", 64);
+			}
+		delay(2);
+		if (l_DisableFlash == 0)	fadeto(0, 0, 255, 0.0, 0.1);
+	}
+}  

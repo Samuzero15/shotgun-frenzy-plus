@@ -1,0 +1,88 @@
+ACTOR ChainsawZombie 3204
+{ 
+spawnid 239
+    Health 30 
+    Radius 20 
+    Height 56 
+    Speed 17 
+    MeleeDamage 1 
+    PainChance 200 
+    MONSTER 
+	Species "DemonSide"
+    +FLOORCLIP 
+    Obituary "%o was sliced by a madman zombie with a chainsaw!" 
+    SeeSound "grunt/sight" 
+    MeleeSound "weapons/sawhit" 
+    PainSound "grunt/pain" 
+    DeathSound "grunt/death" 
+    ActiveSound "grunt/active" 
+	
+    States 
+    { 
+    Spawn: 
+        CHAN A 4 A_Look 
+        CHAN A 4 A_PlayWeaponSound("weapons/sawidle") 
+        CHAN A 4 A_Look 
+        CHAN B 4 A_PlayWeaponSound("weapons/sawidle") 
+        CHAN B 4 A_Look 
+        CHAN B 4 A_PlayWeaponSound("weapons/sawidle") 
+        goto Spawn 
+    See: 
+        CHAN A 4 A_Chase 
+        CHAN A 4 A_Chase 
+        CHAN B 0 A_PlayWeaponSound("weapons/sawidle") 
+        CHAN B 4 A_Chase 
+        CHAN B 4 A_Chase 
+        CHAN C 0 A_PlayWeaponSound("weapons/sawidle") 
+        CHAN C 4 A_Chase 
+        CHAN C 4 A_Chase 
+        CHAN D 0 A_PlayWeaponSound("weapons/sawidle") 
+        CHAN D 4 A_Chase 
+        CHAN D 4 A_Chase 
+        CHAN A 0 A_PlayWeaponSound("weapons/sawidle") 
+        goto See 
+    Melee: 
+        CHAN E 1 A_FaceTarget 
+        CHAN F 3 A_MeleeAttack 
+        Goto See 
+    Pain: 
+        CHAN G 5 
+        CHAN G 3 A_Pain 
+        Goto See 
+    Death: 
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+NULL A 0 ACS_ExecuteAlways(500, 0, 31, 0)
+        CHAN H 5 
+        CHAN I 5 A_Scream 
+        CHAN J 5 A_Fall 
+        CHAN KLM 5 
+        CHAN N 650
+		DeathFade:
+			CHAN N 2 A_FadeOut(0.1)
+			goto DeathFade
+    Death.NoProfitKill: 
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+NULL A 0 ACS_ExecuteAlways(500, 0, 31, 0)
+        CHAN H 5 
+        CHAN I 5 A_Scream 
+        CHAN J 5 A_Fall 
+        CHAN KLM 5 
+        CHAN N 650
+		DeathFade:
+			CHAN N 2 A_FadeOut(0.1)
+			goto DeathFade
+    XDeath:
+NULL A 0 ACS_ExecuteAlways(500, 0, 31, 1)
+        CHAN O 5
+        CHAN P 5 A_XScream
+        CHAN Q 5 A_Fall
+        CHAN RSTUV 5
+        CHAN W 650
+		XDeathFade:
+			CHAN W 2 A_FadeOut(0.1)
+			goto XDeathFade
+    Raise: 
+        CHAN NMLKJIH 5 
+        Goto See 
+    } 
+}

@@ -1,0 +1,386 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_PHUD.acs
+// players heads up display
+#library "f_PHUD"
+
+#import "f_IntDB.acs"
+#include "zcommon.acs"
+#include "acsutils.acs"
+
+// ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
+
+// display rank
+script 604 (int l_Rank) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("CONFONT");
+		int x = 164.1;
+		int y = 10.1;
+		str rankTitle = "\n\n\n\nRookie (1)";
+		switch(l_Rank)
+		{
+			case 0:         rankTitle = "\n\n\n\nRookie (1)"; break;
+			case 1:         rankTitle = "\n\n\n\nPrivate (2)"; break;
+			case 2:         rankTitle = "\n\n\n\nLance Corporal (3)"; break;
+			case 3:         rankTitle = "\n\n\n\nCorporal (4)"; break;
+			case 4:         rankTitle = "\n\n\n\nSergeant (5)"; break; 
+			case 5:         rankTitle = "\n\n\n\nStaff Sergeant (6)"; break;
+			case 6:         rankTitle = "\n\n\n\nMaster Sergeant (7)"; break;
+			case 7:         rankTitle = "\n\n\n\nMajor (8)"; break;
+			case 8:         rankTitle = "\n\n\n\nCommander (9)"; break;
+			case 9:         rankTitle = "\n\n\n\nUltimate Commander (10)"; break;
+		}
+		hudmessage(s:rankTitle; 0, 87, CR_CREAM, x, y, 1.0);
+	}else ClearHudMessage(87);
+}
+
+// display hud
+script 605 (int l_Type) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("HUD");
+		hudmessage(s:"a"; 0, 90, 0, 0.1, 0.1, 1.0);
+	}else ClearHudMessage(90);
+}
+
+// *********************************************************** 
+
+// demonic core attack message
+script 616 (void)
+{
+			//If we're not in guardian wave or all batteries are down, don't let the demonic core get hurt.
+			if (g_Status != 4)
+			{
+				SetActorProperty(109,APROP_Health,100000);
+				sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+				setfont("BCOUNT");
+				hudmessagebold(s:"a"; 1, 180, CR_Red, 0.1, 0.1, 3.0);
+				setfont("BIGFONT");
+				hudmessagebold(s:"DEMONIC CORE"; 1, 178, CR_Red, 570.0, 390.1, 3.0);
+				setfont("CONFONT");
+				hudmessagebold(s:"Core is invulnerable until\nall battery doors are down"; 1, 179, CR_White, 580.0, 420.1, 3.0);
+			}
+			else
+			{
+				sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+				setfont("BCOUNT");
+				hudmessagebold(s:"a"; 1, 180, CR_Red, 0.1, 0.1, 3.0);
+				setfont("BIGFONT");
+				hudmessagebold(s:"DEMONIC CORE"; 1, 178, CR_Red, 570.0, 390.1, 3.0);
+				setfont("CONFONT");
+				hudmessagebold(s:"Taking damage!\n",d:GetActorProperty(109,APROP_Health),s:" Health remaining..."; 1, 179, CR_White, 580.0, 420.1, 3.0);
+			}
+	
+}
+
+// new research available message
+script 617 (int l_Structure)
+{
+			sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+			setfont("NEWR");
+			hudmessagebold(s:"a"; 1, 180, CR_Red, 0.1, 0.1, 3.0);
+			setfont("BIGFONT");
+			//hudmessagebold(s:"DEMONIC CORE"; 1, 178, CR_Blue, 570.0, 290.1, 3.0);
+			setfont("CONFONT");
+			
+			if (l_Structure == 11){
+				hudmessagebold(s:"New research available!\nCollect at Genetics Lab\n\nHuman Engineering Phase 1\nStandard health increased"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 12){
+				hudmessagebold(s:"New research available!\nCollect at Genetics Lab\n\nHuman Engineering Phase 2\nStandard health increased"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 0){
+				hudmessagebold(s:"New research available!\nCollect at Genetics Lab\n\nAdrenaline\nFaster run speed"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 1){
+				hudmessagebold(s:"New research available!\nCollect at Genetics Lab\n\nSteel Plating\nArmor plating for marines"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 2){
+				hudmessagebold(s:"New research available!\nCollect at Genetics Lab\n\nResister Unit\nDamage resistance against enemy fire"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 3){
+				hudmessagebold(s:"New research available!\nCollect at Genetics Lab\n\nAsorber Unit\nHealth regeneration"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 4){
+				hudmessagebold(s:"New weapons available at the Armory!"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 5){
+				hudmessagebold(s:"Flamers now available at the Armory!"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 6){
+				hudmessagebold(s:"New research available!\nCollect at the Armory\n\nBoomshot Rounds\nIncreased weapon damage"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 7){
+				hudmessagebold(s:"New research available!\nCollect at the Armory\n\nAmmo Backpack\nTake more ammo with you!"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			if (l_Structure == 8){
+				hudmessagebold(s:"New research available!\nCollect at the Armory\n\nStimpacks\n10 Stimpacks on spawn!"; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
+			}
+			
+			ambientsound("p/upgrade", 125);
+	
+}
+
+script 999 ENTER
+{
+    // display loop
+    while(1)
+    {
+		int kills = p_RankExp[p_Rank[playernumber()] + 1] - p_Exp[playernumber()];
+		
+		ACS_NAMEDEXECUTEALWAYS("SyncWithSBARINFO", 0, kills);
+		
+		if(CheckInventory("SamuTInv_UsingTerminal")){
+			//[Samu] Hide the damn hud, ets annoying.
+			ClearHudMessage(80);
+			ClearHudMessage(88);
+			ClearHudMessage(89);
+			ClearHudMessage(90);
+			ClearHudMessage(91);
+			ClearHudMessage(87);
+			ClearHudMessage(86);
+			ClearHudMessage(180);
+			ClearHudMessage(178);
+			delay(1);
+			continue;
+		}
+        // hud background
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        acs_executealways(605, 0, 0, 0, 0);
+
+        // mmm: add kills left display
+       
+        if (kills < 0)
+          kills = 0;
+        
+        // hud information
+        setfont("CONFONT");
+		Acs_NamedExecuteAlways("Hud_ShowPlayerStats", 0, p_Credits[playernumber()], p_Exp_Points[playernumber()], kills);
+		
+    if(g_Status == 5)
+	{
+		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
+			5, getactorproperty(104,APROP_Health));
+		/*
+	    if(getactorproperty(104,APROP_Health) > 0)
+	    {
+	      hudmessage(s:"\nCore: ",
+              d:getactorproperty(104, APROP_Health); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+       	    }
+	    else
+	    {
+	      hudmessage(s:"\nCore: ",
+              s:"0"; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+	    }
+		*/
+	}
+	else if (c_NukeLaunched == 0 || g_Status < 4)
+        {
+		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
+			g_Status, getactorproperty(100 + g_status,APROP_Health));
+		/*
+            if (thingcount(0, 100 + g_Status) > 1)
+              hudmessage(s:"\nSector: ", d:g_Status, 
+                s:"\nBatteries Remaining: ", 
+                d:thingcount(0, 100 + g_Status); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+            else
+              
+	    	if(getactorproperty(100 + g_Status,APROP_Health) > 0)
+	    	{
+			hudmessage(s:"\nSector: ", d:g_Status,s:"\nBattery: ", 
+            		d:getactorproperty(100 + g_Status, APROP_Health); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+	    
+			}
+			else
+			{
+				hudmessage(s:"\nSector: ", d:g_Status,s:"\nBattery: ", 
+					s:"0"; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+			   
+			}
+	    */
+	
+        }
+        else if(c_NukeLaunched == 1 || g_Status == 4)
+        {
+			/*
+            if(getactorproperty(104,APROP_Health) > 0)
+				{
+				
+				
+				hudmessage(s:"\nSector: ", d:g_Status, s:"\nCore: ",
+              d:getactorproperty(104, APROP_Health); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+				}
+			else
+				{
+				hudmessage(s:"\nSector: ", d:g_Status, s:"\nCore: ",
+				s:"0"; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+				}
+			*/
+			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0, 4, getactorproperty(104,APROP_Health));
+		}
+	
+        
+        // team credits (if a commander based game)
+        if (f_Gametype == 1 && c_Commander == 99)
+          Acs_NamedExecuteAlways("Hud_ShowTeamCredits_NoCMD", 0, c_credits);
+        if (f_Gametype == 1 && c_Commander != 99)
+          Acs_NamedExecuteAlways("Hud_ShowTeamCredits_YesCMD", 0, c_credits, c_Commander);	
+        
+        // current rank
+        acs_executealways(604, 0, p_Rank[playernumber()], 0, 0);
+		
+		// Rank Bar.
+		Acs_NamedExecuteAlways("Hud_ShowExperienceBar", 0, kills * 20, p_RankExp[p_Rank[playernumber()] + 1]);
+        
+		
+        delay(1);
+    }
+}   
+
+script "Hud_ShowCoreHealth" (int which, int hp) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+		//print(d: getCvar("screenblocks"));
+		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("CONFONT");
+		int maxhp, percent, color;
+		if (hp < 0) hp = 0;
+		
+		if(which == 5){
+			maxhp = 1500;
+			hudmessage(s:"\nCore: ", d:hp; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+		}else if (which == 4){
+			maxhp = 1500;
+			hudmessage(s:"\nSector: ", d:which, s:"\nCore: ",
+              d:hp; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+		}else{
+			maxhp = 750;
+			hudmessage(s:"\nSector: ", d:which,s:"\nBattery: ", 
+					d:hp; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
+		}
+		setfont("Statbigs");	
+		percent = iceil(fixedDiv(hp, maxhp) * 100);
+		if(percent == 100) 						color = CR_CYAN;
+		else if(percent >= 75 && percent < 100) color = CR_GREEN;
+		else if(percent >= 50 && percent < 75)  color = CR_YELLOW;
+		else if(percent >= 25 && percent < 50) 	color = CR_ORANGE;
+		else if(percent >  0  && percent < 25) 	color = CR_RED;
+		else 									color = CR_BLACK;
+		hudmessage(d:percent, s:" %"; 0, 80, color, 545.1, 40.1, 1.0);
+	}else{ ClearHudMessage(88); ClearHudMessage(80); }
+} 
+
+script "Hud_ShowPlayerStats" (int credits, int exp, int  kills) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("CONFONT");
+		
+		hudmessage(s:"\nCredits: ", d:credits,
+          s:"\nUpgrade Points: ", d:exp,
+          s:"\nKills left: ", d:kills; 0, 89, CR_CREAM, 164.1, 10.1, 1.0);
+		  
+	}else ClearHudMessage(89);
+} 
+
+script "Hud_ShowTeamCredits_YesCMD" (int teamcredits, int commander) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("CONFONT");
+		hudmessage(s:"Team Credits: ", d:teamcredits, 
+            s:"\n Com: ", n:commander+1; 0, 86, CR_CREAM, 400.4, 10.1, 1.0);
+	}else ClearHudMessage(86);
+} 
+
+script "Hud_ShowTeamCredits_NoCMD" (int teamcredits) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("CONFONT");
+		hudmessage(s:"Team Credits: ", d:teamcredits, 
+            s:"\n\cg -- No Comm. -- "; 0, 86, CR_CREAM, 400.4, 10.1, 1.0);
+	}else ClearHudMessage(86);
+}
+
+script "Hud_ShowExperienceBar" (int kills, int rankexp) clientside
+{
+	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		str expbar;
+		if	   (kills > rankexp *20)        expbar = "EXP01";
+		else if(kills > rankexp *19)        expbar = "EXP02";
+		else if(kills > rankexp *18)        expbar = "EXP03";
+		else if(kills > rankexp *17)        expbar = "EXP04";
+		else if(kills > rankexp *16)        expbar = "EXP05";
+		else if(kills > rankexp *15)        expbar = "EXP06";
+		else if(kills > rankexp *14)        expbar = "EXP07";
+		else if(kills > rankexp *13)        expbar = "EXP08";
+		else if(kills > rankexp *12)        expbar = "EXP09";
+		else if(kills > rankexp *11)        expbar = "EXP10";
+		else if(kills > rankexp *10)        expbar = "EXP11";
+		else if(kills > rankexp *9)         expbar = "EXP12";
+		else if(kills > rankexp *8)         expbar = "EXP13";
+		else if(kills > rankexp *7)         expbar = "EXP14";
+		else if(kills > rankexp *6)         expbar = "EXP15";
+		else if(kills > rankexp *5)         expbar = "EXP16";
+		else if(kills > rankexp *4)         expbar = "EXP17";
+		else if(kills > rankexp *3)         expbar = "EXP18";
+		else if(kills > rankexp *2)         expbar = "EXP19";
+		else 								expbar = "EXP20";
+		setfont(expbar);
+		hudmessage(s:"a"; 0, 91, 0, 0.1, 0.1, 1.0);
+	}else ClearHudMessage(91);
+}
+
+Script "SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
+	int play = 0;
+	while(play < 32)
+	{
+		SetActivatorToPlayer(play);
+		//This will sync the spectator inventory for the sbar info.
+		SetInventory("HUD_Spectating", PlayerIsSpectator(play) == 1);
+		if(PlayerIsSpectator(play) == 1){
+		
+			SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
+			SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
+			SetInventory("HUD_Sector", g_Status);
+			if(g_Status == 5)
+				SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
+			else
+				SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
+			if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
+			if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
+		}
+		
+		SetActivator(0,AAPTR_NULL);
+		
+		delay(1);
+		play++;
+	}
+	restart;
+}
+
+script "SyncWithSBARINFO" (int kills) {
+
+	SetInventory("HUD_Sector", g_Status);
+	if(g_Status == 5)
+	SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
+	else
+	SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
+	SetInventory("HUD_Credits", p_Credits[PlayerNumber()]);
+	if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
+	if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
+	SetInventory("HUD_Ups", p_Exp_Points[PlayerNumber()]);
+	SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
+	SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
+	SetInventory("HUD_ExpLeft", kills);
+	SetInventory("HUD_Rank", p_Rank[playernumber()] + 1);
+	SetInventory("HUD_Exp", p_Exp[playernumber()]);
+	SetAmmoCapacity("HUD_Exp", p_RankExp[p_Rank[playernumber()] + 1]);
+}

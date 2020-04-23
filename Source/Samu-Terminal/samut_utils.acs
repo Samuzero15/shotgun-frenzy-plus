@@ -1,0 +1,99 @@
+/**
+*
+* 	<samut_utils.acs> 
+* 	More functions that may come in handy!
+*
+**/
+function bool TerminalInUse(void){
+	return CheckInventory("SamuTInv_UsingTerminal");
+}
+
+function void lockPlayer(int player){
+	SetPlayerProperty(0,true,PROP_TOTALLYFROZEN);
+	SetActorVelocity(player+1000,0,0,0,false,false);
+}
+
+function void unlockPlayer(int player){
+	SetPlayerProperty(0,false,PROP_TOTALLYFROZEN);
+}
+
+// Those functions can vary.
+script "PlayerDiesSomehow" Death{
+	if(TerminalInUse()){
+		SamuTerm_Execute(STEXE_SYSOFF, 0, 0, 0);
+	}
+}  
+
+
+function void SamuTerm_SetBack(str what){
+	imgbg = what;
+}
+
+script "SamuTerm_StringSync" Open{
+	SamuTerm_InitStrings();
+}
+
+
+function void SamuTerm_ResetBack(void){
+	imgbg = STSET_BACK;
+}
+
+function str itos (int stringy){return StrParam(d:stringy);}
+
+
+//Suffix and prefix on int. (This can come in handy in ACSUtils.)
+function str StrSfPfInt(str suffix, int value, int prefix){
+	return StrAdd(StrAddInt(suffix, value),prefix);
+}
+
+// Font measures for teh STATBIGS Font. (By jimmy of coruse :D)
+
+function int StringWidth(str wut){
+	int res = 0;
+		str stringy = StripColorCodes(wut);
+		for(int i = 0; i < StrLen(stringy); i++)
+		{
+			res += CharWidth(getChar(stringy, i));
+		}
+	return res;
+}
+
+function int CharWidth(int c){
+	int res = 0;
+	switch(c){
+		
+		case 'I': case 'i':
+		case ' ':
+			res = 5;
+		break;
+		case 'L': case 'l':
+			res = 9;
+		break;
+		case 'G': case 'g':
+		case 'H': case 'h':
+		case 'M': case 'm':
+		case 'O': case 'o':
+		case 'Q': case 'q':
+		case 'W': case 'w':
+			res = 15;
+		break;
+		default: 
+		res = 13;
+		break;
+	}
+	return res;
+}
+
+function int CharHeight(int c){
+	int res = 0;
+	switch(c){
+		case 'Q': case 'q':
+			res = 15;
+		break;
+		default: 
+		res = 13;
+		break;
+	}
+	return res;
+}
+//Wish i could get a magic function to measure the charsize in pixels for any font.

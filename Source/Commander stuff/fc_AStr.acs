@@ -1,0 +1,99 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// fc_Airstrike.acs
+// airstrike bomb positioning system
+// made by Tribeam
+
+#library "fc_AStr"
+#include "zcommon.acs"
+
+#define AIRSTRIKE_TIDSTART 500          // First bomb tid, all bombs after add up from this tid, so bomb2 is 501 and bomb3 is 502 and so on.
+
+
+// All these functions come from the zdoom wiki and 
+// are generic functions. You should but them in a misc.acs or something.
+
+function int distance (int tid1, int tid2)
+{
+	int x, y, z, d;
+	x = GetActorX(tid1) - GetActorX(tid2) >> 16;
+	y = GetActorY(tid1) - GetActorY(tid2) >> 16;
+	z = GetActorZ(tid1) - GetActorZ(tid2) >> 16;
+	d = sqrt( x*x + y*y + z*z );
+	return d;
+}
+
+function int GetTargetAngle (int tid1, int tid2)
+{
+    int x, y;
+    x = GetActorX(tid2) - GetActorX(tid1);
+    y = GetActorY(tid2) - GetActorY(tid1);
+    return VectorAngle(x, y);
+}
+
+// Notes:
+// This makes the line of spots from tid1 to tid2, amount specifies how many spots will show.
+// Call this function everytime you change a point's position or change the amount of spots.
+// When you're ready to bomb stuff use the AIRSTRIKE_TIDSTART tid scheme to spawn your bombs.
+// Whenever you're ready to remove the spots, call script 2 below.
+
+script 140 (int tid1, int tid2, int amount)
+{
+    int dist = distance(tid1, tid2);
+    int angle = gettargetangle(tid1, tid2);
+    int x = getactorx(tid1);
+    int y = getactory(tid1);
+    int z = getactorz(tid1) + 1.0 + 128;
+    int x2;
+    int y2;
+    int tidcounter = 0;
+    
+    
+    if(Thingcount("StrikeMarker", 0) != 0)
+        {
+            int spotamount = Thingcount("StrikeMarker", 0);
+            
+            for(int i = 0; i <= spotamount; i++)
+                {
+                    Thing_Remove(AIRSTRIKE_TIDSTART + i);
+                }
+        }
+    
+    for(int rad = 0; rad < dist; rad += dist / (amount - 1))
+        {
+            x2 = x + (rad * cos(angle));
+            y2 = y + (rad * sin(angle));
+            spawn("StrikeMarker", x2, y2, z, AIRSTRIKE_TIDSTART + tidcounter, 0);
+            tidcounter++;
+        }
+}
+
+
+// use this function to remove the spots when you're done with them
+script 141 (void)
+{
+    thing_remove(500);
+    thing_remove(501);
+    thing_remove(502);
+    thing_remove(503);
+    thing_remove(504);
+    thing_remove(505);
+    thing_remove(506);
+    thing_remove(507);
+    thing_remove(508);
+    thing_remove(509);
+    thing_remove(510);
+    thing_remove(511);
+    thing_remove(512);
+    thing_remove(513);
+    thing_remove(514);
+    thing_remove(515);
+}
+
+// setup a tid
+script 142 (int l_Tid)
+{
+    thing_changetid(0, l_Tid);
+}

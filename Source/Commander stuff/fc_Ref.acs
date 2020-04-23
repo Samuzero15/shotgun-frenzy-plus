@@ -1,0 +1,81 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// fc_Refinery.acs
+// structure scripts
+#library "fc_Ref"
+
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+#import "fc_Const.acs"
+#import "fc_CommB.acs"
+
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+// build
+script 350 (void)
+{
+	SetActivator(0); //Preventing a major disaster
+    // construction
+    c_Construct (270, 176, 128, 128, "FLOOR5_1", "SLIME14", "");
+    c_Construct (271, 201, 132, 128, "GRND", "SLIME14", "");
+    c_Construct (195, 224, 128, 128, "FLOOR4_8", "SLIME14", "");
+    c_Construct (273, 176, 24, 256, "GRND", "CEIL5_2", "");
+    c_Construct (196, 144, 24, 360, "GRND", "CEIL5_2", "");
+    c_Construct (275, 224, 24, 264, "FLOOR4_8", "SHAWN2", "");
+    c_Construct (276, 255, 16, 136, "GRND", "CEIL5_1", "");
+    c_Construct (277, 224, 8, 72, "GRND", "CEIL5_2", "");
+    c_Construct (278, 208, 128, 136, "CEIL5_1", "CEIL5_1", "");
+    c_Construct (279, 208, 128, 136, "CEIL5_1", "CEIL5_1", "");
+    c_Construct (280, 176, 128, 136, "CEIL5_1", "CEIL5_1", "");
+    c_Construct (281, 208, 128, 72, "CEIL5_1", "CEIL5_2", "");
+    c_Construct (282, 208, 128, 72, "CEIL5_1", "CEIL5_2", "");
+    c_Construct (283, 255, 128, 0, "CEIL5_1", "", "");
+    c_Construct (284, 192, 144, 0, "CEIL5_1", "", "");
+    c_Construct (285, 176, 144, 0, "TEKWALL4", "", "");
+    c_Construct (286, 176, 144, 0, "TEKWALL4", "", "");
+    c_Construct (287, 255, 384, 0, "", "", "");
+    c_Construct (288, 255, 144, 190, "CEIL5_1", "CEIL5_1", "");
+    
+    // summon turrets
+    spawnspot("TurretBase", 153, 0, 0);
+    
+    // set techflag
+    //c_Techflag[4] = 1;
+	SetBuildState(BUILD_REFINE, BUILT);
+    
+    // refresh the commander menu
+    c_NewButton_Refresh();
+    
+    // constructed message
+    f_TipShow ("BUTTON", "Refinery", "Construction Complete!", 1);
+    
+    // check bridge
+    if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_REFINE) && c_BridgeStatus_3 == 0 && f_Gametype != 5)
+    {
+        c_BridgeStatus_3 = 1;
+        floor_raisetonearest(342, 125);
+    }
+    
+    // activate turbine
+    delay(35 * 1);
+    floor_raisebyvalue(285, 100, 128);
+    delay(35 * 1);
+    while(1)
+    {
+        // movement animation
+        floor_raisebyvalue(286, 100, 128);
+        floor_lowerbyvalue(285, 100, 128);
+        delay(35*1);
+        floor_lowerbyvalue(286, 100, 128);
+        floor_raisebyvalue(285, 100, 128);
+        
+        // delay before repeating
+        delay(35*1);
+        
+        // increase credit count
+        c_Credits += 2;
+    }
+}

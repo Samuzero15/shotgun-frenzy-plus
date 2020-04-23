@@ -1,0 +1,5 @@
+Doom version = 21
+Patch format = 6
+Ammo 1 (Shells)
+Max ammo = 60
+Misc 0

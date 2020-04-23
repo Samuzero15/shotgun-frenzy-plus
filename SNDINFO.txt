@@ -1,0 +1,40 @@
+usefail PISDFIRE
+
+$random ZombieFodder/Sight { FODDERSEE1 FODDERSEE2 }
+FODDERSEE1	FODDSEE1
+FODDERSEE2	FODDSEE2
+
+$random ZombieFodder/Active { FODDERACT1 FODDERACT2 }
+FODDERACT1	FODDACT1
+FODDERACT2	FODDACT2
+
+ZombieFodder/Pain	FODDPAIN
+
+$random ZombieFodder/Death { FODDERDIE1 FODDERDIE2 }
+FODDERDIE1	FODDDIE1
+FODDERDIE2	FODDDIE2
+
+ZombieFodder/Melee DSCLAW
+ZombieFodder/Soul	FODDSOUL
+
+ZFlesh/Throw	FODDATK
+ZFlesh/Miss		FODDMISS
+ZFlesh/Hit		FODDHIT
+
+$limit p/kill 2
+$volume p/kill 0.3
+
+g/sector_reclaim LOCKSECT
+
+g/healing DSHPUP
+g/reloading DSAMMOUP
+
+p/monies MONIES2
+
+$random Flinger/Grenade/Booms { FGS01 FGS02 FGS03 }
+FGS01 FGS01
+FGS02 FGS02
+FGS03 FGS03
+$LIMIT Flinger/Grenade/Booms 3
+
+Flinger/Grenade/NerveGas gasHiss

@@ -1,0 +1,70 @@
+Actor SamuTInv_UsingTerminal : Inventory{
+	inventory.Maxamount 1
+}
+
+Actor SamuTInv_Cooldown : Inventory{
+	inventory.Maxamount 1
+}
+
+Actor Integer : Inventory { Inventory.MaxAmount 0x7fffffff }
+
+Actor SamuTInv_ActionKey : Integer {}
+
+Actor p_Money : Integer {}
+Actor p_UpPoint : Integer {}
+
+Actor p_CreditPrice : Integer {}
+Actor p_UpPointPrice : Integer {}
+
+Actor shop_WP_SHOTGUN : Integer {}
+Actor shop_WP_ASSAULT : Integer {}
+Actor shop_WP_SUPPORT : Integer {}
+Actor shop_WP_COMANDO : Integer {}
+Actor shop_WP_HEAVY : Integer {}
+Actor shop_WP_PLASMA : Integer {}
+Actor shop_WP_FLAMER : Integer {}
+Actor shop_WP_BFG : Integer {}
+
+Actor g_TechFlags : Integer {}
+
+actor price_build_GENLAB : Integer {}
+actor price_build_ARMORY : Integer {}
+actor price_build_MECHFA : Integer {}
+actor price_build_REFINE : Integer {}
+actor price_build_MARCOM : Integer {}
+actor price_build_NUKESY : Integer {}
+
+
+Actor shop_Item_SOULSPHERE : Integer {}
+Actor shop_Item_MEGASPHERE : Integer {}
+Actor shop_Item_GODSPHERE : Integer {}
+Actor shop_Item_QUADDAMAGE : Integer {}
+
+Actor shop_Item_BACKPACK : Integer {}
+Actor shop_Item_DRON_SAW : Integer {}
+Actor shop_Item_DRON_MINE : Integer {}
+Actor shop_Item_MINES : Integer {}
+
+Actor shop_Item_DISP_HEALTH : Integer {}
+Actor shop_Item_DISP_AMMO : Integer {}
+
+//soon...
+Actor shop_Item_DISP_REFRESH : Integer {}
+
+Actor shop_Item_TURR_BULLET : Integer {}
+Actor shop_Item_TURR_SHELLS : Integer {}
+Actor shop_Item_TURR_PLASMA : Integer {}
+Actor shop_Item_TURR_FLAME : Integer {}
+Actor shop_Item_TURR_ROCKET : Integer {}
+Actor shop_Item_TURR_RAIL : Integer {}
+Actor shop_Item_TURR_TESLA : Integer {}
+
+
+Actor mech_buy : Integer {}
+Actor mech_state : Integer {}
+
+actor MechUp_armor_Lvl : Integer {}
+actor MechUp_speed_Lvl : Integer {}
+actor MechUp_nails_Lvl : Integer {}
+actor MechUp_rockets_Lvl : Integer {}
+actor MechUp_selfdestruct : Integer {}

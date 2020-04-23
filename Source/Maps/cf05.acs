@@ -1,0 +1,160 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// CF05_ACS
+// map script
+#library "cf05"
+
+//Priority doesn't matter anymore
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+
+#import "f_SecMan.acs"
+#import "f_MonAtt.acs"
+#import "f_AIDRL.acs"
+#import "f_FinalF.acs"
+#import "f_PMen.acs"
+#import "f_PHUD.acs"
+#import "f_Rank.acs"
+#import "f_Cred.acs"
+#import "f_PStat.acs"
+#import "f_StokP.acs"
+#import "f_Battr.acs"
+//#import "f_TaticalMap.acs"
+#import "f_Core.acs"
+#import "f_CfSpec.acs"
+
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+// setup techflags and game settings
+script 91 OPEN
+{
+	// setup gametype value
+	f_Gametype = 0;
+	f_UseScoreSystem = 1;
+	// game settings
+	f_Startcash =   2500;                   // player starting cash, 2500 is the default
+	c_Startcash =   0;                      // starting cash for the commander (SF maps only)
+	f_Doortype =    0;                      // 0 is a normal door, 1 is a floor based door
+	f_Doorspeed =   50;                     // speed of the door opening, 50 is the default
+	f_GameLength =  15;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime)
+	f_AISkillMultiplier = 3;               // increase in levels, higher means harder (aka: the RapeFactor variable)
+
+	f_Cacodemons = 0;
+	f_AdaptiveSpawning = 0;
+
+        readconsole();
+	
+	setupTerminals();
+}
+
+// ***************** MAP SPECIFIC *****************
+
+int AIRLOCK_PERCENT = 100;
+
+script 3 (void)
+{
+	SetActivator(0); //Preventing a major disaster
+	// reduce Airlock charge
+	AIRLOCK_PERCENT = 0;
+ 
+ // startin
+ f_TipShow("INFO", "VAPOR CHAMBER", "Activated...", 0);
+	
+	// close doors
+  ceiling_lowerandcrush(1, 5, 2);
+	door_close(1, 5);
+	
+	delay(35 * 7);
+	
+	// open death traps
+	door_open(22, 75); delay(5);
+	
+	// spawn vapour
+	thing_projectile(1, 253, 0, 0, -300); delay(5);
+	thing_projectile(1, 253, 0, 0, -300); delay(5);
+	thing_projectile(1, 253, 0, 0, -300); delay(5);
+	thing_projectile(1, 253, 0, 0, -300); delay(5);
+	thing_projectile(1, 253, 0, 0, -300); delay(35 * 2);
+	
+	// close death traps
+  door_close(22, 75);
+	
+	delay(35 * 4);
+	
+	// reopen doors to reveal frozen actors
+	door_open(1, 5);
+	
+	// wait before reactivation
+	delay(35 * 7);
+	
+	// reload
+ f_TipShow("INFO", "VAPOR CHAMBER", "Reloading...", 0);
+	while(AIRLOCK_PERCENT < 101)
+	{
+		AIRLOCK_PERCENT ++;
+		
+		delay(12);
+	}
+	
+	// ready for action!
+ f_TipShow("INFO", "VAPOR CHAMBER", "Ready for use...", 0);
+}
+
+
+// final boss
+script 90 (void)
+{
+    music_change("NONELIVE",0);
+    int ticker;
+    int tickertime = 5;
+        if (PlayerCount() > 4 || playercountReplicate > 4){ tickertime = 10; }
+        if (PlayerCount() > 8 || playercountReplicate > 8){ tickertime = 15; }
+        if (PlayerCount() > 12 || playercountReplicate > 8){ tickertime = 20; door_open(6, 50); f_TipShow ("DEMONT", "BASE BACK DOOR", "Incoming wave from the rear!", 0);  }
+    while(ticker < tickertime)
+    {
+        if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200) {
+        spawnspot("ArchVile", 115, 118, 0);
+        if (PlayerCount() > 4 || playercountReplicate > 4){
+        	spawnspot("sfBaronOfHell", 116, 118, 0);
+        }
+        if (PlayerCount() > 8 || playercountReplicate > 8){
+        	spawnspot("Cyberbaron", 199, 118, 0);
+        }
+        if (PlayerCount() > 12 || playercountReplicate > 12){
+	spawnspot("ArchVile", 181, 118, 0);
+        	spawnspot("sfBaronOfHell", 182, 118, 0);
+        	spawnspot("Cyberbaron", 183, 118, 0);
+        }
+        }
+        ticker++;
+        delay(35 * 2);
+        thing_hate(118, 104, 0);
+        thing_hate(110, 104, 0);
+        thing_hate(111, 104, 0);
+        thing_hate(112, 104, 0);
+        thing_hate(113, 104, 0);
+        thing_hate(114, 104, 0);
+    }
+    
+    while(thingcount(0, 118) > 3 || thingcount(0, 111) > 3 || thingcount(0, 112) > 3 || thingcount(0, 113) > 3 || thingcount(0, 114) > 3)
+        delay(35 * 1);
+    thing_destroy(118, 0);
+    thing_destroy(111, 0);
+    thing_destroy(112, 0);
+    thing_destroy(113, 0);
+    thing_destroy(114, 0);
+    // endgame
+    acs_execute(125, 0, 2, 0, 0);
+}
+    
+// i only added this to override the error message, who ever fixes it in the main script gets a cookie
+//script 146 (void)
+//{
+//    delay(1);
+//}
+
+    
+// ************************************************

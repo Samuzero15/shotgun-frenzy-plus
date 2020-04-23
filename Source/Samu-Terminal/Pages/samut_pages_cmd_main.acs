@@ -1,0 +1,175 @@
+
+int cmdpage_vars[100];
+
+//Inner page index = 0
+
+function void CMDPage_Update(void){
+	setPageTitle_Alpha("Commander mode", CR_CYAN);
+	
+		ShowByAlphaTag();
+		
+	if(comphover != lasthover){
+		Label_SetText(cmdpage_vars[1], "");
+		Label_SetText(cmdpage_vars[2], "");
+	}
+}
+
+//This will initialize the page components.
+function void CMDPage_Init(void){
+	int i;
+	
+	Grid_SetPosition(508.0, 369.0);
+	Grid_SetDimensions(3, 4);
+	Grid_SetCellSize(32.0, 32.0);
+	int grid = Grid_Generate();
+	cmdpage_vars[0] = grid;
+	
+	pagetags[STTAGS_NOW] = 11;
+	
+	i = Image_Add(0.0, 0.0, "HUDCOM");
+	setImageTag(i, pagetags[STTAGS_ALPHA]);
+	
+	i = Label_Add(50.0, 420.0);
+	Label_setTag(i, pagetags[STTAGS_ALPHA]);
+	Label_setColor(i, CR_YELLOW);
+	Label_setFont(i, "STATBIGS");
+	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_Center);
+	cmdpage_vars[1] = i;
+	
+	i = Label_Add(50.0, 440.0);
+	Label_setTag(i, pagetags[STTAGS_ALPHA]);
+	Label_setColor(i, CR_WHITE);
+	Label_setFont(i, "CONFONT");
+	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	cmdpage_vars[2] = i;
+	
+	i = 11;
+	int m = 11;
+	int p = 0;
+	int cmd = STEXE_CLOSE;
+	//Main category
+	CMDPage_MakeLinkButton2(i, 1, 1, 2, 12);
+	CMDPage_MakeLinkButton2(i, 1, 2, 3, 13);
+	CMDPage_MakeLinkButton2(i, 1, 3, 4, 18);
+	CMDPage_MakeLinkButton2(i, 1, 4, 5, 20);
+	 //Nuke button!
+	 CMDPage_MakeLinkButton(i, 3, 1, "CM75", 22);
+		CMDPage_MakeButton(22, 3, 1, "CM75", cmd, 0);
+		CMDPage_MakeReturnButton(22, m);
+	CMDPAGE_MakeExitButton(i);
+	
+	i = 12, cmd = STEXE_CMDBUILD;
+	//Build category
+	CMDPage_MakeButton2(i, 1, 1, 11, cmd, 0);
+	CMDPage_MakeButton2(i, 1, 2, 12, cmd, 0);
+	CMDPage_MakeButton2(i, 1, 3, 13, cmd, 0);
+	CMDPage_MakeButton2(i, 1, 4, 14, cmd, 0);
+	CMDPage_MakeButton2(i, 2, 1, 15, cmd, 0);
+	CMDPage_MakeButton2(i, 2, 2, 16, cmd, 0);
+	CMDPage_MakeReturnButton(i, m);
+	
+	i = 13, p = 14, cmd = STEXE_CMDRESEARCH;
+	//Research category
+	CMDPage_MakeLinkButton2(i, 1, 1, 21, p);
+		CMDPage_MakeButton(p, 1, 1, "CM13", cmd, 0);
+		CMDPage_MakeButton(p, 1, 1, "CM12", cmd, 0);
+		CMDPage_MakeButton(p, 1, 2, "CM15", cmd, 0);
+		CMDPage_MakeButton(p, 1, 3, "CM16", cmd, 0);
+		CMDPage_MakeButton(p, 1, 4, "CM17", cmd, 0);
+		CMDPage_MakeButton(p, 2, 1, "CM18", cmd, 0);
+		CMDPage_MakeReturnButton(p, i);
+	p = 15;
+	CMDPage_MakeLinkButton2(i, 1, 2, 22, p);
+		CMDPage_MakeButton(p, 1, 1, "CM27", cmd, 0);
+		CMDPage_MakeButton(p, 1, 1, "CM26", cmd, 0);
+		CMDPage_MakeButton(p, 1, 2, "CM28", cmd, 0);
+		CMDPage_MakeButton(p, 1, 3, "CM29", cmd, 0);
+		CMDPage_MakeReturnButton(p, i);
+	//CMDPage_MakeButton(13, 1, 3, "CC03", STEXE_CLOSE, 0);
+	p = 16;
+	CMDPage_MakeLinkButton2(i, 1, 3, 23, p);
+		CMDPage_MakeButton(p, 1, 1, "CM56", cmd, 0);
+		CMDPage_MakeButton(p, 1, 2, "CM57", cmd, 0);
+		CMDPage_MakeReturnButton(p, i);
+	p = 17;
+	CMDPage_MakeLinkButton2(i, 1, 4, 24, p);
+		CMDPage_MakeButton(p, 1, 1, "CM44", cmd, 0);
+		CMDPage_MakeButton(p, 1, 2, "CM53", cmd, 0);
+		CMDPage_MakeButton(p, 1, 3, "CM54", cmd, 0);
+		CMDPage_MakeReturnButton(p, i);
+	CMDPage_MakeReturnButton(i, m);
+	
+	// Support Button
+	i = 18, p = 19, cmd = STEXE_CMDSUPPORT;
+	CMDPage_MakeButton(i, 1, 1, "CM76", cmd, 0);
+	CMDPage_MakeLinkButton(i, 1, 2, "CM78", p);
+		CMDPage_MakeButton(p, 1, 1, "CM67", cmd, 0);
+		CMDPage_MakeButton(p, 1, 2, "CM68", cmd, 0);
+		CMDPage_MakeButton(p, 1, 3, "CM69", cmd, 0);
+		CMDPage_MakeReturnButton(p, i);
+	CMDPage_MakeButton(i, 1, 4, "CM79", cmd, 0);
+	
+	CMDPage_MakeButton(i, 2, 1, "CM80", cmd, 0);
+	CMDPage_MakeButton(i, 2, 2, "CM81", cmd, 0);
+	CMDPage_MakeButton(i, 2, 3, "CM82", cmd, 0);
+	CMDPage_MakeButton(i, 2, 4, "CM83", cmd, 0);
+	CMDPage_MakeButton(i, 3, 1, "CM84", cmd, 0);
+	CMDPage_MakeButton(i, 3, 2, "CM85", cmd, 0);
+	CMDPage_MakeReturnButton(i, m);
+	
+	//Deploy Button.
+	i = 20, p = 21, cmd = STEXE_CMDDEPLOY;
+	CMDPage_MakeButton(i, 1, 1, "CM30", cmd, 0);
+	CMDPage_MakeButton(i, 1, 2, "CM31", cmd, 0);
+	CMDPage_MakeButton(i, 1, 3, "CM32", cmd, 0);
+	CMDPage_MakeButton(i, 1, 4, "CM33", cmd, 0);
+	CMDPage_MakeLinkButton(i, 3, 1, "CG05", p);
+		CMDPage_MakeButton(p, 1, 1, "CM40", cmd, 0);
+		CMDPage_MakeButton(p, 1, 2, "CM41", cmd, 0);
+		CMDPage_MakeButton(p, 1, 3, "CM42", cmd, 0);
+		CMDPage_MakeButton(p, 1, 4, "CM43", cmd, 0);
+		CMDPage_MakeButton(p, 2, 1, "CM47", cmd, 0);
+		CMDPage_MakeReturnButton(p, i);
+	CMDPage_MakeReturnButton(i, m);
+}
+
+function void CMDPage_MakeLinkButton2(int tag, int row, int col, int btndata, int destTag){
+	CMDPage_MakeButton2(tag, row, col, btndata, STEXE_GTCAT, destTag);
+}
+
+function void CMDPage_MakeLinkButton(int tag, int row, int col, str img, int destTag){
+	CMDPage_MakeButton(tag, row, col, img, STEXE_GTCAT, destTag);
+}
+
+function void CMDPage_MakeExitButton(int tag){
+	CMDPage_MakeButton2(tag, 3, 4, 0, STEXE_CLOSE, 0);
+}
+
+function void CMDPage_MakeReturnButton(int tag, int returntag){
+	CMDPage_MakeButton2(tag, 3, 4, 1, STEXE_GTCAT, returntag);
+}
+
+function void CMDPage_MakeButton(int tag, int row, int col, str img, int exe, int arg)
+{
+	int i = ImgButton_AddGrid(cmdpage_vars[0], row, col, 31.0, 31.0);
+	setImgButtonImage(i, img);
+	setImgButtonHoverImage(i, "BUTTONS");
+	setImgButtonExecute(i, exe);
+	setImgButtonArgs(i, arg, 0, 0);
+	setImgButtonTag(i, tag);
+}
+
+function void CMDPage_MakeButton2(int tag, int row, int col, int btndata, int exe, int arg)
+{
+	//Check on cmdbut_list.acs on Samu-Tools to see the respective properties.
+	str icon = getCMDButIcon(btndata);
+
+	int i = ImgButton_AddGrid(cmdpage_vars[0], row, col, 31.0, 31.0);
+	setImgButtonImage(i, icon);
+	setImgButtonHoverImage(i, "BUTTONS");
+	setImgButtonExecute(i, exe);
+	setImgButtonArgs(i, arg, 0, 0);
+	setImgButtonTag(i, tag);
+	SetImgButtonExeHover(i, STEXE_CMDBTNDESC);
+	SetImgButtonArgsHover(i, cmdpage_vars[1],cmdpage_vars[2],btndata);
+}

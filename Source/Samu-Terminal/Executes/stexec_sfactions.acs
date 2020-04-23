@@ -1,0 +1,240 @@
+
+function void StExecute_BuyMechTank(void){
+	if(GetPlayCredits() < CheckInventory("Mech_Buy")){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+	}else{
+		Toaster_ShowToast("The War Mech is your's to drive!",CR_GREEN);
+		SamuTerm_CallOpExecute(STEXE_GetMechTank, 0, 0, 0);
+	}
+}
+
+function void STExecute_GetMechTank(void){
+	sf_RemoveCredits(CheckInventory("Mech_Buy"), PlayerNumber());
+	
+	SetActivatorToPlayer(PlayerNumber());
+	p_TankSlot[playernumber()] = 1;
+	Acs_ExecuteAlways(305, 0);
+}
+
+function void STExecute_EnterMechTank(void){
+	SetActivatorToPlayer(PlayerNumber());
+	Acs_ExecuteAlways(306, 0);
+	STExecute_Close();
+}
+
+function void STExecute_UpgradeMech(int which){
+	int name = getMechUpName(which);
+	int actor = getMechUpActor(which);
+	int price = getMechUpPrice(which);
+	
+	if(CheckInventory("Mech_State") == 99) {
+		Toaster_ShowToast("You can't upgrade what its broken!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+		return;
+		}
+	
+	if(GetPlayCredits() < price){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = which + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(stradd(stradd("Sure to apply the ", name), "?"),CR_ORANGE);
+		else{
+			localambientsound("vehicle/mechupgrade",128);
+			Toaster_ShowToast(stradd(name," Installed! (click for more)"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_GETMECHUPG, which, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+
+function void STExecute_GetMechUpgrade(int which){
+	str actor = getMechUpActor(which);
+	int payprice = getMechUpPrice(which);
+	
+	
+	sf_RemoveCredits(payprice, PlayerNumber());
+	
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(actor, 1);
+	ACS_NamedExecuteAlways("AnnounceMechUpgrade", 0, which);
+}
+
+
+
+
+
+
+function void StExecute_BuyPowerup(int which){
+	int name = getItemName(which);
+	int price = getItemPrice(which);
+	int actor = getItemActor(which);
+	int maxamount = getItemMax(which);
+	
+	if(GetPlayCredits() < price){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}else if(CheckInventory(actor) == maxamount){
+		Toaster_ShowToast(stradd(stradd("You can't carry more ", name), "s!"), CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = which + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(stradd(stradd("Sure to buy a(n) ", name), "?"),CR_ORANGE);
+		else{
+			LocalAmbientSound("p/heal",128);
+			Toaster_ShowToast(stradd(name," Pursached! Click for more!"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_ItemGet, which, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+
+function void StExecute_BuyItem(int which){
+	int name = getItemName(which);
+	int price = getItemPrice(which);
+	int actor = getItemActor(which);
+	int maxamount = getItemMax(which);
+	
+	if(GetPlayCredits() < price){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}else if(CheckInventory(actor) == maxamount){
+		Toaster_ShowToast("You can't carry more of this!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = which + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(stradd(stradd("Sure to buy a(n) ", name), "?"),CR_ORANGE);
+		else{
+			LocalAmbientSound("p/upgrade",128);
+			Toaster_ShowToast(StrParam(s:name, s:" Pursached! Click for more!"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_ItemGet, which, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+
+function void STExecute_GetItem(int which){
+	int payprice = getItemPrice(which);
+	int actor = getItemActor(which);
+	sf_RemoveCredits(payprice, PlayerNumber());
+	
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(actor, 1);
+}
+
+function void STExecute_BuyWeapon(int which){
+	
+	int price = getWPPrice(which);
+	//print(d:which);
+	if(getPlayCredits() < price)
+	{	
+		Toaster_ShowToast("Ya dont have enough!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		//SamuTerm_CallOpExecute (STEXE_GIVEWP, which, price,0);
+		Prompt_Resize(20,5);
+		Prompt_Ask("Confirm", "Are you sure to buy this weapon pack?", CR_BRICK);
+		Prompt_ExecuteOnTrue(STEXE_GETWP, which, 0, 0);
+		//Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
+	}
+}
+
+function void STExecute_GetWeapon(int which){
+	Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
+	SamuTerm_CallOpExecute(STEXE_GIVEWP, which, 0, 0);
+	LocalAmbientSound("p/deploy",128);
+}
+
+function void STExecute_GiveWeapon(int which){
+	int payprice = getWPPrice(which);
+	sf_RemoveCredits(payprice, PlayerNumber());
+	
+	GiveWeaponPack(which);
+}
+
+function void STExecute_ShowPage(int which){
+	SetUpBuyPage_WP(which);
+	SamuTerm_CallOpExecute(STEXE_GTCAT,10,0,0);
+}
+
+function void STExecute_ShowBuyPage(int which){
+	SetUpBuyPage_WP(which);
+	SamuTerm_CallOpExecute(STEXE_GTCAT,10,0,0);
+}
+
+function void STExecute_UpgradeWeapon(int which, int type){
+	int payprice;
+	
+	if(type == 1){
+		payprice = getWeaponUP1Cost(which);
+	}else if (type == 2){payprice = getWeaponUP2Cost(which);}
+	sf_RemoveUpPoints(payprice, PlayerNumber());
+	//Yes, even when upgrading, will crank up the difficulty too.
+	g_AID_UpsTracker += payprice;
+	
+	UpgradeWeapon(which, type);
+}
+
+function void STExecute_UpgradeAccepted(int which, int type){
+	SamuTerm_CallOpExecute(STEXE_GETUP, which, type, 0);
+	Toaster_ShowToast("Upgrade implemented sucessfully!", CR_GOLD);
+	LocalAmbientSound("p/upgrade",128);
+}
+
+function void STExecute_AskForUpgrade(int which, int type){
+	int price;
+	if(type == 1) price = getWeaponUP1Cost(which);
+	else if (type == 2)	price = getWeaponUP2Cost(which);
+	
+	if(getPlayUPts() < price){
+		Toaster_ShowToast("You need more \cgUpgrade Points\c-!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+		}
+	else{
+		Prompt_Resize(20,8);
+		Prompt_Ask("Conf. Upgrade", 
+			"Are you sure you want to apply this upgrade to your weapon?", CR_GREEN);
+		Prompt_ExecuteOnTrue(STEXE_GETUP, which, type, 0);
+	}
+}
+
+function void STExecute_AskForRecycle(int weapon){
+	Prompt_Resize(20,8);
+	Prompt_Ask("Conf. Upgrade", 
+			"Are you sure you want to recycle this weapon?", CR_GREEN);
+	Prompt_ExecuteOnTrue(STEXE_MSGRC, weapon, 0, 0);
+}
+
+function void STExecute_RecycleAccepted(int which){
+	LocalAmbientSound("monies",128);
+	SamuTerm_CallOpExecute(STEXE_WEPRC, which, playerNumber(), 0);
+	Toaster_ShowToast("Recycling process completed!", CR_GOLD);
+}
+
+function void STExecute_RecycleWeapon(int weapon, int play){	
+	RecycleWeapon(weapon, play);
+}
+
+function void STExecute_lupnextPage(void){
+	listup_nav[2]++;
+	if(listup_nav[2] > listup_nav[3]){
+		listup_nav[2] = 0;
+	}
+}
+
+function void STExecute_lupprevPage(void){
+	listup_nav[2]--;
+	if(listup_nav[2] < 0){
+		listup_nav[2] = listup_nav[3];
+	}
+}

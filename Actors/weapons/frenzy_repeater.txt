@@ -1,0 +1,134 @@
+ACTOR Repeater : Weapon
+{
+	Weapon.AmmoUse 			1
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Dualshot_Ammo"
+	Inventory.PickupMessage		"You got the Repeater!"
+	Obituary			"%o got mushed by %k's Repeater."
+	
+	Weapon.UpSound			"w/load2"
+	AttackSound			"x5/fire1"
+	weapon.selectionorder 2900
+	States
+	{
+		Ready:
+			X5E1 A 1 A_WeaponReady
+			goto Ready
+			X5E1 ABABAB 1 A_PlaySound("x5/powerdown")
+			X5E1 ABABAB 2
+			X5E1 ABABAB 3
+			goto Ready
+		Deselect:
+			X5E1 A 1 A_Lower
+			X5E1 A 0 A_Lower
+			goto Deselect
+		Select:
+			X5E1 A 1 A_Raise
+			X5E1 A 0 A_Raise
+			goto Ready
+		Fire:
+			X5E1 ABABAB 3 A_PlaySound("x5/powerup")
+			X5E1 ABABAB 2
+			X5E1 ABABAB 1
+			goto Hold
+		Hold:
+			X5E1 CD 2 bright  A_FireBullets(5, 5, 1, 13, "BulletPuff_Standard", CHAN_AUTO)
+			X5E1 D 0 A_TakeInventory("Dualshot_Ammo", 2)
+			X5E1 A 1 A_ReFire
+			goto Ready+2
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
+	}
+}
+
+ACTOR Repeater_DoubleSpeed : Weapon
+{
+	Weapon.AmmoUse 			1
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Dualshot_Ammo"
+	Inventory.PickupMessage		"You got the Repeater with extra barrel control!"
+	Obituary			"%o got mushed by %k's Repeater."
+	
+	Weapon.UpSound			"w/load2"
+	AttackSound			"x5/fire2"
+	weapon.selectionorder 2900
+	States
+	{
+		Ready:
+			X5E1 A 1 A_WeaponReady
+			goto Ready
+			X5E1 AB 1 A_PlaySound("x5/powerdown")
+			X5E1 AB 2
+			X5E1 AB 3
+			goto Ready
+		Deselect:
+			X5E1 A 1 A_Lower
+			X5E1 A 0 A_Lower
+			goto Deselect
+		Select:
+			X5E1 A 1 A_Raise
+			X5E1 A 0 A_Raise
+			goto Ready
+		Fire:
+			X5E1 AB 2 A_PlaySound("x5/powerup")
+			X5E1 AB 1
+			X5E1 AB 1
+			goto Hold
+		Hold:
+			X5E1 CD 2 bright  A_FireBullets(5, 5, 2, 13, "BulletPuff_Standard", CHAN_AUTO)
+			X5E1 D 0 A_TakeInventory("Dualshot_Ammo", 2)
+			X5E1 A 1 A_ReFire
+			goto Ready+2
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
+	}
+}
+
+ACTOR Repeater_BlastShells : Weapon
+{
+	Weapon.AmmoUse 			1
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Cell"
+	Inventory.PickupMessage		"You got the Repeater with BLASTER ROUNDS!"
+	Obituary			"%o got mushed by %k's Repeater."
+	
+	Weapon.UpSound			"w/load2"
+	AttackSound			"x3/fire1"
+	weapon.selectionorder 2900
+	States
+	{
+		Ready:
+			X5E2 A 1 A_WeaponReady
+			goto Ready
+			X5E2 AB 1 A_PlaySound("x5/powerdown")
+			X5E2 AB 2
+			X5E2 AB 3
+			goto Ready
+		Deselect:
+			X5E2 A 1 A_Lower
+			X5E2 A 0 A_Lower
+			goto Deselect
+		Select:
+			X5E2 A 1 A_Raise
+			X5E2 A 0 A_Raise
+			goto Ready
+		Fire:
+			X5E2 AB 3 A_PlaySound("x5/powerup")
+			X5E2 AB 2
+			X5E2 AB 1
+			goto Hold
+		Hold:
+			X5E2 CD 3 bright  A_FireBullets(5, 5, 1, 19, "BulletPuff_Explosive", CHAN_AUTO)
+			X5E2 D 0 A_TakeInventory("Cell", 2)
+			X5E2 A 1 A_ReFire
+			goto Ready+2
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
+	}
+}

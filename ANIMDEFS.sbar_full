@@ -1,0 +1,79 @@
+Texture 100HPSP1
+pic 100HPSP1 tics 4
+pic 100HPSP2 tics 4
+pic 100HPSP3 tics 4
+pic 100HPSP4 tics 4
+pic 100HPSP5 tics 4
+pic 100HPSP6 tics 4
+pic 100HPSP7 tics 4
+pic 100HPSP8 tics 4
+
+Texture MEGHPSP1
+pic MEGHPSP1 tics 4
+pic MEGHPSP2 tics 4
+pic MEGHPSP3 tics 4
+pic MEGHPSP4 tics 4
+pic MEGHPSP5 tics 4
+pic MEGHPSP6 tics 4
+pic MEGHPSP7 tics 4
+pic MEGHPSP8 tics 4
+
+Texture 4XDMGSP1
+pic 4XDMGSP1 tics 4
+pic 4XDMGSP2 tics 4
+pic 4XDMGSP3 tics 4
+pic 4XDMGSP4 tics 4
+pic 4XDMGSP5 tics 4
+pic 4XDMGSP6 tics 4
+pic 4XDMGSP7 tics 4
+pic 4XDMGSP8 tics 4
+
+Texture INVULSP1
+pic INVULSP1 tics 4
+pic INVULSP2 tics 4
+pic INVULSP3 tics 4
+pic INVULSP4 tics 4
+pic INVULSP5 tics 4
+pic INVULSP6 tics 4
+pic INVULSP7 tics 4
+pic INVULSP8 tics 4
+
+Texture BULLTSP1
+pic BULLTSP1 tics 4
+pic BULLTSP2 tics 4
+pic BULLTSP3 tics 4
+pic BULLTSP4 tics 4
+pic BULLTSP5 tics 4
+pic BULLTSP6 tics 4
+pic BULLTSP7 tics 4
+pic BULLTSP8 tics 4
+
+Texture TESLTSP1
+pic TESLTSP1 tics 4
+pic TESLTSP2 tics 4
+pic TESLTSP3 tics 4
+pic TESLTSP4 tics 4
+pic TESLTSP5 tics 4
+pic TESLTSP6 tics 4
+pic TESLTSP7 tics 4
+pic TESLTSP8 tics 4
+
+Texture SAWDRSP1
+pic SAWDRSP1 tics 4
+pic SAWDRSP2 tics 4
+pic SAWDRSP3 tics 4
+pic SAWDRSP4 tics 4
+pic SAWDRSP5 tics 4
+pic SAWDRSP6 tics 4
+pic SAWDRSP7 tics 4
+pic SAWDRSP8 tics 4
+
+Texture MINDRSP1
+pic MINDRSP1 tics 4
+pic MINDRSP2 tics 4
+pic MINDRSP3 tics 4
+pic MINDRSP4 tics 4
+pic MINDRSP5 tics 4
+pic MINDRSP6 tics 4
+pic MINDRSP7 tics 4
+pic MINDRSP8 tics 4

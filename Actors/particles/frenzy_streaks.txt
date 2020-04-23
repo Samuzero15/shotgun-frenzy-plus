@@ -1,0 +1,199 @@
+// emitters
+ACTOR streakemitter_red 23001
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	
+	States
+	{
+		Spawn:
+			STRK A 1
+			STRK A 1 A_SpawnItemEx("streak_red", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			goto Spawn
+	}
+}
+
+ACTOR streakemitter_green 23002
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	
+	States
+	{
+		Spawn:
+			STRK B 1
+			STRK B 1 A_SpawnItemEx("streak_green", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			goto Spawn
+	}
+}
+
+ACTOR streakemitter_blue 23003
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	
+	States
+	{
+		Spawn:
+			STRK C 1
+			STRK C 1 A_SpawnItemEx("streak_blue", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			goto Spawn
+	}
+}
+
+ACTOR streakemitter_soul 23004
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	
+	States
+	{
+		Spawn:
+			STRK C 1
+			STRK C 1 A_SpawnItemEx("streak_soul1", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("streak_soul2", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("streak_soul3", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			goto Spawn
+	}
+}
+
+// particle actors
+actor streak_red
+{
+	renderstyle add
+	
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			STRK A 1 bright A_FadeOut(0.02)
+			goto Spawn
+	}
+}
+
+actor streak_green
+{
+	renderstyle add
+	
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			STRK B 1 bright A_FadeOut(0.02)
+			goto Spawn
+	}
+}
+
+actor streak_blue
+{
+	renderstyle add
+	
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			STRK C 1 bright A_FadeOut(0.02) //shortened because it was hitting ceiling and doing odd effect
+			goto Spawn
+	}
+}
+
+actor streakb_cfx
+{
+	renderstyle add
+	scale 0.5
+	
+	+NOCLIP
+	+NOGRAVITY
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	
+	States
+	{
+		Spawn:
+			PLSS AB 3 bright A_FadeOut(0.03) //shortened because it was hitting ceiling and doing odd effect
+			goto Spawn
+	}
+}
+
+actor streak_cfx
+{
+	renderstyle add
+	scale 0.5
+	
+	+NOCLIP
+	+NOGRAVITY
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	
+	States
+	{
+		Spawn:
+			BLUP AB 3 bright A_FadeOut(0.03) //shortened because it was hitting ceiling and doing odd effect
+			goto Spawn
+	}
+}
+
+actor streak_soul1
+{
+	renderstyle add
+	
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			SOUL A 1 bright A_FadeOut(0.02) //shortened because it was hitting ceiling and doing odd effect
+			loop
+	}
+}
+
+actor streak_soul2
+{
+	renderstyle add
+	
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			SOUL B 1 bright A_FadeOut(0.02) //shortened because it was hitting ceiling and doing odd effect
+			loop
+	}
+}
+
+actor streak_soul3
+{
+	renderstyle add
+	
+	+FORCEYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			SOUL C 1 bright A_FadeOut(0.02) //shortened because it was hitting ceiling and doing odd effect
+			loop
+	}
+}

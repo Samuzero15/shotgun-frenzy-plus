@@ -1,0 +1,191 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// SF01_ACS
+// map script
+#library "sf01"
+
+// top priority
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+
+// minor
+#import "fc_AStr.acs"
+#import "fc_Comm.acs"
+#import "fc_Entr.acs"
+#import "f_SecMan.acs"
+#import "f_MonAtt.acs"
+#import "f_AIDRL.acs"
+#import "f_FinalF.acs"
+#import "f_PMen.acs"
+#import "f_PHUD.acs"
+#import "f_Rank.acs"
+#import "f_Cred.acs"
+#import "f_PStat.acs"
+#import "f_StokP.acs"
+#import "f_Battr.acs"
+//#import "f_TaticalMap.acs"
+#import "f_Core.acs"
+
+#include "zcommon.acs"
+
+script 88 OPEN
+{
+	// setup gametype value
+	f_UseScoreSystem = 0;
+	f_Gametype =    1;
+	// game settings
+	f_Startcash =   2500;                   // player starting cash, 2500 is the default
+	c_Startcash =   5000;                   // starting cash for the commander (SF maps only)
+	f_Doortype =    1;                      // 0 is a normal door, 1 is a floor based door
+	f_Doorspeed =   50;                     // speed of the door opening, 50 is the default
+	f_GameLength =  18;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime)
+	f_AISkillMultiplier = 2;               // increase in levels, higher means harder (aka: the RapeFactor variable)
+	
+	f_AdaptiveSpawning = 0;
+	f_Cacodemons = 0;
+
+        readconsole();
+
+	f_AllowNuke =   1;
+	f_AllowIon =    1;
+}
+
+script 11 OPEN
+{
+    sector_setcolor(3, 239, 181, 119);
+    
+    delay(35);
+//	c_Credits = c_Startcash;
+    
+    // moving floor
+    while(1){
+        floor_movetovalue(1, 50, -440, 0);
+        floor_movetovalue(2, 50, -456, 0);
+        delay(35 * 6);
+        floor_movetovalue(1, 50, 184, 1);
+        floor_movetovalue(2, 50, 64, 1);
+        delay(35 * 6);
+    }
+}
+
+// final boss
+int l_HoltSpawning = 0;
+script 90 (void)
+{
+    // change music
+    Music_Change("BVSWWTHM", 1);
+    acs_execute(89, 0, 0, 0, 0);
+    int ticker;
+    while(ticker < 60)
+    {
+        ticker++;
+        delay(35);
+    }
+    acs_terminate(89, 0);
+    l_HoltSpawning = 1;
+    while(thingcount(0, 118) > 10 || thingcount(0, 111) > 10 || thingcount(0, 112) > 10 || thingcount(0, 113) > 10 || thingcount(0, 114) > 10 || thingcount(0, 24) > 10)
+        delay(35 * 1);
+    
+    // endgame
+    acs_execute(125, 0, 2, 0, 0);
+}
+
+script 1 (void)
+{
+    if (g_Status == 3)
+    {
+        acs_execute(144, 0, 0, 0, 0);
+    // message
+    f_TipShow("INFO", "Sector 3 has been locked down!", "Recapture sector 2 via the teleporter before the time runs out!", 0);     delay(35 * 5);
+    ceiling_lowerandcrush(20, 100, 1);
+
+	// display timer
+    //f_TipShow("INFO", "Sector 3 Lockdown", "2 Minutes remaining...", 0);     delay(35 * 30);
+    //if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "1 and a half minutes remaining...", 0);     delay(35 * 30);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "1 Minute remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "50 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "40 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "30 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "20 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "10 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "10 Seconds remaining...", 0);     delay(35 * 5);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "5 Seconds remaining...", 0);     delay(35 * 5);
+    f_TipShow("INFO", "Sector 3 Lockdown", "Lockdown over...\nDoors opening, recharge in 3 minutes", 0);     delay(35 * 5);
+    acs_terminate(144, 0);
+	
+	// ready for action!
+    ceiling_raisetonearest(20, 10);
+    delay(35 * 60 * 3);
+    f_TipShow("INFO", "Sector 3 Lockdown", "Ready!", 0);     delay(35 * 1);
+    }
+}
+
+script 2 (void)
+{
+    acs_terminate(144, 0);
+    f_TipShow("INFO", "Sector Changed!", "Lockdown over...", 0);     delay(35 * 5);
+    ceiling_raisetonearest(20, 10);
+}
+
+// null console-fixing script
+script 146 (void)
+{
+    // nullage
+}
+
+script 144 (void)
+{
+    while(1)
+    {
+        printbold(s:"Demons Remaining in Sector 3: ", d:thingcount(0, 113), s:"\nDemons Remaining in Sector 2: ", d:thingcount(0, 112));
+        delay(35);
+    }
+}
+
+
+// nuke enemies
+script 89 (void)
+{
+	// lower columns
+	floor_lowertonearest(4, 10);
+	
+	// lets start spawning some things, depending on the player count
+	acs_executealways(71, 0, 0, 8, 0);
+	
+	acs_executealways(71, 0, 1, 15, 0);
+	if (PlayerCount() > 6 || playercountReplicate > 6)	{ acs_executealways(71, 0, 2, 60, 0); }
+}
+
+script 71 (int l_MonsterType, int l_DelayTime){
+	while(l_HoltSpawning == 0){
+		if (l_MonsterType == 0){
+			if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200){
+			spawnspot("sfCacodemon", 21, 24, 0);
+			spawnspot("sfCacodemon", 22, 24, 0);
+			}
+		}
+		if (l_MonsterType == 1){
+			if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200){
+			spawnspot("sfBaronOfHell", 23, 24, 0);
+			}
+		}
+		if (l_MonsterType == 2){
+			if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200){
+			spawnspot("sfCyberdemon", 117, 24, 0);
+			}
+		}
+		thing_hate(24, 104, 4);
+		delay(35*l_DelayTime);
+	}
+}

@@ -1,0 +1,35 @@
+TEXTURE BG
+	pic BG01 tics 6
+	pic BG02 tics 6
+	pic BG03 tics 6
+	pic BG04 tics 6
+	pic BG05 tics 6
+	pic BG06 tics 6
+	pic BG07 tics 6
+	pic BG08 tics 6
+	pic BG09 tics 6
+	pic BG10 tics 6
+	pic BG11 tics 6
+	pic BG12 tics 6
+	pic BG13 tics 6
+	pic BG14 tics 6
+	pic BG15 tics 6
+	pic BG16 tics 6
+
+TEXTURE BGR
+	pic BGR01 tics 6
+	pic BGR02 tics 6
+	pic BGR03 tics 6
+	pic BGR04 tics 6
+	pic BGR05 tics 6
+	pic BGR06 tics 6
+	pic BGR07 tics 6
+	pic BGR08 tics 6
+	pic BGR09 tics 6
+	pic BGR10 tics 6
+	pic BGR11 tics 6
+	pic BGR12 tics 6
+	pic BGR13 tics 6
+	pic BGR14 tics 6
+	pic BGR15 tics 6
+	pic BGR16 tics 6

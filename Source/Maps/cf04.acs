@@ -1,0 +1,191 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// CF04_ACS
+// map script
+#library "cf04"
+
+// top priority
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+
+// minor
+#import "f_SecMan.acs"
+#import "f_MonAtt.acs"
+#import "f_AIDRL.acs"
+#import "f_FinalF.acs"
+#import "f_PMen.acs"
+#import "f_PHUD.acs"
+#import "f_Rank.acs"
+#import "f_Cred.acs"
+#import "f_PStat.acs"
+#import "f_StokP.acs"
+#import "f_Battr.acs"
+//#import "f_TaticalMap.acs"
+#import "f_Core.acs"
+#import "f_CfSpec.acs"
+
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+// setup techflags
+script 91 OPEN
+{
+	spawnspot("TurretPlasma", 12);
+// game settings
+	f_UseScoreSystem = 1;
+	f_Startcash =   2500;                   // player starting cash, 2500 is the default
+	c_Startcash =   0;                      // starting cash for the commander (SF maps only)
+	f_Doortype =    0;                      // 0 is a normal door, 1 is a floor based door
+	f_Doorspeed =   50;                     // speed of the door opening, 50 is the default
+	f_GameLength =  9;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime) 18
+	f_AISkillMultiplier = 3;               // increase in levels, higher means harder (aka: the RapeFactor variable)
+
+	f_Cacodemons = 0;
+	f_AdaptiveSpawning = 0;
+
+        readconsole();
+
+	setupTerminals();
+}
+// final boss
+script 90 (void)
+{
+    music_change("NONELIVE",0);
+    int ticker;
+	thing_destroy(118, 1);
+	thing_destroy(110, 1);
+	thing_destroy(111, 1);
+	thing_destroy(112, 1);
+	thing_destroy(113, 1);
+	thing_destroy(114, 1);
+	
+	delay(35);
+	// open next area
+	f_TipShow ("DEMONT", "BASE BACK DOOR", "Incoming wave from the rear!", 0);
+	door_open(6, 5);
+	delay(35 * 5);
+
+    while(ticker < 5)
+    {
+        spawnspot("SpiderImpHead", 115, 118, 0);
+        spawnspot("SpiderImpHead", 116, 118, 0);
+       spawnspot("SpiderImpHead", 117, 118, 0);
+       spawnspot("SpiderImpHead", 15, 118, 0);
+        spawnspot("Cacodemon", 7, 118, 0);
+        spawnspot("Cacodemon", 8, 118, 0);
+        if (PlayerCount() > 4){
+        	spawnspot("Cyberdemon", 9, 118, 0);
+        }
+        ticker++;
+        delay(35 * 1);
+        thing_hate(118, 104, 4);
+        delay(35 * 20);
+    }
+    ticker = 0;
+    while(thingcount(0, 118) > 15 || thingcount(0, 111) > 15 || thingcount(0, 112) > 15 || thingcount(0, 113) > 15 || thingcount(0, 114) > 15)
+        delay(35 * 1);
+    thing_destroy(118, 1);
+    thing_destroy(110, 1);
+    thing_destroy(111, 1);
+    thing_destroy(112, 1);
+    thing_destroy(113, 1);
+    thing_destroy(114, 1);
+    
+    // endgame
+    acs_execute(125, 0, 2, 0, 0);
+}
+
+// moving platforms
+script 1 OPEN
+{
+	while(1) {
+		floor_lowertonearest(4,10);
+		delay(35 * 6);
+		floor_raisetonearest(4, 10);
+		delay(35 * 6);
+	}
+}
+
+
+
+
+
+
+
+
+// custom mech script
+script 11 (void)
+{
+	thing_remove(11);
+    // welcome message
+    setfont("CONFONT");
+    hudmessage(s:"Give em hell!"; 0, 0, 0, 0.5, 0.5, 6.0);
+    
+    // change flags
+    p_TankSlot[playernumber()] = 2;
+    
+    // teleport to new location
+    teleport(10, 0, 0);
+    
+    // change skin and class
+    //morphactor(0, "TankPlayer", "", 999999, 2, "", "");
+    giveinventory("MechMorph",1);
+    giveinventory("TankGunAdvanced", 1);
+    
+    // give more health
+    if (p_MechUpgradeArmor[playernumber()] == 0){
+   	 setactorproperty(0, APROP_HEALTH, 2500);
+    }
+    else{
+   	 setactorproperty(0, APROP_HEALTH, 3500);
+    }
+    
+    // setup tank hud
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    
+    // open marine command doors
+    door_open(347, 10);
+    
+    delay(5);
+    while(p_TankSlot[playernumber()] == 2)
+    {
+        // display tank hud
+        if (GetPlayerInput(-1, INPUT_YAW) < 0)           setfont("TANKH3");
+        else if (GetPlayerInput(-1, INPUT_YAW) > 0)      setfont("TANKH2");
+        else
+            setfont("TANKH1");
+        
+        hudmessage(s:"a"; 0, 201, 0, 400.0, 0.1, 1.0);
+        
+        // switch to tank weapon
+       setweapon("TankGunAdvanced");
+        
+        // display tank health
+        setfont("CONFONT");
+        hudmessage(s:"Armor: ", d:getactorproperty(0, APROP_HEALTH) - 1000; 0, 202, CR_BLUE, 128.1, 300.1, 1.0);
+        
+        // destroyed?
+        if (getactorproperty(0, APROP_HEALTH) < 1000)
+        {
+	//acs_execute(13, 0, 0, 0, 0);
+             takeinventory("MechMorph",1);
+    hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
+            Unmorphactor(0, 1);
+            setactorproperty(0, APROP_HEALTH, 50);
+            delay(10);
+            spawnspot("StrikerRocket_SelfDestruct", 0, 0, 0);
+	break;
+        }
+        
+        delay(6);
+    }
+    
+    // purge
+    hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
+    while(1){
+       delay(35*99);
+    }
+    
+}

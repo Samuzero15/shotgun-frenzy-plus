@@ -1,0 +1,53 @@
+ACTOR Healer_Ammo : Ammo
+{
+	Inventory.Icon "MEDIA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 10
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 20
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+ACTOR Healer : Weapon
+{
+	Weapon.AmmoUse 			1
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Healer_Ammo"
+	Inventory.PickupMessage		"You got the Healer!"
+	Obituary			"What, How? THAT WASN'T SUPPOSED TO HAPPEN!!!"
+	
+	Weapon.UpSound			"w/load4"
+	
+	States
+	{
+		Ready:
+			W7E2 A 1 A_WeaponReady
+			goto Ready
+		Deselect:
+			W7E2 A 1 A_Lower
+			W7E2 A 0 A_Lower
+			goto Deselect
+		Select:
+			W7E2 A 1 A_Raise
+			W7E2 A 0 A_Raise
+			goto Select
+		Fire:
+			W7E2 A 0 A_PlaySound("w6/up")
+			W7E2 A 3 A_SpawnItem ("Medikit" , 20, 0, 0, 0)
+			W7E2 A 3 A_TakeInventory("Healer_Ammo", 1)
+			W7E2 BCDE 5
+			W7E2 A 5 A_Refire
+			goto Ready
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
+	}
+}

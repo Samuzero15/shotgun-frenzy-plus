@@ -1,0 +1,32 @@
+
+
+Script "hmm today i will execute an ACS script on the server" (void) CLIENTSIDE
+{
+    int TID = UniqueTID();
+    NamedRequestScriptPuke("oh yes i'm doing it", tid);
+    
+    delay(1);
+    
+    if(!RSP_Verify_Client(tid)) {restart;}
+}
+
+Script "oh yes i'm doing it" (int tid) NET
+{
+    RSP_Verify_Server(tid);
+    
+    DoStuff();
+}
+
+function void RSP_Verify_Server (int tid)
+{
+    SpawnForced("Mapspot", 0, 0, 0, TID);
+}
+
+function bool RSP_Verify_Client (int tid)
+{
+    if(ThingCount(T_NONE, tid) == FALSE)
+        return FALSE;
+        
+    SetActorState(tid, "Null", TRUE);
+    return TRUE;
+}

@@ -1,0 +1,67 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// fc_Mouse.acs
+// commander mouse script written by Tribeam
+
+#library "fc_Mouse"
+#include "zcommon.acs"
+
+// do not touch
+#libdefine CURSOR_X 0                  // x position of the cursor
+#libdefine CURSOR_Y 1                  // y position of the cursor
+
+// touch all you want
+#define CURSOR_XSENS 100             // horizontal sensitivity of the cursor(divided by the players current mouse senstivity)          was 50
+#define CURSOR_YSENS 90             // vertical sensitivity of the cursor(divided by the players current mouse senstivity)              was 40
+
+#define CURSOR_IMAGE "PNTR"      // Image lump name of the cursor image
+#define CURSOR_ID 125                // hudmessage id of the cursor
+
+
+//Note: use Cursor_Info[CURSOR_X] as a normal integer to get the current x position of the cursor, same goes for Cursor_Info[CURSOR_Y]
+
+// set the cursor in the middle of the script on map start
+int Cursor_Info[2];
+
+function void c_ShowCursor (void)
+{
+    int CursorHoriz = GetPlayerInput(-1, INPUT_YAW) / CURSOR_XSENS;
+    int CursorVert = GetPlayerInput(-1, INPUT_PITcH) / CURSOR_YSENS;
+    
+    
+    Cursor_Info[CURSOR_X] -= CursorHoriz;
+    Cursor_Info[CURSOR_Y] -= CursorVert;
+    
+    if(Cursor_Info[CURSOR_X] <= 0)
+    {
+        Cursor_Info[CURSOR_X] = 0;
+    }
+    if(Cursor_Info[CURSOR_X] >= 640)
+    {
+        Cursor_Info[CURSOR_X] = 640;
+    }
+    if(Cursor_Info[CURSOR_Y] <= 0)
+    {
+        Cursor_Info[CURSOR_Y] = 0;
+    }
+    if(Cursor_Info[CURSOR_Y] >= 480)
+    {
+        Cursor_Info[CURSOR_Y] = 480;
+    }
+    
+    acs_execute(606, 0, Cursor_Info[CURSOR_X] * 1.0, Cursor_Info[CURSOR_Y] * 1.0, 0);
+    //hudmessage(s:"a"; c_Onscreen_Type, CURSOR_ID, 0, Cursor_Info[CURSOR_X] * 1.0, Cursor_Info[CURSOR_Y] * 1.0, c_Onscreen_Time);
+}
+
+// ************** CLIENTSIDE HUDMESSAGE SCRIPTS **************
+
+script 606 (int l_X, int l_Y)// clientside
+{
+    sethudsize(640, 480, 1);
+    setfont("PNTR");
+    hudmessage(s:"a"; 1, 125, 0, l_X, l_Y, 3.0);
+}
+ 
+// ***********************************************************

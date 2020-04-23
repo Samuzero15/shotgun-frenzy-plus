@@ -1,0 +1,20 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_TaticalMap.acs
+// tatical map setup
+
+#library "f_TMap"
+#include "zcommon.acs"
+
+// markers
+script 50 OPEN
+{
+    // setup markers
+    spawnspot("marker_demonspawn", 115, 0, 0);
+    spawnspot("marker_battery", 101, 0, 0);
+    spawnspot("marker_battery", 102, 0, 0);
+    spawnspot("marker_battery", 103, 0, 0);
+    //spawnspot("marker_core", 104, 0, 0);
+}  

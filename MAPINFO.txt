@@ -1,0 +1,182 @@
+// Menu setup
+
+Gameinfo
+{
+	MenuFontColor_Title = "White"
+	MenuFontColor_Action = "LightBlue"
+	MenuFontColor_Label = "Orange"
+	MenuFontColor_Selection = "Gold"
+	MenuFontColor_Header = "Cyan"
+	MenuSliderColor = "Red"
+}
+
+
+// Episode setup
+clearepisodes
+
+episode CF01
+{
+	name = "Combat Frenzy"
+	noskillmenu
+}
+
+episode SD01
+{
+	name = "Survival Defender"
+	noskillmenu
+}
+
+episode SF01
+{
+	name = "Shotgun Frenzy"
+	noskillmenu
+}
+
+
+// Map setup
+map TITLEMAP lookup "TITLEMAP"
+{
+	levelnum = 1
+	next = "CF01"
+	sky1 = "RSKYC", 0.2
+	sky1 = "RSKY4", 0.1
+	music = "d_in"
+	allowrespawn
+	noinventorybar
+}
+
+// Quick Match (CF)
+
+map CF01 lookup "War Machine"
+{
+	levelnum = 1
+	next = "CF02"
+	music = "UT3TRK2"
+	intermusic = "Q4FINAL"
+	allowrespawn
+}
+
+map CF02 lookup "District"
+{
+	levelnum = 2
+	next = "CF03"
+	music = "KLENDROP"
+	intermusic = "Q4FINAL"
+	outsidefog = "52 00 00"
+	allowrespawn
+}
+
+map CF03 lookup "Checkpoint"
+{
+	levelnum = 3
+	next = "CF04"
+	music = "DOOM2005"
+	intermusic = "Q4FINAL"
+	sky1 = RSKYG, 0.0
+	outsidefog = "82 82 b4"
+	allowrespawn
+}
+
+map CF04 lookup "Hell Island"
+{
+	levelnum = 4
+	next = "CF05"
+	music = "BSDOUBT"
+	intermusic = "Q4FINAL"
+	sky1 = "RSKYC", 0.2
+	sky2 = "RSKY4", 0.1
+	doublesky
+	allowrespawn
+}
+
+map CF05 lookup "Dynomite"
+{
+	levelnum = 5
+	next = "SD01"
+	music = "OMDMUS"
+	intermusic = "Q4FINAL"
+	sky1 = "03SIDE2", 0.0
+	allowrespawn
+}
+
+// Survival Defender (SD)
+map SD01 lookup "Hell Asteroid"
+{
+	levelnum = 6
+	next = "SD02"
+	music = "BSARMA"
+	intermusic = "Q4FINAL"
+	sky1 = "03SIDE2", 0.0
+	allowrespawn
+}
+
+map SD02 lookup "The Valley"
+{
+	levelnum = 7
+	next = "SF01"
+	music = "IMARCA"
+	intermusic = "Q4FINAL"
+	sky1 = "RSKYG", 0.0
+	allowrespawn
+}
+
+// Total Invasion (SF)
+map SF01 lookup "Refinery"
+{
+	levelnum = 8
+	next = "SF02"
+	music = "NCONTRA"
+	intermusic = "Q4FINAL"
+	sky1 = "RSKYM", 0.0
+	outsidefog = "44 5c 57"
+	allowrespawn
+}
+
+map SF02 lookup "Wasteland"
+{
+	levelnum = 9
+	next = "SF03"
+	music = "ZANIKINE"
+	intermusic = "Q4FINAL"
+	sky1 = "RSKYW", 0.0
+	outsidefog = "77 5f 4b"
+	allowrespawn
+	lightning
+	fallingdamage
+}
+
+map SF03 lookup "Grid"
+{
+	levelnum = 10
+	next = "SF04"
+	music = "MZRESPWN"
+	intermusic = "Q4FINAL"
+	outsidefog = "52 00 00"
+	allowrespawn
+}
+
+map SF04 lookup "Hell Siege"
+{
+	levelnum = 11
+	next = "SF05"
+	music = "TDTSO"
+	intermusic = "Q4FINAL"
+	sky1 = "RSKY5", 0.2
+	allowrespawn
+}
+
+map SF05 lookup "Underworld"
+{
+	levelnum = 12
+	sky1 = RSKYG, 0.0
+	next = "CF01"
+	music = "300TOVIC"
+	intermusic = "Q4FINAL"
+	allowrespawn
+}
+
+map TEST lookup "Testing map"{
+	music = "LABHub"
+	intermusic = "Q4FINAL"
+	allowrespawn
+}

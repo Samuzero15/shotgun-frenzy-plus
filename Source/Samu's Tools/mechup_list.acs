@@ -1,0 +1,48 @@
+
+int mechup_list[5][5];
+
+function void MechUpList_init(void){
+	addMechUpOnList (1, 
+	"Nail Upgrade", "Make them harder, make them better...",
+	"MechUp_Nails_Lvl", 2000, 4);
+	
+	addMechUpOnList (2, 
+	"Rocket Upgrade", "Face it, explsions can save the day.",
+	"MechUp_Rockets_Lvl", f_Price[86], 4);
+	
+	addMechUpOnList (3, 
+	"Armor Upgrade", "More resistance never done you harm.",
+	"MechUp_Armor_Lvl", f_Price[90], 4);
+	
+	addMechUpOnList (4, 
+	"Manuvering Upgrade", "Tanks are slow, but you're on a hurry.",
+	"MechUp_Speed_Lvl", 3000, 2);
+	
+	addMechUpOnList (5, 
+	"Self-Destruct Upgrade", "If this is it, then finish it with style.",
+	"MechUp_SelfDestruct", 8000, 0);
+	
+}
+
+function void addMechUpOnList (int upg, 
+	str name, str desc,str actor, str price, int maxupgs){
+	
+	upg = upg-1;
+	
+	MechUp_List[upg][0] = name;
+	MechUp_List[upg][1] = desc;
+	MechUp_List[upg][2] = actor;
+	MechUp_List[upg][3] = price; 
+	MechUp_List[upg][4] = maxupgs; 
+	// ^ It's already synched with the inventory gaven on the terminal.
+}
+
+function str getMechUpName(int up){		return MechUp_List[up-1][0];}
+function str getMechUpDesc(int up){		return MechUp_List[up-1][1];}
+function str getMechUpActor(int up){	return MechUp_List[up-1][2];}
+function int getMechUpPrice(int up){	
+
+	return MechUp_List[up-1][3] + ((MechUp_List[up-1][3] * CheckInventory(getMechUpActor(up))) / 4);
+
+}
+function int getMechUpMax(int up){		return MechUp_List[up-1][4];}

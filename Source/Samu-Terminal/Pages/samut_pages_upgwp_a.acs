@@ -1,0 +1,34 @@
+
+function void UpdateListUpPage_A(int pageTag){
+	if(IsOnTheSamePage(pageTag) && listup_nav[2] == 1){
+		//ListUp_AdjustPages();
+		Label_setText(listup_page_title, "Advanced weapons");
+		Label_setColor(listup_page_title, CR_CYAN);
+		ListUp_showUpOptions(WEP_REPEATER);
+		ListUp_showUpOptions(WEP_DUALSHOT);
+		ListUp_showUpOptions(WEP_LAUNCHER);
+		ListUp_showUpOptions(WEP_FLINGER);
+		ListUp_showUpOptions(WEP_PLASMAGUN);
+		ListUp_showUpOptions(WEP_RAILGUN);
+	}
+}
+
+function void InitListUpPage_A(int pageTag){
+	pcolor = CR_CYAN;
+	ListUp_addUpOptions( pagetag, WEP_REPEATER, "Repeater");
+	ListUp_addUpOptions( pagetag, WEP_DUALSHOT, "Dualshot");
+	ListUp_addUpOptions( pagetag, WEP_LAUNCHER, "Launcher");
+	ListUp_addUpOptions( pagetag, WEP_FLINGER, "Flinger");
+	ListUp_addUpOptions( pagetag, WEP_PLASMAGUN, "Plasmagun");
+	ListUp_addUpOptions( pagetag, WEP_RAILGUN, "Railgun");
+	
+}
+
+function void ListUp_HideComps_A(void){
+	ListUp_hideComps(WEP_REPEATER);
+	ListUp_hideComps(WEP_DUALSHOT);
+	ListUp_hideComps(WEP_LAUNCHER);
+	ListUp_hideComps(WEP_FLINGER);
+	ListUp_hideComps(WEP_PLASMAGUN);
+	ListUp_hideComps(WEP_RAILGUN);
+}

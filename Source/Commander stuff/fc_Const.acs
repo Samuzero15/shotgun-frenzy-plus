@@ -1,0 +1,41 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// fc_Construction.acs
+// building construction functions
+#library "fc_Const"
+
+#import "f_IntDB.acs"
+#include "zcommon.acs"
+
+// line construction
+function void c_LineSet (int lineid, str texture, int tex_side, int trans, int trans_add)
+{
+	if (texture != "")
+	{
+		if (tex_side == 0)		setlinetexture (lineid, SIDE_FRONT, TEXTURE_MIDDLE, texture);
+		if (tex_side == 1)		setlinetexture (lineid, SIDE_BACK, TEXTURE_MIDDLE, texture);
+		
+		if (tex_side == 3)
+		{
+			setlinetexture (lineid, SIDE_FRONT, TEXTURE_MIDDLE, texture);
+			setlinetexture (lineid, SIDE_BACK, TEXTURE_MIDDLE, texture);
+		}
+	}
+	
+	// make the line transparent
+	if (trans > 0)		translucentline (lineid, trans, trans_add);
+	
+	// turn blocking on
+    setlineblocking(lineid, BLOCK_EVERYTHING);
+}
+// sector construction
+function void c_Construct (int tag, int lightlevel, int floorup, int ceilingdown, str floortex, str ceilingtex, str spec)
+{
+    if (lightlevel > 0)			light_changetovalue	(tag, lightlevel);
+    if (floorup > 0)				floor_raisebyvalue (tag, c_ConstructSpeed, floorup);
+    if (ceilingdown > 0)			ceiling_lowerbyvalue (tag, c_ConstructSpeed, ceilingdown);
+    if (floortex != "")			changefloor (tag, floortex);
+    if (ceilingtex != "")		changeceiling (tag, ceilingtex);
+}

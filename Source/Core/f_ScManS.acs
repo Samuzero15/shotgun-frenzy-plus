@@ -1,0 +1,169 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_SecMan.acs
+// manages the sectors
+#library "f_ScManS"
+
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+#import "fa_SetV.acs"
+#include "zcommon.acs"
+
+function int m_CalcSector (void)
+{
+    // locals
+    int l_Result;
+    
+    // check demon count (per sector)
+    m_InSector[0] = thingcount(0, 111);
+    m_InSector[1] = thingcount(0, 112);
+    m_InSector[2] = thingcount(0, 113);
+    m_InSector[3] = thingcount(0, 114);
+    
+    if (g_Status == 1)      l_Result = m_InSector[0];
+    if (g_Status == 2)      l_Result = m_InSector[0] + m_InSector[1];
+    if (g_Status == 3)      l_Result = m_InSector[1] + m_InSector[2];
+    if (g_Status == 4)      l_Result = m_InSector[2] + m_InSector[3];
+    
+    return l_Result;
+}
+
+function int m_CalcTotal (void)
+{
+    // locals
+    int l_Result;
+    
+    // count total demons
+    l_Result = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114);
+    
+    return l_Result;
+}
+
+// setup comm cash and wait for players to enter the game
+script 51 OPEN
+{
+    // setup default credits for the commander
+    c_Credits = c_Startcash;
+    
+    while(playercount() == 0) delay(1);
+    g_Status = 4; 
+}
+
+// sector open
+script 100 OPEN
+{
+    // define a container
+    int l_RemainingMonsters = 0;
+    
+    // activate beginning lift
+    floor_raisetonearest(105, 50);
+    
+    // locals
+    int l_CurrentSector;
+    
+    // wait until the game is active
+    while(g_Status == 0)
+        delay(35);
+    
+    // setup current sector
+    l_CurrentSector = g_Status;
+    
+    while(1)
+    {
+
+        // print centerscreen message
+        sethudsize(800, 600, 0);
+        setfont("BIGFONT");
+        if (f_SurvivalLastLevel == m_SurvivalWave) {
+        	hudmessage(s:"FINAL WAVE"; 2, 0, cr_red, 400.0, 200.0, 5.0); }
+        else {
+        	hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 0, cr_red, 400.0, 200.0, 5.0);
+        }
+        setfont("CONFONT");
+        hudmessage(s:"Current Wave ", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 35.0, 9999.0);
+        
+        // heal core
+        acs_execute(405, 0, 0, 0, 0);
+        
+        // the game has started
+                f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "30 seconds...", 0);
+                acs_execute(129, 0, 1, 30, 0);
+        delay(35 * 25);
+                f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "5 seconds...", 0);
+        delay(35 * 5);
+                f_TipShow("DEMONT", "DEMON WAVE", "Give em hell!", 0);
+                
+        // remove first blocker
+        thing_remove(50);
+        
+        // breached sound
+        ambientsound("cv/sector4", 125);
+        
+        // reactivate script
+        acs_execute(120, 0, 0, 0, 0);
+        
+        // remove first spawn blockers
+        thing_remove(70);
+        
+        // start counting the waves (skill modifiers for less players ( =less demons))
+        if (playercount() < 2) {
+            while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]/3){
+                f_AIDir_SpawnCount ++;
+	thing_hate(110, 104, 4);
+                delay(35);
+            }
+        }
+        else if (playercount() < 3) {
+            while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]/2){
+                f_AIDir_SpawnCount ++;
+	thing_hate(110, 104, 4);
+                delay(35);
+            }
+        }
+        else {
+            while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]){
+                f_AIDir_SpawnCount ++;
+	thing_hate(110, 104, 4);
+                delay(35);
+            }
+        }
+        
+        // kill remaining demons
+        f_TipShow("DEMONT", "DEMON WAVE", "Kill the remaining demons...", 0);
+        acs_suspend(120, 0);
+        
+        // wait until most of the demons are dead
+        while(1)
+        {
+            // recount
+            l_RemainingMonsters = thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112);
+            
+            if (l_RemainingMonsters < 5)     break;
+            delay(35 * 3);
+        }
+    
+        // kill off the remaining demons
+        thing_destroy(110, 0);
+        thing_destroy(111, 0);
+        thing_destroy(112, 0);
+        thing_destroy(113, 0);
+        thing_destroy(114, 0);
+        
+        // proceed
+        f_AIDir_SpawnCount = 0;
+        
+        delay(35 * 3);
+        
+        // last wave?
+        if (f_SurvivalLastLevel == m_SurvivalWave) {
+                acs_execute(125, 0, 2, 0, 0);
+                break;
+        }
+        else {
+                // goto next wave
+                m_SurvivalWave ++;
+        }
+    }
+}    

@@ -1,0 +1,23 @@
+
+A-Greet1 A-Greet1
+A-Greet2 A-Greet2
+$random Amy/Welcome {A-Greet1 A-Greet2}
+
+A-Bye1 A-Bye1
+A-Bye2 A-Bye2
+$random Amy/Farewell {A-Bye1 A-Bye2}
+Amy/WeaponEquipped A-wepeqi
+
+// Sounds from Gears of Wars 3 ! (Thanks to TiberumSoul!)
+
+SamuTerm/Login login
+//SamuTerm/Logout 
+SamuTerm/Hover hover
+SamuTerm/Idle comhum
+SamuTerm/Select select
+SamuTerm/Back back
+
+SamuTerm/Hopin goleft
+SamuTerm/Hopout goright
+
+SamuTerm/Error error
