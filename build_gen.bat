@@ -86,10 +86,10 @@ chgcolor 0B
 
 echo Compiling Shotgun Frenzy Plus Local Dev Build...
 pause
-del .\builds\sfplus-d.pk3 /q
+del .\sfplus-d.pk3 /q
 
 cd pk3
-7za a -y -tzip -mx=9 -mmt -x!.svn ..\builds\sfplus-d.pk3 .\
+7za a -y -tzip -mx=9 -mmt -x!.svn ..\sfplus-d.pk3 .\
 
 pause
 goto MENU
