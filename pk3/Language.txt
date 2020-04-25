@@ -1,2 +1,0 @@
-[Enu default]
-PATCH_VERSION = "";
