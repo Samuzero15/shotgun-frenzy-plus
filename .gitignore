@@ -2,6 +2,7 @@
 *.tmp
 *.bak
 *d.pk3
+builds/
 
 #############
 ## Windows detritus
