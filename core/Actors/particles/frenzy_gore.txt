@@ -1,0 +1,567 @@
+// emitters
+ACTOR splatEmitter_Lite
+{
+	radius 32
+	height 32
+	States
+	{
+		Spawn:
+			POSS A 0 A_SpawnDebris("splatBlood_Eye")
+			POSS A 0 A_SpawnDebris("splatBlood_Spray")
+			POSS A 0 A_SpawnDebris("splatBlood_Rib")
+			POSS A 0 A_SpawnDebris("splatBlood_Spine")
+			Stop
+	}
+}
+
+ACTOR MassiveGoreExplosion
+{
+	radius 32
+	height 32
+	States
+	{
+		Spawn:
+			POSS A 0 A_SpawnDebris("splatBlood_EyeGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_SprayGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_RibGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_SpineGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_EyeGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_SprayGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_RibGiant")
+			POSS A 0 A_SpawnDebris("splatBlood_SpineGiant")
+			Stop
+	}
+}
+
+
+ACTOR splatEmitter_Bloody
+{
+	radius 32
+	height 32
+	States
+	{
+		Spawn:
+			POSS A 0 A_SpawnDebris("splatBlood_Spray")
+			Stop
+	}
+}
+
+ACTOR splatEmitter_CFX
+{
+	radius 32
+	height 32
+	States
+	{
+		Spawn:
+			POSS A 0 A_PlaySound("c/build")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			POSS A 0 A_SpawnDebris("splatCFX")
+			Stop
+	}
+}
+
+ACTOR splatEmitter_CFX2
+{
+	radius 32
+	height 32
+	States
+	{
+		Spawn:
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 10 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			NULL A 2 A_SpawnDebris("splatCFX2")
+			NULL A 0 A_PlaySound("weapons/spark", CHAN_AUTO)
+			Stop
+	}
+}
+
+
+// particle actors
+actor splatSandbag1
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SAND D 3
+		SAND D 3
+		SAND D 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SAND D 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+
+actor splatSandbag2
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SAND E 3
+		SAND E 3
+		SAND E 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SAND E 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+
+actor splatSandbag3
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SAND F 3
+		SAND F 3
+		SAND F 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SAND F 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+actor splatShard1
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SHRD B 3
+		SHRD B 3
+		SHRD B 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SHRD B 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+actor splatShard2
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SHRD C 3
+		SHRD C 3
+		SHRD C 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SHRD C 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+actor splatShard3
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SHRD D 3
+		SHRD D 3
+		SHRD D 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SHRD D 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+actor splatShard4
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		SHRD E 3
+		SHRD E 3
+		SHRD E 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		SHRD E 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+
+actor splatBlood_Eye
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		EYEB ABCD 3
+		EYEB ABCD 3
+		SPLT A 0 A_PlaySound("splatBlood")
+		SPLT ABCDEF 3
+		stop
+	}
+}
+
+actor splatBlood_EyeGiant
+{
+	health 2
+	radius 1
+	height 1
+	scale 3
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		EYEB ABCD 3
+		EYEB ABCD 3
+		SPLT A 0 A_PlaySound("splatBlood")
+		SPLT ABCDEF 3
+		stop
+	}
+}
+
+actor splatBlood_Spine
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		GORE ABCD 3
+		GORE ABCD 3
+		GORE E 50 A_PlaySound("splatBlood")
+                stop
+		//Fade:
+		//GORE E 2 A_FadeOut(0.1)
+		//loop
+	}
+}
+
+actor splatBlood_Rib
+{
+	health 3
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		GUTS ABCD 2
+		GUTS ABCD 2
+		GUTS ABCD 2
+		GUTS E 50 A_PlaySound("splatBlood")
+                stop
+		//Fade:
+		//GUTS E 2 A_FadeOut(0.1)
+		//loop
+	}
+}
+
+actor splatBlood_RibGiant
+{
+	health 3
+	radius 1
+	height 1
+	scale 4
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		GUTS ABCD 2
+		GUTS ABCD 2
+		GUTS ABCD 2
+		GUTS E 50 A_PlaySound("splatBlood")
+                stop
+		//Fade:
+		//GUTS E 2 A_FadeOut(0.1)
+		//loop
+	}
+}
+
+actor splatCFX
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.3
+	renderstyle add
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		BLUP ABAB 3 A_PlaySound("c/build")
+		BLUP ABAB 3
+		BLUP AB 3 A_FadeOut(0.1)
+		BLUP AB 3 A_FadeOut(0.1)
+		BLUP AB 3 A_FadeOut(0.1)
+		BLUP AB 3 A_FadeOut(0.1)
+		BLUP AB 3 A_FadeOut(0.1)
+		stop
+	}
+}
+
+actor splatCFX2
+{
+	health 2
+	radius 1
+	height 1
+	scale 0.6
+	renderstyle add
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		IFOG DDDDDDDDDDDDD 3
+		BLUP D 1
+		BLUP DD 1 A_FadeOut(0.3)
+		BLUP DD 1 A_FadeOut(0.3)
+		BLUP DD 1 A_FadeOut(0.3)
+		BLUP DD 1 A_FadeOut(0.3)
+		BLUP DD 1 A_FadeOut(0.3)
+		BLUP DD 1 A_FadeOut(0.3)
+		stop
+	}
+}
+
+actor splatBlood_Spray
+{
+	health 20
+	radius 1
+	height 1
+	scale 1
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		SPLT A 0 A_PlaySound("splatBlood")
+		SPLT ABCDEF 3
+		stop
+	}
+}
+
+actor splatBlood_SprayGiant
+{
+	health 20
+	radius 1
+	height 1
+	scale 5
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		BLUD AB 1
+		SPLT A 0 A_PlaySound("splatBlood")
+		SPLT ABCDEF 3
+		stop
+	}
+}
+
+
+ACTOR splatBlood replaces Blood
+{
+	SpawnID 130
+	Mass 5
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+CLIENTSIDEONLY
+	States
+	{
+		Spawn:
+		BLUD CBA 8 //A_SpawnDebris("splatBlood_Eye")
+		Stop
+		Spray:
+		SPRY ABCDEF 3
+		SPRY G 2
+		Stop
+	}
+}
+
+// casings
+ACTOR splatShellCasing
+{
+	Height 12
+	Radius 9
+	Speed 4
+	Scale 0.25
+	PROJECTILE
+	+DOOMBOUNCE
+	- NOGRAVITY
+	+CLIENTSIDEONLY
+	SeeSound "splatShell"
+	States
+	{
+		Spawn:
+		CASE A 0 A_PlaySound("NULL")
+		CASE ACBHEGFD 1
+		Goto Spawn+1
+		Death:
+		CASE A 0 A_Jump(32,8)
+		CASE A 0 A_Jump(37,8)
+		CASE A 0 A_Jump(43,8)
+		CASE A 0 A_Jump(51,8)
+		CASE A 0 A_Jump(64,8)
+		CASE A 0 A_Jump(85,8)
+		CASE A 0 A_Jump(128,8)
+		CASE A 350
+		Stop
+		CASE B 350
+		Stop
+		CASE C 350
+		Stop
+		CASE D 350
+		Stop
+		CASE E 350
+		Stop
+		CASE F 350
+		Stop
+		CASE G 350
+		Stop
+		CASE H 350
+		Stop
+	}
+}
+ACTOR splatBulletCasing
+{
+	Height 12
+	Radius 9
+	Speed 4
+	Scale 0.1
+	PROJECTILE
+	+DOOMBOUNCE
+	- NOGRAVITY
+	+CLIENTSIDEONLY
+	SeeSound "splatBulletCasing"
+	States
+	{
+		Spawn:
+		BULC A 0 A_PlaySound("NULL")
+		BULC ACBHEGFD 1
+		Goto Spawn+1
+		Death:
+		BULC A 0 A_Jump(32,8)
+		BULC A 0 A_Jump(37,8)
+		BULC A 0 A_Jump(43,8)
+		BULC A 0 A_Jump(51,8)
+		BULC A 0 A_Jump(64,8)
+		BULC A 0 A_Jump(85,8)
+		BULC A 0 A_Jump(128,8)
+		BULC A 350
+		Stop
+		BULC B 350
+		Stop
+		BULC C 350
+		Stop
+		BULC D 350
+		Stop
+		BULC E 350
+		Stop
+		BULC F 350
+		Stop
+		BULC G 350
+		Stop
+		BULC H 350
+		Stop
+	}
+}

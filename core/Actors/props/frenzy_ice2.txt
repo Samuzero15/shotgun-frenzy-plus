@@ -1,0 +1,41 @@
+ACTOR IceStalagmiteLarge 10430
+{
+  Radius 24
+  Height 128
+  +SOLID
+  States
+  {
+  Spawn:
+    ICES A 100
+    ICES A -1
+    Stop
+  }
+}
+
+ACTOR IceStalagmiteSmall1 10431
+{
+  Radius 16
+  Height 32
+  +SOLID
+  States
+  {
+  Spawn:
+    ICES B 100
+    ICES B -1
+    Stop
+  }
+}
+
+ACTOR IceStalagmiteSmall2 10432
+{
+  Radius 16
+  Height 32
+  +SOLID
+  States
+  {
+  Spawn:
+    ICES C 100
+    ICES C -1
+    Stop
+  }
+}

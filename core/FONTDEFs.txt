@@ -1,0 +1,68 @@
+StatBigsNums{
+	0 STATBN0
+	1 STATBN1
+	2 STATBN2
+	3 STATBN3
+	4 STATBN4
+	5 STATBN5
+	6 STATBN6
+	7 STATBN7
+	8 STATBN8
+	9 STATBN9
+}
+
+SmallIndexFont{
+	0 SMALLIF0
+	1 SMALLIF1
+	2 SMALLIF2
+	3 SMALLIF3
+	4 SMALLIF4
+	5 SMALLIF5
+	6 SMALLIF6
+	7 SMALLIF7
+	8 SMALLIF8
+	9 SMALLIF9
+}
+
+// More fonts donw here, for Samu Term.
+
+
+BTNFONT
+{
+       A BP1
+	   B BP2
+	   C BP3
+	   D BP4
+	   E BP5
+	   F BP6
+	   G BP7
+	   H BP8
+	   I BP9
+}
+
+
+TOSFONT
+{
+       A TP1
+	   B TP2
+	   C TP3
+	   D TP4
+	   E TP5
+	   F TP6
+	   G TP7
+	   H TP8
+	   I TP9
+}
+
+WINFONT
+{
+       A WP1
+	   B WP2
+	   C WP3
+	   D WP4
+	   E WP5
+	   F WP6
+	   G WP7
+	   H WP8
+	   I WP9
+}

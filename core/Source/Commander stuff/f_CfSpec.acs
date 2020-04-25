@@ -1,0 +1,59 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+//
+#library "f_CfSpec"
+#import "f_IntDB.acs"
+#import "f_Rank.acs"
+#include "zcommon.acs"
+
+// COMMANDER HOTKEYS OVERRIDE
+script 881 (void)
+{
+	print(s:"");
+}
+script 882 (void)
+{
+	print(s:"");
+}
+script 883 (void)
+{
+	print(s:"");
+}
+script 884 (void)
+{
+	print(s:"");
+}
+script 885 (void)
+{
+	print(s:"");
+}
+script 886 (void)
+{
+	print(s:"");
+}
+script 887 (void)
+{
+	print(s:"");
+}
+script 888 (void)
+{
+	print(s:"");
+}
+script 889 (void)
+{
+	print(s:"");
+}
+script 890 (void)
+{
+	print(s:"");
+}
+script 891 (void)
+{
+	print(s:"");
+}
+script 892 (void)
+{
+	print(s:"");
+}

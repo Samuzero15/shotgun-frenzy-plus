@@ -1,0 +1,206 @@
+
+//
+// Defines & Variables
+//
+
+#define ACSRECTS_NUM_GLOBALS 6
+
+#define ACSRECTS_X 0
+#define ACSRECTS_Y 1
+#define ACSRECTS_W 2
+#define ACSRECTS_H 3
+
+// simple addons for buttons
+#define ACSRECTS_GRABBED 4
+#define ACSRECTS_HOLD 5
+
+// FIXME
+#define ACSUTILS_RECTLIB_SAVEDSTATES 256
+int numrects = 0;
+
+int RectsStateStack[ACSRECTS_NUM_GLOBALS][ACSUTILS_RECTLIB_SAVEDSTATES];
+int RectsUserStateStack[ACSUTILS_RECTLIB_USERVARS][ACSUTILS_RECTLIB_SAVEDSTATES];
+
+//
+// Basic functions
+//
+
+function int RectCreate(int x, int y, int w, int h)
+{
+	int offset = numrects;
+	RectsStateStack[ACSRECTS_X][offset] = x;
+	RectsStateStack[ACSRECTS_Y][offset] = y;
+	RectsStateStack[ACSRECTS_W][offset] = w;
+	RectsStateStack[ACSRECTS_H][offset] = h;
+	return numrects++;
+}
+
+function void RectsDelete(int start)
+{
+	for (int i = start; i < numrects; i++)
+	{
+		RectsStateStack[ACSRECTS_X][i] = 0.0;
+		RectsStateStack[ACSRECTS_Y][i] = 0.0;
+		RectsStateStack[ACSRECTS_W][i] = 0.0;
+		RectsStateStack[ACSRECTS_H][i] = 0.0;
+		RectsStateStack[ACSRECTS_GRABBED][i] = false;
+		RectsStateStack[ACSRECTS_HOLD][i] = false;
+		for (int j = 0; j < ACSUTILS_RECTLIB_USERVARS; j++)
+		{
+			RectsUserStateStack[i][ACSUTILS_RECTLIB_SAVEDSTATES] = 0;
+		}
+	}
+	numrects -= numrects - start;
+}
+
+function void SetRectUserData(int rect, int id, int data)
+{
+	RectsUserStateStack[id][rect] = data;
+}
+
+function int RectGetUserData(int rect, int id)
+{
+	return RectsUserStateStack[id][rect];
+}
+
+function void SetRectPosition(int rect, int x, int y)
+{
+	RectsStateStack[ACSRECTS_X][rect] = x;
+	RectsStateStack[ACSRECTS_Y][rect] = y;
+}
+
+function void SetRectSize(int rect, int w, int h)
+{
+	RectsStateStack[ACSRECTS_W][rect] = w;
+	RectsStateStack[ACSRECTS_H][rect] = h;
+}
+
+function int RectX1(int rect)
+{
+	return RectsStateStack[ACSRECTS_X][rect];
+}
+
+function int RectY1(int rect)
+{
+	return RectsStateStack[ACSRECTS_Y][rect];
+}
+
+function int RectWidth(int rect)
+{
+	return RectsStateStack[ACSRECTS_W][rect];
+}
+
+function int RectHeight(int rect)
+{
+	return RectsStateStack[ACSRECTS_H][rect];
+}
+
+function int RectX2(int rect)
+{
+	return RectX1(rect) + RectWidth(rect);
+}
+
+function int RectY2(int rect)
+{
+	return RectY1(rect) + RectHeight(rect);
+}
+
+function bool RectIsPointInside(int rect, int x, int y)
+{
+    if (x > RectX1(rect) && x < RectX2(rect) && y > RectY1(rect) && y < RectY2(rect))
+        return true;
+	
+	return false;
+}
+
+function int RectCenterX(int rect)
+{
+	return RectX1(rect) + FixedDiv(RectWidth(rect), 2.0);
+}
+
+function int RectCenterY(int rect)
+{
+	return RectY1(rect) + FixedDiv(RectHeight(rect), 2.0);
+}
+
+//
+// Input & Cursor Addons
+//
+
+function void RectFollowCursor(int rect)
+{
+	RectsStateStack[ACSRECTS_X][rect] += CursorDeltaX();
+	RectsStateStack[ACSRECTS_Y][rect] += CursorDeltaY();
+}
+
+function bool RectIsHovered(int rect)
+{
+	return RectIsPointInside(rect, CursorX(), CursorY());
+}
+
+function bool RectIsClicked(int rect, int key)
+{	
+	if (KeyPressed(key) && RectIsHovered(rect))
+		return true;
+
+	return false;
+}
+
+function bool RectIsDown(int rect, int key)
+{	
+	if (KeyDown(key) && RectIsHovered(rect))
+		return true;
+
+	return false;
+}
+
+function bool RectIsGrabbed(int rect, int key)
+{
+	if (!RectsStateStack[ACSRECTS_GRABBED][rect])
+	{
+		if(RectIsClicked(rect, key))
+		{
+			RectsStateStack[ACSRECTS_GRABBED][rect] = true;
+			return true;
+		}
+	}
+	else
+	{
+		if(KeyDown(key))
+			return true;
+		else
+			RectsStateStack[ACSRECTS_GRABBED][rect] = false;
+	}
+	return false;
+}
+
+function bool RectIsPressed(int rect, int key)
+{
+	if (!RectsStateStack[ACSRECTS_HOLD][rect])
+	{
+		if(RectIsClicked(rect, key))
+		{
+			RectsStateStack[ACSRECTS_HOLD][rect] = true;
+			return false;
+		}
+	}
+	else
+	{
+		if(RectIsDown(rect, key))
+			return false;
+		else
+		{
+			RectsStateStack[ACSRECTS_HOLD][rect] = false;
+			return true;
+		}
+	}
+	return false;
+}
+
+function bool RectIntersects(int rect, int rect2)
+{
+	if (rect == rect2)
+		return false;
+
+	return !(RectX1(rect) > RectX2(rect2) || RectX1(rect2) > RectX2(rect) || RectY1(rect) > RectY2(rect2) || RectY1(rect2) > RectY2(rect));
+}

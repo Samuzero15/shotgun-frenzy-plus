@@ -1,0 +1,204 @@
+ACTOR Root 30360
+{
+	Game Doom
+	Radius 16
+	Height 84
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT A -1
+			Stop
+	}
+}
+ACTOR RootBlocking : Root { +SOLID }
+
+ACTOR RootSmooth 30361
+{
+	Game Doom
+	Radius 16
+	Height 84
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT B -1
+			Stop
+	}
+}
+ACTOR RootSmoothBlocking : RootSmooth { +SOLID }
+
+ACTOR RootSmall 30362
+{
+	Game Doom
+	Radius 16
+	Height 48
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT C -1
+			Stop
+	}
+}
+ACTOR RootSmallBlocking : RootSmall { +SOLID }
+
+ACTOR RootTiny 30363
+{
+	Game Doom
+	Radius 16
+	Height 24
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT D -1
+			Stop
+	}
+}
+ACTOR RootTinyBlocking : RootTiny { +SOLID }
+
+ACTOR RootDouble 30364
+{
+	Game Doom
+	Radius 16
+	Height 48
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT E -1
+			Stop
+	}
+}
+ACTOR RootDoubleBlocking : RootDouble { +SOLID }
+
+ACTOR RootFloor 30365
+{
+	Game Doom
+	Radius 16
+	Height 48
+	
+	-SOLID
+	
+	States
+	{
+		Spawn:
+		ROOT F -1
+		Stop
+	}
+}
+ACTOR RootFloorBlocking : RootFloor { +SOLID }
+
+ACTOR RootBloody 30366
+{
+	Game Doom
+	Radius 16
+	Height 84
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+		ROOT G -1
+		Stop
+	}
+}
+ACTOR RootBloodyBlocking : RootBloody { +SOLID }
+
+ACTOR RootBloodySmall 30367
+{
+	Game Doom
+	Radius 16
+	Height 48
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT H -1
+			Stop
+	}
+}
+ACTOR RootBloodySmallBlocking : RootBloodySmall { +SOLID }
+
+ACTOR RootBloodyTiny 30368
+{
+	Game Doom
+	Radius 16
+	Height 24
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT I -1
+			Stop
+	}
+}
+ACTOR RootBloodyTinyBlocking : RootBloodyTiny { +SOLID }
+
+ACTOR RootBloodyDouble 30369
+{
+	Game Doom
+	Radius 16
+	Height 48
+	
+	-SOLID
+	+NOGRAVITY
+	+SPAWNCEILING
+	
+	States
+	{
+		Spawn:
+			ROOT J -1
+			Stop
+	}
+}
+ACTOR RootBloodyDoubleBlocking : RootBloodyDouble { +SOLID }
+
+ACTOR RootBloodyFloor 30370
+{
+	Game Doom
+	Radius 16
+	Height 48
+	
+	-SOLID
+	
+	States
+	{
+		Spawn:
+			ROOT K -1
+			Stop
+	}
+}
+ACTOR RootBloodyFloorBlocking : RootBloodyFloor { +SOLID }

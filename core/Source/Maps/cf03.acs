@@ -1,0 +1,146 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// CF01_ACS
+// map script
+#library "cf03"
+
+// top priority
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+
+// minor
+#import "f_SecMan.acs"
+#import "f_MonAtt.acs"
+#import "f_AIDRL.acs"
+#import "f_FinalF.acs"
+#import "f_PMen.acs"
+#import "f_PHUD.acs"
+#import "f_Rank.acs"
+#import "f_Cred.acs"
+#import "f_PStat.acs"
+#import "f_StokP.acs"
+#import "f_Battr.acs"
+//#import "f_TaticalMap.acs"
+#import "f_Core.acs"
+#import "f_CfSpec.acs"
+
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+// setup techflags
+script 91 OPEN
+{
+// game settings
+	f_Startcash =   2500;                   // player starting cash, 2500 is the default
+	f_UseScoreSystem = 1;
+	c_Startcash =   0;                      // starting cash for the commander (SF maps only)
+	f_Doortype =    0;                      // 0 is a normal door, 1 is a floor based door
+	f_Doorspeed =   50;                     // speed of the door opening, 50 is the default
+	f_GameLength =  9;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime) 18
+	f_AISkillMultiplier = 5;               // increase in levels, higher means harder (aka: the RapeFactor variable)
+
+	f_Cacodemons = 0;
+	f_AdaptiveSpawning = 0;
+
+        readconsole();
+
+	setupTerminals();
+}
+
+// final boss
+script 90 (void)
+{
+    music_change("NONELIVE",0);
+    int ticker;
+    while(ticker < PlayerCount() + 3)
+    {
+        spawnspot("Afrit", 115, 118, 0);
+        ticker++;
+//	printbold(d:ticker, d:PlayerCount() + 3);
+//      Is there any point to printing this to the players?
+        delay(35 * 3);
+        thing_hate(118, 104, 0);
+        thing_hate(110, 104, 0);
+        thing_hate(111, 104, 0);
+        thing_hate(112, 104, 0);
+        thing_hate(113, 104, 0);
+        thing_hate(114, 104, 0);
+    }
+    
+    while(thingcount(0, 118) > 3 || thingcount(0, 111) > 3 || thingcount(0, 112) > 3 || thingcount(0, 113) > 3 || thingcount(0, 114) > 3)
+        delay(35 * 1);
+    thing_destroy(118, 100);
+    thing_destroy(111, 100);
+    thing_destroy(112, 100);
+    thing_destroy(113, 100);
+    thing_destroy(114, 100);
+    
+    // endgame
+    acs_execute(125, 0, 2, 0, 0);
+}
+
+script 1 (void)
+{
+	SetActivator(0); //Preventing a major disaster
+    if (g_Status == 3)
+    {
+        acs_execute(144, 0, 0, 0, 0);
+    // message
+    f_TipShow("INFO", "Sector 3 has been locked down!", "Recapture sector 2 via the teleporter before the time runs out!", 0);     delay(35 * 5);
+    ceiling_lowerandcrush(20, 100, 1);
+
+	// display timer
+    //f_TipShow("INFO", "Sector 3 Lockdown", "2 Minutes remaining...", 0);     delay(35 * 30);
+    //if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "1 and a half minutes remaining...", 0);     delay(35 * 30);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "1 Minute remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "50 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "40 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "30 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "20 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "10 Seconds remaining...", 0);     delay(35 * 10);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "10 Seconds remaining...", 0);     delay(35 * 5);
+    if (!g_Status == 3) {acs_execute(2, 0, 0, 0, 0); terminate;}
+    f_TipShow("INFO", "Sector 3 Lockdown", "5 Seconds remaining...", 0);     delay(35 * 5);
+    f_TipShow("INFO", "Sector 3 Lockdown", "Lockdown over...\nDoors opening, recharge in 3 minutes", 0);     delay(35 * 5);
+    acs_terminate(144, 0);
+	
+	// ready for action!
+    ceiling_raisetonearest(20, 10);
+    delay(35 * 60 * 3);
+    f_TipShow("INFO", "Sector 3 Lockdown", "Ready!", 0);     delay(35 * 1);
+    }
+}
+
+script 2 (void)
+{
+	SetActivator(0); //Preventing a major disaster
+    acs_terminate(144, 0);
+    f_TipShow("INFO", "Sector Changed!", "Lockdown over...", 0);     delay(35 * 5);
+    ceiling_raisetonearest(20, 10);
+}
+
+// null console-fixing script
+script 146 (void)
+{
+    // nullage
+}
+
+script 144 (void)
+{
+    while(1)
+    {
+        HUDMessageBold(s:"\c+Demons Remaining in Sector 3: ", d:thingcount(0, 113), s:"\nDemons Remaining in Sector 2: ", d:thingcount(0, 112);
+		HUDMSG_FADEOUT,0,CR_YELLOW,0.125,0.75,1.0,1.0);
+        delay(35);
+    }
+}

@@ -1,0 +1,372 @@
+ACTOR CommanderCam 2310
+{
+	height 16
+	radius 8
+	+NOBLOCKMAP +SLIDESONWALLS +NOCLIP -SOLID +FLOORHUGGER
+	cameraheight 4096
+	
+	states
+	{
+		Spawn:
+			NULL A 40 A_SpawnItemEx("CommanderCam_Position", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_HealthDispenser:
+			NULL A 1 A_SpawnItemEx("HealthDispenser", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_AmmoDispenser:
+			NULL A 1 A_SpawnItemEx("AmmoDispenser", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_Sandbags:
+			NULL A 1 A_SpawnItemEx ("Sandbag_Building", 512, 0, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretBullet:
+			NULL A 1 A_SpawnItemEx("TurretBullet", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretRocket:
+			NULL A 1 A_SpawnItemEx("TurretRocket", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretPlasma:
+			NULL A 1 A_SpawnItemEx("TurretPlasma", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretRail:
+			NULL A 1 A_SpawnItemEx("TurretRail", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretShotgun:
+			NULL A 1 A_SpawnItemEx("TurretShotgun", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretTesla:
+			NULL A 1 A_SpawnItemEx("TurretTesla", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretFlame:
+			NULL A 1 A_SpawnItemEx("TurretFlame", 512, 0, 0, 0)
+			goto Spawn
+		Spawn_Landmine:
+			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 512, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_LostSoul:
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 512, 100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 512, -100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 412, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 612, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Demon:
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 512, 100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 512, -100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 412, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 612, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Revenant:
+			NULL A 1 A_SpawnItemEx("sfTeamRevenant", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_HellKnight:
+			NULL A 1 A_SpawnItemEx("sfTeamHellKnight", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_BaronOfHell:
+			NULL A 1 A_SpawnItemEx("sfTeamBaronOfHell", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Cyberdemon:
+			NULL A 1 A_SpawnItemEx("sfTeamCyberdemon", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_StrikeMarker1:
+			NULL A 1 A_SpawnItemEx("StrikeMarker1", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_StrikeMarker2:
+			NULL A 1 A_SpawnItemEx("StrikeMarker2", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_IonCannon:
+			NULL A 1 A_SpawnItemEx("IonBeam", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Attack:
+			NULL A 1 A_SpawnItemEx("marker_object_attack", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Defend:
+			NULL A 1 A_SpawnItemEx("marker_object_defend", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Construct:
+			NULL A 1 A_SpawnItemEx("marker_object_construct", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_Regroup:
+			NULL A 1 A_SpawnItemEx("marker_object_regroup", 512, 0, 64, 0)
+			goto Spawn
+		Spawn_MoneyBag:
+			NULL A 1 A_SpawnItemEx("MoneyBag", 512, 0, 64, 0)
+			goto Spawn
+	}
+}
+
+ACTOR CommanderCamLow 2320
+{
+	height 16
+	radius 8
+	+NOBLOCKMAP +SLIDESONWALLS +NOCLIP -SOLID +FLOORHUGGER
+	cameraheight 96
+	
+	states
+	{
+		Spawn:
+			NULL A 40 A_SpawnItemEx("CommanderCam_Position", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_HealthDispenser:
+			NULL A 1 A_SpawnItemEx("HealthDispenser_Build", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_AmmoDispenser:
+			NULL A 1 A_SpawnItemEx("AmmoDispenser_Build", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_Sandbags:
+			NULL A 1 A_SpawnItemEx ("Sandbag_Building", 512, 0, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretBullet:
+			NULL A 1 A_SpawnItemEx("TurretBullet", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretRocket:
+			NULL A 1 A_SpawnItemEx("TurretRocket", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretPlasma:
+			NULL A 1 A_SpawnItemEx("TurretPlasma", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretRail:
+			NULL A 1 A_SpawnItemEx("TurretRail", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretShotgun:
+			NULL A 1 A_SpawnItemEx("TurretShotgun", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretTesla:
+			NULL A 1 A_SpawnItemEx("TurretTesla", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretFlame:
+			NULL A 1 A_SpawnItemEx("TurretFlame", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_Landmine:
+			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 128, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_LostSoul:
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 128, 100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 128, -100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 28, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 228, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Demon:
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 128, 100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 128, -100, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 28, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("sfTeamDemon", 228, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Revenant:
+			NULL A 1 A_SpawnItemEx("sfTeamRevenant", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_HellKnight:
+			NULL A 1 A_SpawnItemEx("sfTeamHellKnight", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_BaronOfHell:
+			NULL A 1 A_SpawnItemEx("sfTeamBaronOfHell", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Cyberdemon:
+			NULL A 1 A_SpawnItemEx("sfTeamCyberdemon", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_StrikeMarker1:
+			NULL A 1 A_SpawnItemEx("StrikeMarker1", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_StrikeMarker2:
+			NULL A 1 A_SpawnItemEx("StrikeMarker2", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_IonCannon:
+			NULL A 1 A_SpawnItemEx("IonBeam", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Attack:
+			NULL A 1 A_SpawnItemEx("marker_object_attack", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Defend:
+			NULL A 1 A_SpawnItemEx("marker_object_defend", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Construct:
+			NULL A 1 A_SpawnItemEx("marker_object_construct", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_Regroup:
+			NULL A 1 A_SpawnItemEx("marker_object_regroup", 128, 0, 64, 0)
+			goto Spawn
+		Spawn_MoneyBag:
+			NULL A 1 A_SpawnItemEx("MoneyBag", 128, 0, 64, 0)
+			goto Spawn
+	}
+}
+
+ACTOR CommanderCam_Position
+{
+	height 16
+	radius 8
+	renderstyle add
+	Gravity 0.5
+	states
+	{
+		Spawn:
+			COPO ABCDEFGHIJKLM 1
+		Fade:
+			COPO M 1 A_FadeOut(0.1)
+			goto Fade
+	}
+}
+
+ACTOR StrikeMarker
+{
+	+NOBLOCKMAP
+	renderstyle add
+	States
+	{
+		Spawn:
+		ASDT A -1
+		stop
+	}
+
+}
+
+ACTOR StrikeMarker1
+{
+	+NOBLOCKMAP
+	renderstyle add
+	States
+	{
+		Spawn:
+		ASDT A 0
+		ASDT A 1 ACS_Execute(142, 0, 140, 0, 0)
+		ASDT A -1
+		stop
+	}
+
+}
+
+ACTOR StrikeMarker2
+{
+	+NOBLOCKMAP
+	renderstyle add
+	States
+	{
+		Spawn:
+		ASDT A 0
+		ASDT A 1 ACS_Execute(142, 0, 141, 0, 0)
+		ASDT A -1
+		stop
+	}
+
+}
+
+actor StrikerRocket
+{
+  Game Doom
+  SpawnID 254
+  Radius 11
+  Height 8
+  Speed 20
+  Damage 10
+  Projectile
+  Scale 4.0
+  +RANDOMIZE
+  +DEHEXPLOSION
+  +ROCKETTRAIL
+  +FORCERADIUSDMG
+  SeeSound "weapons/rocklf"
+  DeathSound "weapons/rocklx"
+  DamageType MarineFire
+  Obituary "$OB_MPROCKET" // "%o rode %k's rocket."
+  States
+  {
+  Spawn:
+    MISL B 1 bright
+    goto Spawn
+  Death:
+    MISL B 8 bright A_Explode(400,256,0,0,64)
+    MISL C 6 bright
+    MISL D 4 bright
+    stop
+  }
+}
+
+actor StrikerRocket_SelfDestruct
+{
+  Game Doom
+  SpawnID 254
+  Radius 11
+  Height 8
+  Speed 20
+  Damage 10
+  Projectile
+  Scale 4.0
+  +RANDOMIZE
+  +DEHEXPLOSION
+  +ROCKETTRAIL
+  +FORCERADIUSDMG
+  SeeSound "weapons/rocklf"
+  DeathSound "weapons/rocklx"
+  DamageType MarineFire
+  Obituary "$OB_MPROCKET" // "%o rode %k's rocket."
+  States
+  {
+  Spawn:
+    MISL B 1 bright
+    goto Death
+  Death:
+    MISL B 8 bright A_Explode(400,256,0,0,64)
+    MISL C 6 bright
+    MISL D 4 bright
+    stop
+  }
+}
+	
+
+ACTOR IonBeam
+{
+	Radius 11
+	Height 8
+	Speed 20
+	Damage 0
+	Projectile
+	+RANDOMIZE
+	+OLDRADIUSDMG
+	+FLOORHUGGER
+	+FORCEYBILLBOARD
+	+FORCERADIUSDMG
+	+NODAMAGETHRUST
+	+BRIGHT
+	renderstyle add
+	Alpha 1.0
+	SeeSound "weapons/rocklf"
+	DeathSound "weapons/rocklx"
+	Obituary "%o got blasted by the Ion Cannon... Poor fella"
+	DamageType "MarineFire"
+	States
+	{
+		Spawn:
+			IONC A 0
+			IONC A 0 Radius_Quake(4, 8, 0, 256, 0)
+			IONC A 1 A_SpawnItemEx("FlamerRemains", frandom(-256.0, 256.0), 0, 0,0,0,0,frandom(0.0,359.0))
+			goto Death
+		Death:
+			IONC A 4 A_Explode(800,512,0,0,128)
+		DeathFade:
+			IONC A 1 A_FadeOut(0.1)
+			Loop
+	}
+}

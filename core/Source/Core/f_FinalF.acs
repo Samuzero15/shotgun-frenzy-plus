@@ -1,0 +1,375 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_FinalF.acs
+// the battle before the end
+#library "f_FinalF"
+
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+#import "f_AIDir.acs"
+#include "zcommon.acs"
+
+// define a useful variable (for dev purposes only, use to instantly goto the boss)
+int instant_guardian = 0;
+int guardianActive = 0;
+
+script 231 (void)
+{
+	// get current attributes
+	int health = getactorproperty(0, APROP_Health);
+	int alpha = getactorproperty(0, APROP_Alpha);
+	int adjustedCount = PlayerCount()/2;
+	
+	// auto adjust monsters based on player count
+	if (alpha != 0.9 && PlayerCount() > 2){
+		setactorproperty(0, APROP_Health, health*adjustedCount);
+		setactorproperty(0, APROP_Alpha, 0.9);
+		if (f_PercentFast > random(0,99)) {
+			setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
+		}
+	}
+}
+
+// final fight
+script 107 OPEN
+{
+    // define a local container
+    int l_RemainingMonsters;
+    
+    // wait until the game is active
+    while(g_Status == 0)
+        delay(35);
+    // survival?
+    if(f_Gametype == 5){
+         acs_terminate(107,0);
+    }
+    if (instant_guardian == 0)
+    {
+        // wait desired time minutes
+        if (f_GameLength > 10){
+        delay(35 * 60 * 10);
+        g_TenMinMark = 1;
+        delay(35 * 60 * f_GameLength - 10);
+        }
+        else{
+        delay(35 * 60 * f_GameLength);
+        }
+        
+        // five minute warning
+        f_TipShow ("DEMONT", "Guardian Appearence", "2 Minutes remaining...", 0);
+        
+        // wait 2 minutes
+        delay(35 * 60 * 2);
+    }
+    
+    acs_execute(108, 0, l_RemainingMonsters, 0, 0);
+    
+}
+
+script 108 (int l_RemainingMonsters)
+{
+	int bonusPoints;
+    guardianActive = 1;
+    // collect AI director information and turn it off
+    g_SkillScore = f_AIDir_Check();
+	log(s:"Score catched: ", d:g_SkillScore);
+	
+	if(g_Status == 1){bonusPoints += 30; log(s:"The battery 1, 2 and 3 are safe!");}
+	if(g_Status == 2){bonusPoints += 20; log(s:"The battery 2 and 3 are safe!");}
+	if(g_Status == 3){bonusPoints += 10; log(s:"The battery 3 is safe!");}
+	
+	g_SkillScore += bonusPoints;
+	
+	log(s:"Score before the guardian wave: ", d:g_SkillScore);
+    acs_terminate(13, 0);
+    acs_terminate(120, 0);
+    acs_terminate(100, 0);
+    acs_terminate(102, 0);
+    acs_terminate(103, 0);
+	
+	//[Samu] To shut up the counter.
+	acs_terminate(129, 0);
+    
+    // deactivate cores
+    //thing_deactivate(101);
+    //thing_deactivate(102);
+    //thing_deactivate(103);
+    
+    g_Status = 4;
+    g_GuardianMode = 1;
+    thing_remove(101);
+    thing_remove(102);
+    thing_remove(103);
+    
+    f_TipShow ("DEMONT", "Guardian Appearence", "Kill the remaining demons!", 0);
+    
+    // open doors/gates
+    if (f_Doortype == 0)
+    {
+        door_open(101, f_Doorspeed);
+        door_open(102, f_Doorspeed);
+        door_open(103, f_Doorspeed);
+        door_open(104, f_Doorspeed);
+    }
+    else
+    {
+        floor_lowertonearest(101, f_Doorspeed);
+        floor_lowertonearest(102, f_Doorspeed);
+        floor_lowertonearest(103, f_Doorspeed);
+        floor_lowertonearest(104, f_Doorspeed);
+    }
+    
+    // one last hate command
+    delay(35);
+
+    //Try to open the doors again -- sometimes if a sector
+    // is recaptured at just the right time, a door will stick
+    if (f_Doortype == 0)
+    {
+        door_open(101, f_Doorspeed);
+        door_open(102, f_Doorspeed);
+        door_open(103, f_Doorspeed);
+        door_open(104, f_Doorspeed);
+    }
+    else
+    {
+        floor_lowertonearest(101, f_Doorspeed);
+        floor_lowertonearest(102, f_Doorspeed);
+        floor_lowertonearest(103, f_Doorspeed);
+        floor_lowertonearest(104, f_Doorspeed);
+    }
+    
+        thing_hate(110, 104, 0);
+        thing_hate(111, 104, 0);
+        thing_hate(112, 104, 0);
+        thing_hate(113, 104, 0);
+        thing_hate(114, 104, 0);
+	
+	int mtotal, mkilled;
+        
+    // wait until most of the demons are dead
+    while(1)
+    {
+		//[Samu] I've always hated zandronum for this broken fuctions.
+		mtotal = GetLevelInfo (LEVELINFO_TOTAL_MONSTERS),
+        mkilled = GetLevelInfo (LEVELINFO_KILLED_MONSTERS);
+		// There is the -n monster count bug, so to counter that. 
+		// We're gonna ignore the "5 monsters to guardian" rule.
+		
+        // recount
+		log(s:"Monsters remaining: ", d:l_RemainingMonsters);
+        l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114);
+        
+		
+        if (l_RemainingMonsters < 5 || mKilled >= mTotal)     break;
+		// And maybe, analize this quickly, to evade missupdates.
+        delay(5);
+    }
+	log(s:"Guardian wave started.");
+    // kill off the remaining demons
+    thing_destroy(110, 0);
+    thing_destroy(111, 0);
+    thing_destroy(112, 0);
+    thing_destroy(113, 0);
+    thing_destroy(114, 0);
+    
+    delay(35);
+    
+    // display message
+    f_TipShow ("DEMONT", "Guardian Appearence", "Arrived!", 0);
+    
+	
+	// kill all scripts!
+	acs_terminate(120, 0);
+	
+	
+	
+    // spawn boss script
+    if(c_NukeLaunched != 1){
+    acs_execute(90, 0, 0, 0, 0);}
+}
+
+// game over
+// 1 = Nuked
+// 2 = All killed
+// 3 = Demonic Core destroyed
+// 4 = Marine Core destroyed
+
+script 125 (int l_Condition)
+{
+    // define some local containers
+    int l_MonstersKilled = -1;
+    int l_PlayerDeaths = -1;
+    int l_SkillLevel = -1;
+    int g_FinalSkillScore = 0;
+    
+    // display center message
+    setfont("STATBIGS");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    
+    // collect final score
+    if(l_Condition != 2)g_SkillScore = f_AIDir_Check();
+    g_FinalSkillScore = g_SkillScore / 2;
+	
+	// Cheaty fucks.
+	//if(!alarmsUsed) g_finalSkillScore = -1;
+	
+	str music;
+	switch(l_Condition){
+		case 1: music = "D_END1"; break;
+		case 2: music = "D_END2"; break;
+		case 3: music = "D_END3"; break;
+		case 4: music = "D_END4"; break;
+		default: music = "D_IN";
+	}
+    SetMusic(music,0);
+	if (l_Condition < 1 || l_condition > 4){
+		hudmessagebold(s:"No Count!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
+		delay(35*6);
+		str again = StrParam(s:"Changemap ", n:-2);
+		ConsoleCommand(again);
+	}
+    else if (l_Condition == 4)       {hudmessagebold(s:"Defeat!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);}
+    else                        {hudmessagebold(s:"Victory!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);}
+    
+    delay(35 * 6);
+    // change camera and remove huds (and exit mechs)
+    changecamera(40, 0, 0);
+    g_Status = 299;
+    
+    
+    // display endpic
+    if (l_Condition == 1)       setfont("HCON1");
+    if (l_Condition == 2)       setfont("HCON2");
+    if (l_Condition == 3)       setfont("HCON4");
+    if (l_Condition == 4)       setfont("HCON3");
+    if (l_Condition == 5)
+    {
+        setfont("HCON4");
+        g_FinalSkillScore = 100;
+    }
+    hudmessagebold(s:"a"; 0, 160, 0, 0.1, 0.1, 900.0);
+    
+    // add or subtract bonus points
+    if (l_Condition == 1)       g_FinalSkillScore += 20;
+    if (l_Condition == 2)       g_FinalSkillScore += 15;
+    if (l_Condition == 3)       g_FinalSkillScore += 10;
+    if (l_Condition == 4)       g_FinalSkillScore -= 20;
+	
+	//[Samu] you think you can get a good score by dying a lot!?
+	if(PlayerCount() == 0) g_FinalSkillScore = 0;
+	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 5;
+	// Well not on my watch!
+	
+	log(s:"Test: ", d:g_FinalSkillScore, s:" %");
+    
+    // check limits
+    if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
+    if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
+	
+	str msg;
+	switch(l_Condition){
+		case 1: msg = "Nukes sloves everything"; break;
+		case 2: msg = "Rip and tear until it's done"; break;
+		case 3: msg = "Jokes on you demons"; break;
+		case 4: msg = "Soon, ashes will remain..."; break;
+	}
+	
+	log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
+    
+    // display killed demons
+    setfont("STATBIGS");
+	hudmessagebold(s:msg; 0, 150, CR_WHITE, s_ScreenSize[0] * 0.5 + 10.0, s_ScreenSize[1] * 0.5 + 35.0, 0.0);
+
+	int LevelKilledMonsters = getlevelinfo(LEVELINFO_KILLED_MONSTERS);
+    while(l_MonstersKilled < LevelKilledMonsters)
+    {
+        setfont("STATBIGS");
+        ambientsound("weapons/pistol", 20);
+		hudmessagebold(s:"You killed"; 0, 151, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 55.0, 0.0);
+		
+		if(l_MonstersKilled < LevelKilledMonsters - 100)
+			l_MonstersKilled += 25;
+        l_MonstersKilled ++;
+		setfont("BIGFONT");
+        hudmessagebold(d:l_MonstersKilled, s:" Demons"; 0, 154, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 55.0, 0.0);
+        
+        delay(2);
+    }
+    
+    delay(35*1);
+    // display total deaths
+    setfont("STATBIGS");
+    
+    while(l_PlayerDeaths < p_TotalPlayerDeaths)
+    {
+        setfont("STATBIGS");
+        ambientsound("weapons/pistol", 20);
+		hudmessagebold(s:"Players died"; 0, 152, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 70.0, 0.0);
+        l_PlayerDeaths ++;
+		setfont("BIGFONT");
+        hudmessagebold(d:l_PlayerDeaths, s:" times"; 0, 155, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 70.0, 0.0);
+        
+        delay(2);
+    }
+    
+    delay(35*1);
+	
+	while(l_SkillLevel < g_FinalSkillScore)
+    {
+        setfont("STATBIGS");
+		hudmessagebold(s:"Skill Level"; 0, 153, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 85.0, 0.0);
+        ambientsound("weapons/pistol", 20);
+        l_SkillLevel ++;
+		setfont("BIGFONT");
+        hudmessagebold(d:l_SkillLevel, s:" %"; 0, 156, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 85.0, 0.0);
+
+        delay(2);
+    }
+    
+    delay(35 * 1);
+	setfont("confont");	
+	msg = "";
+	//[Samu] I got bored lol.
+	if(l_Condition == 4){
+		if (g_FinalSkillScore < 0)         msg = "You suck so much, that you broke the limit of the game.";
+		else if (g_FinalSkillScore < 10)   msg = "Your skill is not enough!";
+		else if (g_FinalSkillScore < 20)   msg = "You failed it!";
+		else if (g_FinalSkillScore < 30)   msg = "Let this be lesson for you";
+		else if (g_FinalSkillScore < 40)   msg = "At least you got a decent score";
+		else if (g_FinalSkillScore < 50)   msg = "Focus more on the core next time"; 
+		else if (g_FinalSkillScore < 60)   msg = "And that's why the teamwork exists";
+		else if (g_FinalSkillScore < 70)   msg = "Damn... And you were rocking the map";
+		else if (g_FinalSkillScore < 80)   msg = "How did you lost the game again?";
+		else if (g_FinalSkillScore < 90)   msg = "You can't read this, ha-ha! oh wait you could?"; 
+		else if (g_FinalSkillScore < 100)  msg = "Don't you have anything better to do?";
+		else if (g_FinalSkillScore == 100) msg = "... Nut enough cheats ...";
+	}else{
+		if (g_FinalSkillScore < 0)         msg = "You cheaty motherfuckers";
+		else if (g_FinalSkillScore < 10)   msg = "It's a miracle that you won this.";
+		else if (g_FinalSkillScore < 20)   msg = "Try to do not die a lot next time.";
+		else if (g_FinalSkillScore < 30)   msg = "You will get it someday";
+		else if (g_FinalSkillScore < 40)   msg = "I think you can do it better.";
+		else if (g_FinalSkillScore < 50)   msg = "Not bad, not bad at all"; 
+		else if (g_FinalSkillScore < 60)   msg = "Nice work, but still you can do it better.";
+		else if (g_FinalSkillScore < 70)   msg = "Good job! not anyone reaches to this level";
+		else if (g_FinalSkillScore < 80)   msg = "Great job! Now pat yourself in the back!";
+		else if (g_FinalSkillScore < 90)   msg = "Exelent (team)work!"; 
+		else if (g_FinalSkillScore < 100)  msg = "That was an amazing game!";
+		else if (g_FinalSkillScore == 100) msg = "You mastered the hell itself!";
+    }
+	hudmessagebold(s:msg; 0, 158, CR_GOLD, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 43.0, 6.0);
+	
+    delay(35 * 6);
+
+    exit_normal(0);
+}
+
+// cheatz
+script 999 (void)
+{
+	p_Credits[playernumber()] = 99999;
+	c_Credits = 99999;
+}  

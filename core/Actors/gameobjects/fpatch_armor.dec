@@ -1,0 +1,10 @@
+
+Actor Flag_BlueArmor : Inventory {Inventory.MaxAmount 1}
+
+Actor KillCounter : Inventory{
+	Inventory.MaxAmount 0xffffffff
+	+Inventory.UNTOSSABLE
+	+INVENTORY.UNDROPPABLE
+}
+
+Actor PlayerKilledDemon : Killcounter{Inventory.Amount 1}

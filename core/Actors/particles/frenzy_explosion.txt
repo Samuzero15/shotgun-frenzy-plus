@@ -1,0 +1,171 @@
+// emitters
+ACTOR explosionemitter_wall 23010
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	
+	States
+	{
+		Spawn:
+			STRK C 1
+			loop
+		Explode:
+			STRK C 1
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+	}
+}
+ACTOR explosionemitter_t
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	
+	States
+	{
+		Spawn:
+			STRK C 1
+			loop
+		Explode:
+			STRK C 1
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+	}
+}
+
+// particle actors
+actor explosion_particle
+{
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	
+	States
+	{
+		Spawn:
+			MISL B 0
+			MISL B 3 A_PlaySound("weapons/rocklx", CHAN_AUTO)
+			MISL CD 3 bright
+			stop
+	}
+}

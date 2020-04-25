@@ -1,0 +1,148 @@
+DefaultListMenu
+{
+	Position 97, 68
+	Font "STATBIGS", "Cyan", "Orange"
+}
+
+ListMenu "MainMenu"{
+
+	
+	TextItem "New Game", "s", "PlayerclassMenu"
+	TextItem "SF+ Settings", "s", "SFPlusOptions"
+	TextItem "More Options", "o", "OptionsMenu"
+	TextItem "Quit", "q", "QuitMenu"
+}
+
+ListMenu "EpisodeMenu"
+{
+	IfGame(Doom, Heretic, Hexen, Strife)
+	{
+		NetgameMessage "Disconnect first before starting a single player game."
+	}
+
+	IfGame(Doom, Chex)
+	{
+		Position 48, 63
+		Font "STATBIGS", "Cyan"
+		StaticText 54, 38, "Choose a Gamemode"
+		
+	}
+	Font "DBIGFONT", "White", "Gold"
+	// items will be filled in by MAPINFO
+}
+
+OptionMenu "SFPlusOptions"{
+	Title "Shotgun Frenzy Plus Settings"
+	StaticText "*) Requires a map restart to take effect",1
+	StaticText ""
+	StaticText "Game Options", 1
+	StaticText "All options that you need for your server.", 1
+	StaticText ""
+	Slider "Starting Player Cash *", "sf_startcash", 1000, 20000, 500, 0
+	Slider "Starting Team Cash *", "sf_teamcash", 500, 20000, 500, 0
+	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"
+	Slider "Fast Percent (+ 3P) *", "sf_percentfast", 0, 50, 5, 0
+	Option "Adaptive Spawning *", "sf_adaptivespawn", "Boolean"
+	Slider "Door Hold-Time Seconds", "sf_doorholdtime", 15, 45, 1, 0
+	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
+	SubMenu "About Game Options", "SFPlusGameOptionHelp"
+	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
+	StaticText ""
+	StaticText ""
+	StaticText ""
+	StaticText "Item Hotkeys", 1
+	StaticText "Samu encourages to use the hotkeys. They're good stuff.",1
+	StaticText ""
+	Control "Soulsphere", "usesoulsphere"
+	Control "Megasphere", "usemegasphere"
+	Control "Berserk 2.0", "useberserk2"
+	Control "Godsphere", "usegodsphere"
+	Control "Ammosphere", "usebackpack"
+	Control "Stimpack", "usestimpack"
+	StaticTextSwitchable "Backspace -> Clear, Enter -> Bind a key", "Press a key. (ESC to cancel)", "ControlMessage", 1
+	//SafeCommand "Clear Hotkeys", "sfp_fuckMyBinds"
+	StaticText ""
+	StaticText ""
+	StaticText ""
+	StaticText "User Options", 1
+	StaticText "Not needed at all, but hey, you should take a look.",1
+	StaticText ""
+	Option "Enable Auto-Healing?", "sfp_Autouse", "Boolean"
+	NumberField "Stimpack Low HP %",   "sfp_stimpack_t" , 5, 75, 5, "sfp_Autouse"
+	NumberField "Soulsphere Low HP %", "sfp_soulsphere_t" , 5, 75, 5, "sfp_Autouse"
+	NumberField "Megasphere Low HP %", "sfp_megasphere_t" , 5, 75, 5, "sfp_Autouse"
+	Option "Hear Hitmark sound?", "sfp_hitmarksnd", "Boolean"
+	Option "Display earnings?", "sfp_earningdisp", "EarningDispOptions"
+	SubMenu "About User Options", "SFPlusUserOptionHelp"
+	SafeCommand "Reset User Options", "sfp_resetUserOptions"
+	StaticText ""
+	Command "To the Testing Map!", "map TEST"
+}
+
+OptionMenu "SFPlusUserOptionHelp"{
+	Title "About the User Options"
+	StaticText "", 1
+	StaticText "Auto-healing", 1
+	StaticText "When certain amount of health is reached, the healing items"
+	StaticText "will be activated. This won't save you from death though."
+	StaticText ""
+	StaticText "Hitmark sound", 1
+	StaticText "You know, that tick that you hear after killing a demon."
+	StaticText ""
+	StaticText "Earnings", 1
+	StaticText "The number that you see after killing a demon. Or buying"
+	StaticText "your weapons, recycles, upgrades..."
+}
+
+OptionMenu "SFPlusGameOptionHelp"{
+	Title "About the Game Options"
+	StaticText ""
+	StaticText "Player Cash", 1
+	StaticText "The amount of credits you get before starting the map."
+	StaticText ""
+	StaticText "Team Cash", 1
+	StaticText "The amount of credits you team gets before starting the map."
+	StaticText ""
+	StaticText "wut is a caco?", 1
+	StaticText "Do you see that smiling tomato over there?, yeah that's a caco."
+	StaticText "This will ask you if you want to play with cacodemon waves."
+	StaticText ""
+	StaticText "Fast Percent", 1
+	StaticText "The chance to spawn a fast demon."
+	StaticText "Luckly it only triggers when there is at least 3 players in game"
+	StaticText ""
+	StaticText "Door hold-time", 1
+	StaticText "Remember the timer before opening / closing a sector?"
+	StaticText "You can edit this to make it open / close faster or slower."
+	StaticText ""
+	StaticText "Adaptive Spawning", 1
+	StaticText "This will make the monsters spawn depending on the sector on "
+	StaticText "conflict, if the map does'nt support that feature, it will spawn"
+	StaticText "once the monsters are gone, causing to recover sectors quick."
+	StaticText ""
+	StaticText "Credit Correction", 1
+	StaticText "For the late players, they can get a bit more of money by the time."
+	StaticText "Spectating and re-joining can cause to gain more or less cash for"
+	StaticText "the player losing their weapons. Set it to -10 to deny this bonus."
+	StaticText "< -10 = - credits, > -10 = + credits.", -1
+}
+
+OptionValue "Boolean"
+{
+	0, "No"
+	1, "Yes"
+}
+
+OptionValue "EarningDispOptions"
+{
+	3, "Yes, all earnings."
+	2, "Just the most importants."
+	1, "Just my earnings."
+	0, "No, im okay."
+}
+
+OptionValue "CacoBoolean"
+{
+	0, "No thanks."
+	1, "Ye we like cacos!"
+}

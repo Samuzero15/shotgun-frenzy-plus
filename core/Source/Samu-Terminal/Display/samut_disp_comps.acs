@@ -1,0 +1,298 @@
+
+function void HilightImgButton (int bid){
+	//log(s:"I am Being called.");
+	int x = getImgButtonX1(bid)+(fixedDiv(getImgButtonWidth(bid), 2.0));
+	int y = getImgButtonY1(bid)+(fixedDiv(getImgButtonHeight(bid), 2.0));
+	str hover = getImgButtonHoverImage(bid);
+	str img = getImgButtonImage(bid);
+	
+	HudPushState();
+    HudResetState();
+	//HudSetAligns(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	HUDSetHiliTimes();
+		if(StrLen(hover) == 0){
+			//No custom hovering image. Just make the button shine.
+			HUDSetTextColor(CR_WHITE);
+			HudSetBlendStyle(HUD_BLENDSTYLE_ADDITIVE);
+			HudSetAlpha(0.5);
+			HudPrintImage(x, y, ST_HID_HILI, img);
+		}else{
+			//Custom hovering image.
+			HudPrintImage(x, y, ST_HID_HILI, hover);
+		}
+    HudPopState();
+}
+
+function void ShowImgButton (int bid){
+	//log(s:"I am Being called.");
+	int x = getImgButtonX1(bid)+(fixedDiv(getImgButtonWidth(bid), 2.0));
+	int y = getImgButtonY1(bid)+(fixedDiv(getImgButtonHeight(bid), 2.0));
+	
+	int hid = getImgButtonHudId(bid);
+	str img = getImgButtonImage(bid);
+	
+	//print(s:getImgButtonImage(bid));
+	HudPushState();
+    HudResetState();
+		//if(!use)
+			//HudPrintImage(x, y, ST_HID_BTNI + bid,"BTNDEN");
+		//else 
+		HudPrintImage(x, y, hid, img);
+    HudPopState();
+}
+
+function void ShowLabel (int lid){
+	//log(s:"I am Being called.");
+	int x = Label_getX(lid);
+	int y = Label_getY(lid);
+	str text = Label_getText(lid);
+	str font = Label_getFont(lid);
+	int color = Label_getColor(lid);
+	
+	int alignx = Label_getAlignX(lid);
+	int aligny = Label_getAlignY(lid);
+	
+	int hid = Label_getHudID(lid);
+	
+	int p = Label_getParent(lid);
+	int ww = Label_getWrapWidth(lid);
+	
+	int iw = RectWidth(p) >> 16;
+	int ih = RectHeight(p) >> 16;
+	
+	int ix1 = RectX1(p) >> 16;
+	int iy1 = RectY1(p) >> 16;
+	
+	
+	//log(d:iy1);
+	HudPushState();
+    HudResetState();
+	HudSetWordWrap(true);
+	//SetHudSize(640,480,true);
+	HudSetAlign(alignx,aligny);
+	//HUDSetScale(4.0);
+	if(p != -1) SetHudClipRect(0, 0, 0, 0, iw - 16);
+	//if(p != -1) SetHudClipRect(ix1 + 8, iy1 + 8, iw - 8, ih - 8, 0);
+	else SetHudClipRect(0, 0, 0, 0, ww);
+		
+		HudPrintText(x,y, hid,text, font, color);
+	SetHudClipRect(0, 0, 0, 0, 0);
+    HudPopState();
+}
+
+function void ShowImage (int iid){
+	int x = getImageX(iid) + getImageOffsetX(iid);
+	int y = getImageY(iid) + getImageOffsetY(iid);;
+	str img = getImageFile(iid);
+	
+	// If no file was added.
+	if(strlen(img) == 0) return;
+	
+	int alignx = getImageAlignX(iid);
+	int aligny = getImageAlignY(iid);
+	
+	int hid = getImageHudID(iid);
+	
+	int p = getImageParent(iid);
+	
+	
+	int iw = RectWidth(p) >> 16;
+	//log(d:hid);
+	HudPushState();
+    HudResetState();
+	HudSetAlign(alignx,aligny);
+	if(p != -1) SetHudClipRect(0, 0, 0, 0, iw - 16);
+		HudPrintImage(x, y, hid, img);
+	SetHudClipRect(0, 0, 0, 0, 0);
+    HudPopState();
+}
+
+function void ShowStrButton (int sbid){
+	
+	int xpos = getStrButtonX1(sbid);
+	int ypos = getStrButtonY1(sbid);
+	
+	int w = getStrButtonWidth(sbid);
+	int h = getStrButtonHeight(sbid);
+	str text = getStrButtonText(sbid);
+	//print(f:xpos);
+	str back = getStrButtonBack(sbid);
+	//print(s:"w: ", f:w, s:", h: ", f:h);
+	
+	//print()
+	
+	int color = getStrButtonColor(sbid);
+	int hudid = getStrButtonHudId(sbid);
+	
+	HudPushState();
+    HudResetState();
+	HUDSetTimes();
+	
+	HUDSetTextColor(color);
+	
+	//HudSetAlign(HUD_ALIGN_Left, HUD_ALIGN_Top);
+	//HudSetAlignY(HUD_ALIGN_Center);
+	HUDSetPoint(xpos + fixedDiv(w, 2.0), ypos + fixedDiv(h, 2.0));
+	HUDSetFont("STATBIGS");
+	HUDDrawText(hudid,text);
+	
+	//HudSetScale(0.5);
+	//HudSetAlignX(HUD_ALIGN_LEFT);
+	//HudSetAlignY(HUD_ALIGN_TOP);
+	HudSetScale(1.0);
+	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	HUDSetPoint(xpos, ypos);
+	HUDSetFont("BTNFONT");
+	HUDDrawText(hudid+100,back);
+	//log(s:back);
+	/*
+	HudSetAlignX(HUD_ALIGN_CENTER);
+	HudSetAlignY(HUD_ALIGN_CENTER);
+	
+	HUDSetPoint(xpos+ fixedDiv(w,2.0), ypos+ fixedDiv(h,2.0));
+	HUDSetTextColor(CR_BLACK);
+	HUDSetFont("TOSFONT");
+	HUDSetScaleXY(1.025,1.125);
+	HUDDrawText(ST_HID_SBTNB2,back);
+	*/
+	HudPopState();
+}
+
+function void HiLightStrButton (int sbid){
+	
+	int xpos = getStrButtonX1(sbid);
+	int ypos = getStrButtonY1(sbid);
+	
+	int w = getStrButtonWidth(sbid);
+	int h = getStrButtonHeight(sbid);
+	//str text = getStrButtonText(sbid);
+	//print(f:xpos);
+	str back = getStrButtonBack(sbid);
+	//print(s:"w: ", f:w, s:", h: ", f:h);
+	
+	int color = getStrButtonColor(sbid);
+	
+	HudPushState();
+    HudResetState();
+	HUDSetHiliTimes();
+	
+	HUDSetTextColor(CR_WHITE);
+	
+	/*
+	HudSetAlignX(HUD_ALIGN_Center);
+	HudSetAlignY(HUD_ALIGN_Center);
+	HUDSetPoint(xpos + (fixedDiv(w,2.0)), ypos + (fixedDiv(h,2.0)));
+	HudSetScaleXY(1.0, 1.5);
+	HUDSetFont("STATBIGS");
+	HUDDrawText(ST_HID_SBTN1+sbid,text);
+	*/
+	HudSetBlendStyle(HUD_BLENDSTYLE_ADDITIVE);
+	HudSetAlpha(0.6);
+	HudSetAlignX(HUD_ALIGN_LEFT);
+	HudSetAlignY(HUD_ALIGN_TOP);
+	HUDSetPoint(xpos, ypos);
+	HUDSetFont("BTNFONT");
+	HUDDrawText(ST_HID_HILI,back);
+	
+	HudPopState();
+}
+
+function void ShowToast (void){
+	
+	int xpos = getToastX();
+	int ypos = getToastY();
+	str text = getToastString();
+	//print(f:xpos);
+	str back = getToastBack();
+	int color = getToastColor();
+	
+	HudPushState();
+    HudResetState();
+	
+	HudSetToastSettings(color);
+	
+	HUDSetPoint(xpos,ypos);
+	//HudSetScaleXY(1.0, 1.5);
+	HUDSetFont("CONFONT");
+	HUDDrawText(ST_HID_TOAST_TEXT,text);
+	
+	//HudSetScale(1.0);
+	HUDSetPoint(xpos, ypos);
+	HUDSetFont("TOSFONT");
+	HUDDrawText(ST_HID_TOAST_BACK,back);
+	
+	HudPopState();
+}
+
+function void ShowPrompt (void){
+	
+	int xpos = getPromptX();
+	int ypos = getPromptY();
+	str title = getPromptTitle();
+	//print(f:xpos);
+	
+	int w = getPromptWidth();
+	int h = getPromptHeight();
+	str back = getPromptBack();
+	int color = getPromptColor();
+	
+	HudPushState();
+    HudResetState();
+	HUDSetTimes();
+	HudSetTextColor(color);
+	//HudSetToastSettings(color);
+	//HudSetAlign(HUD_ALIGN_Center,HUD_ALIgn_Center);
+	HUDSetPoint(xpos + fixedDiv(w,2.0) - 4.0,ypos);
+	HUDSetFont("STATBIGS");
+	HUDDrawText(ST_HID_PROMPT_TITLE,title);
+	
+	//HudSetScale(1.0);
+	HudSetAlign(HUD_ALIGN_LEFT,HUD_ALIGN_TOP);
+	HUDSetPoint(xpos, ypos);
+	HUDSetFont("WINFONT");
+	HUDDrawText(ST_HID_PROMPT,back);
+	
+	HudPopState();
+}
+
+function void ShowCursor(void){
+	int x = getCursorX();
+	int y = getCursorY();
+	int w = getCursorWidth();
+	int h = getCursorHeight();
+	int icon = getCursorIcon();
+	
+	//print(s:icon);
+	
+	HudPushState();
+    HudResetState();
+		HudSetAlignX(HUD_ALIGN_LEFT);
+		HudSetAlignY(HUD_ALIGN_TOP);
+		HudPrintImage(x, y, ST_HID_CURSOR,icon);
+    HudPopState();
+}
+/*
+function void ShowPanels (int pid){
+	
+	int xpos = getPanelX(pid);
+	int ypos = getPanelY(pid);
+	//str text = getToastString();
+	//print(f:xpos);
+	str back = getPanelBack(pid);
+	int color = getPanelColor(pid);
+	int hid = getPanelHudId(pid);
+	
+	HudPushState();
+    HudResetState();
+	
+	HudSetTimes();
+		HudSetAlignX(HUD_ALIGN_LEFT);
+		HudSetAlignY(HUD_ALIGN_TOP);
+		
+	HUDSetPoint(xpos,ypos);
+	//HudSetScaleXY(1.0, 1.5);
+	HUDSetFont("WINFONT");
+	HUDDrawText(hid,back);
+
+	HudPopState();
+}*/

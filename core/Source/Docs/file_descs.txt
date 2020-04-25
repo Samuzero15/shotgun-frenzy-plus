@@ -1,0 +1,79 @@
+
+Samu's File Summary for ACS source code.
+
+// For the modder's out there, here is a Summary on how the files works.
+
+-) Maps: All of the map scripts. You know this one.
+	Each file represents each script of the map.
+	If you take a look on the map, it is being imported to the source code,
+	in that way, it's better to mantain the code per each map.
+	
+	*)There is no map for the scripts: sf00, cf06, tw01 and sd03.
+	 yet you can use these clusters to create your own maps. :D
+	 
+-) Core: The main scripts to make the magic of this mod!
+	@) f_initDB: All of the variables and constants needed for each map.
+	@) f_FinalF: The final fight scripts, and so goes for the ending script. 
+	@) f_Battr: It's just the battery/core warning script, nothing intresting. 
+	@) f_Core: Same as adobe, but focused on the core, still not intresting. 
+	@) f_SecMan: Sector management. For the sector holding scripts!
+		This file contains a lot of stuff talking about the sectors like...
+		100) Opening sectors (What happens after the count down.)
+		102) Losing sectors
+		103) Recovering Sectors (and the rewards on doing it.)
+		104) Entering and exiting from sectors (after selecting the sector 
+		  to travel)
+	@) f_ScManS: Sector Management as F_SecMan, except is aimed for Survival 
+				 Defender maps.
+		100) Wave control (Like the invasion map in Skull--er Zandronum)
+	
+-) Shop: For the ka-ching and stuff to be selled.
+	@) f_PMen: The old global player menu. (Depercharted)
+		See the Samu-Terminal for those menus.
+	@) f_PMenP: Functions for the old global player menu. (Depercarted)
+		See the Samu-Terminal and Samu-Tools for some more functions.
+	@) fl_Price: Prices for all of the items in the game!
+		(wip) This file will also contain some prices not shown here, 
+		      and they're hard coded on Samu-Tools.
+			  Just for that guy who says: 
+			  "Hey! This is too expensive/cheap, I'll change dat."
+			  
+	@) f_Cred: Credit and item scripts for the monsters.
+		There it is some stuff that you might concern about...
+		105) Credit addition display for clietside, look for samu-tools to see 
+			 what does those functions over there.
+		855) Money bag script. Just show the message and add some more credits.
+		500) Monster Kill script, depending on how it died, it will grant money
+			 to the player(s). It does'nt matter how.
+			 (In that way you can earn money, without doing almost nothing :v)
+		Some more named scripts are in there, but they're self explainatory.
+		"SF_UniqueDrone") This is to give an unique tid for the drones, to give
+						  the money to the respective owners.
+		"SF_SpawnADrone") Spawns a drone, keeping track of his master to give
+						  some money to him.
+		"SF_Net_AddCredits") Net script to give credits to the player
+		"SF_Net_AddTeamCredits") Net script to give credits to the commander
+		"SF_Net_KillRewardCredits") Net script to give credits depending on 
+									the monster.
+									
+-) Players: Scripts aimed to the players! Including the Refreshing scripts.
+	@) f_PHUD: That good-old hud on the center top corner of your screen.
+			   It's only visible on full screen mode.
+		604) This one will display the actual player's rank 
+		605) Displays the background Hud
+		616) Displays the Demon-Core's damaging notification.
+		617) Announces to the players about the new techs researched 
+			 on the commander type maps.
+		999) Loop for hud and sbarinfo
+		"Hud_ShowCoreHealth") Shows the core health
+		"Hud_ShowPlayerStats") Shows the kill, exp and credit count.
+		"Hud_ShowTeamCredits_YesCMD") Shows the commander's name
+		"Hud_ShowTeamCredits_NoCMD") Shows in case of no player in command.
+		"Hud_ShowExperienceBar") Show the experience bar.
+		"SyncSBARForEveryone") Syncs items to match up with the sbarinfo
+							   in this way, you can see the status of the game
+							   even if you're spectating!
+		"SyncWithSBARINFO")	Same as adobe, but it sinches when the player
+							is in the game.
+// More documanting soon...
+		

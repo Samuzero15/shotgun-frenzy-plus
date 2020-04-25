@@ -1,0 +1,142 @@
+////////////////////////////////////////
+// Getters from prompts!
+////////////////////////////////////////
+
+function int getPromptRect(void){ 
+	return comp_rects_once[STCOMP_PROMPT];
+}
+
+function int getPromptX(void){
+	return RectX1(getPromptRect());
+}
+
+function int getPromptY(void){
+	return RectY1(getPromptRect());
+}
+
+function int getPromptWidth(void){
+	return RectWidth(getPromptRect());
+}
+
+function int getPromptHeight(void){
+	return RectHeight(getPromptRect());
+}
+
+function int getPromptTag(void){
+	return RectGetUserData(getPromptRect(), ST_CPROP0);
+}
+
+function int getPromptTitle(void){
+	return RectGetUserData(getPromptRect(), ST_CPROP1);
+}
+
+function int getPromptWindowId(void){
+	return RectGetUserData(getPromptRect(), ST_CPROP2);
+}
+
+function int getPromptValue(void){ 
+	return RectGetUserData(getPromptRect(), ST_CPROP3);
+}
+
+function int getPromptColor(void){ 
+	return RectGetUserData(getPromptRect(), ST_CPROP4);
+}
+
+function str getPromptBack(void){ 
+	return RectGetUserData(getPromptRect(), ST_CPROP5);
+}
+
+function bool getPromptState(void){ 
+	return RectGetUserData(getPromptRect(), ST_CPROP6);
+}
+
+function bool getPromptOpLayout(void){ 
+	return RectGetUserData(getPromptRect(), ST_CPROP7);
+}
+
+function int getPromptExecute_YesAction(void){ 
+	return stexe_true;
+}
+
+function int getPromptExecute_NoAction(void){ 
+	return stexe_false;
+}
+
+function int getPromptExeArg1_YesAction(void){ 
+	return UnpackByte1(stexe_true_args);
+}
+
+function int getPromptExeArg2_YesAction(void){ 
+	return UnpackByte2(stexe_true_args);
+}
+
+function int getPromptExeArg3_YesAction(void){ 
+	return UnpackByte3(stexe_true_args);
+}
+
+function int getPromptExeArg1_NoAction(void){ 
+	return UnpackByte1(stexe_false_args);
+}
+
+function int getPromptExeArg2_NoAction(void){ 
+	return UnpackByte2(stexe_false_args);
+}
+
+function int getPromptExeArg3_NoAction(void){ 
+	return UnpackByte3(stexe_false_args);
+}
+
+///////////////////////////////////////
+// Setters for teh prompts!
+///////////////////////////////////////
+
+function void setPromptRect(int rect){ 
+	comp_rects_once[STCOMP_PROMPT] = rect;
+}
+
+function void setPromptTag(int tag){ 
+	SetRectUserData(getPromptRect(), ST_CPROP0, tag);
+}
+
+function void setPromptTitle(str title){ 
+	SetRectUserData(getPromptRect(), ST_CPROP1, title);
+}
+
+function void setPromptWindowId(int windowid){ 
+	SetRectUserData(getPromptRect(), ST_CPROP2, windowid);
+}
+
+function void setPromptValue(int value){ 
+	SetRectUserData(getPromptRect(), ST_CPROP3, value);
+}
+
+function void setPromptColor(int color){ 
+	SetRectUserData(getPromptRect(), ST_CPROP4, color);
+}
+
+function void setPromptBack(str back){ 
+	SetRectUserData(getPromptRect(), ST_CPROP5, back);
+}
+
+function void setPromptState(bool state){ 
+	SetRectUserData(getPromptRect(), ST_CPROP6, state);
+}
+
+function void setPromptExecute_YesAction(int execute){ 
+	stexe_true = execute;
+}
+
+function void setPromptExecute_NoAction(int execute){ 
+	stexe_false = execute;
+}
+
+function void setPromptExeArgs_YesAction(int arg1,int arg2,int arg3){ 
+	int args = PackBytes(arg1, arg2, arg3, 0);
+	stexe_true_args = args;
+}
+
+function void setPromptExeArgs_NoAction(int arg1,int arg2,int arg3){ 
+	int args = PackBytes(arg1, arg2, arg3, 0);
+	stexe_false_args = args;
+}
+

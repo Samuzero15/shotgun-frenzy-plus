@@ -1,0 +1,134 @@
+
+function void UpdateListWPPage(int pageTag){
+	setPageTitle(pageTag, "Buy Weapon Packs", CR_CYAN);
+	
+	if(isOnTheSamePage(pageTag)){
+		Label_setShow(listwp_page[4], GetTechFlag_C(TECH_ARMSP1));
+		setStrButtonShow(listwp_page[5], GetTechFlag_C(TECH_ARMSP1));
+		setStrButtonShow(listwp_page[6], GetTechFlag_C(TECH_ARMSP1));
+		setStrButtonShow(listwp_page[7], GetTechFlag_C(TECH_ARMSP1));
+	
+		Label_setShow(listwp_page[8], GetTechFlag_C(TECH_ARMSP2));
+		setStrButtonShow(listwp_page[9], GetTechFlag_C(TECH_ARMSP2));
+		setStrButtonShow(listwp_page[10], GetTechFlag_C(TECH_ARMSP2));
+	}
+}
+
+function void InitListWPPage(int pageTag){
+	int i, j, posx, posy, stepx, stepy, iposx, iposy;
+	
+	// Main set
+	i = Label_Add(100.0,80.0); 
+	Label_setText(i,"Standard set");
+	Label_setFont(i,"STATBIGS");
+	Label_setColor(i,CR_GREEN);
+	Label_setTag(i, 1);
+	Label_setShow(i, false);
+	listwp_page[0] = i;
+	
+	posX = 40.0;
+	posY = 100.0;
+	stepX = 0.0;
+	stepY = 45.0;
+	
+	for(j = 0; j < 3; j++){
+	iposX = posX + stepX * j;
+	iposY = posY + stepY * j;
+		switch(j){
+			case 0:
+			i = StrButton_Add(iposX, iposY, "Shotgun");
+			setStrButtonExeArgs(i, WP_SHOTGUN,0,0);
+			break;
+			case 1:
+			i = StrButton_Add(iposX, iposY, "Assault");
+			setStrButtonExeArgs(i, WP_ASSAULT,0,0);
+			break;
+			case 2:
+			i = StrButton_Add(iposX, iposY, "Support");
+			setStrButtonExeArgs(i, WP_SUPPORT,0,0);
+			break;
+		}
+		setStrButtonTag(i,pageTag);
+		setStrButtonShow(i, false);
+		setStrButtonColor(i, CR_GREEN);
+		setStrButtonExecute(i, STEXE_SHOWBuyPAGE);
+		listwp_page[1 + j] = i;
+	}
+	
+	i = Label_Add(320.0,80.0); 
+	Label_setText(i,"Advanced set");
+	Label_setFont(i,"STATBIGS");
+	Label_setColor(i,CR_CYAN);
+	Label_setTag(i, 1);
+	Label_setShow(i, false);
+	listwp_page[4] = i;
+	
+	// To set the buttons quick with a nity for.
+	posX = 240.0;
+	posY = 100.0;
+	stepX = 0.0;
+	stepY = 45.0;
+	
+	for(j = 0; j < 3; j++){
+	iposX = posX + stepX * j;
+	iposY = posY + stepY * j;
+		switch(j){
+			case 0:
+			i = StrButton_Add(iposX, iposY, "Commando");
+			setStrButtonExeArgs(i, WP_COMANDO,0,0);
+			break;
+			case 1:
+			i = StrButton_Add(iposX, iposY, "Exploder");
+			setStrButtonExeArgs(i, WP_HEAVY,0,0);
+			break;
+			case 2:
+			i = StrButton_Add(iposX, iposY, "Plasmatic");
+			setStrButtonExeArgs(i, WP_PLASMA,0,0);
+			break;
+		}
+		setStrButtonTag(i,pageTag);
+		setStrButtonShow(i, false);
+		setStrButtonColor(i, CR_CYAN);
+		setStrButtonExecute(i, STEXE_SHOWBuyPAGE);
+		listwp_page[5 + j] = i;
+	}
+	
+	i = Label_Add(525.0,80.0); 
+	Label_setText(i,"OverPower set");
+	Label_setFont(i,"STATBIGS");
+	Label_setColor(i,CR_ORANGE);
+	Label_setTag(i, 1);
+	Label_setShow(i, false);
+	listwp_page[8] = i;
+	
+	// To set the buttons quick with a nity for.
+	posX = 450.0;
+	posY = 100.0;
+	stepX = 0.0;
+	stepY = 45.0;
+	
+	for(j = 0; j < 2; j++){
+	iposX = posX + stepX * j;
+	iposY = posY + stepY * j;
+		switch(j){
+			case 0:
+			i = StrButton_Add(iposX, iposY, "Pyromaniac");
+			setStrButtonExeArgs(i, WP_FLAMER,0,0);
+			break;
+			case 1:
+			i = StrButton_Add(iposX, iposY, "BFG");
+			setStrButtonExeArgs(i, WP_BFG,0,0);
+			break;
+		}
+		setStrButtonTag(i,pageTag);
+		setStrButtonShow(i, false);
+		setStrButtonColor(i, CR_ORANGE);
+		setStrButtonExecute(i, STEXE_SHOWBuyPAGE);
+		listwp_page[9 + j] = i;
+	}
+	
+	
+	//Label_setAligns(buy_price,HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	
+	
+}

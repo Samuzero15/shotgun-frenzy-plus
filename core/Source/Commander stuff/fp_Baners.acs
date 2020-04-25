@@ -1,0 +1,83 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS!
+//   a modification of shotugn frenzy, but with moar stuff.
+//	 by Samuzero15tlh.
+
+// fc_Baners.acs
+// That banner on the bases on sf maps!
+#library "fp_baners"
+
+#import "f_IntDB.acs"
+#import "fc_const.acs"
+
+#include "zcommon.acs"
+#include "acsutils.acs"
+#include "samu_tools.acs"
+
+script "ShotgunFrenzy_BaseBanner" open{
+	str string;
+	int count = 0;
+	int next = 1;
+	while(1){
+		if(count == 0) 				next = 1;
+		if(count == 1)				next = 2;
+		if(count == 2) 				next = cond(isBuilt(BUILD_GENLAB), 3, 0); 
+		if(count == 3 || next == 0) next = cond(isBuilt(BUILD_ARMORY), 4, 0);
+		if(count == 4 || next == 0) next = cond(isBuilt(BUILD_MECHFA), 5, 0);
+		if(count == 5 || next == 0) next = cond(isBuilt(BUILD_REFINE), 6, 0);
+		if(count == 6 || next == 0) next = cond(isBuilt(BUILD_MARCOM), 7, 0);
+		if(count == 7 || next == 0) next = cond(isBuilt(BUILD_NUKESY), 8, 0);
+		if(count == 8 || next == 0) next = 0;
+		
+		switch(count){
+			case 0: string = "BLOGO1"; break;
+			case 1: string = "BLOGO2"; break;
+			case 2: string = "ZBANER"; break;
+			case 3: string = "SLOGO1"; break;
+			case 4: string = "SLOGO2"; break;
+			case 5: string = "SLOGO3"; break;
+			case 6: string = "SLOGO4"; break;
+			case 7: string = "SLOGO5"; break;
+			case 8: string = "BLOGO3"; break;
+		}
+		log(d:count, s:" ", d:next);
+		
+		showbanner(string);
+		delay(5);
+		showstatic();
+		delay(2);
+		showstatic();
+		delay(2);
+		showbanner(string);
+		delay(35 * 30); // 30 seconds to display it :D
+		showstatic();
+		delay(5);
+		showbanner(string);
+		delay(20);
+		showstatic();
+		delay(5);
+		showstatic();
+		delay(5);
+		showbanner(string);
+		delay(10);
+		showstatic();
+		delay(2);
+		showstatic();
+		delay(2);
+		
+		
+		count = next;
+	} 
+}
+
+function void showbanner(str banner){
+	Line_SetTextureScale(77, 0.0, 0.0, SIDE_FRONT, 2);
+	Line_SetTextureOffset(77, 0.0, 0.0, SIDE_FRONT, 2);
+	c_LineSet(77, banner, SIDE_FRONT, 0, 0);
+}
+
+function void showstatic(void){
+	Line_SetTextureScale(77, random(1.5, 2.0), random(1.5, 2.0), SIDE_FRONT, 2);
+	Line_SetTextureOffset(77, random(-128.0, 128.0), random(-128.0, 128.0), SIDE_FRONT, 2);
+	c_LineSet(77, "STATIC", SIDE_FRONT, 0, 0);
+}

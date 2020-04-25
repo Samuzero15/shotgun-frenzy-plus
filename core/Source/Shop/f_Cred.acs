@@ -1,0 +1,279 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_Cred.acs
+// credit management
+#library "f_Cred"
+
+#import "f_IntDB.acs"
+
+#import "f_Rank.acs"
+
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+
+
+
+// old credit hook - just to be sure
+
+//[Samu] Time for the Clientside rape!
+script 105 (int l_AmountSpecial, int l_SplatCombo, int l_NoSoundQue) CLIENTSIDE
+{
+	if(Human()){
+		if(IsActivatingClient()){
+		//if (l_NoSoundQue == 0)	{localambientsound("p/kill", 125);}
+		
+		if(l_AmountSpecial == 99){ // Coin pickup
+		 NamedRequestScriptPuke("SF_Net_AddCredits", 5, PlayerNumber());
+		 ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, 5, CR_Gold);
+		 NamedRequestScriptPuke("SF_Net_AddTeamCredits", 25);
+		}else p_monsterKilled(1, 0, false);
+		}
+	}
+}
+
+script "SF_Net_AddCredits" (int l_AmountSpecial, int who) NET{
+	sf_AddCredits_S(l_AmountSpecial, who);
+}
+
+script "SF_Net_AddTeamCredits" (int l_AmountSpecial) NET{
+	sf_AddTeamCredits(l_AmountSpecial);
+}
+
+script "SF_Net_KillRewardCredits" (int monster, int splat) NET{
+	p_monsterKilled(monster, splat, false);
+}
+
+script "SF_SpawnADrone" (void){
+	int player = ActivatorTID();
+	if(playerNumber() == -1){ 
+		giveinventory("Inventory_SawDrone", 1);
+		terminate;
+	}
+	int drone = UniqueTID(10000 + 100*playernumber());
+	print(d:player, s:" ", d:drone);
+	Spawn("sf_SawDrone", GetActorX(player), GetActorY(player), 50.0, drone, 0);
+	SetActivator(drone);
+	SetActorProperty(drone, APROP_MasterTID, player);
+	//SetActorProperty(player, APROP_TracerTID, drone);
+	//debugTidPointers(player);
+	debugTidPointers(drone);
+	//debugTidPointersStrings(player);
+	debugTidPointersStrings(drone);
+	
+}
+
+script "SF_Checc" (void){
+	debugTidPointers(ActivatorTID());
+	debugTidPointersStrings(ActivatorTID());
+	
+}
+script "SF_UniqueDrone" (void){
+	setResultValue(UniqueTID(10000 + 100*playernumber()));
+}
+
+function void debugTidPointers (int debug){
+log(d:debug, s:") TAR:", d:GetActorProperty(debug, APROP_TargetTID), s:" MAS:", d:GetActorProperty(debug, APROP_MasterTID), s: " TRA:", d:GetActorProperty(debug, APROP_TracerTID) );
+}
+function void debugTidPointersStrings (int debug){
+log(s:GetActorClass(debug),
+ s:") TAR:", s:GetActorClass(GetActorProperty(debug, APROP_TargetTID)),
+ s:" MAS:", s:GetActorClass(GetActorProperty(debug, APROP_MasterTID)),
+ s: " TRA:", s:GetActorClass(GetActorProperty(debug, APROP_TracerTID)) );
+}
+
+
+// mmm: monster killed - give credits and exp
+
+//[Samu] Time for the Clientside rape!
+function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit)
+
+{
+ //debugTidPointers(ActivatorTID());
+ //debugTidPointersStrings(ActivatorTID());
+	//log(s:GetActorClass(0));
+	int l_Amount;
+	
+	if(monsterClass < 0){
+	monsterClass += 1;
+	// [Samu] It's killed by a drone!
+	// Let's give credits to the owner!
+		l_Amount = p_MonsterCredits[-monsterClass] + playercount();
+		l_Amount = l_Amount / 2; 
+		if(l_amount > 0)
+		sf_AddCredits_S(l_Amount, playerNumber());
+		
+		if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
+		localambientsound("p/kill", 64);
+	}
+
+	if(Human()){
+	if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
+		localambientsound("p/kill", 125);
+
+	l_Amount = p_MonsterCredits[monsterClass] + playercount();
+	// increase credit
+	
+	if(l_SplatCombo > 0){
+	l_Amount += l_Amount/2;
+	}
+	//print(d:l_Amount);
+
+	if(!noProfit)sf_AddCredits_S(l_Amount, playerNumber());
+ 
+	// message 
+	// [Samu] What they where thinking on mixing client and net scripts huh?
+	
+	// increase team credits
+
+	sf_AddTeamCredits(l_Amount);
+
+
+	// Processing Phase 1
+
+	if (GetTechFlag(TECH_PUMPP1))	c_Credits += 15;
+	
+	// Processing Phase 2
+	if (GetTechFlag(TECH_PUMPP2))	c_Credits += 15;
+	GiveInventory("PlayerKilledDemon",1);
+	
+	if(monsterClass < 0){ return; }
+	
+	// increase exp and combo
+	p_Exp[playernumber()] ++;
+	p_Combo[playernumber()] ++;
+    p_SplatCombo[playernumber()] += l_SplatCombo;
+
+
+  // increase rank
+
+  if (p_Exp[playernumber()] > 0)
+
+    for (int i = 0; i < NUM_RANKS; i++)
+      if (p_RankExp[i] == p_Exp[playernumber()] && p_RankExp[i] >= p_RankExp[p_Rank[playernumber()]+1])
+       {
+      p_IncreaseRank();
+          break;
+        }
+	}else{ // [Samu] 
+	// give a quarter part of the loot for everyone.
+	// dont grant any experience for that.
+		l_Amount = p_MonsterCredits[monsterClass] + playercount();
+		l_Amount = l_Amount/4;
+		if(l_amount > 0)
+			giveTipsToPlayers(l_Amount);
+	}
+} 
+
+ 
+
+
+// money bag
+
+script 855 (int l_Amount, int l_SplatCombo)
+{
+  
+  // increase credit
+   
+ sf_AddCredits(l_Amount, playerNumber());
+ //ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, l_Amount, CR_BLUE, 1);
+ print(s:"You got some money from the captain!");
+
+}
+
+
+// mmm: monster killed
+
+script 500 (int monsterID, int splat, int noProfit)
+
+{
+ // monster class
+  int monsterClass = sf_GetMonsterClass(MonsterID);
+
+ // drop reward item
+ int howMuch = p_MonsterCredits[monsterClass] + playercount();
+ int splatbonus = howmuch/2;
+ if(splat > 0)	howMuch += splatBonus;
+	p_dropItem(monsterClass);
+	//debugTidPointers (0);
+	//debugTidPointersStrings(0);
+  // give credits and xp
+	SetActivatorToTarget(0);
+	//if ((ClassifyActor(0) & ACTOR_Monster)) Print(s:"I am a monster.");
+	//print(d:noProfit);
+	if(noProfit){
+		p_monsterKilled(monsterClass, splat, true);
+	}else{
+		if(splat > 0){
+			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,howMuch, CR_BRICK);
+			p_monsterKilled(monsterClass, splat, false);
+		}else if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
+			//[Samu] My try to give you the half of amount if a saw drone kills a monster.
+			//The math is simple.
+			//1/00/00
+			//Type of Drone/Player number/Number Of Drone
+			
+			// I'll hope to do not encounter a player spamming to 100 and more drones.
+			int owner = ((ActivatorTID() / 100) % 100);
+			//log(s:"Died by a saw drone. With tid: ", d:ActivatorTid());
+			//log(s:"Owned by: ", n:owner+1,s:" ", d:owner); 
+			// Attempting to retrive the owner of this drone.
+			setActivatorToPlayer(owner);
+			
+			ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0,howMuch/2, CR_Blue);
+			p_monsterKilled_Drone(monsterClass);
+		}//It's a glitch but... sometimes they can grant you experience.
+		// Not a big deal imo.
+		else{
+		ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,howMuch, CR_GREEN);
+		p_monsterKilled(monsterClass, splat, false);
+		}
+	}
+}
+
+function void p_monsterKilled_Drone(int monsterClass)
+{
+	int l_Amount;
+	
+	// [Samu] It's killed by a drone!
+	// Let's give credits to the owner!
+		l_Amount = p_MonsterCredits[monsterClass] + playercount();
+		l_Amount = l_Amount / 2; 
+		if(l_amount > 0)
+		sf_AddCredits_S(l_Amount, playerNumber());
+		
+		if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
+		localambientsound("p/kill", 64);
+} 
+
+
+
+
+// mmm: drop reward item on monster death
+
+
+function void p_dropItem(int monsterClass)
+{
+
+// probability of dropping item
+	//[Samu] Alright, im doing this just for the sake of refactoring!
+	
+  // loop through rewards for this monster class (max 4 rewards)
+  int chance = p_MonsterItem[monsterClass];
+  if (random(0, 100) > chance)return; 
+  
+  str type = "";
+  for (int i = 0; i < NUM_MONSTER_REWARDS; i++)
+    {
+	 
+	 chance = getMonsterChanceToDrop(monsterClass, i);
+	 if (random(0, 100) > chance) continue;
+	 
+	 Spawn(getMonsterItem(monsterClass, i), GetActorX(0) + random(0, 10),
+        GetActorY(0) + random(0, 10),
+        GetActorFloorZ(0) + 10);
+	}
+}
+  

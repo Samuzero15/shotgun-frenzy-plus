@@ -1,0 +1,211 @@
+ACTOR marker_demonspawn : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  +NOCLIP
+  +NOCLIP
+  +INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK01 A -1
+    Stop
+  }
+}
+
+ACTOR marker_battery : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  +NOCLIP
+  //+INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK05 A 5
+    goto Spawn
+  }
+}
+
+ACTOR marker_core : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  +NOCLIP
+  +INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK20 A 5
+    goto Spawn
+  }
+}
+
+ACTOR marker_demoncore : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  +NOCLIP
+  +INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK21 A 5
+    goto Spawn
+  }
+}
+
+ACTOR attack_f
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  Scale 1.5
+  renderstyle add
+  States
+  {
+  Spawn:
+    MK06 A 1 A_FadeOut(0.1)
+    goto spawn
+  }
+}
+
+ACTOR marker_object_attack : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  //+INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK06 A 0
+    MK06 A 1 acs_execute(142, 0, 143, 0, 0)
+  Reveal:
+    MK06 AA 5 A_SpawnItemEx("attack_f", 0)
+    goto Reveal
+  }
+}
+
+ACTOR marker_object_defend_f
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  Scale 1.5
+  renderstyle add
+  States
+  {
+  Spawn:
+    MK07 A 1 A_FadeOut(0.1)
+    goto Spawn
+  }
+}
+
+ACTOR marker_object_defend : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  //+INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK06 A 0
+    MK06 A 0 acs_execute(142, 0, 144, 0, 0)
+  Reveal:
+    MK07 AA 5 A_SpawnItemEx("marker_object_defend_f",0)
+    goto Reveal
+  }
+}
+
+ACTOR marker_object_construct_f
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  Scale 1.5
+  renderstyle add
+  States
+  {
+  Spawn:
+    MK08 A 1 A_FadeOut(0.1)
+    goto Spawn
+  }
+}
+
+ACTOR marker_object_construct : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  //+INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK06 A 0
+    MK06 A 0 acs_execute(142, 0, 145, 0, 0)
+  Reveal:
+    MK08 AA 5 A_SpawnItemEx("marker_object_construct_f",0)
+    goto Reveal
+  }
+}
+
+ACTOR marker_object_regroup_f
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  Scale 1.5
+  renderstyle add
+  States
+  {
+  Spawn:
+    MK09 A 1 A_FadeOut(0.1)
+    goto Spawn
+  }
+}
+
+ACTOR marker_object_regroup : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  //+INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK06 A 0
+    MK06 A 0 acs_execute(142, 0, 146, 0, 0)
+  Reveal:
+    MK09 AA 5 A_SpawnItemEx("marker_object_regroup_f",0)
+    goto Reveal
+  }
+}
+
+ACTOR marker_enemy : MapMarker
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +DONTSPLASH
+  +INVISIBLE
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MK15 A 1 A_FadeOut(0.1)
+    goto Spawn
+  }
+}

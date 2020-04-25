@@ -1,0 +1,216 @@
+ACTOR Quadshot : Weapon
+{
+	Weapon.AmmoUse1 		4
+	Weapon.AmmoUse2 		1
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType1		"Shell"
+	Weapon.AmmoType2		"Shell"
+	Inventory.PickupMessage		"You got the Quadshot!"
+	Obituary			"%o eats %k's Quadshot shells."
+	
+	Weapon.UpSound			"w4/load"
+	AttackSound			"w2/fire"
+	
+	tag "Chain-Shell Quadshot SB9"
+	Weapon.selectionorder 3000
+	States
+	{
+		Ready:
+			W4E1 A 1 A_WeaponReady
+			goto Ready
+		Deselect:
+			W4E1 A 1 A_Lower
+			W4E1 A 0 A_Lower
+			goto Deselect
+		Select:
+			W4E1 A 1 A_Raise
+			W4E1 A 0 A_Raise
+			goto Select
+		Fire:
+			W4E1 A 3
+			W4E1 B 4
+			W4E1 C 5 bright A_FireBullets(3, 2, 28, 11, "BulletPuff_Standard")	// damage switched from 11 to 9
+			W4E1 A 17
+			W4E1 D 4 A_PlayWeaponSound("w4/load")
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 E 2
+			W4E1 A 17
+			W4E1 A 5 A_Refire
+			goto Ready
+		AltFire:
+			W4E1 A 7
+			W4E1 AB 1
+			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")	// damage switched from 11 to 9
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			
+			W4E1 AB 1
+			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			
+			W4E1 AB 1
+			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			
+			W4E1 AB 1
+			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			
+			W4E1 A 2
+			W4E1 D 4 A_PlayWeaponSound("w4/load")
+			
+			W4E1 E 2
+			W4E1 A 20
+			W4E1 A 0 A_Refire
+			goto Ready
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
+	}
+}
+
+ACTOR Quadshot_Full : Weapon
+{
+	Weapon.AmmoUse 			4
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Shell"
+	Inventory.PickupMessage		"You got the Combat Quadshot!"
+	Obituary			"%o eats %k's Quadshot shells, which was also upgraded with a Bayonet Chainsaw."
+	
+	Weapon.ReadySound		"weapons/sawidle"
+	Weapon.UpSound			"weapons/sawup"
+	AttackSound			"w2/fire"
+	DamageType			MarineFire
+	tag "Combat Chain-Shell Quadshot SB9"
+	Weapon.selectionorder 3000
+	States
+	{
+		Ready:
+			W4E3 A 1 A_WeaponReady
+			goto Ready
+		Deselect:
+			W4E3 A 1 A_Lower
+			W4E3 A 0 A_Lower
+			goto Deselect
+		Select:
+			W4E3 A 1 A_Raise
+			W4E3 A 0 A_Raise
+			goto Select
+		Fire:
+			W4E3 A 3
+			W4E3 B 4
+			W4E3 C 5 bright A_FireBullets(3, 2, 20, 12, "BulletPuff_Explosive")	// from 15 to 11
+			W4E3 A 7
+			W4E3 D 5 A_PlayWeaponSound("w4/load")
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 E 3
+			W4E3 A 7
+			W4E3 A 5 A_Refire
+			goto Ready
+		AltFire:
+			W4E2 DE 2 A_Saw("weapons/sawfull", "weapon/sawhit", 20, "Saw_Spread")
+			W4E2 E 0 A_Refire
+			W4E2 CBA 3
+			goto Ready
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
+	}
+}
+
+/*
+ACTOR Quadshot_Bayonet : Weapon
+{
+	Weapon.AmmoUse 			4
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Shell"
+	Inventory.PickupMessage		"You got the Quadshot, upgraded with a Bayonet Chainsaw!"
+	Obituary			"%o eats %k's Quadshot shells, which was also upgraded with a Bayonet Chainsaw."
+	
+	Weapon.ReadySound		"weapons/sawidle"
+	Weapon.UpSound			"weapons/sawup"
+	AttackSound			"w2/fire"
+	DamageType			MarineFire
+	
+	States
+	{
+		Ready:
+			W4E1 A 1 A_WeaponReady
+			goto Ready
+		Deselect:
+			W4E1 A 1 A_Lower
+			W4E1 A 0 A_Lower
+			goto Deselect
+		Select:
+			W4E1 A 1 A_Raise
+			W4E1 A 0 A_Raise
+			goto Select
+		Fire:
+			W4E1 A 3
+			W4E1 B 4
+			W4E1 C 5 bright A_FireBullets(3, 2, 28, 11, "BulletPuff_Standard")	// damage switched from 11 to 9, to 7
+			W4E1 A 7
+			W4E1 D 4 A_PlayWeaponSound("w4/load")
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 E 2
+			W4E1 A 7
+			W4E1 A 5 A_Refire
+			goto Ready
+		AltFire:
+			W4E2 DE 2 A_Saw("weapons/sawfull", "weapon/sawhit", 20, "Saw_Spread")
+			W4E2 E 0 A_Refire
+			W4E2 CBA 3
+			goto Ready
+	}
+}
+
+ACTOR Quadshot_Explosive : Weapon
+{
+	Weapon.AmmoUse 			4
+	Weapon.AmmoGive 		8
+	Weapon.AmmoType			"Shell"
+	Inventory.PickupMessage		"You got the Quadshot, upgraded with Explosive Shells!"
+	Obituary			"%o eats %k's Explosive Quadshot shells."
+	
+	Weapon.UpSound			"w4/load"
+	AttackSound			"w2/fire"
+	
+	States
+	{
+		Ready:
+			W4E3 A 1 A_WeaponReady
+			goto Ready
+		Deselect:
+			W4E3 A 1 A_Lower
+			W4E3 A 0 A_Lower
+			goto Deselect
+		Select:
+			W4E3 A 1 A_Raise
+			W4E3 A 0 A_Raise
+			goto Select
+		Fire:
+			W4E3 A 3
+			W4E3 B 4
+			W4E3 C 5 bright A_FireBullets(3, 2, 20, 12, "BulletPuff_Explosive")	// from 15 to 11
+			W4E3 A 7
+			W4E3 D 5 A_PlayWeaponSound("w4/load")
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 E 3
+			W4E3 A 7
+			W4E3 A 5 A_Refire
+			goto Ready
+	}
+}*/

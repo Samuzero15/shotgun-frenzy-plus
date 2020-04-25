@@ -1,0 +1,32 @@
+
+#include "samut_cgnsf_panels.acs"
+
+function int SamuTerm_AddPanel(int x, int y, int wx8, int hx8){
+	int i = pancount;
+	
+	int fw = 16.0 + (8.0*wx8);
+	int fh = 16.0 + (8.0*hx8);
+	
+	print(s:StrSfPfFixed("Width: ", fw, " pixels"), s:" ", s:StrSfPfFixed("Height: ", fh, " pixels"));
+	
+	if(i < ST_NCOMPS){
+		int rect = RectCreate(x,y,fw,fh);
+		setPanelRect(i,rect);
+		
+		str back = generateSizedButton(wx8, hx8);
+		setPanelBack(i, back);
+		
+		Panel_SetDefaultProps(i);
+	pancount++;
+	}else print(s:"No more panels to add!");
+	
+	return i;
+}
+
+
+function void Panel_SetDefaultProps(int i){
+		setPanelColor(i,CR_WHITE);
+		setPanelShow(i,true);
+		setPanelTag(i,0);
+		setPanelHudId(i, ST_HID_PAN + i);
+}

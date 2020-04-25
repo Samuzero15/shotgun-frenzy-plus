@@ -1,0 +1,468 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// f_Tip.acs
+// displays quick tips onscreen
+
+// ************************** CLIENTSIDE HUDMESSAGE SCRIPTS **************************
+
+
+
+// ***********************************************************************************
+#library "f_Tip"
+#import "f_IntDB.acs"
+#import "fl_price.acs"
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
+{
+    // local containers
+    int l_Position;
+    int l_ID;
+    int l_TipQue_Selection;
+    
+    // setup position
+    if (p_TipQue[0] == 0)               { l_Position = 100.1;   l_ID = 51; p_TipQue[0] ++; l_TipQue_Selection = 0; }
+    else if (p_TipQue[1] == 0)          { l_Position = 140.1;   l_ID = 54; p_TipQue[1] ++; l_TipQue_Selection = 1; }
+    else if (p_TipQue[2] == 0)          { l_Position = 180.1;   l_ID = 57; p_TipQue[2] ++; l_TipQue_Selection = 2; }
+    else if (p_TipQue[3] == 0)          { l_Position = 220.1;   l_ID = 60; p_TipQue[3] ++; l_TipQue_Selection = 3; }
+    else if (p_TipQue[4] == 0)          { l_Position = 260.1;   l_ID = 63; p_TipQue[4] ++; l_TipQue_Selection = 4; }
+    else if (p_TipQue[5] == 0)          { l_Position = 300.1;   l_ID = 66; p_TipQue[5] ++; l_TipQue_Selection = 5; }
+    else if (p_TipQue[6] == 0)          { l_Position = 340.1;   l_ID = 69; p_TipQue[6] ++; l_TipQue_Selection = 6; }
+    else if (p_TipQue[7] == 0)          { l_Position = 380.1;   l_ID = 72; p_TipQue[7] ++; l_TipQue_Selection = 7; }
+    else                                { l_Position = 420.1;   l_ID = 75; p_TipQue[8] ++; l_TipQue_Selection = 8; }        // always override last message
+    
+    // audio
+    ambientsound("patch/newmessage", 56);
+    
+    // setup appearence
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    setfont(l_Image);
+    hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+    
+    // display text
+    setfont("CONFONT");
+    
+    switch (l_Type)
+    {
+        case 0:
+            hudmessagebold(s:l_Text1; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+            hudmessagebold(s:"\n", s:l_Text2; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+            break;
+        case 1:
+            hudmessagebold(s:l_Text1; 1, l_ID + 1, CR_BLUE, 64.1, l_Position, 3.0);
+            hudmessagebold(s:"\n", s:l_Text2; 1, l_ID + 2, CR_BLUE, 64.1, l_Position, 3.0);
+            break;
+        case 2:
+            hudmessagebold(s:l_Text1; 1, l_ID + 1, CR_GREEN, 64.1, l_Position, 3.0);
+            hudmessagebold(s:"\n", s:l_Text2; 1, l_ID + 2, CR_GREEN, 64.1, l_Position, 3.0);
+            break;
+        case 9:
+            hudmessagebold(s:l_Text1; 1, l_ID + 1, CR_RED, 64.1, l_Position, 3.0);
+            hudmessagebold(s:"\n", s:l_Text2; 1, l_ID + 2, CR_BRICK, 64.1, l_Position, 3.0);
+            break;
+        case 10:
+            hudmessagebold(n:0, s:l_Text1; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+            hudmessagebold(s:"\n", s:l_Text2; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+            break;
+        
+    }
+    
+    // run the subtraction script
+    if (l_Type == 11)            acs_executealways(160, 0, l_Position, l_TipQue_Selection, l_ID);        // genetics lab
+    else if (l_Type == 12)       acs_executealways(161, 0, l_Position, l_TipQue_Selection, l_ID);        // armory
+    else if (l_Type == 13)       acs_executealways(162, 0, l_Position, l_TipQue_Selection, l_ID);        // marine command
+    else if (l_Type == 14)       acs_executealways(163, 0, l_Position, l_TipQue_Selection, l_ID);        // refinery
+    else if (l_Type == 15)       acs_executealways(164, 0, l_Position, l_TipQue_Selection, l_ID);        // demonic lab
+    else if (l_Type == 16)       acs_executealways(165, 0, l_Position, l_TipQue_Selection, l_ID);        // nuclear silo
+    else if (l_Type == 17)       acs_executealways(166, 0, l_Position, l_TipQue_Selection, l_ID);        // ion cannon charge
+    else if (l_Type == 18)       acs_executealways(167, 0, l_Position, l_TipQue_Selection, l_ID);        // pulse rage charge
+    else if (l_Type == 19)       acs_executealways(168, 0, l_Position, l_TipQue_Selection, l_ID);        // other core stuff
+    else                         acs_executealways(150, 0, 3, l_TipQue_Selection, 0);                    // normal tip timing
+}
+
+function void f_CenterTip (str l_Tip)
+{
+    // setup appearence
+    setfont("CONFONT");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    hudmessage(s:l_Tip; 1, 78, CR_WHITE, 400.0, 400.1, 1.0);
+}
+
+function void f_CenterTipQuick (str l_Tip)
+{
+    // setup appearence
+    setfont("CONFONT");
+    sethudsize(640, 480, s_ScreenSize[2]);
+    hudmessage(s:l_Tip; 1, 78, CR_RED, 320.0, 330.1, 0.1);
+}
+
+function void f_CenterTipBold (str l_Tip)
+{
+    // setup appearence
+    setfont("CONFONT");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    hudmessageBold(s:l_Tip; 1, 78, CR_WHITE, 400.0, 400.1, 1.0);
+}
+
+function void f_SmallTip (str l_Tip, int color, int id)
+{
+    // setup appearence
+    setfont("CONFONT");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    hudmessage(s:l_Tip; 1, 0, color, 400.0, 400.1+ 10.0*id, 0.5);
+}
+
+// remove message after waiting period
+script 150 (int l_Delay, int l_TipQue_Selection)
+{
+	SetActivator(0); //Preventing a major disaster
+    // delay before restoring
+    delay(35 * l_Delay);
+    p_TipQue[l_TipQue_Selection] --;
+}
+
+// genetics lab construction
+script 160 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    ambientsound("cv/genetics1", 125);
+    
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("BUTTON");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Genetics Lab Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(5);//5
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // build structure
+    acs_execute(200, 0, 0, 0, 0);
+    ambientsound("cv/genetics2", 125);
+    
+}
+
+// armory construction
+script 161 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    ambientsound("cv/armory1", 125);
+    
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("BUTTON");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Armory Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(5);//5
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // build structure
+    acs_execute(250, 0, 0, 0, 0);
+    ambientsound("cv/armory2", 125);
+    
+}
+
+// marine command construction (NOW MECH FACTORY)
+script 162 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    ambientsound("cv/dem1", 125);
+    
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("BUTTON");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Mech Factory Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(10);       // 10
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // build structure
+    acs_execute(300, 0, 0, 0, 0);
+    ambientsound("cv/dem2", 125);
+	
+    
+}
+
+// refinery construction
+script 163 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    ambientsound("cv/refinery1", 125);
+    
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("BUTTON");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Refinery Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(15);//15
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // build structure
+    acs_execute(350, 0, 0, 0, 0);
+    ambientsound("cv/refinery2", 125);
+	
+    
+}
+
+// demonic lab construction (NOW MARINE COMMAND)
+script 164 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    //ambientsound("cv/dem1", 125);
+	ambientsound("cv/mcom1", 125);
+    
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("BUTTON");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Marine Command Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(15);  // 15
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // build structure
+    acs_execute(400, 0, 0, 0, 0);
+    //ambientsound("cv/dem2", 125);
+	ambientsound("cv/mcom2", 125);
+	
+    
+}
+
+// nuclear silo construction
+script 165 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    ambientsound("cv/nsilo1", 125);
+    
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("BUTTON");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Nuclear Silo Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(30); //30
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // build structure
+    acs_execute(450, 0, 0, 0, 0);
+    ambientsound("cv/nsilo2", 125);
+	
+    
+}
+
+// ion cannon charge
+script 166 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("CM79");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Ion Cannon Charging..."; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(50);
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // re enable the ion cannon
+	SetTechFlag(TECH_IONCAN, true);
+}
+
+// pulse rage charge
+script 167 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("CM78");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Core Charging..."; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(35);
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // re enable the pulse rage
+    c_Techflag[66] = 1;
+}
+
+// other charges
+script 168 (int l_Position, int l_TipQue_Selection, int l_ID)
+{
+	SetActivator(0); //Preventing a major disaster
+    // define a local variable
+    int l_Percent;
+    
+    // delay before subtracting from que position
+    while(l_Percent < 101)
+    {
+        // display message and image
+        setfont("CM78");
+        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
+        
+        setfont("CONFONT");
+        hudmessagebold(s:"Core Charging..."; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
+        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
+        
+        // increase percent
+        l_Percent ++;
+        
+        delay(35);
+    }
+    p_TipQue[l_TipQue_Selection] --;
+    
+    // re enable the core stuff
+    c_Techflag[66] = 0;
+}
+
+// screen flash
+script 126 (int l_Colour)
+{
+    sethudsize(64, 128, 0);
+    
+    if (l_Colour == 1)
+    {
+        setfont("FBLUE");
+    }
+    else if (l_Colour == 2)
+    {
+        setfont("FWHITE");
+    }
+    else
+    {
+        setfont("FBLUE");
+        hudmessage(s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, 0.5);
+        terminate;
+    }
+    
+    hudmessagebold(s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, 0.5);
+    
+}
+
+script 129 (int l_TextType, int l_StartTime)
+{
+    while(l_StartTime > 0){
+        sethudsize(800, 600, 0);
+        setfont("INFO");
+        hudmessagebold(s:"a"; HUDMSG_FADEOUT, 322, CR_WHITE, 300.0, 320.0, 2.0);
+        ambientsound("beep", 125);
+        setfont("CONFONT");
+        switch(l_TextType){
+            case 0:
+                hudmessagebold(d:l_StartTime, s:" second(s)"; HUDMSG_FADEOUT, 321, CR_WHITE, 400.0, 320.0, 2.0);    break;
+            case 1:
+                hudmessagebold(s:"Doors opening in...\n", d:l_StartTime, s:" second(s)"; HUDMSG_FADEOUT, 321, CR_WHITE, 400.0, 320.0, 2.0);    break;
+        }
+        delay(35);
+        l_StartTime -= 1;
+    }
+}  

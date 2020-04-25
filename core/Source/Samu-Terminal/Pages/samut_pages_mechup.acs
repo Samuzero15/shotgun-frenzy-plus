@@ -1,0 +1,266 @@
+
+int mechpage_vars[50];
+
+#define MECHPAGE_NCOMPGROUP 4
+#define MECHPAGE_NPRIVARS 15
+
+function void MechUpPage_Update(int pageTag){
+	setPageTitle(pageTag, "Mecha Factory Terminal", CR_CYAN);
+	if(isOnTheSamePage(pageTag)){
+		mechpage_vars[49] = 0;
+		//MechUpPage_UpdateStats();
+		
+		MechUpPage_UpdateComps(1);
+		MechUpPage_UpdateComps(2);
+		MechUpPage_UpdateComps(3);
+		MechUpPage_UpdateComps(4);
+		MechUpPage_UpdateComps(5);
+	
+		if(!CheckInventory("Mech_State")){
+			Label_setText(mechpage_vars[3], strparam(s:"Cost: ", d:checkInventory("Mech_Buy"), s:" $") );
+			setStrButtonShow(mechpage_vars[4], false);
+			setImageFile(mechpage_vars[6], "MECHANO");
+		}else{
+			Label_SetShow(mechpage_vars[3], false);
+			setStrButtonShow(mechpage_vars[2], false);
+			
+			if(CheckInventory("Mech_State") == 99){
+				Label_SetShow(mechpage_vars[5], true);
+				setImageFile(mechpage_vars[6], "MECHANO");
+				setStrButtonShow(mechpage_vars[4], false);
+			}else{
+				Label_SetShow(mechpage_vars[5], false);
+				setImageFile(mechpage_vars[6], "MECHAYES");
+				setStrButtonShow(mechpage_vars[4], true);
+			}
+		}
+	}
+}
+
+//This will initialize the page components.
+function void MechUpPage_Init(int pageTag){
+	int i;
+	
+	mechpage_vars[0] = pageTag;
+	Card_SetPosition(260.0,90.0);
+	Card_SetCells(8);
+	Card_SetStep(35.0);
+	Card_SetVerticalOri(true);
+	mechpage_vars[1] = Card_Generate();
+	
+	i = StrButton_AddMid(320.0, 240.0, " Pursache a War Mech ");
+	setStrButtonColor(i, CR_CYAN);
+	setStrButtonTag(i, pagetag);
+	setStrButtonExecute(i, STEXE_BUYMECHTANK);
+	mechpage_vars[2] = i;
+	
+	i = Label_Add(320.0, 280.0);
+	Label_setText(i, "$");
+	Label_setFont(i, "StatBigs");
+	Label_setColor(i, CR_GOLD);
+	Label_setTag(i, pagetag);
+	mechpage_vars[3] = i;
+	
+	i = StrButton_AddMid(320.0, 380.0, " Enter the War Mech ");
+	setStrButtonColor(i, CR_CYAN);
+	setStrButtonTag(i, pagetag);
+	setStrButtonExecute(i, STEXE_ENTERMECHTANK);
+	mechpage_vars[4] = i;
+	
+	i = Label_Add(320.0, 380.0);
+	Label_setText(i, "Still on Repairing Protocols...");
+	Label_setFont(i, "StatBigs");
+	Label_setColor(i, CR_BRICK);
+	mechpage_vars[5] = i;
+	//PowBuyPage_SaveToGroup(powerup, 1, i);
+	
+	i = Image_Add(30.0,80.0, "MECHANO");
+	//setImageTag(i, pagetag);
+	setImageShow(i, true);
+	mechpage_vars[6] = i;
+	
+	//MechUpPage_InitStats();
+	
+	MechUpPage_AddComps(1, 1);
+	MechUpPage_AddComps(2, 2);
+	MechUpPage_AddComps(3, 3);
+	MechUpPage_AddComps(4, 4);
+	MechUpPage_AddComps(5, 5);
+	
+}
+
+function void MechUpPage_UpdateStats(void){
+	int naillv = CheckInventory(getMechUpActor(1));
+	int nailmax = getMechUpMax(1);
+	
+	int rocklv = CheckInventory(getMechUpActor(2));
+	int rockmax = getMechUpMax(2);
+	
+	int armorlv = CheckInventory(getMechUpActor(3));
+	int armormax = getMechUpMax(3);
+	
+	int speedlv = CheckInventory(getMechUpActor(4));
+	int speedmax = getMechUpMax(4);
+	//int naillv = CheckInventory(getMechUpActor(1));
+	//int naillv = CheckInventory(getMechUpActor(1));
+	//int naillv = CheckInventory(getMechUpActor(1));
+	//int naillv = CheckInventory(getMechUpActor(1));
+	
+	bool pursached = CheckInventory("Mech_State");
+	Label_setShow(mechpage_vars[8], pursached);
+	Label_setShow(mechpage_vars[9], pursached);
+	Label_setShow(mechpage_vars[10], pursached);
+	Label_setShow(mechpage_vars[11], pursached);
+	Label_setShow(mechpage_vars[12], pursached);
+	
+	Label_setText(mechpage_vars[12], 
+		strparam(s:"Speed: Lv.", s:(cond(speedlv > speedmax, "MAX", strparam(d:speedlv))))
+		);
+	
+	Label_setText(mechpage_vars[9], 
+		strparam(s:"Armor: Lv.", s:(cond(armorlv > armormax, "MAX", strparam(d:armorlv))))
+		);
+	
+	Label_setText(mechpage_vars[10], 
+		strparam(s:"Nails: Lv.", s:(cond(naillv > nailmax, "MAX", strparam(d:naillv))))
+		);
+		
+	Label_setText(mechpage_vars[11], 
+		strparam(s:"Rockets: Lv.", s:(cond(rocklv > rockmax, "MAX", strparam(d:rocklv))))
+		);
+	
+}
+
+function void MechUpPage_InitStats(void){
+	int i;
+	
+	Card_SetPosition(50.0, 100.0);
+	Card_SetCells(10);
+	Card_SetStep(10.0);
+	Card_SetVerticalOri(true);
+	mechpage_vars[7] = Card_Generate();
+
+	i = Label_Add(140.0, 80.0);
+	Label_setText(i, "Your Mecha Stats:");
+	Label_setFont(i, "StatBigs");
+	Label_setColor(i, CR_WHITE);
+	mechpage_vars[8] = i;
+	
+	i = Label_AddCard(mechpage_vars[6], 1);
+	Label_setFont(i, "Confont");
+	Label_setColor(i, CR_Cream);
+	Label_setAligns(i, Hud_Align_Left, Hud_Align_CENTER);
+	Component_SaveProps(Label_getRect(i));
+	mechpage_vars[9] = i;
+	
+	i = Label_AddCard(mechpage_vars[6], 2);
+	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	mechpage_vars[10] = i;
+	
+	i = Label_AddCard(mechpage_vars[6], 3);
+	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	mechpage_vars[11] = i;
+	
+	i = Label_AddCard(mechpage_vars[6], 4);
+	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	mechpage_vars[12] = i;
+}
+
+function void MechUpPage_UpdateComps(int upgrade){
+	bool pursached = CheckInventory("Mech_State");
+	
+	str name = getMechUpName(upgrade);
+	str desc = getMechUpDesc(upgrade);
+	str actor = getMechUpActor(upgrade);
+	int maxup = getMechUpMax(upgrade);
+	int price = getMechUpPrice(upgrade);
+	
+	bool showit = pursached && CheckInventory(actor) <= maxup;
+	
+	int i = MechUpPage_LoadFromGroup(upgrade, 1),
+		j = MechUpPage_LoadFromGroup(upgrade, 2),
+		k = MechUpPage_LoadFromGroup(upgrade, 3), 
+		l = MechUpPage_LoadFromGroup(upgrade, 4);
+		
+	Label_setShow(i, showit);
+	Label_setShow(j, showit);
+	Label_setShow(k, showit);
+	setImgButtonShow(l, showit);
+	
+	if(showit) mechpage_vars[49]++;
+	else return;
+	int topping = mechpage_vars[49];
+	
+	bool isaffordable = GetPlayCredits() >= price;
+	// [Samu] Makes sense, you can't upgrade something that its already broken. 
+	if(CheckInventory("Mech_State") == 99){isaffordable = false;}
+	
+	Label_setColor(i, cond(isaffordable, CR_WHITE, CR_RED));
+	Label_setColor(j, cond(isaffordable, CR_Green, CR_RED));
+	Label_setColor(k, cond(isaffordable, CR_Green, CR_RED));
+	setImgButtonImage(l, cond(isaffordable, "BTUP00", "BTNDEN"));
+	
+	Label_setText(i, cond(maxup != 0, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)), name));
+	Label_setText(j, strparam(d:price, s:" $"));
+	
+	Label_SetPosToCardOff(i, mechpage_vars[1], topping, 40.0, 2.0);
+	Label_SetPosToCardOff(j, mechpage_vars[1], topping, 40.0, 22.0);
+	Label_SetPosToCardOff(k, mechpage_vars[1], topping, 40.0, 12.0);
+	
+	ImgButton_SetPosToCard(l, mechpage_vars[1], topping);
+	
+}
+
+function void MechUpPage_AddComps(int upgrade,int cell){
+
+	int i;
+	
+	str name = getMechUpName(upgrade);
+	str desc = getMechUpDesc(upgrade);
+	str actor = getMechUpActor(upgrade);
+	int maxup = getMechUpMax(upgrade);
+	str price = getMechUpPrice(upgrade);
+	
+	
+	i = ImgButton_AddCard(mechpage_vars[1], cell, 32.0, 32.0);
+	SetImgButtonImage(i, "BTUP00");
+	SetImgButtonHoverImage(i, "btnhov");
+	SetImgButtonTag(i, mechpage_vars[0]);
+	SetImgButtonExecute(i, STEXE_UPGMECHTANK);
+	SetImgButtonArgs(i, upgrade, 0 ,0);
+	MechUpPage_SaveToGroup(upgrade, 4, i);
+	
+	i = Label_AddCardOff(mechpage_vars[1], cell, 40.0, 2.0);
+	if(maxup == 0)	Label_setText(i, name);
+	else			Label_setText(i, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)));
+	Label_setFont(i, "StatBigs");
+	Label_setTag(i, mechpage_vars[0]);
+	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_setColor(i, CR_WHITE);
+	Component_SaveProps(Label_getRect(i));
+	MechUpPage_SaveToGroup(upgrade, 1, i);
+	
+	i = Label_AddCardOff(mechpage_vars[1], cell, 40.0, 20.0);
+	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	Label_setText(i, strparam(d:price, s:" $"));
+	Label_setColor(i, CR_GREEN);
+	Component_SaveProps(Label_GetRect(i));
+	MechUpPage_SaveToGroup(upgrade, 2, i);
+	
+	i = Label_AddCardOff(mechpage_vars[1], cell, 40.0, 12.0);
+	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	Label_setText(i, desc);
+	Label_setFont(i, "Confont");
+	MechUpPage_SaveToGroup(upgrade, 3, i);
+	
+	
+	
+}
+
+function void MechUpPage_SaveToGroup(int up, int id, int comp){
+	mechpage_vars[MECHPAGE_NCOMPGROUP * up + MECHPAGE_NPRIVARS + (id-1)] = comp;
+}
+
+function int MechUpPage_LoadFromGroup(int up, int id){
+	return mechpage_vars[MECHPAGE_NCOMPGROUP * up + MECHPAGE_NPRIVARS + (id-1)];
+}

@@ -1,0 +1,147 @@
+int armit_comp[20][2][5];
+int armit_caps[20][2];
+int armit_gpos[18][2];
+int armit_top;
+
+function void UpdateArmItemsPage(int pageTag){
+	setPageTitle(pageTag, "More items", CR_GOLD);
+	if(isOnTheSamePage(pageTag)){
+		for(int i = 4; i <= 14; i++){
+			ArmsItemsPage_UpdateItem(i);
+		}
+	}
+	else;
+}
+
+
+function void InitArmItemsPage(int pageTag){
+	ArmItemsPage_InitGrid(285.0, 50.0);
+	ArmItemsPage_Purge();
+		pcolor = CR_BLUE;
+		for(int i = 4; i <= 14; i++){
+			if(i == 4) pcolor = CR_BLUE;
+			else if(i == 5) pcolor = CR_GREEN;
+			else if(i == 7) pcolor = CR_ORANGE;
+			else if(i == 12) pcolor = CR_DARKGREEN;
+			ArmItemsPage_AddItemOption(pageTag, i);
+		}
+		
+	armit_top = 0;
+}
+
+function void ArmItemsPage_AddItemOption(int pagetag, int itemId){
+	int i;
+	
+	int x = armit_gpos[armit_top][0];
+	int y = armit_gpos[armit_top][1];
+	armit_top++;
+	//[Samu] recycling biatch!
+	
+	i = Label_Add(x + cond(armit_top-1 < 9, -8.0, 40.0),
+	y + 4.0); 
+	Label_setText(i, getItemName(itemId));
+	Label_setFont(i,"StatBigs");
+	Label_setShow(i, false);
+	Label_setAligns(i,cond(armit_top-1 < 9,HUD_ALIGN_RIGHT, HUD_ALIGN_LEFT),
+	HUD_ALIGN_TOP);
+	Label_setColor(i, pcolor);
+	Label_setTag(i, pageTag);
+	ArmItemsPage_Allocate(itemId, 0, i);
+	
+	i = ImgButton_Add(x,y, 32.0, 32.0); 
+	setImgButtonImage(i, getItemIcon(itemId));
+	setImgButtonShow(i, false);
+	setImgButtonTag(i, pageTag);
+	setImgButtonExecute(i, STEXE_ITEMBUY);
+	setImgButtonArgs(i, itemId, 0 ,0);
+	ArmItemsPage_Allocate(itemId, 1, i);
+	
+	i = Label_Add(x + cond(armit_top-1 < 9, -8.0, 40.0),y + 16.0); 
+	Label_setText(i, getItemDesc(itemId));
+	Label_setFont(i,"Confont");
+	Label_setShow(i, false);
+	Label_setAligns(i,cond(armit_top-1 < 9,HUD_ALIGN_RIGHT, HUD_ALIGN_LEFT),
+	HUD_ALIGN_TOP);
+	Label_setColor(i, pcolor);
+	Label_setTag(i, pageTag);
+	ArmItemsPage_Allocate(itemId, 0, i);
+	
+	i = Label_Add(x + cond(armit_top-1 < 9, -8.0, 40.0),y + 24.0); 
+	Label_setText(i, strParam(d:getItemPrice(itemId), s:" Credits"));
+	Label_setFont(i,"Confont");
+	Label_setShow(i, false);
+	Label_setAligns(i,cond(armit_top-1 < 9,HUD_ALIGN_RIGHT, HUD_ALIGN_LEFT),
+	HUD_ALIGN_TOP);
+	Label_setColor(i, pcolor);
+	Label_setTag(i, pageTag);
+	ArmItemsPage_Allocate(itemId, 0, i);
+	
+	i = Label_Add(x +  16.0,y + 30.0); 
+	Label_setText(i, 
+		strParam(
+			d:CheckInventory(getItemActor(itemId)),
+			s:"/",
+			d:getItemMax(itemId)
+			));
+	Label_setFont(i,"Confont");
+	Label_setShow(i, false);
+	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
+	Label_setColor(i, pcolor);
+	Label_setTag(i, pageTag);
+	ArmItemsPage_Allocate(itemId, 0, i);
+	
+}
+
+function void ArmItemsPage_Allocate(int slot, int compType, int c){
+	int toppy = armit_caps[slot][compType];
+	
+	armit_comp[slot][compType][toppy] = c;
+	
+	armit_caps[slot][compType] ++;
+}
+
+function void ArmItemsPage_Purge(void){
+	//if(armit_caps[0][0] != 0)
+	for(int i = 0; i < 20; i++){
+		armit_caps[i][0] = 0;
+		armit_caps[i][1] = 0;
+		armit_comp[i][0][0] = 0;
+		armit_comp[i][0][1] = 0;
+		armit_comp[i][0][2] = 0;
+		armit_comp[i][0][3] = 0;
+		armit_comp[i][1][0] = 0;
+	}
+}
+
+function void ArmItemsPage_InitGrid(int x, int y){
+int stepy = 38.0;
+	int gx, gy;
+	int count = 0;
+	int slots = 18;
+	while(count < slots){
+		gx = x;
+		gy = y + stepY * count;
+		if(count >= slots/2){
+			gx = 50.0 + x;
+			gy = y + stepY * (count-(slots/2));
+		}
+		armit_gpos[count][0] = gx;
+		armit_gpos[count][1] = gy;
+		
+		//log(d:count, s:")Grid Pos x: ", f:armit_gpos[count][0],s:" y: ", f:armit_gpos[count][1]);
+		
+		count++;
+	}
+}
+
+function void ArmsItemsPage_UpdateItem(int itemId){
+	int i = armit_comp[itemId][0][3]; // The amount of items.
+	
+	int quantity = Checkinventory(GetItemActor(itemid));
+	int maximum = GetItemMax(itemid);
+	
+	if(quantity == maximum)
+		Label_setText(i, "Max!");
+	else
+		Label_setText(i, StrParam(d:quantity, s:"/",d:maximum));
+}

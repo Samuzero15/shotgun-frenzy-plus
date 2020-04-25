@@ -1,0 +1,24 @@
+#library "f_Battr"
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+#include "zcommon.acs"
+
+
+// f_Battr.acs
+// sector battery setup
+
+// battery warnings
+script 111 (int l_Type)
+{
+    // battery
+    if (l_Type == 0)
+    {
+        f_CenterTipBold("Battery Under Attack!");
+    }
+    
+    // core
+    if (l_Type == 1)
+    {
+        f_CenterTipBold("Core Under Attack!");
+    }
+}

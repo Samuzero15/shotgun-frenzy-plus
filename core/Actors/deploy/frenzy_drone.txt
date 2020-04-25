@@ -1,0 +1,132 @@
+
+Actor sf_Drone{
+
+	painchance 180
+	radius 8
+	height 8
+	scale 0.7
+	mass 400
+	DamageType "MarineFire"
+	damagefactor "MarineFire", 0.0
+	damageFactor "MarineFire2", 0.0
+	DamageFactor "MarineFire3", 0.0
+    DamageFactor "BFGSplash", 0.0
+    DamageFactor "BFGSpray", 0.0
+	Species Marines
+	MONSTER
+	-isMonster
+	+FRIENDLY
+	+FLOORCLIP
+	+NEVERRESPAWN
+	+FORCERADIUSDMG
+	+NODAMAGETHRUST
+	
+	-NoBlockMap
+	+ThruSpecies
+	+MthruSpecies
+	
+	+LOOKALLAROUND
+	+NOBLOCKMONST
+}
+
+ACTOR sf_SawDrone : sf_Drone
+{
+	hitobituary "%o was shaved by a Saw Drone"
+	health 30
+	painchance 180
+	speed 8
+	seesound "p/drone_saw1"
+	activesound "p/drone_saw2"
+	attacksound "p/drone_saw3"
+	Tag "Deploy a single saw drone. It will attack demons with their blades."
+	+NoGravity
+	+FLOAT
+	+MISSILEMORE
+	+MISSILEEVENMORE
+	+DONTFALL
+	+QUICKTORETALIATE
+	
+	states
+	{
+		Spawn:
+			SAWD AB 4 A_Look
+			TNT1 A 0 ACS_NamedExecute("SF_Checc",0)
+			goto See
+		See:
+			SAWD A 0 A_PlaySound("p/drone_saw2",CHAN_VOICE)
+			SAWD A 4 A_Chase
+			SAWD B 4 A_Chase
+			TNT1 A 0 A_Look
+			goto See
+		Missile:
+			SAWD A 2 BRIGHT A_FaceTarget
+			SAWD B 2 BRIGHT A_SkullAttack(30)
+			goto Missile
+		Melee:
+			SAWD A 1 A_FaceTarget
+			SAWD B 1 A_SargAttack
+			goto See
+		Pain:
+			SAWD A 1
+			SAWD B 1 A_Pain
+			goto See
+		Death:
+			MISL B 8 bright A_Explode(50,64)
+			MISL C 6 bright
+			MISL D 4 bright
+			stop
+	}
+}
+
+ACTOR sf_MineDrone : sf_Drone
+{
+	hitobituary "%o was shaved by a Mine Drone"
+	health 5
+	speed 10
+	seesound "baby/sight"
+	painsound "baby/pain"
+	deathsound "baby/death"
+	activesound "baby/active"
+	Tag "Deploy a single mine drone. It will blow at the enemies with their cluster grenades."
+	states
+	{
+		Spawn:
+			MIND AB 1 A_Look
+			goto Spawn
+		See:
+			MIND A 0
+			MIND A 1 A_Chase
+			TNT1 A 0 A_Look
+			MIND A 1 A_Chase
+			TNT1 A 0 A_Look
+			MIND B 1 A_Chase
+			TNT1 A 0 A_Look
+			MIND B 1 A_Chase
+			TNT1 A 0 A_Look
+			goto See
+		Melee:
+			MIND A 0 A_FaceTarget
+			goto death
+		Pain:
+			MIND A 1
+			MIND B 1 A_Pain
+			goto See
+		Death:
+			MISL B 1 bright A_Explode(50,128,0,0,64)
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL C 6 bright
+			MISL D 4 bright
+			stop
+	}
+}

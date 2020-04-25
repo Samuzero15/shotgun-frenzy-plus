@@ -1,0 +1,132 @@
+///////////////////////////////////////////////////
+//	  SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// TW01_ACS
+// map script
+#library "tw01"
+
+// top priority
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+
+// minor
+#import "fc_AStr.acs"
+#import "fc_Comm.acs"
+#import "fc_Entr.acs"
+#import "f_ScManS.acs"
+#import "f_MonAtt.acs"
+#import "f_AIDRL.acs"
+#import "f_FinalF.acs"
+#import "f_PMen.acs"
+#import "f_PHUD.acs"
+#import "f_Rank.acs"
+#import "f_Cred.acs"
+#import "f_PStat.acs"
+#import "f_StokP.acs"
+#import "f_Battr.acs"
+//#import "f_TaticalMap.acs"
+#import "f_Core.acs"
+
+// load demon wave set, for custom sets look in the ACS directory for any fa files
+#import "fa_SSD01.acs"
+
+#include "zcommon.acs"
+
+//map setup
+script 91 OPEN
+{
+	// game settings
+	f_UseScoreSystem = 1;
+	f_Startcash =   2500;                   // player starting cash, 2500 is the default
+	c_Startcash =   5000;				   // starting cash for the commander (SF maps only)
+	f_Doortype =   1;					  // 0 is a normal door, 1 is a floor based door
+	f_Doorspeed =   50;					 // speed of the door opening, 50 is the default
+	f_GameLength =  18;					 // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime)
+	f_AISkillMultiplier = 10;			   // increase in levels, higher means harder (aka: the RapeFactor variable)
+
+	f_AdaptiveSpawning = 0;
+	f_Cacodemons = 0;
+
+        readconsole();
+
+	f_AllowNuke =   0;
+	f_AllowIon =	0;
+	// setup gametype value
+	f_Gametype =	1;
+	// setup techflags
+	//c_Techflag[1] = 1;
+	//c_Techflag[2] = 1;
+	//c_Techflag[26] = 1;
+	//c_Techflag[27] = 1;
+	f_SurvivalLastLevel = 11;
+}
+
+
+// wave door setup
+script 5 OPEN
+{
+	while(g_Status == 0)
+		delay(35);
+	g_Status = 5;
+	delay (35 * 15);
+	
+	// wave 1
+	newArea(0, 51);
+	while(m_SurvivalWave < 2)	   {delay(35 * 3);}
+	
+	// wave 2
+	newArea(1, 52);
+	while(m_SurvivalWave < 3)	   {delay(35 * 3);}
+	
+	// wave 3
+	newArea(2, 53);
+	while(m_SurvivalWave < 4)	   {delay(35 * 3);}
+	
+	// wave 4
+	newArea(3, 54);
+	while(m_SurvivalWave < 5)	   {delay(35 * 3);}
+	
+	// wave 5
+	newArea(5, 53);
+	f_TipShow("INFO", "WARNING!", "A new door has been breached to the main area! Defend it...", 0);
+	f_TipShow("INFO", "BACKUP TURRETS", "Deployed to assist...", 0);
+	spawnspot("TurretBullet", 69, 0, 0);
+	while(m_SurvivalWave < 6)	   {delay(35 * 3);}
+	
+	// wave 6
+	newArea(2, 54);
+	f_TipShow("INFO", "WARNING!", "A new door has been breached to the main area! Defend it...", 0);
+	while(m_SurvivalWave < 7)	   {delay(35 * 3);}
+	
+	// wave 7
+	while(m_SurvivalWave < 8)	   {delay(35 * 3);}
+	
+	// wave 8
+	while(m_SurvivalWave < 9)	   {delay(35 * 3);}
+	
+	// wave 9
+	newArea(1, 55);
+	f_TipShow("INFO", "WARNING!", "A new door has been breached to the main area! Defend it...", 0);
+	f_TipShow("INFO", "BACKUP TURRETS", "Deployed to assist...", 0);
+	spawnspot("TurretBullet", 70, 0, 0);
+	while(m_SurvivalWave < 10)	   {delay(35 * 3);}
+	
+	// wave 10
+	while(m_SurvivalWave < 11)	   {delay(35 * 3);}
+	
+	// wave 11
+	newArea(50, 56);
+	f_TipShow("INFO", "WARNING!", "A new door has been breached to the main area! Defend it...", 0);
+	f_TipShow("INFO", "FINAL WAVE", "", 0);
+	while(m_SurvivalWave < 12)   {delay(35 * 3);}
+}
+
+function void newArea(int door_tag, int thing_to_remove){
+	if (door_tag > 0){
+		floor_lowertolowest(door_tag, 10);
+	}
+	if (thing_to_remove > 0){
+		thing_remove(thing_to_remove);
+	}
+}

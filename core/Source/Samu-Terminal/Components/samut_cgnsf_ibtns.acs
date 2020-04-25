@@ -1,0 +1,141 @@
+
+
+////////////////////////////////////////
+// Getters from Image buttons!
+////////////////////////////////////////
+
+function int getImgButtonRect(int bid){ 
+	return comp_rects_many[STCOMP_IBTN][bid];
+}
+
+function int getImgButtonX1(int bid){
+	return RectX1(getImgButtonRect(bid));
+}
+
+function int getImgButtonY1(int bid){
+	return RectY1(getImgButtonRect(bid));
+}
+
+
+function int getIMGButtonWidth(int bid){
+	return RectWidth(getImgButtonRect(bid));
+}
+
+function int getIMGButtonHeight(int bid){
+	return RectHeight(getImgButtonRect(bid));
+}
+
+function int getImgButtonTag(int bid){
+	return RectGetUserData(GetImgButtonRect(bid), ST_CPROP0);
+}
+
+function str getImgButtonImage(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP1);
+}
+
+function str getImgButtonHoverImage(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP2);
+}
+
+function int getImgButtonShow(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP3);
+}
+
+function int getImgButtonExecute(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP4);
+}
+
+function int getImgButtonExeArg1(int bid){
+	return unpackByte1(RectGetUserData(getImgButtonRect(bid), ST_CPROP5));
+}
+
+function int getImgButtonExeArg2(int bid){
+	return unpackByte2(RectGetUserData(getImgButtonRect(bid), ST_CPROP5));
+}
+
+function int getImgButtonExeArg3(int bid){
+	return UnpackByte3(RectGetUserData(getImgButtonRect(bid), ST_CPROP5));
+}
+
+function int getImgButtonHudId(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP6);
+}
+
+function int getImgButtonExeHover(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP7);
+}
+
+function int getImgButtonHoverArg1(int bid){
+	return unpackByte1(RectGetUserData(getImgButtonRect(bid), ST_CPROP8));
+}
+
+function int getImgButtonHoverArg2(int bid){
+	return unpackByte2(RectGetUserData(getImgButtonRect(bid), ST_CPROP8));
+}
+
+function int getImgButtonHoverArg3(int bid){
+	return UnpackByte3(RectGetUserData(getImgButtonRect(bid), ST_CPROP8));
+}
+
+function int getImgButtonParent(int bid){
+	return RectGetUserData(getImgButtonRect(bid), ST_CPROP9);
+}
+
+///////////////////////////////////////
+// Setters for teh Image Buttons!
+///////////////////////////////////////
+
+function void setImgButtonRect(int bid, int rect){
+	comp_rects_many[STCOMP_IBTN][bid] = rect;
+}
+
+function void setImgButtonPosition(int bid, int x, int y){
+	SetRectPosition(GetImgButtonRect(bid), x, y);
+}
+
+function void setImgButtonDimensions(int bid, int w, int h){
+	SetRectSize(GetImgButtonRect(bid), w, h);
+}
+
+function void setImgButtonTag(int bid, int tag){
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP0, tag);
+}
+
+function void setImgButtonImage(int bid, str img){
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP1, img);
+}
+
+function void setImgButtonHoverImage(int bid, str img){
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP2, img);
+}
+
+function void setImgButtonShow(int bid, bool state){
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP3, state);
+}
+
+function void setImgButtonExecute(int bid, int execute){
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP4, execute);
+}
+
+function void setImgButtonArgs(int bid, int arg1, int arg2, int arg3){
+	int args = PackBytes(arg1, arg2, arg3, 0);
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP5, args);
+}
+
+function void setImgButtonHudId(int bid, int hid){
+	SetRectUserData(getImgButtonRect(bid), ST_CPROP6, hid);
+}
+
+
+function void setImgButtonExeHover(int bid, int execute){
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP7, execute);
+}
+
+function void setImgButtonArgsHover(int bid, int arg1, int arg2, int arg3){
+	int args = PackBytes(arg1, arg2, arg3, 0);
+	SetRectUserData(GetImgButtonRect(bid), ST_CPROP8, args);
+}
+
+function void setImgButtonParent(int bid, int parent){
+	SetRectUserData(getImgButtonRect(bid), ST_CPROP9, parent);
+}

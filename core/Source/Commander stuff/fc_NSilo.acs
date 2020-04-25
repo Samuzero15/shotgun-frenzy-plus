@@ -1,0 +1,170 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY
+//   a mod by Wad'a'Holic
+
+// fc_NuclearSilo.acs
+// structure scripts
+#library "fc_NSilo"
+
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+#import "fl_price.acs"
+#import "fc_Const.acs"
+#import "fc_CommB.acs"
+#import "f_AIDir.acs"
+
+#include "zcommon.acs"
+#include "samu_tools.acs"
+
+// build
+script 450 (void)
+{
+	SetActivator(0); //Preventing a major disaster
+    // construction
+    c_Construct (305, 240, 32, 0, "TEKWALL1", "", "");
+    c_Construct (306, 240, 160, 0, "TEKWALL1", "", "");
+    
+    // lower nuke
+    floor_lowerbyvalue		(307, c_ConstructSpeed, 1024);
+		
+    
+    // set techflag
+	SetBuildState(BUILD_NUKESY, BUILT);
+    
+    // refresh the commander menu
+    c_NewButton_Refresh();
+    
+    // constructed message
+    f_TipShow ("BUTTON", "Nuclear Silo", "Construction Complete!", 1);
+    
+    delay(35 * 2);
+    
+    // spawn nuke
+    spawnspot("Nuke", 137, 135, 0);
+}
+
+script 451 (void)
+{
+	SetActivator(0); //Preventing a major disaster
+    // start the nuclear launch
+    c_NukeLaunched = 1;
+    acs_execute(89, 0, 0, 0, 0);
+    Music_Change("D_BOSS", 1);
+    
+    acs_terminate(120, 0);
+    acs_terminate(100, 0);
+    acs_terminate(102, 0);
+    acs_terminate(103, 0);
+    acs_terminate(108, 0);
+    
+    // open all sectors
+    g_Status = 4;
+    thing_remove(101);
+    thing_remove(102);
+    thing_remove(103);
+    
+    // open doors/gates
+    if (f_Doortype == 0)
+    {
+        door_open(101, f_Doorspeed);
+        door_open(102, f_Doorspeed);
+        door_open(103, f_Doorspeed);
+        door_open(104, f_Doorspeed);
+    }
+    else
+    {
+        floor_lowertonearest(101, f_Doorspeed);
+        floor_lowertonearest(102, f_Doorspeed);
+        floor_lowertonearest(103, f_Doorspeed);
+        floor_lowertonearest(104, f_Doorspeed);
+    }
+    
+    // raise nuke sprite
+    floor_raisebyvalue		(307, 1, 1024);
+    
+	delay(35);
+	
+	
+	// one last hate
+	thing_hate(110, 104, 4);
+	thing_hate(111, 104, 4);
+	thing_hate(112, 104, 4);
+	thing_hate(113, 104, 4);
+	thing_hate(114, 104, 4);
+
+    // wait 5 minutes
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "5 Minutes remaining...", 0);
+    delay(35 * 60);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "4 Minutes remaining...", 0);
+    delay(35 * 60);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "3 Minutes remaining...", 0);
+    delay(35 * 60);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "2 Minutes remaining...", 0);
+    delay(35 * 60);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "1 Minute remaining...", 0);
+    delay(35 * 30);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "30 Seconds remaining...", 0);
+    delay(35 * 15);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "15 Seconds remaining...", 0);
+    delay(35 * 5);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "10...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "9...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "8...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "7...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "6...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "5...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "4...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "3...", 0);
+    delay(35 * 1);
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "PREPARE FOR LAUNCH...", 0);
+    delay(35 * 2);
+    
+    // gather score before game end
+    g_SkillScore = f_AIDir_Check();
+    
+    // launch missile
+    int thrustamount;
+    while(thrustamount < 130)
+    {
+        radius_quake(8, 20, 0, 10, 0);
+        thrustthingz(135, 8, 0, 1);
+        thrustamount ++;
+        delay(1);
+    }
+    thing_remove(135);
+    
+    delay(35 * 5);
+    
+    // explosion
+    acs_execute(452, 0, 0, 0, 0);
+}
+    
+script 452 (void){
+    acs_executealways(126, 0, 2, 0, 0);
+    acs_terminate(89, 0);
+    acs_terminate(120, 0);
+    acs_terminate(100, 0);
+    acs_terminate(102, 0);
+    acs_terminate(103, 0);
+    thing_destroy(24, 1);
+    thing_destroy(110, 1);
+    thing_destroy(111, 1);
+    thing_destroy(112, 1);
+    thing_destroy(113, 1);
+    thing_destroy(114, 1);
+	
+	//[Samu] One strong explosion worths more than many weak ones.
+    spawnspot("NuclearExplosion", 136, 0, 0);
+    
+    delay(35 * 5);
+    // endgame
+    acs_execute(125, 0, 1, 0, 0);
+    
+}

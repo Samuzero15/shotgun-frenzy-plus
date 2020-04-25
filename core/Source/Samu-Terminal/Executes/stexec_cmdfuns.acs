@@ -1,0 +1,14 @@
+
+function void StExecute_CMDBtnDesc(int lbl_title, int lbl_desc, int btndata){
+	str name = getCMDButName(btndata);
+	str desc = getCMDButDesc(btndata);
+	int price = getCMDButPrice(btndata);
+	//log(s:name);
+	if(price > 0) name = strParam(s:name, s:" - ", d:price, s:" T.C.");
+	Label_SetText(lbl_title, name);
+	Label_SetText(lbl_desc, desc);
+}
+
+function void StExecute_CMDBuild(int which){
+
+}

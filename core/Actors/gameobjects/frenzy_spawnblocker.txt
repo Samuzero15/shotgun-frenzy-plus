@@ -1,0 +1,20 @@
+ACTOR spawnblocker 30555
+{
+	health 1200
+	radius 128
+	height 256
+	mass 9000
+	
+	+SHOOTABLE
+	+SOLID
+	+NODAMAGETHRUST
+	+DONTOVERLAP
+	+NOBLOOD
+	
+	States
+	{
+		Spawn:
+			NULL A 5
+			goto Spawn
+	}
+}

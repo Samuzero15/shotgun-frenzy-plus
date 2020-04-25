@@ -1,0 +1,139 @@
+
+d) Done!
+w) Work in progres
+
+[w] Re-Make the SBarInfo
+	[d] Do some more touchs in the normal bar.
+	[ ] Rework the full screen bar.
+[d] Clientside the Acs HUD.
+[d] Add the powerups on the genetics terminal.
+[ ] Implement the Bank tech.
+[ ] Implement the rune tech.
+[ ] Make the Shell Grenade.
+[d] Give the weapon priority for all of them.
+[ ] Flak-Bombs for the dual shot.
+[d] Make a small earn display with the confont.
+[w] Get some more voices for Amy (Yeah that computer lady voice.)
+[ ] Achievemets? just for the sake of it? Heck yes!.
+[d] Re-arrange buildings to fit on their right places.
+[ ] Make a Process Queue, a way to control the rushing researches.
+[ ] Remake the Terminals
+	[d] Armory
+	[d] Genetics 
+	[d] Mech Factory
+	[w] Commander Terminal
+
+//// Changelog ////
+
+v0 - Before the beginning...
+
+-) (22 / 04 / 2020) 
+	+) Some documentation about the acs source code. for the modders out there.
+		(still WIP)
+	+) Disclamers added on the readme file. 
+
+-) (15 - 16 - 17 / 04 / 2020) 
+	*) Doing some works on the Commander terminal (Oh shiet.)
+	+) For Samu Terminal, now the image buttons can use the Hover execute!
+		//In case you want to execute a script just on the hovering of the button.
+	+) Some new icons! Just to give a different feeling in the Commander Terminal.
+	*) Tank Guns are now akimbo'd!
+		// Shoot nails and rockets together!
+
+-) (13 - 14 / 04 / 2020) 
+	+) Mech terminal is now avilable to use!
+	+) New upgrades can be applied to the War Mech!
+		//Tank gun Advanced is still there just for backward compatibility to the mech in cf04.
+		//Now everyone will love the mechs! (Even if they're more expensier than ever.)
+	*) Now items will not be used inside of the tank!
+
+-) (12 / 04 / 2020) 
+	* The acs hud is now fully clientsided! 
+	// If you miss this hud, go to fullscreen mode!
+	* Gave it some little touches, just because I can do it. :p
+
+-) (10 / 04 / 2020)	Testing relases! (04 and 05)
+	* Fixed the terminal access to the heath and ammo terminals!.
+	* Net Comunication for the samu terminal has been fixed too!, no more packet loss!
+	* Team credits are given as it should be!
+	
+	//With this testing relase, now its up to enable the mecha terminal,
+	  and then fix some bugs more to launch the public alpha!
+
+-) (08 / 04 / 2020)	Testing relases! (01, 02 and 03)
+	//Just to put on test the Samu terminal capabilities in multiplayer. 
+	  Im hosting this and sfplus_res.pk3 with it to TSPG.
+	
+	//I've been testing this in single player with local machines, 
+	  but i must test this on multiplayer, on real multiplayer.
+	
+	//Thanks for Zanieon, Cap. Jace, and TDDR. I've catched some more multiplayer bugs to fix.
+	//But after all of this unstability, the samu terminal is working real good!
+	//The only thing was the net package saving thingy code. I need to fix that crap.
+
+-) (30 / 03 / 2020)
+	+) Now in sbarinfo shows the ammount of ammo in the stock!
+	+) A small popup to show what has been researched by the player! 
+		(use the strife's weapon/item/stats key binding)
+	
+-) (29 / 03 / 2020)
+	*) In cf01, a line was changed to change tid to be only monster activable. (That was kind of a problem in that map)
+	*) Some fixes on the Banner script.
+	   Now with some conditions, the banners will show! (oh and display duration set to 30 secs)
+	*) Now weapons are selected by priority order!
+	   (The more powerful is, the most likely to be selected.)
+	   You can thank me later when you deplete your favorite weapon. 
+	   This will switch to the second most powerful weapon on your inventory.
+
+-) (28 / 03 / 2020)
+	+) Now the banner on the SF maps can dynamically change! (at least in sf01, sf02 and sf03)
+	   also, its kinda funny to seee these banners show in the game.
+	*) After some re-arrangements on the building requisites, 
+	   Now Mecha-Factory and Marine command are written and setted how it should be. Instead of Demonic lab.
+	+) More voices from cepstral, announcing the mecha factory!
+
+-) (26 / 03 / 2020)
+	+) Powerups avilable now on the genetics lab! (After a lot of refactoring in samu terminal!)
+	*) Refactoring and re ordering of the terminal, just to make more cleaner code.
+
+-) (22 / 03 / 2020)
+	+) Card layout helper same as grid to help building the powerup pages.
+	*)Still working on the powerup page.
+	*)Some voices changed on the core. Just for a change of peace.
+
+-) (20 / 03 / 2020)
+	+) Grid helper to make grids in no time for the smau terminal!.
+	*) Some updates on the testing map. Not included in the mod for now.
+
+-) (16 / 03 / 2020)
+	*)In samu terminal, made a parser to set the properties without
+	bothering on the other component functions.
+		//It's implemented in the image button though.
+	+)Some documentation about the samu-terminal.
+
+-) (15 / 03 / 2020)
+	*)Small Fixes on the SBARHUD.
+
+-) (14 / 03 / 2020)
+	+)Added some icons to spice up the hud in sbarinfo.
+	+)Multi Launcher now contains a second altfire!
+		This altfire will shoot the same 3 projectiles but in a triangular spread.
+		Nifty if you want precision over spread.
+	*)Doing some small adjustments to the sbarinfo about the info of the game.
+	*)Setting the right display to the respective gamemode in the sbarinfo.
+	*)Buckshot will be given with ammo in the chamber.
+		(Just for comfyness. You'd hate to buy an assault pack, 
+		discharge all of your spitter gun and then switch back 
+		to a unloaded buckshot.)
+	*)Somehow... In multiplayer the game did'nt gave the cash after finishing a map, fixed that.
+
+-) (12 / 03 / 2020)
+	+)Got some sound, to make some achivements on this crack.
+	+)Just wrote some ideas in the achievements.
+	*)Some more reordering on the sound files, just for the sake of order.
+
+-) (18 / 02 / 2020)
+	Now a confont tip is now added to the display. To make a difference between what you got and what they gave you by other means.
+	
+-) (15 / 02 / 2020) 
+	Lot'sa stuff that i missed xd.

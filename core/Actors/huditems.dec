@@ -1,0 +1,37 @@
+
+Actor HudBar : Ammo {
+	// Why ammo instead inventory?
+	// Zandronum limitation with the GetMaxInventory.
+	inventory.maxAmount 1 // The SetAmmoCapacity can change it. No worries!
+	//Ammo.BackpackAmount 0
+}
+
+Actor HUD_MaxHp : Integer {}
+
+Actor HUD_Exp : Ammo {}
+Actor HUD_ExpLeft : Integer {}
+
+Actor HUD_Credits : Integer {}
+Actor HUD_Ups : Integer {}
+Actor HUD_Kills : Integer {}
+Actor Hud_Deaths : Integer {}
+Actor HUD_TeamCredits : Integer {}
+
+Actor HUD_Sector : Integer {}
+Actor HUD_CoreHP : Integer {}
+
+Actor HUD_Gamemode : Integer {}
+Actor HUD_Spectating : Integer {}
+Actor HUD_Rank : Integer {}
+Actor HUD_Wave : Integer {}
+
+Actor HUD_T_ARMS1 : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_ARMS2 : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_HEALTH1 : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_HEALTH2 : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_RESISTBOOST : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_SPEEDBOOST : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_REGENERATE : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_STEELPLATE : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_BOOMSHOT : Inventory {Inventory.Maxamount 1}
+Actor HUD_T_BACKPACK : Inventory {Inventory.Maxamount 1}
