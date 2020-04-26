@@ -43,7 +43,8 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	
 	//Sync it with client.
 	SamuTerm_InitStrings();
-	print(d:GetCMDBUTPrice(0));
+	// To Sync the prices.
+	ACS_NamedExecuteAlways("SFPlus_DefinePrices", 0);
 	
 	SamuTerm_InitComps();
 	SamuTerm_GreetPlayer(playerNumber());

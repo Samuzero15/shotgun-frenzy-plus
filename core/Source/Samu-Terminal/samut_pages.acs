@@ -51,7 +51,8 @@ function void UpdatePages(void){
 
 		UpdateListUPPage(2);
 		UpdateListWPPage(1);
-		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+		//Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+		Label_setText(wallet, StrParam(s:"Price of p_key: ", d:Prices_getValue_K("p_key")));
 	}
 }
 

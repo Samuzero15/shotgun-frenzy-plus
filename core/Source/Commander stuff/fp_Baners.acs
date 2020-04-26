@@ -8,13 +8,14 @@
 #library "fp_baners"
 
 #import "f_IntDB.acs"
+#import "fl_price.acs"
 #import "fc_const.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
 #include "samu_tools.acs"
 
-script "ShotgunFrenzy_BaseBanner" open{
+script "SFPlus_BaseBanner" open{
 	str string;
 	int count = 0;
 	int next = 1;

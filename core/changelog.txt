@@ -7,25 +7,29 @@ w) Work in progres
 	[ ] Rework the full screen bar.
 [d] Clientside the Acs HUD.
 [d] Add the powerups on the genetics terminal.
+[d] Re-arrange buildings to fit on their right places.
+[d] Give the weapon priority for all of them.
+[d] Make a small earn display with the confont.
+[w] Get some more voices for Amy (Yeah that computer lady voice.)
 [ ] Implement the Bank tech.
 [ ] Implement the rune tech.
 [ ] Make the Shell Grenade.
-[d] Give the weapon priority for all of them.
 [ ] Flak-Bombs for the dual shot.
-[d] Make a small earn display with the confont.
-[w] Get some more voices for Amy (Yeah that computer lady voice.)
 [ ] Achievemets? just for the sake of it? Heck yes!.
-[d] Re-arrange buildings to fit on their right places.
 [ ] Make a Process Queue, a way to control the rushing researches.
 [ ] Remake the Terminals
 	[d] Armory
 	[d] Genetics 
 	[d] Mech Factory
 	[w] Commander Terminal
+[ ] De-hard code prices from samu-tools, for easier acess.
 
 //// Changelog ////
 
 v0 - Before the beginning...
+
+-) (26 / 04 / 2020)
+	*) Some adjustments on the price script for acessibility pruposes.
 
 -) (22 / 04 / 2020) 
 	+) Some documentation about the acs source code. for the modders out there.

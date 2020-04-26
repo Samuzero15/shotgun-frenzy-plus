@@ -7,7 +7,68 @@
 
 #library "fl_Price"
 #include "zcommon.acs"
+#include "acsutils.acs"
 
+int fp_Price[499][2]; // [Samu] I'll do a clone of this.
+int fp_PriceStack = 0;
+
+//This syncher over here is meant to be used by Samu-terminal.
+
+//Remember, to let the terminal sync values, It's more efficient to use Inventory items.
+//Sure, you will end up with a long-ass Decorate, but that's a small price worth to pay. 
+script "SFPlus_PriceSyncher" ENTER
+{// Synchs all of the prices so far.
+	int counter;
+	while(true){
+		if(counter == fp_priceStack) counter = 0;
+		
+		SetInventory(Prices_getKey(counter), Prices_getValue_I(counter));
+		print(d:Prices_GetValue_I(0));
+		
+		delay(1);
+	}
+}
+
+script "SFPlus_DefinePrices" Open
+{// [Samu] Here you can define/change all of your prices.
+ // 	   To sync with the clientside (Samu-Terminal, specially), 
+ //		   invoke this script.
+ Prices_AddPrice("p_Key", 2000);
+ 
+}
+
+function void Prices_addPrice(str inv, int price){
+	fp_Price[fp_PriceStack][0] = inv;
+	fp_Price[fp_PriceStack][1] = price;
+	fp_PriceStack++;
+}
+
+function int Prices_getIndex(str key){
+	bool found = false;
+	int indx = 0;
+	for(int i; i < fp_PriceStack && !found; i ++){
+		if(StrICMP(key, Prices_getKey(i)) == 0){ 
+			indx = i;
+			found = true;
+		}
+	}
+	
+	return indx;
+}
+
+function int Prices_getValue_K(str key){
+	return fp_Price[Prices_getIndex(key)][1];
+}
+
+function str Prices_getKey(int indx){
+	return fp_Price[indx][0];
+}
+
+function int Prices_getValue_I(int indx){
+	return fp_Price[indx][1];
+}
+
+//For compatibility stuff
 int f_Price[499];	// up to 499 items can be brought
 
 // easier way to customise the prices (with a script)
@@ -121,4 +182,4 @@ script 900 OPEN
     f_Price[402]=    1000;      // barricade #2 - Floor rise (attached to tag 52)
     f_Price[403]=    1300;      // barricade #3 - Floor rise (attached to tag 53)
     f_Price[404]=    300;      // barricade #3 - Floor rise (attached to tag 54)
-}    
+}

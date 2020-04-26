@@ -25,7 +25,7 @@ function void SamuTerm_InitComps(void){
 	Toaster_Initialize();
 	Prompt_Initialize();
 	
-	if(pagetags[STTAGS_ALPHA] != 10)Components_Add();
+	if(pagetags[STTAGS_ALPHA] != 10) Components_Add();
 
 	//Custom shiet.
 	SamuTerm_InitPages();
