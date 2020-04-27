@@ -22,11 +22,24 @@ w) Work in progres
 	[d] Genetics 
 	[d] Mech Factory
 	[w] Commander Terminal
-[ ] De-hard code prices from samu-tools, for easier acess.
+[w] De-hard code prices from samu-tools, for easier acess.
+[ ] About the Testing map
+	[d] Monster spawner
+	[ ] The set of items and turrets to spawn.
+	[ ] A CF simulator.
+	[ ] Place a mech, and try to check for all of their upgrades.
+	[ ] Put all of the existent terminals.
 
 //// Changelog ////
 
 v0 - Before the beginning...
+
+-) (27 / 04 / 2020)
+	+) On the testing map, now you can fight with (almost) all of the enemies in a 1v1 mortal kombat!
+		//Meant to see the behavior between each monster in the mod.
+	*) Now the prices are more acessible to be edited.
+		//In fl_prices not only you can change it, you can also create your own prices!
+		//A documentation about that soon.
 
 -) (26 / 04 / 2020)
 	*) Some adjustments on the price script for acessibility pruposes.

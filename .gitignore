@@ -3,6 +3,8 @@
 *.bak
 *d.pk3
 builds/
+*.dbs
+*.wad.backup*
 
 #############
 ## Windows detritus

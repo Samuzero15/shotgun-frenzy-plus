@@ -54,7 +54,11 @@ function void InitUpgWepList(void){
 		"SSG_Autoload", 1, "Autoloading Refire \n+Kickback",
 		"SSG_Explosive", 1 ,"Exploding Shells \n+Damage"
 	);
-	initRecyclePrices(wid, 700, 1000, 1250);
+	initRecyclePrices(wid, 
+		"pr_wr_ssg",
+		"pr_wr_ssg_up1",
+		"pr_wr_ssg_up2"
+		);
 	
 	wid = WEP_QUADSHOT;
 	initWeaponUpgrade(wid, 
@@ -62,7 +66,11 @@ function void InitUpgWepList(void){
 		"Quadshot_Full", 2 ,"Explosive shells + C. Bayonetta"
 	);
 	
-	initRecyclePrices(wid, 700, 3000, 3000);
+	initRecyclePrices(wid, 
+		"pr_wr_quadshot",
+		"pr_wr_quadshot_up0",
+		"pr_wr_quadshot_up0"
+		);
 	
 	wid = WEP_SPITTER;
 	initWeaponUpgrades(wid, 
@@ -70,7 +78,11 @@ function void InitUpgWepList(void){
 		"Spitter_SSG", 1, "Shell grenades \n+Spread",
 		"Spitter_GLauncher", 1 ,"Nerve-gas Grenades \n+Speed"
 	);
-	initRecyclePrices(wid, 700, 1000, 1000);
+	initRecyclePrices(wid, 
+		"pr_wr_spitter",
+		"pr_wr_spitter_up1",
+		"pr_wr_spitter_up2"
+	);
 	
 	wid = WEP_BUCKSHOT;
 	initWeaponUpgrades(wid,
@@ -78,7 +90,11 @@ function void InitUpgWepList(void){
 		"Buckshot_Chamber", 1, "Chamber Expansion \n+R. Speed",
 		"Buckshot_Explosive", 2, "Exploding Shells \n+R. Speed"
 	);
-	initRecyclePrices(wid, 700, 1000, 1000);
+	initRecyclePrices(wid, 
+		"pr_wr_buckshot",
+		"pr_wr_buckshot_up1",
+		"pr_wr_buckshot_up2"
+	);
 		
 	wid = WEP_REPEATER;
 	initWeaponUpgrades(wid, 
@@ -86,14 +102,22 @@ function void InitUpgWepList(void){
 		"Repeater_DoubleSpeed", 1, "Speed buster \n+F. Ratio",
 		"Repeater_BlastShells", 2, "Plasma blaster \n+Damage"
 	);
-	initRecyclePrices(wid, 2600, 3200, 3200);
+	initRecyclePrices(wid, 
+		"pr_wr_repeater",
+		"pr_wr_repeater_up1",
+		"pr_wr_repeater_up2"
+	);
 	
 	wid = WEP_DUALSHOT;
 	initWeaponUpgrade(wid, 
 		"DualShot",
 		"DualShot_Razor", 2, "Razorblade thrower \n+Ripper"
 	);
-	initRecyclePrices(wid, 2600, 3200, 3200);	
+	initRecyclePrices(wid, 
+		"pr_wr_dualshot",
+		"pr_wr_dualshot_up0",
+		"pr_wr_dualshot_up0"
+		);
 		
 	wid = WEP_LAUNCHER;
 	initWeaponUpgrades(wid, 
@@ -101,7 +125,11 @@ function void InitUpgWepList(void){
 		"Launcher_Exploder", 1, "Trail Exploder \n+Damage",
 		"Launcher_Multi", 2, "Multi Rockets \n+Spread"
 	);
-	initRecyclePrices(wid, 1500, 2000, 2000);
+	initRecyclePrices(wid, 
+		"pr_wr_launcher",
+		"pr_wr_launcher_up1",
+		"pr_wr_launcher_up2"
+	);
 
 	wid = WEP_FLINGER;
 	initWeaponUpgrades(wid, 
@@ -109,7 +137,11 @@ function void InitUpgWepList(void){
 		"Flinger_Expander", 2, "Cluster Expander \n+Spread",
 		"Flinger_MinePlacer", 1, "Toxic Gas Launcher \n+Speed"
 	);
-	initRecyclePrices(wid, 1500, 2000, 2000);
+	initRecyclePrices(wid, 
+		"pr_wr_flinger",
+		"pr_wr_flinger_up1",
+		"pr_wr_flinger_up2"
+	);
 		
 	wid = WEP_PLASMAGUN;
 	initWeaponUpgrades(wid, 
@@ -117,7 +149,11 @@ function void InitUpgWepList(void){
 		"Plasmagun_Advanced", 2, "Plasma Enhancer \n+Damage",
 		"Plasmagun_Spread", 1, "Spreader Chip \n+Spread"
 	);
-	initRecyclePrices(wid, 1500, 2000, 2000);
+	initRecyclePrices(wid, 
+		"pr_wr_plasmagun",
+		"pr_wr_plasmagun_up1",
+		"pr_wr_plasmagun_up2"
+	);
 	
 	wid = WEP_RAILGUN;
 	initWeaponUpgrades(wid, 
@@ -125,29 +161,46 @@ function void InitUpgWepList(void){
 		"Railgun_Slug", 1, "Rail Slugger \n+Rail",
 		"Railgun_Taser", 2, "Plasma Taser \n+Damage"
 	);
-	initRecyclePrices(wid, 1500, 2000, 2000);
+	initRecyclePrices(wid, 
+		"pr_wr_railgun",
+		"pr_wr_railgun_up1",
+		"pr_wr_railgun_up2"
+	);
 		
 	wid = WEP_FLAMER;
 	initWeaponUpgrade(wid, 
 		"Flamer",
 		"FlamerS", 2, "Penetration \n +Ripper"
 		);
-	initRecyclePrices(wid, 10000, 15000, 0);
+	initRecyclePrices(wid, 
+		"pr_wr_flamer",
+		"pr_wr_flamer_up0",
+		"pr_wr_flamer_up0"
+		);
 		
 	wid = WEP_BFG;
 	initWeaponUpgrade(wid, 
 		"BFG",
 		"BFGS", 4, "Exploder chip\n +Ripper"
 		);
-	initRecyclePrices(wid, 20000, 30000, 0);
+	initRecyclePrices(wid, 
+		"pr_wr_bfg",
+		"pr_wr_bfg_up0",
+		"pr_wr_bfg_up0"
+		);
 	
 	wid = WEP_SUPPLIER;
 	initWeaponUpgrade(wid, 
 		"Supplier",
 		"Supplier_Big", 1, "Spreadier Placement\n +Supplies"
 		);
-	initRecyclePrices(wid, 500, 1500, 1500);
-		
+	initRecyclePrices(wid, 
+		"pr_wr_supplier",
+		"pr_wr_supplier_up0",
+		"pr_wr_supplier_up0"
+		);
+	
+	
 }
 
 function void initWeaponUpgrades(int wep_num, str UPBasis, str UP1name, int UP1cost, str UP1desc, str UP2name, int UP2cost, str UP2desc){
@@ -161,7 +214,7 @@ function void initWeaponUpgrade(int wep_num, str UPBasis, str UPname, int UPcost
 	initWeaponUpgrades(wep_num, UPBasis, UPname, UPcost, UPdesc, "", -1, "No Upgrade");
 }
 
-function void initRecyclePrices(int wep_num, int sellB, int sell1, int sell2){
+function void initRecyclePrices(int wep_num, str sellB, str sell1, str sell2){
 	WepArray[wep_num][0][WepUpSell] = sellB;
 	WepArray[wep_num][1][WepUpSell] = sell1;
 	WepArray[wep_num][2][WepUpSell] = sell2;
@@ -201,18 +254,18 @@ function str getWeaponUp2Desc(int which){
 	return WepArray[which][2][WepUpDesc];
 }
 
-function str getWeaponUp2Sell(int which){
-	return WepArray[which][2][WepUpSell];
+function int getWeaponUp2Sell(int which){
+	return CheckInventory(WepArray[which][2][WepUpSell]);
 }
 
-function str getWeaponUp1Sell(int which){
-	return WepArray[which][1][WepUpSell];
+function int getWeaponUp1Sell(int which){
+	return CheckInventory(WepArray[which][1][WepUpSell]);
 }
 
 function str getWeaponBasis(int which){
 	return WepArray[which][0][WepUpName];
 }
 
-function str getWeaponBasisSell(int which){
-	return WepArray[which][0][WepUpSell];
+function int getWeaponBasisSell(int which){
+	return CheckInventory(WepArray[which][0][WepUpSell]);
 }

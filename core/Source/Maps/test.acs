@@ -1,4 +1,8 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
 
+//Testing map.
 #library "TEST"
 
 #import "f_IntDB.acs"
@@ -20,6 +24,7 @@
 str spawnerList[List];
 int spawnselect = 0;
 int spawnStack = 0;
+int altars = 64;
 
 script 100 Open{
 	f_Gametype = 0;
@@ -59,6 +64,56 @@ script 100 Open{
 	
 	SpawnSpot(spawnerList[spawnselect], 1,2,0);
 	Thing_Deactivate(2);
+	ACS_Execute(14,0);
+}
+
+script 14 (void){
+	//Iterate list to spawn each monster in each altar.
+	Print(s:"Setting up altars...");
+	int i;
+	for(i = 0; i < spawnStack; i++){
+		ACS_ExecuteAlways(13,0, i);
+		delay(1);
+	}
+	
+	for(i = spawnstack; i < altars; i++){
+		ACS_ExecuteAlways(15,0, i);
+		delay(1);
+	}
+	Print(s:"The monster spawner is now open!");
+	Door_Open(5, 128);
+}
+
+script 16 (int who){
+	//print(s:"Sup bitches.");
+	print(s:"I am from the: ", s:spawnerList[who], s:" Class.");
+	Thing_Remove(1998);
+	Spawnspot(spawnerList[who], 1999, 1998, 0);
+}
+
+script 15 (int who){
+	//If the altar is not used, hide it.
+	changeFloor(301 + who,		"CEIL4_2");
+	changeCeiling(301 + who,	"BRICK8_2");
+	Floor_LowerToLowest(301 + who, 		128);
+	Ceiling_RaiseToNearest(301 + who, 	128);
+	
+	ChangeFloor(601 + who, 		"CEIL4_2");
+	ChangeCeiling(601 + who, 	"BRICK8_2");
+}
+
+script 13 (int who){
+	//Spawn the monster in the altar and then, add a button to spawn it on the arena.
+	SpawnSpot(spawnerList[who], 31 + who, 200 + who, 0);
+	Thing_DeActivate(200 + who);
+	//Activate buttons.
+	SetLineSpecial(31 + who, 80, 16, 0, who);
+	//Raise altars
+	Floor_RaiseByValue(301 + who, 64, 32);
+	Ceiling_LowerByValue(301 + who, 64, 64);
+	
+	//Raise button
+	Floor_RaiseByValue(601 + who, 64, 32);
 }
 
 script 10 (void){
@@ -81,7 +136,21 @@ script 11 (int dir){
 	print(s:"Monster to spawn: ", s:spawnerList[spawnSelect]);
 }
 
+script 20 (int placeid){
+	str msg = "";
+	switch(placeid){
+		case 0: msg = "Monster Spawner";
+	}
+	SetFont("STATBIGS");
+	HudMessage(s:msg; HUDMSG_FADEOUT, 1,  CR_WHITE, 0.5,0.8, 2.0, 0.5);
+}
+
 function void addToSpawner(str who){
-	spawnerList[spawnStack] = who;
-	spawnstack++;
+	if(spawnstack+1 > altars){
+		print(s:"Can't make an altar for ", s:who, s:" there is no more space!");
+	}
+	else{
+		spawnerList[spawnStack] = who;
+		spawnstack++;
+	}
 }

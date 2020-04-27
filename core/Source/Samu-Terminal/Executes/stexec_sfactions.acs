@@ -210,7 +210,7 @@ function void STExecute_AskForUpgrade(int which, int type){
 
 function void STExecute_AskForRecycle(int weapon){
 	Prompt_Resize(20,8);
-	Prompt_Ask("Conf. Upgrade", 
+	Prompt_Ask("Conf. Recycling", 
 			"Are you sure you want to recycle this weapon?", CR_GREEN);
 	Prompt_ExecuteOnTrue(STEXE_MSGRC, weapon, 0, 0);
 }

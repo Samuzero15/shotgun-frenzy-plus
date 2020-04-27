@@ -19,7 +19,7 @@ function int cond2(bool x, int whentrue, int whenfalse)
 }
 
 function int WeaponRecyclePrice(int wid){
-	int money;
+	str money;
 	
 	int check = WeaponLastUpgradeType(wid);
 	
