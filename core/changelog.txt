@@ -34,6 +34,18 @@ w) Work in progres
 
 v0 - Before the beginning...
 
+-) (28 / 04 / 2020)
+	*) The test map now supports up to 128 monsters to be spawned! (Also extended 
+	   the arena for easier combat and debuging.)
+	*) Terminals are avilable now near on the entrance of the monster arena.
+		(Mostly, the health and ammo terminals.)
+	*) Small fix on the Samu terminal about the Alpha tags not showing as first
+	   priority.
+	*) Now the first string button on Samu terminal can be properly hovered.
+	// Yes, soon enough, new monsters from the Realm667 will make an apperance
+	   here. But before that, i need to fix some behaviors on the monsters. 
+	// I'll leave that casting up to the first version.
+
 -) (27 / 04 / 2020)
 	+) On the testing map, now you can fight with (almost) all of the enemies in a 1v1 mortal kombat!
 		//Meant to see the behavior between each monster in the mod.
@@ -45,7 +57,7 @@ v0 - Before the beginning...
 	*) Some adjustments on the price script for acessibility pruposes.
 
 -) (22 / 04 / 2020) 
-	+) Some documentation about the acs source code. for the modders out there.
+	+) Some documentation about the acs source code. For the modders out there.
 		(still WIP)
 	+) Disclamers added on the readme file. 
 

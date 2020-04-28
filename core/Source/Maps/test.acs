@@ -24,43 +24,57 @@
 str spawnerList[List];
 int spawnselect = 0;
 int spawnStack = 0;
-int altars = 64;
+int altars = 128;
+bool wavelikespawn = false;
+bool x4health = false;
+int spawned;
 
 script 100 Open{
 	f_Gametype = 0;
 	setupTerminals();
 	f_Startcash =   2500;  
 	
-	addToSpawner("Annihilator");
-	addToSpawner("ArchonOfHell");
-	addToSpawner("BloodDemonClone");
-	addToSpawner("Bloodfiend");
-	addToSpawner("ChaingunGuy2");
+	addToSpawner("sfFastZombie");
 	addToSpawner("ChainsawZombie");
-	addToSpawner("Cyberbaron");
-	addToSpawner("Cybruiser");
-	addToSpawner("Hellion");
+	addToSpawner("sfZombieMan");
+	addToSpawner("sfShotgunGuy");
+	addToSpawner("sfChaingunGuy");
+	
+	addToSpawner("SegWayZombie");
+	addToSpawner("SuicideBomber");
+	addToSpawner("ChaingunGuy2");
+	addToSpawner("SSGZombie");
 	addToSpawner("NailBorg");
 	addToSpawner("NailBorgCommando");
-	addToSpawner("NamiDarkImp");
-	addToSpawner("sfArachnotron_tw");
-	addToSpawner("sfArchvile");
-	addToSpawner("sfBaronOfHell");
-	addToSpawner("sfChaingunGuy");
-	addToSpawner("sfCyberdemon");
-	addToSpawner("sfDemon");
 	addToSpawner("sfDoomImp");
-	addToSpawner("sfFastZombie");
-	addToSpawner("sfFatso");
-	addToSpawner("sfHellKnight");
-	addToSpawner("sfRevenant");
-	addToSpawner("sfShotgunGuy");
-	addToSpawner("sfZombieMan");
 	addToSpawner("SlimeImp");
-	addToSpawner("SpiderAnnihilator");
-	addToSpawner("SSGZombie");
-	addToSpawner("StoneDemon");
 	addToSpawner("VoidDarkImp");
+	addToSpawner("NamiDarkImp");
+	addToSpawner("sfDemon");
+	addToSpawner("BloodDemonClone");
+	addToSpawner("Bloodfiend");
+	addToSpawner("StoneDemon");
+	addToSpawner("sfRevenant");
+	addToSpawner("Hellion");
+	
+	addToSpawner("Afrit");
+	addToSpawner("sfHellKnight");
+	addToSpawner("sfBaronOfHell");
+	addToSpawner("Cyberbaron");
+	addToSpawner("Cybruiser");
+	addToSpawner("HellsFury");
+	
+	addToSpawner("sfFatso");
+	addToSpawner("FusionSpider");
+	addToSpawner("sfArachnotron_tw");
+	addToSpawner("Aracnorb");
+	addToSpawner("ArchonOfHell");
+	addToSpawner("sfArchvile");
+	addToSpawner("sfCyberdemon");
+	addToSpawner("Annihilator");
+	addToSpawner("SpiderAnnihilator");
+	addtospawner("Demolisher");
+	addToSpawner("SFJuggernaught");
 	
 	SpawnSpot(spawnerList[spawnselect], 1,2,0);
 	Thing_Deactivate(2);
@@ -70,6 +84,8 @@ script 100 Open{
 script 14 (void){
 	//Iterate list to spawn each monster in each altar.
 	Print(s:"Setting up altars...");
+	
+	CreateTranslation(11, 0:255=0:255);
 	int i;
 	for(i = 0; i < spawnStack; i++){
 		ACS_ExecuteAlways(13,0, i);
@@ -84,36 +100,126 @@ script 14 (void){
 	Door_Open(5, 128);
 }
 
+script 17 (int modifier){
+	
+	str msg = "";
+	if(modifier == 1){
+		wavelikespawn = !wavelikespawn;
+		msg = strParam(s:"Wave-Like Spawning: ", s:strBool(wavelikespawn));
+		toggleIndicators(wavelikespawn, 10);
+	} else if (modifier == 2){
+		x4health = !x4health;
+		msg = strParam(s:"Health Points x4: ", s:strBool(x4health));
+		toggleIndicators(x4health, 11);
+	}
+	
+	SetFont("Confont");
+	HudMessage(s:msg; HUDMSG_FADEOUT, 2,  CR_WHITE, 0.5,0.75, 1.0, 0.5);
+	
+}
+
+function void toggleIndicators(int cond, int lineid){
+	if(cond)
+		SetLineTexture(lineid, Side_FRONT, TEXTURE_BOTTOM, "N_CGRN01");
+	else
+		SetLineTexture(lineid, Side_FRONT, TEXTURE_BOTTOM, "N_CRED01");
+}
+
+function str strBool(bool cond){
+	if(cond) return "true";
+	return "false";
+}
+
+script 18 (int cmd){// Teleport commands.
+	if(cmd == 1){ // Kill that sonofablitch
+		Thing_Remove(1998);
+		Thing_Remove(1898);
+	}
+	else if (cmd == 0){// I liked that, again!
+		Thing_Remove(1998);
+		Thing_Remove(1898);
+		if(wavelikespawn){
+			Spawnspot("TeleportFog", 1899, 1898, 0);
+			Spawnspot(spawnerList[spawned], 1899, 1898, 0);
+		}else{
+			Spawnspot("TeleportFog", 1999, 1998, 0);
+			Spawnspot(spawnerList[spawned], 1999, 1998, 0);
+		}
+		if(x4health){
+		int health = getActorProperty(1998, APROP_Health);
+		SetActorProperty(1998, APROP_HEALTH, health + health * 4);
+		
+		health = getActorProperty(1898, APROP_Health);
+		SetActorProperty(1898, APROP_HEALTH, health + health * 4);
+		}
+		
+		Thing_Hate(1998, 0, 0);
+		Thing_Hate(1898, 0, 0);
+	}
+}
+
+script 19 (int tlport){
+	//Teleporter announce.
+	switch(tlport){
+		case 1: 
+			f_TipShow("PLAYER", "", "Entered into the arena.", 10);
+			Teleport(5, 0, 0);
+			Thing_Hate(1998, 0, 0);
+			Thing_Hate(1898, 0, 0);
+		break;
+		case 0:
+			f_TipShow("PLAYER", "", "Left from the arena.", 10);
+			Teleport(6, 0, 0);
+		break;
+	}
+}
+
 script 16 (int who){
-	//print(s:"Sup bitches.");
+	// Set the monster to be spawned.
+	spawned = who;
 	print(s:"I am from the: ", s:spawnerList[who], s:" Class.");
 	Thing_Remove(1998);
-	Spawnspot(spawnerList[who], 1999, 1998, 0);
+	Thing_Remove(1898);
+	if(wavelikespawn){
+		Spawnspot("TeleportFog", 1899, 1898, 0);
+		Spawnspot(spawnerList[who], 1899, 1898, 0);
+	}else{
+		Spawnspot("TeleportFog", 1999, 1998, 0);
+		Spawnspot(spawnerList[who], 1999, 1998, 0);
+	}
+	if(x4health){
+		int health = getActorProperty(1998, APROP_Health);
+		SetActorProperty(1998, APROP_HEALTH, health + health * 4);
+		
+		health = getActorProperty(1898, APROP_Health);
+		SetActorProperty(1898, APROP_HEALTH, health + health * 4);
+	}
 }
 
 script 15 (int who){
 	//If the altar is not used, hide it.
-	changeFloor(301 + who,		"CEIL4_2");
-	changeCeiling(301 + who,	"BRICK8_2");
-	Floor_LowerToLowest(301 + who, 		128);
-	Ceiling_RaiseToNearest(301 + who, 	128);
+	changeFloor(300 + who,		"CEIL4_2");
+	changeCeiling(300 + who,	"BRICK8_2");
+	Floor_LowerToLowest(300 + who, 		128);
+	Ceiling_RaiseToNearest(300 + who, 	128);
 	
-	ChangeFloor(601 + who, 		"CEIL4_2");
-	ChangeCeiling(601 + who, 	"BRICK8_2");
+	ChangeFloor(600 + who, 		"CEIL4_2");
+	ChangeCeiling(600 + who, 	"BRICK8_2");
 }
 
 script 13 (int who){
 	//Spawn the monster in the altar and then, add a button to spawn it on the arena.
-	SpawnSpot(spawnerList[who], 31 + who, 200 + who, 0);
-	Thing_DeActivate(200 + who);
+	SpawnSpot(spawnerList[who], 300 + who, 1300 + who, 0);
+	Thing_DeActivate(1300 + who);
 	//Activate buttons.
-	SetLineSpecial(31 + who, 80, 16, 0, who);
+	SetLineSpecial(300 + who, 80, 16, 0, who);
+	Thing_SetTranslation(1300 + who, TRANSLATION_ICE);
 	//Raise altars
-	Floor_RaiseByValue(301 + who, 64, 32);
-	Ceiling_LowerByValue(301 + who, 64, 64);
+	Floor_RaiseByValue(300 + who, 64, 32);
+	Ceiling_LowerByValue(300 + who, 64, 64);
 	
 	//Raise button
-	Floor_RaiseByValue(601 + who, 64, 32);
+	Floor_RaiseByValue(600 + who, 64, 32);
 }
 
 script 10 (void){

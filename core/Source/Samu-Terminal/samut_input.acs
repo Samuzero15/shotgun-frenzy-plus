@@ -93,7 +93,7 @@ function void CheckHover(void){
 	
 	bool nowHover = false;
 	lasthover = comphover;
-	comphover = 0;
+	comphover = -1;
 	//log(s:"No Change. ", d:nowHover);
 	
 	for(int j = 0; j < comp_count[STCOMP_IBTN] && !inputDone; j++){
@@ -113,7 +113,7 @@ function void CheckHover(void){
 			break;
 		}
 	}
-	if(lasthover != comphover && (comphover != 0))
+	if(lasthover != comphover && (comphover != -1))
 		localAmbientSound("SamuTerm/Hover",127);
 	//log(s:"Click!");
 }

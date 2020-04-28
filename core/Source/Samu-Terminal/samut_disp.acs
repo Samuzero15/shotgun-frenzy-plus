@@ -13,7 +13,7 @@ function void SamuTerm_Display(void){
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
 		if(getImgButtonShow(i)){
 		rect = getIMGButtonRect(i);
-			if (RectIsHovered(rect) && comphover){
+			if (RectIsHovered(rect) && (comphover != -1)){
 				//localAmbientSound("SamuTerm/Hover",127);
 				HilightImgButton(i);
 			}
@@ -34,7 +34,7 @@ function void SamuTerm_Display(void){
 	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
 		if(getStrButtonShow(i)){
 		rect = getStrButtonRect(i);
-			if(RectIsHovered(rect) && comphover){
+			if(RectIsHovered(rect) && (comphover != -1)){
 				//localAmbientSound("SamuTerm/Hover",127);
 				HilightStrButton(i);
 			}

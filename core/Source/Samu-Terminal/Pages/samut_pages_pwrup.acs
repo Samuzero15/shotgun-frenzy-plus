@@ -32,22 +32,26 @@ function void InitPowBuyPage(int pageTag){
 
 function void PowBuyPage_UpdateComps(int pow){
 	int counter = PowBuyPage_LoadFromGroup(pow, 5);
+	
+	int price = PowBuyPage_LoadFromGroup(pow, 4);
+	
 	int quantity = Checkinventory(GetItemActor(pow));
 	int maximum = GetItemMax(pow);
+	int powprice = getItemPrice(pow);
 	
 	if(quantity == maximum)
 		Label_setText(counter, "Max!");
 	else
 		Label_setText(counter, StrParam(d:quantity, s:"/",d:maximum));
 	
-	
+	Label_setText(price, strparam(d:powprice, s:"$"));
 }
 
 function void PowBuyPage_AddComps(int cell, int powerup, int color){
 	int i;
 	
 	str powname = getItemName(powerup);
-	str powprice = getItemPrice(powerup);
+	int powprice = getItemPrice(powerup);
 	str powdesc = getItemDesc(powerup);
 	str powicon = getItemIcon(powerup);
 	

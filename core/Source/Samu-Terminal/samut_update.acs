@@ -15,9 +15,9 @@ function void SamuTerm_Update(void){
 	UpdatePromptImgButtons();
 	UpdatePromptLabels();
 	
-	ShowByAlphaTag();
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
+	showByAlphaTag();
 	
 	UpdatePages();
 	UpdateCursor();
@@ -47,7 +47,6 @@ Function void UpdatePromptImgButtons(void){
 
 Function void ShowByAlphaTag(void){
 	int i, compTag;
-
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
 		comptag = getImgButtonTag(i);
 		if(comptag == pagetags[STTAGS_ALPHA]){
