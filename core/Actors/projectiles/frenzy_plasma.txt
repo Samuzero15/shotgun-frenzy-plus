@@ -139,6 +139,64 @@ ACTOR PlasmaProjectile_Advanced : FastProjectile
 	}
 }
 
+
+Actor PlasmaTrail
+{
+  Radius 0
+  Height 0
+  //Gravity 100
+  Alpha 0.35
+  Renderstyle Add
+  +FORCEXYBILLBOARD
+  	+NOBLOCKMAP
+	+FloorClip
+	+SPECIALFLOORCLIP
+	+NOGRAVITY
+	+NOTELEPORT
+    +DoomBounce
+	+ClientsideOnly
+  States
+  {
+   Melee:
+   Spawn:
+		PLSE A 2 bright
+		PLSE E 1 Bright
+		stop
+  }
+}
+
+ACTOR PlasmaProjectile_Advanced2 : FastProjectile
+{
+	Radius				11
+	Height				8
+	Speed				40
+	Damage				10
+	DamageType			MarineFire
+	RenderStyle			Add
+	Projectile
+	+MTHRUSPECIES
+	+SEEKERMISSILE
+	+SCREENSEEKER 
+	SeeSound "weapons/plasmaf"
+	DeathSound "weapons/plasmax"
+	MissileType "PlasmaTrail"
+	MissileHeight 8
+	//DeathSound		"weapons/rocklx"
+	Obituary			"%o could'nt escape from %k's plasma balls"
+	
+	States
+	{
+		Spawn:
+			PLSS AB 1 bright A_SeekerMissile(10,45, SMF_LOOK)
+			Loop
+		Death:
+			PLSE C 8 bright a_Explode(20,64, 0, true, 32)
+			PLSE D 6 bright
+			PLSE E 4 bright
+			stop
+	}
+}
+
 ACTOR PlasmaProjectile_Spread : FastProjectile
 {
 	Game Doom

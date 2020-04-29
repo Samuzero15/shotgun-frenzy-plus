@@ -225,16 +225,19 @@ function void STExecute_RecycleWeapon(int weapon, int play){
 	RecycleWeapon(weapon, play);
 }
 
+
 function void STExecute_lupnextPage(void){
+/*
 	listup_nav[2]++;
 	if(listup_nav[2] > listup_nav[3]){
 		listup_nav[2] = 0;
 	}
+	*/
 }
 
 function void STExecute_lupprevPage(void){
-	listup_nav[2]--;
+	/*listup_nav[2]--;
 	if(listup_nav[2] < 0){
 		listup_nav[2] = listup_nav[3];
-	}
+	}*/
 }

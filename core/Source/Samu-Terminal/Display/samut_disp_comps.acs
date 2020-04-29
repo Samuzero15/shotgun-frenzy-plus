@@ -1,10 +1,10 @@
 
 function void HilightImgButton (int bid){
 	//log(s:"I am Being called.");
-	int x = getImgButtonX1(bid)+(fixedDiv(getImgButtonWidth(bid), 2.0));
-	int y = getImgButtonY1(bid)+(fixedDiv(getImgButtonHeight(bid), 2.0));
-	str hover = getImgButtonHoverImage(bid);
-	str img = getImgButtonImage(bid);
+	int x = ImgButton_getX1(bid)+(fixedDiv(ImgButton_getWidth(bid), 2.0));
+	int y = ImgButton_getY1(bid)+(fixedDiv(ImgButton_getHeight(bid), 2.0));
+	str hover = ImgButton_getHoverImage(bid);
+	str img = ImgButton_getImage(bid);
 	
 	HudPushState();
     HudResetState();
@@ -25,13 +25,13 @@ function void HilightImgButton (int bid){
 
 function void ShowImgButton (int bid){
 	//log(s:"I am Being called.");
-	int x = getImgButtonX1(bid)+(fixedDiv(getImgButtonWidth(bid), 2.0));
-	int y = getImgButtonY1(bid)+(fixedDiv(getImgButtonHeight(bid), 2.0));
+	int x = ImgButton_getX1(bid)+(fixedDiv(ImgButton_getWidth(bid), 2.0));
+	int y = ImgButton_getY1(bid)+(fixedDiv(ImgButton_getHeight(bid), 2.0));
 	
-	int hid = getImgButtonHudId(bid);
-	str img = getImgButtonImage(bid);
+	int hid = ImgButton_getHudId(bid);
+	str img = ImgButton_getImage(bid);
 	
-	//print(s:getImgButtonImage(bid));
+	//print(s:ImgButton_Image_get(bid));
 	HudPushState();
     HudResetState();
 		//if(!use)
@@ -81,19 +81,19 @@ function void ShowLabel (int lid){
 }
 
 function void ShowImage (int iid){
-	int x = getImageX(iid) + getImageOffsetX(iid);
-	int y = getImageY(iid) + getImageOffsetY(iid);;
-	str img = getImageFile(iid);
+	int x = Image_getX(iid) + Image_getOffsetX(iid);
+	int y = Image_getY(iid) + Image_getOffsetY(iid);;
+	str img = Image_getFile(iid);
 	
 	// If no file was added.
 	if(strlen(img) == 0) return;
 	
-	int alignx = getImageAlignX(iid);
-	int aligny = getImageAlignY(iid);
+	int alignx = Image_getAlignX(iid);
+	int aligny = Image_getAlignY(iid);
 	
-	int hid = getImageHudID(iid);
+	int hid = Image_getHudID(iid);
 	
-	int p = getImageParent(iid);
+	int p = Image_getParent(iid);
 	
 	
 	int iw = RectWidth(p) >> 16;
@@ -109,20 +109,20 @@ function void ShowImage (int iid){
 
 function void ShowStrButton (int sbid){
 	
-	int xpos = getStrButtonX1(sbid);
-	int ypos = getStrButtonY1(sbid);
+	int xpos = StrButton_getX1(sbid);
+	int ypos = StrButton_getY1(sbid);
 	
-	int w = getStrButtonWidth(sbid);
-	int h = getStrButtonHeight(sbid);
-	str text = getStrButtonText(sbid);
+	int w = StrButton_getWidth(sbid);
+	int h = StrButton_getHeight(sbid);
+	str text = StrButton_getText(sbid);
 	//print(f:xpos);
-	str back = getStrButtonBack(sbid);
+	str back = StrButton_getBack(sbid);
 	//print(s:"w: ", f:w, s:", h: ", f:h);
 	
 	//print()
 	
-	int color = getStrButtonColor(sbid);
-	int hudid = getStrButtonHudId(sbid);
+	int color = StrButton_getColor(sbid);
+	int hudid = StrButton_getHudId(sbid);
 	
 	HudPushState();
     HudResetState();
@@ -160,17 +160,17 @@ function void ShowStrButton (int sbid){
 
 function void HiLightStrButton (int sbid){
 	
-	int xpos = getStrButtonX1(sbid);
-	int ypos = getStrButtonY1(sbid);
+	int xpos = StrButton_getX1(sbid);
+	int ypos = StrButton_getY1(sbid);
 	
-	int w = getStrButtonWidth(sbid);
-	int h = getStrButtonHeight(sbid);
-	//str text = getStrButtonText(sbid);
+	int w = StrButton_getWidth(sbid);
+	int h = StrButton_getHeight(sbid);
+	//str text = StrButton_getText(sbid);
 	//print(f:xpos);
-	str back = getStrButtonBack(sbid);
+	str back = StrButton_getBack(sbid);
 	//print(s:"w: ", f:w, s:", h: ", f:h);
 	
-	int color = getStrButtonColor(sbid);
+	int color = StrButton_getColor(sbid);
 	
 	HudPushState();
     HudResetState();

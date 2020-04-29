@@ -8,6 +8,7 @@
 //////SF Stuff////////
 #import "f_IntDB.acs"
 #import "fl_Price.acs"
+#import "fl_WDir.acs" // HEHEh, BOI.
 
 #include "acsutils.acs"
 #include "samu_tools.acs"
@@ -45,6 +46,8 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	SamuTerm_InitStrings();
 	// To Sync the prices.
 	ACS_NamedExecuteAlways("SFPlus_DefinePrices", 0);
+	//ACS_NamedExecuteAlways("SFPlus_DefineWeapons", 0);
+	SFPlus_DefineWeapons();
 	
 	SamuTerm_InitComps();
 	SamuTerm_GreetPlayer(playerNumber());

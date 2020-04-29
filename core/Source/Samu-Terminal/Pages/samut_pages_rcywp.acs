@@ -4,6 +4,7 @@ int rcywp_caps[20][2];
 int rcywp_gpos[20][2];
 int rcywp_stack[20];
 int rcywp_top;
+int pcolor;
 
 function void UpdateRcyPage(int pageTag){
 	setPageTitle(pageTag, "Recycle Weapons", CR_RED);
@@ -104,11 +105,11 @@ function void RecyclePage_AddRecycleOption(int pagetag, int slot, str weapon){
 	RecyclePage_Allocate(slot, 0, i);
 	
 	i = StrButton_Add(x+150.0,y-2.0, "Recycle"); 
-	setStrButtonShow(i, false);
-	setStrButtonColor(i, pcolor);
-	setStrButtonTag(i, pageTag);
-	setStrButtonExecute(i, STEXE_ASKRC);
-	setStrButtonExeArgs(i, slot, 0, 0);
+	StrButton_setShow(i, false);
+	StrButton_setColor(i, pcolor);
+	StrButton_setTag(i, pageTag);
+	StrButton_setExecute(i, STEXE_ASKRC);
+	StrButton_setExeArgs(i, slot, 0, 0);
 	RecyclePage_Allocate(slot, 1, i);
 	
 	
@@ -136,7 +137,7 @@ function void RecyclePage_Purge(void){
 		Label_setShow(rcywp_comp[i][0][0], false);
 		Label_setShow(rcywp_comp[i][0][1], false);
 		Label_setShow(rcywp_comp[i][0][2], false);
-		setStrButtonShow(rcywp_comp[i][1][0], false);
+		StrButton_setShow(rcywp_comp[i][1][0], false);
 		rcywp_caps[i][0] = 0;
 		rcywp_caps[i][1] = 0;
 		rcywp_comp[i][0][0] = 0;
@@ -190,8 +191,8 @@ function void RecyclePage_showRecycleOptions(int slot){
 			int sposx = rcywp_gpos[rcywp_top][0];
 			int sposy = rcywp_gpos[rcywp_top][1];
 				
-			setStrButtonPosition(sbtn,  sposX + 150.0, sposY - 2.0);
-			setStrButtonShow(sbtn, result);
+			StrButton_setPosition(sbtn,  sposX + 150.0, sposY - 2.0);
+			StrButton_setShow(sbtn, result);
 				
 			if(result)rcywp_top++;
 		}

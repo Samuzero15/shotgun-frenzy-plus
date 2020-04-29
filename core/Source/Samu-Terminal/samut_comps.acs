@@ -66,16 +66,16 @@ function void Components_Add(void){
 	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN1");
 	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  1);
 	Prop_StrDef_End();
-	setImgButtonProps(ibtn, propstr);
-	setImgButtonTag(ibtn, 0);
+	ImgButton_setProps(ibtn, propstr);
+	ImgButton_setTag(ibtn, 0);
 	
 	ibtn = ImgButton_AddCard(card, 2, 32.0, 32.0);
 	Prop_StrDef_Start(common);
 	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN2");
 	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  2);
 	Prop_StrDef_End();
-	setImgButtonProps(ibtn,propstr);
-	setImgButtonTag(ibtn, 0);
+	ImgButton_setProps(ibtn,propstr);
+	ImgButton_setTag(ibtn, 0);
 	
 	
 	ibtn = ImgButton_AddCard(card, 3, 32.0, 32.0);
@@ -83,18 +83,18 @@ function void Components_Add(void){
 	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN3");
 	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  3);
 	Prop_StrDef_End(); 
-	setImgButtonProps(ibtn,propstr);
-	setImgButtonTag(ibtn, 0);
-	//setImgButtonDescription(ibtn, "Recycle weapons");
+	ImgButton_setProps(ibtn,propstr);
+	ImgButton_setTag(ibtn, 0);
+	//ImgButton_setDescription(ibtn, "Recycle weapons");
 		
 	ibtn = ImgButton_AddCard(card, 4, 32.0, 32.0);
 	Prop_StrDef_Start(common);
 	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTNOK");
 	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  4);
 	Prop_StrDef_End();
-	setImgButtonProps(ibtn,propstr);
-	setImgButtonTag(ibtn, 0);
-	//setImgButtonDescription(ibtn, "More items");
+	ImgButton_setProps(ibtn,propstr);
+	ImgButton_setTag(ibtn, 0);
+	//ImgButton_setDescription(ibtn, "More items");
 	
 	
 	//print(d:Grid_Generate());
@@ -108,7 +108,7 @@ function void Components_Add(void){
 		Prop_StrDef_Add(ST_PSTR_INT, "exe_a1", 1);
 		Prop_StrDef_Add(ST_PSTR_INT, "tag",    pagetags[STTAGS_ALPHA]);
 		Prop_StrDef_End();
-		setImgButtonProps(ibtn,propstr);
+		ImgButton_setProps(ibtn,propstr);
 		
 	} else exitBtn = "BTNEXIT";
 	
@@ -119,12 +119,12 @@ function void Components_Add(void){
 	Prop_StrDef_Add(ST_PSTR_INT, "tag",     pagetags[STTAGS_ALPHA]);
 	Prop_StrDef_Add(ST_PSTR_INT, "execute", STEXE_CLOSE);
 	Prop_StrDef_End();
-	setImgButtonProps(ibtn,propstr);
+	ImgButton_setProps(ibtn,propstr);
 	
-	//setImgButtonDescription(ibtn, "Back to the reality");
+	//ImgButton_setDescription(ibtn, "Back to the reality");
 }
 
-function void Component_SaveProps(int comprect){
+function void Component_Save(int comprect){
 	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
 		comp_propsave[i] = RectGetUserData(comprect, i);
 	}
@@ -136,9 +136,9 @@ function void Component_LoadProps(int id, int type, int rect){
 	}
 
 	switch(type) {// Hud Id is overriden. Fix that with a redefining.
-		case STCOMP_IBTN:	setImgButtonHudId(id, ST_HID_IBTN + id); break;
-		case STCOMP_SBTN:	setStrButtonHudId(id, ST_HID_SBTNF + id); break;
-		case STCOMP_IMG:	setImageHudId	(id, ST_HID_IMG + id); break;
+		case STCOMP_IBTN:	ImgButton_setHudId(id, ST_HID_IBTN + id); break;
+		case STCOMP_SBTN:	StrButton_setHudId(id, ST_HID_SBTNF + id); break;
+		case STCOMP_IMG:	Image_setHudId	(id, ST_HID_IMG + id); break;
 		case STCOMP_LBL:	Label_setHudId	(id, ST_HID_LBL + id); break;
 	}
 }
@@ -148,9 +148,9 @@ function int Component_Allocate(int comptype, int x, int y, int w, int h){
 	if(id < ST_NCOMPS){
 		int rect = RectCreate(x,y,w,h);
 		switch(comptype){
-			case STCOMP_IBTN:	setImgButtonRect(id, rect); break;
-			case STCOMP_SBTN:	setStrButtonRect(id, rect); break;
-			case STCOMP_IMG:	setImageRect	(id, rect); break;
+			case STCOMP_IBTN:	ImgButton_setRect(id, rect); break;
+			case STCOMP_SBTN:	StrButton_setRect(id, rect); break;
+			case STCOMP_IMG:	Image_setRect	(id, rect); break;
 			case STCOMP_LBL:	Label_setRect	(id, rect); break;
 		}
 		//if(comptype == STCOMP_IBTN) print(s:"Id: ", d:id, s:" for image button added.");

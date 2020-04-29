@@ -12,8 +12,8 @@ function int StrButton_Add(int x, int y, str string){
 	int id = Component_Allocate(STCOMP_SBTN, x, y, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		setStrButtonText(id,string);
-		setStrButtonBack(id,tmp[2]);
+		StrButton_setText(id,string);
+		StrButton_setBack(id,tmp[2]);
 	}
 	
 	return id;
@@ -26,8 +26,8 @@ function int StrButton_AddMid(int x, int y, str string){
 		x - fixedDiv(tmp[0], 2.0) - 2.0, y - fixedDiv(tmp[1], 2.0) - 2.0, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		setStrButtonText(id,string);
-		setStrButtonBack(id,tmp[2]);
+		StrButton_setText(id,string);
+		StrButton_setBack(id,tmp[2]);
 	}
 	
 	return id;
@@ -42,8 +42,8 @@ function int StrButton_AddGrid(int grid, int row, int col,str string){
 	int id = Component_Allocate(STCOMP_SBTN, x, y, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		setStrButtonText(id,string);
-		setStrButtonBack(id,tmp[2]);
+		StrButton_setText(id,string);
+		StrButton_setBack(id,tmp[2]);
 	}
 	return id;
 }
@@ -57,8 +57,8 @@ function int StrButton_AddCard(int card, int cell, str string){
 	int id = Component_Allocate(STCOMP_SBTN, x, y, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		setStrButtonText(id,string);
-		setStrButtonBack(id,tmp[2]);
+		StrButton_setText(id,string);
+		StrButton_setBack(id,tmp[2]);
 	}
 	return id;
 }
@@ -72,8 +72,8 @@ function int StrButton_AddCardOff(int card, int cell, str string, int offx, int 
 	int id = Component_Allocate(STCOMP_SBTN, x + offx, y + offy, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		setStrButtonText(id,string);
-		setStrButtonBack(id,tmp[2]);
+		StrButton_setText(id,string);
+		StrButton_setBack(id,tmp[2]);
 	}
 	return id;
 }
@@ -87,8 +87,8 @@ function int StrButton_AddGridOff(int card, int row, int col, str string, int of
 	int id = Component_Allocate(STCOMP_SBTN, x + offx, y + offy, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		setStrButtonText(id,string);
-		setStrButtonBack(id,tmp[2]);
+		StrButton_setText(id,string);
+		StrButton_setBack(id,tmp[2]);
 	}
 	return id;
 }
@@ -96,47 +96,47 @@ function int StrButton_AddGridOff(int card, int row, int col, str string, int of
 function void StrButton_SetPosToGridOff(int i, int grid, int row, int col, int offx, int offy){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
-	SetStrButtonPosition(i, x + offx, y + offy);
+	StrButton_setPosition(i, x + offx, y + offy);
 }
 
 function void StrButton_SetPosToCardOff(int i, int card, int cell, int offx, int offy){
 	int x = Card_GetX(card, cell);
 	int y = Card_GetY(card, cell);
 	
-	SetStrButtonPosition(i, x + offx, y + offy);
+	StrButton_setPosition(i, x + offx, y + offy);
 }
 
 function void StrButton_SetPosToGrid(int i, int grid, int row, int col){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
-	SetStrButtonPosition(i, x, y);
+	StrButton_setPosition(i, x, y);
 }
 
 function void StrButton_SetPosToCard(int i, int card, int cell){
 	int x = Card_GetX(card, cell);
 	int y = Card_GetY(card, cell);
 	
-	SetStrButtonPosition(i, x, y);
+	StrButton_setPosition(i, x, y);
 }
 
 function void StrButton_SetDefaultProps(int i){
-		setStrButtonText(i,"");
-		setStrButtonDescription(i, "");
-		setStrButtonColor(i, CR_GRAY);
-		setStrButtonShow(i, false);
-		setStrButtonExecute(i, 0);	
-		setStrButtonExeArgs(i,0,0,0);
-		setStrButtonTag(i, 0);
-		setStrButtonHudId(i, ST_HID_SBTNF + i);
+		StrButton_setText(i,"");
+		StrButton_setDescription(i, "");
+		StrButton_setColor(i, CR_GRAY);
+		StrButton_setShow(i, false);
+		StrButton_setExecute(i, 0);	
+		StrButton_setExeArgs(i,0,0,0);
+		StrButton_setTag(i, 0);
+		StrButton_setHudId(i, ST_HID_SBTNF + i);
 }
 
 function void StrButton_SetProperties(int i, 
 	str string, str desc, int show, int exe, str back){
-		setStrButtonText(i,string);
-		setStrButtonDescription(i, desc);
-		setStrButtonShow(i, show);
-		setStrButtonExecute(i, exe);	
-		setStrButtonBack(i,back);
+		StrButton_setText(i,string);
+		StrButton_setDescription(i, desc);
+		StrButton_setShow(i, show);
+		StrButton_setExecute(i, exe);	
+		StrButton_setBack(i,back);
 }
 
 function void StrButton_Setup (str string){

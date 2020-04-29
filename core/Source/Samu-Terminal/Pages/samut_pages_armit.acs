@@ -49,11 +49,11 @@ function void ArmItemsPage_AddItemOption(int pagetag, int itemId){
 	ArmItemsPage_Allocate(itemId, 0, i);
 	
 	i = ImgButton_Add(x,y, 32.0, 32.0); 
-	setImgButtonImage(i, getItemIcon(itemId));
-	setImgButtonShow(i, false);
-	setImgButtonTag(i, pageTag);
-	setImgButtonExecute(i, STEXE_ITEMBUY);
-	setImgButtonArgs(i, itemId, 0 ,0);
+	ImgButton_setImage(i, getItemIcon(itemId));
+	ImgButton_setShow(i, false);
+	ImgButton_setTag(i, pageTag);
+	ImgButton_setExecute(i, STEXE_ITEMBUY);
+	ImgButton_setArgs(i, itemId, 0 ,0);
 	ArmItemsPage_Allocate(itemId, 1, i);
 	
 	i = Label_Add(x + cond(armit_top-1 < 9, -8.0, 40.0),y + 16.0); 

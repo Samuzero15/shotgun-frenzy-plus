@@ -356,7 +356,7 @@ script 125 (int l_Condition)
 		else if (g_FinalSkillScore < 60)   msg = "Nice work, but still you can do it better.";
 		else if (g_FinalSkillScore < 70)   msg = "Good job! not anyone reaches to this level";
 		else if (g_FinalSkillScore < 80)   msg = "Great job! Now pat yourself in the back!";
-		else if (g_FinalSkillScore < 90)   msg = "Exelent (team)work!"; 
+		else if (g_FinalSkillScore < 90)   msg = "Excelent (team)work!"; 
 		else if (g_FinalSkillScore < 100)  msg = "That was an amazing game!";
 		else if (g_FinalSkillScore == 100) msg = "You mastered the hell itself!";
     }

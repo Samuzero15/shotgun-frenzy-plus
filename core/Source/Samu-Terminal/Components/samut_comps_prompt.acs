@@ -27,20 +27,20 @@ function void Prompt_Initialize (void){
 		0.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
 		
 	ImgButton_SetProperties(prompt_ok, "BTNOK", "Okay",false, STEXE_OKAY);
-	setImgButtonHudID(prompt_ok,ST_HID_PROMPT_BTNOK);
-	setImgButtonShow(prompt_ok, false);
+	ImgButton_setHudID(prompt_ok,ST_HID_PROMPT_BTNOK);
+	ImgButton_setShow(prompt_ok, false);
 
 	prompt_yes = ImgButton_Add_P(
 		-32.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
 		
 	ImgButton_SetProperties(prompt_yes, "BTNYES", "Accept",false, STEXE_YES);
-	setImgButtonHudID(prompt_yes, ST_HID_PROMPT_BTNYES);
+	ImgButton_setHudID(prompt_yes, ST_HID_PROMPT_BTNYES);
 	
 	
 	prompt_no = ImgButton_Add_P(
 		32.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
 	ImgButton_SetProperties(prompt_no, "BTNNO", "Decline",false, STEXE_NO);
-	setImgButtonHudID(prompt_no,ST_HID_PROMPT_BTNNO);
+	ImgButton_setHudID(prompt_no,ST_HID_PROMPT_BTNNO);
 	
 	prompt_label = Label_Add_P 
 		(0.0,0.0, ST_COMPALIGN_North, rect);
@@ -61,26 +61,26 @@ function void Prompt_SetOptions(int style)
 {
 	switch(style){
 		case 1: // Yes or not answer.
-			setImgButtonTag(prompt_yes,getPromptTag());
-			setImgButtonTag(prompt_no,getPromptTag());
-			setImgButtonTag(prompt_ok,-9999);
+			ImgButton_setTag(prompt_yes,getPromptTag());
+			ImgButton_setTag(prompt_no,getPromptTag());
+			ImgButton_setTag(prompt_ok,-9999);
 		break;
 		default: // Accept answer.
-			setImgButtonTag(prompt_yes,-9999);
-			setImgButtonTag(prompt_no,-9999);
-			setImgButtonTag(prompt_ok,getPromptTag());
+			ImgButton_setTag(prompt_yes,-9999);
+			ImgButton_setTag(prompt_no,-9999);
+			ImgButton_setTag(prompt_ok,getPromptTag());
 		break;
 	}
 }
 
 function void Prompt_ResetOptions(void)
 {
-	setImgButtonShow(prompt_yes, false);
-	setImgButtonShow(prompt_no, false);
-	setImgButtonShow(prompt_ok, false);
-	setImgButtonTag(prompt_yes,-9999);
-	setImgButtonTag(prompt_no,-9999);
-	setImgButtonTag(prompt_ok,-9999);
+	ImgButton_setShow(prompt_yes, false);
+	ImgButton_setShow(prompt_no, false);
+	ImgButton_setShow(prompt_ok, false);
+	ImgButton_setTag(prompt_yes,-9999);
+	ImgButton_setTag(prompt_no,-9999);
+	ImgButton_setTag(prompt_ok,-9999);
 }
 
 function void Prompt_Resize(int w, int h){
@@ -116,9 +116,9 @@ function void Prompt_Ask(str title, str msg, str color){
 	Prompt_SetOptions(1);
 	
 	// In case i was'nt clear enough.
-	setImgButtonParent(prompt_ok, getPromptRect());
-	setImgButtonParent(prompt_yes, getPromptRect());
-	setImgButtonParent(prompt_no, getPromptRect());
+	ImgButton_setParent(prompt_ok, getPromptRect());
+	ImgButton_setParent(prompt_yes, getPromptRect());
+	ImgButton_setParent(prompt_no, getPromptRect());
 	
 	localAmbientSound("SamuTerm/HopIn",127);
 	setPromptState(true);

@@ -4,90 +4,90 @@
 // Getters from Images!
 ////////////////////////////////////////
 
-function int getImageRect(int bid){
+function int Image_getRect(int bid){
 	return comp_rects_many[STCOMP_IMG][bid];
 }
 
-function int getImageX(int bid){
-	return RectX1(getImageRect(bid));
+function int Image_getX(int bid){
+	return RectX1(Image_getRect(bid));
 }
 
-function int getImageY(int bid){
-	return RectY1(getImageRect(bid));
+function int Image_getY(int bid){
+	return RectY1(Image_getRect(bid));
 }
 
-function int getImageTag(int bid){
-	return RectGetUserData(getImageRect(bid), ST_CPROP0);
+function int Image_getTag(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP0);
 }
 
-function int getImageFile(int bid){
-	return RectGetUserData(getImageRect(bid), ST_CPROP1);
+function int Image_getFile(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP1);
 }
 
-function int getImageShow(int bid){
-	return RectGetUserData(getImageRect(bid), ST_CPROP2);
+function int Image_getShow(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP2);
 }
 
-function int getImageParent(int bid){
-	return RectGetUserData(getImageRect(bid), ST_CPROP3);
+function int Image_getParent(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP3);
 }
 
-function int getImageAlignX(int bid){
-	return UnpackByte1(RectGetUserData(getImageRect(bid), ST_CPROP4));
+function int Image_getAlignX(int bid){
+	return UnpackByte1(RectGetUserData(Image_getRect(bid), ST_CPROP4));
 }
 
-function int getImageAlignY(int bid){
-	return UnpackByte2(RectGetUserData(getImageRect(bid), ST_CPROP4));
+function int Image_getAlignY(int bid){
+	return UnpackByte2(RectGetUserData(Image_getRect(bid), ST_CPROP4));
 }
 
-function int getImageOffsetX(int bid){
-	return UnpackByte1(RectGetUserData(getImageRect(bid), ST_CPROP5));
+function int Image_getOffsetX(int bid){
+	return UnpackByte1(RectGetUserData(Image_getRect(bid), ST_CPROP5));
 }
 
-function int getImageOffsetY(int bid){
-	return UnpackByte2(RectGetUserData(getImageRect(bid), ST_CPROP5));
+function int Image_getOffsetY(int bid){
+	return UnpackByte2(RectGetUserData(Image_getRect(bid), ST_CPROP5));
 }
 
-function int getImageHudId(int bid){
-	return RectGetUserData(getImageRect(bid), ST_CPROP6);
+function int Image_getHudId(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP6);
 }
 
 ///////////////////////////////////////
 // Setters from Images!
 ///////////////////////////////////////
 
-function void setImageRect(int bid, int rect){
+function void Image_setRect(int bid, int rect){
 	comp_rects_many[STCOMP_IMG][bid] = rect;
 }
 
-function void setImageTag(int bid, int tag){
-	SetRectUserData(getImageRect(bid), ST_CPROP0, tag);
+function void Image_setTag(int bid, int tag){
+	SetRectUserData(Image_getRect(bid), ST_CPROP0, tag);
 }
 
-function void setImagePosition(int bid, int x, int y){
-	SetRectPosition(GetImageRect(bid), x, y);
+function void Image_setPosition(int bid, int x, int y){
+	SetRectPosition(Image_getRect(bid), x, y);
 }
 
-function void setImageFile(int bid, str file){
-	SetRectUserData(GetImageRect(bid), ST_CPROP1, file);
+function void Image_setFile(int bid, str file){
+	SetRectUserData(Image_getRect(bid), ST_CPROP1, file);
 }
 
-function void setImageShow(int bid, bool visible){
-	SetRectUserData(GetImageRect(bid), ST_CPROP2, visible);
+function void Image_setShow(int bid, bool visible){
+	SetRectUserData(Image_getRect(bid), ST_CPROP2, visible);
 }
 
-function void setImageParent(int bid, int parent){
-	SetRectUserData(GetImageRect(bid), ST_CPROP3, parent);
+function void Image_setParent(int bid, int parent){
+	SetRectUserData(Image_getRect(bid), ST_CPROP3, parent);
 }
 
-function void setImageAligns(int bid, int alx, int aly){
-	SetRectUserData(GetImageRect(bid), ST_CPROP4, PackBytes(alx,aly,0,0));
+function void Image_setAligns(int bid, int alx, int aly){
+	SetRectUserData(Image_getRect(bid), ST_CPROP4, PackBytes(alx,aly,0,0));
 }
 
-function void setImageOffsets(int bid, int offx, int offy){
-	SetRectUserData(GetImageRect(bid), ST_CPROP5, PackBytes(offx,offy,0,0));
+function void Image_setOffsets(int bid, int offx, int offy){
+	SetRectUserData(Image_getRect(bid), ST_CPROP5, PackBytes(offx,offy,0,0));
 }
 
-function void setImageHudID(int bid, int hudId){
-	SetRectUserData(GetImageRect(bid), ST_CPROP6, hudId);
+function void Image_setHudID(int bid, int hudId){
+	SetRectUserData(Image_getRect(bid), ST_CPROP6, hudId);
 }

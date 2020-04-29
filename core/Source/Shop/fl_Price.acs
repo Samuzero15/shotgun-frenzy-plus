@@ -52,8 +52,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wu_boomstick_up0", 	1);
 	Prices_add("pr_wu_ssg_up1", 		1);
 	Prices_add("pr_wu_ssg_up2", 		1);
-	Prices_add("pr_wu_quadshot_up1", 	1);
-	Prices_add("pr_wu_quadshot_up2", 	2);
+	Prices_add("pr_wu_quadshot_up0", 	2);
 	Prices_add("pr_wu_spitter_up1", 	1);
 	Prices_add("pr_wu_spitter_up2", 	1);
 	Prices_add("pr_wu_buckshot_up1", 	1);

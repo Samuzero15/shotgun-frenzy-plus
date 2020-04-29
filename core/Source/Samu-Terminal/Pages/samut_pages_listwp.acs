@@ -4,13 +4,13 @@ function void UpdateListWPPage(int pageTag){
 	
 	if(isOnTheSamePage(pageTag)){
 		Label_setShow(listwp_page[4], GetTechFlag_C(TECH_ARMSP1));
-		setStrButtonShow(listwp_page[5], GetTechFlag_C(TECH_ARMSP1));
-		setStrButtonShow(listwp_page[6], GetTechFlag_C(TECH_ARMSP1));
-		setStrButtonShow(listwp_page[7], GetTechFlag_C(TECH_ARMSP1));
+		StrButton_setShow(listwp_page[5], GetTechFlag_C(TECH_ARMSP1));
+		StrButton_setShow(listwp_page[6], GetTechFlag_C(TECH_ARMSP1));
+		StrButton_setShow(listwp_page[7], GetTechFlag_C(TECH_ARMSP1));
 	
 		Label_setShow(listwp_page[8], GetTechFlag_C(TECH_ARMSP2));
-		setStrButtonShow(listwp_page[9], GetTechFlag_C(TECH_ARMSP2));
-		setStrButtonShow(listwp_page[10], GetTechFlag_C(TECH_ARMSP2));
+		StrButton_setShow(listwp_page[9], GetTechFlag_C(TECH_ARMSP2));
+		StrButton_setShow(listwp_page[10], GetTechFlag_C(TECH_ARMSP2));
 	}
 }
 
@@ -37,21 +37,21 @@ function void InitListWPPage(int pageTag){
 		switch(j){
 			case 0:
 			i = StrButton_Add(iposX, iposY, "Shotgun");
-			setStrButtonExeArgs(i, WP_SHOTGUN,0,0);
+			StrButton_setExeArgs(i, WP_SHOTGUN,0,0);
 			break;
 			case 1:
 			i = StrButton_Add(iposX, iposY, "Assault");
-			setStrButtonExeArgs(i, WP_ASSAULT,0,0);
+			StrButton_setExeArgs(i, WP_ASSAULT,0,0);
 			break;
 			case 2:
 			i = StrButton_Add(iposX, iposY, "Support");
-			setStrButtonExeArgs(i, WP_SUPPORT,0,0);
+			StrButton_setExeArgs(i, WP_SUPPORT,0,0);
 			break;
 		}
-		setStrButtonTag(i,pageTag);
-		setStrButtonShow(i, false);
-		setStrButtonColor(i, CR_GREEN);
-		setStrButtonExecute(i, STEXE_SHOWBuyPAGE);
+		StrButton_setTag(i,pageTag);
+		StrButton_setShow(i, false);
+		StrButton_setColor(i, CR_GREEN);
+		StrButton_setExecute(i, STEXE_SHOWBuyPAGE);
 		listwp_page[1 + j] = i;
 	}
 	
@@ -75,21 +75,21 @@ function void InitListWPPage(int pageTag){
 		switch(j){
 			case 0:
 			i = StrButton_Add(iposX, iposY, "Commando");
-			setStrButtonExeArgs(i, WP_COMANDO,0,0);
+			StrButton_setExeArgs(i, WP_COMANDO,0,0);
 			break;
 			case 1:
 			i = StrButton_Add(iposX, iposY, "Exploder");
-			setStrButtonExeArgs(i, WP_HEAVY,0,0);
+			StrButton_setExeArgs(i, WP_HEAVY,0,0);
 			break;
 			case 2:
 			i = StrButton_Add(iposX, iposY, "Plasmatic");
-			setStrButtonExeArgs(i, WP_PLASMA,0,0);
+			StrButton_setExeArgs(i, WP_PLASMA,0,0);
 			break;
 		}
-		setStrButtonTag(i,pageTag);
-		setStrButtonShow(i, false);
-		setStrButtonColor(i, CR_CYAN);
-		setStrButtonExecute(i, STEXE_SHOWBuyPAGE);
+		StrButton_setTag(i,pageTag);
+		StrButton_setShow(i, false);
+		StrButton_setColor(i, CR_CYAN);
+		StrButton_setExecute(i, STEXE_SHOWBuyPAGE);
 		listwp_page[5 + j] = i;
 	}
 	
@@ -113,17 +113,17 @@ function void InitListWPPage(int pageTag){
 		switch(j){
 			case 0:
 			i = StrButton_Add(iposX, iposY, "Pyromaniac");
-			setStrButtonExeArgs(i, WP_FLAMER,0,0);
+			StrButton_setExeArgs(i, WP_FLAMER,0,0);
 			break;
 			case 1:
 			i = StrButton_Add(iposX, iposY, "BFG");
-			setStrButtonExeArgs(i, WP_BFG,0,0);
+			StrButton_setExeArgs(i, WP_BFG,0,0);
 			break;
 		}
-		setStrButtonTag(i,pageTag);
-		setStrButtonShow(i, false);
-		setStrButtonColor(i, CR_ORANGE);
-		setStrButtonExecute(i, STEXE_SHOWBuyPAGE);
+		StrButton_setTag(i,pageTag);
+		StrButton_setShow(i, false);
+		StrButton_setColor(i, CR_ORANGE);
+		StrButton_setExecute(i, STEXE_SHOWBuyPAGE);
 		listwp_page[9 + j] = i;
 	}
 	

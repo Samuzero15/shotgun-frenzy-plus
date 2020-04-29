@@ -26,6 +26,7 @@ function void SamuTerm_InitPages(void){
 		CMDPage_Init();
 	}
 	else{
+		setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
 		InitBuyPage(10);
 		InitRcyPage(3);
 		InitArmItemsPage(4);

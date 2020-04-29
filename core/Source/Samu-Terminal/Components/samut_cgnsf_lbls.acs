@@ -57,11 +57,11 @@ function int Label_getWrapWidth(int bid){
 }
 
 function int Label_getOffX(int bid){
-	return UnpackShort1(RectGetUserData(getImgButtonRect(bid), ST_CPROP9)) << 16;
+	return UnpackShort1(RectGetUserData(ImgButton_getRect(bid), ST_CPROP9)) << 16;
 }
 
 function int Label_getOffY(int bid){
-	return UnpackShort2(RectGetUserData(getImgButtonRect(bid), ST_CPROP9)) << 16;
+	return UnpackShort2(RectGetUserData(ImgButton_getRect(bid), ST_CPROP9)) << 16;
 }
 
 ///////////////////////////////////////
@@ -111,7 +111,7 @@ function void Label_setHudID(int bid, int hudId){
 
 function void Label_setOffsets(int bid, int offx, int offy){
 	int res = PackShorts(offx >> 16, offy >> 16);
-	SetRectUserData(getImgButtonRect(bid), ST_CPROP9, res);
+	SetRectUserData(Label_GetRect(bid), ST_CPROP9, res);
 }
 
 function void Label_setWrapWidth(int bid, int wrap){

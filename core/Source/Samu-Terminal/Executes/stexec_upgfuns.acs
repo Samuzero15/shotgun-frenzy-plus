@@ -1,0 +1,16 @@
+
+function void StExecute_Upg0PageDesc(int weapon, int label_desc, int label_title)
+{
+	str textd = WeaponUpgrade_GetDesc(weapon, 0);
+	str textt = WeaponUpgrade_GetName(weapon, 0);
+	Label_setText(label_desc, textd);
+	Label_setText(label_title, textt);
+}
+
+function void StExecute_Upg1PageDesc(int weapon, int label_desc, int label_title)
+{
+	str textd = WeaponUpgrade_GetDesc(weapon, 1);
+	str textt = WeaponUpgrade_GetName(weapon, 1);
+	Label_setText(label_desc, textd);
+	Label_setText(label_title, textt);
+}

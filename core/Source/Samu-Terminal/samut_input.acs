@@ -34,11 +34,11 @@ function void CheckPromptClick(void){
 
 function bool ExecuteOnClick_IBtn(int i){
 	int sucess = false;
-	int rect =  getImgButtonRect(i);
-	if(RectIsClicked(rect,FIRE1) && getImgButtonShow(i) != ST_Disabled){
+	int rect =  ImgButton_getRect(i);
+	if(RectIsClicked(rect,FIRE1) && ImgButton_getShow(i) != ST_Disabled){
 		SamuTerm_CallOpExecute 
-			(getImgButtonExecute(i), getImgButtonExeArg1(i),  
-			getImgButtonExeArg2(i),  getImgButtonExeArg3(i));
+			(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
+			ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
 		localAmbientSound("SamuTerm/Select",127);
 		sucess = true;
 	}
@@ -48,11 +48,11 @@ function bool ExecuteOnClick_IBtn(int i){
 
 function bool ExecuteOnHover_IBtn(int i){
 	int sucess = false;
-	int rect =  getImgButtonRect(i);
-	if(getImgButtonShow(i) != ST_Disabled){
+	int rect =  ImgButton_getRect(i);
+	if(ImgButton_getShow(i) != ST_Disabled){
 		SamuTerm_CallOpExecute 
-			(getImgButtonExeHover(i), getImgButtonHoverArg1(i),  
-			getImgButtonHoverArg2(i),  getImgButtonHoverArg3(i));
+			(ImgButton_getExeHover(i), ImgButton_getHoverArg1(i),  
+			ImgButton_getHoverArg2(i),  ImgButton_getHoverArg3(i));
 		//localAmbientSound("SamuTerm/Select",127);
 		sucess = true;
 	}
@@ -62,11 +62,11 @@ function bool ExecuteOnHover_IBtn(int i){
 
 function bool ExecuteOnClick_sBtn(int i){
 	int sucess = false;
-	int rect = getStrButtonRect(i);
-	if(RectIsClicked(rect,FIRE1) && getStrButtonShow(i) != ST_Disabled){
+	int rect = StrButton_getRect(i);
+	if(RectIsClicked(rect,FIRE1) && StrButton_getShow(i) != ST_Disabled){
 		SamuTerm_CallOpExecute 
-			(getStrButtonExecute(i), getStrButtonExeArg1(i),  
-			getStrButtonExeArg2(i),  getStrButtonExeArg3(i));
+			(StrButton_getExecute(i), StrButton_getExeArg1(i),  
+			StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
 		//log(s:"You clicked a string button!");
 		localAmbientSound("SamuTerm/Select",127);
 		sucess = true;
@@ -97,8 +97,8 @@ function void CheckHover(void){
 	//log(s:"No Change. ", d:nowHover);
 	
 	for(int j = 0; j < comp_count[STCOMP_IBTN] && !inputDone; j++){
-		rect = getImgButtonRect(j);
-		if(RectIsHovered(rect) && getImgButtonShow(j) != ST_Disabled){
+		rect = ImgButton_getRect(j);
+		if(RectIsHovered(rect) && ImgButton_getShow(j) != ST_Disabled){
 			ExecuteOnHover_IBtn(j);
 			comphover = j;
 			inputDone = true;
@@ -106,8 +106,8 @@ function void CheckHover(void){
 		}
 	}
 	for(int i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
-		rect = getStrButtonRect(i);
-		if(RectIsHovered(rect) && getStrButtonShow(i) != ST_Disabled){
+		rect = StrButton_getRect(i);
+		if(RectIsHovered(rect) && StrButton_getShow(i) != ST_Disabled){
 			comphover = i;
 			inputDone = true;
 			break;
@@ -140,8 +140,8 @@ function void CheckPromptHover(void){
 
 function bool IsHovering_ibtn(int i){
 	bool res = false;
-	int rect = getImgButtonRect(i);
-	if(RectIsHovered(rect) && getImgButtonShow(i) != ST_Disabled){
+	int rect = ImgButton_getRect(i);
+	if(RectIsHovered(rect) && ImgButton_getShow(i) != ST_Disabled){
 		res = true;
 	}
 	return res;

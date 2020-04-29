@@ -34,7 +34,17 @@ w) Work in progres
 
 v0 - Before the beginning...
 
+-) (29 / 04 / 2020)
+	*) Replaced the rippering porjectile from the plasma gun advanced with a
+		seeking projectile that explodes. Also the Plasma Gun Advanced can shoot 4
+		plasma balls per shot, with powerful plasma balls.
+	+) Fl_Wdir added and programmed. Here it will save all data from the weapons.
+	// Later will be the turn for the items.
+	*) Revamping the Ammo terminal, starting with the upgrade section.
+	// It will work slightly differently than the last time, but its the same way to use it.
+
 -) (28 / 04 / 2020)
+	*) Function renaming applied for the most used components on samu terminal.
 	*) The test map now supports up to 128 monsters to be spawned! (Also extended 
 	   the arena for easier combat and debuging.)
 	*) Terminals are avilable now near on the entrance of the monster arena.

@@ -38,7 +38,7 @@ Function void UpdatePromptLabels(void){
 
 Function void UpdatePromptImgButtons(void){
 	for (int i = 0; i < comp_count[STCOMP_IBTN]; i++){
-		int parent = GetImgButtonParent(i);
+		int parent = ImgButton_getParent(i);
 		if(parent == getPromptRect()){
 			UpdateImgButton(i, getPromptState());
 		}
@@ -48,16 +48,16 @@ Function void UpdatePromptImgButtons(void){
 Function void ShowByAlphaTag(void){
 	int i, compTag;
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
-		comptag = getImgButtonTag(i);
+		comptag = ImgButton_getTag(i);
 		if(comptag == pagetags[STTAGS_ALPHA]){
-			setImgButtonShow(i, true);
+			ImgButton_setShow(i, true);
 		}
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
-		comptag = getStrButtonTag(i);
+		comptag = StrButton_getTag(i);
 		if(comptag == pagetags[STTAGS_ALPHA]){
-			setStrButtonShow(i, true);
+			StrButton_setShow(i, true);
 		}
 	}
 	
@@ -69,9 +69,9 @@ Function void ShowByAlphaTag(void){
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
-		comptag = getImageTag(i);
+		comptag = Image_getTag(i);
 		if(comptag == pagetags[STTAGS_ALPHA]){
-			setImageShow(i, true);
+			Image_setShow(i, true);
 		}
 	}
 }
@@ -80,16 +80,16 @@ Function void HideOrShowByTag(int tag, bool show){
 	int i, compTag;
 
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
-		comptag = getImgButtonTag(i);
+		comptag = ImgButton_getTag(i);
 		if(comptag == tag && comptag != 0){
-			setImgButtonShow(i, show);
+			ImgButton_setShow(i, show);
 		}
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
-		comptag = getStrButtonTag(i);
+		comptag = StrButton_getTag(i);
 		if(comptag == tag && comptag != 0){
-			setStrButtonShow(i, show);
+			StrButton_setShow(i, show);
 		}
 	}
 	
@@ -101,9 +101,9 @@ Function void HideOrShowByTag(int tag, bool show){
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
-		comptag = getImageTag(i);
+		comptag = Image_getTag(i);
 		if(comptag == tag && comptag != 0){
-			setImageShow(i, show);
+			Image_setShow(i, show);
 		}
 	}
 }

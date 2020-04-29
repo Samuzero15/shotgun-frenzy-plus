@@ -27,7 +27,7 @@ function void CMDPage_Init(void){
 	pagetags[STTAGS_NOW] = 11;
 	
 	i = Image_Add(0.0, 0.0, "HUDCOM");
-	setImageTag(i, pagetags[STTAGS_ALPHA]);
+	Image_setTag(i, pagetags[STTAGS_ALPHA]);
 	
 	i = Label_Add(50.0, 420.0);
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
@@ -152,11 +152,11 @@ function void CMDPage_MakeReturnButton(int tag, int returntag){
 function void CMDPage_MakeButton(int tag, int row, int col, str img, int exe, int arg)
 {
 	int i = ImgButton_AddGrid(cmdpage_vars[0], row, col, 31.0, 31.0);
-	setImgButtonImage(i, img);
-	setImgButtonHoverImage(i, "BUTTONS");
-	setImgButtonExecute(i, exe);
-	setImgButtonArgs(i, arg, 0, 0);
-	setImgButtonTag(i, tag);
+	ImgButton_setImage(i, img);
+	ImgButton_setHoverImage(i, "BUTTONS");
+	ImgButton_setExecute(i, exe);
+	ImgButton_setArgs(i, arg, 0, 0);
+	ImgButton_setTag(i, tag);
 }
 
 function void CMDPage_MakeButton2(int tag, int row, int col, int btndata, int exe, int arg)
@@ -165,11 +165,11 @@ function void CMDPage_MakeButton2(int tag, int row, int col, int btndata, int ex
 	str icon = getCMDButIcon(btndata);
 
 	int i = ImgButton_AddGrid(cmdpage_vars[0], row, col, 31.0, 31.0);
-	setImgButtonImage(i, icon);
-	setImgButtonHoverImage(i, "BUTTONS");
-	setImgButtonExecute(i, exe);
-	setImgButtonArgs(i, arg, 0, 0);
-	setImgButtonTag(i, tag);
-	SetImgButtonExeHover(i, STEXE_CMDBTNDESC);
-	SetImgButtonArgsHover(i, cmdpage_vars[1],cmdpage_vars[2],btndata);
+	ImgButton_setImage(i, icon);
+	ImgButton_setHoverImage(i, "BUTTONS");
+	ImgButton_setExecute(i, exe);
+	ImgButton_setArgs(i, arg, 0, 0);
+	ImgButton_setTag(i, tag);
+	ImgButton_setExeHover(i, STEXE_CMDBTNDESC);
+	ImgButton_setArgsHover(i, cmdpage_vars[1],cmdpage_vars[2],btndata);
 }

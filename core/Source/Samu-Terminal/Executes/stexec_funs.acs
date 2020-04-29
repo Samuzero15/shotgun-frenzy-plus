@@ -10,6 +10,7 @@
 
 #include "stexec_sfactions.acs"
 #include "stexec_cmdfuns.acs"
+#include "stexec_upgfuns.acs"
 
 function void STExecute_OkayAction(void){
 	localAmbientSound("SamuTerm/HopOut",127);

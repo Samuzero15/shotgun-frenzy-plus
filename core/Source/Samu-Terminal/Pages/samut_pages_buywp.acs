@@ -6,10 +6,10 @@ function void UpdateBuyPage(int pageTag){
 		if(gotWPAlready(buy_page[7])){
 			Label_setText(buy_page[5], "You own this pack already.");
 			Label_setColor(buy_page[5], CR_GREEN);
-			setStrButtonShow(buy_page[0], false);
+			StrButton_setShow(buy_page[0], false);
 		}else{
-			setStrButtonShow(buy_page[0], isOnTheSamePage(pageTag));
-			setStrButtonColor(buy_page[0], cond(getPlayCredits() >= buy_page[6], CR_GREEN, CR_RED));
+			StrButton_setShow(buy_page[0], isOnTheSamePage(pageTag));
+			StrButton_setColor(buy_page[0], cond(getPlayCredits() >= buy_page[6], CR_GREEN, CR_RED));
 			
 			if(getPlayCredits() < buy_page[6]){
 				Label_setText(buy_Page[5],
@@ -38,17 +38,17 @@ function void SetUpBuyPage_WP(int wp){
 	Label_setText(buy_page[5], StrSfPfInt("Cost: ", buy_page[6], " credits."));
 	//Label_setAligns(buy_page[5], HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	
-	setStrButtonExecute(buy_page[0], STEXE_BUYWP);
-	setStrButtonExeArgs(buy_page[0], buy_page[7],0,0);
+	StrButton_setExecute(buy_page[0], STEXE_BUYWP);
+	StrButton_setExeArgs(buy_page[0], buy_page[7],0,0);
 }
 
 function void InitBuyPage(int pageTag){
 	int i = buy_page[0];
 	i = StrButton_Add(280.0,345.0, "Buy");
-	setStrButtonTag(i,pageTag);
-	setStrButtonShow(i, false);
-	setStrButtonColor(i, CR_GREEN);
-	setStrButtonExecute(i, STEXE_ASK);
+	StrButton_setTag(i,pageTag);
+	StrButton_setShow(i, false);
+	StrButton_setColor(i, CR_GREEN);
+	StrButton_setExecute(i, STEXE_ASK);
 	buy_page[0] = i;
 	
 	i = Label_Add(320.0,60.0); 

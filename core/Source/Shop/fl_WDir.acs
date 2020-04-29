@@ -1,0 +1,367 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_ItemDir.acs
+// item directory
+
+// Here it lays all of the weapons on the game.
+// For the prices, take a look at fl_price.
+
+#library "fl_WDir"
+#include "zcommon.acs"
+
+#libdefine FP_WEP_PACKS 10
+#libdefine FP_WEAPONS 20
+#libdefine FP_WEPUPS 2
+
+#libdefine FP_BAS 1
+#libdefine FP_ADV 2
+#libdefine FP_OP 3
+
+int fp_WpPacks[FP_WEP_PACKS][4];
+int fp_WeaponList[FP_WEAPONS][5];
+int fp_WepUpgList[FP_WEAPONS][FP_WEPUPS][5];
+
+int fp_WeaponPackStack = 0;
+int fp_WeaponStack = 0;
+int fp_WeaponUpStack = 0;
+
+// fp_WeaponPacks
+//	Pack name
+//	Category (BAS, ADV, POW)
+//  Description
+// 	Buy Price
+
+// fp_WeaponList[wepaonid]:
+// 	Weapon Name
+// 	Actor
+// 	Pack id
+//  Description
+// 	Recycle Price (On Credits)
+
+// fp_WeaponUpgrades[wepaonid]:
+// 	Weapon Upgrade Name
+// 	Actor
+//  Description
+// 	Upgrade Price (On Ups.)
+
+Script "SFPlus_DefineItems" OPEN{
+
+}
+
+function void SFPlus_DefineWeapons (void){
+	int wep = 0;
+	int pack = 0;
+	int ups = 0;
+	
+	fp_WeaponPackStack = 0;
+	fp_WeaponStack = 0;
+    fp_WeaponUpStack = 0;
+	
+	wep = Weapon_Add("Boomstick", "Standard Boomstick", -1, "Your shotgun.", "null");
+				
+	WeaponUpgrade_Add("Boomstick_Full", "Combat Boomstick", wep, 
+		"Peelets can drop fire to burn stronger enemies, also you have a chainsaw bayonetta.",
+		"pr_wu_boomstick_up0", "null");
+	
+	//Shotgun pack
+	pack = WeaponPack_Add(
+		"Shotguns", FP_BAS, 
+		"Shell based weapons to cause damage. Great for the newcomers.",
+		"pr_wb_shotgun");
+	
+	wep = Weapon_Add("SSG", "Super Shotgun", pack, 
+		strparam(s:"Your mighty double barreled shotgun. ",
+				s:"It can also fire as a sawed off for more control.",
+				s:"Pri: 2 Shell shot",
+				s:"Sec: 1 Shell shot"),
+				"pr_wr_ssg");
+				
+	WeaponUpgrade_Add("SSG_Autoload", "Autoloadable Super Shotgun", wep, 
+		"Allows you to fire faster, and your peelets can push the demon waves.",
+		"pr_wu_ssg_up1", "pr_wr_ssg_up1");
+		
+	WeaponUpgrade_Add("SSG_Explosive", "Explosive Super Shotgun", wep, 
+		"Your shells will explode and cause fire to damage the hordes constantly.",
+		"pr_wu_ssg_up2", "pr_wr_ssg_up2");
+		
+	wep = Weapon_Add("Quadshot", "Quadashot", pack, 
+		strparam(s:"Powerful machine to shoot 4 shells at once",
+				s:"It may be slow on recharging, but its more preciser, granting you 3 or 4 kills.",
+				s:"Pri: Single shot",
+				s:"Sec: Burst shots"),
+				"pr_wr_quadshot");
+				
+	WeaponUpgrade_Add("Quadshot_Full", "Combat Quadashot", wep, 
+		"Your shells will cause fire, and now you have a chainsaw with you.",
+		"pr_wu_quadshot_up0", "pr_wr_quadshot_up0");
+		
+	//Assault pack
+	pack = WeaponPack_Add(
+		"Assault", FP_BAS, 
+		"Set of weapons for quick assault operations.",
+		"pr_wb_assault");
+	
+	wep = Weapon_Add("Spitter", "Spitter", pack, 
+		strparam(s:"Nifty for crowd control against the weaker demons.",
+				s:"Fires a series of bullets against the enemies constanty"),
+				"pr_wr_spitter");
+				
+	WeaponUpgrade_Add("Spitter_SSG", "Spread Spitter + Shell Grenades", wep, 
+		"You gain more spread for this gun, and also you can launch shell grenades.",
+		"pr_wu_spitter_up1", "pr_wr_spitter_up1");
+		
+	WeaponUpgrade_Add("Spitter_GLauncher", "Fast Spitter + N. Gas Launcher", wep, 
+		"Fires faster. Allows you to throw N. Gass grenades, they cause stun and poison to the horde.",
+		"pr_wu_spitter_up2", "pr_wr_spitter_up2");
+		
+	wep = Weapon_Add("Buckshot", "Buckshot", pack, 
+		strparam(s:"Powerful shotgun that packes 10 shells in the chamber",
+				s:"Shoots fast, but needs to be recharged manually.",
+				s:"Sec: Reload"),
+				"pr_wr_buckshot");
+				
+	WeaponUpgrade_Add("Buckshot_Chamber", "Big Chamber Buckshot", wep, 
+		"You can reload up to 20 shells, reloads faster adding 4 shells for each pump.",
+		"pr_wu_buckshot_up1", "pr_wr_buckshot_up1");
+		
+	WeaponUpgrade_Add("Buckshot_Explosive", "Explosive Buckshot", wep, 
+		"Your shells causes more damage, and spreads fire.",
+		"pr_wu_buckshot_up2", "pr_wr_buckshot_up2");
+		
+	//Support pack
+	pack = WeaponPack_Add(
+		"Support", FP_BAS, 
+		"Useful tools to aid in the battle.",
+		"pr_wb_support");
+	
+	wep = Weapon_Add("Supplier", "Supplier Machine", pack, 
+		strparam(s:"Patch your allies with this, it drops supplies for the marines.",
+				s:"Pri: Drop Ammo, Sec: Drop Health"),
+				"pr_wr_supplier");
+				
+	WeaponUpgrade_Add("Supplier_Big", "Resourceful Supplier", wep, 
+		"Supply more goodies, and in a wider range.",
+		"pr_wu_supplier_up0", "pr_wr_supplier_up0");
+		
+	//Commando pack
+	pack = WeaponPack_Add(
+		"Commando", FP_ADV, 
+		"Heavier repeating guns, they Rip and Tear a lot.",
+		"pr_wb_commando");
+	
+	wep = Weapon_Add("Repeater", "Bullet Repeater", pack, 
+		strparam(s:"A Heavy chaingun which fires more bullets.",
+				s:"Takes a while to start, but after that, creates a bullet hell"),
+				"pr_wr_spitter");
+				
+	WeaponUpgrade_Add("Repeater_DoubleSpeed", "Speed Drift Repeater", wep, 
+		"Spins quicker, meaning more bullets to fire, and more acurracy.",
+		"pr_wu_repeater_up1", "pr_wr_repeater_up1");
+		
+	WeaponUpgrade_Add("Repeater_BlastShells", "Gauss J. Repeater", wep, 
+		"Fires gauss bullets. They rip and tear through the wave easier.",
+		"pr_wu_repeater_up2", "pr_wr_repeater_up2");
+		
+	wep = Weapon_Add("Dualshot", "Nail Dualshot", pack, 
+		strparam(s:"This gun can rip through enemies with the use of nails. ",
+				s:"Slower than bullets, but they rip more from up close."),
+				"pr_wr_dualshot");
+				
+	WeaponUpgrade_Add("Dualshot_Razor", "Razor Saw Dualshot", wep, 
+		"Launches saws. They're heavier and the gravity affects them, but it rips a lot.",
+		"pr_wu_dualshot_up0", "pr_wr_dualshot_up0");
+		
+	//Explosive pack
+	pack = WeaponPack_Add(
+		"Explosive", FP_ADV, 
+		"Heavy weapons with explosive projectiles, excelent for crowd control.",
+		"pr_wb_heavy");
+	
+	wep = Weapon_Add("Launcher", "Rocket Launcher", pack, 
+		strparam(s:"Shoots fast and explosive rockets straight into the waves.",
+				s:"Aim to their feets for the best experience."),
+				"pr_wr_launcher");
+				
+	WeaponUpgrade_Add("Launcher_Exploder", "Explosive R. Launcher", wep, 
+		"Your rockets explode more, and they leave a trail of fire for the nearby demons.",
+		"pr_wu_launcher_up1", "pr_wr_launcher_up1");
+		
+	WeaponUpgrade_Add("Launcher_Multi", "Multi Barrel R. Launcher", wep, 
+		"Launches 3 rockets per shot. In a spreadier way.",
+		"pr_wu_launcher_up2", "pr_wr_launcher_up2");
+		
+	wep = Weapon_Add("Flinger", "Grenade Flinger", pack, 
+		strparam(s:"With this, you can launch bouncing grenades.",
+				s:"Use the bouncing capacity from each projectile to damage demons in a safe place."),
+				"pr_wr_flinger");
+				
+	WeaponUpgrade_Add("Flinger_Expander", "Expansive G. Flinger", wep, 
+		"Fires a grenade, that spawns smaller grenades in a wider range.",
+		"pr_wu_flinger_up1", "pr_wr_flinger_up1");
+		
+	WeaponUpgrade_Add("Flinger_MinePlacer", "Flavored G. Launcher", wep, 
+		"Fires Nerve Gas grenades on Primary. Shells Grenades on Secondary.",
+		"pr_wu_flinger_up2", "pr_wr_flinger_up2");
+		
+	//Plasmatic pack
+	pack = WeaponPack_Add(
+		"Plasmatic", FP_ADV, 
+		"Plasma based pack which it deals damage at the advanced style.",
+		"pr_wb_plasma");
+	
+	wep = Weapon_Add("Plasmagun", "Plasma Rifle", pack, 
+		strparam(s:"Fires plasma with no delays. Uses energy to fire.",
+				s:"Great against the strongest demons."),
+				"pr_wr_plasmagun");
+				
+	WeaponUpgrade_Add("Plasmagun_Spread", "Spread Chip Plasma Rifle", wep, 
+		"Your plasma can spread. Control it with Primary and Secondary fire.",
+		"pr_wu_plasmagun_up1", "pr_wr_plasmagun_up1");
+		
+	WeaponUpgrade_Add("Plasmagun_Advanced", "Advanced Plasma Rifle", wep, 
+		"The plasma projectiles can seek enemies now. Can cause explosive damage too.",
+		"pr_wu_plasmagun_up2", "pr_wr_plasmagun_up2");
+		
+	wep = Weapon_Add("SF_Railgun", "Laser Railgun", pack, 
+		strparam(s:"This gun can create rails in a line of demons.",
+				s:"Takes some time to fire each rail, but its great for sniping."),
+				"pr_wr_railgun");
+				
+	WeaponUpgrade_Add("Railgun_Taser", "Lancer type Railgun", wep, 
+		"Shoots a wider, and powerful Laser which it harms nearby demons.",
+		"pr_wu_railgun_up1", "pr_wr_railgun_up1");
+		
+	WeaponUpgrade_Add("Railgun_Slug", "Slug Railgun", wep, 
+		"Deals more damage, and fires 2 rails per shot, Use Secondary to fire 1 per time.",
+		"pr_wu_railgun_up2", "pr_wr_railgun_up2");
+		
+	//Flamer pack
+	pack = WeaponPack_Add(
+		"Pyromancer", FP_OP, 
+		"Fire is the spotlight. So let them burn.",
+		"pr_wb_flamer");
+	
+	wep = Weapon_Add("Flamer", "Flamer", pack, 
+			"It spews fire like a dragon, powerful as hell.",
+				"pr_wr_flamer");
+				
+	WeaponUpgrade_Add("FlamerS", "Super Flamer", wep, 
+		"Your fire is unstoppable, ripping the waves with ease.",
+		"pr_wu_flamer_up0", "pr_wr_flamer_up0");
+		
+	//BFG pack
+	pack = WeaponPack_Add(
+		"B.F.G Like", FP_OP, 
+		"Bigger problems needs Big Friggin Guns.",
+		"pr_wb_bfg");
+	
+	wep = Weapon_Add("BFG", "Bio Force Gun 9000", pack, 
+		"Oh come on, you know what does this bad boy.",
+				"pr_wr_bfg");
+				
+	WeaponUpgrade_Add("BFGS", "Ripper BFG9000", wep, 
+		"Same as the BFG, execpt it rips and explode through waves.",
+		"pr_wu_bfg_up0", "pr_wr_bfg_up0");
+	/*
+	log(s:Weapon_GetName(wep));
+	log(s:Weapon_GetActor(wep));
+	log(d:Weapon_GetWepPack(wep));
+	log(d:Weapon_GetPrice(wep));
+	log(s:Weapon_GetDesc(wep));
+	
+	/*
+	log(s:WeaponPack_GetName(pack));
+	log(d:WeaponPack_GetCat(pack));
+	log(s:WeaponPack_GetDesc(pack));
+	log(d:WeaponPack_GetPrice(pack));
+	
+	log(s:WeaponUpgrade_GetActor(0, 1));
+	log(s:WeaponUpgrade_GetName(0, 1));
+	log(s:WeaponUpgrade_GetDesc(0, 1));
+	log(d:WeaponUpgrade_GetUpgPrice(0, 1));
+	log(d:WeaponUpgrade_GetRcyPrice(0, 1));
+	
+	log(s:WeaponUpgrade_GetActor(0, 1));
+	log(s:WeaponUpgrade_GetName(0, 1));
+	log(s:WeaponUpgrade_GetDesc(0, 1));
+	log(d:WeaponUpgrade_GetUpgPrice(0, 1));
+	log(d:WeaponUpgrade_GetRcyPrice(0, 1));
+	
+	/*
+	pack = WeaponPack_Add("My weapon Pack", FP_BAS, "This weapon pack is cool, lol.", "null");
+	
+	
+	
+	/*
+	wep = Weapon_Add("Beretta", "Beretta", -1, "Your trusty old beretta.",  "null");
+	//int wep = 0;
+	
+	*/
+}
+
+
+
+
+
+// Definers.
+///////////////////////////////////////////////////////////////////////////////
+
+function int WeaponUpgrade_Add(str actor, str name, int wpbase, str desc, str upgradepk, str recyclepk){
+	int uid = fp_WeaponUpStack;
+	fp_WepUpgList[wpbase][uid][0] = actor;
+	fp_WepUpgList[wpbase][uid][1] = name;
+	fp_WepUpgList[wpbase][uid][2] = desc;
+	fp_WepUpgList[wpbase][uid][3] = upgradepk;
+	fp_WepUpgList[wpbase][uid][4] = recyclepk;
+	fp_WeaponUpStack++;
+	return uid;
+}
+
+function str WeaponUpgrade_GetActor(int wpb, int uid){ return fp_WepUpgList[wpb][uid][0]; }
+function str WeaponUpgrade_GetName( int wpb, int uid){ return fp_WepUpgList[wpb][uid][1]; }
+function int WeaponUpgrade_GetDesc(int wpb, int uid){  return fp_WepUpgList[wpb][uid][2]; }
+function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return CheckInventory(fp_WepUpgList[wpb][uid][3]); }
+function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return CheckInventory(fp_WepUpgList[wpb][uid][4]); }
+
+
+function int WeaponPack_Add(str name, int cat, str desc, str pricekey){
+	int wid = fp_WeaponPackStack;
+	fp_WpPacks[wid][0] = name;
+	fp_WpPacks[wid][1] = cat;
+	fp_WpPacks[wid][2] = desc;
+	fp_WpPacks[wid][3] = pricekey;
+	fp_WeaponPackStack++;
+	return wid;
+}
+
+function str WeaponPack_GetName(int wid){  return fp_WpPacks[wid][0]; }
+function int WeaponPack_GetCat(int wid){   return fp_WpPacks[wid][1]; }
+function str WeaponPack_GetDesc(int wid){  return fp_WpPacks[wid][2]; }
+function int WeaponPack_GetPrice(int wid){ return CheckInventory(fp_WpPacks[wid][3]); }
+
+function int Weapon_Add(str actor, str name, int pack, str desc, str pricekey){
+	int wid = fp_WeaponStack;
+	fp_WeaponList[wid][0] = actor;
+	fp_WeaponList[wid][1] = name;
+	fp_WeaponList[wid][2] = pack;
+	fp_WeaponList[wid][3] = desc;
+	fp_WeaponList[wid][4] = pricekey;
+	
+	fp_WeaponUpStack = 0;
+	// To initialize the upgrades.
+	fp_WepUpgList[wid][0][0] = -1;
+	fp_WepUpgList[wid][1][0] = -1;
+	fp_WeaponStack++;
+	return wid;
+}
+
+function str Weapon_GetActor(int wid){   return fp_WeaponList[wid][0]; }
+function str Weapon_GetName(int wid){    return fp_WeaponList[wid][1]; }
+function int Weapon_GetWepPack(int wid){ return fp_WeaponList[wid][2]; }
+function int Weapon_GetCat(int wid){
+	return WeaponPack_GetCat(Weapon_GetWepPack(wid));
+}
+function int Weapon_GetDesc(int wid){    return fp_WeaponList[wid][3]; }
+function int Weapon_GetPrice(int wid){   return CheckInventory(fp_WeaponList[wid][4]); }

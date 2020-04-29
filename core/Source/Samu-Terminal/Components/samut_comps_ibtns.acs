@@ -37,67 +37,100 @@ function int ImgButton_AddCard(int grid, int cell, int w, int h){
 	return id;
 }
 
+function int ImgButton_AddCardOff(int grid, int cell, int w, int h, int offx, int offy){
+	int x = Card_GetX(grid, cell);
+	int y = Card_GetY(grid, cell);
+	
+	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
+	if(id != -1){
+		ImgButton_SetDefaultProps(id);
+	}
+	return id;
+}
+
 //Duplicate constructors.
 //This will make another component with the same properties saved with Component_SaveProps function.
 
 //A time saver if you dont like to re-define the component again and again.
-function int ImgButton_AddDup(int x, int y, int w, int h){
+function int ImgButton_Dup(int x, int y, int w, int h){
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, getImgButtonRect(id));
+		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	
 	return id;
 }
 
-function int ImgButton_AddDupGrid(int grid, int row, int col, int w, int h){
+function int ImgButton_DupGrid(int grid, int row, int col, int w, int h){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
 	
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, getImgButtonRect(id));
-		SetImgButtonPosition(id, x, y);
+		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	return id;
 }
 
-function int ImgButton_AddDupCard(int grid, int cell, int w, int h){
+function int ImgButton_DupCard(int grid, int cell, int w, int h){
 	int x = Card_GetX(grid, cell);
 	int y = Card_GetY(grid, cell);
 	
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, getImgButtonRect(id));
-		SetImgButtonPosition(id, x, y);
+		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	return id;
 }
 
+function int ImgButton_DupGridOff(int grid, int row, int col, int w, int h, int offx, int offy){
+	int x = Grid_GetX(grid, row, col);
+	int y = Grid_GetY(grid, row, col);
+	
+	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+	}
+	return id;
+}
+
+function int ImgButton_DupCardOff(int grid, int cell, int w, int h, int offx, int offy){
+	int x = Card_GetX(grid, cell);
+	int y = Card_GetY(grid, cell);
+	
+	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+	}
+	return id;
+}
+
+
+
 function void ImgButton_SetPosToGridOff(int i, int grid, int row, int col, int offx, int offy){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
-	SetImgButtonPosition(i, x + offx, y + offy);
+	ImgButton_setPosition(i, x + offx, y + offy);
 }
 
 function void ImgButton_SetPosToCardOff(int i, int card, int cell, int offx, int offy){
 	int x = Card_GetX(card, cell);
 	int y = Card_GetY(card, cell);
 	
-	SetImgButtonPosition(i, x + offx, y + offy);
+	ImgButton_setPosition(i, x + offx, y + offy);
 }
 
 function void ImgButton_SetPosToGrid(int i, int grid, int row, int col){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
-	SetImgButtonPosition(i, x, y);
+	ImgButton_setPosition(i, x, y);
 }
 
 function void ImgButton_SetPosToCard(int i, int card, int cell){
 	int x = Card_GetX(card, cell);
 	int y = Card_GetY(card, cell);
 	
-	SetImgButtonPosition(i, x, y);
+	ImgButton_setPosition(i, x, y);
 }
 
 function int ImgButton_Add_P(int coffx, int coffy, int w, int h, int align, int parent){
@@ -138,7 +171,7 @@ function int ImgButton_Add_P(int coffx, int coffy, int w, int h, int align, int 
 	int id = Component_Allocate(STCOMP_IBTN, posX, posY, w, h);
 	if(id != -1){
 		ImgButton_SetDefaultProps(id);
-		setImgButtonParent(id, parent);
+		ImgButton_setParent(id, parent);
 	}
 	//print(d:i, s:". Rect added to image buttons.");
 	
@@ -146,9 +179,9 @@ function int ImgButton_Add_P(int coffx, int coffy, int w, int h, int align, int 
 }
 
 function void UpdateImgButton(int bid, int condit){
-	if(getImgButtonParent(bid) > -1){
-		if(getPromptTag() == getImgButtonTag(bid))
-			setImgButtonShow(bid, condit);
+	if(ImgButton_getParent(bid) > -1){
+		if(getPromptTag() == ImgButton_getTag(bid))
+			ImgButton_setShow(bid, condit);
 	}
 }
 
@@ -157,11 +190,11 @@ function void AdjustImgButton_P(int bid,int offx, int offy,
 	int posX = 0;
 	int posY = 0;
 	
-	int w = getImgButtonWidth(bid);
-	int h = getImgButtonHeight(bid);
+	int w = ImgButton_getWidth(bid);
+	int h = ImgButton_getHeight(bid);
 	
 	//print(s:"Parent Center", f:RectY2(parent));
-	//print(f:getImgButtonX1(bid));
+	//print(f:ImgButton_getX1(bid));
 	
 	switch(align){
 		Case ST_COMPALIGN_NORTH:
@@ -192,68 +225,68 @@ function void AdjustImgButton_P(int bid,int offx, int offy,
 		break;
 	}
 
-	setImgButtonPosition(bid, posX, posY);
-	//print(f:getImgButtonX1(bid));
+	ImgButton_setPosition(bid, posX, posY);
+	//print(f:ImgButton_getX1(bid));
 }
 
 function void ImgButton_SetDefaultProps(int i){
-		setImgButtonImage(i,"");
-		setImgButtonHoverImage(i,"");
-		setImgButtonShow(i, false);
-		setImgButtonExecute(i, 0);	
-		setImgButtonArgs(i, 0,0,0);	
-		setImgButtonHudid(i, ST_HID_IBTN + i);
-		setImgButtonParent(i, -1);
-		setImgButtonExeHover(i, 0);	
-		setImgButtonArgsHover(i, 0,0,0);	
-		//setImgButtonOffsets(i, 0.0, 0.0);
+		ImgButton_setImage(i,"");
+		ImgButton_setHoverImage(i,"");
+		ImgButton_setShow(i, false);
+		ImgButton_setExecute(i, 0);	
+		ImgButton_setArgs(i, 0,0,0);	
+		ImgButton_setHudid(i, ST_HID_IBTN + i);
+		ImgButton_setParent(i, -1);
+		ImgButton_setExeHover(i, 0);	
+		ImgButton_setArgsHover(i, 0,0,0);	
+		//ImgButton_setOffsets(i, 0.0, 0.0);
 }
 
 function void ImgButton_SetProperties(int i, 
 	str img, str desc, int enable, int exe){
-		setImgButtonImage(i,img);
-			//log(s:GetImgButtonImage(i));
-		setImgButtonShow(i, enable);
-		setImgButtonExecute(i, exe);	
+		ImgButton_setImage(i,img);
+			//log(s:ImgButton_getImage(i));
+		ImgButton_setShow(i, enable);
+		ImgButton_setExecute(i, exe);	
 }
 
 function void ImgButtonProp_Parse(int i, str name,str value){
 
 	//Parsea todos los nombres de propiedades de un componente.
 	if(StrIEquals(name,  "image")){
-		setImgButtonImage(i,      Prop_Value(value));
+		ImgButton_setImage(i,      Prop_Value(value));
 		return;
 	}if(StrIEquals(name, "hoverimage")){
-		setImgButtonHoverImage(i, Prop_Value(value));
+		ImgButton_setHoverImage(i, Prop_Value(value));
 		return;
 	}if(StrIEquals(name, "tag")){
-		setImgButtonTag(i,        Prop_Value(value));
+		ImgButton_setTag(i,        Prop_Value(value));
 		return;
 	}if(StrIEquals(name, "execute")){
-		setImgButtonExecute(i,    Prop_Value(value));
+		ImgButton_setExecute(i,    Prop_Value(value));
 		return;
 	}if(StrIEquals(name, "exe_a1")){
-		setImgButtonArgs(i, 
+		ImgButton_setArgs(i, 
 			Prop_Value(value),
-			getImgButtonExeArg2(i),
-			getImgButtonExeArg3(i));
+			ImgButton_getExeArg2(i),
+			ImgButton_getExeArg3(i));
 		return;
 	}if(StrIEquals(name, "exe_a2")){
-		setImgButtonArgs(i, 
-			getImgButtonExeArg1(i),
+		ImgButton_setArgs(i, 
+			ImgButton_getExeArg1(i),
 			Prop_Value(value),
-			getImgButtonExeArg3(i));
+			ImgButton_getExeArg3(i));
 		return;
 	}if(StrIEquals(name, "exe_a3")){
-		setImgButtonArgs(i, 
-			getImgButtonExeArg1(i),
-			getImgButtonExeArg2(i),
+		ImgButton_setArgs(i, 
+			ImgButton_getExeArg1(i),
+			ImgButton_getExeArg2(i),
 			Prop_Value(value));
 		return;
 	}
 }
 
-function void SetImgButtonProps(int id, str props){
+function void ImgButton_setProps(int id, str props){
 	Parser_Read(props);
 	
 	for(int j = 0; j < propb_top; j++){
