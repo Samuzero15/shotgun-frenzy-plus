@@ -6,6 +6,7 @@ builds/
 *.dbs
 *.wad.backup*
 *bak.acs
+*bak.acs*
 
 #############
 ## Windows detritus

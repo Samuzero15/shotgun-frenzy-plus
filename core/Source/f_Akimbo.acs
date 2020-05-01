@@ -42,3 +42,45 @@ if (buttons & BT_ATTACK)
    delay(1);
  }
 }
+
+script "Repeater_HeatDamage" (void)
+{
+	int bonusDmg = (CheckInventory("Rep_Heat") / 20);
+	SetResultValue(bonusDmg);
+}
+
+script "Repeater_AimX" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 7);
+}
+
+script "Repeater_AimY" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 3);
+}
+
+script "RepeaterX2_AimX" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 5);
+}
+
+script "RepeaterX2_AimY" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 1);
+}
+
+script "RepGauss_AimX" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 5);
+}
+
+script "RepGauss_AimY" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 1);
+}

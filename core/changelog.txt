@@ -34,6 +34,12 @@ w) Work in progres
 
 v0 - Before the beginning...
 
+-) (30 / 04 / 2020)
+	*) Repeaters are now enchanced! To give it a bit more of punch.
+	// The more you fire it, the inacurrate but stronger becomes!
+	+) Some sprites added for thoe Advanced Plasma Rifle.
+	*) Small fixes on the fl_wdir about the strings and such.
+
 -) (29 / 04 / 2020)
 	*) Replaced the rippering porjectile from the plasma gun advanced with a
 		seeking projectile that explodes. Also the Plasma Gun Advanced can shoot 4

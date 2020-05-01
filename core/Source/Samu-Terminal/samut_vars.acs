@@ -79,6 +79,7 @@
 	Negative Values, Executions on the server. (Needs a NET script.)
 	Touch it if you want to handle more actions.
 */
+#libdefine STEXE_UPGPAGECAT 42
 #libdefine STEXE_UPG1PAGEDESC 41
 #libdefine STEXE_UPG0PAGEDESC 40
 

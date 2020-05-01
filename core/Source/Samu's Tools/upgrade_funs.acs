@@ -29,12 +29,8 @@ function bool CanIUpgrade(int Wid){
 }
 
 function void UpgradeWeapon(int wid, int type){
-	if(type == 1)
-		SwapWeapon(getWeaponBasis(wid),getWeaponUP1Name(wid));
-	else if( type == 2) 
-		SwapWeapon(getWeaponBasis(wid),getWeaponUP2Name(wid));
+	
 }
-
 /*
 function int fetchCost(int which, int upgradeType){
 	//log(s:"Sax");

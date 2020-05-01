@@ -93,6 +93,21 @@ function int StrButton_AddGridOff(int card, int row, int col, str string, int of
 	return id;
 }
 
+function int StrButton_Dup(int x, int y){
+	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_SBTN, StrButton_GetRect(id));
+		str text = StrButton_getText(id);
+		StrButton_Setup(text);
+		StrButton_SetDimensions(id, tmp[0], tmp[1]);
+		StrButton_SetBack(id, tmp[02]);
+		StrButton_SetText(id, text);
+	}
+	
+	return id;
+}
+
+
 function void StrButton_SetPosToGridOff(int i, int grid, int row, int col, int offx, int offy){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);

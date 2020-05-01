@@ -140,12 +140,11 @@ ACTOR PlasmaProjectile_Advanced : FastProjectile
 }
 
 
-Actor PlasmaTrail
-{
+actor PlasmaTrail{
   Radius 0
   Height 0
   //Gravity 100
-  Alpha 0.35
+  Alpha 0.12
   Renderstyle Add
   +FORCEXYBILLBOARD
   	+NOBLOCKMAP
@@ -155,21 +154,43 @@ Actor PlasmaTrail
 	+NOTELEPORT
     +DoomBounce
 	+ClientsideOnly
+}
+
+
+Actor PlasmaTrail1 : PlasmaTrail
+{
   States
   {
    Melee:
    Spawn:
-		PLSE A 2 bright
-		PLSE E 1 Bright
+		PLSE A 2 bright 
+		PLSS A 2 BRIGHT
 		stop
   }
 }
 
-ACTOR PlasmaProjectile_Advanced2 : FastProjectile
+Actor PlasmaTrail2 : PlasmaTrail
+{
+  States
+  {
+   Melee:
+   Spawn:
+		PLSE A 2 bright 
+		PLSS B 2 BRIGHT
+		stop
+  }
+}
+
+Actor PlasmaTrailSpawn : RandomSpawner{
+	DropItem "PlasmaTrail1", 255, 1
+	DropItem "PlasmaTrail2", 255, 1
+}
+
+ACTOR PlasmaProjectile_Adv2 : FastProjectile
 {
 	Radius				11
 	Height				8
-	Speed				40
+	Speed				50
 	Damage				10
 	DamageType			MarineFire
 	RenderStyle			Add
@@ -177,9 +198,8 @@ ACTOR PlasmaProjectile_Advanced2 : FastProjectile
 	+MTHRUSPECIES
 	+SEEKERMISSILE
 	+SCREENSEEKER 
-	SeeSound "weapons/plasmaf"
 	DeathSound "weapons/plasmax"
-	MissileType "PlasmaTrail"
+	MissileType "PlasmaTrailSpawn"
 	MissileHeight 8
 	//DeathSound		"weapons/rocklx"
 	Obituary			"%o could'nt escape from %k's plasma balls"
@@ -187,10 +207,10 @@ ACTOR PlasmaProjectile_Advanced2 : FastProjectile
 	States
 	{
 		Spawn:
-			PLSS AB 1 bright A_SeekerMissile(10,45, SMF_LOOK)
+			PLSS AB 1 bright A_SeekerMissile(5, 30, SMF_LOOK)
 			Loop
 		Death:
-			PLSE C 8 bright a_Explode(20,64, 0, true, 32)
+			PLSE C 8 bright a_Explode(16,64, 0, true, 32)
 			PLSE D 6 bright
 			PLSE E 4 bright
 			stop

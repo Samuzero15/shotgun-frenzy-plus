@@ -152,16 +152,23 @@ function void SFPlus_DefineWeapons (void){
 		"pr_wb_commando");
 	
 	wep = Weapon_Add("Repeater", "Bullet Repeater", pack, 
-		strparam(s:"A Heavy chaingun which fires more bullets.",
-				s:"Takes a while to start, but after that, creates a bullet hell"),
-				"pr_wr_spitter");
+		strparam(s:"A Heavy chaingun which fires more bullets. Using the nails.",
+				s:"Takes a while to start, but after that, creates a bullet hell.",
+				s:"This weapon contains the overheat modifier, the more you fire, the inacurrate but stronger becomes.",
+				s:"Primary: Spins in, shoot and spins out. Secondary: Spin idle. ",
+				s:"When idling, primary fire will shoot without pre-spin and heat"),
+				"pr_wr_repeater");
 				
-	WeaponUpgrade_Add("Repeater_DoubleSpeed", "Speed Drift Repeater", wep, 
-		"Spins quicker, meaning more bullets to fire, and more acurracy.",
-		"pr_wu_repeater_up1", "pr_wr_repeater_up1");
+	WeaponUpgrade_Add(
+		"Repeater_DoubleSpeed", 
+		"Speed Drift Repeater", 
+		wep, 
+		"Spins quicker meaning you can fire faster and presicer. Also you fire more bullets than the usual.",
+		"pr_wu_repeater_up1",
+		"pr_wr_repeater_up1");
 		
 	WeaponUpgrade_Add("Repeater_BlastShells", "Gauss J. Repeater", wep, 
-		"Fires gauss bullets. They rip and tear through the wave easier.",
+		"Fires gauss bullets. They rip and tear through the wave easier. They're also strong as heck.",
 		"pr_wu_repeater_up2", "pr_wr_repeater_up2");
 		
 	wep = Weapon_Add("Dualshot", "Nail Dualshot", pack, 
@@ -188,8 +195,8 @@ function void SFPlus_DefineWeapons (void){
 		"Your rockets explode more, and they leave a trail of fire for the nearby demons.",
 		"pr_wu_launcher_up1", "pr_wr_launcher_up1");
 		
-	WeaponUpgrade_Add("Launcher_Multi", "Multi Barrel R. Launcher", wep, 
-		"Launches 3 rockets per shot. In a spreadier way.",
+	WeaponUpgrade_Add("Launcher_Multi", "Multiple R. Launcher", wep, 
+		"Launches 3 rockets per shot. In a spreadier way. Use secondary to fire in a trangular set.",
 		"pr_wu_launcher_up2", "pr_wr_launcher_up2");
 		
 	wep = Weapon_Add("Flinger", "Grenade Flinger", pack, 
@@ -301,6 +308,19 @@ function void SFPlus_DefineWeapons (void){
 	*/
 }
 
+function void Weapon_SwapWeapon(str this, str withThis){
+	TakeInventory(this,1);
+	GiveInventory(withThis,1);
+	setWeapon(withThis);
+}
+
+function void Weapon_Upgrade(int wid, int type){
+if(type == 1)
+		Weapon_SwapWeapon(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 0));
+	else if( type == 2) 
+		Weapon_SwapWeapon(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 1));
+
+}
 
 
 
