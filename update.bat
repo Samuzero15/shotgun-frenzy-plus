@@ -15,10 +15,19 @@ echo.
 chgcolor 07
 echo If you dont need to execute this, close this window.
 pause
-del .\core
+
+
+set folder=%~dp0core
+cd /d %folder%
+for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
+cd ..
+
 7za x -ocore -y "sfplus_core-d.pk3"
 
-del .\res
+set folder=%~dp0res
+cd /d %folder%
+for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
+cd ..
 7za x -ores -y "sfplus_res-d.pk3"
 
 pause

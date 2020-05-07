@@ -1,4 +1,4 @@
-ACTOR HotDog 30121 
+ACTOR HotDog : Fplus_Monster 30121 
 { 
 spawnid 244
 Health 10000 
@@ -60,18 +60,24 @@ States
        HDOG J 2 
        HDOG J 2 A_Pain 
        Goto See 
+	Death.Ice:
+		goto Super::Death.Ice
+
+	Raise:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+	goto MonRaise
+  
+	 
    Death: 
-NULL A 0 ACS_ExecuteAlways(500, 0, 36, 0)
        HDOG K 8 
        HDOG L 8 A_Scream 
        HDOG M 4 
        HDOG N 4 A_NoBlocking 
        HDOG OP 4 
        HDOG Q 650
-		DeathFade:
-			HDOG Q 2 A_FadeOut(0.1)
-			loop
-   Raise: 
+	goto Super::FadeOut
+   MonRaise: 
        HDOG QPONMLK 5 
        Goto See 
    } 

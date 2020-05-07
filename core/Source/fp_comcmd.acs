@@ -1,0 +1,143 @@
+
+#library "fp_comcmd"
+
+#include "zcommon.acs"
+
+#libdefine FP_COM_BUTTONS 200
+
+int CmdBut_list[FP_COM_BUTTONS][6];
+int CmdButStack = 0;
+
+Script "SFPlus_InitCMDButtons" OPEN {
+	SFPlus_DefineCMDButtons();
+	ACS_NamedExecute("SFPlus_UpdateCMDButtons", 0);
+}
+
+Script "SFPlus_UpdateCMDButtons" (void){
+	while(1){
+		
+		delay(1);
+	}
+}
+
+function void SFPlus_DefineCMDButtons(void){
+	str string;
+
+	CMDButList_Add ("Exit", 			  "CG01", "Eject from the commander's chair."); // 0
+	CMDButList_Add ("Return",			  "CG01", "To the last category."); // 1
+	CMDButList_Add ("Build Structure", 	  "CG02", "Expand your base by building an additional structure."); 
+	CMDButList_Add ("Research New Techs", "CG03", "Upgrade and research to powerup your allies."); 
+	
+	string = strparam(s:"Launch aerial strikes, mark objectives, activate core",
+					  s:" pulses and fire the ion cannon to support your allies.");
+					  
+	CMDButList_Add ("Support allies", 	  "CG04",  string); 
+	CMDButList_Add ("Deploy structures",  "CG05", "Deploy turrets, dispensers, walls and mines to aid in the battle.");
+		
+		/*
+	CMDButList_Add 
+		(10, "Build Structure", "Expand your base by building an\nadditional structure.",
+		"CM02", true, true, ""); 
+		
+		
+	CMDButList_Add 
+		("Build Genetics Lab", 
+			strparam(s:"Allows advancement on armour and health",
+			s:"\nProvides healing pads for marines"),
+		"CM01", !isBuilt(Build_GENLAB), true, "price_build_GENLAB");
+	
+	CMDButList_Add 
+		("Build Armory", 
+			strparam(s:"Allows to buy and upgrade advanced weapons.",
+			s:"\nProvides ammo pads for marines, and some ", 
+			s:"\nuseful items."),
+		"CM02", !isBuilt(Build_ARMORY), true, "price_build_ARMORY");
+	
+	CMDButList_Add 
+		("Build Mechanic Factory", 
+			strparam(s:"Allows marines to purchase and upgrade mechs",
+			s:"\nHeavy machines for the heavy duty."),
+		"CM03", !isBuilt(Build_MECHFA), true, "price_build_MECHFA");
+		
+	CMDButList_Add 
+		("Build Refinery", 
+			strparam(s:"Allows additional credits to be collected",
+			s:"\nAlso increases credit count by 2 a second."),
+		"CM04", !isBuilt(Build_REFINE), true, "price_build_REFINE");
+		
+	CMDButList_Add 
+		("Build Marine Command", 
+			strparam(s:"Allows you to construct turrets and use",
+			s:"\ncore pulses. Here you can command the airstrikes",
+			s:"\nand the mighty Ion Cannon for some extra help."),
+		"CM05", !isBuilt(Build_MARCOM), true, "price_build_MARCOM");
+		
+	CMDButList_Add 
+		("Build Nuke Silo", 
+			strparam(s:"Let's you launch a powerful nuke which it hits",
+			s:"\nthe demon core directly, but it takes 5 minutes", 
+			s:"\nto launch. If the launch works, you win."),
+		"CM06", !isBuilt(Build_NUKESY), true, "price_build_NUKESY");
+		
+		
+		
+		
+		
+	CMDButList_Add 
+		("Upgrade Genetics Lab", 
+			strparam(s:"Allows advancement on armour and health",
+			s:"\nProvides healing pads for marines"),
+		"CC01", isBuilt(Build_GENLAB), true, "");
+	
+	CMDButList_Add 
+		("Upgrade Armory", 
+			strparam(s:"Allows to buy and upgrade advanced weapons.",
+			s:"\nProvides ammo pads for marines, and some ", 
+			s:"\nuseful items."),
+		"CC02", isBuilt(Build_ARMORY), true, "");
+		
+	CMDButList_Add 
+		("Upgrade Refinery", 
+			strparam(s:"Allows additional credits to be collected",
+			s:"\nAlso increases credit count by 2 a second."),
+		"CC04", isBuilt(Build_REFINE), true, "");
+		
+	CMDButList_Add 
+		("Upgrade Marine Command", 
+			strparam(s:"Allows you to construct turrets and use",
+			s:"\ncore pulses. Here you can command the airstrikes",
+			s:"\nand the mighty Ion Cannon for some extra help."),
+		"CC05", isBuilt(Build_MARCOM), true, "");
+	*/
+}
+
+function str CMDButList_GetName(int w){		return CMDBut_List[w][0];}
+function str CMDButList_GetDesc(int w){		return CMDBut_List[w][1];}
+function str CMDButList_GetIcon(int w){		return CMDBut_List[w][2];}
+
+//The condition to be activable.
+function bool CMDButList_GetShowCond(int w){		return CMDBut_List[w][4];} //Condition to show.
+function bool CMDButList_GetAccessCond(int w){	return CMDBut_List[w][3];} //Condition to access to the action. (defaulting to price)
+function int CMDButList_GetPrice(int w){		return CheckInventory(CMDBut_List[w][5]);}
+
+function void CMDButList_Add (str name, str icon, str desc){
+	int id = CmdButStack++;
+	CMDBut_List[id][0] = name;
+	CMDBut_List[id][1] = desc;
+	CMDBut_List[id][2] = icon;
+	
+	CMDBut_List[id][3] = true; 
+	CMDBut_List[id][4] = true; 
+	CMDBut_List[id][5] = "null"; 
+	// ^ It's already synched with the inventory gaven on the terminal.
+}
+
+function void CMDButList_Conds (int id, bool acond, bool scond, str price){
+	CMDBut_List[id][3] = acond; 
+	CMDBut_List[id][4] = scond; 
+	if(strLen(price) == 0)
+		 CMDBut_List[id][5] = "null"; 
+	else CMDBut_List[id][5] = strparam(s:"pr_cmd_",s:price); 
+	// ^ It's already synched with the inventory gaven on the terminal.
+}
+

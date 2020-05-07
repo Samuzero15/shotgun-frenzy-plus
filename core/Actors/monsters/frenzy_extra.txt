@@ -1,4 +1,4 @@
-ACTOR sfFastZombie 30201
+ACTOR sfFastZombie : FPlus_Monster 30201
 {
 	Game Doom
 	SpawnID 233
@@ -8,8 +8,6 @@ ACTOR sfFastZombie 30201
 	Radius 10
 	Height 56
 	Mass 400
-	Monster
-	Species "DemonSide"
 	+FLOORCLIP +FASTER +FASTMELEE +THRUSPECIES
 	SeeSound "demon/sight"
 	AttackSound "demon/melee"
@@ -41,9 +39,8 @@ ACTOR sfFastZombie 30201
 			POSS O 5 A_NoBlocking
 			POSS PQRST 5
 			POSS U 650
-		DeathFade:
-			POSS U 2 A_FadeOut(0.1)
-			goto DeathFade
+		goto Super::FadeOut
+			/*
 		Death.NoProfitKill:
 			POSS A 0 A_SpawnItem ("splatEmitter_Lite" , 0, 0, 0, 0)
 			POSS N 2 A_XScream
@@ -53,7 +50,16 @@ ACTOR sfFastZombie 30201
 			POSS PQRST 5
 			POSS U 650
 			goto DeathFade
+			*/
+		Death.Ice:
+			goto Super::Death.Ice
+		
 		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise
+			
+		MonRaise:
 			POSS N 5
 			POSS MLKJI 5
 			goto See

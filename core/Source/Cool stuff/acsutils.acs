@@ -303,21 +303,21 @@ function int fract(int x)
 function int trunc(int x)
 {
 	if (x > 0.0)
-		return floor(x);
-	return ceil(x);
+		return ut_floor(x);
+	return ut_ceil(x);
 }
 
-/* ZDOOM DEFINES ITS OWN VERSIONS OF floor, ceil AND round THAT SILENTLY RETURN 0 IN ZANDRONUM, PLEASE REMOVE THESE functionS FROM FROM zspecial.acs OR RENAME THE ACSUTILS OR ZDOOM functionS TO SOMETHING ELSE. */ function int floor(int x)
+/* ZDOOM DEFINES ITS OWN VERSIONS OF floor, ceil AND round THAT SILENTLY RETURN 0 IN ZANDRONUM, PLEASE REMOVE THESE functionS FROM FROM zspecial.acs OR RENAME THE ACSUTILS OR ZDOOM functionS TO SOMETHING ELSE. */ function int ut_floor(int x)
 {
 	return ((x) & 0xffff0000);
 }
 
-/* ZDOOM DEFINES ITS OWN VERSIONS OF floor, ceil AND round THAT SILENTLY RETURN 0 IN ZANDRONUM, PLEASE REMOVE THESE functionS FROM FROM zspecial.acs OR RENAME THE ACSUTILS OR ZDOOM functionS TO SOMETHING ELSE. */function int ceil(int x)
+/* ZDOOM DEFINES ITS OWN VERSIONS OF floor, ceil AND round THAT SILENTLY RETURN 0 IN ZANDRONUM, PLEASE REMOVE THESE functionS FROM FROM zspecial.acs OR RENAME THE ACSUTILS OR ZDOOM functionS TO SOMETHING ELSE. */function int ut_ceil(int x)
 {
 	return (((x) - 1) & 0xffff0000) + 1.0;
 }
 
-/* ZDOOM DEFINES ITS OWN VERSIONS OF floor, ceil AND round THAT SILENTLY RETURN 0 IN ZANDRONUM, PLEASE REMOVE THESE functionS FROM FROM zspecial.acs OR RENAME THE ACSUTILS OR ZDOOM functionS TO SOMETHING ELSE. */ function int round(int x)
+/* ZDOOM DEFINES ITS OWN VERSIONS OF floor, ceil AND round THAT SILENTLY RETURN 0 IN ZANDRONUM, PLEASE REMOVE THESE functionS FROM FROM zspecial.acs OR RENAME THE ACSUTILS OR ZDOOM functionS TO SOMETHING ELSE. */ function int ut_round(int x)
 {
 	return ((x + 0.5) & 0xffff0000);
 }

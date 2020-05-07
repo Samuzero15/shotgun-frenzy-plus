@@ -147,3 +147,26 @@ function int sf_GetMonsterClass(int id){
     }
 	return res;
 }
+
+function int btween(int a, int b, int x, int resyes, int resno){
+	if(x >= a && x <= b) return resyes;
+	return resno;
+}
+
+function int sf_GetMonsterClass_Health(void){
+	int res = -1;
+	bool des = false;
+	
+	int hp = GetActorProperty(0, AProp_SpawnHealth);
+	log(d:hp);
+	
+	res = btween(1, 	50, 	hp, 0, res);
+	res = btween(51, 	100, 	hp, 1, res);
+	res = btween(101, 	200, 	hp, 2, res);
+	res = btween(201, 	600, 	hp, 3, res);
+	res = btween(601, 	1000,  	hp, 4, res);
+	res = btween(1001, 	5000, 	hp, 5, res);
+	res = btween(5001, 	9999, 	hp, 6, res);
+	
+	return res;
+}

@@ -2,6 +2,7 @@ int armit_comp[20][2][5];
 int armit_caps[20][2];
 int armit_gpos[18][2];
 int armit_top;
+int pcolor;
 
 function void UpdateArmItemsPage(int pageTag){
 	setPageTitle(pageTag, "More items", CR_GOLD);

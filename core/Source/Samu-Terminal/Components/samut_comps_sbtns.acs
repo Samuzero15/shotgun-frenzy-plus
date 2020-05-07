@@ -103,7 +103,22 @@ function int StrButton_Dup(int x, int y){
 		StrButton_SetBack(id, tmp[02]);
 		StrButton_SetText(id, text);
 	}
+	return id;
+}
+
+function int StrButton_DupCard(int grid, int cell){
+	int x = Card_GetX(grid, cell);
+	int y = Card_GetY(grid, cell);
 	
+	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_SBTN, StrButton_GetRect(id));
+		str text = StrButton_getText(id);
+		StrButton_Setup(text);
+		StrButton_SetDimensions(id, tmp[0], tmp[1]);
+		StrButton_SetBack(id, tmp[02]);
+		StrButton_SetText(id, text);
+	}
 	return id;
 }
 
@@ -141,7 +156,7 @@ function void StrButton_SetDefaultProps(int i){
 		StrButton_setShow(i, false);
 		StrButton_setExecute(i, 0);	
 		StrButton_setExeArgs(i,0,0,0);
-		StrButton_setTag(i, 0);
+		StrButton_setTag(i, -1);
 		StrButton_setHudId(i, ST_HID_SBTNF + i);
 }
 
@@ -152,6 +167,13 @@ function void StrButton_SetProperties(int i,
 		StrButton_setShow(i, show);
 		StrButton_setExecute(i, exe);	
 		StrButton_setBack(i,back);
+}
+
+function void StrButton_SetTextAdj(int id, str string){
+	StrButton_Setup(string);
+	StrButton_SetDimensions(id, tmp[0], tmp[1]);
+	StrButton_SetBack(id, tmp[02]);
+	StrButton_SetText(id, string);
 }
 
 function void StrButton_Setup (str string){

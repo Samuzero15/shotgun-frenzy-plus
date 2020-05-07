@@ -1,0 +1,61 @@
+ACTOR sfArachnotron : FPlus_Monster replaces Arachnotron
+{
+	spawnid 6
+	obituary "%o let an arachnotron get %h."
+	health 500
+	radius 64
+	height 64
+	mass 600
+	speed 12
+	painchance 128
+	seesound "baby/sight"
+	painsound "baby/pain"
+	deathsound "baby/death"
+	activesound "baby/active"
+	+FLOORCLIP
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			BSPI AB 10 A_Look
+			goto Spawn
+		See:
+			BSPI A 20
+			BSPI A 3 A_BabyMetal
+			BSPI ABBCC 3 A_Chase
+			BSPI D 3 A_BabyMetal
+			BSPI DEEFF 3 A_Chase
+			goto See+1
+		Missile:
+			BSPI A 20 bright A_FaceTarget
+			BSPI G 4 bright A_BspiAttack    // See ArachnotronPlasma
+			BSPI H 4 bright
+			BSPI H 1 bright A_SpidRefire
+			goto Missile+1
+		Pain:
+			BSPI I 3
+			BSPI I 3 A_Pain
+			goto See+1
+		
+		Death.Ice:
+			goto Super::Death.Ice
+		
+		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise
+		
+		Death:
+			BSPI J 2
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			BSPI J 20 A_Scream
+			BSPI K 7 A_NoBlocking
+			BSPI LMNO 7
+			BSPI P 0 A_BossDeath
+			BSPI P 1 A_BossDeath
+			goto Super::FadeOut
+		MonRaise:
+			BSPI PONMLKJ 5
+			goto See+1
+	}
+}

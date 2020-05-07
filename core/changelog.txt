@@ -34,6 +34,20 @@ w) Work in progres
 
 v0 - Before the beginning...
 
+-) (3 - 4 - 5 - 6 / 5 / 2020)
+	+) Gave some new ammo graphic for the repeater.
+	*) Some more fixes on the repeater
+	+) Added the global kill script, which now can run in zandronum!
+	*) Toying arround with the flinger's mine placer upgrade... i think i've boffed it a lot.
+	// Sticky grenades are a thing in this weapon now!
+	*) Re-coding the ammo terminal to apply the new functions i gained so far.
+	*) Some more fixups on the f_wdir.acs file on the upgrade thingy.
+
+-) (1 - 2 / 5 / 2020)
+	+) New graphic on the heat indicator available on full screen mode.
+	*) Some more refactoring on the WDir file.
+	*) Changed the rail colors from gray-blue, to cyan-blue On the Gauss J. repeater.
+
 -) (30 / 04 / 2020)
 	*) Repeaters are now enchanced! To give it a bit more of punch.
 	// The more you fire it, the inacurrate but stronger becomes!

@@ -11,10 +11,18 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 {
 	// Eitherway, this will list all of the functions about the executions.
 	switch(cmd){
+		
+		case STEXE_BUYWP_PSHOW: STExecute_BuyWepSetCat(arg1); break;
+		case STEXE_BUYWP_PDESC: STExecute_BuyWepShowData(arg1); break;
+		case STEXE_GETWP: STExecute_getWeapon(arg1); break;
+		case STEXE_GIVEWP: STExecute_giveWeapon(arg1); break;
+		case STEXE_BUYWP: STExecute_BuyWeapon(arg1); break;
+	
 		case STEXE_UPG1PAGEDESC: StExecute_Upg1PageDesc(arg1, arg2, arg3); break;
 		case STEXE_UPG0PAGEDESC: StExecute_Upg0PageDesc(arg1, arg2, arg3); break;
 		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
 		
+		/*
 		case STEXE_CMDDEPLOY: 
 		case STEXE_CMDSUPPORT: 
 		case STEXE_CMDRESEARCH: 
@@ -22,7 +30,8 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 			Toaster_ShowToast("You still need to implement this, Samu...",CR_RED);
 		break;
 		case STEXE_CMDBTNDESC: StExecute_CMDBtnDesc(arg1, arg2, arg3); break;
-	
+		*/
+		
 		case STEXE_BUYMECHTANK: StExecute_BuyMechTank(); break;
 		case STEXE_GETMECHTANK: StExecute_GetMechTank(); break;
 		case STEXE_UPGMECHTANK: StExecute_UpgradeMech(arg1); break;
@@ -34,9 +43,9 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_ITEMBUY: StExecute_BuyItem(arg1); break;
 		case STEXE_ITEMGET: StExecute_GetItem(arg1); break;
 		
-		case STEXE_WEPRC: StExecute_RecycleWeapon(arg1, arg2); break;
-		case STEXE_MSGRC: StExecute_RecycleAccepted(arg1); break;
-		case STEXE_ASKRC: StExecute_AskForRecycle(arg1); break;
+		case STEXE_WEPRC: StExecute_RecycleWeapon(arg1, arg2, arg3); break;
+		case STEXE_MSGRC: StExecute_RecycleAccepted(arg1, arg2); break;
+		case STEXE_ASKRC: StExecute_AskForRecycle(arg1, arg2); break;
 		
 		case STEXE_LUP_NEXTP: StExecute_LUPnextPage(); break;
 		case STEXE_LUP_PREVP: StExecute_LUPprevPage(); break;
@@ -44,11 +53,10 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_MSGUP: StExecute_UpgradeAccepted(arg1, arg2); break;
 		case STEXE_ASKUP: StExecute_AskForUpgrade(arg1, arg2); break;
 		
-		case STEXE_GETWP: STExecute_getWeapon(arg1); break;
-		case STEXE_GIVEWP: STExecute_giveWeapon(arg1); break;
-		case STEXE_BUYWP: STExecute_BuyWeapon(arg1); break;
+		/*
 		
 		case STEXE_ShowBuyPage: STExecute_ShowBuyPage(arg1); break;
+		*/
 		
 		case STEXE_HowKind: STExecute_AYesFun(); break;
 		case STEXE_HowRude: STExecute_ANoFun(); break;

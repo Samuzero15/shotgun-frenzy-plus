@@ -1,4 +1,4 @@
-actor NamiDarkImp 3100
+actor NamiDarkImp : FPlus_Monster 3100
 {
 spawnid 240
 	//$Category Monsters
@@ -7,8 +7,6 @@ spawnid 240
     Height 56
     Speed 8
     PainChance 200
-	Species "DemonSide"
-    MONSTER 
     +FLOORCLIP
     SeeSound "imp/sight"
     PainSound "imp/pain"
@@ -37,22 +35,33 @@ spawnid 240
         DRKI H 2
         DRKI H 2 A_Pain
         Goto See
+		
+	Death.Ice:
+		goto Super::Death.Ice
+
+	XDeath:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
+	goto MonXDeath
+
+	Raise:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+	goto MonRaise
+	
     Death:
-NULL A 0 ACS_ExecuteAlways(500, 0, 32, 0)
         DRKI I 8
         DRKI J 8 A_Scream
         DRKI K 6
         DRKI L 6 A_Fall
-        Stop
-    XDeath:
-NULL A 0 ACS_ExecuteAlways(500, 0, 32, 1)
+        goto Super::FadeOut
+    MonXDeath:
         DRKI N 5
         DRKI O 5 A_XScream
         DRKI P 5
         DRKI Q 5 A_Fall
         DRKI RST 5
-        Stop
-    Raise:
+        goto Super::FadeOut
+    MonRaise:
         DRKI ML 8
         DRKI KJI 6
         Goto See

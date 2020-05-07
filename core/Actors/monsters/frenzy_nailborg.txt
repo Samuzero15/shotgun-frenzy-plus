@@ -1,4 +1,4 @@
-Actor NailBorg 27800
+Actor NailBorg : FPlus_Monster 27800
 {
 spawnid 208
 	OBITUARY "%o was nailed by a Nail Borg."
@@ -15,8 +15,6 @@ spawnid 208
 	DEATHSOUND "Monsters/NBDeath"
 	//Translation 1
 	Bloodcolor "7F 3F 00"
-	Species "DemonSide"
-	MONSTER
 	+FLOORCLIP
 	States
 	{
@@ -79,31 +77,40 @@ spawnid 208
 		NLBG G 3
 		NLBG G 3 A_Pain
 		Goto See
+		
+	Death.Ice:
+		goto Super::Death.Ice
+
+	XDeath:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
+	goto MonXDeath
+
+	Raise:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+	goto MonRaise
+	
 	Death:
 		NLBG H 5
 		NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
-		NULL A 0 ACS_ExecuteAlways(500, 0, 26, 0, 0)
 		NLBG I 5 A_Scream
 		NLBG J 5 A_NoBlocking
 		NLBG J 0 A_PlaySound("Weapons/NailBomb")
 		TNT1 A 0 A_CustomMissile("BorgNailBombBig", 32, 0, Random(6, -6), 0)
     	NLBG L 650 
-	DeathFade:
-    	NLBG L 2 A_FadeOut(0.1)
-		Stop
-	XDeath:
-		NULL A 0 ACS_ExecuteAlways(500, 0, 26, 1)
+	goto Super::FadeOut
+	
+	MonXDeath:
 		NLBG O 5
 		NLBG P 5 A_XScream
 		NLBG Q 5 A_NoBlocking
 		NLBG Q 0 A_PlaySound("Weapons/NailBomb")
 		TNT1 A 0 A_Jump(128, 2)
 		NLBG RTUV 5 A_CustomMissile("BorgNailBombBig", 32, 0, Random(6, -6), 0)
-    NLBG L 650
-  XDeathFade:
-    NLBG L 2 A_FadeOut(0.1)
-    stop
-	Raise:
+		NLBG L 650
+	goto Super::FadeOut
+	
+	MonRaise:
 		NLBG KJIH 5
 		Goto See
 	}

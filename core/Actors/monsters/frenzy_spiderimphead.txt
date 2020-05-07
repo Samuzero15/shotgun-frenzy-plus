@@ -1,4 +1,4 @@
-ACTOR SpiderImpHead 25625
+ACTOR SpiderImpHead : FPlus_Monster 25625
 {
     spawnid 200
     Health 20
@@ -7,7 +7,6 @@ ACTOR SpiderImpHead 25625
     Speed 19
     PainChance 200
     Mass 30
-    MONSTER
     +NOGRAVITY
     SeeSound "impspid/see"
     PainSound "impspid/pain"
@@ -33,12 +32,13 @@ ACTOR SpiderImpHead 25625
     Pain:
         IMHD D 2 A_Pain
         Goto See
+	Death.Ice:
+		goto Super::Death.Ice	
+
     Death:
-NULL A 0
-NULL A 1 ACS_ExecuteAlways(500, 0, 18, 0)
         IMHD F 8 A_ScreamAndUnblock
         IMHD G 8
         IMHD H 6
-        Stop
+        goto Super::FadeOut
     }
 }

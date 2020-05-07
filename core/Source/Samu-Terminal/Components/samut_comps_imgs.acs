@@ -221,4 +221,5 @@ function void Image_SetDefaultProps(int i){
 		Image_setOffsets(i,0.0,0.0);
 		Image_setParent(i, -1);
 		Image_setHudid(i, ST_HID_IMG + i);
+		Image_setTag(i, -1);
 }

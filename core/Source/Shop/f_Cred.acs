@@ -7,7 +7,6 @@
 #library "f_Cred"
 
 #import "f_IntDB.acs"
-
 #import "f_Rank.acs"
 
 #include "zcommon.acs"
@@ -187,50 +186,10 @@ script 855 (int l_Amount, int l_SplatCombo)
 // mmm: monster killed
 
 script 500 (int monsterID, int splat, int noProfit)
-
 {
- // monster class
-  int monsterClass = sf_GetMonsterClass(MonsterID);
+ // Duplicated
+	log(s:"It's duplicated on source/demons/fp_mkill.acs You can remove this script from the decorate, thank you.");
 
- // drop reward item
- int howMuch = p_MonsterCredits[monsterClass] + playercount();
- int splatbonus = howmuch/2;
- if(splat > 0)	howMuch += splatBonus;
-	p_dropItem(monsterClass);
-	//debugTidPointers (0);
-	//debugTidPointersStrings(0);
-  // give credits and xp
-	SetActivatorToTarget(0);
-	//if ((ClassifyActor(0) & ACTOR_Monster)) Print(s:"I am a monster.");
-	//print(d:noProfit);
-	if(noProfit){
-		p_monsterKilled(monsterClass, splat, true);
-	}else{
-		if(splat > 0){
-			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,howMuch, CR_BRICK);
-			p_monsterKilled(monsterClass, splat, false);
-		}else if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
-			//[Samu] My try to give you the half of amount if a saw drone kills a monster.
-			//The math is simple.
-			//1/00/00
-			//Type of Drone/Player number/Number Of Drone
-			
-			// I'll hope to do not encounter a player spamming to 100 and more drones.
-			int owner = ((ActivatorTID() / 100) % 100);
-			//log(s:"Died by a saw drone. With tid: ", d:ActivatorTid());
-			//log(s:"Owned by: ", n:owner+1,s:" ", d:owner); 
-			// Attempting to retrive the owner of this drone.
-			setActivatorToPlayer(owner);
-			
-			ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0,howMuch/2, CR_Blue);
-			p_monsterKilled_Drone(monsterClass);
-		}//It's a glitch but... sometimes they can grant you experience.
-		// Not a big deal imo.
-		else{
-		ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,howMuch, CR_GREEN);
-		p_monsterKilled(monsterClass, splat, false);
-		}
-	}
 }
 
 function void p_monsterKilled_Drone(int monsterClass)

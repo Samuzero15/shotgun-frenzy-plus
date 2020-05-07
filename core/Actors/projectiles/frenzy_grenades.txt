@@ -288,20 +288,24 @@ ACTOR Grenade_MinePlacer
 	Radius				16
 	Height				8
 	
-	Speed				5
+	Speed				40
 	Gravity				1.0
 	Mass				100
 	DamageType			MarineFire2
 	
 	Obituary			"%0 was blowen to bits by %k's Flinger."
 	
+	Projectile
 	+NOBLOCKMAP
-	+DROPOFF
-	+MISSILE
 	+ACTIVATEIMPACT
 	+ACTIVATEPCROSS
 	+DOOMBOUNCE
 	+MTHRUSPECIES
+	+UseBounceState
+	+SeekerMissile
+	+SCREENSEEKER
+	+DONTFALL //Stops it from falling after sticking to targets.
+    -NOGRAVITY
 	bouncecount 16
 	
 	SeeSound "w9/fire1"
@@ -310,11 +314,33 @@ ACTOR Grenade_MinePlacer
 	States
 	{
 		Spawn:
-			GRNS ABA 3 bright
+			TNT1 A 0 NoDelay Thing_ChangeTiD(0, 30000 + ACS_NamedExecuteWithResult("PlayerId"))
+			GRNS ABA 3 bright A_SeekerMissile(1, 1, SMF_LOOK | SMF_PRECISE, 256, 1)
 			GRNS B 3 bright A_PlaySound("w9/fire2")
 			goto Spawn
+		NULL A 0 A_Stop
+		TNT1 A 0 Thing_ChangeTiD(0, 30000 + ACS_NamedExecuteWithResult("PlayerId"))
+		GRNS D 1 Bright A_WARP(AAPTR_TRACER, 0,0,0, 0, WARPF_NOCHECKPOSITION)
+		goto Spawn+5
+		
 		Death:
-			GRNS D 4 bright A_SpawnItem ("Grenade_Mine" , 0, 0, 0, 0)
+			NULL A 0 A_Stop
+			GRNS D 4 bright A_SpawnItem ("Grenade_Mine" , 0, 0, 20.0, 0)
+			stop
+		XDeath:
+			TNT1 A 0 A_Stop
+			goto Spawn+5
+		Bounce.Wall:
+			NULL A 0 A_Stop
+			GRNS D 1 A_SpawnItem ("Grenade_Mine" , 0, 0, 0, 0)
+			stop
+		Bounce.Ceiling:
+			NULL A 0 A_Stop
+			GRNS D 1 A_SpawnItem ("Grenade_Mine" , 0, 0, 0, 0)
+			stop
+		
+		Kaboom:
+			GRNS D 1 bright A_SpawnItem("Grenade_Mine_GoBoom")
 			stop
 	}
 }
@@ -323,20 +349,22 @@ ACTOR Grenade_Mine
 {
 	Game Doom
 	Health 20
-	Radius 10
+	Radius 5
 	Height 34
-	+SHOOTABLE
+	Speed 0
 	+NOBLOOD
 	+MTHRUSPECIES
+	+noclip
 	DeathSound "world/barrelx"
 	Obituary "$OB_BARREL" // "%o went boom."
 	ExplosionRadius			128
 	ExplosionDamage			32
 	DamageType			MarineFire2
+	projectile
 	States
 	{
 		Spawn:
-			GRNS CD 6
+			GRNS CD 6 Thing_ChangeTiD(0, 30000 + ACS_NamedExecuteWithResult("PlayerId"))
 			goto Spawn
 		Death:
 			GRNS C 5 BRIGHT A_PlaySound("w9_detonate")

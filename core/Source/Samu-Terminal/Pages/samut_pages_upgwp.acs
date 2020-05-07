@@ -52,7 +52,7 @@ function void UpdateListUpPage(int pageTag){
 			bool showit; // The showing condition for each weapon.
 			ihaveup1 = checkinventory(WeaponUpgrade_getActor(i, 0));
 			ihavewep = checkInventory(Weapon_GetActor(i));
-			if(WeaponUpgrade_getActor(i, 1) == -1) showit = !ihaveup1 && ihavewep;
+			if(Weapon_getUpsNum(i) == 1) showit = !ihaveup1 && ihavewep;
 			else{
 				ihaveup2 = checkinventory(WeaponUpgrade_getActor(i, 1));
 				showit = !(ihaveup1 || ihaveup2) && ihavewep;
@@ -74,8 +74,9 @@ function void UpdateListUpPage(int pageTag){
 				}
 			}
 		}
-		Label_setShow(Listup_vars[8], cond(listup_vars[6] == 0, true, false));
-		Label_setShow(Listup_vars[9], cond(listup_vars[6] == 0, true, false));
+		
+		Label_setShow(Listup_vars[8], cond(!listup_vars[6], true, false));
+		Label_setShow(Listup_vars[9], cond(!listup_vars[6], true, false));
 	}
 }
 
@@ -108,7 +109,7 @@ function void ListUpPage_Update(int weapon){
 	Label_SetPosToCardOff(lbl_desc, card, pos, 90.0, 12.0);
 	
 	// Display the locked buttons if not enough upgrade points.
-	if(WeaponUpgrade_GetActor(weapon,1) == -1){
+	if(Weapon_getUpsNum(weapon) == 1){
 		// Case Unique upgrade
 		condit = GetPlayUpts() < WeaponUpgrade_GetUpgPrice(weapon,0);
 		Label_setColor	  (lbtn1, cond(condit, CR_RED, color));
@@ -165,7 +166,7 @@ function void ListUpPage_ShowUpgrade(int weapon, bool switchme){
 	Label_setShow(lbtn1, switchme);
 	ImgButton_setShow(btn1, switchme);
 	
-	if(WeaponUpgrade_GetActor(weapon,1) != -1){
+	if(Weapon_getUpsNum(weapon) != 1){
 		Label_setShow(lbtn2, switchme);
 		ImgButton_setShow(btn2, switchme);
 	}
@@ -194,7 +195,6 @@ function void InitListUpPage(int pageTag){
 	
 	// 		Notification 1 if no weapons. Slot[8]
 	i = Label_Dup(Vars_Mid_Wid(), Vars_Mid_Hei());
-	Label_setTag (i, -20);
 	Label_setText(i, "Upgrades not avilable.");
 	Component_Save(Label_GetRect(i));
 	listup_vars[8] = i;
@@ -265,7 +265,7 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 	Label_setWrapWidth		(desc, 400);
 	ListUpPage_SaveGroup(weapon, 2, desc);
 	
-	if(WeaponUpgrade_GetActor(Weapon, 1) == -1){
+	if(Weapon_getUpsNum(Weapon) == 1){
 		// The weapon contains an unique upgrade.
 		i = Label_DupCardOff(layout, 1, 40.0, 18.0); 
 		Label_setText		(i,strparam(d:wepup1, s:" UP"));

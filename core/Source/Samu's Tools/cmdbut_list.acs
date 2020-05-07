@@ -1,4 +1,4 @@
-
+/*
 int cmdbut_list[100][6];
 
 function void CMDButList_Init(void){
@@ -33,11 +33,11 @@ function void CMDButList_Init(void){
 				 s:"\nwalls and mines to aid in the battle."),
 		"CG05", true, true, ""); 
 		
-		/*
+		
 	addCMDButOnList 
 		(10, "Build Structure", "Expand your base by building an\nadditional structure.",
 		"CM02", true, true, ""); 
-		*/
+		
 		
 	addCMDButOnList 
 		(11, "Build Genetics Lab", 
@@ -129,3 +129,4 @@ function void addCMDButOnList (int id, str name, str desc,str icon, bool scond, 
 	CMDBut_List[id][5] = price; 
 	// ^ It's already synched with the inventory gaven on the terminal.
 }
+*/

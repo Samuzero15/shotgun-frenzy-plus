@@ -1,4 +1,4 @@
-ACTOR Cybruiser : BaronOfHell 30128
+ACTOR Cybruiser : FPlus_Monster 30128
 { 
 spawnid 205
 Health 2000 
@@ -7,11 +7,9 @@ Height 64
 Mass 1000 
 Speed 10 
 PainChance 20 
-MONSTER
 MeleeDamage 10
 Obituary "%o was blown away by a Cybruiser."
 HitObituary "%o was smashed by a Cybruiser."
-Species "DemonSide"
 +FLOORCLIP 
 +MISSILEMORE
 +DONTHURTSPECIES
@@ -50,15 +48,18 @@ States
        BRUS J 2 
        BRUS J 2 A_Pain 
        Goto See 
+	   
+	Death.Ice:
+		goto Super::Death.Ice
+	   
    Death: 
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+	   NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
        BRUS K 6 Bright A_Scream
-NULL A 1 ACS_ExecuteAlways(500, 0, 23, 0)
        BRUS LMN 6 Bright
        BRUS O 6 Bright A_NoBlocking
        BRUS QRS 6 Bright
        BRUS T 1 A_BossDeath
-       Stop
+       goto Super::FadeOut
    } 
 }
 

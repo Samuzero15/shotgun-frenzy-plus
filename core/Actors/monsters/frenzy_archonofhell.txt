@@ -1,4 +1,4 @@
-ACTOR ArchonOfHell : BaronOfHell 30104
+ACTOR ArchonOfHell : FPlus_Monster 30104
 { 
 spawnid 254
 Health 2100 
@@ -7,12 +7,10 @@ Height 64
 Mass 1000 
 Speed 10 
 PainChance 20 
-MONSTER
 MeleeDamage 10
 Obituary "%o was no match for an archon of hell."
 HitObituary "%o was ripped apart by an archon of hell."
 BloodColor "20 60 20"
-Species "DemonSide"
 +NOTARGET
 +FLOORCLIP 
 +MISSILEMORE
@@ -79,9 +77,10 @@ States
        BOS4 Q 2 
        BOS4 Q 2 A_Pain 
        Goto See 
+	Death.Ice:
+		goto Super::Death.Ice
+		
    Death: 
-NULL A 0
-NULL A 1 ACS_ExecuteAlways(500, 0, 21, 0)
        BOS4 R 6 Bright 
        BOS4 S 6 Bright A_Scream
        BOS4 T 6 Bright 
@@ -90,7 +89,7 @@ NULL A 1 ACS_ExecuteAlways(500, 0, 21, 0)
        BOS4 X 6 Bright A_CustomMissile("ArchonSoul",86,0,0,2,90)
        BOS4 YZ 6 Bright 
        BOS4 [ 6 Bright A_Fall 
-       Stop
+       goto Super::FadeOut
      } 
 }
 

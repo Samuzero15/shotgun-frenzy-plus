@@ -11,7 +11,7 @@ function int WeaponLastUpgradeType(int wid){
 
 function int cond2(bool x, int whentrue, int whenfalse)
 {//It's cond, from ACSUtils, 
-//except it's outside of the cript since adding thw whole file
+//except it's outside of the script since adding the whole file
 //Will cause the map variable number overflow.
 	if (x)
 		return whentrue;
@@ -32,19 +32,18 @@ function int WeaponRecyclePrice(int wid){
 	return money;
 }
 
-function void RecycleWeapon(int wid, int play){
-	int check = WeaponLastUpgradeType(wid);
-	int gain = WeaponRecyclePrice(wid);
-	
-	str whatWeapon;
-	
-	switch(check){
-		case 0: whatWeapon = getWeaponBasis(wid); break;
-		case 1: whatWeapon = getWeaponUP1Name(wid); break;
-		case 2: whatWeapon = getWeaponUP2Name(wid); break;
+function void RecycleWeapon(int wid, int upg, int play){
+	str whatweapon;
+	int rcyprice;
+	if(upg != 255){
+		whatweapon = WeaponUpgrade_GetActor(wid, upg-1);
+		rcyprice = WeaponUpgrade_getRcyPrice(wid, upg-1);
+	}else{ 
+		whatweapon = Weapon_getActor(wid);
+		rcyprice = Weapon_getPrice(wid);
 	}
 	
 	SetActivatorToPlayer(play);
 	TakeInventory(whatWeapon, 1);
-	sf_AddCredits(gain, play);
+	sf_AddCredits(rcyprice, play);
 }

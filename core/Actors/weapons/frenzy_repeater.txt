@@ -2,11 +2,28 @@
 Actor Rep_Heat : Inventory {inventory.MaxAmount 200}
 Actor Rep_IdleSpin : Inventory {inventory.MaxAmount 1}
 
+ACTOR HeavyBullets : Ammo
+{
+	Inventory.Icon "RAMMO0"
+	Inventory.Amount 200
+	Inventory.MaxAmount 300
+	
+	Ammo.BackpackAmount 60
+	Ammo.BackpackMaxAmount 600
+	
+	States
+	{
+		Spawn:
+			RAMM O -1
+			stop
+	}
+}
+
 ACTOR Repeater : Weapon
 {
 	Weapon.AmmoUse 			0
 	Weapon.AmmoGive 		8
-	Weapon.AmmoType			"Dualshot_Ammo"
+	Weapon.AmmoType			"HeavyBullets"
 	Inventory.PickupMessage		"You got the Repeater!"
 	Obituary			"%o got mushed by %k's Repeater."
 	
@@ -85,15 +102,16 @@ ACTOR Repeater : Weapon
 		FireSpinning:
 		Hold: // To give the repeater a bit more of power...
 			// The more time you hold the fire, the more damage you make!
-			TNT1 A 0 A_JumpIfInventory("Dualshot_Ammo", 1, 1)
+			TNT1 A 0 A_JumpIfInventory("HeavyBullets", 1, 1)
 			goto HoldNoAmmo
 			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("Repeater_AimX"))
 			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("Repeater_AimY"))
 			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
 			TNT1 A 0 A_ZoomFactor(0.95)
-			X5E1 C 2 bright A_FireBullets(args[1], args[2], 1, 7 + args[0], "BulletPuff_Standard")
-			X5E1 D 2 bright A_FireBullets(args[1], args[2], 1, 7 + args[0], "BulletPuff_Standard")
-			TNT1 A 0 A_TakeInventory("Dualshot_Ammo", 1)
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E1 C 2 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E1 D 2 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
 			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
 			X5E1 A 1 A_ReFire
 			goto FinishFire
@@ -115,7 +133,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 {
 	Weapon.AmmoUse 			0
 	Weapon.AmmoGive 		8
-	Weapon.AmmoType			"Dualshot_Ammo"
+	Weapon.AmmoType			"HeavyBullets"
 	Inventory.PickupMessage		"You got the Repeater with extra barrel control!"
 	Obituary			"%o got mushed by %k's Repeater."
 	
@@ -194,7 +212,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 		FireSpinning:
 		Hold: // To give the repeater a bit more of power...
 			// The more time you hold the fire, the more damage you make!
-			TNT1 A 0 A_JumpIfInventory("Dualshot_Ammo", 1, 1)
+			TNT1 A 0 A_JumpIfInventory("HeavyBullets", 1, 1)
 			goto HoldNoAmmo
 			TNT1 A 0 A_PlaySound("x5/fire1", CHAN_6, 1.0, true)
 			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("RepeaterX2_AimX"))
@@ -202,11 +220,12 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
 			
 			TNT1 A 0 A_ZoomFactor(0.95)
-			X5E1 C 1 bright A_FireBullets(args[1], args[2], 1, 7 + args[0], "BulletPuff_Standard")
-			X5E1 D 1 bright A_FireBullets(args[1], args[2], 1, 7 + args[0], "BulletPuff_Standard")
-			X5E1 C 1 bright A_FireBullets(args[1], args[2], 1, 7 + args[0], "BulletPuff_Standard")
-			X5E1 D 1 bright A_FireBullets(args[1], args[2], 1, 7 + args[0], "BulletPuff_Standard")
-			TNT1 A 0 A_TakeInventory("Dualshot_Ammo", 1)
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E1 C 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
+			X5E1 D 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E1 C 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
+			X5E1 D 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
 			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
 			X5E1 A 1 A_ReFire
 			TNT1 A 0 A_StopSound(CHAN_6)
@@ -228,9 +247,11 @@ ACTOR Repeater_DoubleSpeed : Weapon
 
 ACTOR Repeater_BlastShells : Weapon
 {
-	Weapon.AmmoUse 			1
-	Weapon.AmmoGive 		8
-	Weapon.AmmoType			"Cell"
+	Weapon.AmmoUse1 		0
+	Weapon.AmmoGive1 		8
+	Weapon.AmmoType1		"HeavyBullets"
+	Weapon.AmmoType2		"Cell"
+	Weapon.AmmoUse2			0 
 	Inventory.PickupMessage		"You got the Repeater with BLASTER ROUNDS!"
 	Obituary			"%o got mushed by %k's Repeater."
 	
@@ -307,15 +328,31 @@ ACTOR Repeater_BlastShells : Weapon
 		FireSpinning:
 		Hold: // To give the repeater a bit more of power...
 			// The more time you hold the fire, the more damage you make!
-			TNT1 A 0 A_JumpIfInventory("Dualshot_Ammo", 1, 1)
+			TNT1 A 0 A_JumpIfInventory("HeavyBullets", 1, 1)
 			goto HoldNoAmmo
+			TNT1 A 0 A_Jumpifinventory("Cell", 4, "HoldNormal")
 			TNT1 A 0 A_ZoomFactor(0.95)
 			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("RepGauss_AimX"))
 			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("RepGauss_AimY"))
 			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
-			X5E2 C 2 bright A_RailAttack(15 + args[0], 0, false, None, "blue", RGF_FullBright, 0, "BulletPuff_Explosive", args[1], args[2], 0, 15)
-			X5E2 D 2 bright A_RailAttack(15 + args[0], 0, false, None, "blue", RGF_FullBright, 0, "BulletPuff_Explosive", args[1], args[2], 0, 15)
-			TNT1 A 0 A_TakeInventory("Cell", 1)
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E2 C 2 bright A_RailAttack(15 + args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "BulletPuff_Explosive", args[1], args[2], 0, 15)
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E2 D 2 bright A_RailAttack(15 + args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "BulletPuff_Explosive", args[1], args[2], 0, 15)
+			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
+			X5E1 A 1 A_ReFire
+			goto FinishFire
+			
+			HoldNormal:
+			TNT1 A 0 A_ZoomFactor(0.95)
+			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("RepGauss_AimX"))
+			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("RepGauss_AimY"))
+			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
+			TNT1 A 0 A_TakeInventory("Cell", 4)
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E2 C 2 bright A_RailAttack(15 + args[0], 0, false, None, "cyan", RGF_FullBright, 0, "BulletPuff_Explosive", args[1], args[2], 0, 15)
+			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
+			X5E2 D 2 bright A_RailAttack(15 + args[0], 0, false, None, "cyan", RGF_FullBright, 0, "BulletPuff_Explosive", args[1], args[2], 0, 15)
 			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
 			X5E1 A 1 A_ReFire
 			goto FinishFire

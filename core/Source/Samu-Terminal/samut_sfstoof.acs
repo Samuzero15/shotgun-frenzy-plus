@@ -52,7 +52,7 @@ function void SamuTerm_InitStrings(void){
 	InitUpgWepList();
 	Init_ItemList();
 	MechUpList_init();
-	CMDButList_Init();
+	//CMDButList_Init();
 }
 
 function void addWPString(int ind,

@@ -38,6 +38,7 @@ spawnid 236
         BFAM A 2
         BFAM A 2 A_Pain
         Goto See
+		
     Death:
         BFAM D 0 A_Die
         BFAM D 0 A_NoBlocking 

@@ -8,6 +8,7 @@ Gameinfo
 	MenuFontColor_Selection = "Gold"
 	MenuFontColor_Header = "Cyan"
 	MenuSliderColor = "Red"
+	ForceKillScripts = True
 }
 
 

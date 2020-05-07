@@ -44,6 +44,16 @@ ACTOR HellsFury 3127
 		HFRY H 2
 		HFRY H 2 A_Pain
 		Goto See
+
+	Death.Ice:
+		goto Super::Death.Ice
+
+	Raise:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+	goto MonRaise
+
+		
 	Death:
 		HFRY I 8 A_Scream
 		HFRY J 0 A_FaceTarget
@@ -67,7 +77,7 @@ ACTOR HellsFury 3127
 		HFRY MN 8
 		HFRY O -1
 		Stop
-	Raise:
+	MonRaise:
 		HFRY NMLKJI 8
 		Goto See
  	}

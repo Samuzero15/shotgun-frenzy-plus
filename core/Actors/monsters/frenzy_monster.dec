@@ -1,0 +1,71 @@
+Actor FPlus_Monster {
+	health 10
+	species "DemonSide"
+	MONSTER
+	
+	states{
+		/*
+		XDeath:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
+		goto MonXDeath
+		
+		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise
+		
+		Death.Ice:
+			goto Super::Death.Ice
+			
+			
+			// "ExtremeDeath" flag will trigger only for the xdeaths
+			// "SkyExplode" flag will trigger on freezing deaths.
+		*/
+		
+		MonXDeath: // Overridable, if does not have it, go to it's death.
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false) // Flag Token.
+		goto Death
+		
+		FadeOut:
+			"####" "#" 650 CanRaise
+			"####" "#" 2 A_FadeOut(0.1)
+			"####" "#" 2 A_Fadein(0.05)
+		goto FadeOut+1
+		
+		Death.Ice:
+			"####" "#" 0 A_ChangeFlag("SKYEXPLODE",true) // Flag Token.
+		goto GenericFreezeDeath
+	}
+}
+
+// monsters
+#include "Actors/monsters/Doom/fp_monsters.dec"
+#include "Actors/monsters/frenzy_afrit.txt"
+#include "Actors/monsters/frenzy_annihilator.txt"
+#include "Actors/monsters/frenzy_archonofhell.txt"
+#include "Actors/monsters/frenzy_batfamiliar.txt"
+#include "Actors/monsters/frenzy_blooddemonclone.txt"
+#include "Actors/monsters/frenzy_bloodfiend.txt"
+#include "Actors/monsters/frenzy_chaingunguy2.txt"
+#include "Actors/monsters/frenzy_chainsawzombie.txt"
+#include "Actors/monsters/frenzy_cyberbaron.txt"
+#include "Actors/monsters/frenzy_cybruiser.txt"
+#include "Actors/monsters/frenzy_demolisher.txt"
+#include "Actors/monsters/frenzy_fusionspider.txt"
+#include "Actors/monsters/frenzy_hellion.txt"
+#include "Actors/monsters/frenzy_hotdog.txt"
+#include "Actors/monsters/frenzy_nailborg.txt"
+#include "Actors/monsters/frenzy_nailborgcommando.txt"
+#include "Actors/monsters/frenzy_namidarkimp.txt"
+#include "Actors/monsters/frenzy_repeaterzombie.txt"
+#include "Actors/monsters/frenzy_segwayzombie.txt"
+#include "Actors/monsters/frenzy_slimeimp.txt"
+#include "Actors/monsters/frenzy_spiderimphead.txt"
+#include "Actors/monsters/frenzy_ssgzombie.txt"
+#include "Actors/monsters/frenzy_stonedemon.txt"
+#include "Actors/monsters/frenzy_suicidebomber.txt"
+#include "Actors/monsters/frenzy_voiddarkimp.txt"
+#include "Actors/monsters/frenzy_hellsfury.txt"
+#include "Actors/monsters/frenzy_extra.txt"
+
+#include "Actors/monsters/fp_aracnorb.dec"

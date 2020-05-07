@@ -131,64 +131,6 @@ function void STExecute_GetItem(int which){
 	GiveInventory(actor, 1);
 }
 
-function void STExecute_BuyWeapon(int which){
-	
-	int price = getWPPrice(which);
-	//print(d:which);
-	if(getPlayCredits() < price)
-	{	
-		Toaster_ShowToast("Ya dont have enough!",CR_RED);
-		localAmbientSound("SamuTerm/Error",127);
-	}
-	else{
-		//SamuTerm_CallOpExecute (STEXE_GIVEWP, which, price,0);
-		Prompt_Resize(20,5);
-		Prompt_Ask("Confirm", "Are you sure to buy this weapon pack?", CR_BRICK);
-		Prompt_ExecuteOnTrue(STEXE_GETWP, which, 0, 0);
-		//Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
-	}
-}
-
-function void STExecute_GetWeapon(int which){
-	Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
-	SamuTerm_CallOpExecute(STEXE_GIVEWP, which, 0, 0);
-	LocalAmbientSound("p/deploy",128);
-}
-
-function void STExecute_GiveWeapon(int which){
-	int payprice = getWPPrice(which);
-	sf_RemoveCredits(payprice, PlayerNumber());
-	
-	GiveWeaponPack(which);
-}
-
-function void STExecute_ShowPage(int which){
-	SetUpBuyPage_WP(which);
-	SamuTerm_CallOpExecute(STEXE_GTCAT,10,0,0);
-}
-
-function void STExecute_ShowBuyPage(int which){
-	SetUpBuyPage_WP(which);
-	SamuTerm_CallOpExecute(STEXE_GTCAT,10,0,0);
-}
-
-function void STExecute_AskForRecycle(int weapon){
-	Prompt_Resize(20,8);
-	Prompt_Ask("Conf. Recycling", 
-			"Are you sure you want to recycle this weapon?", CR_GREEN);
-	Prompt_ExecuteOnTrue(STEXE_MSGRC, weapon, 0, 0);
-}
-
-function void STExecute_RecycleAccepted(int which){
-	LocalAmbientSound("monies",128);
-	SamuTerm_CallOpExecute(STEXE_WEPRC, which, playerNumber(), 0);
-	Toaster_ShowToast("Recycling process completed!", CR_GOLD);
-}
-
-function void STExecute_RecycleWeapon(int weapon, int play){	
-	RecycleWeapon(weapon, play);
-}
-
 
 function void STExecute_lupnextPage(void){
 /*

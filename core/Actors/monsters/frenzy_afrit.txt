@@ -15,110 +15,114 @@ Stop
 
 actor Comet
 {
-Radius 6
-Height 8
-Speed 30
-Damage 25
-SpawnID 250
-ExplosionDamage 80
-ExplosionRadius 80
-Scale .55
-PROJECTILE
-+MTHRUSPECIES
-SeeSound "comet/launch"
-DeathSound "comet/explosion"
-Decal Scorch
-States
-{
-Spawn:
-COMT AAAABBBBCCCC 1 Bright A_SpawnItemEx("CometTail", 0, 0, 0, 0, 0, 0, 0, 128)
-goto Spawn
-Death:
-COMT D 3 Bright A_SpawnItemEx("CometDeathGlow", 0, 0, 0, 0, 0, 0, 0, 128)
-COMT E 3 Bright A_Explode
-COMT E 0 A_SpawnItemEx("CometDeath", 0, 0, 0, 0, 0, 0, 0, 128)
-Stop
-}
+	Radius 6
+	Height 8
+	Speed 30
+	Damage 25
+	SpawnID 250
+	ExplosionDamage 80
+	ExplosionRadius 80
+	Scale .55
+	PROJECTILE
+	+MTHRUSPECIES
+	SeeSound "comet/launch"
+	DeathSound "comet/explosion"
+	Decal Scorch
+	States
+	{
+		Spawn:
+		COMT AAAABBBBCCCC 1 Bright A_SpawnItemEx("CometTail", 0, 0, 0, 0, 0, 0, 0, 128)
+		goto Spawn
+		Death:
+		COMT D 3 Bright A_SpawnItemEx("CometDeathGlow", 0, 0, 0, 0, 0, 0, 0, 128)
+		COMT E 3 Bright A_Explode
+		COMT E 0 A_SpawnItemEx("CometDeath", 0, 0, 0, 0, 0, 0, 0, 128)
+		Stop
+	}
 }
 
-ACTOR Afrit 3120
+ACTOR Afrit : FPlus_Monster 3120
 {
-spawnid 235
-//$Category "ZDoom Monster pack"
-Health 2500
-Speed 10
-Radius 24
-Height 72
-PainChance 50
-Mass 0x7FFFFFF
-Meleedamage 10
-SeeSound "baron/sight"
-PainSound "baron/pain"
-DeathSound "baron/death"
-ActiveSound "baron/active"
-MeleeSound "baron/melee"
-Missiletype "AfritBall"
-Species "DemonSide"
-MissileHeight 44
-REACTIONTIME 8
-MONSTER
-+NOGRAVITY
-+NOBLOOD
-+FLOATBOB
-+FLOAT
-+DONTHURTSPECIES
-+MTHRUSPECIES
-Obituary "%o was scorched by an Afrit"
-HitObituary "%o found the Afrit too hot to handle."
-Damagefactor "HellFire", 0.0
-	
-States
-{
-Spawn:
-FRIT A 0
-//FRIT A 0 A_CustomMissile("OrbitComet", 44, 0, 0, 2, 0)
-//FRIT A 0 A_CustomMissile("OrbitComet2", 44, 0, 180, 2, 0)
-FRIT ABCD 4 Bright A_Look
-Goto Spawn+3
-Idle:
-FRIT ABCD 4 Bright A_Look
-goto Idle
-See:
-FRIT AABBCCDD 2 Bright A_Chase
-goto See
-Melee:
-//FRIT S 0 A_Jump(64,4)
-FRIT ST 6 Bright A_FaceTarget
-FRIT U 6 Bright A_ComboAttack
-Goto See +2
-FRIT E 6 Bright A_FaceTarget
-FRIT F 6 Bright A_CustomMissile("HellFire", 44, 0, 0)
-FRIT G 6 Bright A_FaceTarget
-Goto See +2
-Missile:
-//FRIT S 0 A_Jump(64,8)
-//FRIT S 0 A_Jump(128,4)
-FRIT ST 6 Bright A_FaceTarget
-FRIT U 6 Bright A_ComboAttack
-Goto See +2
-FRIT EF 6 Bright A_FaceTarget
-FRIT G 6 Bright A_CustomMissile("Comet", 44, 0, 0)
-Goto See +2
-FRIT E 6 Bright A_FaceTarget
-FRIT F 6 Bright A_CustomMissile("HellFire", 44, 0, 0)
-FRIT G 6 Bright A_FaceTarget
-Goto See +2
-Pain:
-FRIT HH 4 Bright A_Pain
-Goto See +2
-Death:
-NULL A 0 ACS_ExecuteAlways(500, 0, 20, 0)
-FRIT I 0 Bright A_NoGravity
-FRIT I 6 Bright A_Scream
-FRIT J 5 Bright A_NoBlocking
-FRIT KLMNOPQR 4 Bright
-Stop
-}
+	spawnid 235
+	//$Category "ZDoom Monster pack"
+	Health 2500
+	Speed 10
+	Radius 24
+	Height 72
+	PainChance 50
+	Mass 0x7FFFFFF
+	Meleedamage 10
+	SeeSound "baron/sight"
+	PainSound "baron/pain"
+	DeathSound "baron/death"
+	ActiveSound "baron/active"
+	MeleeSound "baron/melee"
+	Missiletype "AfritBall"
+	MissileHeight 44
+	REACTIONTIME 8
+	+NOGRAVITY
+	+NOBLOOD
+	+FLOATBOB
+	+FLOAT
+	+DONTHURTSPECIES
+	+MTHRUSPECIES
+	Obituary "%o was scorched by an Afrit"
+	HitObituary "%o found the Afrit too hot to handle."
+	Damagefactor "HellFire", 0.0
+		
+	States
+	{
+		Spawn:
+		FRIT A 0
+		//FRIT A 0 A_CustomMissile("OrbitComet", 44, 0, 0, 2, 0)
+		//FRIT A 0 A_CustomMissile("OrbitComet2", 44, 0, 180, 2, 0)
+		FRIT ABCD 4 Bright A_Look
+		Goto Spawn+3
+		Idle:
+		FRIT ABCD 4 Bright A_Look
+		goto Idle
+		See:
+		FRIT AABBCCDD 2 Bright A_Chase
+		goto See
+		
+		Melee:
+		//FRIT S 0 A_Jump(64,4)
+		FRIT ST 6 Bright A_FaceTarget
+		FRIT U 6 Bright A_ComboAttack
+		//Goto See +2
+		FRIT E 6 Bright A_FaceTarget
+		FRIT F 6 Bright A_CustomMissile("HellFire", 44, 0, 0)
+		FRIT G 6 Bright A_FaceTarget
+		Goto See +2
+		
+		Missile:
+		//FRIT S 0 A_Jump(64,8)
+		//FRIT S 0 A_Jump(128,4)
+		FRIT ST 6 Bright A_FaceTarget
+		FRIT U 6 Bright A_ComboAttack
+		//Goto See +2
+		FRIT EF 6 Bright A_FaceTarget
+		FRIT G 6 Bright A_CustomMissile("Comet", 44, 0, 0)
+		//Goto See +2
+		FRIT E 6 Bright A_FaceTarget
+		FRIT F 6 Bright A_CustomMissile("HellFire", 44, 0, 0)
+		FRIT G 6 Bright A_FaceTarget
+		Goto See +2
+		
+		Pain:
+		FRIT HH 4 Bright A_Pain
+		Goto See +2
+		
+		Death.Ice:
+			goto Super::Death.Ice
+		
+		Death:
+		FRIT I 0 Bright A_NoGravity
+		FRIT I 6 Bright A_Scream
+		FRIT J 5 Bright A_NoBlocking
+		FRIT KLMNOPQR 4 Bright
+		Stop
+	}
 }
 
 actor AfritBall

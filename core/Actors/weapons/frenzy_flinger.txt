@@ -90,6 +90,7 @@ ACTOR Flinger_MinePlacer : Weapon
 	Inventory.PickupMessage		"You got the Mine Placing Flinger!"
 	
 	+WEAPON.NOAUTOFIRE
+	+Weapon.NoAutoAim
 	
 	Weapon.UpSound			"w9/load"
 	weapon.selectionorder 2900
@@ -99,21 +100,23 @@ ACTOR Flinger_MinePlacer : Weapon
 			W9E3 A 1 A_WeaponReady
 			goto Ready
 		Deselect:
+			TNT1 A 0 ACS_NamedExecuteAlways("MinesGoBoom", 0, 30000 + tid)
 			W9E3 A 1 A_Lower
 			W9E3 A 0 A_Lower
-			goto Deselect
+			goto Deselect+1 
 		Select:
 			W9E3 A 1 A_Raise
 			W9E3 A 0 A_Raise
 			goto Select
 		Fire:
-			W9E3 A 8 A_GunFlash
-			W9E3 A 5 A_FireCustomMissile("Grenade_MinePlacer", 0, 1, 0, 0, 0)
+			W9E3 A 6 A_GunFlash
+			W9E3 A 4 A_FireCustomMissile("Grenade_MinePlacer", 0, 1, 0, 0, 0)
 			W9E3 A 0 A_Refire
     			goto Ready
 		AltFire:
-			W9E1 A 8 A_GunFlash
-			W9E1 A 20 A_FireCustomMissile("Grenade_Flinger", 0, 1, 0, 0, 0)
+			TNT1 A 0 A_PlayWeaponSound("Beep")
+			W9E1 A 5 
+			W9E1 A 5 ACS_NamedExecuteAlways("MinesGoBoom", 0, 30000 + tid)
 			W9E1 A 0 A_Refire
     			goto Ready
 		Flash:

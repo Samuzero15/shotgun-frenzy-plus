@@ -12,7 +12,10 @@ Species "DemonSide"
 MONSTER
 +NOTARGET
 +FLOORCLIP 
-+BOSS 
+//+BOSS 
+
++BOSSDEATH // Important, to reward 3 kills and the cash.
+
 +MISSILEEVENMORE
 SeeSound "monster/demsit" 
 AttackSound "spider/attack" 
@@ -49,7 +52,6 @@ States
        Goto See 
    Death: 
        DEMO J 20 Bright A_Scream 
-NULL A 0 ACS_ExecuteAlways(500, 0, 28, 0)
        DEMO K 10 Bright A_NoBlocking 
        DEMO LMNOPQR 10 Bright
        DEMO S 30 

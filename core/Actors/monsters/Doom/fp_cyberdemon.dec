@@ -1,0 +1,68 @@
+
+ACTOR sfCyberdemon : FPlus_Monster replaces Cyberdemon
+{
+	spawnid 114
+	obituary "%o was splattered by a cyberdemon."
+	health 5000
+	radius 25//40
+	height 64//86//110
+	mass 1000
+	speed 17
+	painchance 20
+	seesound "cyber/sight"
+	painsound "cyber/pain"
+	deathsound "cyber/death"
+	activesound "cyber/active"
+	//+BOSS
+	
+	+BOSSDEATH // Important, to reward 3 kills and the cash.
+	
+	+FLOORCLIP
+	+NORADIUSDMG
+	+DONTMORPH
+	+MISSILEMORE
+	+MTHRUSPECIES
+	
+	states
+	{
+		Spawn:
+			CYBR AB 10 A_Look
+			goto Spawn
+		See:
+			CYBR A 3 A_Hoof
+			CYBR ABBCC 3 A_Chase
+			CYBR D 3 A_Metal
+			CYBR D 3
+			goto See
+		Missile:
+			CYBR E 6 A_FaceTarget
+			CYBR F 12 A_CyberAttack //See Rocket
+			CYBR E 12 A_FaceTarget
+			CYBR F 12 A_CyberAttack
+			CYBR E 12 A_FaceTarget
+			CYBR F 12 A_CyberAttack
+			goto See
+		Pain:
+			CYBR G 10 A_Pain
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			goto See
+		Death.Ice:
+			goto Super::Death.Ice
+		
+		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise		
+	
+		Death:
+			CYBR H 2
+			CYBR H 10 
+			CYBR I 10 A_Scream
+			CYBR JKL 10
+			CYBR M 10 A_NoBlocking
+			CYBR NO 10
+			CYBR P 30
+			CYBR P -1 A_BossDeath
+			goto Super::FadeOut
+	}
+}

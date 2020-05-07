@@ -1,0 +1,64 @@
+
+
+ACTOR sfCacodemon : FPlus_Monster replaces Cacodemon
+{
+	spawnid 19
+	obituary "%o was smitten by a cacodemon."
+	hitobituary "%o got too close to a cacodemon."
+	health 400
+	radius 31
+	height 56
+	mass 400
+	speed 8
+	painchance 128
+	seesound "caco/sight"
+	painsound "caco/pain"
+	deathsound "caco/death"
+	activesound "caco/active"
+	attacksound "caco/melee"
+	
+	+FLOAT
+	+NOGRAVITY
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			HEAD A 10 A_Look
+			goto Spawn
+		See:
+			HEAD A 3 A_Chase
+			goto See
+		Missile:
+			HEAD BC 5 A_FaceTarget
+			HEAD D 5 bright A_HeadAttack    // See CacodemonBall
+			goto See
+		Pain:
+			HEAD E 3
+			HEAD E 3 A_Pain
+			HEAD F 6
+			goto See
+		
+		Death.Ice:
+			goto Super::Death.Ice
+		
+		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise
+			
+		Death:
+			HEAD G 2
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			HEAD G 8 
+			HEAD H 8 A_Scream
+			HEAD IJ 8
+			HEAD K 8 A_NoBlocking
+			HEAD L 0 A_SetFloorClip
+			HEAD L 650
+			goto Super::FadeOut
+		MonRaise:
+			HEAD L 8 A_UnSetFloorClip
+			HEAD KJIHG 8
+			goto See
+	}
+}

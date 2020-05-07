@@ -1,0 +1,64 @@
+
+
+ACTOR sfFatso : FPlus_Monster replaces Fatso
+{
+	spawnid 112
+	obituary "%o was squashed by a mancubus."
+	health 600
+	radius 20
+	height 56
+	mass 1000
+	speed 8
+	painchance 80
+	seesound "fatso/sight"
+	painsound "fatso/pain"
+	deathsound "fatso/death"
+	activesound "fatso/active"
+	+FLOORCLIP
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			FATT AB 15 A_Look
+			goto Spawn
+		See:
+			FATT AABBCCDDEEFF 4 A_Chase
+			goto See
+		Missile:
+			FATT G 20 A_FatRaise
+			FATT H 10 bright A_FatAttack1  // See FatShot
+			FATT IG 5 A_FaceTarget
+			FATT H 10 bright A_FatAttack2
+			FATT IG 5 A_FaceTarget
+			FATT H 10 bright A_FatAttack3
+			FATT IG 5 A_FaceTarget
+			goto See
+		Pain:
+			FATT J 3
+			FATT J 3 A_Pain
+			goto See
+		
+		Death.Ice:
+			goto Super::Death.Ice
+		
+		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise
+		
+			
+		Death:
+			FATT K 2
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			FATT K 6 
+			FATT L 6 A_Scream
+			FATT M 6 A_NoBlocking
+			FATT NOPQRS 6
+			FATT T 0 A_BossDeath
+			FATT T 1
+			goto Super::FadeOut
+		MonRaise:
+			FATT RQPONMLK 5
+			goto See
+	}
+}

@@ -84,3 +84,13 @@ script "RepGauss_AimY" (void)
 	int spread = (CheckInventory("Rep_Heat") / 25);
 	SetResultValue(spread + 1);
 }
+
+script "PlayerId" (void){
+	SetActivatorToTarget(0);
+	SetResultValue(ActivatorTID());
+}
+
+script "MinesGoBoom" (int tid) {
+	SpawnProjectile(tid, "Grenade_Mine_GoBoom", 0,0,0,0,0);
+	Thing_remove(tid);
+}

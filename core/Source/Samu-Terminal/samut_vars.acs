@@ -107,7 +107,8 @@
 #libDefine STEXE_MSGRC 16
 #libDefine STEXE_ASKRC 15
 
-#libDefine STEXE_SHOWBUYPAGE 8
+#libDefine STEXE_BUYWP_PDESC 8
+#libDefine STEXE_BUYWP_PSHOW 35
 #libdefine STEXE_BUYWP 9
 #libdefine STEXE_GETWP 10
 #libdefine STEXE_GIVEWP -5
@@ -221,9 +222,6 @@ int techs = 0;
 
 int pant = 0;
 
-int buy_page[10];
-
-int listwp_page[20];
 int ptitle;
 //Other variables.
 str imgbg = STSET_BACK;

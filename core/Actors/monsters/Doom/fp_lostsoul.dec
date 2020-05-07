@@ -1,0 +1,53 @@
+
+
+ACTOR sfLostSoul : FPlus_Monster replaces LostSoul
+{
+	spawnid 110
+	obituary "%o was spooked by a lost soul."
+	health 100
+	radius 16
+	height 56
+	mass 50
+	speed 8
+	damage 3
+	painchance 256
+	renderstyle SoulTrans
+	attacksound "skull/melee"
+	painsound "skull/pain"
+	deathsound "skull/death"
+	activesound "skull/active"
+	+MTHRUSPECIES
+	+FLOAT
+	+NOGRAVITY
+	+NOICEDEATH
+	+MISSILEMORE
+	+DONTFALL
+	states
+	{
+		Spawn:
+			SKUL AB 10 bright A_Look
+			goto Spawn
+		See:
+			SKUL AB 6 bright A_Chase
+			goto See
+		Missile:
+			SKUL C 10 bright A_FaceTarget
+			SKUL D 4 bright A_SkullAttack
+			SKUL CD 4 bright
+			goto Missile+2
+		Pain:
+			SKUL E 3 bright
+			SKUL E 3 bright A_Pain
+			goto See
+		
+		Death:
+			SKUL F 2 bright
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			SKUL F 6 bright 
+			SKUL G 6 bright A_Scream
+			SKUL H 6 bright
+			SKUL I 6 bright A_NoBlocking
+			SKUL JK 6
+			stop
+	}
+}

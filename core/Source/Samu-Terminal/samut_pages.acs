@@ -8,30 +8,28 @@
 
 
 #include "samut_pages_upgwp.acs"
-#include "samut_pages_listwp.acs"
 #include "samut_pages_buywp.acs"
 #include "samut_pages_rcywp.acs"
 #include "samut_pages_armit.acs"
 #include "samut_pages_pwrup.acs"
 #include "samut_pages_mechup.acs"
 
-#include "samut_pages_cmd_main.acs"
+//#include "samut_pages_cmd_main.acs"
 
 function void SamuTerm_InitPages(void){
 	if(pagetags[STTAGS_ALPHA] == 20){
 		InitPowBuyPage(1);
 	}else if(pageTags[STTAGS_ALPHA] == 30){
 		MechUpPage_Init(pageTags[STTAGS_ALPHA]);
-	}else if(pageTags[STTAGS_ALPHA] == 10){
+	}/*else if(pageTags[STTAGS_ALPHA] == 10){
 		CMDPage_Init();
-	}
+	}*/
 	else{
 		setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
-		InitBuyPage(10);
-		InitRcyPage(3);
+		BuyWpnPage_Init(1);
+		RcyWpnPage_Init(3);
 		InitArmItemsPage(4);
 		InitListUPPage(2);
-		InitListWPPage(1);
 	}
 }
 
@@ -42,16 +40,15 @@ function void UpdatePages(void){
 	}else if(pageTags[STTAGS_ALPHA] == 30){
 		MechUpPage_Update(pageTags[STTAGS_ALPHA]);
 		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
-	}else if(pageTags[STTAGS_ALPHA] == 10){
+	}/*else if(pageTags[STTAGS_ALPHA] == 10){
 		CMDPage_Update();
-	}else{
-		UpdateBuyPage(10);
-		UpdateRcyPage(3);
+	}*/else{
+		BuyWpnPage_Update(1);
+		RcyWpnPage_Update(3);
 		UpdateArmItemsPage(4);
 		//UpdateUpgPage(11);
 
 		UpdateListUPPage(2);
-		UpdateListWPPage(1);
 		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
 		//Label_setText(wallet, StrParam(s:"Price of p_key: ", d:Prices_getValue_K("pr_wb_bfg")));
 	}

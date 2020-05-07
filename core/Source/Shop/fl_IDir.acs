@@ -8,20 +8,13 @@
 // Here it lays all of the weapons on the game.
 // For the prices, take a look at fl_price.
 
-#library "fl_WDir"
+#library "fl_IDir"
 #include "zcommon.acs"
 
-#libdefine FP_WEAPONS 15
-#libdefine FP_WEPUPS 2
+#libdefine FP_ITEMS 255
 
-#libdefine FP_C_BASIC 1
-#libdefine FP_C_ADVANCED 2
-#libdefine FP_C_OVERPOW 3
-
-int fp_WeaponList[FP_WEAPONS][4];
-int fp_WeaponUpgrades[FP_WEAPONS][FP_WEPUPS][4];
-int fp_WeaponStack = 0;
-int fp_WeaponUpStack = 0;
+int fp_Items[ITEMS][4];
+int fp_ItemStack = 0;
 
 // fp_WeaponList[wepaonid][prop]:
 // Weapon Name
@@ -32,18 +25,7 @@ int fp_WeaponUpStack = 0;
 // Weapon Name
 // Actor
 // Price (On Ups.)
-Script "SFPlus_DefineItems" OPEN{
 
-}
-
-Script "SFPlus_DefineWeapons" (void){
+function void Items_Define(void){
 	
-}
-
-function void Weapon_Add(int string){
-	fp_WeaponList[fp_WeaponStack][0] = "";
-	fp_WeaponList[fp_WeaponStack][1] = FP_C_BASIC;
-	fp_WeaponList[fp_WeaponStack][2] = "";
-	fp_WeaponList[fp_WeaponStack][3] = "price_key";
-	fp_WeaponStack++;
 }

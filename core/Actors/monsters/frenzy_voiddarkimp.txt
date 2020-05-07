@@ -1,4 +1,4 @@
-actor VoidDarkImp 3101
+actor VoidDarkImp : FPlus_Monster 3101
 {
 spawnid 241
 	//$Category Monsters
@@ -7,8 +7,6 @@ spawnid 241
     Height 56
     Speed 7
     PainChance 200
-    MONSTER 
-	Species "DemonSide"
     +FLOORCLIP
     SeeSound "imp/sight"
     PainSound "imp/pain"
@@ -50,29 +48,38 @@ spawnid 241
         DRKV H 2
         DRKV H 2 A_Pain
         Goto See
+		
+	Death.Ice:
+		goto Super::Death.Ice
+
+	XDeath:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
+	goto MonXDeath
+
+	Raise:
+		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+	goto MonRaise
+		
     Death:
-NULL A 0 ACS_ExecuteAlways(500, 0, 33, 0)
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+		NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
         DRKV L 8
         DRKV M 8 A_Scream
         DRKV N 5
         DRKV O 5 A_Fall
         DRKV P 650
-		DeathFade:
-			DRKV P 2 A_FadeOut(0.1)
-			goto DeathFade
-    XDeath:
-NULL A 0 ACS_ExecuteAlways(500, 0, 33, 1)
+		goto Super::FadeOut
+		
+    MonXDeath:
         DRKI N 5
         DRKI O 5 A_XScream
         DRKI P 5
         DRKI Q 5 A_Fall
         DRKI RST 5
         DRKI U 650
-		XDeathFade:
-			DRKI U 2 A_FadeOut(0.1)
-			goto XDeathFade
-    Raise:
+		goto Super::FadeOut
+		
+    MonRaise:
         DRKV PO 8
         DRKV NML 6
         Goto See

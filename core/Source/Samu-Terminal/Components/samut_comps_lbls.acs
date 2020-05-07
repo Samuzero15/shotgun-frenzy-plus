@@ -254,6 +254,7 @@ function void Label_SetDefaultProps(int i){
 		Label_setHudid(i, ST_HID_LBL + i);
 		Label_setOffsets(i, 0.0, 0.0);
 		Label_setParent(i, -1);
+		Label_setTag(i, -1);
 }
 
 function void Label_SetProperties(int i,

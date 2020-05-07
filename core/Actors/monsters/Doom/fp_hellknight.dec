@@ -1,0 +1,61 @@
+
+ACTOR sfHellKnight : FPlus_Monster replaces HellKnight
+{
+	spawnid 113
+	obituary "%o was splayed by a Hell Knight."
+	hitobituary "%o was gutted by a Hell Knight."
+	health 650
+	radius 24
+	height 64
+	mass 1000
+	speed 10
+	painchance 50
+	seesound "knight/sight"
+	painsound "knight/pain"
+	deathsound "knight/death"
+	activesound "knight/active"
+	
+	+FLOORCLIP
+	+MTHRUSPECIES
+	states
+	{
+		Spawn:
+			BOS2 AB 10 A_Look
+			goto Spawn
+		See:
+			BOS2 AABBCCDD 3 A_Chase
+			goto See
+		Melee:
+		Missile:
+			BOS2 EF 8 A_FaceTarget
+			BOS2 G 8 A_BruisAttack //See BaronBall
+			goto See
+		Pain:
+			BOS2 H 2
+			BOS2 H 2 A_Pain
+			goto See
+		
+		Death.Ice:
+			goto Super::Death.Ice
+		
+		Raise:
+			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
+			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
+		goto MonRaise
+		
+		Death:
+			BOS2 I 2
+			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			BOS2 I 8 ACS_ExecuteAlways(500, 0, 5, 0)
+			BOS2 J 8 A_Scream
+			BOS2 K 8
+			BOS2 L 8 A_NoBlocking
+			BOS2 MN 8
+			BOS2 O 0 A_BossDeath
+			BOS2 O 1
+			goto Fadeout
+		MonRaise:
+			BOS2 ONMLKJI 8
+			goto See
+	}
+}
