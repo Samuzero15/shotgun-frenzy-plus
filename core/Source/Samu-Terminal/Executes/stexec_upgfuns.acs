@@ -34,7 +34,7 @@ function void STExecute_UpgradeWeapon(int which, int type){
 	
 	sf_RemoveUpPoints(payprice, PlayerNumber());
 	//Yes, even when upgrading, will crank up the difficulty too.
-	g_AID_UpsTracker += payprice;
+	fp_UpTrack += payprice;
 	
 	Weapon_Upgrade(which, type);
 }

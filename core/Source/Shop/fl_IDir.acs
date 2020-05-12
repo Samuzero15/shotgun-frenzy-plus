@@ -5,27 +5,111 @@
 // fl_ItemDir.acs
 // item directory
 
-// Here it lays all of the weapons on the game.
+// Here it lays all of the items on the game.
 // For the prices, take a look at fl_price.
 
 #library "fl_IDir"
 #include "zcommon.acs"
+#include "samu_tools.acs"
 
-#libdefine FP_ITEMS 255
 
-int fp_Items[ITEMS][4];
-int fp_ItemStack = 0;
+#libdefine FP_ITEM_NUM 255
 
-// fp_WeaponList[wepaonid][prop]:
-// Weapon Name
-// Category (BAS, ADV, POW)
-// Actor
-// Price (On Credits)
+// Useful for filters.
+#libdefine FP_ITEM_T_POWERUP 1
+#libdefine FP_ITEM_T_DEPLOY 2
+// In case of mech upgrades.
+#libdefine FP_ITEM_T_UPGRADE 3
+// You can only hold 1 rune.
+#libdefine FP_ITEM_T_RUNE 4
 
-// Weapon Name
-// Actor
-// Price (On Ups.)
+int fp_Items[FP_ITEM_NUM][9];
+int fp_LastItem = 0;
 
-function void Items_Define(void){
-	
+// Item properties
+// 0) Item Actor
+// 1) Item Name
+// 2) Item Max amount
+
+function void SFPlus_DefineItems(void){
+	fp_LastItem = 0;
+	Item_Add_Powerup("Inventory_Soulsphere", "Soulsphere", "soulsphere", 3, "ITM1A0", 
+		"Heals and overheals you 100 HP");
+	Item_Add_Powerup("Inventory_Megasphere", "Megasphere", "megasphere", 3, "ITM2A0", 
+		"Grants you 200 Hp and a Blue armor.");
+	Item_Add_Powerup("Inventory_Godsphere", "Godsphere", "godsphere", 1, "ITM3A0", 
+		"Protects you from any damage!");
+	Item_Add_Powerup("Inventory_Berserk2", "Quadsphere", "berserk2", 1, "ITM4A0", 
+		"Your weapons harms 4 times more!");
+		
+	Item_Add_Inv("p_backpack", "Personal Backpack", "backpack", 1, "CM29", 
+		"Carry more ammo with you!");
+	Item_Add_Inv("p_backpack", "Personal Mines", "mines", 16, "CM31", 
+		"Set it on the floor, and let them come!");
+		
+	Item_Add_Deploy("Inventory_MineDrone", "Mine drone", "drone_mine", 8, "CM48",
+		"Throw it and let it blow.");
+	Item_Add_Deploy("Inventory_SawDrone", "Saw drone", "drone_saw", 8, "CM48",
+		"Ready to find some meat.");
+	Item_Add_Deploy("Inventory_HealthDispenser", "Health Dispenser", "disp_health", 3, "CM33",
+		"Heals nearby allies.");
+	Item_Add_Deploy("Inventory_AmmoDispenser", "Ammo Dispenser", "disp_ammo", 3, "CM32",
+		"Stocks nearby allies.");
+	Item_Add_deploy("Inventory_TurretBullet", "Bullet Turret", "turret_bullet", 8, "CM40", 
+		"Basic and Cheap.");
+	Item_Add_deploy("Inventory_TurretRocket", "Rocket Turret", "turret_rocket", 8, "CM41", 
+		"Kinda slow but launches rockets.");
+	Item_Add_deploy("Inventory_TurretPlasma", "Plasma Turret", "turret_plasma", 8, "CM42", 
+		"Plasmatize those demons.");
+	Item_Add_deploy("Inventory_TurretRail", "Rail Turret", "turret_rail", 8, "CM43", 
+		"Rails for the enemy lines.");
+	Item_Add_deploy("Inventory_TurretFlame", "Flame Turret", "turret_flame", 8, "CM47", 
+		"Ignites the nearest foes.");
 }
+
+
+//Definers
+////////////////////////////////////////////
+
+function void Item_Add_Rune(str actor, str name, str price, str icon,str desc){
+	str pr = strparam(s:"pr_r_", s:price);
+	Item_Add(FP_ITEM_T_RUNE, actor, name, pr, 1, icon, desc);
+}
+
+function void Item_Add_Deploy(str actor, str name, str price, int max, str icon,str desc){
+	str pr = strparam(s:"pr_d_", s:price);
+	Item_Add(FP_ITEM_T_DEPLOY, actor, name, pr, max, icon, desc);
+}
+
+function void Item_Add_Powerup(str actor, str name, str price, int max, str icon,str desc){
+	str pr = strparam(s:"pr_p_", s:price);
+	Item_Add(FP_ITEM_T_POWERUP, actor, name, pr, max, icon, desc);
+}
+
+function void Item_Add_Inv(str actor, str name, str price, int max, str icon,str desc){
+	str pr = strparam(s:"pr_i_", s:price);
+	Item_Add(0, actor, name, pr, max, icon, desc);
+}
+
+function void Item_Add(int type, str actor, str name, str price, int max, str icon, str desc){
+	fp_Items[fp_LastItem][0] = type;
+	fp_Items[fp_LastItem][1] = actor;
+	fp_Items[fp_LastItem][2] = name;
+	fp_Items[fp_LastItem][3] = price;
+	fp_Items[fp_LastItem][4] = max;
+	fp_Items[fp_LastItem][5] = icon;
+	fp_Items[fp_LastItem][6] = desc;
+	
+	fp_LastItem++;
+}
+
+function int Item_GetType(int it){	return fp_Items[it][0];}
+function int Item_GetActor(int it){	return fp_Items[it][1];}
+function int Item_GetName(int it){	return fp_Items[it][2];}
+
+function int Item_GetPrice(int it){
+	return CheckInventory(fp_Items[it][3]);
+}
+function int Item_GetMax(int it){	return fp_Items[it][4];}
+function int Item_GetIcon(int it){	return fp_Items[it][5];}
+function int Item_GetDesc(int it){	return fp_Items[it][6];}

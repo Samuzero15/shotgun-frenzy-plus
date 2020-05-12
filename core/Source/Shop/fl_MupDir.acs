@@ -1,0 +1,57 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_MUpDir.acs
+// Mech Upgrade directory
+
+// Here it lays all of the mech upgrades on the game.
+// For the prices, take a look at fl_price.
+
+#library "fl_MupDir"
+#include "zcommon.acs"
+#include "samu_tools.acs"
+int MechUpTop = 0;
+int mechup_list[5][5];
+
+function void SFPlus_DefineMechUps(void){
+	MechUpTop = 0;
+	MechUp_Add ("Nail Upgrade","MechUp_Nails", "nails", 4,
+		"Make them harder, make them better...");
+	
+	MechUp_Add ("Rocket Upgrade", "MechUp_Rockets", "rockets", 4,  
+		"Face it, explsions can save the day.");
+	
+	MechUp_Add ("Armor Upgrade", "MechUp_Armor", "armor", 4, 
+		"More resistance never done you harm.");
+	
+	MechUp_Add ("Manuvering Upgrade", "MechUp_Speed", "speed", 2,
+		"Tanks are slow, but you're on a hurry.");
+	
+	MechUp_Add1Up ("Self-Destruct Upgrade", "MechUp_SelfDestruct", "self_destruct",
+		"If this is it, then finish it with style.");
+}
+
+function void MechUp_Add1Up (str name, str actor, str price, str desc){
+	MechUp_Add (name, actor, price, 1, desc);
+}
+function void MechUp_Add (str name, str actor, str price, int maxupgs, str desc){
+	int upg = MechUpTop;
+	
+	MechUp_List[upg][0] = name;
+	MechUp_List[upg][1] = desc;
+	MechUp_List[upg][2] = actor;
+	MechUp_List[upg][3] = strparam(s:"pr_mu_", s:price); 
+	MechUp_List[upg][4] = maxupgs; 
+	MechUpTop++;
+}
+
+function str MechUp_getName(int up){		return MechUp_List[up][0];}
+function str MechUp_getDesc(int up){		return MechUp_List[up][1];}
+function str MechUp_getActor(int up){	return MechUp_List[up][2];}
+function int MechUp_getPrice(int up){	
+	int price = CheckInventory(MechUp_List[up][3]);
+	return price + ((price * CheckInventory(MechUp_getActor(up))) / 4);
+
+}
+function int MechUp_getMax(int up){		return MechUp_List[up][4];}

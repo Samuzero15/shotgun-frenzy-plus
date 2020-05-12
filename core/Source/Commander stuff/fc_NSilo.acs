@@ -30,6 +30,7 @@ script 450 (void)
     
     // set techflag
 	SetBuildState(BUILD_NUKESY, BUILT);
+	Tech_Set(FP_TECH_NUKESY, FP_TECHF_DONE);
     
     // refresh the commander menu
     c_NewButton_Refresh();

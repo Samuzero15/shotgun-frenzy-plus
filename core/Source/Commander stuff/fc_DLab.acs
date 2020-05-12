@@ -40,6 +40,7 @@ script 400 (void)
     // set techflag
     //c_Techflag[5] = 1;
 	SetBuildState(BUILD_MARCOM, BUILT);
+	Tech_Set(FP_TECH_MARCOM, FP_TECHF_DONE);
     
     // refresh the commander menu
     c_NewButton_Refresh();
@@ -49,7 +50,8 @@ script 400 (void)
     
     // check bridge
     delay(35 * 2);
-    if (isBuilt(BUILD_MARCOM) && isBuilt(BUILD_MECHFA) && c_BridgeStatus_4 == 0 && f_Gametype != 5)
+    if (Tech_isDone(FP_TECH_MARCOM) && Tech_isDone(FP_TECH_MECHFA) &&
+		c_BridgeStatus_4 == 0 && f_Gametype != 5)
     {
         c_BridgeStatus_4 = 1;
         floor_raisetonearest(343, 125);

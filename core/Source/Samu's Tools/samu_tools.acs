@@ -1,4 +1,7 @@
 
+//#import "f_IntDB.acs"
+#import "fl_techs.acs"
+
 #include "upgrade_list.acs"
 #include "upgrade_funs.acs"
 #include "weapon_funs.acs"
@@ -10,10 +13,14 @@
 #include "item_list.acs"
 #include "cside_scripts.acs"
 #include "autouse_scripts.acs"
-#include "mechup_list.acs"
 #include "cmdbut_list.acs"
 
 function void setupTerminals(void){
+	Tech_Set(FP_TECH_GENLAB, 		FP_TECHF_DONE);
+	Tech_Set(FP_TECH_ARMORY, 		FP_TECHF_DONE);
+	Tech_Set(FP_TECH_ARMORY_ARMS1, 	FP_TECHF_DONE);
+	Tech_Set(FP_TECH_ARMORY_ARMS2, 	FP_TECHF_DONE);
+
 	SetBuildState(Build_GENLAB, BUILT);
 	SetBuildState(Build_ARMORY, BUILT);
 	TogTechFlag(TECH_ARMSP1);
@@ -158,7 +165,6 @@ function int sf_GetMonsterClass_Health(void){
 	bool des = false;
 	
 	int hp = GetActorProperty(0, AProp_SpawnHealth);
-	log(d:hp);
 	
 	res = btween(1, 	50, 	hp, 0, res);
 	res = btween(51, 	100, 	hp, 1, res);

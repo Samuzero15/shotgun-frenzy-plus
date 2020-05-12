@@ -6,6 +6,7 @@ What is inside?
 	===) Some more balances to the marine side.
 	===) Drones are back, and with more!
 	===) Kinda Clean code. (Lot'sa refactoring)
+	===) The under-used guns are updated for more variety fo selection!
 	===) A Terminal that supports mouse movement! And it's easier to mantain!
 	===) Customizable parematers with the sf+ settings!
 	===) Lotta Fixes from the original!
@@ -30,7 +31,7 @@ What is inside?
 	*) This mod is based on the series of patchs made by t3h player. So thank 
 	him also for making this mod a reality.
 	
-	*) This is NOT an offical relase of Shotgun Frenzy.
+	*) This is NOT an offical relase for Shotgun Frenzy.
 	
 	*) YES. This thing uses a lot of stuff taken from Realm667, You got a 
 	problem with that? I mean, I know you'd hate to see the same resources seen
@@ -94,12 +95,20 @@ What is inside?
 		For play-testing this a lot! (Not to mention for the original fixes.)
 		
 	Zanieon:
-		He did balanced more things, and changed the Sound track from it.
+		He did balanced some more things, and changed the Soundtrack from it.
 		Actually he made me to make this in the first place :v
 		
 	Korshun, TDDR and Mr. Satan:
 		They Helped me out with some acs questions :D
 		
+	WolfNexus:
+		Some spicy sounds for the weapuns!
+	
+	Cepstral:
+		Domo arigato, Mister robotto! 10010101 01011100
+	
 	Myself (Samuzero15tlh):
 		I just added, fixed and tweaked some more stuff. 
-		And yeah, im leading this revamping.
+		
+	My sis:
+		Moral help... What i can do without you? <3

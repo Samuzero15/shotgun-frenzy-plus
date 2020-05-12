@@ -31,19 +31,3 @@ function int WeaponRecyclePrice(int wid){
 	
 	return money;
 }
-
-function void RecycleWeapon(int wid, int upg, int play){
-	str whatweapon;
-	int rcyprice;
-	if(upg != 255){
-		whatweapon = WeaponUpgrade_GetActor(wid, upg-1);
-		rcyprice = WeaponUpgrade_getRcyPrice(wid, upg-1);
-	}else{ 
-		whatweapon = Weapon_getActor(wid);
-		rcyprice = Weapon_getPrice(wid);
-	}
-	
-	SetActivatorToPlayer(play);
-	TakeInventory(whatWeapon, 1);
-	sf_AddCredits(rcyprice, play);
-}

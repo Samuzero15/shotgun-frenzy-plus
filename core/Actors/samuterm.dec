@@ -12,11 +12,15 @@ Actor p_UpPointPrice : Integer {}
 
 Actor g_TechFlags : Integer {}
 
+Actor tech_doneflags : Integer {}
+Actor tech_lockflags : Integer {}
+Actor tech_loadflags : Integer {}
+
 Actor mech_buy : Integer {}
 Actor mech_state : Integer {}
 
-actor MechUp_armor_Lvl : Integer {}
-actor MechUp_speed_Lvl : Integer {}
-actor MechUp_nails_Lvl : Integer {}
-actor MechUp_rockets_Lvl : Integer {}
+actor MechUp_armor : Integer {}
+actor MechUp_speed : Integer {}
+actor MechUp_nails : Integer {}
+actor MechUp_rockets : Integer {}
 actor MechUp_selfdestruct : Integer {}

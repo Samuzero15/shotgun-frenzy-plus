@@ -1,5 +1,5 @@
 
-//Some possible achievements to add.
+//Some possible achievements to add. (After the first version of this.)
  ) First blood!
 	Kill the first demon!
 	

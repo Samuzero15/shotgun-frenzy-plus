@@ -10,6 +10,7 @@
 
 #library "fl_WDir"
 #include "zcommon.acs"
+#include "samu_tools.acs"
 
 #libdefine FP_WEP_PACKS 10
 #libdefine FP_WEAPONS 20
@@ -23,6 +24,9 @@ int fp_WpPacks[FP_WEP_PACKS][10];
 int fp_Wpns[FP_WEAPONS][10];
 int fp_WpUps[FP_WEAPONS][FP_WEPUPS][10];
 
+// Weapon pack tracker. For difficulty increasing.
+int fp_WpTrack[FP_WEP_PACKS];
+int fp_UpTrack;
 int fp_WeaponPackStack = 0;
 int fp_WeaponStack = 0;
 
@@ -33,6 +37,7 @@ int fp_WeaponStack = 0;
 // 	Buy Price
 
 // fp_Wpns[wepaonid]:
+//  Score Gain (To ramp-up difficulty.)
 // 	Weapon Name
 // 	Actor
 // 	Pack id
@@ -66,7 +71,7 @@ function void SFPlus_DefineWeapons (void){
 	
 	
 	//Shotgun pack
-	pack = WeaponPack_Add("Shotguns", FP_BAS, "shotgun",
+	pack = WeaponPack_Add("Shotguns", FP_BAS, "shotgun", 2,
 		"Shell based weapons to cause damage. Great for the newcomers.",
 	);
 	
@@ -107,7 +112,7 @@ function void SFPlus_DefineWeapons (void){
 		
 		
 	//Assault pack
-	pack = WeaponPack_Add("Assault", FP_BAS, "assault",
+	pack = WeaponPack_Add("Assault", FP_BAS, "assault", 2,
 		"Set of weapons for quick assault operations."
 		);
 	
@@ -147,7 +152,7 @@ function void SFPlus_DefineWeapons (void){
 		
 		
 	//Support pack
-	pack = WeaponPack_Add("Support", FP_BAS, "support",
+	pack = WeaponPack_Add("Support", FP_BAS, "support", 0,
 		"Useful tools to aid in the battle."
 		);
 		
@@ -169,7 +174,7 @@ function void SFPlus_DefineWeapons (void){
 		
 		
 	//Commando pack
-	pack = WeaponPack_Add("Commando", FP_ADV, "commando",
+	pack = WeaponPack_Add("Commando", FP_ADV, "commando", 5, 
 		"Heavier repeating guns, they Rip and Tear a lot.");
 	
 	string = strparam(
@@ -204,7 +209,7 @@ function void SFPlus_DefineWeapons (void){
 		
 		
 	//Explosive pack
-	pack = WeaponPack_Add("Explosive", FP_ADV, "heavy",
+	pack = WeaponPack_Add("Explosive", FP_ADV, "heavy", 8,
 		"Heavy weapons with explosive projectiles, excelent for crowd control."
 		);
 	string = strparam(
@@ -240,7 +245,7 @@ function void SFPlus_DefineWeapons (void){
 		
 		
 	//Plasmatic pack
-	pack = WeaponPack_Add("Plasmatic", FP_ADV, "plasma",
+	pack = WeaponPack_Add("Plasmatic", FP_ADV, "plasma", 8,
 		"Plasma based pack which it deals damage at the advanced style."
 		);
 	
@@ -274,7 +279,7 @@ function void SFPlus_DefineWeapons (void){
 		
 		
 	//Flamer pack
-	pack = WeaponPack_Add("Pyromancer", FP_OP, "flamer", "Fire is the spotlight. So let them burn.");
+	pack = WeaponPack_Add("Pyromancer", FP_OP, "flamer", 12,  "Fire is the spotlight. So let them burn.");
 	
 	wep = Weapon_Add("Flamer", "Flamer", pack, "",
 			"It spews fire like a dragon, powerful as hell.");
@@ -284,7 +289,7 @@ function void SFPlus_DefineWeapons (void){
 		);
 		
 	//BFG pack
-	pack = WeaponPack_Add("B.F.G Like", FP_OP, "bfg",
+	pack = WeaponPack_Add("B.F.G Like", FP_OP, "bfg", 15,
 		"Bigger problems needs Big Friggin Guns."
 		);
 	
@@ -354,6 +359,24 @@ function void WeaponPack_Give(int wp){
 			setweapon(weapon);
 		}
 	}
+	WPTrack_Increase(wp);
+}
+
+
+function void Weapon_Recycle(int wid, int upg, int play){
+	str whatweapon;
+	int rcyprice;
+	if(upg != 255){
+		whatweapon = WeaponUpgrade_GetActor(wid, upg-1);
+		rcyprice = WeaponUpgrade_getRcyPrice(wid, upg-1);
+	}else{ 
+		whatweapon = Weapon_getActor(wid);
+		rcyprice = Weapon_getPrice(wid);
+	}
+	
+	SetActivatorToPlayer(play);
+	TakeInventory(whatWeapon, 1);
+	sf_AddCredits(rcyprice, play);
 }
 
 
@@ -361,6 +384,39 @@ function void WeaponPack_Give(int wp){
 
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
+
+function void WPTrack_Increase(int wp){
+	fp_WPTrack[wp] = fp_WPTrack[wp] + WeaponPack_GetScoreGain(wp);
+}
+
+function void WPTrack_Decrease(int wp){
+	fp_WPTrack[wp] = fp_WPTrack[wp] - WeaponPack_GetScoreGain(wp);
+}
+
+function int WPTrack_GetScore(void){
+	int i;
+	int score = 0;
+	for(i = 0; i < fp_WeaponPAckStack; i++){
+		score = score + fp_WPTrack[i];
+	}
+	int players = 0;
+	for(i = 0; i < 64; i++){
+		if(PlayerInGame(i)) players++;
+		else break;
+	}
+	return score / players;
+}
+
+function int UpTrack_GetScore(void){
+	int i;
+	int score = fp_UpTrack;
+	int players = 0;
+	for(i = 0; i < 64; i++){
+		if(PlayerInGame(i)) players++;
+		else break;
+	}
+	return score / players;
+}
 
 function int WeaponUpgrade_Add(str actor, str name, int wpbase, int uptype, str pkey, str desc){
 	int uid = fp_Wpns[wpbase][6];
@@ -392,19 +448,21 @@ function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return CheckInventory(
 function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return CheckInventory(fp_WpUps[wpb][uid][4]); }
 
 
-function int WeaponPack_Add(str name, int cat, str pkey, str desc){
+function int WeaponPack_Add(str name, int cat, str pkey, int game_gain, str desc){
 	int wid = fp_WeaponPackStack;
 	fp_WpPacks[wid][0] = name;
 	fp_WpPacks[wid][1] = cat;
 	fp_WpPacks[wid][2] = desc;
 	fp_WpPacks[wid][3] = strparam(s:"pr_wb_", s:pkey);
 	fp_WpPacks[wid][4] = pkey;
+	fp_WpPacks[wid][5] = game_gain;
 	fp_WeaponPackStack++;
 	return wid;
 }
 
 function str WeaponPack_GetName(int wid){  return fp_WpPacks[wid][0]; }
 function int WeaponPack_GetCat(int wid){   return fp_WpPacks[wid][1]; }
+function int WeaponPack_GetScoreGain(int wid){   return fp_WpPacks[wid][5]; }
 function str WeaponPack_GetDesc(int wid){  return fp_WpPacks[wid][2]; }
 function int WeaponPack_GetPrice(int wid){ return CheckInventory(fp_WpPacks[wid][3]); }
 function bool WeaponPack_isOwned(int wid){

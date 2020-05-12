@@ -110,21 +110,21 @@ Actor pr_wr_bfg_up1 : Integer {}
 Actor pr_wr_bfg_up2 : Integer {}
 
 // Other sellable items.
-Actor pr_i_soulsphere : Integer {}
-Actor pr_i_megasphere : Integer {}
-Actor pr_i_godsphere : Integer {}
-Actor pr_i_berserk2 : Integer {}
+Actor pr_p_soulsphere : Integer {}
+Actor pr_p_megasphere : Integer {}
+Actor pr_p_godsphere : Integer {}
+Actor pr_p_berserk2 : Integer {}
 Actor pr_i_backpack : Integer {}
-Actor pr_i_drone_saw : Integer {}
-Actor pr_i_drone_mine : Integer {}
-Actor pr_i_disp_health : Integer {}
-Actor pr_i_disp_ammo : Integer {}
-Actor pr_i_turret_bullet : Integer {}
-Actor pr_i_turret_rocket : Integer {}
-Actor pr_i_turret_plasma : Integer {}
-Actor pr_i_turret_rail : Integer {}
-Actor pr_i_turret_flame : Integer {}
-Actor pr_i_turret_shells : Integer {}
+Actor pr_d_drone_saw : Integer {}
+Actor pr_d_drone_mine : Integer {}
+Actor pr_d_disp_health : Integer {}
+Actor pr_d_disp_ammo : Integer {}
+Actor pr_d_turret_bullet : Integer {}
+Actor pr_d_turret_rocket : Integer {}
+Actor pr_d_turret_plasma : Integer {}
+Actor pr_d_turret_rail : Integer {}
+Actor pr_d_turret_flame : Integer {}
+Actor pr_d_turret_shells : Integer {}
 Actor pr_i_mines : Integer {}
 
 //Mech upgrade prices.
@@ -137,46 +137,46 @@ Actor pr_mu_self_destruct : Integer {}
 Actor pr_mu_auto_repair : Integer {}
 
 //Commander research / build
-Actor pr_cr_genlab : Integer {}
-Actor pr_cr_armory : Integer {}
-Actor pr_cr_mechfa : Integer {}
-Actor pr_cr_refine : Integer {}
-Actor pr_cr_marcom : Integer {}
-Actor pr_cr_nukesy : Integer {}
-Actor pr_cr_gl_health1 : Integer {}
-Actor pr_cr_gl_health2 : Integer {}
-Actor pr_cr_gl_armor1 : Integer {}
-Actor pr_cr_gl_resisb : Integer {}
-Actor pr_cr_gl_speedb : Integer {}
-Actor pr_cr_gl_regenb : Integer {}
-Actor pr_cr_ar_armsp1 : Integer {}
-Actor pr_cr_ar_armsp2 : Integer {}
-Actor pr_cr_ar_boomrn : Integer {}
-Actor pr_cr_ar_ammobp : Integer {}
-Actor pr_cr_ar_stimpk : Integer {}
-Actor pr_cr_rf_pumpp1 : Integer {}
-Actor pr_cr_rf_pumpp2 : Integer {}
-Actor pr_cr_mc_advsys : Integer {}
-Actor pr_cr_mc_airsup : Integer {}
-Actor pr_cr_mc_ioncan : Integer {}
-Actor pr_cr_mc_cpulse : Integer {}
+Actor pr_cmd_genlab : Integer {}
+Actor pr_cmd_armory : Integer {}
+Actor pr_cmd_mechfa : Integer {}
+Actor pr_cmd_refine : Integer {}
+Actor pr_cmd_marcom : Integer {}
+Actor pr_cmd_nukesy : Integer {}
+Actor pr_cmd_gl_health1 : Integer {}
+Actor pr_cmd_gl_health2 : Integer {}
+Actor pr_cmd_gl_armor1 : Integer {}
+Actor pr_cmd_gl_resisb : Integer {}
+Actor pr_cmd_gl_speedb : Integer {}
+Actor pr_cmd_gl_regenb : Integer {}
+Actor pr_cmd_ar_armsp1 : Integer {}
+Actor pr_cmd_ar_armsp2 : Integer {}
+Actor pr_cmd_ar_boomrn : Integer {}
+Actor pr_cmd_ar_ammobp : Integer {}
+Actor pr_cmd_ar_stimpk : Integer {}
+Actor pr_cmd_rf_pumpp1 : Integer {}
+Actor pr_cmd_rf_pumpp2 : Integer {}
+Actor pr_cmd_mc_advsys : Integer {}
+Actor pr_cmd_mc_airsup : Integer {}
+Actor pr_cmd_mc_ioncan : Integer {}
+Actor pr_cmd_mc_cpulse : Integer {}
 
 //Commander deploy.
-Actor pr_cd_pulse_repair : Integer {}
-Actor pr_cd_pulse_cripple : Integer {}
-Actor pr_cd_pulse_halt : Integer {}
-Actor pr_cd_turret_bullet : Integer {}
-Actor pr_cd_turret_rocket : Integer {}
-Actor pr_cd_turret_plasma : Integer {}
-Actor pr_cd_turret_flame : Integer {}
-Actor pr_cd_turret_tesla : Integer {}
-Actor pr_cd_turret_shotgun : Integer {}
-Actor pr_cd_turret_rail : Integer {}
-Actor pr_cd_airstrike : Integer {}
-Actor pr_cd_moneybag : Integer {}
-Actor pr_cd_minefield : Integer {}
-Actor pr_cd_disp_health : Integer {}
-Actor pr_cd_disp_ammo : Integer {}
+Actor pr_cmd_pulse_repair : Integer {}
+Actor pr_cmd_pulse_cripple : Integer {}
+Actor pr_cmd_pulse_halt : Integer {}
+Actor pr_cmd_turret_bullet : Integer {}
+Actor pr_cmd_turret_rocket : Integer {}
+Actor pr_cmd_turret_plasma : Integer {}
+Actor pr_cmd_turret_flame : Integer {}
+Actor pr_cmd_turret_tesla : Integer {}
+Actor pr_cmd_turret_shotgun : Integer {}
+Actor pr_cmd_turret_rail : Integer {}
+Actor pr_cmd_airstrike : Integer {}
+Actor pr_cmd_moneybag : Integer {}
+Actor pr_cmd_minefield : Integer {}
+Actor pr_cmd_disp_health : Integer {}
+Actor pr_cmd_disp_ammo : Integer {}
 
 
 

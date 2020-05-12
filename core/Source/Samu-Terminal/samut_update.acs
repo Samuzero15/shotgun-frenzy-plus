@@ -12,15 +12,13 @@ function void SamuTerm_Update(void){
 	//Here, change stuff before drawing!
 	// (Like, dunno, showing your money n stuff?)
 	
+		UpdateCursor();
 	UpdatePromptImgButtons();
 	UpdatePromptLabels();
-	
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
 	showByAlphaTag();
-	
 	UpdatePages();
-	UpdateCursor();
 	
 	
 	//Label_setText(techs, StrParam(s:"Human engineering 1 Researched?: ", d:getTechFlag_C(TECH_HEALT1)));

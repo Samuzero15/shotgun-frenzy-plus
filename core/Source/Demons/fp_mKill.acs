@@ -7,7 +7,7 @@
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
-Script "FPlus_MonsterKill" Kill{
+Script "SFPlus_MonsterKill" Kill{
 	delay(1); // Let the monsters set their flags in the decorate.
 	
 	//The actor flags are important.

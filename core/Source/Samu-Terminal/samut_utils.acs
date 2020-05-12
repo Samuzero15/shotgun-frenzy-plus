@@ -29,10 +29,6 @@ function void SamuTerm_SetBack(str what){
 	imgbg = what;
 }
 
-script "SamuTerm_StringSync" Open{
-	SamuTerm_InitStrings();
-}
-
 
 function void SamuTerm_ResetBack(void){
 	imgbg = STSET_BACK;

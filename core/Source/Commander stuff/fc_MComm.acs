@@ -7,10 +7,10 @@
 #library "fc_MComm"
 
 #import "f_IntDB.acs"
-#import "fl_price.acs"
 #import "f_Tip.acs"
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
+#import "fl_mupDir.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -48,6 +48,7 @@ script 300 (void)
     // set techflag
     //c_Techflag[3] = 1;
 	SetBuildState(BUILD_MECHFA, BUILT);
+	Tech_Set(FP_TECH_MECHFA, FP_TECHF_DONE);
     
     // refresh the commander menu
     c_NewButton_Refresh();
@@ -60,7 +61,8 @@ script 300 (void)
     
     // check bridge
     delay(35 * 2);
-    if (isBuilt(BUILD_MARCOM) &&  isBuilt(BUILD_MECHFA) && c_BridgeStatus_4 == 0 && f_Gametype != 5)
+    if (Tech_isDone(FP_TECH_MARCOM) &&  Tech_isDone(FP_TECH_MECHFA)
+		&& c_BridgeStatus_4 == 0 && f_Gametype != 5)
     {
         c_BridgeStatus_4 = 1;
         floor_raisetonearest(343, 125);
@@ -173,7 +175,8 @@ script 304 (void)
     // switch off flags
     c_Techflag[53] = 4;
 	SetTechFlag(TECH_IONCAN, false);
-    
+    Tech_SetDone(FP_TECH_MARCOM_IONCAN, FP_TECHF_LOCK);
+	
     // refresh commanders menu
     c_NewButton_Refresh();
     
@@ -197,6 +200,8 @@ script 304 (void)
     // charge the cannon
 	c_Techflag[53] = 3;
     f_TipShow ("BUTTON", "", "", 17);
+	Tech_SetDone(FP_TECH_MARCOM_IONCAN, FP_TECHF_LOAD);
+	
     
     // refresh commanders menu
     delay(35);
@@ -234,13 +239,10 @@ script 308 (void)
 script 306 (void)
 {
 	// make sure godsphere is not in use
-	InitUpgWepList();
-	Init_ItemList();
-	MechUpList_init();
-	
+	/*
 	int lastWeapon = saveLastWeapon();
 	p_LastWeap[playernumber()] = lastWeapon;
-	
+	*/
 	if (CheckInventory("PowerInvulnerable") == 0) {
 	
 	setfont("BIGFONT");
@@ -283,8 +285,8 @@ script 306 (void)
     else{
    	 setactorproperty(0, APROP_HEALTH, 3500);
     }*/
-	setactorproperty(0, APROP_HEALTH, 1500 + 1500 * checkinventory("MechUp_Armor_lvl"));
-	SetActorProperty(0, APROP_SPEED, 0.5 + 0.25 * checkInventory("MechUp_Speed_lvl"));
+	setactorproperty(0, APROP_HEALTH, 1500 + 1500 * checkinventory("MechUp_Armor"));
+	SetActorProperty(0, APROP_SPEED, 0.5 + 0.25 * checkInventory("MechUp_Speed"));
     
     // setup tank hud
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
@@ -413,12 +415,12 @@ script 158 (void)
 // mech upgrade: weapons
 
 script "AnnounceMechUpgrade" (int which){
-	MechUpList_init();
+	//MechUpList_init();
 
 	str upg;
-	if(GetMechUpMax(which) != 0)	
-		upg = strparam(s:GetMechUpName(which), s:" Lv.", d:CheckInventory(GetMechupActor(which)));
-	else upg = strparam(s:GetMechUpName(which));
+	if(MechUp_getMax(which) != 0)	
+		upg = strparam(s:MechUp_getName(which), s:" Lv.", d:CheckInventory(MechUp_getActor(which)));
+	else upg = strparam(s:MechUp_getName(which));
 	str msg = strparam(s:"Installed the ", s:upg ,s:"!");
 
     f_TipShow("VEHICA", " Mech upgrade!", msg, 10);

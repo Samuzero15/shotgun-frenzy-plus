@@ -22,7 +22,7 @@ w) Work in progres
 	[d] Genetics 
 	[d] Mech Factory
 	[w] Commander Terminal
-[w] De-hard code prices from samu-tools, for easier acess.
+[d] De-hard code prices from samu-tools, for easier access.
 [ ] About the Testing map
 	[d] Monster spawner
 	[ ] The set of items and turrets to spawn.
@@ -33,12 +33,21 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (7 - 8 - 9 / 5 / 2020)
+	*) Heat indicator, and shell indicator (for repeater and buckshot guns) are properly displayed in the status bar.
+	*) Some more fixups on the Samu terminal.
+	*) Now, meet the copper, silver and copper coins!
+	*) Buckshot refactorized, for easier maintability. Also a small touch up on the animation.
+	// from +1, +2, +5 credits. //Soon rare gems to award!
+	+) It's not implemented yet, but there is an alternative version for the quadshot
+		//What if e let it behave like a ssg huh? Double Barrel Quadshot,(Octashot??)
+	+) New fl_IDir.acs and fl_MUpDir.acs to keep track on mech upgrades and items!
 
 -) (3 - 4 - 5 - 6 / 5 / 2020)
 	+) Gave some new ammo graphic for the repeater.
 	*) Some more fixes on the repeater
 	+) Added the global kill script, which now can run in zandronum!
-	*) Toying arround with the flinger's mine placer upgrade... i think i've boffed it a lot.
+	*) Toying arround with the flinger's mine placer upgrade... i think i've buffed it a lot.
 	// Sticky grenades are a thing in this weapon now!
 	*) Re-coding the ammo terminal to apply the new functions i gained so far.
 	*) Some more fixups on the f_wdir.acs file on the upgrade thingy.

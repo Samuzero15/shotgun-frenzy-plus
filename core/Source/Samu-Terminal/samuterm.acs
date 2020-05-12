@@ -6,9 +6,10 @@
 #define ACSUTILS_RECTLIB_USERVARS 10 // user defined
 
 //////SF Stuff////////
-#import "f_IntDB.acs"
 #import "fl_Price.acs"
 #import "fl_WDir.acs" // HEHEh, BOI.
+#import "fl_IDir.acs" // HEHEh, BOI.
+#import "fl_MUpDir.acs" // HEHEh, BOI.
 #import "fp_comcmd.acs"
 
 #include "acsutils.acs"
@@ -44,12 +45,14 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	else if(pagetags[STTAGS_ALPHA] == 10) SamuTerm_SetBack("");
 	
 	//Sync it with client.
-	SamuTerm_InitStrings();
 	// To Sync the prices.
 	ACS_NamedExecuteAlways("SFPlus_DefinePrices", 0);
 	//ACS_NamedExecuteAlways("SFPlus_DefineWeapons", 0);
 	SFPlus_DefineWeapons();
+	SFPLUS_DefineItems();
 	SFPlus_DefineCMDButtons();
+	SFPlus_DefineMechUps();
+	
 	
 	SamuTerm_InitComps();
 	SamuTerm_GreetPlayer(playerNumber());
@@ -81,8 +84,6 @@ Script "SamuTerm_VariableSync" ENTER{
 		SetInventory("p_Money", p_credits[playernumber()]);
 		SetInventory("p_UpPoint", p_Exp_points[playernumber()]);
 		
-		SyncAllShopPrices();
-		SyncTechs();
 		SyncAllMechaPrices();
 		SyncAllCMDPrices();
 		

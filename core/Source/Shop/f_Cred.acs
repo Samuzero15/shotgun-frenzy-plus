@@ -33,6 +33,12 @@ script 105 (int l_AmountSpecial, int l_SplatCombo, int l_NoSoundQue) CLIENTSIDE
 	}
 }
 
+script "SFPlus_CreditPickup" (int howmuch, int color){
+	ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, howmuch, color);
+	sf_AddCredits_S(howmuch, playernumber());
+	sf_AddTeamCredits(howmuch * 5);
+}
+
 script "SF_Net_AddCredits" (int l_AmountSpecial, int who) NET{
 	sf_AddCredits_S(l_AmountSpecial, who);
 }

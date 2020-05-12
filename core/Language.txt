@@ -1,2 +1,91 @@
 [Enu default]
 PATCH_VERSION = "";
+
+// All button descriptions for the commander terminal.
+FP_CBD_BUILD_GENLAB 	=	"Allows advancement on armour and health"
+							"\nProvides healing pads for marines";
+					  
+FP_CBD_BUILD_ARMORY		=	"Allows to buy and upgrade advanced weapons."
+							"\nProvides ammo pads for marines, and some "
+							"\nuseful items.";
+					  
+FP_CBD_BUILD_MECHFA 	=	"Allows marines to purchase and upgrade mechs"
+							"\nHeavy machines for the heavy duty.";	
+							
+FP_CBD_BUILD_REFINE		=	"Allows additional credits to be collected"
+							"\nAlso increases credit count by 2 a second.";
+							
+FP_CBD_BUILD_MARCOM		=	"Allows you to construct turrets and use"
+							"\ncore pulses. Here you can command the airstrikes"
+							"\nand the mighty Ion Cannon for some extra help.";
+							
+FP_CBD_BUILD_NUKESY		=	"Let's you launch a powerful nuke which it hits"
+							"\nthe demon core directly, but it takes 5 minutes"
+							"\nto launch. If the launch works, you win.";
+							
+FP_TECHD_GENLAB_HEALTH1 	= "Increases default health to 120%.";
+FP_TECHD_GENLAB_HEALTH2 	= "Increases default health to 140%.";
+FP_TECHD_GENLAB_ARMOR 		= "Marines are stocked with a green armor.";
+FP_TECHD_GENLAB_SPEEDB 		= "Marines runs 30% more faster.";
+FP_TECHD_GENLAB_RESISB 		= "Marines can resist 30% more damage.";
+FP_TECHD_GENLAB_REGENB 		= "Marines can regenerate health.";
+
+FP_TECHD_ARMORY_ARMS1		= "Advanced weapons are available for the marines"
+							  "\nIncluding the explosives, plasma and commando packs.";
+FP_TECHD_ARMORY_ARMS2 		= "Overpowered weapons are available for the\n"
+							  "marines. Including the mighty Flamethrower\n"
+							  "and the BFG 9000.";
+FP_TECHD_ARMORY_BOOMRN 		= "Marines deals 30% more damage.";
+FP_TECHD_ARMORY_AMMOBP		= "Marines can carry more ammo, two times more.";
+FP_TECHD_ARMORY_STIMPK		= "Marines are stocked with 10 stimpacks, healing 15 hp per item.";
+
+FP_TECHD_REFINE_PUMP1		= "Increases the credit resource collection by\n"
+							  "enabling the pump #1 from the refinery.";
+FP_TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
+							  "enabling the pump #2 from the refinery";
+
+FP_TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
+							  "\nbombs in a straight line.";
+							  
+FP_TECHD_MARCOM_ADVSYS		= "Powerful turrets are avilable to be deployed on "
+							  "\nthe battlefield";	
+							  
+FP_TECHD_MARCOM_IONCAN		= "Allows you to fire the Mighty Ion Cannon.\n"
+							  "Powerful enough to wipe-out entire waves in a single swipe.";
+							  
+FP_TECHD_MARCOM_CPULSE		= "You core gains the capacity to create special effects\n"
+							  "that affects in the battle field.";
+							 
+FP_SUPCD_AIRSTK_1			= "Mark first point for your airstrike.";
+FP_SUPCD_AIRSTK_2			= "Mark second point for your airstrike.";
+FP_SUPCD_CPULSE				= "Activate a core pulse.";
+FP_SUPCD_CPULSE_HEAL		= "Healing pulse. \nRestores all batteries and core's Hp.";
+FP_SUPCD_CPULSE_CRIPPLE		= "Cripple pulse. \nDamages all monsters in the battlefield.";
+FP_SUPCD_CPULSE_HALT		= "Halt pulse. \nHolds up the monster spawning for 30 seconds.";
+FP_SUPCD_MARK_ATTACK		= "Notify your allies to attack a specific point.";
+FP_SUPCD_MARK_DEFEND		= "Notify your allies to defend a specific point.";
+FP_SUPCD_MARK_DEPLOY		= "Notify your allies to deploy something in a "
+							  "\nspecific point.";
+FP_SUPCD_MARK_REGROUP		= "Notify your allies to meet in the rendezvous point\n"
+							  "at a specific point.";
+FP_SUPCD_MARK_CLEAR			= "Clears all markers.";
+FP_SUPCD_IONCAN				= "Fires the mighty Ion Cannon in a specific location.";
+FP_SUPCD_DROPMONEY			= "Drops a Money bag with 3000 credits inside.\n"
+							  "It's discounted from the team credits.";
+							  
+							  
+FP_DEPCD_MINEFIElD			= "Spawns some mines in the area and sets them up\n"
+							  "in case of any demon, prepared to blow them away.";
+FP_DEPCD_DISP_HEALTH		= "Spawns a health dispenser, nifty for restoring health.";
+FP_DEPCD_DISP_AMMO			= "Deploys an ammo dispenser, for marine re-stocking.";
+FP_DEPCD_BARRIER			= "Deploys a resistent barrier which it works as\n"
+							  "a distraction, as long as it makes time to let the\n"
+							  "marines fight back.";
+FP_DEPCD_TURRET				= "Acess to the turret menu.";
+FP_DEPCD_TURRET_BULLET		= "Deploys a basic but cheap bullet turret.";
+FP_DEPCD_TURRET_ROCKET		= "Deploys an explosive rocket turret.";
+FP_DEPCD_TURRET_PLASMA		= "Deploys an advanced plasma turret.";
+FP_DEPCD_TURRET_TESCOL		= "Deploys a tesla coil which it damages nearby enemies\n"
+							  "hiting them without even noticing.";
+FP_DEPCD_TURRET_FLAMER		= "Deploys a powerful flame turret which it spews fire\n"
+							  "to the nearby demons.";

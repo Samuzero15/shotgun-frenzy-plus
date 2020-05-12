@@ -1,0 +1,136 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_techs.acs
+// Technologies directory
+
+// All of the tech you need in this.
+
+#library "fl_techs"
+#include "zcommon.acs"
+#include "acsutils.acs"
+
+#libdefine FP_NUMBTECH 25
+#libdefine FP_TECHF_DONE 	1<<0
+#libdefine FP_TECHF_LOCK 	1<<1
+#libdefine FP_TECHF_LOAD 	1<<2
+
+#libdefine FP_TECH_GENLAB			0
+#libdefine FP_TECH_GENLAB_HEALTH1	1
+#libdefine FP_TECH_GENLAB_HEALTH2	2
+#libdefine FP_TECH_GENLAB_ARMOR		3
+#libdefine FP_TECH_GENLAB_SPEEDB	4
+#libdefine FP_TECH_GENLAB_RESISB	5
+#libdefine FP_TECH_GENLAB_REGENB	6
+#libdefine FP_TECH_ARMORY			7
+#libdefine FP_TECH_ARMORY_ARMS1		8
+#libdefine FP_TECH_ARMORY_ARMS2		9
+#libdefine FP_TECH_ARMORY_BOOMRN	10
+#libdefine FP_TECH_ARMORY_AMMOBP	11
+#libdefine FP_TECH_ARMORY_STIMPK	12
+#libdefine FP_TECH_REFINE			13
+#libdefine FP_TECH_REFINE_PUMP1		14
+#libdefine FP_TECH_REFINE_PUMP2		15
+#libdefine FP_TECH_MARCOM			16
+#libdefine FP_TECH_MARCOM_AIRSUP	17
+#libdefine FP_TECH_MARCOM_ADVSYS	18
+#libdefine FP_TECH_MARCOM_IONCAN	19
+#libdefine FP_TECH_MARCOM_CPULSE	20
+#libdefine FP_TECH_MECHFA			21
+#libdefine FP_TECH_NUKESY			22
+
+int fp_techstate[99];
+int fp_techflags[3];
+
+function void SFPlus_DefineTechs(void){
+	for(int i = 0; i < FP_NUMBTECH; i++){
+		Tech_Set(i, 0);
+	}
+}
+
+Script "SFPlus_SyncTechs" ENTER{
+	delay(1);
+	while(1){
+		
+		SetInventory("tech_doneflags", fp_techflags[0]);
+		SetInventory("tech_lockflags", fp_techflags[1]);
+		SetInventory("tech_loadflags", fp_techflags[2]);
+		delay(1);
+	}
+}
+
+function bool Tech_IsDoneC(int flag){
+	return (CheckInventory("tech_doneflags") & (1<<flag)) > 0;
+}
+
+function bool Tech_IsLockC(int flag){
+	return (CheckInventory("tech_lockflags") & (1<<flag)) > 0;
+}
+
+function bool Tech_IsLoadC(int flag){
+	return (CheckInventory("tech_loadflags") & (1<<flag)) > 0;
+}
+
+function void Tech_ChangeFlags(int id, int flag, int value)
+{
+  int flags = fp_techflags[id];
+  if (value)
+    flags |= 1<<flag; // set bit to 1
+  else
+    flags &= ~(1<<flag); // set bit to 0
+  fp_techflags[id] = flags;
+}
+
+function void Tech_ChangeDone(int flag, int value)
+{
+	Tech_ChangeFlags(0, flag, value);
+}
+
+function void Tech_ChangeLock(int flag, int value)
+{
+	Tech_ChangeFlags(1, flag, value);
+}
+
+function void Tech_ChangeLoad(int flag, int value)
+{
+	Tech_ChangeFlags(2, flag, value);
+}
+
+
+function int Tech_Get(int which){
+	return fp_techstate[which];
+}
+
+function void Tech_SetDone(int which, int flags){
+	Tech_Set(which, FP_TECHF_DONE | flags);
+}
+
+function void Tech_Set(int which, int flags){
+	
+	if(flags & FP_TECHF_DONE)
+			Tech_ChangeDone(which, true);
+	else 	Tech_ChangeDone(which, false);
+	
+	if(flags & FP_TECHF_LOCK)
+			Tech_ChangeLock(which, true);
+	else 	Tech_ChangeLock(which, false);
+	
+	if(flags & FP_TECHF_Load)
+			Tech_ChangeLoad(which, true);
+	else 	Tech_ChangeLoad(which, false);
+	
+	fp_techstate[which] = flags;
+}
+
+function bool Tech_IsDone(int which){
+	return fp_techstate[which] & FP_TECHF_DONE;
+}
+
+function bool Tech_IsLock(int which){
+	return fp_techstate[which] & FP_TECHF_LOCK;
+}
+
+function bool Tech_IsLoad(int which){
+	return fp_techstate[which] & FP_TECHF_LOAD;
+}

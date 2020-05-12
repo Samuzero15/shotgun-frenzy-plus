@@ -8,6 +8,7 @@
 #library "fl_Price"
 #include "zcommon.acs"
 #include "acsutils.acs"
+#include "samu_tools.acs"
 
 int fp_Price[499][2]; // [Samu] I'll do a clone of this.
 int fp_PriceStack = 0;
@@ -24,8 +25,7 @@ script "SFPlus_PriceSyncher" ENTER
 		if(counter == fp_priceStack) counter = 0;
 		
 		SetInventory(Prices_getKey(counter), Prices_getValue_I(counter));
-		/*print(s:"Prices= ", d:fp_priceStack, s:", Counter= ", d:counter, s:") ",
-			s:Prices_getKey(counter), s:" ", d:Prices_getValue_I(counter));*/
+		SetInventory(Prices_getKey(fp_PriceStack-1 - counter), Prices_getValue_I(fp_PriceStack-1 - counter));
 		counter++;
 		delay(1);
 	}
@@ -109,71 +109,71 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wr_bfg_up0", 		30000);
 	
 	//Item prices
-	Prices_add("pr_i_soulsphere", 		150);
-	Prices_add("pr_i_megasphere", 		300);
-	Prices_add("pr_i_godsphere", 		8000);
-	Prices_add("pr_i_berserk2", 		7000);
+	Prices_add("pr_p_soulsphere", 		150);
+	Prices_add("pr_p_megasphere", 		300);
+	Prices_add("pr_p_godsphere", 		8000);
+	Prices_add("pr_p_berserk2", 		7000);
 	Prices_add("pr_i_backpack", 		2850);
-	Prices_add("pr_i_drone_saw", 		400);
-	Prices_add("pr_i_drone_mine", 		100);
-	Prices_add("pr_i_disp_health", 		500);
-	Prices_add("pr_i_disp_ammo", 		500);
-	Prices_add("pr_i_turret_bullet", 	800);
-	Prices_add("pr_i_turret_rocket", 	1500);
-	Prices_add("pr_i_turret_plasma", 	1700);
-	Prices_add("pr_i_turret_rail", 		1900);
-	Prices_add("pr_i_turret_flame", 	2300);
-	Prices_add("pr_i_turret_shells", 	1200);
 	Prices_add("pr_i_mines", 			850);
+	Prices_add("pr_d_drone_saw", 		400);
+	Prices_add("pr_d_drone_mine", 		100);
+	Prices_add("pr_d_disp_health", 		500);
+	Prices_add("pr_d_disp_ammo", 		500);
+	Prices_add("pr_d_turret_bullet", 	800);
+	Prices_add("pr_d_turret_rocket", 	1500);
+	Prices_add("pr_d_turret_plasma", 	1700);
+	Prices_add("pr_d_turret_rail", 		1900);
+	Prices_add("pr_d_turret_flame", 	2300);
+	Prices_add("pr_d_turret_shells", 	1200);
 	
 	//Commander Prices
 	
 	//Prices for researching/building
-	Prices_add("pr_cr_genlab", 			2500);
-	Prices_add("pr_cr_armory", 			2500);
-	Prices_add("pr_cr_mechfa", 			8500);
-	Prices_add("pr_cr_refine", 			3500);
-	Prices_add("pr_cr_marcom",			5500);
-	Prices_add("pr_cr_nukesy", 			15000);
+	Prices_add("pr_cmd_genlab", 			2500);
+	Prices_add("pr_cmd_armory", 			2500);
+	Prices_add("pr_cmd_mechfa", 			8500);
+	Prices_add("pr_cmd_refine", 			3500);
+	Prices_add("pr_cmd_marcom",			5500);
+	Prices_add("pr_cmd_nukesy", 			15000);
 	
 	//Gen-lab researches
-	Prices_add("pr_cr_gl_health1", 		1000);
-	Prices_add("pr_cr_gl_health2", 		2000);
-	Prices_add("pr_cr_gl_armor1", 		1500);
-	Prices_add("pr_cr_gl_resisb",  		2000);
-	Prices_add("pr_cr_gl_speedb", 		1500);
-	Prices_add("pr_cr_gl_regenb", 		2000);
+	Prices_add("pr_cmd_gl_health1", 		1000);
+	Prices_add("pr_cmd_gl_health2", 		2000);
+	Prices_add("pr_cmd_gl_armor1", 		1500);
+	Prices_add("pr_cmd_gl_resisb",  		2000);
+	Prices_add("pr_cmd_gl_speedb", 		1500);
+	Prices_add("pr_cmd_gl_regenb", 		2000);
 	
 	//Armory researches
-	Prices_add("pr_cr_ar_armsp1", 		1500);
-	Prices_add("pr_cr_ar_armsp2", 		2000);
-	Prices_add("pr_cr_ar_boomrn",		2000);
-	Prices_add("pr_cr_ar_ammobp",	 	1500);
-	Prices_add("pr_cr_ar_stimpk",	  	1200);
+	Prices_add("pr_cmd_ar_armsp1", 		1500);
+	Prices_add("pr_cmd_ar_armsp2", 		2000);
+	Prices_add("pr_cmd_ar_boomrn",		2000);
+	Prices_add("pr_cmd_ar_ammobp",	 	1500);
+	Prices_add("pr_cmd_ar_stimpk",	  	1200);
 	
 	//Refinery researches
-	Prices_add("pr_cr_rf_pumpp1", 		4500);
-	Prices_add("pr_cr_rf_pumpp2", 		4500);
+	Prices_add("pr_cmd_rf_pumpp1", 		4500);
+	Prices_add("pr_cmd_rf_pumpp2", 		4500);
 	
 	//Marine command researches
-	Prices_add("pr_cr_mc_advsys", 		1200);
-	Prices_add("pr_cr_mc_airsup", 		4000);
-	Prices_add("pr_cr_mc_ioncan", 		5000);
-	Prices_add("pr_cr_mc_cpulse", 		2000);
+	Prices_add("pr_cmd_mc_advsys", 		1200);
+	Prices_add("pr_cmd_mc_airsup", 		4000);
+	Prices_add("pr_cmd_mc_ioncan", 		5000);
+	Prices_add("pr_cmd_mc_cpulse", 		2000);
 	
 	//Commander deploys / actions
-	Prices_add("pr_cd_turret_bullet", 	600);
-	Prices_add("pr_cd_turret_rocket", 	1500);
-	Prices_add("pr_cd_turret_plasma", 	800);
-	Prices_add("pr_cd_turret_flame", 	2000);
-	Prices_add("pr_cd_turret_tesla", 	1800);
-	Prices_add("pr_cd_turret_shotgun", 	1000);
-	Prices_add("pr_cd_turret_rail", 	1600);
-	Prices_add("pr_cd_disp_health", 	600);
-	Prices_add("pr_cd_disp_ammo", 		600);
-	Prices_add("pr_cd_airstrike", 		850);
-	Prices_add("pr_cd_moneybag", 		3000);
-	Prices_add("pr_cd_minefield", 		750);
+	Prices_add("pr_cmd_turret_bullet", 	600);
+	Prices_add("pr_cmd_turret_rocket", 	1500);
+	Prices_add("pr_cmd_turret_plasma", 	800);
+	Prices_add("pr_cmd_turret_flame", 	2000);
+	Prices_add("pr_cmd_turret_tesla", 	1800);
+	Prices_add("pr_cmd_turret_shotgun", 	1000);
+	Prices_add("pr_cmd_turret_rail", 	1600);
+	Prices_add("pr_cmd_disp_health", 	600);
+	Prices_add("pr_cmd_disp_ammo", 		600);
+	Prices_add("pr_cmd_airstrike", 		850);
+	Prices_add("pr_cmd_moneybag", 		3000);
+	Prices_add("pr_cmd_minefield", 		750);
 	
 	//Mech prices
 	Prices_add("pr_mech", 				12000);
@@ -182,7 +182,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_mu_armor", 			5000);
 	Prices_add("pr_mu_speed", 			3000);
 	Prices_add("pr_mu_self_destruct", 	8000);
-	Prices_add("pr_mu_auto_repair", 	3500); // Heh. Another future thing.
+	//Prices_add("pr_mu_auto_repair", 	3500); // Heh. Another future thing.
 }
 
 function void Prices_add(str inv, int price){

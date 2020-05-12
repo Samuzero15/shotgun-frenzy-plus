@@ -32,10 +32,10 @@ ACTOR Quadshot : Weapon
 			W4E1 C 5 bright A_FireBullets(3, 2, 28, 11, "BulletPuff_Standard")	// damage switched from 11 to 9
 			W4E1 A 17
 			W4E1 D 4 A_PlayWeaponSound("w4/load")
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
 			W4E1 E 2
 			W4E1 A 17
 			W4E1 A 5 A_Refire
@@ -44,19 +44,19 @@ ACTOR Quadshot : Weapon
 			W4E1 A 7
 			W4E1 AB 1
 			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")	// damage switched from 11 to 9
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
 			
 			W4E1 AB 1
 			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
 			
 			W4E1 AB 1
 			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
 			
 			W4E1 AB 1
 			W4E1 C 3 bright A_FireBullets(3, 2, 7, 9, "BulletPuff_Standard")
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
 			
 			W4E1 A 2
 			W4E1 D 4 A_PlayWeaponSound("w4/load")
@@ -105,10 +105,10 @@ ACTOR Quadshot_Full : Weapon
 			W4E3 C 5 bright A_FireBullets(3, 2, 20, 12, "BulletPuff_Explosive")	// from 15 to 11
 			W4E3 A 7
 			W4E3 D 5 A_PlayWeaponSound("w4/load")
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
 			W4E3 E 3
 			W4E3 A 7
 			W4E3 A 5 A_Refire
@@ -125,20 +125,21 @@ ACTOR Quadshot_Full : Weapon
 	}
 }
 
-/*
-ACTOR Quadshot_Bayonet : Weapon
+ACTOR Quadshot_2Barrels : Weapon
 {
-	Weapon.AmmoUse 			4
-	Weapon.AmmoGive 		8
-	Weapon.AmmoType			"Shell"
-	Inventory.PickupMessage		"You got the Quadshot, upgraded with a Bayonet Chainsaw!"
-	Obituary			"%o eats %k's Quadshot shells, which was also upgraded with a Bayonet Chainsaw."
+	Weapon.AmmoUse1 		8
+	Weapon.AmmoUse2 		4
+	Weapon.AmmoGive 		16
+	Weapon.AmmoType1		"Shell"
+	Weapon.AmmoType2		"Shell"
+	Inventory.PickupMessage		"You got the Double Barrel Quadshot! (Octa-Shot?)"
+	Obituary			"%o eats %k's Quadshot shells."
 	
-	Weapon.ReadySound		"weapons/sawidle"
-	Weapon.UpSound			"weapons/sawup"
+	Weapon.UpSound			"w4/load"
 	AttackSound			"w2/fire"
-	DamageType			MarineFire
 	
+	tag "Double Barrel Quadshot"
+	Weapon.selectionorder 3000
 	States
 	{
 		Ready:
@@ -153,64 +154,66 @@ ACTOR Quadshot_Bayonet : Weapon
 			W4E1 A 0 A_Raise
 			goto Select
 		Fire:
-			W4E1 A 3
+			W4E1 A 3 A_JumpIfNoAmmo("Ready")
 			W4E1 B 4
-			W4E1 C 5 bright A_FireBullets(3, 2, 28, 11, "BulletPuff_Standard")	// damage switched from 11 to 9, to 7
-			W4E1 A 7
+			//TNT1 A 0 A_FireBullets(3, 2, 28, 11, "BulletPuff_Standard", FBF_USEAMMO | FBF_EXPLICITANGLE)	// damage switched from 11 to 9
+			TNT1 A 0 A_SetArg(0, 0) // counter
+			TNT1 A 0 A_TakeInventory("Shell", 8)
+			Fire.CalculateLeftBullets:
+				TNT1 A 0 A_Jumpif(args[0] == 56, "Fire.Finish")
+				TNT1 A 0 A_setArg(2, frandom(0.5, 40.5)) // RadiusX
+				TNT1 A 0 A_setArg(1, frandom(0.5, 20.5)) // RadiusY
+				TNT1 A 0 A_setArg(3, fRandom(0.0,359.9)) // Angle
+				TNT1 A 0 A_FireBullets(((Args[2] * Cos(Args[3])) * 0.1), ((Args[1] * sin(Args[3])) * 0.1), -1, 15, "BulletPuff_Standard", FBF_EXPLICITANGLE)
+				TNT1 A 0 A_setArg(0, args[0] + 1) 
+			loop
+		Fire.Finish:
+			W4E1 C 5 bright 
+			W4E1 A 8
 			W4E1 D 4 A_PlayWeaponSound("w4/load")
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 315 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 315 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 315 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 315 + frandom(-8,8), 0, 2, 3)
 			W4E1 E 2
-			W4E1 A 7
+			W4E1 A 8
 			W4E1 A 5 A_Refire
 			goto Ready
 		AltFire:
-			W4E2 DE 2 A_Saw("weapons/sawfull", "weapon/sawhit", 20, "Saw_Spread")
-			W4E2 E 0 A_Refire
-			W4E2 CBA 3
+			W4E1 A 7 A_JumpIfNoAmmo("Ready")
+
+			W4E1 AB 1 
+			W4E1 C 3 bright
+			TNT1 A 0 A_SetArg(0, 0) // counter
+			TNT1 A 0 A_TakeInventory("Shell", 4)
+			AltFire.Calculate1:
+				TNT1 A 0 A_Jumpif(args[0] == 28, "AltFire.Finish")
+				TNT1 A 0 A_setArg(2, frandom(0.5, 20.5)) // RadiusX
+				TNT1 A 0 A_setArg(1, frandom(0.5, 10.5)) // RadiusY
+				TNT1 A 0 A_setArg(3, fRandom(0.0,359.9)) // Angle
+				TNT1 A 0 A_FireBullets(((Args[2] * Cos(Args[3])) * 0.1), ((Args[1] * sin(Args[3])) * 0.1), -1, 15, "BulletPuff_Standard", FBF_EXPLICITANGLE)
+				TNT1 A 0 A_setArg(0, args[0] + 1) 
+			loop
+			
+			AltFire.Finish:
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 315 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
+			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 315 + frandom(-8,8), 0, 2, 3)
+			
+			W4E1 A 1
+			W4E1 D 2 A_PlaySound("w4/load", CHAN_AUTO, 1.0)
+			
+			W4E1 E 2
+			W4E1 A 5 A_Refire
 			goto Ready
+			
+		FireRockets:
+			TNT1 A 1
+		goto lightdone
 	}
 }
-
-ACTOR Quadshot_Explosive : Weapon
-{
-	Weapon.AmmoUse 			4
-	Weapon.AmmoGive 		8
-	Weapon.AmmoType			"Shell"
-	Inventory.PickupMessage		"You got the Quadshot, upgraded with Explosive Shells!"
-	Obituary			"%o eats %k's Explosive Quadshot shells."
-	
-	Weapon.UpSound			"w4/load"
-	AttackSound			"w2/fire"
-	
-	States
-	{
-		Ready:
-			W4E3 A 1 A_WeaponReady
-			goto Ready
-		Deselect:
-			W4E3 A 1 A_Lower
-			W4E3 A 0 A_Lower
-			goto Deselect
-		Select:
-			W4E3 A 1 A_Raise
-			W4E3 A 0 A_Raise
-			goto Select
-		Fire:
-			W4E3 A 3
-			W4E3 B 4
-			W4E3 C 5 bright A_FireBullets(3, 2, 20, 12, "BulletPuff_Explosive")	// from 15 to 11
-			W4E3 A 7
-			W4E3 D 5 A_PlayWeaponSound("w4/load")
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W4E3 E 3
-			W4E3 A 7
-			W4E3 A 5 A_Refire
-			goto Ready
-	}
-}*/

@@ -8,6 +8,7 @@
 // include the custom levels
 #library "f_AIDir"
 #import "f_IntDB.acs"
+#import "fl_WDir.acs"
 #include "zcommon.acs"
 
 // check function
@@ -49,17 +50,11 @@ function int f_AIDir_Check (void)
     //l_Score +=  f_AISkillMultiplier;
     
     // phase 6 *NEW* - track powerful weapon purchase
-	// [Samu] See f_intdb.acs to see what does those numbers.
-	if (g_AID_WepTracker[0])      l_Score += 1; 
-    if (g_AID_WepTracker[1])      l_Score += 1;
-    if (g_AID_WepTracker[2])      l_Score += 5;
-	if (g_AID_WepTracker[3])      l_Score += 5;
-    if (g_AID_WepTracker[4])      l_Score += 8; 
-    if (g_AID_WepTracker[5])      l_Score += 10;
-	if (g_AID_WepTracker[6])      l_Score += 15;
+	// [Samu] fl_WDir Has a pair of variable trackers, so lets use them to crank up difficulty too!
+	l_Score += WPTrack_GetScore(); 
 	
 	//[Samu] The more and expensier upgrades, the harder it gets!
-	l_Score += g_AID_UpsTracker;
+	l_Score += WPTrack_GetScore();
     
 	l_Score -= aiSubtract;
 	if (l_Score < 5){ l_Score = 30; }
@@ -86,13 +81,12 @@ script 269 (void)
 	str msg;
     while(1)
     {
+		
 		msg = strParam(s:"AI Director status: ", d:f_AIDir_Check(), 
-		s:"\nAID_Rockets: ", d:g_AID_WepTracker[0],
-		s:"\nAID_Plasma: ", d:g_AID_WepTracker[1],
-		s:"\nAID_Flamers: ", d:g_AID_WepTracker[2],
-		s:"\nAID_BFGs: ", d:g_AID_WepTracker[3],
-		s:"\nAID_Upgrades: ", d:g_AID_UpsTracker);
+		s:"\nWDir Packs Score: ", d:WPTrack_GetScore(),
+		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore());
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
         delay(1);
+		
     }
 }  

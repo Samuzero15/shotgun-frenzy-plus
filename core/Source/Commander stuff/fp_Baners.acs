@@ -8,7 +8,6 @@
 #library "fp_baners"
 
 #import "f_IntDB.acs"
-#import "fl_price.acs"
 #import "fc_const.acs"
 
 #include "zcommon.acs"
@@ -33,7 +32,7 @@ script "SFPlus_BaseBanner" open{
 		switch(count){
 			case 0: string = "BLOGO1"; break;
 			case 1: string = "BLOGO2"; break;
-			case 2: string = "ZBANER"; break;
+			case 2: string = "ZBANNER"; break;
 			case 3: string = "SLOGO1"; break;
 			case 4: string = "SLOGO2"; break;
 			case 5: string = "SLOGO3"; break;

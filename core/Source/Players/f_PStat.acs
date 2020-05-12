@@ -11,6 +11,7 @@
 #import "f_Cred.acs"
 #import "fl_Price.acs"
 #import "f_PMenP.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -89,19 +90,6 @@ else{
 	hudmessage(s:"You have been killed!\nThe bodycount sits at ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" dead monsters!\nTotal player deaths is sitting at ", d:p_TotalPlayerDeaths; 2, 179, CR_Gold, 580.0, 420.1, 1.0);
 
 
-}
-
-script "SyncMeAgain" Open{
-	// [Samu] Hot-Damn.
-	// This will not be looped forever, to save bandwidth.
-
-	while(getWeaponBasisSell(WEP_BERETTA) != 1){
-		//log(s:getWeaponBasis(WEP_BERETTA));
-		InitUpgWepList();
-		Init_ItemList();
-		MechUpList_init();
-		delay(5);
-	}
 }
 
 Script "CheckClientMute" OPEN CLIENTSIDE
@@ -276,6 +264,8 @@ script 249 OPEN
 			// upgrade level 1
 			if (l_CurrentLevel == 0 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 100){
 				l_CurrentLevel ++;
+				Tech_Set(FP_TECH_GENLAB_HEALTH1, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_HEALT1);
 				c_Techflag[12] = 1;
 				f_TipShow ("CM12", "Human Engineering Phase 1", "Has been rewarded to your team!\nHealth increased", 1);
@@ -286,6 +276,8 @@ script 249 OPEN
 			// upgrade level 2
 			if (l_CurrentLevel == 1 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 450){
 				l_CurrentLevel ++;
+				Tech_Set(FP_TECH_GENLAB_ARMOR, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_ARMOR1);
 				c_Techflag[16] = 1;
 				f_TipShow ("CM16", "Steel Plating", "Has been rewarded to your team!\nArmor provided", 1);
@@ -296,6 +288,8 @@ script 249 OPEN
 			// upgrade level 3
 			if (l_CurrentLevel == 2 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 800){
 				l_CurrentLevel ++;
+				Tech_Set(FP_TECH_ARMORY_AMMOBP, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_AMMOBP);
 				c_Techflag[29] = 1;
 				f_TipShow ("CM29", "Ammo Backpack", "Has been rewarded to your team!\nDouble ammo capacity", 1);
@@ -306,6 +300,8 @@ script 249 OPEN
 			// upgrade level 4
 			if (l_CurrentLevel == 3 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 1050){
 				l_CurrentLevel ++;
+				Tech_Set(FP_TECH_ARMORY_BOOMRN, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_BOOMRN);
 				c_Techflag[28] = 1;
 				f_TipShow ("CM28", "Boomshot Rounds", "Has been rewarded to your team!\nIncreased weapon damage", 1);
@@ -316,6 +312,8 @@ script 249 OPEN
 			// upgrade level 5
 			if (l_CurrentLevel == 4 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 1500){
 				l_CurrentLevel ++;
+				Tech_Set(FP_TECH_GENLAB_HEALTH2, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_HEALT2);
 				c_Techflag[13] = 1;
 				f_TipShow ("CM13", "Human Engineering Phase 2", "Has been rewarded to your team!\nHealth increased", 1);
@@ -327,6 +325,8 @@ script 249 OPEN
 			if (l_CurrentLevel == 5 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 2300){
 				l_CurrentLevel ++;
 				togTechFlag(TECH_PUMPP1);
+				Tech_Set(FP_TECH_REFINE_PUMP1, FP_TECHF_DONE);
+				
 				c_Techflag[56] = 1;
 				f_TipShow ("CM56", "Processing Phase 1", "Has been rewarded to your team!\nCredit bonus", 1);
 			}
@@ -336,6 +336,9 @@ script 249 OPEN
 			// upgrade level 7
 			if (l_CurrentLevel == 6 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 3800){
 				l_CurrentLevel ++;
+				
+				Tech_Set(FP_TECH_GENLAB_RESISB, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_RESISB);
 				c_Techflag[17] = 1;
 				f_TipShow ("CM17", "Resister Unit", "Has been rewarded to your team!\nDamage Resistance", 1);
@@ -346,6 +349,9 @@ script 249 OPEN
 			// upgrade level 8
 			if (l_CurrentLevel == 7 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 4500){
 				l_CurrentLevel ++;
+				
+				Tech_Set(FP_TECH_GENLAB_REGENB, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_REGENB);
 				c_Techflag[18] = 1;
 				f_TipShow ("CM18", "Asorber Unit", "Has been rewarded to your team!\nHealth regeneration", 1);
@@ -356,6 +362,8 @@ script 249 OPEN
 			// upgrade level 9
 			if (l_CurrentLevel == 8 && getlevelinfo(LEVELINFO_KILLED_MONSTERS) > 5000){
 				l_CurrentLevel ++;
+				Tech_Set(FP_TECH_REFINE_PUMP2, FP_TECHF_DONE);
+				
 				togTechFlag(TECH_PUMPP2);
 				c_Techflag[57] = 1;
 				f_TipShow ("CM56", "Processing Phase 2", "Has been rewarded to your team!\nCredit bonus", 1);

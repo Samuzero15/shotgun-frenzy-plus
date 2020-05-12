@@ -55,6 +55,16 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  -80, -25;
 	}
 	
+	isSelected "Buckshot"{
+		drawnumber 3, HUDFONT_DOOM, white, "Buckshot_LoadedShells", drawshadow, -25, -38;
+	}
+	isSelected "Buckshot_Chamber"{
+		drawnumber 3, HUDFONT_DOOM, white, "Buckshot_Chamber_LoadedShells", drawshadow, -25, -38;
+	}
+	isSelected "Buckshot_Explosive"{
+		drawnumber 3, HUDFONT_DOOM, white, "Buckshot_LoadedShells", drawshadow, -25, -38;
+	}
+	
 	// [Samu] To show what powerups and stimpacks do you have.
 	drawimage "BAWX", 110, -22, centerbottom;
 	InInventory "Inventory_Soulsphere" {
@@ -266,6 +276,17 @@ statusbar normal// Standard Doom Status bar
 	usessecondaryammo not
      {
 	 	//alpha 0.5{DrawImage ammoicon1, 308, 184, none, 10,10;}
+		
+		isSelected "Buckshot"{
+			drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
+		}
+		isSelected "Buckshot_Chamber"{
+			drawnumber 3, StatBigsNums, white, "Buckshot_Chamber_LoadedShells",alignment(center), drawshadow, 725, 490;
+		}
+		isSelected "Buckshot_Explosive"{
+			drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
+		}
+		
 	 	drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
 		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
         drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
@@ -273,6 +294,18 @@ statusbar normal// Standard Doom Status bar
      }
     usessecondaryammo
      {
+	 
+		isSelected "Repeater"{
+		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+		}
+		isSelected "Repeater_DoubleSpeed"{
+		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+		}
+		isSelected "Repeater_BlastShells"{
+		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+		}
+			
+			
 		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
 		//alpha 0.5{DrawImage ammoicon1, 305, 190, none, 10,10;}
 		//alpha 0.5{DrawImage ammoicon2, 305, 180, none, 10,10;}

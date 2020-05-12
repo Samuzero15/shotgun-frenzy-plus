@@ -9,10 +9,11 @@
 */
 
 #include "stexec_sfactions.acs"
-//#include "stexec_cmdfuns.acs"
+#include "stexec_cmdfuns.acs"
 #include "stexec_buyfuns.acs"
 #include "stexec_upgfuns.acs"
 #include "stexec_rcyfuns.acs"
+#include "stexec_mupfuns.acs"
 
 
 function void STExecute_OkayAction(void){

@@ -142,148 +142,69 @@ ACTOR Buckshot : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 2, "Fire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 1, "Fire1")
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
-			W5E1 A 0 ACS_Execute(56,0,0,0,0)
 		Fire1:
 			W5E1 B 0 A_JumpIfInventory("Buckshot_LoadedShells", 1, 1)
 			goto Nope0
 			W5E1 B 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 B 3 A_GunFlash
-			W5E1 A 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 A 1 offset (0,37)
-			W5E1 A 1 offset (0,43)
-			W5E1 A 1 offset (0,45)
-			W5E1 A 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 A 1 offset (0,42)
-			W5E1 A 1 offset (0,38)
-			W5E1 A 1 offset (0,34)
-			W5E1 A 1 offset (0,32)
-			W5E1 A 10 A_Refire
-			goto Ready0
+			W5E1 A 0 
+			goto Fire.Recoil
 		Fire2:
 			W5E1 C 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 C 3 A_GunFlash
-			W5E1 B 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 B 1 offset (0,37)
-			W5E1 B 1 offset (0,43)
-			W5E1 B 1 offset (0,45)
-			W5E1 B 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 B 1 offset (0,42)
-			W5E1 B 1 offset (0,38)
-			W5E1 B 1 offset (0,34)
-			W5E1 B 1 offset (0,32)
-			W5E1 B 10 A_Refire
-			goto Ready0
+			W5E1 B 0 
+			goto Fire.Recoil
 		Fire3:
 			W5E1 D 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 D 3 A_GunFlash
-			W5E1 C 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 C 1 offset (0,37)
-			W5E1 C 1 offset (0,43)
-			W5E1 C 1 offset (0,45)
-			W5E1 C 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 C 1 offset (0,42)
-			W5E1 C 1 offset (0,38)
-			W5E1 C 1 offset (0,34)
-			W5E1 C 1 offset (0,32)
-			W5E1 C 10 A_Refire
-			goto Ready0
+			W5E1 C 0 
+			goto Fire.Recoil
 		Fire4:
 			W5E1 E 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 E 3 A_GunFlash
-			W5E1 D 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 D 1 offset (0,37)
-			W5E1 D 1 offset (0,43)
-			W5E1 D 1 offset (0,45)
-			W5E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 D 1 offset (0,42)
-			W5E1 D 1 offset (0,38)
-			W5E1 D 1 offset (0,34)
-			W5E1 D 1 offset (0,32)
-			W5E1 D 10 A_Refire
-			goto Ready0
+			W5E1 D 0 
+			goto Fire.Recoil
 		Fire5:
 			W5E1 F 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 F 3 A_GunFlash
-			W5E1 E 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 E 1 offset (0,37)
-			W5E1 E 1 offset (0,43)
-			W5E1 E 1 offset (0,45)
-			W5E1 E 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 E 1 offset (0,42)
-			W5E1 E 1 offset (0,38)
-			W5E1 E 1 offset (0,34)
-			W5E1 E 1 offset (0,32)
-			W5E1 E 10 A_Refire
-			goto Ready0
+			W5E1 E 0 
+			goto Fire.Recoil
 		Fire6:
 			W5E1 G 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 G 3 A_GunFlash
-			W5E1 F 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 F 1 offset (0,37)
-			W5E1 F 1 offset (0,43)
-			W5E1 F 1 offset (0,45)
-			W5E1 F 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 F 1 offset (0,42)
-			W5E1 F 1 offset (0,38)
-			W5E1 F 1 offset (0,34)
-			W5E1 F 1 offset (0,32)
-			W5E1 F 10 A_Refire
-			goto Ready0
+			W5E1 F 0 
+			goto Fire.Recoil
 		Fire7:
 			W5E1 H 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 H 3 A_GunFlash
-			W5E1 G 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 G 1 offset (0,37)
-			W5E1 G 1 offset (0,43)
-			W5E1 G 1 offset (0,45)
-			W5E1 G 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 G 1 offset (0,42)
-			W5E1 G 1 offset (0,38)
-			W5E1 G 1 offset (0,34)
-			W5E1 G 1 offset (0,32)
-			W5E1 G 10 A_Refire
-			goto Ready0
+			W5E1 G 0 
+			goto Fire.Recoil
 		Fire8:
 			W5E1 I 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 I 3 A_GunFlash
-			W5E1 H 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 H 1 offset (0,37)
-			W5E1 H 1 offset (0,43)
-			W5E1 H 1 offset (0,45)
-			W5E1 H 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 H 1 offset (0,42)
-			W5E1 H 1 offset (0,38)
-			W5E1 H 1 offset (0,34)
-			W5E1 H 1 offset (0,32)
-			W5E1 H 10 A_Refire
-			goto Ready0
+			W5E1 H 0 
+			goto Fire.Recoil
 		Fire9:
 			W5E1 J 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 J 3 A_GunFlash
-			W5E1 I 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 I 1 offset (0,37)
-			W5E1 I 1 offset (0,43)
-			W5E1 I 1 offset (0,45)
-			W5E1 I 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 I 1 offset (0,42)
-			W5E1 I 1 offset (0,38)
-			W5E1 I 1 offset (0,34)
-			W5E1 I 1 offset (0,32)
-			W5E1 I 10 A_Refire
-			goto Ready0
+			W5E1 I 0 
+			goto Fire.Recoil
 		Fire10:
 			W5E1 K 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 K 3 A_GunFlash
-			W5E1 J 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
-			W5E1 J 1 offset (0,37)
-			W5E1 J 1 offset (0,43)
-			W5E1 J 1 offset (0,45)
-			W5E1 J 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 J 1 offset (0,42)
-			W5E1 J 1 offset (0,38)
-			W5E1 J 1 offset (0,34)
-			W5E1 J 1 offset (0,32)
-			W5E1 J 10 A_Refire
+			W5E1 J 0 
+			goto Fire.Recoil
+		Fire.Recoil:
+			"####" "#" 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
+			"####" "#" 1 offset (0,37)
+			"####" "#" 1 offset (0,43)
+			"####" "#" 1 offset (0,45)
+			"####" "#" 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			"####" "#" 1 offset (0,42)
+			"####" "#" 1 offset (0,38)
+			"####" "#" 1 offset (0,34)
+			"####" "#" 1 offset (0,32)
+			"####" "#" 10 A_Refire
 			goto Ready0
 		AltFire:
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
@@ -291,19 +212,28 @@ ACTOR Buckshot : Weapon
 			W5E1 A 0 A_JumpIfInventory("Shell", 2, 2)
 			W5E1 A 0 A_Jump(255, "AltFire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Altfire2")
-                        W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready")
+            W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready")
 			W2E1 A 1
-			W2E1 B 3
+			Altfire.Reloading:
+			//W2E1 B 3
+			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Altfire2")
+			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Ready0")
+			W2E1 B 3 
+			TNT1 A 0 A_PlayWeaponSound("w2/load")
 			W2E1 C 4 A_TakeInventory("Shell", 2)
-			W2E1 D 5 A_PlayWeaponSound("w2/load")
-			W2E1 C 4 A_GiveInventory("Buckshot_LoadedShells", 2)
-			W2E1 B 3 A_Refire
+			W2E1 D 5 
+			W2E1 C 2 
+			W2E1 B 2 A_GiveInventory("Buckshot_LoadedShells", 2)
+			W2E1 B 3 A_Refire("Altfire.Reloading")
 			goto Ready0
        Altfire2:
             W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Ready")
+			W2E1 B 3 
+			TNT1 A 0 A_PlayWeaponSound("w2/load")
             W2E1 C 4 A_TakeInventory("Shell", 1)
-			W2E1 D 5 A_PlayWeaponSound("w2/load")
-			W2E1 C 4 A_GiveInventory("Buckshot_LoadedShells", 1)
+			W2E1 D 5 
+			W2E1 C 2 
+			W2E1 B 2 A_GiveInventory("Buckshot_LoadedShells", 2)
 			W2E1 B 3 A_Refire
             goto Ready0
 		Flash:
@@ -538,288 +468,119 @@ ACTOR Buckshot_Chamber : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 2, "Fire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 1, "Fire1")
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
-			W5E1 A 0 ACS_Execute(56,0,0,0,0)
 		Fire1:
 			W5E1 B 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 1, 1)
 			goto Nope0
 			W5E1 B 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 B 3 A_GunFlash
-			W5E1 A 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 A 1 offset (0,37)
-			W5E1 A 1 offset (0,43)
-			W5E1 A 1 offset (0,45)
-			W5E1 A 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 A 1 offset (0,42)
-			W5E1 A 1 offset (0,38)
-			W5E1 A 1 offset (0,34)
-			W5E1 A 1 offset (0,32)
-			W5E1 A 10 A_Refire
-			goto Ready0
+			W5E1 A 0 
+			goto Fire.Recoil
 		Fire2:
 			W5E1 C 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 C 3 A_GunFlash
-			W5E1 B 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 B 1 offset (0,37)
-			W5E1 B 1 offset (0,43)
-			W5E1 B 1 offset (0,45)
-			W5E1 B 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 B 1 offset (0,42)
-			W5E1 B 1 offset (0,38)
-			W5E1 B 1 offset (0,34)
-			W5E1 B 1 offset (0,32)
-			W5E1 B 10 A_Refire
-			goto Ready0
+			W5E1 B 0 
+			goto Fire.Recoil
 		Fire3:
 			W5E1 D 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 D 3 A_GunFlash
-			W5E1 C 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 C 1 offset (0,37)
-			W5E1 C 1 offset (0,43)
-			W5E1 C 1 offset (0,45)
-			W5E1 C 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 C 1 offset (0,42)
-			W5E1 C 1 offset (0,38)
-			W5E1 C 1 offset (0,34)
-			W5E1 C 1 offset (0,32)
-			W5E1 C 10 A_Refire
-			goto Ready0
+			W5E1 C 0 
+			goto Fire.Recoil
 		Fire4:
 			W5E1 E 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 E 3 A_GunFlash
-			W5E1 D 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 D 1 offset (0,37)
-			W5E1 D 1 offset (0,43)
-			W5E1 D 1 offset (0,45)
-			W5E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 D 1 offset (0,42)
-			W5E1 D 1 offset (0,38)
-			W5E1 D 1 offset (0,34)
-			W5E1 D 1 offset (0,32)
-			W5E1 D 10 A_Refire
-			goto Ready0
+			W5E1 D 0 
+			goto Fire.Recoil
 		Fire5:
 			W5E1 F 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 F 3 A_GunFlash
-			W5E1 E 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 E 1 offset (0,37)
-			W5E1 E 1 offset (0,43)
-			W5E1 E 1 offset (0,45)
-			W5E1 E 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 E 1 offset (0,42)
-			W5E1 E 1 offset (0,38)
-			W5E1 E 1 offset (0,34)
-			W5E1 E 1 offset (0,32)
-			W5E1 E 10 A_Refire
-			goto Ready0
+			W5E1 E 0 
+			goto Fire.Recoil
 		Fire6:
 			W5E1 G 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 G 3 A_GunFlash
-			W5E1 F 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 F 1 offset (0,37)
-			W5E1 F 1 offset (0,43)
-			W5E1 F 1 offset (0,45)
-			W5E1 F 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 F 1 offset (0,42)
-			W5E1 F 1 offset (0,38)
-			W5E1 F 1 offset (0,34)
-			W5E1 F 1 offset (0,32)
-			W5E1 F 10 A_Refire
-			goto Ready0
+			W5E1 F 0 
+			goto Fire.Recoil
 		Fire7:
 			W5E1 H 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 H 3 A_GunFlash
-			W5E1 G 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 G 1 offset (0,37)
-			W5E1 G 1 offset (0,43)
-			W5E1 G 1 offset (0,45)
-			W5E1 G 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 G 1 offset (0,42)
-			W5E1 G 1 offset (0,38)
-			W5E1 G 1 offset (0,34)
-			W5E1 G 1 offset (0,32)
-			W5E1 G 10 A_Refire
-			goto Ready0
+			W5E1 G 0 
+			goto Fire.Recoil
 		Fire8:
 			W5E1 I 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 I 3 A_GunFlash
-			W5E1 H 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 H 1 offset (0,37)
-			W5E1 H 1 offset (0,43)
-			W5E1 H 1 offset (0,45)
-			W5E1 H 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 H 1 offset (0,42)
-			W5E1 H 1 offset (0,38)
-			W5E1 H 1 offset (0,34)
-			W5E1 H 1 offset (0,32)
-			W5E1 H 10 A_Refire
-			goto Ready0
+			W5E1 H 0 
+			goto Fire.Recoil
 		Fire9:
 			W5E1 J 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 J 3 A_GunFlash
-			W5E1 I 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 I 1 offset (0,37)
-			W5E1 I 1 offset (0,43)
-			W5E1 I 1 offset (0,45)
-			W5E1 I 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 I 1 offset (0,42)
-			W5E1 I 1 offset (0,38)
-			W5E1 I 1 offset (0,34)
-			W5E1 I 1 offset (0,32)
-			W5E1 I 10 A_Refire
-			goto Ready0
+			W5E1 I 0 
+			goto Fire.Recoil
 		Fire10:
 			W5E1 K 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 K 3 A_GunFlash
-			W5E1 I 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 J 1 offset (0,37)
-			W5E1 J 1 offset (0,43)
-			W5E1 J 1 offset (0,45)
-			W5E1 J 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 J 1 offset (0,42)
-			W5E1 J 1 offset (0,38)
-			W5E1 J 1 offset (0,34)
-			W5E1 J 1 offset (0,32)
-			W5E1 J 10 A_Refire
-			goto Ready0
+			W5E1 I 0 
+			goto Fire.Recoil
 		Fire11:
 			W5E1 L 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 L 3 A_GunFlash
-			W5E1 K 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 K 1 offset (0,37)
-			W5E1 K 1 offset (0,43)
-			W5E1 K 1 offset (0,45)
-			W5E1 K 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 K 1 offset (0,42)
-			W5E1 K 1 offset (0,38)
-			W5E1 K 1 offset (0,34)
-			W5E1 K 1 offset (0,32)
-			W5E1 K 10 A_Refire
-			goto Ready0
+			W5E1 K 0 
+			goto Fire.Recoil
 		Fire12:
 			W5E1 M 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 M 3 A_GunFlash
-			W5E1 L 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 L 1 offset (0,37)
-			W5E1 L 1 offset (0,43)
-			W5E1 L 1 offset (0,45)
-			W5E1 L 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 L 1 offset (0,42)
-			W5E1 L 1 offset (0,38)
-			W5E1 L 1 offset (0,34)
-			W5E1 L 1 offset (0,32)
-			W5E1 L 10 A_Refire
-			goto Ready0
+			W5E1 L 0 
+			goto Fire.Recoil
 		Fire13:
 			W5E1 N 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 N 3 A_GunFlash
-			W5E1 M 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 M 1 offset (0,37)
-			W5E1 M 1 offset (0,43)
-			W5E1 M 1 offset (0,45)
-			W5E1 M 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 M 1 offset (0,42)
-			W5E1 M 1 offset (0,38)
-			W5E1 M 1 offset (0,34)
-			W5E1 M 1 offset (0,32)
-			W5E1 M 10 A_Refire
-			goto Ready0
+			W5E1 M 0 
+			goto Fire.Recoil
 		Fire14:
 			W5E1 O 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 O 3 A_GunFlash
-			W5E1 N 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 N 1 offset (0,37)
-			W5E1 N 1 offset (0,43)
-			W5E1 N 1 offset (0,45)
-			W5E1 N 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 N 1 offset (0,42)
-			W5E1 N 1 offset (0,38)
-			W5E1 N 1 offset (0,34)
-			W5E1 N 1 offset (0,32)
-			W5E1 N 10 A_Refire
-			goto Ready0
+			W5E1 N 0 
+			goto Fire.Recoil
 		Fire15:
 			W5E1 P 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 P 3 A_GunFlash
-			W5E1 O 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 O 1 offset (0,37)
-			W5E1 O 1 offset (0,43)
-			W5E1 O 1 offset (0,45)
-			W5E1 O 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 O 1 offset (0,42)
-			W5E1 O 1 offset (0,38)
-			W5E1 O 1 offset (0,34)
-			W5E1 O 1 offset (0,32)
-			W5E1 O 10 A_Refire
-			goto Ready0
+			W5E1 O 0 
+			goto Fire.Recoil
 		Fire16:
 			W5E1 Q 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 Q 3 A_GunFlash
-			W5E1 P 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 P 1 offset (0,37)
-			W5E1 P 1 offset (0,43)
-			W5E1 P 1 offset (0,45)
-			W5E1 P 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 P 1 offset (0,42)
-			W5E1 P 1 offset (0,38)
-			W5E1 P 1 offset (0,34)
-			W5E1 P 1 offset (0,32)
-			W5E1 P 10 A_Refire
-			goto Ready0
+			W5E1 P 0 
+			goto Fire.Recoil
 		Fire17:
 			W5E1 R 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 R 3 A_GunFlash
-			W5E1 Q 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 Q 1 offset (0,37)
-			W5E1 Q 1 offset (0,43)
-			W5E1 Q 1 offset (0,45)
-			W5E1 Q 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 Q 1 offset (0,42)
-			W5E1 Q 1 offset (0,38)
-			W5E1 Q 1 offset (0,34)
-			W5E1 Q 1 offset (0,32)
-			W5E1 Q 10 A_Refire
-			goto Ready0
+			W5E1 Q 0 
+			goto Fire.Recoil
 		Fire18:
 			W5E1 S 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 S 3 A_GunFlash
-			W5E1 R 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 R 1 offset (0,37)
-			W5E1 R 1 offset (0,43)
-			W5E1 R 1 offset (0,45)
-			W5E1 R 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 R 1 offset (0,42)
-			W5E1 R 1 offset (0,38)
-			W5E1 R 1 offset (0,34)
-			W5E1 R 1 offset (0,32)
-			W5E1 R 10 A_Refire
-			goto Ready0
+			W5E1 R 0 
+			goto Fire.Recoil
 		Fire19:
 			W5E1 T 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 T 3 A_GunFlash
-			W5E1 S 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
-			W5E1 S 1 offset (0,37)
-			W5E1 S 1 offset (0,43)
-			W5E1 S 1 offset (0,45)
-			W5E1 S 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 S 1 offset (0,42)
-			W5E1 S 1 offset (0,38)
-			W5E1 S 1 offset (0,34)
-			W5E1 S 1 offset (0,32)
-			W5E1 S 10 A_Refire
-			goto Ready0
+			W5E1 S 0 
+			goto Fire.Recoil
 		Fire20:
 			W5E1 U 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 U 3 A_GunFlash
-			W5E1 T 0 A_FireBullets(4, 4, 9, 18, "BulletPuff_Standard")
-			W5E1 T 1 offset (0,37)
-			W5E1 T 1 offset (0,43)
-			W5E1 T 1 offset (0,45)
-			W5E1 T 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 T 1 offset (0,42)
-			W5E1 T 1 offset (0,38)
-			W5E1 T 1 offset (0,34)
-			W5E1 T 1 offset (0,32)
-			W5E1 T 10 A_Refire
+			W5E1 T 0 
+			goto Fire.Recoil
+		Fire.Recoil:
+			"####" "#" 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Standard")
+			"####" "#" 1 offset (0,37)
+			"####" "#" 1 offset (0,43)
+			"####" "#" 1 offset (0,45)
+			"####" "#" 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			"####" "#" 1 offset (0,42)
+			"####" "#" 1 offset (0,38)
+			"####" "#" 1 offset (0,34)
+			"####" "#" 1 offset (0,32)
+			"####" "#" 10 A_Refire
 			goto Ready0
 		AltFire:
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
@@ -1020,142 +781,65 @@ ACTOR Buckshot_Explosive : Weapon
 			goto Nope0
 			W5E1 B 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 B 3 A_GunFlash
-			W5E1 A 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 A 1 offset (0,37)
-			W5E1 A 1 offset (0,43)
-			W5E1 A 1 offset (0,45)
-			W5E1 A 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 A 1 offset (0,42)
-			W5E1 A 1 offset (0,38)
-			W5E1 A 1 offset (0,34)
-			W5E1 A 1 offset (0,32)
-			W5E1 A 10 A_Refire
-			goto Ready0
+			W5E1 A 0
+			goto Fire.Recoil
 		Fire2:
 			W5E1 C 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 C 3 A_GunFlash
-			W5E1 B 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 B 1 offset (0,37)
-			W5E1 B 1 offset (0,43)
-			W5E1 B 1 offset (0,45)
-			W5E1 B 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 B 1 offset (0,42)
-			W5E1 B 1 offset (0,38)
-			W5E1 B 1 offset (0,34)
-			W5E1 B 1 offset (0,32)
-			W5E1 B 10 A_Refire
-			goto Ready0
+			W5E1 B 0 
+			goto Fire.Recoil
 		Fire3:
 			W5E1 D 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 D 3 A_GunFlash
-			W5E1 C 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 C 1 offset (0,37)
-			W5E1 C 1 offset (0,43)
-			W5E1 C 1 offset (0,45)
-			W5E1 C 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 C 1 offset (0,42)
-			W5E1 C 1 offset (0,38)
-			W5E1 C 1 offset (0,34)
-			W5E1 C 1 offset (0,32)
-			W5E1 C 10 A_Refire
-			goto Ready0
+			W5E1 C 0 
+			goto Fire.Recoil
 		Fire4:
 			W5E1 E 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 E 3 A_GunFlash
-			W5E1 D 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 D 1 offset (0,37)
-			W5E1 D 1 offset (0,43)
-			W5E1 D 1 offset (0,45)
-			W5E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 D 1 offset (0,42)
-			W5E1 D 1 offset (0,38)
-			W5E1 D 1 offset (0,34)
-			W5E1 D 1 offset (0,32)
-			W5E1 D 10 A_Refire
-			goto Ready0
+			W5E1 D 0 
+			goto Fire.Recoil
 		Fire5:
 			W5E1 F 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 F 3 A_GunFlash
-			W5E1 E 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 E 1 offset (0,37)
-			W5E1 E 1 offset (0,43)
-			W5E1 E 1 offset (0,45)
-			W5E1 E 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 E 1 offset (0,42)
-			W5E1 E 1 offset (0,38)
-			W5E1 E 1 offset (0,34)
-			W5E1 E 1 offset (0,32)
-			W5E1 E 10 A_Refire
-			goto Ready0
+			W5E1 E 0 
+			goto Fire.Recoil
 		Fire6:
 			W5E1 G 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 G 3 A_GunFlash
-			W5E1 F 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 F 1 offset (0,37)
-			W5E1 F 1 offset (0,43)
-			W5E1 F 1 offset (0,45)
-			W5E1 F 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 F 1 offset (0,42)
-			W5E1 F 1 offset (0,38)
-			W5E1 F 1 offset (0,34)
-			W5E1 F 1 offset (0,32)
-			W5E1 F 10 A_Refire
-			goto Ready0
+			W5E1 F 0
+			goto Fire.Recoil
 		Fire7:
 			W5E1 H 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 H 3 A_GunFlash
-			W5E1 G 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 G 1 offset (0,37)
-			W5E1 G 1 offset (0,43)
-			W5E1 G 1 offset (0,45)
-			W5E1 G 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 G 1 offset (0,42)
-			W5E1 G 1 offset (0,38)
-			W5E1 G 1 offset (0,34)
-			W5E1 G 1 offset (0,32)
-			W5E1 G 10 A_Refire
-			goto Ready0
+			W5E1 G 0 
+			goto Fire.Recoil
 		Fire8:
 			W5E1 I 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 I 3 A_GunFlash
-			W5E1 H 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 H 1 offset (0,37)
-			W5E1 H 1 offset (0,43)
-			W5E1 H 1 offset (0,45)
-			W5E1 H 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 H 1 offset (0,42)
-			W5E1 H 1 offset (0,38)
-			W5E1 H 1 offset (0,34)
-			W5E1 H 1 offset (0,32)
-			W5E1 H 10 A_Refire
-			goto Ready0
+			W5E1 H 0 
+			goto Fire.Recoil
 		Fire9:
 			W5E1 J 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 J 3 A_GunFlash
-			W5E1 I 0 A_FireBullets(6, 6, 7, 12, "BulletPuff_Explosive")
-			W5E1 I 1 offset (0,37)
-			W5E1 I 1 offset (0,43)
-			W5E1 I 1 offset (0,45)
-			W5E1 I 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 I 1 offset (0,42)
-			W5E1 I 1 offset (0,38)
-			W5E1 I 1 offset (0,34)
-			W5E1 I 1 offset (0,32)
-			W5E1 I 10 A_Refire
-			goto Ready0
+			W5E1 I 0 
+			goto Fire.Recoil
 		Fire10:
 			W5E1 K 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 K 3 A_GunFlash
-			W5E1 I 0 A_FireBullets(6, 6, 7, 20, "BulletPuff_Explosive")
-			W5E1 J 1 offset (0,37)
-			W5E1 J 1 offset (0,43)
-			W5E1 J 1 offset (0,45)
-			W5E1 J 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
-			W5E1 J 1 offset (0,42)
-			W5E1 J 1 offset (0,38)
-			W5E1 J 1 offset (0,34)
-			W5E1 J 1 offset (0,32)
-			W5E1 J 10 A_Refire
+			W5E1 J 0
+			goto Fire.Recoil
+			
+		Fire.Recoil:
+			"####" "#" 0 A_FireBullets(6, 6, 7, 14, "BulletPuff_Explosive")
+			"####" "#" 1 offset (0,37)
+			"####" "#" 1 offset (0,43)
+			"####" "#" 1 offset (0,45)
+			"####" "#" 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
+			"####" "#" 1 offset (0,42)
+			"####" "#" 1 offset (0,38)
+			"####" "#" 1 offset (0,34)
+			"####" "#" 1 offset (0,32)
+			"####" "#" 10 A_Refire
 			goto Ready0
 		AltFire:
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)

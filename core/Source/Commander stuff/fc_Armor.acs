@@ -49,6 +49,7 @@ script 250 (void)
     
     // set techflag
     SetBuildState(BUILD_ARMORY, Built);
+	Tech_Set(FP_TECH_ARMORY, FP_TECHF_DONE);
     
     // refresh the commander menu
     c_NewButton_Refresh();
@@ -58,14 +59,16 @@ script 250 (void)
     
     // check bridge
     delay(35 * 2);
-    if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_GENLAB) && c_BridgeStatus_2 == 0)
+    if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_GENLAB) 
+		&& c_BridgeStatus_2 == 0)
     {
         c_BridgeStatus_2 = 1;
         floor_raisetonearest(341, 125);
     }
     
     // check bridge
-    if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_REFINE) && c_BridgeStatus_3 == 0 && f_Gametype != 5)
+    if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_REFINE) && c_BridgeStatus_3 == 0 
+		&& f_Gametype != 5)
     {
         c_BridgeStatus_3 = 1;
         floor_raisetonearest(342, 125);

@@ -22,7 +22,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_UPG0PAGEDESC: StExecute_Upg0PageDesc(arg1, arg2, arg3); break;
 		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
 		
-		/*
+		
 		case STEXE_CMDDEPLOY: 
 		case STEXE_CMDSUPPORT: 
 		case STEXE_CMDRESEARCH: 
@@ -30,7 +30,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 			Toaster_ShowToast("You still need to implement this, Samu...",CR_RED);
 		break;
 		case STEXE_CMDBTNDESC: StExecute_CMDBtnDesc(arg1, arg2, arg3); break;
-		*/
+		
 		
 		case STEXE_BUYMECHTANK: StExecute_BuyMechTank(); break;
 		case STEXE_GETMECHTANK: StExecute_GetMechTank(); break;

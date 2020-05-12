@@ -467,6 +467,15 @@ function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2,
 			case 5: setBuildState(BUILD_MARCOM, LOCKED); break;
 			case 6: setBuildState(BUILD_NUKESY, LOCKED); break;
 		}
+		
+		switch(l_EventArg1){
+			case 1: Tech_Set(FP_TECH_GENLAB, FP_TECHF_LOCK); break;
+			case 2: Tech_Set(FP_TECH_ARMORY, FP_TECHF_LOCK); break;
+			case 3: Tech_Set(FP_TECH_MECHFA, FP_TECHF_LOCK); break;
+			case 4: Tech_Set(FP_TECH_REFINE, FP_TECHF_LOCK); break;
+			case 5: Tech_Set(FP_TECH_MARCOM, FP_TECHF_LOCK); break;
+			case 6: Tech_Set(FP_TECH_NUKESY, FP_TECHF_LOCK); break;
+		}
     }
     
     // research and change techflag
@@ -483,92 +492,108 @@ function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2,
 		switch(l_EventArg1){
 			case 12:
 				TogTechFlag(TECH_HEALT1);
+				Tech_Set(FP_TECH_GENLAB_HEALTH1, FP_TECHF_DONE);
 				f_TipShow ("CM12", "Human Engineering Phase 1", "Researched!", 1);
 				acs_execute(617, 0, 11, 0, 0);
 			break;
 			
 			case 13:
 				TogTechFlag(TECH_HEALT2);
+				Tech_Set(FP_TECH_GENLAB_HEALTH2, FP_TECHF_DONE);
 				f_TipShow ("CM13", "Human Engineering Phase 2", "Researched!", 1);
 				acs_execute(617, 0, 12, 0, 0);
 			break;
 			
 			case 15:
 				TogTechFlag(TECH_SPEEDB);
+				Tech_Set(FP_TECH_GENLAB_SPEEDB, FP_TECHF_DONE);
 				f_TipShow ("CM15", "Adrenaline", "Researched!", 1);
 				acs_execute(617, 0, 0, 0, 0);
 			break;
 			
 			case 16:
 				TogTechFlag(TECH_ARMOR1);
+				Tech_Set(FP_TECH_GENLAB_ARMOR, FP_TECHF_DONE);
 				f_TipShow ("CM16", "Steel Plating", "Researched!", 1);
 				acs_execute(617, 0, 1, 0, 0);
 			break;
 			
 			case 17:
 				TogTechFlag(TECH_RESISB);
+				Tech_Set(FP_TECH_GENLAB_RESISB, FP_TECHF_DONE);
 				f_TipShow ("CM17", "Resister Unit", "Researched!", 1);
 				acs_execute(617, 0, 2, 0, 0);
 			break;
 			
 			case 18:
 				TogTechFlag(TECH_REGENB);
+				Tech_Set(FP_TECH_GENLAB_REGENB, FP_TECHF_DONE);
 				f_TipShow ("CM18", "Asorber Unit", "Researched!", 1);
 				acs_execute(617, 0, 3, 0, 0);
 			break;
 			
 			case 26:
 				TogTechFlag(TECH_ARMSP1);
+				Tech_Set(FP_TECH_ARMORY_ARMS1, FP_TECHF_DONE);
 				f_TipShow ("CM26", "Arms Phase 1", "Researched!", 1);
 				acs_execute(617, 0, 4, 0, 0);
 			break;
 			
 			case 27:
 				TogTechFlag(TECH_ARMSP2);
+				Tech_Set(FP_TECH_ARMORY_ARMS2, FP_TECHF_DONE);
 				f_TipShow ("CM27", "Arms Phase 2", "Researched!", 1);
 				acs_execute(617, 0, 5, 0, 0);
 			break;
 			
 			case 28:
 				TogTechFlag(TECH_BOOMRN);
+				Tech_Set(FP_TECH_ARMORY_BOOMRN, FP_TECHF_DONE);
 				f_TipShow ("CM28", "Boomshot Rounds", "Researched!", 1);
 				acs_execute(617, 0, 6, 0, 0);
 			break;
 			
 			case 29:
 				TogTechFlag(TECH_AMMOBP);
+				Tech_Set(FP_TECH_ARMORY_AMMOBP, FP_TECHF_DONE);
 				f_TipShow ("CM29", "Ammo Backpack", "Researched!", 1);
 				acs_execute(617, 0, 7, 0, 0);
 			break;
 			
 			case 44:
 				TogTechFlag(TECH_ADVSYS);
+				Tech_Set(FP_TECH_MARCOM_ADVSYS, FP_TECHF_DONE);
 				f_TipShow ("CM44", "Advanced Systems", "Researched!", 1);
 			break;
 			
 			case 48:
 				//[Samu] Looks like the drones we're meant to used by the commander too.
 				//SetTechFlag(TECH_HEALT1);
+				
 				f_TipShow ("CM48", "Drone Tech", "Researched!", 1);
 			break;
 			
 			case 53:
 				TogTechFlag(TECH_IONCAN);
+				Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
 				f_TipShow ("CM53", "Ion Heat", "Researched!", 1);
 			break;
 			
 			case 54:
 				TogTechFlag(TECH_AIRSUP);
+				Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
 				f_TipShow ("CM54", "Air Support", "Researched!", 1);
 			break;
 			
 			case 56:
 				TogTechFlag(TECH_PUMPP1);
+				Tech_Set(FP_TECH_REFINE_PUMP1, FP_TECHF_DONE);
 				f_TipShow ("CM56", "Processing Phase 1", "Researched!", 1);
 			break;
 			
 			case 57:
 				TogTechFlag(TECH_PUMPP2);
+				Tech_Set(FP_TECH_REFINE_PUMP2, FP_TECHF_DONE);
 				f_TipShow ("CM57", "Processing Phase 2", "Researched!", 1);
 			break;
 			
@@ -580,6 +605,7 @@ function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2,
 			
 			case 71:
 				TogTechFlag(TECH_STIMPK);
+				Tech_Set(FP_TECH_ARMORY_STIMPK, FP_TECHF_DONE);
 				f_TipShow ("CM71", "Stimpacks", "Researched!", 1);
 				acs_execute(617, 0, 8, 0, 0);
 			break;

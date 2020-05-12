@@ -361,6 +361,7 @@ script 166 (int l_Position, int l_TipQue_Selection, int l_ID)
     p_TipQue[l_TipQue_Selection] --;
     
     // re enable the ion cannon
+	Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
 	SetTechFlag(TECH_IONCAN, true);
 }
 

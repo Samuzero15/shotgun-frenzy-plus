@@ -45,6 +45,7 @@ script 350 (void)
     // set techflag
     //c_Techflag[4] = 1;
 	SetBuildState(BUILD_REFINE, BUILT);
+	Tech_Set(FP_TECH_REFINE, FP_TECHF_DONE);
     
     // refresh the commander menu
     c_NewButton_Refresh();
@@ -53,7 +54,7 @@ script 350 (void)
     f_TipShow ("BUTTON", "Refinery", "Construction Complete!", 1);
     
     // check bridge
-    if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_REFINE) && c_BridgeStatus_3 == 0 && f_Gametype != 5)
+    if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_REFINE) && c_BridgeStatus_3 == 0 && f_Gametype != 5)
     {
         c_BridgeStatus_3 = 1;
         floor_raisetonearest(342, 125);

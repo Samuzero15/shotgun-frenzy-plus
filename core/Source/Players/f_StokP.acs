@@ -8,6 +8,7 @@
 #library "f_StokP"
 
 #import "f_IntDB.acs"
+#import "fl_techs.acs"
 #import "f_Tip.acs"
 
 #include "zcommon.acs"
@@ -22,32 +23,32 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
     {
 	
 	// display what has been researched to the player
-	if (getTechFlag(TECH_HEALT2)) {
+	if (Tech_IsDone(FP_TECH_GENLAB_HEALTH2)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ HUMAN GENETICS P2"; HUDMSG_TYPEON, 0, CR_White, 600.1, 100.1, 2.0);
 	}
-	else if (getTechFlag(TECH_HEALT1)) {
+	else if (Tech_IsDone(FP_TECH_GENLAB_HEALTH1)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ HUMAN GENETICS P1"; HUDMSG_TYPEON, 0, CR_White, 600.1, 100.1, 2.0);
 	}
-	if (getTechFlag(TECH_SPEEDB)) {
+	if (Tech_IsDone(FP_TECH_GENLAB_SPEEDB)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ Adrenaline"; HUDMSG_TYPEON, 0, CR_White, 600.1, 120.1, 2.0);
 	}
-	if (getTechFlag(TECH_ARMOR1)) {
+	if (Tech_IsDone(FP_TECH_GENLAB_ARMOR)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ Steel Plating"; HUDMSG_TYPEON, 0, CR_White, 600.1, 140.1, 2.0);
 	}
-	if (getTechFlag(TECH_RESISB)) {
+	if (Tech_IsDone(FP_TECH_GENLAB_RESISB)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ Resister Unit"; HUDMSG_TYPEON, 0, CR_White, 600.1, 160.1, 2.0);
 	}
-	if (getTechFlag(TECH_REGENB)) {
+	if (Tech_IsDone(FP_TECH_GENLAB_REGENB)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ Asorber Unit"; HUDMSG_TYPEON, 0, CR_White, 600.1, 180.1, 2.0);
@@ -71,13 +72,13 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 				setactorproperty(0, APROP_SpawnHealth, 100);
 				SetInventory("HUD_MaxHp", 1);
 			}
-            if (l_Give > 0 && getTechFlag(TECH_HEALT2)){
+            if (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH2)){
 				// [Samu] Preventing Over-Health stat resets.
 				if(hp < 140) giveinventory("Health", 140);
 				setactorproperty(0, APROP_SpawnHealth, 140);
 				SetInventory("HUD_MaxHp", 3);
 			}            
-            else if  (l_Give > 0 && getTechFlag(TECH_HEALT1)) {
+            else if  (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH1)) {
 				// [Samu] Preventing Over-Health stat resets.
 				if(hp < 120) giveinventory("Health", 120);
 				setactorproperty(0, APROP_SpawnHealth, 120);
@@ -87,8 +88,8 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
             // check for genetics lab updates
             if (l_Give > 0)
             {
-                if (getTechFlag(TECH_SPEEDB))        setactorproperty(0, APROP_SPEED, 1.3);      // adrenaline
-                if (getTechFlag(TECH_ARMOR1)){
+                if (Tech_IsDone(FP_TECH_GENLAB_SPEEDB))        setactorproperty(0, APROP_SPEED, 1.3);      // adrenaline
+                if (Tech_IsDone(FP_TECH_GENLAB_ARMOR)){
 					// [Samu] Preventing Armor Overrides.
 					if(CheckInventory("BasicArmor") == 0) {takeInventory("Flag_BlueArmor", 1);}
 					
@@ -97,8 +98,8 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 					}
 					// steel plating
 				}
-                if (getTechFlag(TECH_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
-                if (getTechFlag(TECH_REGENB))        giveinventory("Upgrade_Asorber", 1);        // asorber unit
+                if (Tech_IsDone(FP_TECH_GENLAB_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
+                if (Tech_IsDone(FP_TECH_GENLAB_REGENB))        giveinventory("Upgrade_Asorber", 1);        // asorber unit
             }
             
             delay(2);
@@ -109,27 +110,27 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
     if ((l_Type == 2 && isBuilt(BUILD_ARMORY)) || (l_Type == 3))
     {
 	// display what has been researched to the player
-	if (getTechFlag(TECH_ARMSP1)) {
+	if (Tech_IsDone(FP_TECH_ARMORY_ARMS2)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ ARMS P2"; HUDMSG_TYPEON, 0, CR_White, 600.1, 200.1, 2.0);
 	}
-	else if (getTechFlag(TECH_ARMSP2)) {
+	else if (Tech_IsDone(FP_TECH_ARMORY_ARMS1)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ ARMS P1"; HUDMSG_TYPEON, 0, CR_White, 600.1, 200.1, 2.0);
 	}
-	if (getTechFlag(TECH_BOOMRN)) {
+	if (Tech_IsDone(FP_TECH_ARMORY_BOOMRN)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ Boomshot Rounds"; HUDMSG_TYPEON, 0, CR_White, 600.1, 220.1, 2.0);
 	}
-	if (getTechFlag(TECH_AMMOBP)) {
+	if (Tech_IsDone(FP_TECH_ARMORY_AMMOBP)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ Ammo Backpack"; HUDMSG_TYPEON, 0, CR_White, 600.1, 240.1, 2.0);
 	}
-	if (getTechFlag(TECH_STIMPK)) {
+	if (Tech_IsDone(FP_TECH_ARMORY_STIMPK)) {
 		sethudsize(800, 600, s_ScreenSize[2]);
 		setfont("CONFONT");
 		hudmessage(s:"+ 10 Stimpacks"; HUDMSG_TYPEON, 0, CR_White, 600.1, 260.1, 2.0);
@@ -140,9 +141,9 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		//[Samu] *sigh* It's time to refactor deez sheet.
 			//Bullets
 			if(l_Give > 0){
-			 if (getTechFlag(TECH_BOOMRN)) 
+			 if (Tech_IsDone(FP_TECH_ARMORY_BOOMRN)) 
 				giveinventory("Upgrade_Boomshot", 1);   // boomshot rounds
-             if (getTechFlag(TECH_AMMOBP)) 
+             if (Tech_IsDone(FP_TECH_ARMORY_AMMOBP)) 
 				giveinventory("Backpack", 1);           // backpack
 			
 			
@@ -183,10 +184,10 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		// Do Heal and Stock the player, but do not give the latest techs.
 		
 		if (l_Give > 0)        giveinventory("Health", 100);
-        if (l_Give > 0 && getTechFlag(TECH_HEALT2)){
+        if (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH2)){
 				giveinventory("Health", 140);
 		}            
-        else if  (l_Give > 0 && getTechFlag(TECH_HEALT1)) {
+        else if  (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH1)) {
 				giveinventory("Health", 120);
 		}
 		

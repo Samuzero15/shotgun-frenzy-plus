@@ -13,5 +13,5 @@ function void STExecute_RecycleAccepted(int which, int uptype){
 }
 
 function void STExecute_RecycleWeapon(int weapon, int uptype, int play){	
-	RecycleWeapon(weapon, uptype, play);
+	Weapon_Recycle(weapon, uptype, play);
 }

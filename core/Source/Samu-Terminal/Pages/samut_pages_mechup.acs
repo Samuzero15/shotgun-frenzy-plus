@@ -10,11 +10,11 @@ function void MechUpPage_Update(int pageTag){
 		mechpage_vars[49] = 0;
 		//MechUpPage_UpdateStats();
 		
+		MechUpPage_UpdateComps(0);
 		MechUpPage_UpdateComps(1);
 		MechUpPage_UpdateComps(2);
 		MechUpPage_UpdateComps(3);
 		MechUpPage_UpdateComps(4);
-		MechUpPage_UpdateComps(5);
 	
 		if(!CheckInventory("Mech_State")){
 			Label_setText(mechpage_vars[3], strparam(s:"Cost: ", d:checkInventory("Mech_Buy"), s:" $") );
@@ -81,30 +81,26 @@ function void MechUpPage_Init(int pageTag){
 	
 	//MechUpPage_InitStats();
 	
-	MechUpPage_AddComps(1, 1);
-	MechUpPage_AddComps(2, 2);
-	MechUpPage_AddComps(3, 3);
-	MechUpPage_AddComps(4, 4);
-	MechUpPage_AddComps(5, 5);
+	MechUpPage_AddComps(0, 1);
+	MechUpPage_AddComps(1, 2);
+	MechUpPage_AddComps(2, 3);
+	MechUpPage_AddComps(3, 4);
+	MechUpPage_AddComps(4, 5);
 	
 }
 
 function void MechUpPage_UpdateStats(void){
-	int naillv = CheckInventory(getMechUpActor(1));
-	int nailmax = getMechUpMax(1);
+	int naillv = CheckInventory(MechUp_GetActor(0));
+	int nailmax = MechUp_GetMax(0);
 	
-	int rocklv = CheckInventory(getMechUpActor(2));
-	int rockmax = getMechUpMax(2);
+	int rocklv = CheckInventory(MechUp_GetActor(1));
+	int rockmax = MechUp_GetMax(1);
 	
-	int armorlv = CheckInventory(getMechUpActor(3));
-	int armormax = getMechUpMax(3);
+	int armorlv = CheckInventory(MechUp_GetActor(2));
+	int armormax = MechUp_GetMax(2);
 	
-	int speedlv = CheckInventory(getMechUpActor(4));
-	int speedmax = getMechUpMax(4);
-	//int naillv = CheckInventory(getMechUpActor(1));
-	//int naillv = CheckInventory(getMechUpActor(1));
-	//int naillv = CheckInventory(getMechUpActor(1));
-	//int naillv = CheckInventory(getMechUpActor(1));
+	int speedlv = CheckInventory(MechUp_GetActor(3));
+	int speedmax = MechUp_GetMax(3);
 	
 	bool pursached = CheckInventory("Mech_State");
 	Label_setShow(mechpage_vars[8], pursached);
@@ -169,11 +165,11 @@ function void MechUpPage_InitStats(void){
 function void MechUpPage_UpdateComps(int upgrade){
 	bool pursached = CheckInventory("Mech_State");
 	
-	str name = getMechUpName(upgrade);
-	str desc = getMechUpDesc(upgrade);
-	str actor = getMechUpActor(upgrade);
-	int maxup = getMechUpMax(upgrade);
-	int price = getMechUpPrice(upgrade);
+	str name = MechUp_GetName(upgrade);
+	str desc = MechUp_GetDesc(upgrade);
+	str actor = MechUp_GetActor(upgrade);
+	int maxup = MechUp_GetMax(upgrade);
+	int price = MechUp_GetPrice(upgrade);
 	
 	bool showit = pursached && CheckInventory(actor) <= maxup;
 	
@@ -215,11 +211,11 @@ function void MechUpPage_AddComps(int upgrade,int cell){
 
 	int i;
 	
-	str name = getMechUpName(upgrade);
-	str desc = getMechUpDesc(upgrade);
-	str actor = getMechUpActor(upgrade);
-	int maxup = getMechUpMax(upgrade);
-	str price = getMechUpPrice(upgrade);
+	str name = MechUp_GetName(upgrade);
+	str desc = MechUp_GetDesc(upgrade);
+	str actor = MechUp_GetActor(upgrade);
+	int maxup = MechUp_GetMax(upgrade);
+	str price = MechUp_GetPrice(upgrade);
 	
 	
 	i = ImgButton_AddCard(mechpage_vars[1], cell, 32.0, 32.0);

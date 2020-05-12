@@ -76,6 +76,8 @@ function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	
 	i = Label_Dup(0.0, 0.0); 
 	Label_setText	(i,strparam(s:"+ ",d:stat[2],s:" $"));
+	Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+	Label_setFont	(i, "confont");
 	RcyWpnPage_SaveGroup(wpn, 3, i);
 	
 	i = StrButton_Add	(0,0, "Recycle"); 
@@ -144,7 +146,7 @@ function void RcyWpnPage_UpdateOptions(int wpn){
 		
 		Label_setPosToGridOff(comp1, rcywpn_vars[0], toppy, col, 0.0, 4.0);
 		Label_setPosToGridOff(comp2, rcywpn_vars[0], toppy, col, 0.0, 20.0);
-		Label_setPosToGridOff(comp3, rcywpn_vars[0], toppy, col, 204.0, 20.0);
+		Label_setPosToGridOff(comp3, rcywpn_vars[0], toppy, col, 204.0, 24.0);
 		StrButton_setPosToGridOff(comp4, rcywpn_vars[0], toppy, col, 150.0, -2.0);
 		
 		Label_setShow(comp1, true);
