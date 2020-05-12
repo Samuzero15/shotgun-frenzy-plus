@@ -33,6 +33,14 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (10 - 11 / 5 / 2020)
+	*) Re-coding terminals to apply new functions and make them more maintainable.
+	+) Added fl_techs.acs for more easier manuvering with the researches.
+	*) Configured terminals to let it work with fl_techs.acs and the buildings.
+	*) Defined all data from the command buttons for the next terminal, the Commander Terminal!
+	// After this terminal and some more touch ups, A new relase will be created, wait for it!
+	*) Modified the comander terminal to let the syncing work.
+	
 -) (7 - 8 - 9 / 5 / 2020)
 	*) Heat indicator, and shell indicator (for repeater and buckshot guns) are properly displayed in the status bar.
 	*) Some more fixups on the Samu terminal.
