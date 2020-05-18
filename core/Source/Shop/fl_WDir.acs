@@ -9,6 +9,8 @@
 // For the prices, take a look at fl_price.
 
 #library "fl_WDir"
+#import "f_intDB.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
@@ -404,6 +406,7 @@ function int WPTrack_GetScore(void){
 		if(PlayerInGame(i)) players++;
 		else break;
 	}
+	if(!players) return 0;
 	return score / players;
 }
 
@@ -411,10 +414,12 @@ function int UpTrack_GetScore(void){
 	int i;
 	int score = fp_UpTrack;
 	int players = 0;
+	
 	for(i = 0; i < 64; i++){
 		if(PlayerInGame(i)) players++;
 		else break;
 	}
+	if(!players) return 0;
 	return score / players;
 }
 

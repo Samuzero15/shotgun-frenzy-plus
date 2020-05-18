@@ -1,6 +1,4 @@
 
-//#import "f_IntDB.acs"
-#import "fl_techs.acs"
 
 #include "upgrade_list.acs"
 #include "upgrade_funs.acs"
@@ -63,6 +61,10 @@ function void sf_RemoveCredits(int howMuch, int who){
 
 function void sf_AddTeamCredits(int howMuch){
 	c_Credits += howMuch;
+}
+
+function void sf_RemoveTeamCredits(int howMuch){
+	c_Credits -= howMuch;
 }
 
 function bool Human(void){

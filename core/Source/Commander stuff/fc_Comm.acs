@@ -28,6 +28,11 @@ int scriptpulse;
 // money bag temp disable
 script 966 (void)
 {
+	if(Thingcount(T_NONE, 5550)) {
+		Thing_Remove(5550);
+		c_credits += 3000;
+	}
+	Thing_ChangeTID(ActivatorTID(), 5550);
     allow_moneybag = 0;
     delay(35 * 5);
     allow_moneybag = 1;
@@ -149,8 +154,8 @@ script 130 (void)
         terminate;
     }
     
-    ACS_Execute(133,0,0,0,0); //Script life check
-    ACS_Execute(968,0,0,0,0); //mouse pointer
+    //ACS_Execute(133,0,0,0,0); //Script life check
+    //ACS_Execute(968,0,0,0,0); //mouse pointer
     
     // return whos commanding
     c_Commander = playernumber();
@@ -171,17 +176,20 @@ script 130 (void)
     fadeto(0, 0, 0, 0.0, 1.0);
     
     // prepare the pointer
-    Cursor_Info[CURSOR_X] = 320;
-    Cursor_Info[CURSOR_Y] = 240;
+    //Cursor_Info[CURSOR_X] = 320;
+    //Cursor_Info[CURSOR_Y] = 240;
     
     // call clickscanner
-    acs_execute(131, 0, 0, 0, 0);
+    //acs_execute(131, 0, 0, 0, 0);
     
     localambientsound("cv/welcomecommander", 125);
     
     // load up demon count per sector
-    acs_execute(969, 0, 0, 0, 0);
+    //acs_execute(969, 0, 0, 0, 0);
     
+	//[Samu] A Commander terminal which it work more efficiently, and hopefuly more easier to mantain.
+	ACS_NamedExecute("SamuTerminal", 0, 10);
+	
     // begin commanding
     while(c_Commander == playernumber() && playeringame(c_Commander) && getactorproperty(0, APROP_Health) > 0)
     {
@@ -215,7 +223,8 @@ script 130 (void)
             //if (CheckActorCeilingTexture(130, "F_SKY1"))      setactorpitch(130, 0.085);
             //else                                            setactorpitch(130, 0.04);
             setactorpitch(130, 0.085);
-            
+			
+            /*
             // CLIENTSIDE -- load hudmessage
             acs_executealways(601, 0, 1, 0, 0);
             
@@ -239,16 +248,19 @@ script 130 (void)
             
             // display buttons
             fc_CommandButtons_Call();
+			*/
         }
         
         delay(1);
     }
     
     //Normal exit - kill life check
-    ACS_Terminate(133,0);
+    //ACS_Terminate(133,0);
 	
 	//Unblock player
 	Thing_Remove(3568);
+	
+	/*
     
     // kill demon count per sector
     acs_terminate(969, 0);
@@ -268,8 +280,9 @@ script 130 (void)
         {
             thing_destroy(activatortid(), 1);
         }
-        
+       */
         // disable commanding from player
+		//[Samu] Just in case...
         c_Commander = 99;
         
         f_TipShow("PLAYER", "", "Has left the command chair...", 10);
@@ -283,7 +296,7 @@ script 130 (void)
         
         // unfreeze the player
         delay(10);
-        setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
+        //setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
     //}
     // if not
     /*else

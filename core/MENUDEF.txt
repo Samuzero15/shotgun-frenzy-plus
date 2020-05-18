@@ -38,6 +38,7 @@ OptionMenu "SFPlusOptions"{
 	StaticText "Game Options", 1
 	StaticText "All options that you need for your server.", 1
 	StaticText ""
+	Slider "Game Length (Mins)", "sf_gamelength", 5, 30, 10, 0
 	Slider "Starting Player Cash *", "sf_startcash", 1000, 20000, 500, 0
 	Slider "Starting Team Cash *", "sf_teamcash", 500, 20000, 500, 0
 	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"

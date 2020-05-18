@@ -11,6 +11,7 @@
 #import "f_IntDB.acs"
 #import "fl_Price.acs"
 #import "f_Tip.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
@@ -433,6 +434,60 @@ function void c_NewButton_Refresh (void)
     }
 }
 
+script "SFPlus_CMD_CallBuildScript" (int which){
+	fc_NewButton_Event (2, which, 0, 0,0,0,0,0);
+}
+
+script "SFPlus_CMD_CallUpgradeScript" (int which){
+	fc_NewButton_Event (3, which, 0, 0,0,0,0,0);
+}
+
+script "SFPlus_CMD_CallMarkScript" (int which){
+	fc_NewButton_Event (5, which, 0, 0,0,0,0,0);
+}
+
+script "SFPlus_CMD_CallSpawnScript" (int which){
+	str thing;
+	int priceid; // Something that is unneeded.
+	
+	if(which == 99){ // Money bag Execption.
+		fc_NewButton_Event (9, 0, 0, 0,0,0,0,0);
+	}else if (which > 0){
+		switch(which){
+			case 10: //Ammo dispenser
+			priceid = 32; 
+			thing = "Spawn_AmmoDispenser";
+			break;
+			case 11:  //Health dispenser
+			priceid = 33; 
+			thing = "Spawn_HealthDispenser";
+			break;
+			case 1: //Bullet turret
+			priceid = 40; 
+			thing = "Spawn_TurretBullet";
+			break;
+			case 2: //Rocket turret
+			priceid = 41; 
+			thing = "Spawn_TurretRocket";
+			break;
+			case 3: //Plasma turret
+			priceid = 42; 
+			thing = "Spawn_TurretPlasma";
+			break;
+			case 4: //Tesla Coil
+			priceid = 46; 
+			thing = "Spawn_TurretTesla";
+			break;
+			case 5: //Flame turret
+			priceid = 47;
+			thing = "Spawn_TurretFlame";
+			break;
+		}
+		if(priceid != 0)
+			fc_NewButton_Event (4, 0, 0, 0,0,0,thing,priceid);
+	}
+}
+
 // events system
 function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3, str l_Name, str l_Image, str l_EventString, int l_PriceID)
 {
@@ -600,7 +655,8 @@ function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2,
 			case 66: 
 				//[Samu] Not used. Probably was there to give the players a rage rune for a short time.
 				//SetTechFlag(TECH_HEALT1);
-				f_TipShow ("CM66", "Pulse Rage", "Researched!", 1);
+				Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
+				f_TipShow ("CM66", "Core Pulses", "Researched!", 1);
 			break;
 			
 			case 71:
@@ -649,6 +705,10 @@ function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2,
             setactorstate(130, l_EventString, 0);
             
             // add desired message
+			
+			//[Samu] for lazyness sake, and for controlling turret - dispenser spawning.
+			if(!allow_turret()) return;
+			
             if(l_PriceID >= 40 && l_PriceID <= 47 || l_PriceID == 32 || l_PriceID == 33) {
                 time_turret = Timer();
             } 
@@ -752,6 +812,7 @@ function void fc_NewButton_Event (int l_Event, int l_EventArg1, int l_EventArg2,
     // money bag spawn
     if (l_Event == 9)
     {
+		if(!allow_moneybag) return;
         // add object
         setactorstate(130, "Spawn_MoneyBag", 0);
         

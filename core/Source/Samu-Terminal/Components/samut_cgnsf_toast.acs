@@ -34,6 +34,10 @@ function void setToastRect(int rect){
 	comp_rects_once[STCOMP_TOAST] = rect;
 }
 
+function void Toast_setPosition(int x, int y){
+	SetRectPosition(getToastRect(), x, y);
+}
+
 function void setToastString(str string){ 
 	SetRectUserData(getToastRect(), ST_CPROP1, string);
 }

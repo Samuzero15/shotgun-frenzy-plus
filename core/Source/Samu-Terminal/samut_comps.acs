@@ -26,7 +26,7 @@ function void SamuTerm_InitComps(void){
 	Prompt_Initialize();
 	
 	if(pagetags[STTAGS_ALPHA] != 10) Components_Add();
-
+	else Toast_SetPosition(320.0, 150.0);
 	//Custom shiet.
 	SamuTerm_InitPages();
 }

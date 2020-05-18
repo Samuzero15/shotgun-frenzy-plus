@@ -3,12 +3,86 @@ function void StExecute_CMDBtnDesc(int lbl_title, int lbl_desc, int btndata){
 	str name = CMDBut_getName(btndata);
 	str desc = CMDBut_getDesc(btndata);
 	int price = CMDBut_getPrice(btndata);
+	bool acess = CMDBut_getAccessCond(btndata);
 	//log(s:name);
-	if(price > 0) name = strParam(s:name, s:" - ", d:price, s:" T.C.");
+	if(price > 0) name = strParam(s:name, s:" - ", d:price, s:" $.");
+	if(!acess) name = strParam(s:name, s:" - Locked.");
+	
+	if(!CMDBut_getAccessCond(btndata)){
+		Label_SetText(lbl_desc, CMDBut_getNoAccessReason(btndata));
+		Label_setColor(lbl_title, CR_BRICK);
+	}else{
+		Label_SetText(lbl_desc, desc);
+		if(price != 0)
+			Label_setColor(lbl_title, cond(getTeamCredits() >= price, CR_YELLOW, CR_ORANGE));
+		else Label_setColor(lbl_title, CR_GREEN);
+	}
+	
 	Label_SetText(lbl_title, name);
-	Label_SetText(lbl_desc, desc);
+	
 }
 
-function void StExecute_CMDBuild(int which){
+function void StExecute_CMDBuild(int which, int btndata){
+	int cost = CMDBut_getPrice(btndata);
+	
+	if(CMDBut_GetAccessCond(btndata))
+		if(getTeamCredits() >= cost){
+			sf_RemoveTeamCredits(cost);
+			ACS_NamedExecute("SFPlus_CMD_CallBuildScript", 0, which);
+		}else Toaster_ShowToast("Insufficient funds to start building, Access Denied.", CR_RED);
+	else{
+		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+	}
+	
+}
 
+function void StExecute_CMDUpgrade(int which, int btndata){
+	int cost = CMDBut_getPrice(btndata);
+	
+	if(CMDBut_GetAccessCond(btndata))
+		if(getTeamCredits() >= cost){
+			sf_RemoveTeamCredits(cost);
+			ACS_NamedExecute("SFPlus_CMD_CallUpgradeScript", 0, which);
+		}else Toaster_ShowToast("Insufficient funds to start researching, Access Denied!.", CR_RED);
+	else{
+		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+	}
+	
+	
+}
+
+function void StExecute_CMDSupport_Mark(int which){
+	ACS_NamedExecute("SFPlus_CMD_CallMarkScript", 0, which);
+}
+
+function void StExecute_CMDSpawn(int which, int btndata){
+	int cost = CMDBut_getPrice(btndata);
+
+	if(CMDBut_GetAccessCond(btndata)){
+		if(which == 99){ 
+			ACS_NamedExecute("SFPlus_CMD_CallSpawnScript", 0, which); 
+			return; 
+		}
+		if(getTeamCredits() >= cost){
+			sf_RemoveTeamCredits(cost);
+			ACS_NamedExecute("SFPlus_CMD_CallSpawnScript", 0, which);
+		}else Toaster_ShowToast("Insufficient funds for deploying, Access Denied!.", CR_RED);
+	}else{
+		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+	}
+}
+
+function void STExecute_CMDGotToCat(int tagdest, int btndata){
+
+	if(!CMDBut_GetAccessCond(btndata))
+		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+	else{
+		pagetags[STTAGS_LAST] = pagetags[STTAGS_NOW];
+		pagetags[STTAGS_NOW] = tagdest;
+	}
+}
+
+function void STExecute_CMDExit(void){
+	c_Commander = 99;
+	SamuTerm_Execute(STEXE_CLOSE, 0,0,0);
 }

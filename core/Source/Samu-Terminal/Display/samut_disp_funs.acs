@@ -72,18 +72,6 @@ function void HudSetToastSettings(int color){
 	HudSetAlignY(HUD_ALIGN_Center);
 }
 
-function void SamuTerm_GreetPlayer(int player){
-	str prefix = "Welcome ";
-	str pname = PlayerName(player);
-	str sufix = " to the terminal.";
-	str msg = StrAdd(StrAdd(prefix, pname),sufix);
-	Toaster_ShowToast(msg, CR_Green);
-}
-
-function void SamuTerm_DimissPlayer(int player){
-	str prefix = "Bring me a demon teeth ";
-	str pname = PlayerName(player);
-	str sufix = " when you come back.";
-	str msg = StrAdd(StrAdd(prefix, pname),sufix);
+function void SamuTerm_Say(str msg){
 	Toaster_ShowToast(msg, CR_Green);
 }

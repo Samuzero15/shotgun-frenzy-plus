@@ -6,11 +6,13 @@
 #define ACSUTILS_RECTLIB_USERVARS 10 // user defined
 
 //////SF Stuff////////
+#import "f_IntDB.acs"
 #import "fl_Price.acs"
 #import "fl_WDir.acs" // HEHEh, BOI.
 #import "fl_IDir.acs" // HEHEh, BOI.
 #import "fl_MUpDir.acs" // HEHEh, BOI.
 #import "fp_comcmd.acs"
+#import "fl_techs.acs"
 
 #include "acsutils.acs"
 #include "samu_tools.acs"
@@ -38,11 +40,8 @@ Script "SamuTerminal" (int homeTag){
 
 script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	//Here is where the magic begins!
-	if(IsClient() && consolePlayerNumber() == playerNumber()){
-	
-	pagetags[STTAGS_ALPHA] = alphatag;
-	if(pagetags[STTAGS_ALPHA] == 20) SamuTerm_SetBack("BGR");
-	else if(pagetags[STTAGS_ALPHA] == 10) SamuTerm_SetBack("");
+	int play = playerNumber();
+	if(IsClient() && consolePlayerNumber() == play && PlayerInGame(PlayerNumber())){
 	
 	//Sync it with client.
 	// To Sync the prices.
@@ -53,9 +52,36 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	SFPlus_DefineCMDButtons();
 	SFPlus_DefineMechUps();
 	
+		
+	str himsg;
+	str byemsg;
+	
+	pagetags[STTAGS_ALPHA] = alphatag;
+	
+	switch(pagetags[STTAGS_ALPHA]){
+		case 20:
+			himsg = strparam(s:"Health terminal initiated, any powerup you need ", s:Playername(play), s:"?");
+			byemsg = strparam(s:"Stay healthy ", s:Playername(play), s:". Don't get shot.");
+			SamuTerm_SetBack("BGR");
+		break;
+	
+		case 10:
+			himsg = strparam(s:"Commander ", s:Playername(play), s:", we're awaiting your orders.");
+			byemsg = strparam(s:"Stay safe, Commander ", s:Playername(play), s:".");
+			SamuTerm_SetBack("");
+			//Toast_SetPosition(320.0, 380.0);
+		break;
+		case 0:
+			himsg = strparam(s:"Ammo terminal initiated, need something ", s:Playername(play), s:"?");
+			byemsg = strparam(s:"Remember, shoot to kill ", s:Playername(play), s:".");
+		break;
+		default:
+			himsg = strparam(s:"Welcome ", s:Playername(play),s:" to the terminal.");
+			byemsg = strparam(s:"See you soon ", s:Playername(play),s:".");
+	}
 	
 	SamuTerm_InitComps();
-	SamuTerm_GreetPlayer(playerNumber());
+	SamuTerm_Say(himsg);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
 	PlaySound(1000+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
 		while(TerminalInUse())
@@ -70,7 +96,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	CenterCursor();
 	SamuTerm_ResetBack();
 	if(exitResult != -1){
-		SamuTerm_DimissPlayer(playerNumber());
+		SamuTerm_Say(byemsg);
 		LocalAmbientSound("SamuTerm/Back", 127);
 	}
 	StopSound(0,CHAN_BODY); 
@@ -83,9 +109,9 @@ Script "SamuTerm_VariableSync" ENTER{
 	while(1){
 		SetInventory("p_Money", p_credits[playernumber()]);
 		SetInventory("p_UpPoint", p_Exp_points[playernumber()]);
+		SetInventory("p_team_credits", c_credits);
 		
 		SyncAllMechaPrices();
-		SyncAllCMDPrices();
 		
 		delay(1);
 	}

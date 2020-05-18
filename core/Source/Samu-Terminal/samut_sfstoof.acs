@@ -1,21 +1,8 @@
 
-#include "samut_sfstrings.acs"
-
-#Libdefine NWpacks 8
 
 function void SyncAllMechaPrices(void){
 	SetInventory("mech_BUY", f_Price[52]);
 	SetInventory("mech_state", p_TankSlot[PlayerNumber()]);
-	
-}
-
-function void SyncAllCmdPrices(void){
-	SetInventory("price_build_GENLAB", f_Price[1]);
-	SetInventory("price_build_ARMORY", f_Price[2]);
-	SetInventory("price_build_MECHFA", f_Price[3]);
-	SetInventory("price_build_REFINE", f_Price[4]);
-	SetInventory("price_build_MARCOM", f_Price[5]);
-	SetInventory("price_build_NUKESY", f_Price[6]);
 }
 
 function int getPlayCredits(void){
@@ -27,3 +14,6 @@ function int getPlayUPts(void){
 	return res;
 }
 
+Function int getTeamCredits(void){
+	return CheckInventory("p_team_credits");
+}

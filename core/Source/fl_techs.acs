@@ -50,14 +50,16 @@ function void SFPlus_DefineTechs(void){
 }
 
 Script "SFPlus_SyncTechs" ENTER{
-	delay(1);
 	while(1){
-		
 		SetInventory("tech_doneflags", fp_techflags[0]);
 		SetInventory("tech_lockflags", fp_techflags[1]);
 		SetInventory("tech_loadflags", fp_techflags[2]);
 		delay(1);
 	}
+}
+
+function bool Tech_IsActivatedC(int flag){
+	return Tech_IsDoneC(flag) || Tech_IsLockC(flag);
 }
 
 function bool Tech_IsDoneC(int flag){

@@ -6,6 +6,7 @@ Actor SamuTInv_ActionKey : Integer {}
 
 Actor p_Money : Integer {}
 Actor p_UpPoint : Integer {}
+Actor p_team_credits : Integer {}
 
 Actor p_CreditPrice : Integer {}
 Actor p_UpPointPrice : Integer {}

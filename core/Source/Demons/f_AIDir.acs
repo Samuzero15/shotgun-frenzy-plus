@@ -54,7 +54,7 @@ function int f_AIDir_Check (void)
 	l_Score += WPTrack_GetScore(); 
 	
 	//[Samu] The more and expensier upgrades, the harder it gets!
-	l_Score += WPTrack_GetScore();
+	l_Score += UPTrack_GetScore();
     
 	l_Score -= aiSubtract;
 	if (l_Score < 5){ l_Score = 30; }

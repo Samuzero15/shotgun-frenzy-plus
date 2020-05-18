@@ -84,8 +84,8 @@ ACTOR MoneyBag : CustomInventory 30006
                 MBAG A 1
                 MBAG A 3 acs_execute(966, 0, 0, 0, 0)
         Static:
-		MBAG A 3
-		goto Spawn
+		MBAG A 1
+		loop
 	Pickup:
 		MBAG A 11 ACS_ExecuteAlways(855, 0, 3000, 0, 0)
 		Stop

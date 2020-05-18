@@ -22,14 +22,15 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_UPG0PAGEDESC: StExecute_Upg0PageDesc(arg1, arg2, arg3); break;
 		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
 		
-		
-		case STEXE_CMDDEPLOY: 
 		case STEXE_CMDSUPPORT: 
-		case STEXE_CMDRESEARCH: 
-		case STEXE_CMDBUILD: 
-			Toaster_ShowToast("You still need to implement this, Samu...",CR_RED);
-		break;
+			Toaster_ShowToast("You still need to implement this, Samu...",CR_RED); break;
+		case STEXE_CMDDEPLOY: StExecute_CMDSpawn(arg1, arg2); break;
+		case STEXE_CMDSUPPORT_MARK: StExecute_CMDSupport_Mark(arg1); break;
+		case STEXE_CMDEXIT: StExecute_CMDExit(); break;
+		case STEXE_CMDRESEARCH: StExecute_CMDUpgrade(arg1, arg2); break;
+		case STEXE_CMDBUILD: StExecute_CMDBuild(arg1, arg2); break;
 		case STEXE_CMDBTNDESC: StExecute_CMDBtnDesc(arg1, arg2, arg3); break;
+		case STEXE_CMDCAT: STExecute_CMDGotToCat(arg1, arg2); break;
 		
 		
 		case STEXE_BUYMECHTANK: StExecute_BuyMechTank(); break;
@@ -37,7 +38,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_UPGMECHTANK: StExecute_UpgradeMech(arg1); break;
 		case STEXE_GETMECHUPG: StExecute_GetMechUpgrade(arg1); break;
 		case STEXE_EnterMECHTANK: StExecute_EnterMechTank(); break;
-	
+		
 		case STEXE_POWBUY: StExecute_BuyPowerup(arg1); break;
 	
 		case STEXE_ITEMBUY: StExecute_BuyItem(arg1); break;

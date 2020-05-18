@@ -6,6 +6,8 @@
 // quick price setup
 
 #library "fl_Price"
+#import "fl_techs.acs"
+#import "f_intDB.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
 #include "samu_tools.acs"
@@ -145,15 +147,15 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_cmd_gl_regenb", 		2000);
 	
 	//Armory researches
-	Prices_add("pr_cmd_ar_armsp1", 		1500);
-	Prices_add("pr_cmd_ar_armsp2", 		2000);
+	Prices_add("pr_cmd_ar_arms1", 		1500);
+	Prices_add("pr_cmd_ar_arms2", 		2000);
 	Prices_add("pr_cmd_ar_boomrn",		2000);
 	Prices_add("pr_cmd_ar_ammobp",	 	1500);
 	Prices_add("pr_cmd_ar_stimpk",	  	1200);
 	
 	//Refinery researches
-	Prices_add("pr_cmd_rf_pumpp1", 		4500);
-	Prices_add("pr_cmd_rf_pumpp2", 		4500);
+	Prices_add("pr_cmd_rf_pump1", 		4500);
+	Prices_add("pr_cmd_rf_pump2", 		4500);
 	
 	//Marine command researches
 	Prices_add("pr_cmd_mc_advsys", 		1200);
