@@ -12,6 +12,7 @@
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
 #import "f_AIDir.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -29,11 +30,7 @@ script 450 (void)
 		
     
     // set techflag
-	SetBuildState(BUILD_NUKESY, BUILT);
 	Tech_Set(FP_TECH_NUKESY, FP_TECHF_DONE);
-    
-    // refresh the commander menu
-    c_NewButton_Refresh();
     
     // constructed message
     f_TipShow ("BUTTON", "Nuclear Silo", "Construction Complete!", 1);

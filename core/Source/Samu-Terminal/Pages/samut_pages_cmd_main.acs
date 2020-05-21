@@ -83,7 +83,7 @@ function void CMDPage_Init(void){
 	CMDPage_MakeLinkButton(i, 1, 4, FP_CB_DEPLOY, 	20);
 	 //Nuke button!
 	 CMDPage_MakeLinkButton(i, 3, 1, FP_CB_NUKE, 22);
-		CMDPage_MakeButton(22, 3, 1, FP_CB_NUKE_IT_NOW, cmd, 0);
+		CMDPage_MakeButton(22, 3, 1, FP_CB_NUKE_IT_NOW, STEXE_CMDSUPPORT, 66);
 		CMDPage_MakeReturnButton(22, m);
 	CMDPAGE_MakeExitButton(i);
 	
@@ -131,13 +131,16 @@ function void CMDPage_Init(void){
 	
 	// Support Button
 	i = 18, p = 19, cmd = STEXE_CMDSUPPORT;
-	CMDPage_MakeButton(i, 1, 1, FP_CB_SUPPORT_AIRSTK_1, cmd, 0);
+	CMDPage_MakeLinkButton(i, 1, 1, FP_CB_SUPPORT_AIRSTK, 25);
+		CMDPage_MakeButton(25, 1, 1, FP_CB_SUPPORT_AIRSTK_1, 	cmd, 1);
+		CMDPage_MakeButton(25, 1, 2, FP_CB_SUPPORT_AIRSTK_2, 	cmd, 2);
+		CMDPage_MakeReturnButton(25, i);
 	CMDPage_MakeLinkButton(i, 1, 2, FP_CB_SUPPORT_CPULSE, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_SUPPORT_CPULSE_HEAL, 		cmd, 0);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_SUPPORT_CPULSE_CRIPPLE, 	cmd, 0);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_SUPPORT_CPULSE_HALT, 		cmd, 0);
+		CMDPage_MakeButton(p, 1, 1, FP_CB_SUPPORT_CPULSE_HEAL, 		cmd, 10);
+		CMDPage_MakeButton(p, 1, 2, FP_CB_SUPPORT_CPULSE_CRIPPLE, 	cmd, 11);
+		CMDPage_MakeButton(p, 1, 3, FP_CB_SUPPORT_CPULSE_HALT, 		cmd, 12);
 		CMDPage_MakeReturnButton(p, i);
-	CMDPage_MakeButton(i, 1, 4, FP_CB_SUPPORT_IONCAN, cmd, 0);
+	CMDPage_MakeButton(i, 1, 4, FP_CB_SUPPORT_IONCAN, cmd, 4);
 	CMDPage_MakeButton(i, 2, 1, FP_CB_SUPPORT_DROPMONEY, 		STEXE_CMDDEPLOY, 99);
 	cmd = STEXE_CMDSUPPORT_MARK;
 	CMDPage_MakeButton(i, 2, 2, FP_CB_SUPPORT_MARK_ATTACK, 		cmd, 1);
@@ -149,16 +152,16 @@ function void CMDPage_Init(void){
 	
 	//Deploy Button.
 	i = 20, p = 21, cmd = STEXE_CMDDEPLOY;
-	CMDPage_MakeButton(i, 1, 1, FP_CB_DEPLOY_MINEFIELD, cmd, 0);
-	CMDPage_MakeButton(i, 1, 2, FP_CB_DEPLOY_DISP_HEALTH, cmd, 0);
-	CMDPage_MakeButton(i, 1, 3, FP_CB_DEPLOY_DISP_AMMO, cmd, 0);
-	CMDPage_MakeButton(i, 1, 4, FP_CB_DEPLOY_BARRIER, cmd, 0);
+	CMDPage_MakeButton(i, 1, 1, FP_CB_DEPLOY_MINEFIELD, cmd, 13);
+	CMDPage_MakeButton(i, 1, 2, FP_CB_DEPLOY_DISP_HEALTH, cmd, 	10);
+	CMDPage_MakeButton(i, 1, 3, FP_CB_DEPLOY_DISP_AMMO, cmd, 	11);
+	CMDPage_MakeButton(i, 1, 4, FP_CB_DEPLOY_BARRIER, cmd, 12);
 	CMDPage_MakeLinkButton(i, 3, 1, FP_CB_DEPLOY_TURRET, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_DEPLOY_TURRET_BULLET, cmd, 0);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_DEPLOY_TURRET_ROCKET, cmd, 0);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_DEPLOY_TURRET_PLASMA, cmd, 0);
-		CMDPage_MakeButton(p, 1, 4, FP_CB_DEPLOY_TURRET_TESCOL, cmd, 0);
-		CMDPage_MakeButton(p, 2, 1, FP_CB_DEPLOY_TURRET_FLAMER, cmd, 0);
+		CMDPage_MakeButton(p, 1, 1, FP_CB_DEPLOY_TURRET_BULLET, cmd, 1);
+		CMDPage_MakeButton(p, 1, 2, FP_CB_DEPLOY_TURRET_ROCKET, cmd, 2);
+		CMDPage_MakeButton(p, 1, 3, FP_CB_DEPLOY_TURRET_PLASMA, cmd, 3);
+		CMDPage_MakeButton(p, 1, 4, FP_CB_DEPLOY_TURRET_TESCOL, cmd, 4);
+		CMDPage_MakeButton(p, 2, 1, FP_CB_DEPLOY_TURRET_FLAMER, cmd, 5);
 		CMDPage_MakeReturnButton(p, i);
 	CMDPage_MakeReturnButton(i, m);
 }
@@ -169,6 +172,11 @@ function void CMDPage_MakeLinkButton(int tag, int row, int col, int btndata, int
 
 function void CMDPage_MakeExitButton(int tag){
 	CMDPage_MakeButton(tag, 3, 4, FP_CB_EXIT, STEXE_CMDEXIT, 0);
+}
+
+function void CMDPage_MakeReturnButtonExe(int tag, int returntag, int exe_return, int exe_exit){
+	CMDPage_MakeButton(tag, 3, 4, FP_CB_RETURN, exe_return, returntag);
+	CMDPage_MakeButton(tag, 3, 3, FP_CB_EXIT, exe_exit, 0);
 }
 
 function void CMDPage_MakeReturnButton(int tag, int returntag){

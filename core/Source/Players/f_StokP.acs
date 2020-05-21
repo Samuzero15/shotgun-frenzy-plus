@@ -19,7 +19,7 @@
 script 106 (int l_Type, int l_Give, int l_DisableFlash)
 {//Healing and stocking pads
     // healing pad
-    if ((l_Type == 1 && isBuilt(BUILD_GENLAB)) || (l_Type == 4))
+    if ((l_Type == 1 && Tech_IsDone(FP_TECH_GENLAB)) || (l_Type == 4))
     {
 	
 	// display what has been researched to the player
@@ -107,7 +107,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
     }
     
     // ammo stock pad
-    if ((l_Type == 2 && isBuilt(BUILD_ARMORY)) || (l_Type == 3))
+    if ((l_Type == 2 && Tech_IsDone(FP_TECH_ARMORY)) || (l_Type == 3))
     {
 	// display what has been researched to the player
 	if (Tech_IsDone(FP_TECH_ARMORY_ARMS2)) {

@@ -77,17 +77,16 @@ ACTOR MoneyBag : CustomInventory 30006
 	+INVENTORY.QUIET //[Samu] Shadap!
 	+SOLID
 	+COUNTITEM
-	
 	States
 	{
 	Spawn:
-                MBAG A 1
-                MBAG A 3 acs_execute(966, 0, 0, 0, 0)
-        Static:
+        MBAG A 1 
+		MBAG A 3 acs_execute(966, 0, 3000, 0, 0)
+     Static:
 		MBAG A 1
 		loop
 	Pickup:
-		MBAG A 11 ACS_ExecuteAlways(855, 0, 3000, 0, 0)
+		MBAG A 11 ACS_Execute(855, 0, 3000, 0, 0)
 		Stop
     }
 }

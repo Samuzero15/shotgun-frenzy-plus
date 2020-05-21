@@ -5,23 +5,23 @@ w) Work in progres
 [w] Re-Make the SBarInfo
 	[d] Do some more touchs in the normal bar.
 	[ ] Rework the full screen bar.
+[w] Get some more voices for Amy (Yeah that computer lady voice.)
 [d] Clientside the Acs HUD.
 [d] Add the powerups on the genetics terminal.
 [d] Re-arrange buildings to fit on their right places.
 [d] Give the weapon priority for all of them.
 [d] Make a small earn display with the confont.
-[w] Get some more voices for Amy (Yeah that computer lady voice.)
+[d] Remake the Terminals
+	[d] Armory
+	[d] Genetics 
+	[d] Mech Factory
+	[d] Commander Terminal
 [ ] Implement the Bank tech.
 [ ] Implement the rune tech.
 [ ] Make the Shell Grenade.
 [ ] Flak-Bombs for the dual shot.
 [ ] Achievemets? just for the sake of it? Heck yes!.
 [ ] Make a Process Queue, a way to control the rushing researches.
-[ ] Remake the Terminals
-	[d] Armory
-	[d] Genetics 
-	[d] Mech Factory
-	[w] Commander Terminal
 [d] De-hard code prices from samu-tools, for easier access.
 [ ] About the Testing map
 	[d] Monster spawner
@@ -33,6 +33,15 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (21 / 05 / 2020)
+	*) Fixups on the commander terminal so it will work in multiplayer.
+	// This time, fixes should be done in the whole project.
+
+-) (12 - 20 / 5 / 2020)
+	*) Commander's terminal is now ready for action! (Fi-friggin-nally!)
+	+) Sandbags are now back! (on the commander's terminal.)
+	// Phew, now its time to test it on mp, and there you go!, the first version is ready to go.
+
 -) (10 - 11 / 5 / 2020)
 	*) Re-coding terminals to apply new functions and make them more maintainable.
 	+) Added fl_techs.acs for more easier manuvering with the researches.

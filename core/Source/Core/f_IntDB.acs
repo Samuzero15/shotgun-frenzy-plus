@@ -110,6 +110,7 @@ int p_MechUpgradeArmor[31];
 // commander
 int c_Commander = 99;
 int c_Credits;
+int c_MoneyDropped;
 int c_Techflag[99];
 int c_ButtonSel;        // selected button
 int c_ButtonCat;        // current category
@@ -126,6 +127,8 @@ int c_KickVotes;
 int c_KickVotesNeeded;
 int c_HaltSpawning;
 int c_ManualClick;
+int c_allow_moneybag = 1;
+int c_allow_turret;
 
 int c_Onscreen_Time = 15.0;
 int c_Onscreen_Type = 1;
@@ -218,77 +221,20 @@ function int getMonsterItem(int class,int nitem){
 	return m_rewards[class][0][nitem];
 }
 
-/*
+#libdefine TURRET_DELAY 70
 
-str m_rewardItems0[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_Soulsphere",
-    "Medikit"
-  };
-int m_rewardChances0[NUM_MONSTER_REWARDS] =
-  { 25, 15, 10, 10 };
+function int allow_turret_C(void)
+{
+    if((checkinventory("c_timer") - checkinventory("c_timer_turret")) >= TURRET_DELAY) return 1;
+    return 0;
+}
 
-str m_rewardItems1[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_Megasphere"
-  };
+function int allow_turret(void)
+{
+    if((Timer() - c_allow_turret) >= TURRET_DELAY) return 1;
+    return 0;
+}
 
-//"Rnd_Inventory_TurretBullet"
-
-int m_rewardChances1[NUM_MONSTER_REWARDS] =
-  { 25, 10, 10, 5 };
-
-str m_rewardItems2[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_Megasphere",
-    "Rnd_Inventory_Soulsphere"
-  };
-//"Rnd_Inventory_TurretBullet",
-
-int m_rewardChances2[NUM_MONSTER_REWARDS] =
-  { 40, 20, 20, 5 };
-
-str m_rewardItems3[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_TurretBullet",
-    "Rnd_Inventory_Soulsphere",
-    "Rnd_Inventory_Berserk2"
-  };
-
-int m_rewardChances3[NUM_MONSTER_REWARDS] =
-  { 50, 30, 20, 10 };
-
-str m_rewardItems4[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_TeslaCoil",
-    "Rnd_Inventory_TurretBullet",
-    "Rnd_Inventory_Berserk2",
-    "Rnd_Inventory_Godsphere"
-  };
-
-int m_rewardChances4[NUM_MONSTER_REWARDS] =
-  { 30, 20, 20, 10 };
-
-str m_rewardItems5[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_Berserk2",
-    "Rnd_Inventory_Megasphere",
-    "Rnd_Inventory_Godsphere",
-    "Rnd_Inventory_AmmoGiver"
-  };
-int m_rewardChances5[NUM_MONSTER_REWARDS] =
-  { 30, 25, 20, 20 };
-
-str m_rewardItems6[NUM_MONSTER_REWARDS] =
-  { 
-    "Rnd_Inventory_Berserk2",
-    "Rnd_Inventory_Megasphere",
-    "Rnd_Inventory_Godsphere",
-    "Rnd_Inventory_AmmoGiver"
-  };
-int m_rewardChances6[NUM_MONSTER_REWARDS] =
-  { 50, 40, 20, 20 };
-*/
 function void readconsole(void)
 {
 	int sf_startcash = GetCVar("sf_startcash");
@@ -297,7 +243,7 @@ function void readconsole(void)
 	int sf_skillmult = GetCVar("sf_skillmult");
 	int sf_adaptivespawn = GetCVar("sf_adaptivespawn");
 	int sf_cacodemons = GetCVar("sf_cacodemons");
-        int sf_percentfast = GetCVar("sf_percentfast");
+    int sf_percentfast = GetCVar("sf_percentfast");
 
 	if (sf_startcash)
 	{

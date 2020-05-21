@@ -10,6 +10,7 @@
 #import "fl_Price.acs"
 #import "f_PMenP.acs"
 #import "samuterm.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -659,11 +660,11 @@ script 155 (int l_Category)
 {
 	
     // terminate if not researched
-    if (l_Category == 10 && !isBuilt(BUILD_GENLAB) || l_Category == 1 && !isBuilt(BUILD_ARMORY) || l_Category == 20 && !isBuilt(BUILD_MECHFA))        terminate;
+    if (l_Category == 10 && !Tech_IsDone(FP_TECH_GENLAB) || l_Category == 1 && !Tech_IsDone(FP_TECH_ARMORY) || l_Category == 20 && !Tech_IsDone(FP_TECH_MECHFA))        terminate;
     
 	// [Samu] Im making an exeption.
 	// If it's the barricade or the teleporting selection, you can execute the old script.
-	if(l_Category == 51 || l_Category == 52) print(d:l_Category, s:" This part is still in progress, sorry for the trouble.");
+	if(l_Category == 51 || l_Category == 52); //print(d:l_Category, s:" This part is still in progress, sorry for the trouble.");
 	else {
 		// [Samu] Otherwise, go to my terminal and do your shiet.
 		print(d:l_Category, s:" Terminal booted.");

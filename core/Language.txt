@@ -1,6 +1,8 @@
 [Enu default]
 PATCH_VERSION = "";
 
+// All weapon descriptions.
+
 // All button descriptions for the commander terminal.
 FP_CBD_BUILD_GENLAB 	=	"Allows advancement on armour and health"
 							"\nProvides healing pads for marines";

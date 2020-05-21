@@ -22,8 +22,8 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_UPG0PAGEDESC: StExecute_Upg0PageDesc(arg1, arg2, arg3); break;
 		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
 		
-		case STEXE_CMDSUPPORT: 
-			Toaster_ShowToast("You still need to implement this, Samu...",CR_RED); break;
+		case STEXE_CMDEXECUTE: StExecute_CMDExecute(arg1, arg2, arg3); break;
+		case STEXE_CMDSUPPORT: StExecute_CMDSupport(arg1, arg2); break;
 		case STEXE_CMDDEPLOY: StExecute_CMDSpawn(arg1, arg2); break;
 		case STEXE_CMDSUPPORT_MARK: StExecute_CMDSupport_Mark(arg1); break;
 		case STEXE_CMDEXIT: StExecute_CMDExit(); break;

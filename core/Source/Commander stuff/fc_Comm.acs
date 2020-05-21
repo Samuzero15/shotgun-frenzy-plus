@@ -26,16 +26,29 @@
 int scriptpulse;
 
 // money bag temp disable
-script 966 (void)
+script 966 (int amount)
 {
+	str msg = strparam(d:amount, s:" credits for the lucky one!");
+	
+	//[Samu] Extended, for wealthier and bigger drops.
+	if(c_credits < amount) terminate;
+	
+
 	if(Thingcount(T_NONE, 5550)) {
+		
 		Thing_Remove(5550);
-		c_credits += 3000;
+		c_credits += c_MoneyDropped;
+		// add desired message
+        f_TipShow ("CM80", "Money Bag Re-Placed!", msg, 2);
+	}else{
+		f_TipShow ("CM80", "Money Bag Dropped!", msg, 2);
 	}
+	c_MoneyDropped = amount;
+	c_credits -= amount;
 	Thing_ChangeTID(ActivatorTID(), 5550);
-    allow_moneybag = 0;
-    delay(35 * 5);
-    allow_moneybag = 1;
+    c_allow_moneybag = 0;
+    delay(35 * 3);
+    c_allow_moneybag = 1;
 }
 
 // ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
@@ -401,154 +414,4 @@ script 880 OPEN
 {
 	delay(35 * 3);
 	c_Credits = c_Startcash;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// COMMANDER HOTKEYS
-script 881 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 1;
-	acs_executealways(601, 0, 2, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 882 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 2;
-	acs_executealways(601, 0, 3, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 883 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 3;
-	acs_executealways(601, 0, 4, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 884 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 4;
-	acs_executealways(601, 0, 5, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 885 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 5;
-	acs_executealways(601, 0, 6, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 886 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 6;
-	acs_executealways(601, 0, 7, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 887 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 7;
-	acs_executealways(601, 0, 8, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 888 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 8;
-	acs_executealways(601, 0, 9, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 889 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 9;
-	acs_executealways(601, 0, 10, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 890 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 10;
-	acs_executealways(601, 0, 11, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 891 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 11;
-	acs_executealways(601, 0, 12, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
-}
-script 892 (void)
-{
-	if (c_Commander == playernumber()){
-	c_ButtonSel = 12;
-	acs_executealways(601, 0, 13, 0, 0);
-	delay(1);
-	fc_CommandButtons_Call();
-	c_ManualClick  = 1;
-	acs_executealways(131, 0, 0, 0, 0);
-	}
 }

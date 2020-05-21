@@ -87,7 +87,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 		while(TerminalInUse())
 		{
 			SamuTerm_Update();
-			SamuTerm_Input(playerNumber());
+			SamuTerm_Input(play);
 			SamuTerm_Display();
 			
 			debug();
@@ -107,10 +107,17 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 
 Script "SamuTerm_VariableSync" ENTER{
 	while(1){
-		SetInventory("p_Money", p_credits[playernumber()]);
-		SetInventory("p_UpPoint", p_Exp_points[playernumber()]);
-		SetInventory("p_team_credits", c_credits);
-		
+		SetInventory("p_Money", 		p_credits[playernumber()]);
+		SetInventory("p_UpPoint", 		p_Exp_points[playernumber()]);
+		SetInventory("p_team_credits", 	c_credits);
+		SetInventory("f_allownuke", 	f_AllowNuke);
+		SetInventory("c_nukelaunched", 	c_NukeLaunched);
+		SetInventory("f_allownuke", 	f_AllowNuke);
+		SetInventory("c_nukelaunched", 	c_NukeLaunched);
+		SetInventory("c_allow_moneybag", 	c_allow_moneybag);
+		SetInventory("c_allow_turret", 		allow_turret_C());
+		SetInventory("c_timer_turret", 		c_allow_turret);
+		SetInventory("c_timer", 		Timer());
 		SyncAllMechaPrices();
 		
 		delay(1);

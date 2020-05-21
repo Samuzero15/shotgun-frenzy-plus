@@ -22,14 +22,42 @@ function void StExecute_CMDBtnDesc(int lbl_title, int lbl_desc, int btndata){
 	
 }
 
+function void STExecute_CMDExecute(int command, int arg, int btndata){
+	str scriptname; 
+	int ignore = 	CMDBut_getIgnorePrice(btndata);
+	int cost = 		CMDBut_getPrice(btndata);
+	
+	if(!ignore)	sf_RemoveTeamCredits(cost);
+	switch(command){
+		case 1: scriptname = "SFPlus_CMD_CallBuildScript"; break;
+		case 2: scriptname = "SFPlus_CMD_CallUpgradeScript"; break;
+		case 3: scriptname = "SFPlus_CMD_CallSpawnScript"; break;
+		case 4: scriptname = "SFPlus_CMD_CallMarkScript"; break;
+		case 5: scriptname = "SFPlus_CMD_CallSupportScript"; break;
+	}
+	ACS_NamedExecute(scriptname, 0, arg);
+}
+
+function void STExecute_CMDExecuteF(int command, int arg){
+	str scriptname; 
+	switch(command){
+		case 1: scriptname = "SFPlus_CMD_CallBuildScript"; break;
+		case 2: scriptname = "SFPlus_CMD_CallUpgradeScript"; break;
+		case 3: scriptname = "SFPlus_CMD_CallSpawnScript"; break;
+		case 4: scriptname = "SFPlus_CMD_CallMarkScript"; break;
+		case 5: scriptname = "SFPlus_CMD_CallSupportScript"; break;
+	}
+	ACS_NamedExecute(scriptname, 0, arg);
+}
+
 function void StExecute_CMDBuild(int which, int btndata){
 	int cost = CMDBut_getPrice(btndata);
 	
-	if(CMDBut_GetAccessCond(btndata))
-		if(getTeamCredits() >= cost){
-			sf_RemoveTeamCredits(cost);
-			ACS_NamedExecute("SFPlus_CMD_CallBuildScript", 0, which);
+	if(CMDBut_GetAccessCond(btndata)){
+		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
+			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 1, which, btndata);
 		}else Toaster_ShowToast("Insufficient funds to start building, Access Denied.", CR_RED);
+	}
 	else{
 		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
 	}
@@ -40,9 +68,8 @@ function void StExecute_CMDUpgrade(int which, int btndata){
 	int cost = CMDBut_getPrice(btndata);
 	
 	if(CMDBut_GetAccessCond(btndata))
-		if(getTeamCredits() >= cost){
-			sf_RemoveTeamCredits(cost);
-			ACS_NamedExecute("SFPlus_CMD_CallUpgradeScript", 0, which);
+		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
+			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 2, which, btndata);
 		}else Toaster_ShowToast("Insufficient funds to start researching, Access Denied!.", CR_RED);
 	else{
 		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
@@ -59,13 +86,22 @@ function void StExecute_CMDSpawn(int which, int btndata){
 	int cost = CMDBut_getPrice(btndata);
 
 	if(CMDBut_GetAccessCond(btndata)){
-		if(which == 99){ 
-			ACS_NamedExecute("SFPlus_CMD_CallSpawnScript", 0, which); 
-			return; 
-		}
-		if(getTeamCredits() >= cost){
-			sf_RemoveTeamCredits(cost);
-			ACS_NamedExecute("SFPlus_CMD_CallSpawnScript", 0, which);
+		//log(d:getTeamCredits(),s:" $, - ", d:cost, s:"$ = ", d:(getTeamCredits() - cost), s:", Ignore price? =" , d:CMDBut_GetIgnorePrice(btndata));
+		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
+			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 3, which, btndata);
+			
+		}else Toaster_ShowToast("Insufficient funds for deploying, Access Denied!.", CR_RED);
+	}else{
+		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+	}
+}
+
+function void StExecute_CMDSupport(int which, int btndata){
+	int cost = CMDBut_getPrice(btndata);
+
+	if(CMDBut_GetAccessCond(btndata)){
+		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
+			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 5, which, btndata);
 		}else Toaster_ShowToast("Insufficient funds for deploying, Access Denied!.", CR_RED);
 	}else{
 		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
@@ -84,5 +120,12 @@ function void STExecute_CMDGotToCat(int tagdest, int btndata){
 
 function void STExecute_CMDExit(void){
 	c_Commander = 99;
+	ACS_NamedExecute("SFPlus_CMD_CallSupportScript", 0, 304); // Remove the left over markers from the air support.
 	SamuTerm_Execute(STEXE_CLOSE, 0,0,0);
+}
+
+function void STExecute_CMDGoToCatExe(int tagdest, int execute){
+	SamuTerm_Execute(execute, 0,0,0);
+	pagetags[STTAGS_LAST] = pagetags[STTAGS_NOW];
+	pagetags[STTAGS_NOW] = tagdest;
 }

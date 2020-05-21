@@ -10,6 +10,7 @@
 #import "f_Tip.acs"
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
@@ -48,11 +49,7 @@ script 250 (void)
     spawnspot("TurretBase", 152, 0, 0);
     
     // set techflag
-    SetBuildState(BUILD_ARMORY, Built);
 	Tech_Set(FP_TECH_ARMORY, FP_TECHF_DONE);
-    
-    // refresh the commander menu
-    c_NewButton_Refresh();
     
     // constructed message
     f_TipShow ("BUTTON", "Armory", "Construction Complete!", 1);

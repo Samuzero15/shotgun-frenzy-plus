@@ -10,6 +10,12 @@ Actor p_team_credits : Integer {}
 
 Actor p_CreditPrice : Integer {}
 Actor p_UpPointPrice : Integer {}
+Actor f_allownuke : Integer {}
+Actor c_nukelaunched : Integer {}
+Actor c_allow_turret : Integer {}
+Actor c_timer_turret : Integer {}
+Actor c_timer : Integer {}
+Actor c_allow_moneybag : Integer {}
 
 Actor g_TechFlags : Integer {}
 

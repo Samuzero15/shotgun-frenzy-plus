@@ -175,6 +175,7 @@ Actor pr_cmd_turret_rail : Integer {}
 Actor pr_cmd_airstrike : Integer {}
 Actor pr_cmd_moneybag : Integer {}
 Actor pr_cmd_minefield : Integer {}
+Actor pr_cmd_sandbags : Integer {}
 Actor pr_cmd_disp_health : Integer {}
 Actor pr_cmd_disp_ammo : Integer {}
 

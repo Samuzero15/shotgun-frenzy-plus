@@ -176,6 +176,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_cmd_airstrike", 		850);
 	Prices_add("pr_cmd_moneybag", 		3000);
 	Prices_add("pr_cmd_minefield", 		750);
+	Prices_add("pr_cmd_sandbags", 		200);
 	
 	//Mech prices
 	Prices_add("pr_mech", 				12000);

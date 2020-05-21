@@ -10,7 +10,7 @@ ACTOR FrenzyPlayer : PlayerPawn
 	damagefactor "MarineFire2", 0.0
 	damagefactor "MarineFire3", 0.0667
 	damagefactor "NoProfitKill", 0.0
-	Species Marines
+	Species "Marines"
 	PainChance 255
 	Player.ColorRange 112, 127
 	Player.DisplayName "Frenzy Player"

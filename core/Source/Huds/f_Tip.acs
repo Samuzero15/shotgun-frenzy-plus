@@ -13,6 +13,8 @@
 #library "f_Tip"
 #import "f_IntDB.acs"
 #import "fl_price.acs"
+#import "fl_techs.acs"
+
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
@@ -362,7 +364,6 @@ script 166 (int l_Position, int l_TipQue_Selection, int l_ID)
     
     // re enable the ion cannon
 	Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
-	SetTechFlag(TECH_IONCAN, true);
 }
 
 // pulse rage charge
@@ -422,7 +423,7 @@ script 168 (int l_Position, int l_TipQue_Selection, int l_ID)
     p_TipQue[l_TipQue_Selection] --;
     
     // re enable the core stuff
-    c_Techflag[66] = 0;
+	Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
 }
 
 // screen flash

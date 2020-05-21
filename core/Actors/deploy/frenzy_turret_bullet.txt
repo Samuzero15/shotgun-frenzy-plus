@@ -86,6 +86,7 @@ ACTOR TurretBullet2_Base
 			TBAS A 100
 			goto Spawn
 		Death:
+			TNT1 A 0 A_KillMaster
 			TBAS A 1 A_FadeOut(0.1)
 			goto Fade
 	}

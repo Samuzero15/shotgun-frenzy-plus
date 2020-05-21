@@ -10,6 +10,7 @@
 #import "f_Tip.acs"
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -42,9 +43,6 @@ script 400 (void)
 	SetBuildState(BUILD_MARCOM, BUILT);
 	Tech_Set(FP_TECH_MARCOM, FP_TECHF_DONE);
     
-    // refresh the commander menu
-    c_NewButton_Refresh();
-    
     // constructed message
     f_TipShow ("BUTTON", "Marine Command", "Construction Complete!", 1);
     
@@ -69,7 +67,7 @@ script 402 (void)
     ambientsound("cv/corepulse", 125);
     
     // disable use of core weapons
-    c_Techflag[66] = 3;
+	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
     
     // 5 second warning
     f_TipShow("INFO", "CORE PULSE", "5 seconds...", 0);
@@ -96,7 +94,7 @@ script 403 (void)
     ambientsound("cv/corepulse", 125);
     
     // disable use of core weapons
-    c_Techflag[66] = 3;
+	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
     
     // 5 second warning
     f_TipShow("INFO", "HALT PULSE", "5 seconds...", 0);
@@ -131,7 +129,7 @@ script 404 (void)
     ambientsound("cv/corepulse", 125);
     
     // disable use of core weapons
-    c_Techflag[66] = 3;
+	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
     
     // 5 second warning
     f_TipShow("INFO", "CORE REVIVE", "5 seconds...", 0);

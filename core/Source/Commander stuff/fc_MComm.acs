@@ -11,6 +11,7 @@
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
 #import "fl_mupDir.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -46,12 +47,7 @@ script 300 (void)
     sector_setcolor(291, 100, 100, 255);
     
     // set techflag
-    //c_Techflag[3] = 1;
-	SetBuildState(BUILD_MECHFA, BUILT);
 	Tech_Set(FP_TECH_MECHFA, FP_TECHF_DONE);
-    
-    // refresh the commander menu
-    c_NewButton_Refresh();
     
     // open heavy vehicle bay
     door_open(155, 50);
@@ -74,25 +70,18 @@ script 301 (void)
 {
     // place marker and change menus
     setactorstate(130, "Spawn_StrikeMarker1", 0);
-    c_ButtonCat = 12;
-    
-    // refresh commanders menu
-    c_NewButton_Refresh();
+	
 }
 
-// strike placement 1
+// strike placement 2
 script 302 (void)
 {
 	SetActivator(0); //Preventing a major disaster
     // disable air attacks
-    c_Techflag[54] = 3;
+	Tech_SetDone(FP_TECH_MARCOM_AIRSUP, FP_TECHF_LOCK);
     
     // place marker and change menus
     setactorstate(130, "Spawn_StrikeMarker2", 0);
-    c_ButtonCat = 3;
-    
-    // refresh commanders menu
-    c_NewButton_Refresh();
     
     delay(1);
     
@@ -148,21 +137,15 @@ script 302 (void)
     delay(35 * 5);
     
     // enable air attacks
-    c_Techflag[54] = 1;
+	Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
 }
 
 // cancel strike
 script 303 (void)
 {
-    // change category for the commander
-    c_ButtonCat = 3;
-    
     // remove striker points
     thing_remove(140);
     thing_remove(141);
-    
-    // refresh commanders menu
-    c_NewButton_Refresh();
 }
 
 // fire ion cannon
@@ -173,12 +156,7 @@ script 304 (void)
     int l_IonCannonTime;
     
     // switch off flags
-    c_Techflag[53] = 4;
-	SetTechFlag(TECH_IONCAN, false);
     Tech_SetDone(FP_TECH_MARCOM_IONCAN, FP_TECHF_LOCK);
-	
-    // refresh commanders menu
-    c_NewButton_Refresh();
     
     // message
     f_TipShow ("CM79", "Ion Cannon", "Firing in 5 seconds...", 2);
@@ -198,15 +176,10 @@ script 304 (void)
     delay(35);
     
     // charge the cannon
-	c_Techflag[53] = 3;
     f_TipShow ("BUTTON", "", "", 17);
-	Tech_SetDone(FP_TECH_MARCOM_IONCAN, FP_TECHF_LOAD);
-	
     
     // refresh commanders menu
     delay(35);
-    c_NewButton_Refresh();
-    
 }
 
 
