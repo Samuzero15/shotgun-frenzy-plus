@@ -32,5 +32,5 @@ Loading order should be:
 
 This mod works on Zandronum 3.1 Alpha for now, (3.0.1 build will be made soon)
 
-#More info in the changelog inside the source code!
+# More info in the changelog inside the source code!
 
