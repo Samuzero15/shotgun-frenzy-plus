@@ -174,7 +174,6 @@ function int sf_GetMonsterClass_Health(void){
 	res = btween(201, 	600, 	hp, 3, res);
 	res = btween(601, 	1000,  	hp, 4, res);
 	res = btween(1001, 	5000, 	hp, 5, res);
-	res = btween(5001, 	9999, 	hp, 6, res);
-	
+	res = btween(5001, 	9999999, 	hp, 6, res);
 	return res;
 }

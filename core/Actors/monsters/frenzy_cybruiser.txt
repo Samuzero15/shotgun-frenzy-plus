@@ -49,11 +49,8 @@ States
        BRUS J 2 A_Pain 
        Goto See 
 	   
-	Death.Ice:
-		goto Super::Death.Ice
-	   
-   Death: 
-	   NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+   MonDeath: 
+	   TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
        BRUS K 6 Bright A_Scream
        BRUS LMN 6 Bright
        BRUS O 6 Bright A_NoBlocking

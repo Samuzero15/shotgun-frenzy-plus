@@ -10,7 +10,6 @@ spawnid 236
     MONSTER 
     +NOGRAVITY
     +FLOAT
-	+MTHRUSPECIES
 	Species "DemonSide"
     SeeSound "batfam/idle"
     PainSound "batfam/pain"

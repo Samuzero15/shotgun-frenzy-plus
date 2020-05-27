@@ -38,3 +38,7 @@ FGS03 FGS03
 $LIMIT Flinger/Grenade/Booms 3
 
 Flinger/Grenade/NerveGas gasHiss
+
+Quadshot/Reload QuadReld
+Quadshot/Fire1  Quad_1Bf
+Quadshot/Fire4	Quad_4BF

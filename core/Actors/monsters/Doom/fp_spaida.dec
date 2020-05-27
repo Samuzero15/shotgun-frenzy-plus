@@ -13,7 +13,6 @@ ACTOR sfArachnotron : FPlus_Monster replaces Arachnotron
 	deathsound "baby/death"
 	activesound "baby/active"
 	+FLOORCLIP
-	+MTHRUSPECIES
 	states
 	{
 		Spawn:
@@ -37,23 +36,15 @@ ACTOR sfArachnotron : FPlus_Monster replaces Arachnotron
 			BSPI I 3 A_Pain
 			goto See+1
 		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-		
-		Death:
+		MonDeath:
 			BSPI J 2
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			BSPI J 20 A_Scream
 			BSPI K 7 A_NoBlocking
 			BSPI LMNO 7
 			BSPI P 0 A_BossDeath
 			BSPI P 1 A_BossDeath
 			goto Super::FadeOut
+			
 		MonRaise:
 			BSPI PONMLKJ 5
 			goto See+1

@@ -19,7 +19,6 @@ ACTOR sfCacodemon : FPlus_Monster replaces Cacodemon
 	
 	+FLOAT
 	+NOGRAVITY
-	+MTHRUSPECIES
 	states
 	{
 		Spawn:
@@ -38,17 +37,8 @@ ACTOR sfCacodemon : FPlus_Monster replaces Cacodemon
 			HEAD F 6
 			goto See
 		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-			
-		Death:
+		MonDeath:
 			HEAD G 2
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			HEAD G 8 
 			HEAD H 8 A_Scream
 			HEAD IJ 8

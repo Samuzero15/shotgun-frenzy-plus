@@ -1,0 +1,63 @@
+
+
+
+ACTOR ZombieFodder : FPlus_monster replaces sfFastZombie 
+{
+  Health 5 // Just a futile resistance
+  GibHealth 25
+  Radius 10
+  Height 56
+  Speed 15
+  PainChance 256
+  Monster
+  +FLOORCLIP +FASTER +FASTMELEE
+  -THRUSPECIES // [Samu] Just to ease you the presure of running while those bastards destroys the core.
+  SeeSound "ZombieFodder/sight"
+  PainSound "ZombieFodder/pain"
+  DeathSound "ZombieFodder/death"
+  MeleeSound "ZombieFodder/melee"
+  ActiveSound "ZombieFodder/active"
+  Obituary "%o joins the zombies."
+  
+  States
+  {
+  Spawn:
+    ZFOD AB 10 A_Look
+    Loop
+  See:
+    ZFOD AABBCCDD 2 A_Chase
+    Loop
+  Melee:
+    ZFOD EF 8 A_FaceTarget
+    ZFOD G 8 A_CustomMeleeAttack(random(1, 2) * 6)
+    Goto See
+  Pain:
+    ZFOD H 2
+    ZFOD H 2 A_Pain
+    Goto See
+  MonDeath:
+    ZFOD I 2 A_Scream
+	NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+	ZFOD I 5 
+    ZFOD J 5 
+    ZFOD K 5 A_NoBlocking
+    ZFOD L 5
+    ZFOD M 1
+	goto Super::FadeOut
+	
+  MonXDeath:
+	ZFOD A 0 A_SpawnItem ("splatEmitter_Lite" , 0, 0, 0, 0)
+	ZFOD N 2 A_XScream
+	NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+	ZFOD N 5 
+	ZFOD O 5 A_NoBlocking
+	ZFOD PQR 5
+	ZFOD S 1
+	goto Super::FadeOut
+
+  MonRaise:
+    ZFOD L 5
+    ZFOD KJI 5
+    Goto See
+  }
+}

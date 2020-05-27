@@ -22,8 +22,6 @@ spawnid 250
   MaxTargetRange 77
 	
   +FLOORCLIP
-  
-  +BLASTED // This thing is easy to kill, reward 1 kill, no credits.
   states
   {
   Spawn:
@@ -41,11 +39,7 @@ spawnid 250
     BMBE A 3 A_Pain
     goto See
 	
-	Death.Ice:
-		goto Super::Death.Ice
-	
-	
-  Death:
+  MonDeath:
     BMBE M 0 bright A_Explode (50, 128)
     BMBE M 5 bright A_PlaySound ("weapons/rocklx")
     BMBE N 5 bright A_XScream

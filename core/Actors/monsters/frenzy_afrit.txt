@@ -65,7 +65,6 @@ ACTOR Afrit : FPlus_Monster 3120
 	+FLOATBOB
 	+FLOAT
 	+DONTHURTSPECIES
-	+MTHRUSPECIES
 	Obituary "%o was scorched by an Afrit"
 	HitObituary "%o found the Afrit too hot to handle."
 	Damagefactor "HellFire", 0.0
@@ -103,7 +102,7 @@ ACTOR Afrit : FPlus_Monster 3120
 		//Goto See +2
 		FRIT EF 6 Bright A_FaceTarget
 		FRIT G 6 Bright A_CustomMissile("Comet", 44, 0, 0)
-		//Goto See +2
+		Goto See +2
 		FRIT E 6 Bright A_FaceTarget
 		FRIT F 6 Bright A_CustomMissile("HellFire", 44, 0, 0)
 		FRIT G 6 Bright A_FaceTarget
@@ -113,10 +112,8 @@ ACTOR Afrit : FPlus_Monster 3120
 		FRIT HH 4 Bright A_Pain
 		Goto See +2
 		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		Death:
+		MonDeath:
+		TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
 		FRIT I 0 Bright A_NoGravity
 		FRIT I 6 Bright A_Scream
 		FRIT J 5 Bright A_NoBlocking

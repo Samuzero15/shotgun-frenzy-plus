@@ -35,20 +35,8 @@ spawnid 240
         DRKI H 2
         DRKI H 2 A_Pain
         Goto See
-		
-	Death.Ice:
-		goto Super::Death.Ice
-
-	XDeath:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-	goto MonXDeath
-
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise
 	
-    Death:
+    MonDeath:
         DRKI I 8
         DRKI J 8 A_Scream
         DRKI K 6

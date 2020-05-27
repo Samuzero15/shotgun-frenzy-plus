@@ -12,7 +12,6 @@ ACTOR sfArchvile : FPlus_Monster replaces Archvile
 	+QUICKTORETALIATE 
 	+FLOORCLIP 
 	+NOTARGET
-	+MTHRUSPECIES
 	SeeSound "vile/sight"
 	PainSound "vile/pain"
 	DeathSound "vile/death"
@@ -44,12 +43,9 @@ ACTOR sfArchvile : FPlus_Monster replaces Archvile
 			VILE Q 5 A_Pain
 			goto See
 		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		Death:
+		MonDeath:
+			TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
 			VILE Q 2
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			VILE R 7 A_Scream
 			VILE S 7 A_NoBlocking
 			VILE TUVWXY 7

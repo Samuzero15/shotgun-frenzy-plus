@@ -14,8 +14,6 @@ MONSTER
 +FLOORCLIP 
 //+BOSS 
 
-+BOSSDEATH // Important, to reward 3 kills and the cash.
-
 +MISSILEEVENMORE
 SeeSound "monster/demsit" 
 AttackSound "spider/attack" 

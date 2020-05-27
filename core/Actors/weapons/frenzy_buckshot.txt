@@ -141,10 +141,8 @@ ACTOR Buckshot : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 3, "Fire3")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 2, "Fire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 1, "Fire1")
-			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
-		Fire1:
-			W5E1 B 0 A_JumpIfInventory("Buckshot_LoadedShells", 1, 1)
 			goto Nope0
+		Fire1:
 			W5E1 B 0 A_TakeInventory("Buckshot_LoadedShells", 1)
 			W5E1 B 3 A_GunFlash
 			W5E1 A 0 
@@ -467,10 +465,8 @@ ACTOR Buckshot_Chamber : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 3, "Fire3")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 2, "Fire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 1, "Fire1")
-			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
-		Fire1:
-			W5E1 B 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 1, 1)
 			goto Nope0
+		Fire1:
 			W5E1 B 0 A_TakeInventory("Buckshot_Chamber_LoadedShells", 1)
 			W5E1 B 3 A_GunFlash
 			W5E1 A 0 

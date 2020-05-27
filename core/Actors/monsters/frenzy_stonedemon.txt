@@ -44,16 +44,8 @@ spawnid 249
     STON H 3 A_Pain
     Goto See
 
-	Death.Ice:
-		goto Super::Death.Ice
-
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise
 	
-  Death:
-	NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+  MonDeath:
     //STON IIIIIIIIII 0 A_CustomMissile("StoneDemonMiniBoulder",16,0,random(0,359),2,random(0,40))
     STON I 5
     STON J 5 A_Scream
@@ -61,7 +53,7 @@ spawnid 249
     STON L 5 A_NoBlocking
     STON MN 5
     STON OP 4
-    STON Q 640
+    STON Q 1
 	goto Super::FadeOut
 	
   MonRaise:

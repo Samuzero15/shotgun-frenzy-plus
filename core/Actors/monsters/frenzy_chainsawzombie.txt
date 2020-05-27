@@ -48,39 +48,14 @@ spawnid 239
         CHAN G 3 A_Pain 
         Goto See 
 		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		XDeath:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-		goto MonXDeath
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-		
-    Death: 
-		NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+    MonDeath: 
         CHAN H 5 
         CHAN I 5 A_Scream 
         CHAN J 5 A_Fall 
         CHAN KLM 5 
         CHAN N 650
 		goto Super::FadeOut
-	/*
-    Death.NoProfitKill: 
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
-NULL A 0 ACS_ExecuteAlways(500, 0, 31, 0)
-        CHAN H 5 
-        CHAN I 5 A_Scream 
-        CHAN J 5 A_Fall 
-        CHAN KLM 5 
-        CHAN N 650
-		DeathFade:
-			CHAN N 2 A_FadeOut(0.1)
-			goto DeathFade
-	*/
+
     MonXDeath:
         CHAN O 5
         CHAN P 5 A_XScream

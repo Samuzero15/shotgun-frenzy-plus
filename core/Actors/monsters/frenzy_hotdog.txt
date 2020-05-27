@@ -12,7 +12,6 @@ Species "DemonSide"
 MONSTER
 +FLOORCLIP
 +FIRERESIST
-+DONTHURTSPECIES
 +FASTER
 +FASTMELEE
 Obituary "%o burned alive by a hellhound."
@@ -60,16 +59,9 @@ States
        HDOG J 2 
        HDOG J 2 A_Pain 
        Goto See 
-	Death.Ice:
-		goto Super::Death.Ice
 
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise
-  
-	 
-   Death: 
+   MonDeath: 
+	   TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
        HDOG K 8 
        HDOG L 8 A_Scream 
        HDOG M 4 
@@ -77,6 +69,7 @@ States
        HDOG OP 4 
        HDOG Q 650
 	goto Super::FadeOut
+	
    MonRaise: 
        HDOG QPONMLK 5 
        Goto See 

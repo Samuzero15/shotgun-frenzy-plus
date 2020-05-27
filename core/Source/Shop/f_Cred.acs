@@ -8,6 +8,7 @@
 
 #import "f_IntDB.acs"
 #import "f_Rank.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -28,7 +29,7 @@ script 105 (int l_AmountSpecial, int l_SplatCombo, int l_NoSoundQue) CLIENTSIDE
 		 NamedRequestScriptPuke("SF_Net_AddCredits", 5, PlayerNumber());
 		 ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, 5, CR_Gold);
 		 NamedRequestScriptPuke("SF_Net_AddTeamCredits", 25);
-		}else p_monsterKilled(1, 0, false);
+		}else p_monsterKilled(1, 0, false, false);
 		}
 	}
 }
@@ -48,7 +49,7 @@ script "SF_Net_AddTeamCredits" (int l_AmountSpecial) NET{
 }
 
 script "SF_Net_KillRewardCredits" (int monster, int splat) NET{
-	p_monsterKilled(monster, splat, false);
+	p_monsterKilled(monster, splat, false, false);
 }
 
 script "SF_SpawnADrone" (void){
@@ -93,13 +94,19 @@ log(s:GetActorClass(debug),
 // mmm: monster killed - give credits and exp
 
 //[Samu] Time for the Clientside rape!
-function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit)
+function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, int enemytype)
 
 {
  //debugTidPointers(ActivatorTID());
  //debugTidPointersStrings(ActivatorTID());
 	//log(s:GetActorClass(0));
 	int l_Amount;
+	int color = CR_GREEN;
+	
+	bool bossmon = enemytype == 2;
+	bool hardmon = enemytype == 1;
+	
+	if(l_splatCombo) color = CR_BRICK;
 	
 	if(monsterClass < 0){
 	monsterClass += 1;
@@ -121,12 +128,22 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit)
 	l_Amount = p_MonsterCredits[monsterClass] + playercount();
 	// increase credit
 	
-	if(l_SplatCombo > 0){
-	l_Amount += l_Amount/2;
-	}
-	//print(d:l_Amount);
+	if(bossmon) l_Amount *= 5;
+	if(hardmon) l_Amount *= 3;
+	
+	if(l_SplatCombo > 0)	l_Amount += l_Amount/2;
 
-	if(!noProfit)sf_AddCredits_S(l_Amount, playerNumber());
+	if(!noProfit){
+		if(bossmon || hardmon){
+			sf_AddCredits_S(l_Amount, playerNumber());
+			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, l_Amount, CR_WHITE, true);
+		}else{
+			sf_AddCredits_S(l_Amount, playerNumber());
+			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,l_Amount, color);
+		}
+	}
+	
+	
  
 	// message 
 	// [Samu] What they where thinking on mixing client and net scripts huh?
@@ -134,20 +151,18 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit)
 	// increase team credits
 
 	sf_AddTeamCredits(l_Amount);
-
-
 	// Processing Phase 1
 
-	if (GetTechFlag(TECH_PUMPP1))	c_Credits += 15;
+	if (Tech_isDone(FP_TECH_REFINE_PUMP1))	c_Credits += 15;
 	
 	// Processing Phase 2
-	if (GetTechFlag(TECH_PUMPP2))	c_Credits += 15;
+	if (Tech_isDone(FP_TECH_REFINE_PUMP2))	c_Credits += 15;
 	GiveInventory("PlayerKilledDemon",1);
 	
 	if(monsterClass < 0){ return; }
 	
 	// increase exp and combo
-	p_Exp[playernumber()] ++;
+	p_Exp[playernumber()] += 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass);
 	p_Combo[playernumber()] ++;
     p_SplatCombo[playernumber()] += l_SplatCombo;
 
@@ -157,7 +172,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit)
   if (p_Exp[playernumber()] > 0)
 
     for (int i = 0; i < NUM_RANKS; i++)
-      if (p_RankExp[i] == p_Exp[playernumber()] && p_RankExp[i] >= p_RankExp[p_Rank[playernumber()]+1])
+      if (p_RankExp[i] <= p_Exp[playernumber()] && p_RankExp[i] >= p_RankExp[p_Rank[playernumber()]+1])
        {
       p_IncreaseRank();
           break;

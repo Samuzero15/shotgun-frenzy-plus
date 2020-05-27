@@ -33,6 +33,18 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (26 / 05 / 2020)
+	*) Some fixups on the monsters decorate, now appyling an almost universal kill script for all monsters.
+	*) Now boss-like monsters (and hard-to-kill ones) can grant more than just 1 kill point!
+	// There is a lot of stuff to fix. And i mean a lot.
+
+-) (24 / 05 / 2020)
+	*) Some adjusts	on the Quadshot, also doing another alternative version of it.
+
+-) (23 / 05 / 2020)
+	+) New Quadshot Sprites! Now as the Cntered SW''s Riot Gun! (thanks Mike12!)
+	*) Now you can alt-fire the quadshot like a slower, but powerful and acurrate buckshot!
+
 -) (21 / 05 / 2020)
 	*) Fixups on the commander terminal so it will work in multiplayer.
 	// This time, fixes should be done in the whole project.

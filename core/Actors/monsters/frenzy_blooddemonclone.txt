@@ -38,17 +38,9 @@ spawnid 237
        SRG2 H 2
        SRG2 H 2 A_Pain
        Goto See
-	Death.Ice:
-			goto Super::Death.Ice
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
 	   
-    Death: 
+    MonDeath: 
        SRG2 I 8 
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
        SRG2 I 8 
        SRG2 I 0 A_FaceTarget
        SRG2 J 0 A_SpawnItemEx("BloodDemonArm", 10, 0, 32, 0, 8, 0, 0, 128)

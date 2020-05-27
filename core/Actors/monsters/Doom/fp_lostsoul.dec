@@ -16,7 +16,6 @@ ACTOR sfLostSoul : FPlus_Monster replaces LostSoul
 	painsound "skull/pain"
 	deathsound "skull/death"
 	activesound "skull/active"
-	+MTHRUSPECIES
 	+FLOAT
 	+NOGRAVITY
 	+NOICEDEATH
@@ -40,9 +39,8 @@ ACTOR sfLostSoul : FPlus_Monster replaces LostSoul
 			SKUL E 3 bright A_Pain
 			goto See
 		
-		Death:
+		MonDeath:
 			SKUL F 2 bright
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			SKUL F 6 bright 
 			SKUL G 6 bright A_Scream
 			SKUL H 6 bright

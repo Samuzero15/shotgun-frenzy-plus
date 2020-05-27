@@ -1,7 +1,15 @@
+
+Actor FPMToken_NoCount : Boolean {} // This enemy is too easy to be paid (grant experienec only.)
+Actor FPMToken_Gibbed : Boolean {} // The enemy became bits.
+Actor FPMToken_Frozen : Boolean {} // The enemy got frozen. (Same as gibbed)
+Actor FPMToken_Hard : Boolean {} // This enemy is hard to kill.
+Actor FPMToken_Boss : Boolean {} // This enemy is a boss (granting a lot of experience and credits.)
+
 Actor FPlus_Monster {
 	health 10
 	species "DemonSide"
 	MONSTER
+	+MTHRUSPECIES
 	
 	states{
 		/*
@@ -22,9 +30,28 @@ Actor FPlus_Monster {
 			// "SkyExplode" flag will trigger on freezing deaths.
 		*/
 		
+		Spawn:
+			TNT1 a 1 A_Log("Something is wrong on Spawn...")
+		Loop
+		
+		See:
+			TNT1 a 1 a_Log("Something is wrong on See...")
+		Loop
+		
 		MonXDeath: // Overridable, if does not have it, go to it's death.
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false) // Flag Token.
-		goto Death
+			"####" "#" 0 
+			"####" "#" 0 A_TakeInventory("FPMToken_Gibbed",1)
+			"####" "#" 0 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
+		goto MonDeath
+		
+		MonDeath:
+			"####" "#" 0 A_TakeInventory("FPMToken_Gibbed",1) // Flag Token.
+			"####" "#" 1 a_Log("Something is wrong on death / xdeath...")
+		goto FadeOut+1
+		
+		MonRaise:
+			"####" "#" 0 a_Log("Something is wrong on monraise...")
+		goto FadeOut+1
 		
 		FadeOut:
 			"####" "#" 650 CanRaise
@@ -33,12 +60,31 @@ Actor FPlus_Monster {
 		goto FadeOut+1
 		
 		Death.Ice:
-			"####" "#" 0 A_ChangeFlag("SKYEXPLODE",true) // Flag Token.
+			"####" "#" 0 A_GiveInventory("FPMToken_Frozen",1) // Flag Token.
 		goto GenericFreezeDeath
+		
+		Death:
+			"####" "#" 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			"####" "#" 0 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
+		stop
+		
+		XDeath:
+			"####" "#" 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			"####" "#" 0 A_GiveInventory("FPMToken_Gibbed",1) 
+			"####" "#" 0 A_Jump(256, "MonXDeath") // Called for all of the inherited classes.
+		stop
+		
+		Raise:
+			"####" "#" 0 A_TakeInventory("FPMToken_Gibbed",1)
+			"####" "#" 0 A_TakeInventory("FPMToken_Frozen",1)
+			"####" "#" 0 A_Jump(256, "MonRaise") // Called for all of the inherited classes.
+		goto MonRaise
+	
 	}
 }
 
 // monsters
+#include "Actors/monsters/frenzy_juggernaut.dec"
 #include "Actors/monsters/Doom/fp_monsters.dec"
 #include "Actors/monsters/frenzy_afrit.txt"
 #include "Actors/monsters/frenzy_annihilator.txt"
@@ -69,3 +115,4 @@ Actor FPlus_Monster {
 #include "Actors/monsters/frenzy_extra.txt"
 
 #include "Actors/monsters/fp_aracnorb.dec"
+#include "Actors/monsters/fp_zfodder.dec"

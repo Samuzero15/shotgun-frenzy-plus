@@ -9,7 +9,6 @@ Height 56
 Mass 450 
 +FloorClip
 +LongMeleeRange
-+DontHurtSpecies
 OBITUARY "%o died from the toxic blood of a bloodfiend."
 HITOBITUARY "%o was eaten by a bloodfiend."
 SEESOUND "monster/sg2sit" 
@@ -41,20 +40,7 @@ states
        SAR2 H 2 A_Pain 
        Goto See 
 	   
-	   Death.Ice:
-			goto Super::Death.Ice
-		
-		XDeath:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-		goto MonXDeath
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-	   
-    Death: 
-	   NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+    MonDeath: 
        SAR2 I 8 
        SAR2 J 8 A_Scream 
        SAR2 K 4 

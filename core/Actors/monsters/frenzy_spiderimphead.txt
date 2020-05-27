@@ -32,10 +32,8 @@ ACTOR SpiderImpHead : FPlus_Monster 25625
     Pain:
         IMHD D 2 A_Pain
         Goto See
-	Death.Ice:
-		goto Super::Death.Ice	
 
-    Death:
+    MonDeath:
         IMHD F 8 A_ScreamAndUnblock
         IMHD G 8
         IMHD H 6

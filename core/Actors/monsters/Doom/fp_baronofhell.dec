@@ -16,7 +16,6 @@ ACTOR sfBaronOfHell : FPlus_Monster replaces BaronOfHell
 	activesound "baron/active"
 	
 	+FLOORCLIP
-	+MTHRUSPECIES
 	states
 	{
 		Spawn:
@@ -35,17 +34,8 @@ ACTOR sfBaronOfHell : FPlus_Monster replaces BaronOfHell
 			BOSS H 2 A_Pain
 			goto See
 		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-		
-		Death:
+		MonDeath:
 			BOSS I 2
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			BOSS I 8 
 			BOSS J 8 A_Scream
 			BOSS K 8

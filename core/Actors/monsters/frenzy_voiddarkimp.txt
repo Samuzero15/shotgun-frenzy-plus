@@ -49,20 +49,7 @@ spawnid 241
         DRKV H 2 A_Pain
         Goto See
 		
-	Death.Ice:
-		goto Super::Death.Ice
-
-	XDeath:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-	goto MonXDeath
-
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise
-		
-    Death:
-		NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+    MonDeath:
         DRKV L 8
         DRKV M 8 A_Scream
         DRKV N 5

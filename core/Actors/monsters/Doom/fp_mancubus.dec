@@ -15,7 +15,6 @@ ACTOR sfFatso : FPlus_Monster replaces Fatso
 	deathsound "fatso/death"
 	activesound "fatso/active"
 	+FLOORCLIP
-	+MTHRUSPECIES
 	states
 	{
 		Spawn:
@@ -37,19 +36,9 @@ ACTOR sfFatso : FPlus_Monster replaces Fatso
 			FATT J 3
 			FATT J 3 A_Pain
 			goto See
-		
-		Death.Ice:
-			goto Super::Death.Ice
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-		
 			
-		Death:
+		MonDeath:
 			FATT K 2
-			NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			FATT K 6 
 			FATT L 6 A_Scream
 			FATT M 6 A_NoBlocking
@@ -57,6 +46,7 @@ ACTOR sfFatso : FPlus_Monster replaces Fatso
 			FATT T 0 A_BossDeath
 			FATT T 1
 			goto Super::FadeOut
+			
 		MonRaise:
 			FATT RQPONMLK 5
 			goto See

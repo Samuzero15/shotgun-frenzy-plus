@@ -12,9 +12,6 @@ PainChance 10
 +FLOORCLIP 
 //+BOSS 
 +MISSILEEVENMORE 
-+MTHRUSPECIES
-
-+BOSSDEATH // Important, to reward 3 kills and the cash.
 
 SeeSound "monster/annsit" 
 PainSound "cyber/pain" 
@@ -57,14 +54,8 @@ States
    Pain: 
        ANNI G 10 A_Pain 
        Goto See 
-   Death: 
-	   NULL A 0
-	   ANNI H 1 ACS_ExecuteAlways(500, 0, 19, 0)
-	   ANNI H 1 ACS_ExecuteAlways(500, 0, 19, 0)
-	   ANNI H 1 ACS_ExecuteAlways(500, 0, 19, 0)
-	   ANNI H 1 ACS_ExecuteAlways(500, 0, 19, 0)
-	   ANNI H 1 ACS_ExecuteAlways(500, 0, 19, 0)
-	   ANNI H 1 ACS_ExecuteAlways(500, 0, 19, 0)
+   MonDeath: 
+	   TNT1 A 0 A_GiveInventory("FPMToken_Boss", 1)
        ANNI H 10 Bright
        ANNI I 10 Bright A_Scream 
        ANNI JKL 10 Bright

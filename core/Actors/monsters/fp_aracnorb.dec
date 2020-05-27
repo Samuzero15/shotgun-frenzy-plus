@@ -44,15 +44,7 @@ actor Aracnorb : FPlus_Monster
     ACNF I 2 A_Pain
     Goto See
 	
-  Death.Ice:
-	goto Super::Death.Ice
-	
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise
-	
-  Death:
+  MonDeath:
     ACNB D 0 A_ChangeFlag("FLOATBOB",0)
     ACNB D 0 A_Scream
 	ACNB D 6 A_Fall
@@ -62,6 +54,7 @@ actor Aracnorb : FPlus_Monster
     ACNB EFG 6
     ACNB H 650
     goto Super::FadeOut
+	
   MonRaise:
     ACNB HGFEDA 8
     ACNB A 0 A_ChangeFlag("FLOATBOB",1)

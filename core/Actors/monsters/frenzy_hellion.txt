@@ -13,7 +13,7 @@ spawnid 207
   painsound "monster/hlnpai"
   deathsound "monster/hlndth"
   activesound "monster/hlnact"
-  +FLOORCLIP  +THRUSPECIES
+  +FLOORCLIP
   states
   {
   Spawn:
@@ -32,22 +32,9 @@ spawnid 207
     HELN M 2
     HELN M 2 A_Pain
     goto See
-
-	Death.Ice:
-		goto Super::Death.Ice
-
-	XDeath:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-	goto MonXDeath
-
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise
 	
-  Death:
+  MonDeath:
     HELN N 6
-	NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
     HELN O 6 A_Scream
     HELN PQR 6
     HELN S 6 A_NoBlocking

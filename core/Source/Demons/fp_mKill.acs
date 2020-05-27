@@ -3,6 +3,7 @@
 
 #import "f_IntDB.acs"
 #import "f_cred.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -10,23 +11,19 @@
 Script "SFPlus_MonsterKill" Kill{
 	delay(1); // Let the monsters set their flags in the decorate.
 	
-	//The actor flags are important.
-	//		IsMonster will count as monster.
-	//		Friendly will exclude the actor from this script
-	//		ExtremeDeath will execute the gibbing scripts
-	//		SkyExplode will execute the frozing scripts.
-	//		BossDeath will execute this 3 times (gaining 3 kills and the triple of it's reward)
-	//		MissileMore will execute this 1 more time.
-	//		MissileEvenMore will execute this 2 more times.
-	//		Blasted will override all execution countings and execute this once, without money.
-				//In case of the easy-going enemies like the ZombieFodder.
-	
-	
 	if(CheckFlag(0, "ISMONSTER") && !CheckFlag(0, "FRIENDLY")){
+	  bool flag_boss = checkinventory("FPMToken_Boss");
+	  bool flag_hard = checkinventory("FPMToken_Hard");
+	  bool flag_frozen = checkinventory("FPMToken_Frozen");
+	  bool flag_gibbed = checkinventory("FPMToken_Gibbed");
+	  bool flag_NoCount = checkinventory("FPMToken_NoCount");
 		 // monster class
 	  int monsterClass = sf_GetMonsterClass_Health();
-	  int splat = CheckFlag(0, "EXTREMEDEATH");
+	  int splat = flag_gibbed;
 	  int noprofit = 0;
+	  int montype;
+	  if	 (flag_boss) montype = 2;
+	  else if(flag_hard) montype = 1;
 
 	 // drop reward item
 	 int howMuch = p_MonsterCredits[monsterClass] + playercount();
@@ -40,12 +37,10 @@ Script "SFPlus_MonsterKill" Kill{
 		//if ((ClassifyActor(0) & ACTOR_Monster)) Print(s:"I am a monster.");
 		//print(d:noProfit);
 	if(noProfit){
-		p_monsterKilled(monsterClass, splat, true);
+		p_monsterKilled(monsterClass, splat, true, false);
 	}else{
-		if(splat > 0){
-			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,howMuch, CR_BRICK);
-			p_monsterKilled(monsterClass, splat, false);
-		}else if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
+		if(splat > 0) p_monsterKilled(monsterClass, splat, false, montype);
+		else if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
 			//[Samu] My try to give you the half of amount if a saw drone kills a monster.
 			//The math is simple.
 			//1/00/00
@@ -60,12 +55,9 @@ Script "SFPlus_MonsterKill" Kill{
 			
 			ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0,howMuch/2, CR_Blue);
 			p_monsterKilled_Drone(monsterClass);
-		}//It's a glitch but... sometimes they can grant you experience.
-		// Not a big deal imo.
-		else{
-		ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,howMuch, CR_GREEN);
-		p_monsterKilled(monsterClass, splat, false);
 		}
+		else 		 p_monsterKilled(monsterClass, splat, false, montype);
+		
 		}
 	}
 }

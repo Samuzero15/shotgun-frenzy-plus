@@ -68,21 +68,9 @@ spawnid 246
     RPZM I 0 A_StopSoundEx("SoundSlot7")
     RPZM I 3 
     RPZM I 3 A_Pain 
-    Goto See 
+    Goto See 	
 
-Death.Ice:
-		goto Super::Death.Ice
-
-	XDeath:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-	goto MonXDeath
-
-	Raise:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-		TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-	goto MonRaise	
-
-  Death:
+  MonDeath:
     RPZM I 4 A_StopSoundEx("SoundSlot7")
     RPZM J 5
     RPZM K 5 A_Scream 
