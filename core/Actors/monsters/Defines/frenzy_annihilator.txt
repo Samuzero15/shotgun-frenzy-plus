@@ -62,7 +62,7 @@ States
        ANNI M 10 Bright A_NoBlocking 
        ANNI NO 10 Bright
        ANNI P 30 A_BossDeath  
-       goto Super::FadeOut
+       goto Super::FadeOut.NoRaise
    } 
 }
 

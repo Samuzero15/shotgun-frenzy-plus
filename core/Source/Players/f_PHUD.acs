@@ -81,7 +81,7 @@ script 616 (void)
 // new research available message
 script 617 (int l_Structure)
 {
-			sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+			sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 			setfont("NEWR");
 			hudmessagebold(s:"a"; 1, 180, CR_Red, 0.1, 0.1, 3.0);
 			setfont("BIGFONT");

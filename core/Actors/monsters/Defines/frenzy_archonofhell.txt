@@ -86,7 +86,7 @@ States
        BOS4 X 6 Bright A_CustomMissile("ArchonSoul",86,0,0,2,90)
        BOS4 YZ 6 Bright 
        BOS4 [ 6 Bright A_Fall 
-       goto Super::FadeOut
+       goto Super::FadeOut.NoRaise
      } 
 }
 

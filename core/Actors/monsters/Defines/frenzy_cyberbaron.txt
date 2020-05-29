@@ -48,12 +48,8 @@ spawnid 204
     CBOS H 2
     CBOS H 2 A_Pain
     goto See
-	
-	Death.Ice:
-			goto Super::Death.Ice
-	
+
   MonDeath:
-	TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
     CBOS I 8
     CBOS J 8 A_Scream
     CBOS K 8 bright A_Playsound("world/barrelx")
@@ -61,7 +57,7 @@ spawnid 204
     CBOS M 8 bright
     CBOS N 8 bright
 	CBOS O 1
-    goto Super::FadeOut
+    goto Super::FadeOut.NoRaise
    }
 }          
   

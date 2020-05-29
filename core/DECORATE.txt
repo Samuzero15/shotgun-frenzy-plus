@@ -8,8 +8,9 @@ Actor Boolean : Inventory { +Undroppable Inventory.MaxAmount 1 }
 #include "Actors/prices.dec"
 #include "Actors/huditems.dec"
 
-#include "Actors/monsters/frenzyup_misc.txt"
+#include "Actors/monsters/fp_monster.dec"
 #include "Actors/gameobjects/fpatch_armor.dec"
+
 
 #include "Actors/projectiles/frenzy_monsterproj.txt"
 #include "Actors/weapons/frenzy_healnstock.txt"

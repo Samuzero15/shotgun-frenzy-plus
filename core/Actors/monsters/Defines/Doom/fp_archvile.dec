@@ -44,12 +44,11 @@ ACTOR sfArchvile : FPlus_Monster replaces Archvile
 			goto See
 		
 		MonDeath:
-			TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
 			VILE Q 2
 			VILE R 7 A_Scream
 			VILE S 7 A_NoBlocking
 			VILE TUVWXY 7
 			VILE Z 1
-			goto Super::FadeOut
+			goto Super::FadeOut.NoRaise
 	}
 }

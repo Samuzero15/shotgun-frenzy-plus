@@ -1,7 +1,7 @@
 
 Actor FPMToken_NoCount : Boolean {} // This enemy is too easy to be paid (grant experienec only.)
 Actor FPMToken_Gibbed : Boolean {} // The enemy became bits.
-Actor FPMToken_Frozen : Boolean {} // The enemy got frozen. (Same as gibbed)
+Actor FPMToken_Frozen : Boolean {} // The enemy got frozen. (Same as gibbed)ç
 Actor FPMToken_Hard : Boolean {} // This enemy is hard to kill.
 Actor FPMToken_Boss : Boolean {} // This enemy is a boss (granting a lot of experience and credits.)
 
@@ -59,6 +59,12 @@ Actor FPlus_Monster {
 			"####" "#" 2 A_Fadein(0.05)
 		goto FadeOut+1
 		
+		FadeOut.NoRaise:
+			"####" "#" 650
+			"####" "#" 2 A_FadeOut(0.1)
+			"####" "#" 2 A_Fadein(0.05)
+		goto FadeOut+1
+		
 		Death.Ice:
 			"####" "#" 0 A_GiveInventory("FPMToken_Frozen",1) // Flag Token.
 		goto GenericFreezeDeath
@@ -84,35 +90,5 @@ Actor FPlus_Monster {
 }
 
 // monsters
-#include "Actors/monsters/frenzy_juggernaut.dec"
-#include "Actors/monsters/Doom/fp_monsters.dec"
-#include "Actors/monsters/frenzy_afrit.txt"
-#include "Actors/monsters/frenzy_annihilator.txt"
-#include "Actors/monsters/frenzy_archonofhell.txt"
-#include "Actors/monsters/frenzy_batfamiliar.txt"
-#include "Actors/monsters/frenzy_blooddemonclone.txt"
-#include "Actors/monsters/frenzy_bloodfiend.txt"
-#include "Actors/monsters/frenzy_chaingunguy2.txt"
-#include "Actors/monsters/frenzy_chainsawzombie.txt"
-#include "Actors/monsters/frenzy_cyberbaron.txt"
-#include "Actors/monsters/frenzy_cybruiser.txt"
-#include "Actors/monsters/frenzy_demolisher.txt"
-#include "Actors/monsters/frenzy_fusionspider.txt"
-#include "Actors/monsters/frenzy_hellion.txt"
-#include "Actors/monsters/frenzy_hotdog.txt"
-#include "Actors/monsters/frenzy_nailborg.txt"
-#include "Actors/monsters/frenzy_nailborgcommando.txt"
-#include "Actors/monsters/frenzy_namidarkimp.txt"
-#include "Actors/monsters/frenzy_repeaterzombie.txt"
-#include "Actors/monsters/frenzy_segwayzombie.txt"
-#include "Actors/monsters/frenzy_slimeimp.txt"
-#include "Actors/monsters/frenzy_spiderimphead.txt"
-#include "Actors/monsters/frenzy_ssgzombie.txt"
-#include "Actors/monsters/frenzy_stonedemon.txt"
-#include "Actors/monsters/frenzy_suicidebomber.txt"
-#include "Actors/monsters/frenzy_voiddarkimp.txt"
-#include "Actors/monsters/frenzy_hellsfury.txt"
-#include "Actors/monsters/frenzy_extra.txt"
-
-#include "Actors/monsters/fp_aracnorb.dec"
-#include "Actors/monsters/fp_zfodder.dec"
+#include "Actors/monsters/Defines/fp_defines.dec"
+#include "Actors/monsters/fp_aidspawn.dec"

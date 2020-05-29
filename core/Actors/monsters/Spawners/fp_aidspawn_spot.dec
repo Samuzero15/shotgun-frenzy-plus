@@ -1,0 +1,226 @@
+
+//This actors are here for just 1 single reason, Space check.
+
+Actor FPlus_AIDSpot_sfFastZombie{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfFastZombie",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfZombieman{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfZombieman",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfShotgunguy{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfShotgunguy", 0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfChaingunguy{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfChaingunguy",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_Chaingunguy2{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Chaingunguy2",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfDoomimp{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfDoomimp",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfDemon{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfDemon",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_SSGZombie{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("SSGZombie",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_ChainsawZombie{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("ChainsawZombie",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_NamiDarkImp{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("NamiDarkImp",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_VoidDarkImp{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("VoidDarkImp",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_Nailborg{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Nailborg",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_NailborgCommando{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("NailborgCommando",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_Hellion{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Hellion",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_BloodFiend{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("BloodFiend",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_BloodDemonClone{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("BloodDemonClone",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfRevenant{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfRevenant",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfHellknight{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfHellknight",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfBaronOfHell{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfBaronOfHell",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfFatso{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfFatso",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_Cybruiser{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Cybruiser",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_Cyberbaron{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Cyberbaron",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfArachnotron_tw{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfArachnotron_tw",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_SlimeImp{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("SlimeImp",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfArchvile{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfArchvile",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_sfCyberdemon{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("sfCyberdemon",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_Annihilator{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Annihilator",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}
+
+Actor FPlus_AIDSpot_SpiderAnnihilator{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("SpiderAnnihilator",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}

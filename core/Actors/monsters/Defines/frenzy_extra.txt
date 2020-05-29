@@ -37,7 +37,7 @@ ACTOR sfFastZombie : FPlus_Monster 30201
 			POSS N 5 
 			POSS O 5 A_NoBlocking
 			POSS PQRST 5
-			POSS U 650
+			POSS U 1
 		goto Super::FadeOut
 			
 		MonRaise:

@@ -65,9 +65,6 @@
 #include "Actors/weapons/frenzy_dualshot.txt"
 #include "Actors/weapons/frenzy_bfg.txt"
 
-// monsters
-#include "Actors/monsters/frenzy_monster.dec"
-
 // deployables
 #include "Actors/deploy/frenzy_deploy_base.txt"
 #include "Actors/deploy/frenzy_drone.txt"

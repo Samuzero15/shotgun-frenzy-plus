@@ -1,0 +1,81 @@
+
+
+Actor FPlus_AIDSpawn_SE1 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE2 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE3 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE4 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE5 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE6 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE7 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE8 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE9 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE10 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE11 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE12 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE13 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE14 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE15 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE16 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE17 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE18 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE19 : RandomSpawner {
+	dropitem "sfFastZombie"
+}
+
+Actor FPlus_AIDSpawn_SE20 : RandomSpawner {
+	dropitem "sfFastZombie"
+}

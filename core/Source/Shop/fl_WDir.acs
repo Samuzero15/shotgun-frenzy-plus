@@ -387,6 +387,34 @@ function void Weapon_Recycle(int wid, int upg, int play){
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
 
+function bool Weapon_IsHoldingSameKind(int asThis){
+	return 
+		checkweapon(Weapon_GetActor(asThis)) 			||
+		checkweapon(WeaponUpgrade_getActor(asThis, 0))  ||
+		checkWeapon(WeaponUpgrade_getActor(asThis, 1));
+}
+
+function int Weapon_SaveLastUsed(void){
+	int res = -1;
+	for(int i = 0; i < fp_weaponStack; i++){
+		if(Weapon_IsHoldingSameKind(i)){
+			res = i;
+			break;
+		}
+	}
+	log(s:"Weapon style save: ", s:Weapon_GetActor(res));
+	return res;
+}
+
+function void Weapon_LoadLastUsed(int which){
+	
+	SetWeapon(Weapon_GetActor(which));
+	SetWeapon(WeaponUpgrade_GetActor(which, 0));
+	SetWeapon(WeaponUpgrade_GetActor(which, 1));
+	log(s:"Weapon style load: ", s:Weapon_GetActor(which));
+	
+}
+
 function void WPTrack_Increase(int wp){
 	fp_WPTrack[wp] = fp_WPTrack[wp] + WeaponPack_GetScoreGain(wp);
 }

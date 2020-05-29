@@ -140,6 +140,7 @@ script 100 OPEN
             // recount
             l_RemainingMonsters = thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112);
             
+			//log(s:"l_RemainingMonsters = ", d:l_RemainingMonsters);
             if (l_RemainingMonsters < 5)     break;
             delay(35 * 3);
         }

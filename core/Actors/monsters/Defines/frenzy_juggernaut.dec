@@ -1,4 +1,4 @@
-actor sfJuggernaught 30175
+actor sfJuggernaught : FPlus_Monster 30175
 {
 	spawnid 114
 	obituary "%o was completely owned by a freakin Juggernaught!"
@@ -98,6 +98,7 @@ actor sfJuggernaught 30175
 			NULL A 0 A_SpawnItem("MassiveGoreExplosion",0,32)
 			NULL A 30
 			NULL A -1 A_BossDeath
+			goto Super::FadeOut.NoRaise
   }
 }
 

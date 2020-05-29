@@ -29,10 +29,16 @@ w) Work in progres
 	[ ] A CF simulator.
 	[ ] Place a mech, and try to check for all of their upgrades.
 	[ ] Put all of the existent terminals.
-
+[d] Re-work the monster spawning waves.
+[ ] Add some new monsters on the rooster.
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (28 / 05 / 2020)
+	*) Now the spawn algorithm has been refactorized for good!
+	*) Now the spawn algorithm is now converted in the Decorate way.
+	// This will allow the modders add the monsters inside the spawning algorigthm without even touching the acs behind it.
+
 -) (26 / 05 / 2020)
 	*) Some fixups on the monsters decorate, now appyling an almost universal kill script for all monsters.
 	*) Now boss-like monsters (and hard-to-kill ones) can grant more than just 1 kill point!
