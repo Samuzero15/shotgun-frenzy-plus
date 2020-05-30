@@ -16,24 +16,36 @@ w) Work in progres
 	[d] Genetics 
 	[d] Mech Factory
 	[d] Commander Terminal
+[d] Re-work the monster spawning waves.
+[d] De-hard code prices from samu-tools, for easier access.
 [ ] Implement the Bank tech.
 [ ] Implement the rune tech.
 [ ] Make the Shell Grenade.
 [ ] Flak-Bombs for the dual shot.
 [ ] Achievemets? just for the sake of it? Heck yes!.
 [ ] Make a Process Queue, a way to control the rushing researches.
-[d] De-hard code prices from samu-tools, for easier access.
 [ ] About the Testing map
 	[d] Monster spawner
 	[ ] The set of items and turrets to spawn.
 	[ ] A CF simulator.
 	[ ] Place a mech, and try to check for all of their upgrades.
 	[ ] Put all of the existent terminals.
-[d] Re-work the monster spawning waves.
 [ ] Add some new monsters on the rooster.
+	[ ] The Zombiemarine, a weaker version of a chaingunner, causing trobules in early waves.
+	[ ] The Zsec, good ol doom 3 reference, molesting you on early waves. It got a grenade launcher!
+	[ ] the ZombieRailgunner, you guys better keep distances between friends, cuz this guy can rail you up!
+[ ] Document the acs source, and some of the most important decorate files
+[ ] Replace the sprites for the Quadshot and Railgun
+[ ] Change the attack type for the railgun, to make it... like an actual railgun.
+[ ] Ammo and Health indicators, to let the players know when to rethreat.
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (29 / 05 / 2020)
+	*) Now the coins will chase you when you're pretty close of them!
+	// Being brave is not exactly to go for that penny in the middle of the disaster.
+	*) Small fix on the death, asking me for the dang mecha.
+
 -) (28 / 05 / 2020)
 	*) Now the spawn algorithm has been refactorized for good!
 	*) Now the spawn algorithm is now converted in the Decorate way.

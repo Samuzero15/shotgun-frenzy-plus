@@ -73,6 +73,8 @@ ACTOR BulletPuff_ExplosiveQuad
 	+MTHRUSPECIES
 	+NODAMAGETHRUST
 	
+	+AlwaysPuff
+	
 	DamageType			MarineFire
 	
 	RenderStyle			ADD
@@ -202,7 +204,7 @@ Actor FireRemainLong : FireRemainBase {
   {
   Spawn:
 	TNT1 A 0 nodelay A_PlaySoundEx ("vile/firecrkl",CHAN_AUTO, true, 0)
-    FIRE ABCDABCDABCDABCDEFGH 2 bright A_Explode(15,32,0,0,16)
+    FIRE ABCDABCDABCDABCDEFGH 2 bright A_Explode(7,32,0,0,16)
 	TNT1 A 1 A_StopSound (CHAN_AUTO)
     stop
   }
@@ -213,7 +215,7 @@ Actor FireRemainStandard : FireRemainBase {
   {
   Spawn:
 	TNT1 A 0 nodelay A_PlaySoundEx ("vile/firecrkl",CHAN_AUTO, true, 0)
-    FIRE ABCDABCDABCDEFGH 2 bright A_Explode(15,32,0,0,16)
+    FIRE ABCDABCDABCDEFGH 2 bright A_Explode(7,32,0,0,16)
 	TNT1 A 1 A_StopSound (CHAN_AUTO)
     stop
   }
@@ -225,7 +227,7 @@ Actor FireRemainShort : FireRemainBase {
   {
   Spawn:
 	TNT1 A 0 nodelay A_PlaySoundEx ("vile/firecrkl",CHAN_AUTO, true, 0)
-	FIRE ABCDABCDEFGH 2 bright A_Explode(15,32,0,0,16)
+	FIRE ABCDABCDEFGH 2 bright A_Explode(7,32,0,0,16)
 	TNT1 A 1 A_StopSound (CHAN_AUTO)
     stop
   }

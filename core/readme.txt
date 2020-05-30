@@ -6,7 +6,7 @@ What is inside?
 	===) Some more balances to the marine side.
 	===) Drones are back, and with more!
 	===) Kinda Clean code. (Lot'sa refactoring)
-	===) The under-used guns are updated for more variety fo selection!
+	===) The under-used guns are updated for more variety for selection!
 	===) A Terminal that supports mouse movement! And it's easier to mantain!
 	===) Customizable parematers with the sf+ settings!
 	===) Lotta Fixes from the original!

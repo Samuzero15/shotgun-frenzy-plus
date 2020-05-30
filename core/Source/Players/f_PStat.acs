@@ -54,8 +54,7 @@ else{
     hudmessage(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
     
     // check tank status
-    if (p_TankSlot[playernumber()] == 2)        p_TankSlot[playernumber()] = 0;
-	if(checkInventory("TankGun"))
+	if(checkInventory("TankGun") || checkInventory("TankGunAdvanced") && p_TankSlot[playernumber()] == 2)
 		{
 			acs_executealways(309, 0); // Oh shit they got me.
 		}

@@ -51,7 +51,7 @@ ACTOR sfCyberdemon : FPlus_Monster replaces Cyberdemon
 			CYBR M 10 A_NoBlocking
 			CYBR NO 10
 			CYBR P 30
-			CYBR P -1 A_BossDeath
+			CYBR P 1
 			goto Super::FadeOut.NoRaise
 	}
 }
