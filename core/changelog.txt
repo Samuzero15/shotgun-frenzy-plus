@@ -43,7 +43,7 @@ w) Work in progres
 v0 - Before the beginning...
 -) (29 / 05 / 2020)
 	*) Now the coins will chase you when you're pretty close of them!
-	// Being brave is not exactly to go for that penny in the middle of the disaster.
+	// Being brave is not exactly a reason to go for that penny in the middle of the disaster.
 	*) Small fix on the death, asking me for the dang mecha.
 
 -) (28 / 05 / 2020)

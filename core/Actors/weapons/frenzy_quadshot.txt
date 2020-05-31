@@ -82,59 +82,59 @@ ACTOR Quadshot_Explosive : Weapon
 	
 	Weapon.UpSound			"w4/load"
 	
-	tag "Anti-Riot Quadshot CSW"
+	tag "Explosive Quadshot PEW"
 	Weapon.selectionorder 3000
 	States
 	{
 		Ready:
-			W4X1 A 1 A_WeaponReady
+			W4X2 A 1 A_WeaponReady
 			goto Ready
 		Deselect:
-			W4X1 A 1 A_Lower
-			W4X1 A 0 A_Lower
+			W4X2 A 1 A_Lower
+			W4X2 A 0 A_Lower
 			goto Deselect
 		Select:
-			W4X1 A 1 A_Raise
-			W4X1 A 0 A_Raise
+			W4X2 A 1 A_Raise
+			W4X2 A 0 A_Raise
 			goto Select
 		Fire:
-			W4X1 A 3
-			W4X1 H 2
-			W4X1 I 3 bright A_FireBullets(4, 3, 28, 15, "BulletPuff_ExplosiveQuad")	// damage switched from 11 to 9
+			W4X2 A 3
+			W4X2 H 2
+			W4X2 I 3 bright A_FireBullets(4, 3, 28, 15, "BulletPuff_ExplosiveQuad")	// damage switched from 11 to 9
 			TNT1 A 0 A_PlayWeaponSound("Quadshot/Fire4")
-			W4X1 D 4
-			W4X1 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
+			W4X2 D 4
+			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
-			W4X1 F 1
-			W4X1 G 1
-			W4X1 D 4
-			W4X1 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
+			W4X2 F 1
+			W4X2 G 1
+			W4X2 D 4
+			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
-			W4X1 F 1
-			W4X1 G 1
-			W4X1 D 4
-			W4X1 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
+			W4X2 F 1
+			W4X2 G 1
+			W4X2 D 4
+			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
-			W4X1 F 1
-			W4X1 G 1
-			W4X1 D 4
-			W4X1 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
+			W4X2 F 1
+			W4X2 G 1
+			W4X2 D 4
+			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
-			W4X1 F 1
-			W4X1 G 1
-			W4X1 A 5 A_Refire
+			W4X2 F 1
+			W4X2 G 1
+			W4X2 A 5 A_Refire
 			goto Ready
 		AltFire:
-			W4X1 A 3
-			W4X1 B 2 
-			W4X1 C 3 bright A_FireBullets(3, 2, 7, 15, "BulletPuff_ExplosiveQuad")
+			W4X2 A 3
+			W4X2 B 2 
+			W4X2 C 3 bright A_FireBullets(3, 2, 7, 15, "BulletPuff_ExplosiveQuad")
 			TNT1 A 0 A_PlayWeaponSound("Quadshot/Fire1")
-			W4X1 D 4
-			W4X1 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
+			W4X2 D 4
+			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3)
-			W4X1 F 1
-			W4X1 G 1
-			W4X1 A 5 A_Refire
+			W4X2 F 1
+			W4X2 G 1
+			W4X2 A 5 A_Refire
 			goto Ready
 		
 		FireRockets:
