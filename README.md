@@ -30,7 +30,5 @@ Loading order should be:
 * sfplus_res_xxx.pk3  // contains the rest of it, like textures, sprites, sounds etc.
 * sfplus_core_xxx.pk3 // Contains the source code.
 
-This mod works on Zandronum 3.1 Alpha for now, (3.0.1 build will be made soon)
-
 # More info in the changelog inside the source code!
 
