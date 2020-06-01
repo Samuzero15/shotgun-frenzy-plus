@@ -61,6 +61,7 @@ function void Components_Add(void){
 	Card_SetCells(4);
 	card = Card_Generate();
 	
+	
 	ibtn = ImgButton_AddCard(card, 1, 32.0, 32.0); 
 	Prop_StrDef_Start(common);
 	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN1");
@@ -68,6 +69,7 @@ function void Components_Add(void){
 	Prop_StrDef_End();
 	ImgButton_setProps(ibtn, propstr);
 	ImgButton_setTag(ibtn, 0);
+	
 	
 	ibtn = ImgButton_AddCard(card, 2, 32.0, 32.0);
 	Prop_StrDef_Start(common);

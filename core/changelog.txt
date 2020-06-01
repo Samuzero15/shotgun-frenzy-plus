@@ -41,6 +41,13 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (30 - 31 / 05 / 2020) (Test 06 & Test 07 Relases!)
+	*) Created some placeholding sprites for the explosive quadshot.
+	*) Quadshot full replaced with the Quadshot explosive, just for the sake of the tests.
+	*) A monster counter in the final fight can appear now in the screen to track the monsters remaining before the guardian wave rounds.
+	*) Now the terminal has been fixed enough for being compatible with the Zandro's 3.0.1 stable!
+	*) Some more small touchups...
+
 -) (29 / 05 / 2020)
 	*) Now the coins will chase you when you're pretty close of them!
 	// Being brave is not exactly a reason to go for that penny in the middle of the disaster.
@@ -167,7 +174,7 @@ v0 - Before the beginning...
 	// If you miss this hud, go to fullscreen mode!
 	* Gave it some little touches, just because I can do it. :p
 
--) (10 / 04 / 2020)	Testing relases! (04 and 05)
+-) (10 / 04 / 2020)	Testing relases! (Test 04 & Test 05 relases)
 	* Fixed the terminal access to the heath and ammo terminals!.
 	* Net Comunication for the samu terminal has been fixed too!, no more packet loss!
 	* Team credits are given as it should be!
@@ -175,7 +182,7 @@ v0 - Before the beginning...
 	//With this testing relase, now its up to enable the mecha terminal,
 	  and then fix some bugs more to launch the public alpha!
 
--) (08 / 04 / 2020)	Testing relases! (01, 02 and 03)
+-) (08 / 04 / 2020)	Testing relases! (Test 01 & Test 02 & Test 03 relases)
 	//Just to put on test the Samu terminal capabilities in multiplayer. 
 	  Im hosting this and sfplus_res.pk3 with it to TSPG.
 	

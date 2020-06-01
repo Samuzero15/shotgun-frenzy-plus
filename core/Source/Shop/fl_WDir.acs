@@ -99,15 +99,15 @@ function void SFPlus_DefineWeapons (void){
 	s:"This powerful machine can fire a powerful shell burst ",
 	s:"with the use of 4 shells, powerful enough ",
 	s:"to grant you easy kills. Thanks for its high acurracy. ", 
-	s:"The only drawback is its firing speed.\n\n",
+	s:"The only drawback is in its firing speed.\n\n",
 	
-	s:"Pri. fire: Powerful shot \nSec. Fire: Burst shot"
+	s:"Pri. fire: 4 Shell Burst \nSec. Fire: 1 Shell Shot"
 	);
 		
 	wep = Weapon_Add("Quadshot", "Quadshot", pack, "quadshot", string);
 				
-	WeaponUpgrade_Add("Quadshot_Full", "Combat Quadashot", wep, 0, "",
-		"Your shells will cause fire, and now you have a chainsaw with you."
+	WeaponUpgrade_Add("Quadshot_Full", "Explosive Quadashot", wep, 0, "",
+		"Your peelets can explode, also you can fire twice as faster."
 		);
 		
 		
@@ -402,7 +402,7 @@ function int Weapon_SaveLastUsed(void){
 			break;
 		}
 	}
-	log(s:"Weapon style save: ", s:Weapon_GetActor(res));
+	//log(s:"Weapon style save: ", s:Weapon_GetActor(res));
 	return res;
 }
 
@@ -411,7 +411,7 @@ function void Weapon_LoadLastUsed(int which){
 	SetWeapon(Weapon_GetActor(which));
 	SetWeapon(WeaponUpgrade_GetActor(which, 0));
 	SetWeapon(WeaponUpgrade_GetActor(which, 1));
-	log(s:"Weapon style load: ", s:Weapon_GetActor(which));
+	//log(s:"Weapon style load: ", s:Weapon_GetActor(which));
 	
 }
 

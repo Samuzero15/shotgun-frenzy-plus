@@ -55,19 +55,19 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	int pagetag = armitm_vars[1];
 	int color;
 	
-	int prop[5];
-	prop[0] = Item_GetName(itemid);
-	prop[1] = Item_GetIcon(itemid);
-	prop[2] = Item_GetDesc(itemid);
-	prop[3] = strParam(d:Item_GetPrice(itemId), s:" $");
-	prop[4] = strParam(d:CheckInventory(Item_getActor(itemId)), s:"/", d:Item_getMax(itemId) );
+	int prop0, prop1, prop2, prop3, prop4;
+	prop0 = Item_GetName(itemid);
+	prop1 = Item_GetIcon(itemid);
+	prop2 = Item_GetDesc(itemid);
+	prop3 = strParam(d:Item_GetPrice(itemId), s:" $");
+	prop4 = strParam(d:CheckInventory(Item_getActor(itemId)), s:"/", d:Item_getMax(itemId) );
 	//[Samu] recycling biatch!
 	
 	if(Item_getType(itemid) == FP_ITEM_T_DEPLOY) color = cr_Orange;
 	else color = cr_cyan;
 	
 	i = Label_AddGridOff(grid, x, y, offx, 4.0); 
-	Label_setText	(i, prop[0]);
+	Label_setText	(i, prop0);
 	Label_setFont	(i,"StatBigs");
 	Label_setAligns	(i, align, HUD_ALIGN_TOP);
 	Label_setColor	(i, color);
@@ -76,25 +76,25 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	ArmItmPage_SaveGroup(itemId, 0, i);
 	
 	i = Label_DupGridOff(grid, x, y, offx, 16.0); 
-	Label_setText(i, prop[2]);
+	Label_setText(i, prop2);
 	Label_setFont(i,"Confont");
 	Label_setWrapWidth(i, 250);
 	ArmItmPage_SaveGroup(itemId, 1, i);
 	
 	i = Label_DupGridOff(grid, x, y, offx, 30.0); 
-	Label_setText(i, prop[3]);
+	Label_setText(i, prop3);
 	Label_setFont(i,"Confont");
 	Label_setColor(i, CR_GREEN);
 	ArmItmPage_SaveGroup(itemId, 2, i);
 	
 	i = Label_DupGridOff(grid, x, y, 16.0, 30.0); 
 	Label_setFont(i,"Confont");
-	Label_setText(i, prop[4]);
+	Label_setText(i, prop4);
 	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
 	ArmItmPage_SaveGroup(itemId, 3, i);
 	
 	i = ImgButton_AddGrid(grid, ix, y, 32.0, 32.0); 
-	ImgButton_setImage(i, prop[1]);
+	ImgButton_setImage(i, prop1);
 	ImgButton_setTag(i, pageTag);
 	ImgButton_setExecute(i, STEXE_ITEMBUY);
 	ImgButton_setArgs(i, itemId, 0 ,0);

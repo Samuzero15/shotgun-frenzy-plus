@@ -113,11 +113,12 @@ function void BuyWpnPage_Init(int pageTag){
 }
 
 function void BuyWpnPage_UpdateBuyBut(int wp){
-	str msg[3];
+	str msg0, msg1, msg2;
 	
-	msg[0] = strParam(s:"Cost: \cf", d:WeaponPack_getPrice(wp), s:"$");
-	msg[1] = strParam(s:"Needs \ci", d:(WeaponPack_getPrice(wp) - GetPlayCredits()), s:"$ \cgmore!");
-	msg[2] = strParam(s:"\chAlready owned");
+	msg0 = strParam(s:"Cost: \cf", d:WeaponPack_getPrice(wp), s:"$");
+	msg1 = strParam(s:"Needs \ci", d:(WeaponPack_getPrice(wp) - GetPlayCredits()), s:"$ \cgmore!");
+	msg2 = strParam(s:"\chAlready owned");
+	
 	
 	StrButton_setShow(buywpn_vars[20], 	false);
 	Label_setShow	 (buywpn_vars[21], 	false);
@@ -132,7 +133,7 @@ function void BuyWpnPage_UpdateBuyBut(int wp){
 		StrButton_setExeArgs(buywpn_vars[20], wp, 0, 0);
 		
 		Label_setColor(buywpn_vars[21], cond(canibuy, CR_GREEN, CR_RED));
-		Label_setText(buywpn_vars[21], cond(gotit, msg[2],cond(canibuy, msg[0], msg[1])));
+		Label_setText(buywpn_vars[21], cond(gotit, msg2,cond(canibuy, msg0, msg1)));
 		Label_setShow	 (buywpn_vars[21], 	true);
 	}
 }
@@ -272,20 +273,15 @@ function void BuyWpnPage_UpdatePackButtons(int category){
 	// Something new on the Zandro 3.1-alpha.
 	// Local arrays!
 	int stack;
-	int wpaks[50]; // Well shiet, cant assing size with a variable.
 	for (i = 0; i < fp_WeaponPackStack; i++){
-		wpaks[stack] = -1;
 		if(WeaponPack_getCat(i) == category){
-			wpaks[stack] = i;
+			StrButton_setExeArgs(buywpn_vars[15 + stack], i, 0, 0);
+			StrButton_setTextAdj(buywpn_vars[15 + stack], WeaponPack_getName(i));
+			StrButton_setColor(buywpn_vars[15 + stack], 
+			BuyWpnPage_getColorCat(category));
+			StrButton_setShow(buywpn_vars[15 + stack], true);
 			stack++;
 		}
-	}
-	for(i = 0; i < stack; i++){
-		StrButton_setExeArgs(buywpn_vars[15 + i], wpaks[i], 0, 0);
-		StrButton_setTextAdj(buywpn_vars[15 + i], WeaponPack_getName(wpaks[i]));
-		StrButton_setColor(buywpn_vars[15 + i], 
-			BuyWpnPage_getColorCat(WeaponPack_getCat(wpaks[i])));
-		StrButton_setShow(buywpn_vars[15 + i], true);
 	}
 }
 

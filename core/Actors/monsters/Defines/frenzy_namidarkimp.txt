@@ -41,6 +41,7 @@ spawnid 240
         DRKI J 8 A_Scream
         DRKI K 6
         DRKI L 6 A_Fall
+		DRKI M 6
         goto Super::FadeOut
     MonXDeath:
         DRKI N 5

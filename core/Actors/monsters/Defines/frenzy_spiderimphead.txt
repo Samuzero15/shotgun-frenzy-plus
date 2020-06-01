@@ -37,6 +37,6 @@ ACTOR SpiderImpHead : FPlus_Monster 25625
         IMHD F 8 A_ScreamAndUnblock
         IMHD G 8
         IMHD H 6
-        goto Super::FadeOut
+		stop
     }
 }

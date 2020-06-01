@@ -76,9 +76,9 @@ script 108 (int l_RemainingMonsters)
     g_SkillScore = f_AIDir_Check();
 	log(s:"Score catched: ", d:g_SkillScore);
 	
-	if(g_Status == 1){bonusPoints += 30; log(s:"The battery 1, 2 and 3 are safe!");}
-	if(g_Status == 2){bonusPoints += 20; log(s:"The battery 2 and 3 are safe!");}
-	if(g_Status == 3){bonusPoints += 10; log(s:"The battery 3 is safe!");}
+	if(g_Status == 1){bonusPoints += 30; Print(s:"The battery 1, 2 and 3 are safe!");}
+	if(g_Status == 2){bonusPoints += 20; print(s:"The battery 2 and 3 are safe!");}
+	if(g_Status == 3){bonusPoints += 10; print(s:"The battery 3 is safe!");}
 	
 	g_SkillScore += bonusPoints;
 	
@@ -152,14 +152,14 @@ script 108 (int l_RemainingMonsters)
     // wait until most of the demons are dead
     while(1)
     {
-		//[Samu] I've always hated zandronum for this broken fuctions.
+		//[Samu] I've always hated zandronum for these broken fuctions.
 		mtotal = GetLevelInfo (LEVELINFO_TOTAL_MONSTERS),
         mkilled = GetLevelInfo (LEVELINFO_KILLED_MONSTERS);
 		// There is the -n monster count bug, so to counter that. 
 		// We're gonna ignore the "5 monsters to guardian" rule.
 		
         // recount
-		log(s:"Monsters remaining: ", d:l_RemainingMonsters);
+		f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
         l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114);
         
 		

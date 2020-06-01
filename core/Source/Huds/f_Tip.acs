@@ -117,6 +117,14 @@ function void f_SmallTip (str l_Tip, int color, int id)
     hudmessage(s:l_Tip; 1, 0, color, 400.0, 400.1+ 10.0*id, 0.5);
 }
 
+function void f_SmallTipPlain(str l_Tip, int color, int id)
+{
+    // setup appearence
+    setfont("CONFONT");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    hudmessage(s:l_Tip; 0, 666, color, 400.0, 400.1+ 10.0*id, 0.5);
+}
+
 // remove message after waiting period
 script 150 (int l_Delay, int l_TipQue_Selection)
 {

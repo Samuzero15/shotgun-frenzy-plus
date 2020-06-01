@@ -42,9 +42,9 @@ function void RcyWpnPage_Init(int pageTag){
 function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	int i = 0;
 	bool ihaveup1, ihaveup2;
-	int stat[4];
+	int stat0, stat1, stat2, stat3;
 	
-	stat[0] = Weapon_GetName(wpn);
+	stat0 = Weapon_GetName(wpn);
 	
 	int price = Weapon_getPrice(wpn);
 	int priceup1 = WeaponUpgrade_getRcyPrice(wpn,0);
@@ -53,15 +53,15 @@ function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	ihaveup2 = CheckInventory(WeaponUpgrade_GetActor(wpn,1));
 	
 	if(WeaponUpgrade_getActor(wpn, 1) == -1){
-		stat[1] = cond(ihaveup1, "Up. Type: 0", "Not Upgraded");
-		stat[2] = cond(ihaveup1, priceup1, price);
+		stat1 = cond(ihaveup1, "Up. Type: 0", "Not Upgraded");
+		stat2 = cond(ihaveup1, priceup1, price);
 	}else{
-		stat[1] = cond(ihaveup1 || ihaveup2, cond(ihaveup1, "Up. Type: 1", "Up. Type: 2"), "Not Upgraded");
-		stat[2] = cond(ihaveup1 || ihaveup2, cond(ihaveup1, priceup1, priceup2), 			price);
+		stat1 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, "Up. Type: 1", "Up. Type: 2"), "Not Upgraded");
+		stat2 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, priceup1, priceup2), 			price);
 	}
 	
 	i = Label_Add	(0.0, 0.0); 
-	Label_setText	(i, stat[0]);
+	Label_setText	(i, stat0);
 	Label_setFont	(i,"StatBigs");
 	Label_setShow	(i, false);
 	Label_setAligns	(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
@@ -70,12 +70,12 @@ function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	RcyWpnPage_SaveGroup(wpn, 1, i);
 	
 	i = Label_Dup	(0.0, 0.0); 
-	Label_setText	(i,stat[1]);
+	Label_setText	(i,stat1);
 	Label_setFont	(i,"confont");
 	RcyWpnPage_SaveGroup(wpn, 2, i);
 	
 	i = Label_Dup(0.0, 0.0); 
-	Label_setText	(i,strparam(s:"+ ",d:stat[2],s:" $"));
+	Label_setText	(i,strparam(s:"+ ",d:stat2,s:" $"));
 	Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	Label_setFont	(i, "confont");
 	RcyWpnPage_SaveGroup(wpn, 3, i);
@@ -107,9 +107,9 @@ function void RcyWpnPage_UpdateOptions(int wpn){
 	StrButton_setShow(comp4, false);
 	
 	bool ihaveup1, ihaveup2, ihavewpn;
-	int stat[4];
+	int stat0, stat1, stat2, stat3;
 	
-	stat[0] = Weapon_GetName(wpn);
+	stat0 = Weapon_GetName(wpn);
 	
 	int price = Weapon_getPrice(wpn);
 	int priceup1 = WeaponUpgrade_getRcyPrice(wpn,0);
@@ -119,13 +119,13 @@ function void RcyWpnPage_UpdateOptions(int wpn){
 	ihaveup2 = CheckInventory(WeaponUpgrade_GetActor(wpn,1));
 	
 	if(WeaponUpgrade_getActor(wpn, 1) == -1){
-		stat[1] = cond(ihaveup1, "Up. Type: 0", "Not Upgraded");
-		stat[2] = cond(ihaveup1, priceup1, price);
-		stat[3] = cond(ihaveup1, 0, 255);
+		stat1 = cond(ihaveup1, "Up. Type: 0", "Not Upgraded");
+		stat2 = cond(ihaveup1, priceup1, price);
+		stat3 = cond(ihaveup1, 0, 255);
 	}else{
-		stat[1] = cond(ihaveup1 || ihaveup2, cond(ihaveup1, "Up. Type: 1", "Up. Type: 2"), "Not Upgraded");
-		stat[2] = cond(ihaveup1 || ihaveup2, cond(ihaveup1, priceup1, priceup2), 			price);
-		stat[3] = cond(ihaveup1 || ihaveup2, cond(ihaveup1, 1, 2), 			255);
+		stat1 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, "Up. Type: 1", "Up. Type: 2"), "Not Upgraded");
+		stat2 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, priceup1, priceup2), 			price);
+		stat3 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, 1, 2), 			255);
 	}
 	
 	if(ihavewpn || ihaveup1 || ihaveup2){
@@ -134,10 +134,10 @@ function void RcyWpnPage_UpdateOptions(int wpn){
 		int toppy = (rcywpn_vars[1] % 10) + 1;
 		int col = (rcywpn_vars[1] / 10) + 1;
 		
-		Label_setText	(comp1, stat[0]);
-		Label_setText	(comp2, stat[1]);
-		Label_setText	(comp3, strparam(s:"+ ",d:stat[2],s:" $"));
-		StrButton_setExeArgs(comp4, wpn, stat[3], 0);
+		Label_setText	(comp1, stat0);
+		Label_setText	(comp2, stat1);
+		Label_setText	(comp3, strparam(s:"+ ",d:stat2,s:" $"));
+		StrButton_setExeArgs(comp4, wpn, stat3, 0);
 		
 		Label_setColor	(comp1, color);
 		Label_setColor	(comp2, color);
