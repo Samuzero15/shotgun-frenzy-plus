@@ -21,7 +21,7 @@ And now the latest update for the patch was the unofficial v8f, it was intended 
 ## Initial Setup
 
 To run this you need:
-* Zandronum 3.1 Alpha
+* Zandronum 3.1 Alpha OR Zandronum 3.0
 * A copy of Doom 2 or Freedoom 2.
 * The Skulltag Content wad.
 
