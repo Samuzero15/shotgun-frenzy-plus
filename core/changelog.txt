@@ -41,6 +41,9 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (1 / 06 / 2020) (Test 08 Relase!)
+	*) Fixed up the disappearing bodies after being killed.
+	
 -) (30 - 31 / 05 / 2020) (Test 06 & Test 07 Relases!)
 	*) Created some placeholding sprites for the explosive quadshot.
 	*) Quadshot full replaced with the Quadshot explosive, just for the sake of the tests.

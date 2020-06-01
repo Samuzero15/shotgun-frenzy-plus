@@ -1,2 +1,2 @@
-STARTUPTITLE = "Shotgun Frenzy Plus (v0-t07)"
+STARTUPTITLE = "Shotgun Frenzy Plus (v0-t08)"
 STARTUPCOLORS = "#0099FF", "#002277" 
