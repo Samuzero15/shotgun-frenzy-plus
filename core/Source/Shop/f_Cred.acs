@@ -52,44 +52,6 @@ script "SF_Net_KillRewardCredits" (int monster, int splat) NET{
 	p_monsterKilled(monster, splat, false, false);
 }
 
-script "SF_SpawnADrone" (void){
-	int player = ActivatorTID();
-	if(playerNumber() == -1){ 
-		giveinventory("Inventory_SawDrone", 1);
-		terminate;
-	}
-	int drone = UniqueTID(10000 + 100*playernumber());
-	print(d:player, s:" ", d:drone);
-	Spawn("sf_SawDrone", GetActorX(player), GetActorY(player), 50.0, drone, 0);
-	SetActivator(drone);
-	SetActorProperty(drone, APROP_MasterTID, player);
-	//SetActorProperty(player, APROP_TracerTID, drone);
-	//debugTidPointers(player);
-	debugTidPointers(drone);
-	//debugTidPointersStrings(player);
-	debugTidPointersStrings(drone);
-	
-}
-
-script "SF_Checc" (void){
-	debugTidPointers(ActivatorTID());
-	debugTidPointersStrings(ActivatorTID());
-	
-}
-script "SF_UniqueDrone" (void){
-	setResultValue(UniqueTID(10000 + 100*playernumber()));
-}
-
-function void debugTidPointers (int debug){
-log(d:debug, s:") TAR:", d:GetActorProperty(debug, APROP_TargetTID), s:" MAS:", d:GetActorProperty(debug, APROP_MasterTID), s: " TRA:", d:GetActorProperty(debug, APROP_TracerTID) );
-}
-function void debugTidPointersStrings (int debug){
-log(s:GetActorClass(debug),
- s:") TAR:", s:GetActorClass(GetActorProperty(debug, APROP_TargetTID)),
- s:" MAS:", s:GetActorClass(GetActorProperty(debug, APROP_MasterTID)),
- s: " TRA:", s:GetActorClass(GetActorProperty(debug, APROP_TracerTID)) );
-}
-
 
 // mmm: monster killed - give credits and exp
 

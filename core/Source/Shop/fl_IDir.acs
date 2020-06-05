@@ -9,6 +9,9 @@
 // For the prices, take a look at fl_price.
 
 #library "fl_IDir"
+
+#import "f_intdb.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
@@ -44,7 +47,7 @@ function void SFPlus_DefineItems(void){
 		
 	Item_Add_Inv("p_backpack", "Personal Backpack", "backpack", 1, "CM29", 
 		"Carry more ammo with you!");
-	Item_Add_Inv("p_backpack", "Personal Mines", "mines", 16, "CM31", 
+	Item_Add_Inv("Inventory_MarineMine", "Personal Mines", "mines", 16, "CM31", 
 		"Set it on the floor, and let them come!");
 		
 	Item_Add_Deploy("Inventory_MineDrone", "Mine drone", "drone_mine", 8, "CM48",

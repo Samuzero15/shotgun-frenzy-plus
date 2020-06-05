@@ -48,9 +48,9 @@ Script "SFPlus_MonsterKill" Kill{
 			
 			// I'll hope to do not encounter a player spamming to 100 and more drones.
 			int owner = ((ActivatorTID() / 100) % 100);
-			//log(s:"Died by a saw drone. With tid: ", d:ActivatorTid());
-			//log(s:"Owned by: ", n:owner+1,s:" ", d:owner); 
+			//log(s:"Died by a saw drone. With tid: ", d:ActivatorTid(), s:" Owned by: ", n:owner+1,s:" ", d:owner); 
 			// Attempting to retrive the owner of this drone.
+			
 			setActivatorToPlayer(owner);
 			
 			ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0,howMuch/2, CR_Blue);

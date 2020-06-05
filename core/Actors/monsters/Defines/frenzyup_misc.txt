@@ -13,37 +13,6 @@ actor SpiderAnnihilator : SpiderMastermind
 	Height 40
 	Scale 0.4
 	Obituary "%o learned that Spider Annihilators pack a lot of punch for their size."
-	States
-	{
-	Death:
-		NULL A 0
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0)
-		SPID J 20 A_Scream
-		SPID K 10 A_NoBlocking
-		SPID LMNOPQR 10
-		SPID S 30
-		SPID S -1 A_BossDeath
-		Stop
-	Death.NoProfitKill:
-		NULL A 0
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0,1)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0,1)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0,1)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0,1)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0,1)
-		SPID J 1 ACS_ExecuteAlways(500, 0, 19, 0,1)
-		SPID J 20 A_Scream
-		SPID K 10 A_NoBlocking
-		SPID LMNOPQR 10
-		SPID S 30
-		SPID S -1 A_BossDeath
-		Stop
-	}
 }
 
 actor sfArachnotron_tw : Arachnotron
@@ -52,25 +21,4 @@ actor sfArachnotron_tw : Arachnotron
 	Radius 40
 	Height 40
 	Scale 0.65
-	States
-	{
-	Death:
-		BSPI J 5 A_Scream
-		NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
-		BSPI J 5 
-		BSPI J 10 ACS_ExecuteAlways(500, 0, 4, 0)
-		BSPI K 7 A_NoBlocking
-		BSPI LMNO 7
-		BSPI P -1 A_BossDeath
-		Stop
-	Death.NoProfitKill:
-		BSPI J 5 A_Scream
-		NULL A 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
-		BSPI J 5 
-		BSPI J 10 ACS_ExecuteAlways(500, 0, 4, 0,1)
-		BSPI K 7 A_NoBlocking
-		BSPI LMNO 7
-		BSPI P -1 A_BossDeath
-		Stop
-	}
 }

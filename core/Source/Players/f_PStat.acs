@@ -133,6 +133,7 @@ script 53 ENTER
 
     // clear any previous items
 	TakeInventory("PlayerKilledDemon", 0xFFFFFFF);
+	TakeInventory("P_Backpack", 0xFFFFFFF);
     clearinventory();
 
     // give the player his/her boomstick and beretta

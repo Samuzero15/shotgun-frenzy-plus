@@ -1,0 +1,160 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// f_decscp.acs
+// Scripts for the decorate tricks
+
+// Put all you Decorate-Only scripts here, this script should be loaded in any level.
+
+
+#library "f_decscp"
+
+#include "zcommon.acs"
+
+
+// ye, it's a shameless copy of dual wielding script from brutal doom.
+
+// I have no shaem.
+script "SecFireTrigger" ENTER
+{
+ int buttons;
+
+ while (TRUE)
+ {
+   buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttons & BT_ALTATTACK)
+{
+   GiveInventory("Akimbo_Fire2", 1);
+   delay(2);
+}
+   TakeInventory("Akimbo_Fire2", 1);
+   delay(1);
+ }
+}
+
+
+script "PriFireTrigger" ENTER
+{
+ int buttons;
+
+ while (TRUE)
+ {
+   buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttons & BT_ATTACK)
+{
+   GiveInventory("Akimbo_Fire1", 1);
+   delay(2);
+}
+   TakeInventory("Akimbo_Fire1", 1);
+   delay(1);
+ }
+}
+
+script "PersonalBP_Expand" (void) {
+	if(getAmmoCapacity("Clip") == 300 || getAmmoCapacity("Clip") == 500){
+			terminate; // Dont expand if already expanded.
+		}
+	
+	SetAmmoCapacity("Clip", getAmmoCapacity("Clip") 					+ 100);
+	SetAmmoCapacity("Shell", getAmmoCapacity("Shell") 					+ 30);
+	SetAmmoCapacity("RocketAmmo", getAmmoCapacity("RocketAmmo") 		+ 25);
+	SetAmmoCapacity("HeavyBullets", getAmmoCapacity("HeavyBullets") 	+ 100);
+	SetAmmoCapacity("Dualshot_Ammo", getAmmoCapacity("Dualshot_Ammo") 	+ 50);
+	SetAmmoCapacity("Cell", getAmmoCapacity("Cell") 					+ 200);
+	SetAmmoCapacity("GLauncher_Ammo", getAmmoCapacity("GLauncher_Ammo") + 10);
+	SetAmmoCapacity("Flinger_Ammo", getAmmoCapacity("Flinger_Ammo") 	+ 50);
+}
+
+script "Repeater_HeatDamage" (void)
+{
+	int bonusDmg = (CheckInventory("Rep_Heat") / 20);
+	SetResultValue(bonusDmg);
+}
+
+script "Repeater_AimX" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 7);
+}
+
+script "Repeater_AimY" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 3);
+}
+
+script "RepeaterX2_AimX" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 5);
+}
+
+script "RepeaterX2_AimY" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 1);
+}
+
+script "RepGauss_AimX" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 5);
+}
+
+script "RepGauss_AimY" (void)
+{
+	int spread = (CheckInventory("Rep_Heat") / 25);
+	SetResultValue(spread + 1);
+}
+
+script "PlayerId" (void){
+	SetActivatorToTarget(0);
+	SetResultValue(ActivatorTID());
+}
+
+script "MinesGoBoom" (int tid) {
+	SpawnProjectile(tid, "Grenade_Mine_GoBoom", 0,0,0,0,0);
+	Thing_remove(tid);
+}
+
+script "SF_SpawnADrone" (void){
+	int player = ActivatorTID();
+	if(playerNumber() == -1){ 
+		giveinventory("Inventory_SawDrone", 1);
+		terminate;
+	}
+	int drone = UniqueTID(10000 + 100*playernumber());
+	print(d:player, s:" ", d:drone);
+	Spawn("sf_SawDrone", GetActorX(player), GetActorY(player), 50.0, drone, 0);
+	SetActivator(drone);
+	SetActorProperty(drone, APROP_MasterTID, player);
+	//SetActorProperty(player, APROP_TracerTID, drone);
+	//debugTidPointers(player);
+	debugTidPointers(drone);
+	//debugTidPointersStrings(player);
+	debugTidPointersStrings(drone);
+	
+}
+
+script "SF_Checc" (void){
+	/*
+	debugTidPointers(ActivatorTID());
+	debugTidPointersStrings(ActivatorTID());
+	*/
+}
+script "SF_UniqueDrone" (void){
+	setResultValue(UniqueTID(10000 + 100*playernumber()));
+}
+
+function void debugTidPointers (int debug){
+log(d:debug, s:") TAR:", d:GetActorProperty(debug, APROP_TargetTID), s:" MAS:", d:GetActorProperty(debug, APROP_MasterTID), s: " TRA:", d:GetActorProperty(debug, APROP_TracerTID) );
+}
+function void debugTidPointersStrings (int debug){
+log(s:GetActorClass(debug),
+ s:") TAR:", s:GetActorClass(GetActorProperty(debug, APROP_TargetTID)),
+ s:" MAS:", s:GetActorClass(GetActorProperty(debug, APROP_MasterTID)),
+ s: " TRA:", s:GetActorClass(GetActorProperty(debug, APROP_TracerTID)) );
+}

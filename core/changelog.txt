@@ -18,6 +18,7 @@ w) Work in progres
 	[d] Commander Terminal
 [d] Re-work the monster spawning waves.
 [d] De-hard code prices from samu-tools, for easier access.
+[d] Implement the extra expanding personal backpack. (Forgot to implement that :P)
 [ ] Implement the Bank tech.
 [ ] Implement the rune tech.
 [ ] Make the Shell Grenade.
@@ -35,12 +36,26 @@ w) Work in progres
 	[ ] The Zsec, good ol doom 3 reference, molesting you on early waves. It got a grenade launcher!
 	[ ] the ZombieRailgunner, you guys better keep distances between friends, cuz this guy can rail you up!
 [ ] Document the acs source, and some of the most important decorate files
-[ ] Replace the sprites for the Quadshot and Railgun
+[w] Replace the sprites for...
+	[d] Quadshot
+	[ ] Railgun
+	[ ] Spitter
 [ ] Change the attack type for the railgun, to make it... like an actual railgun.
 [ ] Ammo and Health indicators, to let the players know when to rethreat.
+[ ] Inventory/Weapon/Stats saving for the current game. 
+	(As long you're on the same map, you could recover your stuff.)
+	Useful if you're suffering for high ping and therefore, desynching enough 
+	to be kicked out of the game. Resulting in a total loss of your progress.
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (4 / 06 / 2020)
+	*) Fixed the miss-buying from the ammo terminal where you buy a mine, and it mistakes with the p_backpack.
+	+) Talking about that... the personal backpack is now ready to go! 
+	// Grants you some ammo space, completly separated from your backpack given by the commander.
+	*) Trying to clear some logs I've left up scattered arround.
+	*) Hopefully, drones will not activate wrong lines on the map.
+
 -) (1 / 06 / 2020) (Test 08 Relase!)
 	*) Fixed up the disappearing bodies after being killed.
 	

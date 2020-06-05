@@ -146,6 +146,10 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
              if (Tech_IsDone(FP_TECH_ARMORY_AMMOBP)) 
 				giveinventory("Backpack", 1);           // backpack
 			
+			 if(checkInventory("p_backpack")){ // Grants it some more ammo.
+				ACS_NamedExecuteAlways("PersonalBP_Expand", 0);
+			 }
+			
 			
 			 GiveInventory("Clip", 9999);
 			 GiveInventory("Shell", 9999);
