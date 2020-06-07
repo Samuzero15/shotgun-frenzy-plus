@@ -320,26 +320,26 @@ statusbar normal// Standard Doom Status bar
 	}	
 	
 	
-	drawbar "AC1_BULL", "AC0_BULL", Clip, vertical,  			   	    	540, 495;
-	drawnumber 3, confont, Gold, ammo("Clip"), alignment(center), 	   	 	556, 495, 0, RED, 10;
+	drawbar "AC1_BULL", "AC0_BULL", Clip, vertical,  			   	    			540, 495;
+	drawnumber 3, confont, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 507;
 	
-	drawbar "AC1_SHEL", "AC0_SHEL", Shell, vertical,  			   	    	572, 495;
-	drawnumber 3, confont, Gold, ammo("Shell"), alignment(center), 	    	598, 495, 0, RED, 10;
+	drawbar "AC1_SHEL", "AC0_SHEL", Shell, vertical,  			   	    			572, 495;
+	drawnumber 3, confont, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 507;
 	
-	drawbar "AC1_ROKT", "AC0_ROKT", RocketAmmo, vertical,  			    	604, 495;
-	drawnumber 3, confont, Gold, ammo("RocketAmmo"), alignment(center), 	630, 495, 0, RED, 10;
+	drawbar "AC1_ROKT", "AC0_ROKT", RocketAmmo, vertical,  			    			604, 495;
+	drawnumber 3, confont, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 507;
 	
-	drawbar "AC1_CELL", "AC0_CELL", Cell, vertical,  			   			636, 495;
-	drawnumber 3, confont, Gold, ammo("Cell"), alignment(center), 			652, 495, 0, RED, 10;
+	drawbar "AC1_CELL", "AC0_CELL", Cell, vertical,  			   					636, 495;
+	drawnumber 3, confont, Gold, ammocapacity("Cell"), alignment(center), 			652, 507;
 	
-	drawbar "AC1_HBUL", "AC0_HBUL", HeavyBullets, vertical,  			   	540, 527;
-	drawnumber 3, confont, Gold, ammo("HeavyBullets"), alignment(center), 	556, 527, 0, RED, 10;
+	drawbar "AC1_HBUL", "AC0_HBUL", HeavyBullets, vertical,  			   			540, 527;
+	drawnumber 3, confont, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 539;
 	
-	drawbar "AC1_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical,  			   	572, 527;
-	drawnumber 3, confont, Gold, ammo("Dualshot_Ammo"), alignment(center), 	598, 527, 0, RED, 10;
+	drawbar "AC1_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical,  			   			572, 527;
+	drawnumber 3, confont, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 539;
 	
-	drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   	604, 527;
-	drawnumber 3, confont, Gold, ammo("Flinger_Ammo"), alignment(center), 	630, 527, 0, RED, 10;
+	drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   			604, 527;
+	drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 539;
 	
 	
 	

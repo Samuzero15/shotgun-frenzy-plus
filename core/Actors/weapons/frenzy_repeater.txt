@@ -2,23 +2,6 @@
 Actor Rep_Heat : Inventory {inventory.MaxAmount 200}
 Actor Rep_IdleSpin : Inventory {inventory.MaxAmount 1}
 
-ACTOR HeavyBullets : Ammo
-{
-	Inventory.Icon "RAMMO0"
-	Inventory.Amount 200
-	Inventory.MaxAmount 300
-	
-	Ammo.BackpackAmount 60
-	Ammo.BackpackMaxAmount 600
-	
-	States
-	{
-		Spawn:
-			RAMM O -1
-			stop
-	}
-}
-
 ACTOR Repeater : Weapon
 {
 	Weapon.AmmoUse 			0

@@ -100,20 +100,3 @@ ACTOR Dualshot_Razor : Weapon
 		goto lightdone
 	}
 }
-
-ACTOR Dualshot_Ammo : Ammo
-{
-	Inventory.Icon "DDAMA0"
-	Inventory.Amount 200
-	Inventory.MaxAmount 200
-	
-	Ammo.BackpackAmount 400
-	Ammo.BackpackMaxAmount 400
-	
-	States
-	{
-		Spawn:
-			GRNS A -1
-			stop
-	}
-}

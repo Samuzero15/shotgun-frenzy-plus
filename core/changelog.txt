@@ -46,9 +46,17 @@ w) Work in progres
 	(As long you're on the same map, you could recover your stuff.)
 	Useful if you're suffering for high ping and therefore, desynching enough 
 	to be kicked out of the game. Resulting in a total loss of your progress.
+	
 //// Changelog ////
 
 v0 - Before the beginning...
+
+-) (7 / 06 / 2020)
+	*) Now the texture warnings are (almost) gone! meaning more speed on loading!
+	*) Some small fixes on the texture definitions...
+	*) Small fix on building turrets, flames are flames, and teslas are teslas :p
+	*) Separated the ammo in fp_ammo.dec, just to keep on track those ammos.
+	*) Moved the texture definitions to the resource pack, for easier maintanbility.
 
 -) (6 / 06 / 2020)
 	+) Some more graphics, now focused on the ammo counter!

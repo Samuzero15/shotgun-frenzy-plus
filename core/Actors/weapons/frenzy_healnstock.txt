@@ -1,70 +1,3 @@
-ACTOR Supplies_Health_Big : Ammo
-{
-	Inventory.Icon "MEDIA0"
-	Inventory.Amount 1
-	Inventory.MaxAmount 10
-	
-	Ammo.BackpackAmount 2
-	Ammo.BackpackMaxAmount 20
-	
-	States
-	{
-		Spawn:
-			MEDI A -1
-			stop
-	}
-}
-
-ACTOR Supplies_Ammo_Big : Ammo
-{
-	Inventory.Icon "AMMOA0"
-	Inventory.Amount 1
-	Inventory.MaxAmount 10
-	
-	Ammo.BackpackAmount 2
-	Ammo.BackpackMaxAmount 20
-	
-	States
-	{
-		Spawn:
-			MEDI A -1
-			stop
-	}
-}
-
-ACTOR Supplies_Health : Ammo
-{
-	Inventory.Icon "StimA0"
-	Inventory.Amount 1
-	Inventory.MaxAmount 10
-	
-	Ammo.BackpackAmount 2
-	Ammo.BackpackMaxAmount 20
-	
-	States
-	{
-		Spawn:
-			MEDI A -1
-			stop
-	}
-}
-
-ACTOR Supplies_Ammo : Ammo
-{
-	Inventory.Icon "ClipA0"
-	Inventory.Amount 1
-	Inventory.MaxAmount 10
-	
-	Ammo.BackpackAmount 2
-	Ammo.BackpackMaxAmount 20
-	
-	States
-	{
-		Spawn:
-			MEDI A -1
-			stop
-	}
-}
 
 Actor Sup_HealMode : Inventory {Inventory.MaxAmount 1}
 
@@ -78,6 +11,7 @@ ACTOR Supplier : Weapon
 	Weapon.AmmoType2			"Supplies_Health"
 	Inventory.PickupMessage		"You got the Stocker!"
 	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
+	Tag "Supplier Machine (Sec. Ammo / Pri. Health)"
 	
 	Weapon.UpSound			"w/load4"
 	Weapon.selectionorder 3100
@@ -142,8 +76,9 @@ ACTOR Supplier_Big : Weapon
 	Weapon.AmmoUse2 		1
 	Weapon.AmmoGive2 		8
 	Weapon.AmmoType2			"Supplies_Health_Big"
-	Inventory.PickupMessage		"You got the Stocker!"
+	Inventory.PickupMessage		"You got the BEEG Supplier!"
 	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
+	Tag "Big Supplier Machine (Sec. Ammo / Pri. Health)"
 	
 	Weapon.UpSound			"w/load4"
 	Weapon.selectionorder 3100

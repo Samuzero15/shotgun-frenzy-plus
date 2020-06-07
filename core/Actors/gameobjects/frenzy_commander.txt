@@ -121,10 +121,10 @@ ACTOR CommanderCamLow 2320
 			NULL A 40 A_SpawnItemEx("CommanderCam_Position", 128, 0, 0, 0)
 			goto Spawn
 		Spawn_HealthDispenser:
-			NULL A 1 A_SpawnItemEx("HealthDispenser_Build", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("HealthDispenser", 512, 0, 0, 0)
 			goto Spawn
 		Spawn_AmmoDispenser:
-			NULL A 1 A_SpawnItemEx("AmmoDispenser_Build", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("AmmoDispenser", 512, 0, 0, 0)
 			goto Spawn
 		Spawn_Sandbags:
 			NULL A 1 A_SpawnItemEx ("Sandbag_Building", 512, 0, 0)

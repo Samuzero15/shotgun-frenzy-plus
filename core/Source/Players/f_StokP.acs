@@ -160,9 +160,6 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			 
 			 GiveInventory("Cell", 9999);
 			
-			 GiveInventory("Healer_Ammo", 9999);
-			 GiveInventory("Stocker_Ammo", 9999);
-			
 			 GiveInventory("Dualshot_Ammo", 9999);
 			 GiveInventory("HeavyBullets", 9999);
 			 

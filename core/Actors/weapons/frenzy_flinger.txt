@@ -130,20 +130,3 @@ ACTOR Flinger_MinePlacer : Weapon
 		goto lightdone
 	}
 }
-
-ACTOR Flinger_Ammo : Ammo
-{
-	Inventory.Icon "GRNSA0"
-	Inventory.Amount 50
-	Inventory.MaxAmount 50
-	
-	Ammo.BackpackAmount 100
-	Ammo.BackpackMaxAmount 100
-	
-	States
-	{
-		Spawn:
-			GRNS A -1
-			stop
-	}
-}

@@ -95,7 +95,7 @@ actor CommanderBlocker
 
 
 
-ACTOR MarinePlasma: ScriptedMarine 9109
+ACTOR MarinePlasma_SF: ScriptedMarine replaces MarinePlasma
 {
   Game Doom
   States

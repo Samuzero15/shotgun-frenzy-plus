@@ -250,8 +250,8 @@ function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_Eve
 				case 2: f_TipShow ("CM41", "Rocket Turret", "Commander is building a Rocket Turret...", 2); break;
 				case 3: f_TipShow ("CM42", "Plasma Turret", "Commander is building a Plasma Turret...", 2); break;
 				
-				case 4: f_TipShow ("CM47", "Flame Turret", "Commander is building a Flame Turret...", 2); break;
-				case 5: f_TipShow ("CM46", "Tesla Turret", "Commander is building a Tesla Turret...", 2); break;
+				case 4: f_TipShow ("CM46", "Tesla Turret", "Commander is building a Tesla Turret...", 2); break;
+				case 5: f_TipShow ("CM47", "Flame Turret", "Commander is building a Flame Turret...", 2); break;
 				case 6: f_TipShow ("CM45", "Shotgun Turret", "Awaiting Construction...", 2); break;
 				case 7: f_TipShow ("CM43", "Rail Turret", "Awaiting Construction...", 2); break;
 			}   

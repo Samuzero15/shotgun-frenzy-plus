@@ -14,5 +14,6 @@ Actor Boolean : Inventory { +Undroppable Inventory.MaxAmount 1 }
 
 #include "Actors/projectiles/frenzy_monsterproj.txt"
 #include "Actors/weapons/frenzy_healnstock.txt"
+#include "Actors/weapons/fp_ammo.dec"
 #include "Actors/projectiles/fplus_flak.txt"
 

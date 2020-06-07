@@ -1,4 +1,4 @@
-ACTOR Credit : CustomInventory 30002
+ACTOR Credit : CustomInventory 31002
 {
 	Inventory.PickupMessage 	"You got 15 Credits!"
 	+INVENTORY.QUIET //[Samu] Shadap!
@@ -16,7 +16,7 @@ ACTOR Credit : CustomInventory 30002
     }
 }
 
-ACTOR SuperCredit : CustomInventory 30003
+ACTOR SuperCredit : CustomInventory 31003
 {
 	Inventory.PickupMessage 	"You got 50 Credits!"
 	+INVENTORY.QUIET //[Samu] Shadap!
@@ -35,7 +35,7 @@ ACTOR SuperCredit : CustomInventory 30003
 }
 
 
-ACTOR UltraCredit : CustomInventory 30004
+ACTOR UltraCredit : CustomInventory 31004
 {
 	Inventory.PickupMessage 	"You got 150 Credits!"
 	+INVENTORY.QUIET //[Samu] Shadap!
@@ -53,7 +53,7 @@ ACTOR UltraCredit : CustomInventory 30004
     }
 }
 
-ACTOR SplatCredit : CustomInventory 30005
+ACTOR SplatCredit : CustomInventory 31005
 {
 	Inventory.PickupMessage 	"You got 15 Credits!"
 	+INVENTORY.QUIET //[Samu] Shadap!
@@ -71,7 +71,7 @@ ACTOR SplatCredit : CustomInventory 30005
     }
 }
 
-ACTOR MoneyBag : CustomInventory 30006
+ACTOR MoneyBag : CustomInventory 31006
 {
 	Inventory.PickupMessage 	"You got 3000 Credits from the Commander!"
 	+INVENTORY.QUIET //[Samu] Shadap!

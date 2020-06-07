@@ -1,0 +1,121 @@
+
+ACTOR Supplies_Health_Big : Ammo
+{
+	Inventory.Icon "MEDIA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 10
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 20
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+ACTOR Supplies_Ammo_Big : Ammo
+{
+	Inventory.Icon "AMMOA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 10
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 20
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+ACTOR Supplies_Health : Ammo
+{
+	Inventory.Icon "StimA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 10
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 20
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+ACTOR Supplies_Ammo : Ammo
+{
+	Inventory.Icon "ClipA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 10
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 20
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+
+ACTOR HeavyBullets : Ammo
+{
+	Inventory.Icon "RAMMO0"
+	Inventory.Amount 200
+	Inventory.MaxAmount 300
+	
+	Ammo.BackpackAmount 60
+	Ammo.BackpackMaxAmount 600
+	
+	States
+	{
+		Spawn:
+			RAMM O -1
+			stop
+	}
+}
+
+ACTOR Dualshot_Ammo : Ammo
+{
+	Inventory.Icon "DDAMA0"
+	Inventory.Amount 200
+	Inventory.MaxAmount 200
+	
+	Ammo.BackpackAmount 400
+	Ammo.BackpackMaxAmount 400
+	
+	States
+	{
+		Spawn:
+			GRNS A -1
+			stop
+	}
+}
+
+
+ACTOR Flinger_Ammo : Ammo
+{
+	Inventory.Icon "GRNSA0"
+	Inventory.Amount 50
+	Inventory.MaxAmount 50
+	
+	Ammo.BackpackAmount 100
+	Ammo.BackpackMaxAmount 100
+	
+	States
+	{
+		Spawn:
+			GRNS A -1
+			stop
+	}
+}

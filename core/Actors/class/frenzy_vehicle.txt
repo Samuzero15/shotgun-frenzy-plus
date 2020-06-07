@@ -490,7 +490,7 @@ actor TankGun : Weapon // With some upgrades, hell yea!
 	TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
 	//TNT1 A 0 A_JumpIfInventory("TankGunFireNails")
 	TNT1 A 0 A_JumpIfInventory("Akimbo_Fire1", 1, "FireNails")
-	TNT1 A 0 A_TakeInventory("TankGun_FireNails", 1)
+	TNT1 A 0 
   loop
   ImStillFirin:
 	TNT1 A 1
