@@ -343,7 +343,7 @@ statusbar normal// Standard Doom Status bar
 	
 	
 	
-	drawselectedinventory center, artiflash, VerVibes, 250, 530;
+	drawselectedinventory center, artiflash, VerVibes, 250, 530, 260, 530;
 	//[Samu] Well this is ridiculous, but if there is no other option to hide it...
 	InInventory "Inventory_Soulsphere"{
 		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);

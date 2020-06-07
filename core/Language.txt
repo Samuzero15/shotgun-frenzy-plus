@@ -1,5 +1,5 @@
 [Enu default]
-PATCH_VERSION = "(XXXXXX)";
+PATCH_VERSION = "";
 CORE_CHANGES = "";
 
 // All weapon descriptions.

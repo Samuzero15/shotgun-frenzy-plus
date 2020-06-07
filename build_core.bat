@@ -11,9 +11,12 @@ for /f "delims=" %%i in ('git rev-list HEAD --count') do set REVISIONNUMBER=%%i
 
 cd core
 	for /f "tokens=2 delims=()" %%a in (GAMEINFO.txt) do set RELASE=%%a
+
+	for /f "tokens=2 delims=()" %%a in (Language.txt) do set OBJETIVE=%%a
 		
 	
 echo %RELASE%
+echo %OBJETIVE%
 rem do set RELASE=%%A
 
 pause
