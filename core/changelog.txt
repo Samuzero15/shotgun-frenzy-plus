@@ -49,6 +49,13 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+
+-) (6 / 06 / 2020)
+	+) Some more graphics, now focused on the ammo counter!
+	*) Also, adjusted the graphics in the sbarinfo to let it work.
+	*) A new game file has been created, the music pack!
+	// If the music changes, only this pack will be affected, separated from the resource pack.
+	
 -) (4 / 06 / 2020)
 	*) Fixed the miss-buying from the ammo terminal where you buy a mine, and it mistakes with the p_backpack.
 	+) Talking about that... the personal backpack is now ready to go! 

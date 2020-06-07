@@ -30,4 +30,10 @@ for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
 cd ..
 7za x -ores -y "sfplus_res-d.pk3"
 
+set folder=%~dp0mus
+cd /d %folder%
+for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
+cd ..
+7za x -omus -y "sfplus_mus-d.pk3"
+
 pause

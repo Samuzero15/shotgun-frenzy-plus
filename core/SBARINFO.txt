@@ -318,29 +318,30 @@ statusbar normal// Standard Doom Status bar
 		drawnumber 3, StatBigsNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
      }
 	}	
-	drawstring confont, white, "BULL", 												560, 496, 0, alignment(left);
-	drawnumber 3, VERVIBES, Gold, ammo("Clip"), alignment(left), 						  			 	   600, 495, 0, RED, 50;
-	drawnumber 3, VERVIBES, WHITE, ammocapacity("Clip"), prefix("", "\cu/ \cj"), alignment(left), 		   630, 495;
 	
-	drawstring confont, white, "NAIL", 												560, 506, 0, alignment(left);
-	drawnumber 3, VERVIBES, Gold, ammo("Dualshot_Ammo"), alignment(left),  								   600, 505, 0, RED, 50;
-	drawnumber 3, VERVIBES, WHITE, ammocapacity("Dualshot_Ammo"), prefix("", "\cu/ \cj"), alignment(left), 630, 505;
 	
-	drawstring confont, white, "SHEL", 												560, 516, 0, alignment(left);
-	drawnumber 3, VERVIBES, Gold, ammo("Shell"), alignment(left),									  	   600, 515, 0, RED, 10;
-	drawnumber 3, VERVIBES, WHITE, ammocapacity("Shell"), prefix("", "\cu/ \cj"),	alignment(left),       630, 515;
+	drawbar "AC1_BULL", "AC0_BULL", Clip, vertical,  			   	    	540, 495;
+	drawnumber 3, confont, Gold, ammo("Clip"), alignment(center), 	   	 	556, 495, 0, RED, 10;
 	
-	drawstring confont, white, "RKCT", 												560, 526, 0, alignment(left);
-	drawnumber 3, VERVIBES, Gold, ammo("RocketAmmo"),alignment(left),								  	   600, 525, 0, RED, 10;
-	drawnumber 3, VERVIBES, WHITE, ammocapacity("RocketAmmo"), prefix("", "\cu/ \cj"), alignment(left),    630, 525;
+	drawbar "AC1_SHEL", "AC0_SHEL", Shell, vertical,  			   	    	572, 495;
+	drawnumber 3, confont, Gold, ammo("Shell"), alignment(center), 	    	598, 495, 0, RED, 10;
 	
-	drawstring confont, white, "GNDS", 												560, 536, 0, alignment(left);
-	drawnumber 3, VERVIBES, Gold, ammo("Flinger_Ammo"),alignment(left),								  	   600, 535, 0, RED, 10;
-	drawnumber 3, VERVIBES, WHITE, ammocapacity("Flinger_Ammo"), prefix("", "\cu/ \cj"), alignment(left),  630, 535;
+	drawbar "AC1_ROKT", "AC0_ROKT", RocketAmmo, vertical,  			    	604, 495;
+	drawnumber 3, confont, Gold, ammo("RocketAmmo"), alignment(center), 	630, 495, 0, RED, 10;
 	
-	drawstring confont, white, "CELL", 												560, 546, 0, alignment(left);
-	drawnumber 3, VERVIBES, Gold, ammo("Cell"),alignment(left),								  			   600, 545, 0, RED, 50;
-	drawnumber 3, VERVIBES, WHITE, ammocapacity("Cell"), prefix("", "\cu/ \cj"), alignment(left), 	       630, 545;
+	drawbar "AC1_CELL", "AC0_CELL", Cell, vertical,  			   			636, 495;
+	drawnumber 3, confont, Gold, ammo("Cell"), alignment(center), 			652, 495, 0, RED, 10;
+	
+	drawbar "AC1_HBUL", "AC0_HBUL", HeavyBullets, vertical,  			   	540, 527;
+	drawnumber 3, confont, Gold, ammo("HeavyBullets"), alignment(center), 	556, 527, 0, RED, 10;
+	
+	drawbar "AC1_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical,  			   	572, 527;
+	drawnumber 3, confont, Gold, ammo("Dualshot_Ammo"), alignment(center), 	598, 527, 0, RED, 10;
+	
+	drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   	604, 527;
+	drawnumber 3, confont, Gold, ammo("Flinger_Ammo"), alignment(center), 	630, 527, 0, RED, 10;
+	
+	
 	
 	drawselectedinventory center, artiflash, VerVibes, 250, 530;
 	//[Samu] Well this is ridiculous, but if there is no other option to hide it...
