@@ -260,3 +260,21 @@ ACTOR BulletPuff_Player
 			stop
 	}
 }
+
+
+ACTOR NullPuff : BulletPuff
+{
++NOBLOODDECALS
+-BloodSplatter
++BLOODLESSIMPACT
+  States
+  {
+  Spawn:
+    TNT1 A 4 Bright
+    TNT1 A 4 Bright
+    // Intentional fall-through
+  Melee:
+    TNT1 AA 4 Bright
+    Stop
+  }
+}

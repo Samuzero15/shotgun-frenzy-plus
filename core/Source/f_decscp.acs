@@ -5,12 +5,13 @@
 // f_decscp.acs
 // Scripts for the decorate tricks
 
-// Put all you Decorate-Only scripts here, this script should be loaded in any level.
+// Put all your Decorate-Only scripts here, this script should be loaded in any level.
 
 
 #library "f_decscp"
 
 #include "zcommon.acs"
+#include "acsutils.acs"
 
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
@@ -158,3 +159,5 @@ log(s:GetActorClass(debug),
  s:" MAS:", s:GetActorClass(GetActorProperty(debug, APROP_MasterTID)),
  s: " TRA:", s:GetActorClass(GetActorProperty(debug, APROP_TracerTID)) );
 }
+
+ 

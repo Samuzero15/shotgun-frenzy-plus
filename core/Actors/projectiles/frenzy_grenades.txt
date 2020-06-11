@@ -169,33 +169,68 @@ ACTOR Grenade_NerveGas // Hm...
 	States
 	{
 		Spawn:
-			GNER ABA 3 bright
-			GNER B 3 bright A_PlaySound("w9/fire2")
-			GNER CBC 3 bright
-			GNER B 3 bright A_PlaySound("w9/fire2")
+			GRE1 A 3 bright a_playSound("Flinger/Grenade/NerveGas")
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			GRE1 B 3 bright
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			GRE1 A 3 bright
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			GRE1 B 3 bright A_PlaySound("w9/fire2")
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			
+			GRE1 C 3 bright a_playSound("Flinger/Grenade/NerveGas")
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			GRE1 B 3 bright
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			GRE1 C 3 bright
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			GRE1 B 3 bright A_PlaySound("w9/fire2")
+			TNT1 A 0 A_SpawnItemEX("NerveGas_HurtQuick")
+			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
+			
 			TNT1 A 0 A_ChangeFlag("ThruActors",false)
 			goto Spawn
 		Death:
-			GNER A 3 bright 
-			GNER C 2 bright A_PlaySound("w9/fire2")
-			GNER A 3 bright 
-			GNER C 2 bright A_PlaySound("w9/fire2")
-			GNER A 3 bright 
-			GNER AAD 3
+			GRE1 A 3 bright 
+			GRE1 C 2 bright A_PlaySound("w9/fire2")
+			GRE1 A 3 bright 
+			GRE1 C 2 bright A_PlaySound("w9/fire2")
+			GRE1 A 3 bright 
+			GRE1 AAD 3
 			TNT1 A 0 A_Explode(30,64,0,0,64)
 			GRNS A 0 A_SpawnItemEX("NerveGas_Hurt", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 			TNT1 A 0 a_playSound("Flinger/Grenade/NerveGas")
 		GasPasser:
-			TNT1 A 0 bright a_SpawnItemEx("NerveGas_SteamUp",0,0,0,0,0,frandom(2.5,5.0))
-			GNER D 4 bright A_SpawnItemEx("NerveGas_Fog", 0.0, 0.1, 16.0, frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(0.0, 2.0))
+			TNT1 A 0 bright a_SpawnItem("NerveGas_GFX")
+			GRE1 D 4 bright 
 			TNT1 A 0 A_SetArg(1, args[1] + 1)
 			TNT1 A 0 A_JumpIf(args[1] > 35, "IDontFeelSoGood")
 			loop
 		IDontFeelSoGood:
-			GNER A 4 bright a_fadeout(0.1)
+			GRE1 A 4 bright a_fadeout(0.1)
 			loop
 	}
 }
+
+Actor NerveGas_GFX
+{
+	states{
+		Spawn:
+		TNT1 A 1
+		TNT1 A 0
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_SteamUp",0,0,0,0,0,frandom(2.5,5.0))
+		TNT1 A 0 bright A_SpawnItemEx("NerveGas_Fog", 0.0, 0.1, 16.0, frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(0.0, 2.0))
+		stop
+	}
+}
+
 //[Samu] Taken from alphahiatus dm!
 // Thank you Himaura!
 ACTOR NerveGas_Fog // Hm...
@@ -280,6 +315,20 @@ Actor NerveGas_Hurt
 	Death:
 		TNT1 A 1
 		Stop
+	}
+}
+
+Actor NerveGas_HurtQuick : NerveGas_Hurt
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(2, 32, 0, true, 32)
+		TNT1 A 1 A_Explode(2, 48, 0, true, 48)
+		TNT1 A 1 A_Explode(2, 64, 0, true, 64)
+	Death:
+		goto SUPER::DEATH
 	}
 }
 
@@ -457,6 +506,114 @@ ACTOR Grenade_GLauncher
 			MISL B 8 bright A_Explode(250,128,0,0,16)
 			MISL C 6 bright
 			MISL D 4 bright
+			stop
+	}
+}
+
+//////
+
+//////
+
+Actor Grenade_ShellBlast {
+	Radius				16
+	Height				8
+	
+	Speed				40
+	Gravity				1.0
+	Mass				100
+	DamageType			MarineFire2
+	Damage 30
+	
+	Obituary			"%o got a lot of lead by %k's shell grenade."
+	
+	Projectile
+	+NOBLOCKMAP
+	+DROPOFF
+	+MISSILE
+	+ACTIVATEIMPACT
+	+ACTIVATEPCROSS
+	+DOOMBOUNCE
+	-NOGRAVITY
+	+DONTGIB
+	bouncecount 16
+	
+	DeathSound "w2/fire"
+	
+	States
+	{
+		Spawn:
+			GRE2 ABA 3 bright
+			GRE2 B 3 bright A_PlaySound("w9/fire2")
+			goto Spawn
+		Death:
+			
+			PUFF B 1 A_Explode(30,256,0,0,16)
+			TNT1 A 0 a_setScale(1.5, 1.5)
+			PUFF B 1 A_SetArg(3, 0)
+		RelaseThePeels:
+			TNT1 A 0 A_Jumpif(args[3] >= 30, "ChangeTheWorld_MyFinalMessage_Goodbye")
+			TNT1 A 0 A_SetArg(0, cos(random(0,360)) * (80) *  (2*random(0,1) - 1))
+			TNT1 A 0 A_SetArg(1, sin(random(0,360)) * (80) *  (2*random(0,1) - 1))
+			TNT1 A 0 A_SetArg(2, cos(random(0,360)) * (80) *  (2*random(0,1) - 1))
+			TNT1 A 0 A_SetArg(3, args[3] + 1)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet",0,0,0,args[0],args[1],args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+			loop
+		ChangeTheWorld_MyFinalMessage_Goodbye:
+			TNT1 A 0 A_Playsound("")
+			PUFF B 6 bright 
+			PUFF C 6 bright
+			PUFF D 4 bright
+			stop
+	}
+
+}
+
+
+Actor ShellBlast_PelletTracer
+{
+  Radius 0
+  Height 0
+  //Gravity 100
+  Renderstyle Add
+  +FORCEXYBILLBOARD
+  	+NOBLOCKMAP
+	+FloorClip
+	+SPECIALFLOORCLIP
+	+NOGRAVITY
+	+NOTELEPORT
+    +DoomBounce
+	+ClientsideOnly
+  States
+  {
+   Melee:
+   Spawn:
+		PUFF AA 1
+		stop
+  }
+}
+
+Actor ShellBlast_Pellet	: FastProjectile {
+	Radius				11
+	Height				8
+	Speed				5
+	Damage				(10)
+	DamageType			MarineFire
+	RenderStyle			Add
+	Projectile
+	+MTHRUSPECIES
+	DeathSound "weapons/rico"
+	MissileType "ShellBlast_PelletTracer"
+	MissileHeight 8
+	//DeathSound		"weapons/rocklx"
+	Obituary			"%o ate some of %k's lead."
+	
+	States
+	{
+		Spawn:
+			PUFF A 1 
+			Loop
+		Death:
+			PUFF A 1 A_SpawnItem("Bulletpuff_Standard") 
 			stop
 	}
 }

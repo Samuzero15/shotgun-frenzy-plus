@@ -3,7 +3,7 @@ d) Done!
 w) Work in progres
 
 [w] Re-Make the SBarInfo
-	[d] Do some more touchs in the normal bar.
+	[w] Do some more touchs in the normal bar.
 	[ ] Rework the full screen bar.
 [w] Get some more voices for Amy (Yeah that computer lady voice.)
 [d] Clientside the Acs HUD.
@@ -19,9 +19,9 @@ w) Work in progres
 [d] Re-work the monster spawning waves.
 [d] De-hard code prices from samu-tools, for easier access.
 [d] Implement the extra expanding personal backpack. (Forgot to implement that :P)
+[d] Make the Shell Grenade.
 [ ] Implement the Bank tech.
 [ ] Implement the rune tech.
-[ ] Make the Shell Grenade.
 [ ] Flak-Bombs for the dual shot.
 [ ] Achievemets? just for the sake of it? Heck yes!.
 [ ] Make a Process Queue, a way to control the rushing researches.
@@ -50,8 +50,16 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (10 / 06 / 2020)
+	+) Shell grenade is finally here!
+	// This grenade will spit pellets across the map. 
+	// Weak in it's explosion, but im sure you will enjoy it with your
+	// Spitter's Shell Grenade upgrade. (This weapon can fire a pair of 'em!)
+	*) Now Nerve Gas grenades can relase gas on the way! Just to cause some small 
+	   grief on the enemy lines.  
+	*) Tweaked the Ammo counter a bit, just to give it more contrast on the HUD.
 
--) (7 / 06 / 2020)
+-) (7 / 06 / 2020) (Test 09 Relase!)
 	*) Now the texture warnings are (almost) gone! meaning more speed on loading!
 	*) Some small fixes on the texture definitions...
 	*) Small fix on building turrets, flames are flames, and teslas are teslas :p

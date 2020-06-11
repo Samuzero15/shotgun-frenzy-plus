@@ -1,6 +1,6 @@
 
-Actor Integer : Inventory { +Undroppable Inventory.MaxAmount 0x7fffffff }
-Actor Boolean : Inventory { +Undroppable Inventory.MaxAmount 1 }
+Actor Integer : Inventory { Inventory.MaxAmount 0x7fffffff }
+Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 
 #include "Actors/sfrenzy14.dec"
 #include "Actors/acsutils.dec"
