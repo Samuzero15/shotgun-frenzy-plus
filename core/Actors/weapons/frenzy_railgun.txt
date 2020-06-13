@@ -1,6 +1,6 @@
 ACTOR SF_Railgun : Weapon
 {
-	Weapon.AmmoUse 		        1
+	Weapon.AmmoUse 		        2
 	Weapon.AmmoGive 		50
 	Weapon.AmmoType			"Cell"
 	Inventory.PickupMessage		"You got the Railgun!"
@@ -9,7 +9,7 @@ ACTOR SF_Railgun : Weapon
 	Weapon.UpSound			"w/load6"
 	AttackSound			"x1/fire1"
 	//[Samu] No ripping, booo :v
-	Tag "Power Railgun NR-800"
+	Tag "Laser Railgun"
 	weapon.selectionorder 2900
 	States
 	{
@@ -26,8 +26,10 @@ ACTOR SF_Railgun : Weapon
 			goto Select
 		Fire:
 			X1E1 A 2 A_GunFlash
-			X1E1 B 0 A_FireCustomMissile("Rail_Standard", 0)
-			//X1E1 B 0 A_FireCustomMissile("Rail_Standard", 0)
+			X1E1 B 0 A_RailAttack (40, 0, 1, "", "", RGF_NOPIERCING, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E1 B 0 A_RailAttack (40, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E1 B 0 A_RailAttack (40, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E1 B 0 A_RailAttack (40, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
 			X1E1 BCB 1
 			X1E1 A 4
 			X1E1 A 4 A_Refire
@@ -45,7 +47,7 @@ ACTOR SF_Railgun : Weapon
 
 ACTOR Railgun_Taser : Weapon
 {
-	Weapon.AmmoUse1			1
+	Weapon.AmmoUse1			2
 	Weapon.AmmoUse2 		5
 	Weapon.AmmoGive 		50
 	Weapon.AmmoType1		"Cell"
@@ -55,7 +57,7 @@ ACTOR Railgun_Taser : Weapon
 	
 	Weapon.UpSound			"w/load6"
 	AttackSound			"x1/fire1"
-	Tag "Power Railgun NR-800 + Taser"
+	Tag "Laser Railgun + Taser"
 	weapon.selectionorder 2900
 	States
 	{
@@ -72,7 +74,10 @@ ACTOR Railgun_Taser : Weapon
 			goto Select
 		Fire:
 			X1E2 A 2 A_GunFlash
-			X1E2 B 0 A_FireCustomMissile("Rail_Standard", 0)
+			X1E1 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E1 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E1 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E1 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
 			X1E2 BCB 1
 			X1E2 A 4
 			X1E2 A 4 A_Refire
@@ -95,8 +100,8 @@ ACTOR Railgun_Taser : Weapon
 
 ACTOR Railgun_Slug : Weapon
 {
-	Weapon.AmmoUse1			1
-	Weapon.AmmoUse2 		2
+	Weapon.AmmoUse1			2
+	Weapon.AmmoUse2 		8
 	Weapon.AmmoGive 		50
 	Weapon.AmmoType1		"Cell"
 	Weapon.AmmoType2		"Cell"
@@ -105,7 +110,7 @@ ACTOR Railgun_Slug : Weapon
 	
 	Weapon.UpSound			"w/load6"
 	AttackSound			"x1/fire1"
-	Tag "Power Railgun R0-101 Slug"
+	Tag "Laser Railgun + Slug Rails"
 	weapon.selectionorder 2900
 	States
 	{
@@ -122,16 +127,18 @@ ACTOR Railgun_Slug : Weapon
 			goto Select
 		Fire:
 			X1E3 A 2 A_GunFlash
-			X1E3 B 0 A_FireCustomMissile("Rail_Standard", 0)
-			//X1E1 B 0 A_FireCustomMissile("Rail_Standard", 0)
+			X1E3 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E3 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E3 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
+			X1E3 B 0 A_RailAttack (60, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_Puff",0,0,0,0,10.0,0,"Rail_Standard_Tracer")		// damage from 60 to 100
 			X1E3 BCB 1
 			X1E3 A 4
 			X1E3 A 4 A_Refire
 			goto Ready
 		AltFire:
 			X1E3 A 2 A_GunFlash
-			X1E3 B 0 A_RailAttack (150, 1, 1, "0C 00 FF", "ff ff ff", 0, 0, "BulletPuff_Player")		// damage from 60 to 100
-			X1E3 B 0 A_RailAttack (150, -1, 1, "0C 00 FF", "ff ff ff", 0, 0, "BulletPuff_Player")		// damage from 60 to 100
+			X1E3 B 0 A_RailAttack (200, 1, 1, "0C 00 FF", "ff ff ff", 0, 0, "BulletPuff_Player")		// damage from 60 to 100
+			X1E3 B 0 A_RailAttack (200, -1, 1, "0C 00 FF", "ff ff ff", 0, 0, "BulletPuff_Player")		// damage from 60 to 100
 			X1E3 BCB 9
 			X1E3 A 4 A_Refire
 			goto Ready

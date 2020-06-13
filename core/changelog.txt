@@ -20,6 +20,7 @@ w) Work in progres
 [d] De-hard code prices from samu-tools, for easier access.
 [d] Implement the extra expanding personal backpack. (Forgot to implement that :P)
 [d] Make the Shell Grenade.
+[d] Change the attack type for the railgun, to make it... like an actual railgun.
 [ ] Implement the Bank tech.
 [ ] Implement the rune tech.
 [ ] Flak-Bombs for the dual shot.
@@ -40,7 +41,7 @@ w) Work in progres
 	[d] Quadshot
 	[ ] Railgun
 	[ ] Spitter
-[ ] Change the attack type for the railgun, to make it... like an actual railgun.
+[ ] Edit a bit the slug rail attack.
 [ ] Ammo and Health indicators, to let the players know when to rethreat.
 [ ] Inventory/Weapon/Stats saving for the current game. 
 	(As long you're on the same map, you could recover your stuff.)
@@ -50,6 +51,14 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (12 / 06 / 2020)
+	*) Let's hope this time fixes the disappearing single upgrade weapons.
+	*) Improved the railgun projectiles, now this, is what i call a Railgun!
+	// I'd just edit the slug attack for the slug laser railgun later...
+	+) Meet the Gasoline, the Flamer's new Ammo type!
+	// Yeah, Sometimes i'd prefer to fire plasma with cells and flamer with gasoline.
+	*) Small improvements on the weapons, and also renamed their tags.
+
 -) (10 / 06 / 2020)
 	+) Shell grenade is finally here!
 	// This grenade will spit pellets across the map. 

@@ -85,6 +85,23 @@ ACTOR HeavyBullets : Ammo
 	}
 }
 
+ACTOR Gasoline : Ammo
+{
+	Inventory.Icon "AGASA0"
+	Inventory.Amount 20
+	Inventory.MaxAmount 200
+	
+	Ammo.BackpackAmount 50
+	Ammo.BackpackMaxAmount 400
+	
+	States
+	{
+		Spawn:
+			AGAS A -1
+			stop
+	}
+}
+
 ACTOR Dualshot_Ammo : Ammo
 {
 	Inventory.Icon "DDAMA0"

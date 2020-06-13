@@ -9,6 +9,7 @@ ACTOR Launcher : Weapon
 	
 	Weapon.UpSound			"w8/load"
 	weapon.selectionorder 2900
+	Tag "Rocket Launcher"
 	States
 	{
 		Ready:
@@ -52,6 +53,7 @@ ACTOR Launcher_Multi : Weapon
 	
 	Weapon.UpSound			"w8/load"
 	weapon.selectionorder 2900
+	Tag "Multiple Rocket Launcher"
 	States
 	{
 		Ready:
@@ -104,7 +106,7 @@ ACTOR Launcher_Exploder : Weapon
 	
 	Weapon.UpSound			"w8/load"
 	weapon.selectionorder 2900
-	
+	Tag "Exploder Rocket Launcher"
 	States
 	{
 		Ready:

@@ -37,7 +37,7 @@ Script "SFPlus_LoadDefaultEnemySet" Open
 			if		(i == 0) string = strparam(s:string,s:"E");
 			else if	(i == 1) string = strparam(s:string,s:"M");
 			else if	(i == 2) string = strparam(s:string,s:"H");
-			string = strparam(s:"FPlus_AIDSpawn_", s:string, d:j);
+			string = strparam(s:"FPSpawn_", s:string, d:j);
 			//log(s:string);
 			MList_SetSpawner (i, j, string);
 		}

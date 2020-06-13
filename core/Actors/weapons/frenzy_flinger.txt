@@ -9,6 +9,7 @@ ACTOR Flinger : Weapon
 	
 	Weapon.UpSound			"w9/load"
 	weapon.selectionorder 2900
+	Tag "Grenade Flinger"
 	States
 	{
 		Ready:
@@ -50,6 +51,7 @@ ACTOR Flinger_Expander : Weapon
 	
 	Weapon.UpSound			"w9/load"
 	weapon.selectionorder 2900
+	Tag "Expanding Grenade Flinger"
 	States
 	{
 		Ready:
@@ -94,6 +96,7 @@ ACTOR Flinger_MinePlacer : Weapon
 	
 	Weapon.UpSound			"w9/load"
 	weapon.selectionorder 2900
+	Tag "Sticky Grenade Flinger"
 	States
 	{
 		Ready:

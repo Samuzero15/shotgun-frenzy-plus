@@ -142,7 +142,7 @@ ACTOR Quadshot_Full : Weapon
 		goto lightdone
 	}
 }
-
+/*
 ACTOR Quadshot_Explosive : Weapon
 {
 	Weapon.AmmoUse 			4

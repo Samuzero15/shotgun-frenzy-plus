@@ -273,6 +273,16 @@ statusbar normal// Standard Doom Status bar
 	}
 	
 	usesammo{
+		isSelected "Repeater"{
+		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+		}
+		isSelected "Repeater_DoubleSpeed"{
+		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+		}
+		isSelected "Repeater_BlastShells"{
+		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+		}
+	
 	usessecondaryammo not
      {
 	 	//alpha 0.5{DrawImage ammoicon1, 308, 184, none, 10,10;}
@@ -293,18 +303,7 @@ statusbar normal// Standard Doom Status bar
 		
      }
     usessecondaryammo
-     {
-	 
-		isSelected "Repeater"{
-		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
-		}
-		isSelected "Repeater_DoubleSpeed"{
-		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
-		}
-		isSelected "Repeater_BlastShells"{
-		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
-		}
-			
+     {	
 			
 		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
 		//alpha 0.5{DrawImage ammoicon1, 305, 190, none, 10,10;}
@@ -340,6 +339,9 @@ statusbar normal// Standard Doom Status bar
 	
 	drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   			604, 527;
 	drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 539;
+	
+	drawbar "AC1_GASL", "AC0_GASL", Gasoline, vertical,  			   				636, 527;
+	drawnumber 3, confont, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 539;
 	
 	
 	

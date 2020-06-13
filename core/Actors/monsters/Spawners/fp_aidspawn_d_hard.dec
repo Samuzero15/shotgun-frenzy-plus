@@ -1,118 +1,118 @@
 
 
-Actor FPlus_AIDSpawn_DH1 : RandomSpawner {
+Actor FPSpawn_DH1 : RandomSpawner {
 	dropitem ""
 }
 
-Actor FPlus_AIDSpawn_DH2 : RandomSpawner {
+Actor FPSpawn_DH2 : RandomSpawner {
 	dropitem ""
 }
 
-Actor FPlus_AIDSpawn_DH3 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfDemon"
+Actor FPSpawn_DH3 : RandomSpawner {
+	dropitem "FPSSpot_sfDemon"
 }
 
-Actor FPlus_AIDSpawn_DH4 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfDemon"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
+Actor FPSpawn_DH4 : RandomSpawner {
+	dropitem "FPSSpot_sfDemon"
+	dropitem "FPSSpot_BloodDemonClone"
 }
 
-Actor FPlus_AIDSpawn_DH5 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfDemon"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_BloodFiend"
+Actor FPSpawn_DH5 : RandomSpawner {
+	dropitem "FPSSpot_sfDemon"
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_BloodFiend"
 }
 
-Actor FPlus_AIDSpawn_DH6 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_BloodFiend"
-	dropitem "FPlus_AIDSpot_StoneDemon"
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_SSGZombie"
+Actor FPSpawn_DH6 : RandomSpawner {
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_BloodFiend"
+	dropitem "FPSSpot_StoneDemon"
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_SSGZombie"
 }
 
-Actor FPlus_AIDSpawn_DH7 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFatso"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_StoneDemon"
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_sfHellknight"
+Actor FPSpawn_DH7 : RandomSpawner {
+	dropitem "FPSSpot_sfFatso"
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_StoneDemon"
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_sfHellknight"
 }
 
-Actor FPlus_AIDSpawn_DH8 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfArachnotron_tw"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
-	dropitem "FPlus_AIDSpot_sfHellknight"
+Actor FPSpawn_DH8 : RandomSpawner {
+	dropitem "FPSSpot_sfArachnotron_tw"
+	dropitem "FPSSpot_sfBaronOfHell"
+	dropitem "FPSSpot_sfHellknight"
 }
 
-Actor FPlus_AIDSpawn_DH9 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfArachnotron_tw"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
-	dropitem "FPlus_AIDSpot_sfHellknight"
+Actor FPSpawn_DH9 : RandomSpawner {
+	dropitem "FPSSpot_sfArachnotron_tw"
+	dropitem "FPSSpot_sfBaronOfHell"
+	dropitem "FPSSpot_sfHellknight"
 }
 
-Actor FPlus_AIDSpawn_DH10 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_Cyberbaron"
-	dropitem "FPlus_AIDSpot_sfFatso"      
+Actor FPSpawn_DH10 : RandomSpawner {
+	dropitem "FPSSpot_Cyberbaron"
+	dropitem "FPSSpot_sfFatso"      
 }
 
-Actor FPlus_AIDSpawn_DH11 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFatso"
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
+Actor FPSpawn_DH11 : RandomSpawner {
+	dropitem "FPSSpot_sfFatso"
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_sfBaronOfHell"
 }
 
-Actor FPlus_AIDSpawn_DH12 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
-	dropitem "FPlus_AIDSpot_Cybruiser"
+Actor FPSpawn_DH12 : RandomSpawner {
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_sfBaronOfHell"
+	dropitem "FPSSpot_Cybruiser"
 }
 
-Actor FPlus_AIDSpawn_DH13 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
-	dropitem "FPlus_AIDSpot_ArchonOfHell"
+Actor FPSpawn_DH13 : RandomSpawner {
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_Cyberbaron"
+	dropitem "FPSSpot_ArchonOfHell"
 }
 
-Actor FPlus_AIDSpawn_DH14 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
-	dropitem "FPlus_AIDSpot_ArchonOfHell"
+Actor FPSpawn_DH14 : RandomSpawner {
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_Cyberbaron"
+	dropitem "FPSSpot_ArchonOfHell"
 }
 
-Actor FPlus_AIDSpawn_DH15 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
-	dropitem "FPlus_AIDSpot_sfArchvile"
+Actor FPSpawn_DH15 : RandomSpawner {
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_Cyberbaron"
+	dropitem "FPSSpot_sfArchvile"
 }
 
-Actor FPlus_AIDSpawn_DH16 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
-	dropitem "FPlus_AIDSpot_sfCyberdemon"
+Actor FPSpawn_DH16 : RandomSpawner {
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_Cyberbaron"
+	dropitem "FPSSpot_sfCyberdemon"
 }
 
-Actor FPlus_AIDSpawn_DH17 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfCyberdemon"
-	dropitem "FPlus_AIDSpot_Cybruiser"
+Actor FPSpawn_DH17 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+	dropitem "FPSSpot_Cybruiser"
 }
 
-Actor FPlus_AIDSpawn_DH18 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_sfArchvile"
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_sfCyberdemon"
+Actor FPSpawn_DH18 : RandomSpawner {
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_sfArchvile"
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_sfCyberdemon"
 }
 
-Actor FPlus_AIDSpawn_DH19 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_SpiderAnnihilator"
-	dropitem "FPlus_AIDSpot_sfArchvile"
-	dropitem "FPlus_AIDSpot_Annihilator"
-	dropitem "FPlus_AIDSpot_sfCyberdemon"
+Actor FPSpawn_DH19 : RandomSpawner {
+	dropitem "FPSSpot_SpiderAnnihilator"
+	dropitem "FPSSpot_sfArchvile"
+	dropitem "FPSSpot_Annihilator"
+	dropitem "FPSSpot_sfCyberdemon"
 }
 
-Actor FPlus_AIDSpawn_DH20 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_SpiderAnnihilator"
-	dropitem "FPlus_AIDSpot_sfArchvile"
-	dropitem "FPlus_AIDSpot_Annihilator"
+Actor FPSpawn_DH20 : RandomSpawner {
+	dropitem "FPSSpot_SpiderAnnihilator"
+	dropitem "FPSSpot_sfArchvile"
+	dropitem "FPSSpot_Annihilator"
 }

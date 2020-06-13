@@ -18,6 +18,16 @@ ACTOR FrenzyPlayer : PlayerPawn
 	Player.ViewHeight 46
 	Player.StartItem "Beretta"
 	Player.StartItem "Clip", 50
+	Player.WeaponSlot 0, "Supplier", 		"Supplier_Big"
+	Player.WeaponSlot 1, "Beretta", 		"Beretta_Dual", 		"Beretta_SMG"
+	Player.WeaponSlot 2, "Boomstick", 		"Boomstick_Full"
+	Player.WeaponSlot 3, "SSG", 			"SSG_Autoload", 		"SSG_Explosive", 		"Quadshot", 				"Quadshot_Full", 			"Quadshot_Explosive"
+	Player.WeaponSlot 4, "Buckshot", 		"Buckshot_Chamber", 	"Buckshot_Explosive", 	"Spitter", 					"Spitter_SSG", 				"Spitter_GLauncher"
+	Player.WeaponSlot 5, "Dualshot", 		"Dualshot_Razor", 		"Repeater", 			"Repeater_DoubleSpeed", 	"Repeater_BlastShells"
+	Player.WeaponSlot 6, "Launcher", 		"Launcher_Multi", 		"Launcher_Exploder", 	"Flinger", 					"Flinger_Expander", 		"Flinger_MinePlacer"
+	Player.WeaponSlot 7, "SF_Railgun", 		"Railgun_Taser", 		"Railgun_Slug", 		"PlasmaGun", 				"PlasmaGun_Advanced", 		"PlasmaGun_Spread"
+	Player.WeaponSlot 8, "Flamer", 			"FlamerS", 				"BoomerCannon"
+	Player.WeaponSlot 9, "BFG", 			"BFGS"
 	
 	
 	//+NOSKIN

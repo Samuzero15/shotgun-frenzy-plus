@@ -2,7 +2,7 @@ ACTOR Flamer : Weapon
 {
 	Weapon.AmmoUse			1
 	Weapon.AmmoGive 		50
-	Weapon.AmmoType			"Cell"
+	Weapon.AmmoType			"Gasoline"
 	Inventory.PickupMessage		"You got the Flamer 2.0!"
 	Obituary			"%o got flamed by a fanboy"
 	

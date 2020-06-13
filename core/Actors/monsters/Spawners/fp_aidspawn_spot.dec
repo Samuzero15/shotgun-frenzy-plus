@@ -1,7 +1,7 @@
 
 //This actors are here for just 1 single reason, Space check.
 
-Actor FPlus_AIDSpot_sfFastZombie{
+Actor FPSSpot_sfFastZombie{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfFastZombie",0,0,0,0,0,0,0,0,0,tid)  
@@ -9,7 +9,7 @@ Actor FPlus_AIDSpot_sfFastZombie{
 	}
 }
 
-Actor FPlus_AIDSpot_sfZombieman{
+Actor FPSSpot_sfZombieman{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfZombieman",0,0,0,0,0,0,0,0,0,tid)  
@@ -17,7 +17,7 @@ Actor FPlus_AIDSpot_sfZombieman{
 	}
 }
 
-Actor FPlus_AIDSpot_sfShotgunguy{
+Actor FPSSpot_sfShotgunguy{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfShotgunguy", 0,0,0,0,0,0,0,0,0,tid)  
@@ -25,7 +25,7 @@ Actor FPlus_AIDSpot_sfShotgunguy{
 	}
 }
 
-Actor FPlus_AIDSpot_sfChaingunguy{
+Actor FPSSpot_sfChaingunguy{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfChaingunguy",0,0,0,0,0,0,0,0,0,tid)  
@@ -33,7 +33,7 @@ Actor FPlus_AIDSpot_sfChaingunguy{
 	}
 }
 
-Actor FPlus_AIDSpot_Chaingunguy2{
+Actor FPSSpot_Chaingunguy2{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Chaingunguy2",0,0,0,0,0,0,0,0,0,tid)  
@@ -41,7 +41,7 @@ Actor FPlus_AIDSpot_Chaingunguy2{
 	}
 }
 
-Actor FPlus_AIDSpot_sfDoomimp{
+Actor FPSSpot_sfDoomimp{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfDoomimp",0,0,0,0,0,0,0,0,0,tid)  
@@ -49,7 +49,7 @@ Actor FPlus_AIDSpot_sfDoomimp{
 	}
 }
 
-Actor FPlus_AIDSpot_sfDemon{
+Actor FPSSpot_sfDemon{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfDemon",0,0,0,0,0,0,0,0,0,tid)  
@@ -57,7 +57,7 @@ Actor FPlus_AIDSpot_sfDemon{
 	}
 }
 
-Actor FPlus_AIDSpot_SSGZombie{
+Actor FPSSpot_SSGZombie{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("SSGZombie",0,0,0,0,0,0,0,0,0,tid)  
@@ -65,7 +65,7 @@ Actor FPlus_AIDSpot_SSGZombie{
 	}
 }
 
-Actor FPlus_AIDSpot_ChainsawZombie{
+Actor FPSSpot_ChainsawZombie{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("ChainsawZombie",0,0,0,0,0,0,0,0,0,tid)  
@@ -73,7 +73,7 @@ Actor FPlus_AIDSpot_ChainsawZombie{
 	}
 }
 
-Actor FPlus_AIDSpot_NamiDarkImp{
+Actor FPSSpot_NamiDarkImp{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("NamiDarkImp",0,0,0,0,0,0,0,0,0,tid)  
@@ -81,7 +81,7 @@ Actor FPlus_AIDSpot_NamiDarkImp{
 	}
 }
 
-Actor FPlus_AIDSpot_VoidDarkImp{
+Actor FPSSpot_VoidDarkImp{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("VoidDarkImp",0,0,0,0,0,0,0,0,0,tid)  
@@ -89,7 +89,7 @@ Actor FPlus_AIDSpot_VoidDarkImp{
 	}
 }
 
-Actor FPlus_AIDSpot_Nailborg{
+Actor FPSSpot_Nailborg{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Nailborg",0,0,0,0,0,0,0,0,0,tid)  
@@ -97,7 +97,7 @@ Actor FPlus_AIDSpot_Nailborg{
 	}
 }
 
-Actor FPlus_AIDSpot_NailborgCommando{
+Actor FPSSpot_NailborgCommando{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("NailborgCommando",0,0,0,0,0,0,0,0,0,tid)  
@@ -105,7 +105,7 @@ Actor FPlus_AIDSpot_NailborgCommando{
 	}
 }
 
-Actor FPlus_AIDSpot_Hellion{
+Actor FPSSpot_Hellion{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Hellion",0,0,0,0,0,0,0,0,0,tid)  
@@ -113,7 +113,7 @@ Actor FPlus_AIDSpot_Hellion{
 	}
 }
 
-Actor FPlus_AIDSpot_BloodFiend{
+Actor FPSSpot_BloodFiend{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("BloodFiend",0,0,0,0,0,0,0,0,0,tid)  
@@ -121,7 +121,7 @@ Actor FPlus_AIDSpot_BloodFiend{
 	}
 }
 
-Actor FPlus_AIDSpot_BloodDemonClone{
+Actor FPSSpot_BloodDemonClone{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("BloodDemonClone",0,0,0,0,0,0,0,0,0,tid)  
@@ -129,7 +129,7 @@ Actor FPlus_AIDSpot_BloodDemonClone{
 	}
 }
 
-Actor FPlus_AIDSpot_sfRevenant{
+Actor FPSSpot_sfRevenant{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfRevenant",0,0,0,0,0,0,0,0,0,tid)  
@@ -137,7 +137,7 @@ Actor FPlus_AIDSpot_sfRevenant{
 	}
 }
 
-Actor FPlus_AIDSpot_sfHellknight{
+Actor FPSSpot_sfHellknight{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfHellknight",0,0,0,0,0,0,0,0,0,tid)  
@@ -145,7 +145,7 @@ Actor FPlus_AIDSpot_sfHellknight{
 	}
 }
 
-Actor FPlus_AIDSpot_sfBaronOfHell{
+Actor FPSSpot_sfBaronOfHell{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfBaronOfHell",0,0,0,0,0,0,0,0,0,tid)  
@@ -153,7 +153,7 @@ Actor FPlus_AIDSpot_sfBaronOfHell{
 	}
 }
 
-Actor FPlus_AIDSpot_sfFatso{
+Actor FPSSpot_sfFatso{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfFatso",0,0,0,0,0,0,0,0,0,tid)  
@@ -161,7 +161,7 @@ Actor FPlus_AIDSpot_sfFatso{
 	}
 }
 
-Actor FPlus_AIDSpot_Cybruiser{
+Actor FPSSpot_Cybruiser{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Cybruiser",0,0,0,0,0,0,0,0,0,tid)  
@@ -169,7 +169,7 @@ Actor FPlus_AIDSpot_Cybruiser{
 	}
 }
 
-Actor FPlus_AIDSpot_Cyberbaron{
+Actor FPSSpot_Cyberbaron{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Cyberbaron",0,0,0,0,0,0,0,0,0,tid)  
@@ -177,7 +177,7 @@ Actor FPlus_AIDSpot_Cyberbaron{
 	}
 }
 
-Actor FPlus_AIDSpot_sfArachnotron_tw{
+Actor FPSSpot_sfArachnotron_tw{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfArachnotron_tw",0,0,0,0,0,0,0,0,0,tid)  
@@ -185,7 +185,7 @@ Actor FPlus_AIDSpot_sfArachnotron_tw{
 	}
 }
 
-Actor FPlus_AIDSpot_SlimeImp{
+Actor FPSSpot_SlimeImp{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("SlimeImp",0,0,0,0,0,0,0,0,0,tid)  
@@ -193,7 +193,7 @@ Actor FPlus_AIDSpot_SlimeImp{
 	}
 }
 
-Actor FPlus_AIDSpot_sfArchvile{
+Actor FPSSpot_sfArchvile{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfArchvile",0,0,0,0,0,0,0,0,0,tid)  
@@ -201,7 +201,7 @@ Actor FPlus_AIDSpot_sfArchvile{
 	}
 }
 
-Actor FPlus_AIDSpot_sfCyberdemon{
+Actor FPSSpot_sfCyberdemon{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("sfCyberdemon",0,0,0,0,0,0,0,0,0,tid)  
@@ -209,7 +209,7 @@ Actor FPlus_AIDSpot_sfCyberdemon{
 	}
 }
 
-Actor FPlus_AIDSpot_Annihilator{
+Actor FPSSpot_Annihilator{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Annihilator",0,0,0,0,0,0,0,0,0,tid)  
@@ -217,7 +217,7 @@ Actor FPlus_AIDSpot_Annihilator{
 	}
 }
 
-Actor FPlus_AIDSpot_SpiderAnnihilator{
+Actor FPSSpot_SpiderAnnihilator{
 	states{
 		Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("SpiderAnnihilator",0,0,0,0,0,0,0,0,0,tid)  

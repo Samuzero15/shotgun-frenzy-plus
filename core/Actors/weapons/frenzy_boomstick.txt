@@ -10,6 +10,7 @@ ACTOR Boomstick : Weapon
 	AttackSound			"w2/fire"
 	Tag "Boomstick Shotgun"
 	weapon.selectionorder 3200
+	Weapon.SlotNumber 2
 	States
 	{
 		Ready:
@@ -52,7 +53,7 @@ ACTOR Boomstick : Weapon
 		
 	}
 }
-
+/*
 ACTOR Boomstick_Bayonet : Weapon
 {
 	Weapon.AmmoUse 			1
@@ -161,7 +162,7 @@ ACTOR Boomstick_Explosive : Weapon
 			TNT1 A 1
 		goto lightdone
 	}
-}
+}*/
 
 ACTOR Boomstick_Full : Weapon
 {
@@ -175,6 +176,7 @@ ACTOR Boomstick_Full : Weapon
 	Weapon.ReadySound		"weapons/sawidle"
 	AttackSound			"w2/fire2"
 	DamageType			MarineFire
+	Weapon.SlotNumber 2
 	
 	Tag "Combat Boomstick Shotgun"
 	

@@ -162,6 +162,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			
 			 GiveInventory("Dualshot_Ammo", 9999);
 			 GiveInventory("HeavyBullets", 9999);
+			 Giveinventory("Gasoline", 9999);
 			 
 			 GiveInventory("Supplies_Health", 9999);
 			 GiveInventory("Supplies_Ammo", 9999);
@@ -203,6 +204,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			
 		GiveInventory("Dualshot_Ammo", 9999);
 		GiveInventory("HeavyBullets", 9999);
+		Giveinventory("Gasoline", 9999);
 		
 		GiveInventory("Supplies_Health", 9999);
 		GiveInventory("Supplies_Ammo", 9999);
@@ -232,6 +234,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		GiveInventory("Flinger_Ammo", 1);
 			 
 		GiveInventory("Cell", 20);
+		Giveinventory("Gasoline", 10);
 			
 		GiveInventory("Dualshot_Ammo", 15);
 		GiveInventory("HeavyBullets", 40);

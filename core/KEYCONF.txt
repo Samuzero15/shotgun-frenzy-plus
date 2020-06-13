@@ -5,14 +5,13 @@ weaponsection Resource
 setslot 0 Supplier Supplier_Big
 setslot 1 Beretta Beretta_Dual Beretta_SMG
 setslot 2 Boomstick Boomstick_Full
-setslot 3 SSG SSG_Autoload SSG_Explosive Quadshot Quadshot_Full Quadshot_Explosive
+setslot 3 SSG SSG_Autoload SSG_Explosive Quadshot Quadshot_Full
 setslot 4 Buckshot Buckshot_Chamber Buckshot_Explosive Spitter Spitter_SSG Spitter_GLauncher
 setslot 5 Dualshot Dualshot_Razor Repeater Repeater_DoubleSpeed Repeater_BlastShells
 setslot 6 Launcher Launcher_Multi Launcher_Exploder Flinger Flinger_Expander Flinger_MinePlacer
 setslot 7 SF_Railgun Railgun_Taser Railgun_Slug PlasmaGun PlasmaGun_Advanced PlasmaGun_Spread
 setslot 8 Flamer FlamerS BoomerCannon
 setslot 9 BFG BFGS
-
 
 addkeysection "Shotgun Frenzy Item Hotkeys" sfItemHotkeys
 addmenukey "Use Godsphere" usegodsphere
@@ -33,6 +32,6 @@ alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;sum
 alias TestWeapon "take weapons; give Spitter_GLauncher; give Ammo"
 alias TestActor "Summon sf_SawDrone"
 
-alias sfp_ResetGameOptions "sf_startcash 2500; sf_teamcash 5000; sf_cacodemons 0; sf_doorholdtime 30; sf_percentfast 10; sf_gamelength 10; sf_skillmult 3; sf_creditcorrection -8;"
+alias sfp_ResetGameOptions "sf_gamelength 10; sf_startcash 2500; sf_teamcash 5000; sf_cacodemons 0; sf_doorholdtime 30; sf_percentfast 10; sf_gamelength 10; sf_skillmult 3; sf_creditcorrection -8;"
 alias sfp_ResetUserOptions "sfp_autouse 0; sfp_stimpack_t 40; sfp_soulsphere_t 20; sfp_megasphere_t 15; spf_hitmarksnd"
 //alias sfp_FuckMyBinds "unbind"

@@ -13,7 +13,7 @@ ACTOR Dualshot : Weapon
 	
 	Weapon.UpSound			"w7/load"
 	weapon.selectionorder 2900
-	
+	Tag "Nail Dualshot"
 	States
 	{
 		Ready:
@@ -72,7 +72,7 @@ ACTOR Dualshot_Razor : Weapon
 	Weapon.UpSound			"w7/load"
 	Weapon.ReadySound		"weapons/sawidle"
 	weapon.selectionorder 2900
-	
+	Tag "Razorblade Dualshot"
 	States
 	{
 		Ready:

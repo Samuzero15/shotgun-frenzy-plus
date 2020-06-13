@@ -1,86 +1,3 @@
-ACTOR Rail_Standard
-{
-	Radius				11
-	Height				8
-	Speed				30
-	Damage				1
-	DamageType			MarineFire
-	
-	DamageType			MarineFire
-	RenderStyle			Add
-	
-	Projectile
-	+RANDOMIZE
-	+MTHRUSPECIES
-	
-	SeeSound			"x1/fire1"
-	//DeathSound			"weapons/rocklx"
-	Obituary			"%o smells %k's rails... oh wait, thats $o's melted insides"
-        DontHurtShooter
-	
-	States
-	{
-		Spawn:
-			PLSS A 1 bright A_SpawnItem ("Rail_Standard_Tracer" , 0, 0, 0, 0)
-			PLSS B 1
-			goto Spawn
-		Death:
-			PLSE C 8 bright A_Explode(100,128,0,0,16)
-			PLSE D 6 bright
-			PLSE E 4 bright
-			stop
-	}
-}
-
-ACTOR Rail_Taser
-{
-	Radius				11
-	Height				8
-	Speed				30
-	Damage				60
-	DamageType			MarineFire
-	
-	DamageType			MarineFire
-	RenderStyle			Add
-	
-	Projectile
-	+RANDOMIZE
-	+MTHRUSPECIES
-	Obituary			"%o smells %k's rails... oh wait, thats $o's melted insides"
-	
-	SeeSound 			"x1/taser"
-	
-	States
-	{
-		Spawn:
-			PLSE CDE 2
-			stop
-		Death:
-			PLSE C 8 bright
-			PLSE D 6 bright
-			PLSE E 4 bright
-			stop
-	}
-}
-
-ACTOR Rail_Standard_Tracer
-{
-	Radius				11
-	Height				8
-	
-	RenderStyle			Add
-	Scale				0.7
-	
-	+CLIENTSIDEONLY
-	+NOINTERACTION
-	
-	States
-	{
-		Spawn:
-			PLSS AB 1 bright A_FadeOut(0.1)
-			goto Spawn
-	}
-}
 
 // Plasma Ball
 actor PlasmaBall_Player : FastProjectile replaces PlasmaBall
@@ -317,4 +234,29 @@ ACTOR PlasmaProjectile_Spread_Expand3 : PlasmaProjectile_Spread_Expand
 		PLSS AB 2 bright A_FadeOut(0.5)
 		goto Spawn
       }
+}
+
+
+Actor Gauss_Puff 
+{
+	Radius				2
+	Height				2
+	DamageType			MarineFire
+	+AlwaysPuff
+	+NoBlockMap
+	+nogravity
+	+NODAMAGETHRUST
+	
+	states	
+	{
+	Spawn:
+		TNT1 A 0
+		PLSS A 3 BRIGHT A_Explode(10,16,0,0,16)
+		PLSS B 2 BRIGHT
+		PLSE AEE 2 BRIGHT
+		stop
+	Death:
+		TNT1 A 1
+		stop
+	}
 }

@@ -8,6 +8,7 @@
 
 //Priority doesn't matter anymore
 #import "f_IntDB.acs"
+#import "fl_techs.acs"
 #import "f_Tip.acs"
 
 #import "f_SecMan.acs"

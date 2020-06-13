@@ -10,7 +10,7 @@
 
 #library "fl_MupDir"
 #include "zcommon.acs"
-#include "samu_tools.acs"
+//#include "samu_tools.acs"
 int MechUpTop = 0;
 int mechup_list[5][5];
 

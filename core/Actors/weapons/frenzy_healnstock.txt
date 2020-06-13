@@ -11,7 +11,7 @@ ACTOR Supplier : Weapon
 	Weapon.AmmoType2			"Supplies_Health"
 	Inventory.PickupMessage		"You got the Stocker!"
 	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
-	Tag "Supplier Machine (Sec. Ammo / Pri. Health)"
+	Tag "Supplier Machine (Pri. Ammo / Sec. Health)"
 	
 	Weapon.UpSound			"w/load4"
 	Weapon.selectionorder 3100
@@ -78,7 +78,7 @@ ACTOR Supplier_Big : Weapon
 	Weapon.AmmoType2			"Supplies_Health_Big"
 	Inventory.PickupMessage		"You got the BEEG Supplier!"
 	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
-	Tag "Big Supplier Machine (Sec. Ammo / Pri. Health)"
+	Tag "Big Supplier Machine (Pri. Ammo / Sec. Health)"
 	
 	Weapon.UpSound			"w/load4"
 	Weapon.selectionorder 3100

@@ -1,142 +1,142 @@
 
 
 
-Actor FPlus_AIDSpawn_DE1 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFastZombie"
+Actor FPSpawn_DE1 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
 }
             
-Actor FPlus_AIDSpawn_DE2 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFastZombie"
-	dropitem "FPlus_AIDSpot_ChainsawZombie"
-	dropitem "FPlus_AIDSpot_sfZombieman"
-	dropitem "FPlus_AIDSpot_sfShotgunguy"
+Actor FPSpawn_DE2 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfZombieman"
+	dropitem "FPSSpot_sfShotgunguy"
 }
             
 
-Actor FPlus_AIDSpawn_DE3 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFastZombie"
-	dropitem "FPlus_AIDSpot_sfChaingunGuy"
-	dropitem "FPlus_AIDSpot_sfShotgunguy"
-	dropitem "FPlus_AIDSpot_sfDemon"
+Actor FPSpawn_DE3 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfChaingunGuy"
+	dropitem "FPSSpot_sfShotgunguy"
+	dropitem "FPSSpot_sfDemon"
 }
 
-Actor FPlus_AIDSpawn_DE4 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFastZombie"
-	dropitem "FPlus_AIDSpot_sfChaingunGuy"
-	dropitem "FPlus_AIDSpot_sfShotgunguy"
-	dropitem "FPlus_AIDSpot_SSGZombie"
+Actor FPSpawn_DE4 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfChaingunGuy"
+	dropitem "FPSSpot_sfShotgunguy"
+	dropitem "FPSSpot_SSGZombie"
 }
 
-Actor FPlus_AIDSpawn_DE5 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfChaingunGuy"
-	dropitem "FPlus_AIDSpot_ChaingunGuy2"
-	dropitem "FPlus_AIDSpot_sfShotgunguy"
-	dropitem "FPlus_AIDSpot_sfDemon"
+Actor FPSpawn_DE5 : RandomSpawner {
+	dropitem "FPSSpot_sfChaingunGuy"
+	dropitem "FPSSpot_ChaingunGuy2"
+	dropitem "FPSSpot_sfShotgunguy"
+	dropitem "FPSSpot_sfDemon"
 }
 
-Actor FPlus_AIDSpawn_DE6 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_NamiDarkImp"
-	dropitem "FPlus_AIDSpot_VoidDarkImp"
-	dropitem "FPlus_AIDSpot_ChaingunGuy2"
-	dropitem "FPlus_AIDSpot_sfDemon"
-	dropitem "FPlus_AIDSpot_SSGZombie"
+Actor FPSpawn_DE6 : RandomSpawner {
+	dropitem "FPSSpot_NamiDarkImp"
+	dropitem "FPSSpot_VoidDarkImp"
+	dropitem "FPSSpot_ChaingunGuy2"
+	dropitem "FPSSpot_sfDemon"
+	dropitem "FPSSpot_SSGZombie"
 }
 
-Actor FPlus_AIDSpawn_DE7 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfChaingunGuy"
-	dropitem "FPlus_AIDSpot_sfShotgunguy"
-	dropitem "FPlus_AIDSpot_SSGZombie"
-	dropitem "FPlus_AIDSpot_sfDoomImp"
+Actor FPSpawn_DE7 : RandomSpawner {
+	dropitem "FPSSpot_sfChaingunGuy"
+	dropitem "FPSSpot_sfShotgunguy"
+	dropitem "FPSSpot_SSGZombie"
+	dropitem "FPSSpot_sfDoomImp"
 }
 
-Actor FPlus_AIDSpawn_DE8 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_SSGZombie"
-	dropitem "FPlus_AIDSpot_Nailborg"
-	dropitem "FPlus_AIDSpot_sfChaingunGuy"
-	dropitem "FPlus_AIDSpot_NailborgCommando"
-	dropitem "FPlus_AIDSpot_Hellion"
+Actor FPSpawn_DE8 : RandomSpawner {
+	dropitem "FPSSpot_SSGZombie"
+	dropitem "FPSSpot_Nailborg"
+	dropitem "FPSSpot_sfChaingunGuy"
+	dropitem "FPSSpot_NailborgCommando"
+	dropitem "FPSSpot_Hellion"
 }
 
-Actor FPlus_AIDSpawn_DE9 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_BloodFiend"
-	dropitem "FPlus_AIDSpot_Nailborg"
-	dropitem "FPlus_AIDSpot_SSGZombie"
+Actor FPSpawn_DE9 : RandomSpawner {
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_BloodFiend"
+	dropitem "FPSSpot_Nailborg"
+	dropitem "FPSSpot_SSGZombie"
 }
 
-Actor FPlus_AIDSpawn_DE10 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_NailborgCommando"
-	dropitem "FPlus_AIDSpot_Nailborg"
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_SSGZombie"
+Actor FPSpawn_DE10 : RandomSpawner {
+	dropitem "FPSSpot_NailborgCommando"
+	dropitem "FPSSpot_Nailborg"
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_SSGZombie"
 }
 
-Actor FPlus_AIDSpawn_DE11 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfShotgunGuy"
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_sfHellknight"
-	dropitem "FPlus_AIDSpot_SSGZombie"
+Actor FPSpawn_DE11 : RandomSpawner {
+	dropitem "FPSSpot_sfShotgunGuy"
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_sfHellknight"
+	dropitem "FPSSpot_SSGZombie"
 }
 
-Actor FPlus_AIDSpawn_DE12 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfShotgunGuy"
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_sfDemon"
-	dropitem "FPlus_AIDSpot_sfHellknight"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
+Actor FPSpawn_DE12 : RandomSpawner {
+	dropitem "FPSSpot_sfShotgunGuy"
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_sfDemon"
+	dropitem "FPSSpot_sfHellknight"
+	dropitem "FPSSpot_sfBaronOfHell"
 }
 
-Actor FPlus_AIDSpawn_DE13 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_BloodFiend"
-	dropitem "FPlus_AIDSpot_SFRevenant"
+Actor FPSpawn_DE13 : RandomSpawner {
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_BloodFiend"
+	dropitem "FPSSpot_SFRevenant"
     
 }
 
-Actor FPlus_AIDSpawn_DE14 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfRevenant"
-	dropitem "FPlus_AIDSpot_BloodFiend"
-	dropitem "FPlus_AIDSpot_sfHellknight"
+Actor FPSpawn_DE14 : RandomSpawner {
+	dropitem "FPSSpot_sfRevenant"
+	dropitem "FPSSpot_BloodFiend"
+	dropitem "FPSSpot_sfHellknight"
 }
 
-Actor FPlus_AIDSpawn_DE15 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfDemon"
-	dropitem "FPlus_AIDSpot_SSGZombie"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_sfRevenant"
+Actor FPSpawn_DE15 : RandomSpawner {
+	dropitem "FPSSpot_sfDemon"
+	dropitem "FPSSpot_SSGZombie"
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_sfRevenant"
     
 }
 
-Actor FPlus_AIDSpawn_DE16 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfFastZombie"
-	dropitem "FPlus_AIDSpot_sfFatso"
-	dropitem "FPlus_AIDSpot_SSGZombie"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_sfRevenant"
+Actor FPSpawn_DE16 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfFatso"
+	dropitem "FPSSpot_SSGZombie"
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_sfRevenant"
 }
 
-Actor FPlus_AIDSpawn_DE17 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_sfFatso"
+Actor FPSpawn_DE17 : RandomSpawner {
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_sfFatso"
 }
 
-Actor FPlus_AIDSpawn_DE18 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_SSGZombie"
-	dropitem "FPlus_AIDSpot_BloodDemonClone"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
+Actor FPSpawn_DE18 : RandomSpawner {
+	dropitem "FPSSpot_SSGZombie"
+	dropitem "FPSSpot_BloodDemonClone"
+	dropitem "FPSSpot_sfBaronOfHell"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
-Actor FPlus_AIDSpawn_DE19 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_SSGZombie"
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
+Actor FPSpawn_DE19 : RandomSpawner {
+	dropitem "FPSSpot_SSGZombie"
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
-Actor FPlus_AIDSpawn_DE20 : RandomSpawner {
-	dropitem "FPlus_AIDSpot_sfArchVile"
-	dropitem "FPlus_AIDSpot_Cybruiser"
-	dropitem "FPlus_AIDSpot_sfBaronOfHell"
-	dropitem "FPlus_AIDSpot_Cyberbaron"
+Actor FPSpawn_DE20 : RandomSpawner {
+	dropitem "FPSSpot_sfArchVile"
+	dropitem "FPSSpot_Cybruiser"
+	dropitem "FPSSpot_sfBaronOfHell"
+	dropitem "FPSSpot_Cyberbaron"
 }
