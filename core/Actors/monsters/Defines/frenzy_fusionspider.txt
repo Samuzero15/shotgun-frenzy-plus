@@ -8,6 +8,7 @@ spawnid 206
   Mass 600
   Speed 12
   PainChance 30   
+  
   SEESOUND "baby/sight"
   PAINSOUND "baby/pain"
   DEATHSOUND "baby/death"

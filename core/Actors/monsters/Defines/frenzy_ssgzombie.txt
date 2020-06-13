@@ -25,23 +25,23 @@ ACTOR SSGZombie : FPlus_Monster 23049
 	Missile:
 		GPOS E 10 BRIGHT A_FaceTarget
 		SHT2 A 0 A_PlaySound ("weapons/sshotf", CHAN_AUTO)
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		TNT1 A 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
-		GPOS F 8 BRIGHT A_CustomMissile("CommonBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		TNT1 A 0 A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
+		GPOS F 8 BRIGHT A_CustomMissile("SSGBullet", 32.0, 0, frandom(-5.6,5.6), CMF_AIMDIRECTION, frandom(-3.55,3.55))
 		GPOS E 8 BRIGHT
 		Goto See
 	Pain:
@@ -65,7 +65,7 @@ ACTOR SSGZombie : FPlus_Monster 23049
 		GPOS P 5 A_XScream
 		GPOS Q 5 A_NoBlocking
 		GPOS RS 5
-		GPOS S 650
+		GPOS T 1
 	goto Super::FadeOut
 	
 	MonRaise:

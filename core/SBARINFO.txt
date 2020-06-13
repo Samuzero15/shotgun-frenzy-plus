@@ -237,7 +237,7 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 
 statusbar normal// Standard Doom Status bar
 {
-    inInventory Not SamuTInv_USingTerminal{
+    //inInventory Not SamuTInv_USingTerminal{
 	drawbar "EXPBR", "EXPBR0", Hud_EXP, horizontal, interpolate(15),  399, 570;
 	drawbar "EXPBL", "EXPBL0", Hud_EXP, horizontal, reverse, interpolate(15),  9, 570;
 	
@@ -319,34 +319,49 @@ statusbar normal// Standard Doom Status bar
 	}	
 	
 	
+	
 	drawbar "AC1_BULL", "AC0_BULL", Clip, vertical,  			   	    			540, 495;
-	drawnumber 3, confont, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 507;
-	
 	drawbar "AC1_SHEL", "AC0_SHEL", Shell, vertical,  			   	    			572, 495;
-	drawnumber 3, confont, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 507;
-	
 	drawbar "AC1_ROKT", "AC0_ROKT", RocketAmmo, vertical,  			    			604, 495;
-	drawnumber 3, confont, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 507;
-	
 	drawbar "AC1_CELL", "AC0_CELL", Cell, vertical,  			   					636, 495;
-	drawnumber 3, confont, Gold, ammocapacity("Cell"), alignment(center), 			652, 507;
-	
 	drawbar "AC1_HBUL", "AC0_HBUL", HeavyBullets, vertical,  			   			540, 527;
-	drawnumber 3, confont, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 539;
-	
 	drawbar "AC1_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical,  			   			572, 527;
-	drawnumber 3, confont, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 539;
-	
 	drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   			604, 527;
-	drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 539;
-	
 	drawbar "AC1_GASL", "AC0_GASL", Gasoline, vertical,  			   				636, 527;
-	drawnumber 3, confont, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 539;
+	
+	WeaponAmmo "Clip"{			drawbar "AC2_BULL", "AC0_BULL", Clip, vertical,  			540, 495;}
+	WeaponAmmo "Shell"{			drawbar "AC2_SHEL", "AC0_SHEL", Shell, vertical,  			572, 495;}
+	WeaponAmmo "RocketAmmo"{	drawbar "AC2_ROKT", "AC0_ROKT", RocketAmmo, vertical,  		604, 495;}
+	WeaponAmmo "Cell"{			drawbar "AC2_CELL", "AC0_CELL", Cell, vertical,  			636, 495;}
+	WeaponAmmo "HeavyBullets"{	drawbar "AC2_HBUL", "AC0_HBUL", HeavyBullets, vertical,  	540, 527;}
+	WeaponAmmo "Dualshot_Ammo"{ drawbar "AC2_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical, 	572, 527;}
+	WeaponAmmo "Flinger_Ammo"{ 	drawbar "AC2_GREN", "AC0_GREN", Flinger_Ammo, vertical,		604, 527;}
+	WeaponAmmo "Gasoline"{ 		drawbar "AC2_GASL", "AC0_GASL", Gasoline, vertical,    		636, 527;}
+	
+	drawnumber 3, confont, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 499;
+	drawnumber 3, confont, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 499;
+	drawnumber 3, confont, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 499;
+	drawnumber 3, confont, Gold, ammocapacity("Cell"), alignment(center), 			652, 499;
+	drawnumber 3, confont, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 531;
+	drawnumber 3, confont, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 531;
+	drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 531;
+	drawnumber 3, confont, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 531;
+	
+	drawnumber 3, confont, White, ammo("Clip"), alignment(center), 	   	 			556, 515;
+	drawnumber 3, confont, White, ammo("Shell"), alignment(center), 	    		588, 515;
+	drawnumber 3, confont, White, ammo("RocketAmmo"), alignment(center), 			620, 515;
+	drawnumber 3, confont, White, ammo("Cell"), alignment(center), 					652, 515;
+	drawnumber 3, confont, White, ammo("HeavyBullets"), alignment(center), 			556, 547;
+	drawnumber 3, confont, White, ammo("Dualshot_Ammo"), alignment(center), 		588, 547;	
+	drawnumber 3, confont, White, ammo("Flinger_Ammo"), alignment(center), 			620, 547;
+	drawnumber 3, confont, White, ammo("Gasoline"), alignment(center), 				652, 547;
 	
 	
 	
 	drawselectedinventory center, artiflash, VerVibes, 250, 530, 260, 530;
 	//[Samu] Well this is ridiculous, but if there is no other option to hide it...
+	
+	
 	InInventory "Inventory_Soulsphere"{
 		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
 	}else{ InInventory "Inventory_Megasphere"{
@@ -526,7 +541,7 @@ statusbar normal// Standard Doom Status bar
 	drawnumber 3, VerVibes, GOLD, "Inventory_MineDrone", whennotzero, 516, 590;
 	}// INVENTORY ITEMS list end
 	
-	}
+	//}
 }
 
 statusbar inventory // Standard bar overlay (ZDoom Addition)

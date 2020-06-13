@@ -51,12 +51,20 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (13 / 06 / 2020) (Test 10 Relase!)
+	*) Small fixes on some monsters on their xdeath states.
+	*) Modified the Spider demolisher to let it enter on the monster fray.
+	+) Spider Demolisher is now ready to destroy!
+	*) Ammo counters for the standard hud can tell the amount of ammo, 
+	   and what ammo are you using!
+	*) Improved the exploding rocket launcher, and fixed up a bit.
+	
 -) (12 / 06 / 2020)
 	*) Let's hope this time fixes the disappearing single upgrade weapons.
-	*) Improved the railgun projectiles, now this, is what i call a Railgun!
+	*) Improved the railgun projectiles, now this, is what I call a Railgun!
 	// I'd just edit the slug attack for the slug laser railgun later...
 	+) Meet the Gasoline, the Flamer's new Ammo type!
-	// Yeah, Sometimes i'd prefer to fire plasma with cells and flamer with gasoline.
+	// Yeah, Sometimes I'd prefer to fire plasma with cells and flamer with gasoline.
 	*) Small improvements on the weapons, and also renamed their tags.
 
 -) (10 / 06 / 2020)
@@ -82,7 +90,8 @@ v0 - Before the beginning...
 	// If the music changes, only this pack will be affected, separated from the resource pack.
 	
 -) (4 / 06 / 2020)
-	*) Fixed the miss-buying from the ammo terminal where you buy a mine, and it mistakes with the p_backpack.
+	*) Fixed the miss-buying from the ammo terminal where you buy a mine,
+	   and it mistakes with the p_backpack.
 	+) Talking about that... the personal backpack is now ready to go! 
 	// Grants you some ammo space, completly separated from your backpack given by the commander.
 	*) Trying to clear some logs I've left up scattered arround.

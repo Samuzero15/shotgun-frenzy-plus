@@ -49,6 +49,7 @@ spawnid 240
         DRKI P 5
         DRKI Q 5 A_Fall
         DRKI RST 5
+		DRKI U 1
         goto Super::FadeOut
     MonRaise:
         DRKI ML 8

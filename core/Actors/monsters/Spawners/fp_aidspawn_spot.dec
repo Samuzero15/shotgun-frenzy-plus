@@ -224,3 +224,11 @@ Actor FPSSpot_SpiderAnnihilator{
 		stop
 	}
 }
+
+Actor FPSSpot_Demolisher{
+	states{
+		Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Demolisher",0,0,0,0,0,0,0,0,0,tid)  
+		stop
+	}
+}

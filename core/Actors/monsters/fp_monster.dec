@@ -8,6 +8,7 @@ Actor FPMToken_Boss : Boolean {} // This enemy is a boss (granting a lot of expe
 Actor FPlus_Monster {
 	health 10
 	species "DemonSide"
+	DamageFactor "DemonFire", 0.0
 	MONSTER
 	+MTHRUSPECIES
 	
@@ -76,6 +77,7 @@ Actor FPlus_Monster {
 		
 		XDeath:
 			"####" "#" 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
+			"####" "#" 0 A_SpawnItem ("splatEmitter_Lite" , 0, 0, 0, 0)
 			"####" "#" 0 A_GiveInventory("FPMToken_Gibbed",1) 
 			"####" "#" 1 A_Jump(256, "MonXDeath") // Called for all of the inherited classes.
 		stop

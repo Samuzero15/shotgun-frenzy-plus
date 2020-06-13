@@ -46,6 +46,11 @@ spawnid 207
     HELN V 5 A_XScream
     HELN W 5
     HELN X 5 A_NoBlocking
+	HELN Y 5
+	HELN Z 5 
+	HELN "[" 5 
+	HELN "\" 5 
+	HELN "]" 5 
   goto Super::FadeOut
   
   MonRaise:

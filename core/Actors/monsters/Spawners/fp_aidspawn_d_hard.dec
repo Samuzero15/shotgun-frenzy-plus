@@ -93,11 +93,13 @@ Actor FPSpawn_DH16 : RandomSpawner {
 }
 
 Actor FPSpawn_DH17 : RandomSpawner {
+	dropitem "FPSSpot_SpiderAnnihilator"
 	dropitem "FPSSpot_sfCyberdemon"
 	dropitem "FPSSpot_Cybruiser"
 }
 
 Actor FPSpawn_DH18 : RandomSpawner {
+	dropitem "FPSSpot_SpiderAnnihilator"
 	dropitem "FPSSpot_sfRevenant"
 	dropitem "FPSSpot_sfArchvile"
 	dropitem "FPSSpot_Cybruiser"
@@ -105,14 +107,14 @@ Actor FPSpawn_DH18 : RandomSpawner {
 }
 
 Actor FPSpawn_DH19 : RandomSpawner {
-	dropitem "FPSSpot_SpiderAnnihilator"
+	dropitem "FPSSpot_Demolisher"
 	dropitem "FPSSpot_sfArchvile"
 	dropitem "FPSSpot_Annihilator"
 	dropitem "FPSSpot_sfCyberdemon"
 }
 
 Actor FPSpawn_DH20 : RandomSpawner {
-	dropitem "FPSSpot_SpiderAnnihilator"
+	dropitem "FPSSpot_Demolisher"
 	dropitem "FPSSpot_sfArchvile"
 	dropitem "FPSSpot_Annihilator"
 }

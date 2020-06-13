@@ -27,10 +27,9 @@ alias usestimpack "use Inventory_Stimpack"
 addmenukey "Use Ammosphere" usebackpack
 alias usebackpack "use Inventory_AmmoGiver"
 
-alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;summon Inventory_Stimpack; summon Inventory_Megasphere; summon Inventory_Godsphere; summon Inventory_Berserk2; summon Inventory_AmmoGiver; summon Inventory_TurretBullet; summon Inventory_TurretRocket; summon Inventory_TurretPlasma; summon Inventory_TurretFlame; summon Inventory_TeslaCoil"
-
-alias TestWeapon "take weapons; give Spitter_GLauncher; give Ammo"
-alias TestActor "Summon sf_SawDrone"
+//alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;summon Inventory_Stimpack; summon Inventory_Megasphere; summon Inventory_Godsphere; summon Inventory_Berserk2; summon Inventory_AmmoGiver; summon Inventory_TurretBullet; summon Inventory_TurretRocket; summon Inventory_TurretPlasma; summon Inventory_TurretFlame; summon Inventory_TeslaCoil"
+//alias TestWeapon "take weapons; give Spitter_GLauncher; give Ammo"
+//alias TestActor "Summon sf_SawDrone"
 
 alias sfp_ResetGameOptions "sf_gamelength 10; sf_startcash 2500; sf_teamcash 5000; sf_cacodemons 0; sf_doorholdtime 30; sf_percentfast 10; sf_gamelength 10; sf_skillmult 3; sf_creditcorrection -8;"
 alias sfp_ResetUserOptions "sfp_autouse 0; sfp_stimpack_t 40; sfp_soulsphere_t 20; sfp_megasphere_t 15; spf_hitmarksnd"

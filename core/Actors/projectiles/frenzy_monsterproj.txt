@@ -23,9 +23,17 @@ ACTOR BulletProjectile : FastProjectile
    }
 }
 
+ACTOR ChainBullet : BulletProjectile
+{
+   Damage (5*random(1,2)) // Specifies the damage
+   Decal "Bulletchip" // Change the bullet hole if you wish
+   Speed 200 // and the speed
+   //+Mthruspecies
+}
+
 ACTOR SSGBullet : BulletProjectile
 {
-   Damage (10*random(1,3)) // Specifies the damage
+   Damage (3*random(1,3)) // Specifies the damage
    Decal "Bulletchip" // Change the bullet hole if you wish
    Speed 200 // and the speed
    //+Mthruspecies
@@ -36,4 +44,26 @@ ACTOR CommonBullet : BulletProjectile
    Decal "Bulletchip" // Change the bullet hole if you wish
    Speed 200 // and the speed
    //+Mthruspecies
+}
+
+Actor Mon_BFGBall : BFGBall
+{
+	+Mthruspecies
+	DamageType "DemonFire"
+	
+	states
+	{
+		Death:
+		BFE1 AB 8 Bright
+		BFE1 C 8 Bright A_BFGSpray("Mon_BFGExtra")
+		BFE1 DEF 8 Bright
+		Stop
+	}
+}
+
+
+Actor Mon_BFGExtra : BFGExtra
+{
+	+Mthruspecies
+	DamageType "DemonFire"
 }

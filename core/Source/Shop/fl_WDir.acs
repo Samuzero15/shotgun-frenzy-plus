@@ -341,11 +341,11 @@ function void SFPlus_DefineWeapons (void){
 function void Weapon_SwapWeapon(str this, str withThis){
 	TakeInventory(this,1);
 	GiveInventory(withThis,1);
-	//setWeapon(withThis);
+	setWeapon(withThis);
 }
 
 function void Weapon_Upgrade(int wid, int type){
-	printbold(n:(playernumber() + 1), s:" Upgrades ", s:Weapon_GetActor(wid), s:" to: ", s:WeaponUpgrade_getActor(wid, type-1));
+	//printbold(n:(playernumber() + 1), s:" Upgrades ", s:Weapon_GetActor(wid), s:" to: ", s:WeaponUpgrade_getActor(wid, type-1));
 if(type == 1)
 		Weapon_SwapWeapon(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 0));
 	else if( type == 2) 
@@ -403,7 +403,7 @@ function int Weapon_SaveLastUsed(void){
 			break;
 		}
 	}
-	log(s:"Weapon style save: ", s:Weapon_GetActor(res));
+	//log(s:"Weapon style save: ", s:Weapon_GetActor(res));
 	return res;
 }
 
@@ -412,7 +412,7 @@ function void Weapon_LoadLastUsed(int which){
 	SetWeapon(Weapon_GetActor(which));
 	SetWeapon(WeaponUpgrade_GetActor(which, 0));
 	SetWeapon(WeaponUpgrade_GetActor(which, 1));
-	log(s:"Weapon style load: ", s:Weapon_GetActor(which));
+	//log(s:"Weapon style load: ", s:Weapon_GetActor(which));
 	
 }
 

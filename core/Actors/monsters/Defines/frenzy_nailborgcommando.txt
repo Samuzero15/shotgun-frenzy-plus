@@ -96,8 +96,8 @@ spawnid 245
 		NLBC Q 0 A_PlaySound("Weapons/NailBomb")
 		NLBC J 0 A_Jump(128, 2)
 		TNT1 A 0 A_CustomMissile("BorgNailBombBig", 32, 0, Random(6, -6), 0)
-		NLBC RTUV 5 
-		NLBC W 650
+		NLBC RS 5
+		NLBC T 1
 	goto Super::FadeOut
 	
 	MonRaise:

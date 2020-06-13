@@ -1,14 +1,13 @@
-ACTOR Demolisher 30110
+ACTOR Demolisher : FPlus_Monster 30110
 {
-Obituary "%o felt the power of the Spider-Demolisher."
-Health 70000
-Radius 70 
+Obituary "%o got demolished by a little cute, Demolisher."
+Health 6000
+Radius 50
 Height 50 
 Mass 1000 
 Speed 20
-Scale 1.2
+Scale 0.7
 PainChance 20 
-Species "DemonSide"
 MONSTER
 +NOTARGET
 +FLOORCLIP 
@@ -32,23 +31,53 @@ States
        DEMO CDD 3 A_Chase 
        DEMO E 3 A_Metal 
        DEMO EFF 3 A_Chase 
-       Loop 
-   Missile:
-       DEMO A 10 BRIGHT A_FaceTarget
-       DEMO T 1 BRIGHT A_Playsound ("weapons/bfgf")
-       DEMO T 2 BRIGHT A_FaceTarget
-       DEMO U 10 BRIGHT A_CustomMissile ("BFGBall",64,0,0, 16)
-       DEMO U 0 BRIGHT A_CustomMissile ("BFGBall",64,0,0, 0)
-       DEMO U 0 BRIGHT A_CustomMissile ("BFGBall",64,0,0, -128)
-       DEMO T 0 BRIGHT A_Jump (128,10)
-       DEMO T 1 BRIGHT A_Playsound ("weapons/bfgf")
-       DEMO T 0 BRIGHT A_Jump (192,1)
-       Goto See
+       Loop
+	Missile:
+		DEMO A 0 Bright A_Jump (128,24)
+		DEMO A 20 A_FaceTarget
+		DEMO T 1 Bright A_Playsound ("weapons/bfgf")
+		DEMO T 4 Bright A_FaceTarget
+		DEMO T 4 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO U 10 BRIGHT A_CustomMissile ("Mon_BFGBall",32,0, 0) 
+		DEMO U 0 BRIGHT A_CustomMissile ("Mon_BFGBall",32,0, 16)
+        DEMO U 0 BRIGHT A_CustomMissile ("Mon_BFGBall",32,0, -16)
+		DEMO T 0 Bright A_Jump (128,12)
+		DEMO T 1 Bright A_Playsound ("weapons/bfgf")
+		DEMO T 4 Bright A_FaceTarget
+		DEMO T 4 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget
+		DEMO T 5 Bright A_FaceTarget 
+		DEMO U 10 Bright A_CustomMissile ("Mon_BFGBall",32,0,0)
+		DEMO U 0 BRIGHT A_CustomMissile ("Mon_BFGBall",32,0,16)
+        DEMO U 0 BRIGHT A_CustomMissile ("Mon_BFGBall",32,0,-16)
+		DEMO T 0 Bright A_Jump (192,1)
+	   Goto See
+		DEMO A 10 A_FaceTarget
+		DEMO G 0 Bright A_PlaySound("spider/attack")
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		DEMO G 3 Bright 
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		DEMO H 0 Bright A_PlaySound("spider/attack")
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		DEMO H 3 Bright 
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		TNT1 A 0 A_CustomMissile("ChainBullet", 32.0, 0, frandom(-3.6,3.6), CMF_AIMDIRECTION, frandom(-2.55,2.55))
+		DEMO H 1 Bright A_SpidRefire 
+	   Goto Missile+25
    Pain: 
        DEMO I 3 
        DEMO I 3 A_Pain 
        Goto See 
-   Death: 
+   MonDeath: 
        DEMO J 20 Bright A_Scream 
        DEMO K 10 Bright A_NoBlocking 
        DEMO LMNOPQR 10 Bright
