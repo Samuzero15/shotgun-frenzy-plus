@@ -82,7 +82,6 @@ States
        DEMO K 10 Bright A_NoBlocking 
        DEMO LMNOPQR 10 Bright
        DEMO S 30 
-       DEMO S -1 A_BossDeath 
-       Stop 
+       goto FadeOut.NoRaise
    } 
 }

@@ -237,7 +237,7 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 
 statusbar normal// Standard Doom Status bar
 {
-    //inInventory Not SamuTInv_USingTerminal{
+    inInventory Not SamuTInv_USingTerminal{
 	drawbar "EXPBR", "EXPBR0", Hud_EXP, horizontal, interpolate(15),  399, 570;
 	drawbar "EXPBL", "EXPBL0", Hud_EXP, horizontal, reverse, interpolate(15),  9, 570;
 	
@@ -541,7 +541,7 @@ statusbar normal// Standard Doom Status bar
 	drawnumber 3, VerVibes, GOLD, "Inventory_MineDrone", whennotzero, 516, 590;
 	}// INVENTORY ITEMS list end
 	
-	//}
+	}
 }
 
 statusbar inventory // Standard bar overlay (ZDoom Addition)

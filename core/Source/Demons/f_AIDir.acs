@@ -24,7 +24,7 @@ function int f_AIDir_Check (void)
     
     // phase 2 - count players
     l_Score += playercount() * 2;
-    l_Score += playercountReplicate * 2;
+    //l_Score += playercountReplicate * 2;
     
     // phase 3 - check current sector
     if (g_Status == 1)      l_Score += 15;
@@ -57,6 +57,7 @@ function int f_AIDir_Check (void)
 	l_Score += UPTrack_GetScore();
     
 	l_Score -= aiSubtract;
+	//print(d:aiSubstract);
 	if (l_Score < 5){ l_Score = 30; }
 	
 	
