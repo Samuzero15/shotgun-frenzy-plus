@@ -1,0 +1,20 @@
+// roots
+Submitted: Captain Awesome
+Decorate: Lucario, Captain Awesome
+Sprites: Duke Nukem 3D by 3D Realms
+Sprite Edit: Captain Awesome, Xaser
+
+// stalagmites
+Submitted: Mancubus
+Decorate: KDiZD Team
+Sprites: KDiZD Team
+
+// tree
+Sprites: Raven Software and Bethesda
+Sprite Edit: Dr. Doctor
+
+// ice 2
+Submitted: Captain Toenail
+Decorate: Captain Toenail
+Gldefs: None
+Sprites: Necrodome

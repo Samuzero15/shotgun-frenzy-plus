@@ -1,0 +1,13 @@
+Name: Palmtrees
+Connection: No
+Palette: Custom
+Summon: palmtree1-4
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No
+ACS: No
+
+Submitted: CaptainToenail
+Decorate: CaptainToenail
+Sprites: Necrodome, Powerslave

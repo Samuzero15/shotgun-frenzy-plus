@@ -51,6 +51,11 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (16 / 06 / 2020)
+	*) Fixed the fire ratio from the mecha guns in the nails.
+	*) Fixed a small bug on samu etrminal where it overlaps the hud with the commander view.
+	*) Some more reordering in the resource pack...
+
 -) (13 / 06 / 2020) (Test 10 Relase!)
 	*) Small fixes on some monsters on their xdeath states.
 	*) Modified the Spider demolisher to let it enter on the monster fray.

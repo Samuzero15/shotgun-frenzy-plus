@@ -1,3 +1,0 @@
-:samuterm_onuse
-	playloop SamuTerm/Idle 170
-end

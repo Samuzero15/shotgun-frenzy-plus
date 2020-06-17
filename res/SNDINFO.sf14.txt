@@ -1,0 +1,95 @@
+////////////////////////////////////
+//	NOT ALL SOUNDS ARE LOCATED HERE
+//	PLEASE LOOK IN OTHER .WAD FILES FOR MORE SNDINFO NODES
+
+// 1.4 special
+p/specialitem	ITM2
+
+// player messages
+p/message	MESSAGE
+
+// player hints
+p/kill		KILLR
+p/promotion	PROMO
+
+// player pickups
+p/berserk2	VBERS
+p/godsphere	VGOD
+p/megasphere	VMEGA
+p/soulsphere	VSOUL
+
+// player/commander voices
+p/deploy	DEPLOY
+p/upgrade	UPGRADE
+p/heal		HEAL
+
+// turret sounds
+turret/firebullet	TRTF1
+
+d/demonwall	WALLS		// hurt
+
+// commander voices
+c/airstrike1	ASTRIKE1
+c/airstrike2	ASTRIKE2
+
+c/attack	VORD1
+c/defend	VORD2
+c/construct	VORD3
+c/regroup	VORD4
+c/ioncannon	IONC
+
+cv/airstrike	V_AIR
+cv/genetics1	V_GEN1
+cv/genetics2	V_GEN2
+cv/armory1	V_ARM1
+cv/armory2	V_ARM2
+cv/refinery1	V_REF1
+cv/refinery2	V_REF2
+cv/mcom1	V_MCO1
+cv/mcom2	V_MCO2
+cv/dem1		a_mf1
+cv/dem2		a_mf2
+cv/nsilo1	V_NSI1
+cv/nsilo2	V_NSI2
+cv/batterydestroyed	V_BAT
+cv/welcomecommander	V_COM
+cv/corepulse		V_COR
+cv/researchcomplete	V_RES
+cv/sector1		V_SEC1
+cv/sector2		V_SEC2
+cv/sector3		V_SEC3
+cv/sector4		V_SEC4
+cv/vehicle		V_VEH
+
+// battery alarm sound
+g/alarm		ALARM
+
+
+// turret sounds by minigunner
+turret/sight		DSTURRET
+turret/pain		DSBEP1
+turret/death		DSTDIE
+$random turret/active	{turret/active1 turret/active2 turret/active3}
+turret/active1		DSBEP2
+turret/active2		DSBEP3
+turret/active3		DSBEP4
+
+nuke/explode		DSNUKD
+
+monies			MONIES
+CoinBoom		CBOOM
+beep			BEEP
+
+vehicle/mechleg		MLEG
+vehicle/mechupgrade	MUPG
+
+time			TIME
+attack			ATTACK
+
+
+
+
+endboss			BOSS
+endboss/fire		BOSSF
+endboss/explode		BOSSE
+endboss/stomp		BOSSS
