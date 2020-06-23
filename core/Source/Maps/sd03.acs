@@ -9,6 +9,7 @@
 // top priority
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
+#import "fl_techs.acs"
 
 // minor
 #import "fc_AStr.acs"
@@ -32,7 +33,7 @@
 // load demon wave set, for custom sets look in the ACS directory for any fa files
 #import "fa_SSD01.acs"
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 //map setup
 script 91 OPEN

@@ -12,8 +12,8 @@
 #import "f_Tip.acs"
 
 #include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
+#include "acsutils.ach"
+#include "samu_tools.ach"
 
 // a player walks onto a stock pad
 script 106 (int l_Type, int l_Give, int l_DisableFlash)

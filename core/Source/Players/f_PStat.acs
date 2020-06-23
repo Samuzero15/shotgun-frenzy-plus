@@ -15,7 +15,7 @@
 #import "fl_wdir.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 // player dies
 script 52 DEATH

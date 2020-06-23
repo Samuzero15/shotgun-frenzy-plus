@@ -10,7 +10,7 @@
 #import "fl_techs.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 // lift function (entrance) 1 - Genetics Lab
 script 81 (void)

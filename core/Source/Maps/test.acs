@@ -16,9 +16,11 @@
 #import "f_PStat.acs"
 #import "f_StokP.acs"
 //#import "f_TaticalMap.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.acs"
+
+#include "samu_tools.ach"
 
 #define List 100
 str spawnerList[List];

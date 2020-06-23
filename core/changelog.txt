@@ -51,6 +51,10 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (22 / 06 / 2020)
+	*) Now the bats are replaced by some cute pair of python scripts! (Thank you Xaser!)
+	*) Merged the sndinfo files into a single one. I should re-order that.
+
 -) (16 / 06 / 2020)
 	*) Fixed the fire ratio from the mecha guns in the nails.
 	*) Fixed a small bug on samu etrminal where it overlaps the hud with the commander view.

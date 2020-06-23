@@ -24,9 +24,10 @@
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
 #import "f_CfSpec.acs"
+#import "fl_techs.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 // setup techflags and game settings
 script 91 OPEN

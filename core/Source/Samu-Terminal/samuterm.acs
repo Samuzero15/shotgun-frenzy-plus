@@ -14,22 +14,23 @@
 #import "fp_comcmd.acs"
 #import "fl_techs.acs"
 
-#include "acsutils.acs"
-#include "samu_tools.acs"
-#include "acsrect.acs"
+#include "acsutils.ach"
+#include "samu_tools.ach"
+#include "acsrect.ach"
 //////SF Stuff////////
 
-#include "samut_vars.acs"
-#include "samut_utils.acs"
+#include "samut_vars.ach"
+#include "samut_utils.ach"
 
-#include "samut_cards.acs"
-#include "samut_grids.acs"
-#include "samut_parse.acs"
-#include "samut_comps.acs"
-#include "samut_exes.acs"
-#include "samut_input.acs"
-#include "samut_update.acs"
-#include "samut_disp.acs"
+#include "samut_cards.ach"
+#include "samut_grids.ach"
+#include "samut_parse.ach"
+#include "samut_comps.ach"
+#include "samut_pages.ach"
+#include "samut_exes.ach"
+#include "samut_input.ach"
+#include "samut_update.ach"
+#include "samut_disp.ach"
 
 Script "SamuTerminal" (int homeTag){
 	if(TerminalInUse()) Terminate;

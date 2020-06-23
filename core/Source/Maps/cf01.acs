@@ -27,7 +27,7 @@
 #import "f_CfSpec.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 
 // setup techflags and game settings

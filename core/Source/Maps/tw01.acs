@@ -9,7 +9,7 @@
 // top priority
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-
+#import "fl_techs.acs"
 // minor
 #import "fc_AStr.acs"
 #import "fc_Comm.acs"

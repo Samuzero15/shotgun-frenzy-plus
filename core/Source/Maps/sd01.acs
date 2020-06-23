@@ -29,12 +29,13 @@
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
 #import "f_CfSpec.acs"
+#import "fl_techs.acs"
 
 // load demon wave set, for custom sets look in the ACS directory for any fa files
 #import "fa_SSD01.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 //map setup
 script 91 OPEN

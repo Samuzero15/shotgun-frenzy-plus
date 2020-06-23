@@ -1,6 +1,6 @@
 
 @echo off
-set PATH=%PATH%;%~dp0\bat_tools
+set PATH=%PATH%;%~dp0\Tools
 
 echo This bat will extract all files coming from sfplus_core-d.pk3,
 echo sfplus_res-d.pk3 and sfplus_mus-d.pk3 if exist. This is intended 

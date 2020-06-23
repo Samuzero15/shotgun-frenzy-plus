@@ -12,7 +12,7 @@
 #import "f_intDB.acs"
 #import "fl_techs.acs"
 #include "zcommon.acs"
-#include "samu_tools.acs"
+#include "samu_tools.ach"
 
 #libdefine FP_WEP_PACKS 10
 #libdefine FP_WEAPONS 20

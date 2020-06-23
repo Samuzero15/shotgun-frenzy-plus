@@ -2,11 +2,14 @@
 *.tmp
 *.bak
 *d.pk3
-builds/
+dist/
 *.dbs
 *.wad.backup*
 *bak.acs
 *bak.acs*
+
+skulltag_content-3.0-beta01.pk3
+console.bat
 
 #############
 ## Windows detritus
