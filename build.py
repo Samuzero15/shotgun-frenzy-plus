@@ -1,5 +1,6 @@
 
 import os
+import sys
 import subprocess
 import zipfile
 import datetime
@@ -15,48 +16,46 @@ today = datetime.datetime.now().strftime('%d/%m/%Y')
 # Build main package (as .pk3, a good ol' zip, really)
 #
 def makepkg(sourcePath, destPath, notxt=False):
-	destination = destPath + ".pk3"
-	wadinfoPath = destPath + ".txt" # just assume this, 'cause we can.
+    destination = destPath + ".pk3"
+    wadinfoPath = destPath + ".txt" # just assume this, 'cause we can.
 
-	print ("\n-- Compressing {filename} --".format (filename=destination))
-	filelist = []
-	for path, dirs, files in os.walk (sourcePath):
-		for file in files:
-			if file != "buildinfo.txt": # special exception
-				# Remove sourcepath from filenames in zip
-				splitpath = path.split(os.sep)[1:]
-				splitpath.append(file)
-				name = os.path.join(*splitpath)
+    print ("\n-- Compressing {filename} --".format (filename=destination))
+    filelist = []
+    for path, dirs, files in os.walk (sourcePath):
+        for file in files:
+            if not (file == "buildinfo.txt" or file == "GAMEINFO.txt"): # special exceptions
+            # Remove sourcepath from filenames in zip
+                splitpath = path.split(os.sep)[1:]
+                splitpath.append(file)
+                name = os.path.join(*splitpath)
+                filelist.append((os.path.join (path, file), name,))
 
-				filelist.append((os.path.join (path, file), name,))
+    distzip = zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED)
+    current = 1
+    for file in filelist:
+        printProgressBar (current, len(filelist), 'Zipped: ', ' files', 1, 25)
+        # print ("[{percent:>3d}%] Adding {filename}".format(percent = int(current * 100 / len (filelist)), filename=file[1]))
+        distzip.write(*file)
+        current += 1
+    
+    return (distzip)
+    
 
-	distzip = zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED)
-	current = 1
-	for file in filelist:
-		print ("[{percent:>3d}%] Adding {filename}".format(percent = int(current * 100 / len (filelist)), filename=file[1]))
-		distzip.write(*file)
-		current += 1
-
-	# for wadinfo.txt, use the transformed file in the output dir
-	# rather than the template one with x.x.x's still in it
-	if not notxt: distzip.write(wadinfoPath, 'buildinfo.txt')
-
-def maketxt(sourcePath, destPath, version):
-	textname = os.path.join (sourcePath, "buildinfo.txt")
-	destname = destPath + ".txt"
-
-	print("\n-- Copying {source} to {dest} --".format (source=textname, dest=destname))
-
-	sourcefile = open (textname, "rt")
-	textfile = open (destname, "wt")
-
-	for line in sourcefile:
-		line = line.replace('x.x.x', version)
-		line = line.replace('XX/XX/XXXX', today)
-		textfile.write(line)
-
-	textfile.close()
-	sourcefile.close()
+def maketxt(sourcePath, destPath, version, filetemplate):
+    textname = os.path.join(sourcePath, filetemplate)
+    destname = destPath + ".txt"
+        
+    print("\n-- Copying {source} to {dest} --".format (source=textname, dest=destname))
+    sourcefile = open (textname, "rt")
+    textfile = open (destname, "wt")
+    for line in sourcefile:
+        line = line.replace('x.x.x', version)
+        line = line.replace('_DEV_', version)
+        line = line.replace('XX/XX/XXXX', today)
+        textfile.write(line)
+    
+    textfile.close()
+    sourcefile.close()
 
 def makever(version, destPath):
 
@@ -65,10 +64,17 @@ def makever(version, destPath):
 	copyfile(destPath + ".pk3", destPath + "_" + version + ".pk3")
 	copyfile(destPath + ".txt", destPath + "_" + version + ".txt")
 
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    # Print New Line on Complete
+    if iteration == total: 
+        print()
+
 if __name__ == "__main__":
     command = "cd"
-    
-
     
     cmd = ArgumentParser()
     cmd.add_argument("-d", "--dist", action="store_true", dest="dist", default=False, help="Make a versioned build")
@@ -94,23 +100,27 @@ if __name__ == "__main__":
 
             if (args.nores and part == "Resources"):
             	continue
-			print("\n-- Building {name} --".format(name=part));
+			
+            print("\n-- Building {name} --".format(name=part));
             
             if not os.path.exists(distDir):
                 os.mkdir(distDir)
 
             destPath = os.path.join(distDir, fileName)
             
-
-
-            if not notxt:
-                maketxt(sourceDir, destPath, relase)
-            makepkg(sourceDir, destPath, notxt)
+            zip = makepkg(sourceDir, destPath, notxt)
+            if not notxt: 
+                wadinfoPath = destPath + ".txt"
+                if(os.path.isfile(os.path.join(sourceDir, 'GAMEINFO.txt'))):
+                    maketxt(sourceDir, destPath, relase, 'GAMEINFO.txt')
+                    zip.write(wadinfoPath, 'GAMEINFO.txt')
+                maketxt(sourceDir, destPath, relase, "buildinfo.txt")
+                zip.write(wadinfoPath, 'buildinfo.txt')
             
             
             if(args.dist and not notxt):
                 makever(relase, destPath)
-
+            zip.close();
             filelist.append(os.getcwd() + '\\' + destPath + '.pk3');
             
             
@@ -125,4 +135,3 @@ if __name__ == "__main__":
     fullcmd     = ["zandronum.exe", "-iwad", "doom2.wad", "-file", std_path]
     #print(fullcmd + filelist)
     subprocess.call(fullcmd + filelist)
-    print("Sex on the beach")
