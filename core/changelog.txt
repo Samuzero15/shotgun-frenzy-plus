@@ -47,10 +47,21 @@ w) Work in progres
 	(As long you're on the same map, you could recover your stuff.)
 	Useful if you're suffering for high ping and therefore, desynching enough 
 	to be kicked out of the game. Resulting in a total loss of your progress.
+[ ] Document the build and play python scripts, to guide the modders how to do special stuff.
 	
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (23 / 06 / 2020)
+	*)Some more re-ordering, and python script fixes.
+	*)Now the python scripts contains a loading bar :3
+	// After all these changes, now I can work by directories,
+	   and therefore, complie quicker builds!
+	// However it broke me the file order made in the Samu-Terminal,
+	   but it still works at least...
+	// Now, next update should be on some more fixes, and then,
+	   another testing release for the public.
+
 -) (22 / 06 / 2020)
 	*) Now the bats are replaced by some cute pair of python scripts! (Thank you Xaser!)
 	*) Merged the sndinfo files into a single one. I should re-order that.
