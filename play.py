@@ -84,9 +84,10 @@ def acs_compile(rootDir, SourceDir):
                 f_target = os.path.join(root, file)
                 f_name = os.path.basename(f_target).split('.')[0]
                 compcmd     = ["acc"] + includes + [f_target] + [os.path.join(acs_dir, f_name + '.o')]
-                printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
+                
                 subprocess.call(compcmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 current+=1;
+                printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
                 if(os.path.isfile(os.path.join(root, 'acs.err'))):
                     os.chdir(root);
                     os.system('cls')
@@ -166,7 +167,8 @@ if __name__ == "__main__":
     std_path    = config["Executable"].get('skulldata_path', '?');
     os.chdir(exe_path);
     fullcmd     = ["zandronum.exe", "-iwad", "doom2.wad", "-file", std_path]
-    subprocess.call(fullcmd + filelist)
+    subprocess.call(fullcmd + filelist + ["-map TEST"])
     if( not args.save):
         for file in filelist:
             os.remove(file)
+    else: print("The files are saved in: " + distDir)

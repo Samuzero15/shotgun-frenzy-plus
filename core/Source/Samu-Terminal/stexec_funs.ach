@@ -106,6 +106,7 @@ function void STExecute_NoAction(void){
 
 function void STExecute_Shutdown(void){
 	SetInventory("SamuTInv_UsingTerminal", 0);
+	SetInventory("SamuTInv_HideSBAR", 0);
 	pagetags[STTAGS_ALPHA] = 0;
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
@@ -114,6 +115,7 @@ function void STExecute_Shutdown(void){
 
 function void STExecute_Close(void){
 	SetInventory("SamuTInv_UsingTerminal", 0);
+	SetInventory("SamuTInv_HideSBAR", 0);
 	pagetags[STTAGS_ALPHA] = 0;
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;

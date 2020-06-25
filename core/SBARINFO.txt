@@ -7,6 +7,7 @@ monospacefonts true, "0";
 createpopup status, 800, 150, SlideInBottom, 20;
 statusbar popupstatus, fullscreenoffsets
 {
+	inInventory Not SamuTInv_HideSBAR{
    drawString STATBIGS, White, "Unit Upgrades", 20, -200, 0, alignment(left);
    
    InInventory HUD_T_HEALTH2{
@@ -29,10 +30,12 @@ statusbar popupstatus, fullscreenoffsets
    
    DrawImage "CM28", 230, -185;
    DrawImage "CM29", 265, -185;
+   }
 }
 
 statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 {
+	inInventory Not SamuTInv_HideSBAR{
     //health
     drawimage "MEDIA0", 20, -2, centerbottom;
     drawnumber 3, HUDFONT_DOOM, untranslated, health, drawshadow, 82, -20;
@@ -233,11 +236,12 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
     {
         drawkeybar 6, vertical, reverserows, auto, -10, 2, 0, 3, auto;
     }
+	} // Statusbar hiding.
 }
 
 statusbar normal// Standard Doom Status bar
 {
-    inInventory Not SamuTInv_USingTerminal{
+    inInventory Not SamuTInv_HideSBAR{
 	drawbar "EXPBR", "EXPBR0", Hud_EXP, horizontal, interpolate(15),  399, 570;
 	drawbar "EXPBL", "EXPBL0", Hud_EXP, horizontal, reverse, interpolate(15),  9, 570;
 	
@@ -546,10 +550,14 @@ statusbar normal// Standard Doom Status bar
 
 statusbar inventory // Standard bar overlay (ZDoom Addition)
 {
+	inInventory Not SamuTInv_HideSBAR{
     drawinventorybar Doom, 7, VerVibes, 300, 500;
+	}
 }
 
 statusbar inventoryfullscreen // ZDoom HUD overlay.
 {
+	inInventory Not SamuTInv_HideSBAR{
     drawinventorybar Doom, translucent, 7, INDEXFONT, 400, 200;
+	}
 }

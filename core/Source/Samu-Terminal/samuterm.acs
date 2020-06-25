@@ -32,11 +32,11 @@
 #include "samut_update.ach"
 #include "samut_disp.ach"
 
-Script "SamuTerminal" (int homeTag){
+Script "SamuTerminal" (int homeTag, int hidestatusbar){
 	if(TerminalInUse()) Terminate;
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
-	
+	SetInventory("SamuTInv_HideSBar", hidestatusbar);
 }	
 
 script "TerminalLoop" (int alphatag) CLIENTSIDE {

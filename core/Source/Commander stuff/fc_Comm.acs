@@ -201,7 +201,7 @@ script 130 (void)
     //acs_execute(969, 0, 0, 0, 0);
     
 	//[Samu] A Commander terminal which it work more efficiently, and hopefuly more easier to mantain.
-	ACS_NamedExecute("SamuTerminal", 0, 10);
+	ACS_NamedExecute("SamuTerminal", 0, 10, true);
 	
     // begin commanding
     while(c_Commander == playernumber() && playeringame(c_Commander) && getactorproperty(0, APROP_Health) > 0)
