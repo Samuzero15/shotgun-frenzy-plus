@@ -56,13 +56,13 @@ def acs_compile(rootDir, SourceDir):
     tools_dir = os.path.join(rootdir, "tools");
     acs_dir = os.path.join(rootdir, sourceDir, "acs");
     src_dir = os.path.join(rootdir, sourceDir, "source");
-    includes = ['-i'] + [tools_dir] + ['-i'] + [src_dir]
+    
+    includes = ['-i'] + ["\"" + tools_dir  + "\""] + ['-i'] + ["\"" + src_dir  + "\""]
     
     # print(includes);
     
     os.chdir(tools_dir);
-    compcmd     = ["acc"] + includes
-    
+
     print("\n--Compiling ACS for {name} --".format(name=part));
     os.chdir(src_dir);
     
@@ -70,11 +70,12 @@ def acs_compile(rootDir, SourceDir):
     for root, dirs, files in os.walk(os.getcwd()):
         for dir in dirs:
             # print(os.path.join(root, dir))
-            includes = includes + ['-i'] + [os.path.join(root, dir)]
+            includes = includes + ['-i'] + ["\"" + os.path.join(root, dir)+ "\""]
         
         for file in files:
             if file.endswith(".acs"):
                 fileslist+=1
+    
     
     current = 0;
     for root, dirs, files in os.walk(os.getcwd()):
@@ -83,8 +84,7 @@ def acs_compile(rootDir, SourceDir):
             if file.endswith(".acs"):
                 f_target = os.path.join(root, file)
                 f_name = os.path.basename(f_target).split('.')[0]
-                compcmd     = ["acc"] + includes + [f_target] + [os.path.join(acs_dir, f_name + '.o')]
-                
+                compcmd     = ["acc"] +  includes + ["\"" + f_target + "\""] + ["\"" + os.path.join(acs_dir, f_name + '.o')+ "\""]
                 subprocess.call(compcmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 current+=1;
                 printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
@@ -165,9 +165,10 @@ if __name__ == "__main__":
 
     exe_path    = config["Executable"].get('zandronum_path', '?');
     std_path    = config["Executable"].get('skulldata_path', '?');
+    map_test    = config["Executable"].get('testing_map', '?');
     os.chdir(exe_path);
     fullcmd     = ["zandronum.exe", "-iwad", "doom2.wad", "-file", std_path]
-    subprocess.call(fullcmd + filelist + ["-map TEST"])
+    subprocess.call(fullcmd + filelist + ['+map', map_test])
     if( not args.save):
         for file in filelist:
             os.remove(file)

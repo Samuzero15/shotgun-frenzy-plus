@@ -27,16 +27,16 @@ actor PlasmaBall_Player : FastProjectile replaces PlasmaBall
   }
 }
 
-ACTOR PlasmaProjectile_Advanced : FastProjectile
+
+ACTOR PlasmaProjectile_Turret : FastProjectile
 {
 	Radius				11
 	Height				8
-	Speed				64
-	Damage				6
+	Speed				60
+	Damage				10
 	DamageType			MarineFire
 	RenderStyle			Add
 	Projectile
-	+RIPPER //[Samu] Lazy-ass motherfucker.
 	+MTHRUSPECIES
 	SeeSound			"x1/fire1"
 	//DeathSound		"weapons/rocklx"
@@ -45,8 +45,8 @@ ACTOR PlasmaProjectile_Advanced : FastProjectile
 	States
 	{
 		Spawn:
-			PLSS A 1 bright A_SpawnItem ("Rail_Standard_Tracer" , 0, 0, 0, 0)
-			PLSS B 1
+			PLSS A 1 bright A_SpawnItem ("PlasmaTrail_Turret" , 0, 0, 0, 0)
+			PLSS B 1 bright A_SpawnItem ("PlasmaTrail_Turret" , 0, 0, 0, 0)
 			Loop
 		Death:
 			PLSE C 8 bright
@@ -95,6 +95,18 @@ Actor PlasmaTrail2 : PlasmaTrail
 		PLSE A 2 bright 
 		PLSS B 2 BRIGHT
 		stop
+  }
+}
+
+Actor PlasmaTrail_Turret : PlasmaTrail
+{
+  States
+  {
+   Melee:
+   Spawn:
+		PLSE A 2 nodelay bright 
+		PLSE B 2 BRIGHT a_fadeout(0.25)
+		loop
   }
 }
 

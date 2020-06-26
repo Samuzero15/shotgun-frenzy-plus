@@ -171,7 +171,7 @@ generator	 	FlamerShot		sfMidScorch
 generator	 	Rail_Standard		PlasmaScorch
 generator	 	Rail_Taser		PlasmaScorch
 generator	 	PlasmaBall_Player		PlasmaScorch
-generator	 	PlasmaProjectile_Advanced	PlasmaScorch
+generator	 	PlasmaProjectile_Turret	PlasmaScorch
 generator	 	PlasmaProjectile_Spread	PlasmaScorch
 generator	 	Rocket_Standard		sfMidScorch
 generator	 	Rocket_Exploder		sfMidScorch

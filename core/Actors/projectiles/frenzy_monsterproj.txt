@@ -55,15 +55,10 @@ Actor Mon_BFGBall : BFGBall
 	{
 		Death:
 		BFE1 AB 8 Bright
-		BFE1 C 8 Bright A_BFGSpray("Mon_BFGExtra")
+		TNT1 A 0 A_Explode(150,128, 0)
+		BFE1 C 8 Bright
+		TNT1 A 0 A_Explode(300,256, 0)
 		BFE1 DEF 8 Bright
 		Stop
 	}
-}
-
-
-Actor Mon_BFGExtra : BFGExtra
-{
-	+Mthruspecies
-	DamageType "DemonFire"
 }

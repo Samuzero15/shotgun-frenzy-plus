@@ -64,8 +64,8 @@ ACTOR TurretBase
 			TBAS X 1 A_SpawnItemEx("TurretBase_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER)
 			TBAS X 1 A_NoBlocking
 		Active:
-			TBAS X 5
-			goto Active
+			NULL A 1
+			stop
 	}
 }
 
@@ -94,8 +94,9 @@ ACTOR TurretBase_Stand : TurretStand
 			TBAS X 100
 			goto Spawn
 		Death:
+			TNT1 A 0 A_KillMaster
 			TBAS X 1 A_FadeOut(0.1)
-			goto Fade
+			loop
 	}
 }
 
@@ -348,7 +349,8 @@ ACTOR TurretBase_Head : TurretHeadBase 24300
 	{
 		Spawn:
 			BTRT A 1 A_Look
-			TNT1 A 0 A_SpawnItemEx("TurretBase_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+			TNT1 A 0 A_SpawnItemEx("TurretBase_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+			goto Spawn3
 		Spawn3:
 			BTRT A 1 A_Look
 			NULL A 0 A_JumpIfHealthLower(300,"Spawn2")

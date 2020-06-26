@@ -88,7 +88,7 @@ ACTOR TurretBullet2_Base
 		Death:
 			TNT1 A 0 A_KillMaster
 			TBAS A 1 A_FadeOut(0.1)
-			goto Fade
+			loop
 	}
 }
 
@@ -358,7 +358,7 @@ ACTOR TurretBullet_Head : TurretHeadBase 24301
 	{
 		Spawn:
 			BTRT A 1 A_Look
-			BTRT A 0 A_SpawnItemEx("TurretBullet2_Base", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+			BTRT A 0 A_SpawnItemEx("TurretBullet2_Base", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
 			//BTRT A 1 A_SpawnItemEx("TurretBase1", 0)
 			goto Spawn3
 		Spawn3:

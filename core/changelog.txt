@@ -52,6 +52,21 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (25 / 06 / 2020)
+	*) Now the base turret will not duplicate its stand on spawning.
+	*) Modified the particle effects for the turret/dispenser construction. 
+	   To make it fade upon floor's touch. This will reduce the lag a bit upon spamming up the turrets.
+	*) Replaced the plasma attacks for the plasma turret. 
+	   Now it fires faster but it loses the ability to cause explosive damage.
+	// Did you know the turrets can actually fire plasmas and cause damage 
+	   like a rocket in the past patches?
+	*) When the turret base is gone, now the turret head will die at the same time.
+	*) Shell grenade's pellets buffed up to 7. Suceptible to Doom Random damage.
+	*) No bfg splash for the spider demolisher, because its pretty OP on numbers.
+	*) Modified the play script again, now on project ini you can specify the map where you want to test :D
+	*) Also, now the acs compilation can be applied with folders and subfolders! (Thank you sirJuddington!)
+	*) Now my old organization forthe Samu Terminal is finally back :D
+
 -) (23 / 06 / 2020)
 	*)Some more re-ordering, and python script fixes.
 	*)Now the python scripts contains a loading bar :3

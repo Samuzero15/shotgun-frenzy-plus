@@ -17,8 +17,6 @@ ACTOR Rail_Standard : FastProjectile
 	//DeathSound			"weapons/rocklx"
 	Obituary			"%o smells %k's rails... oh wait, thats $o's melted insides"
         DontHurtShooter
-	MissileType "Rail_Standard_Tracer"
-	MissileHeight 8
 	
 	States
 	{
@@ -27,7 +25,7 @@ ACTOR Rail_Standard : FastProjectile
 			PLSS B 1
 			goto Spawn
 		Death:
-			PLSE C 8 bright A_Explode(100,128,0,0,16)
+			PLSE C 8 bright
 			PLSE D 6 bright
 			PLSE E 4 bright
 			stop

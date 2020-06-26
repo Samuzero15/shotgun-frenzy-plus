@@ -595,7 +595,7 @@ Actor ShellBlast_Pellet	: FastProjectile {
 	Radius				11
 	Height				8
 	Speed				5
-	Damage				(5)
+	Damage				7
 	DamageType			MarineFire
 	RenderStyle			Add
 	Projectile

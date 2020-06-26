@@ -1,6 +1,6 @@
 ACTOR Demolisher : FPlus_Monster 30110
 {
-Obituary "%o got demolished by a little cute, Demolisher."
+Obituary "%o got demolished by a little cute, Spider Demolisher."
 Health 6000
 Radius 50
 Height 50 
@@ -81,7 +81,7 @@ States
        DEMO J 20 Bright A_Scream 
        DEMO K 10 Bright A_NoBlocking 
        DEMO LMNOPQR 10 Bright
-       DEMO S 30 
+       DEMO S 1
        goto FadeOut.NoRaise
    } 
 }

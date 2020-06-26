@@ -73,6 +73,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	height 64
 	mass 0x7FFFFFF
 	speed 0
+	painchance 0
 	MONSTER
 	//-ISMONSTER //Makes it spawnable everywhere
 	+FLOORCLIP

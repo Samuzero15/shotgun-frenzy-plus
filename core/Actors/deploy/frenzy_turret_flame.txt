@@ -76,8 +76,9 @@ ACTOR TurretFlame_Stand : TurretStand
 			TBAS C 100
 			goto Spawn
 		Death:
+			TNT1 A 0 A_KillMaster
 			TBAS C 1 A_FadeOut(0.1)
-			goto Fade
+			Loop
 	}
 }
 
@@ -347,7 +348,7 @@ ACTOR TurretFlame_Head : TurretHeadBase 24302
 	{
 		Spawn:
 			BTRT A 1 A_Look
-			BTRT A 0 A_SpawnItemEx("TurretFlame_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+			BTRT A 0 A_SpawnItemEx("TurretFlame_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
 			goto Spawn3
 			//BTRT A 1 A_SpawnItemEx("TurretBase1", 0)
 		Spawn3:
