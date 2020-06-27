@@ -1,0 +1,17 @@
+
+function void STExecute_AskForRecycle(int weapon, int uptype){
+	Prompt_Resize(20,8);
+	Prompt_Ask("Conf. Recycling", 
+			"Are you sure you want to recycle this weapon?", CR_GREEN);
+	Prompt_ExecuteOnTrue(STEXE_MSGRC, weapon, uptype, 0);
+}
+
+function void STExecute_RecycleAccepted(int which, int uptype){
+	LocalAmbientSound("monies",128);
+	SamuTerm_CallOpExecute(STEXE_WEPRC, which, uptype, playerNumber());
+	Toaster_ShowToast("Recycling process completed!", CR_GOLD);
+}
+
+function void STExecute_RecycleWeapon(int weapon, int uptype, int play){	
+	Weapon_Recycle(weapon, uptype, play);
+}
