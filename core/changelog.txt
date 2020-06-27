@@ -52,6 +52,19 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (26 / 06 / 2020)
+	+) The chaingun turret is coming in the game!
+	*) Some file renaming, just for notepad++ acessibility.
+	*) Re-ordered the folder structure on the Samu Terminal acs scripts.
+	// What makes this turret special from the bullet turret?
+	   Well, it fires everything at sight and it won't 
+	   rest untill everybody in it sight is dead!
+	// This will be implemented in the sf maps for now 
+	   (untill I get a pickup sprite for it.)
+	// The tentative sprite for this turret could be 2000 credits, but that's just me 
+	   measuring how valuable is this badboy. 
+	// Oh yeah, Thank you Captain J! That chaingun turret fits perfectly inside here!
+	
 -) (25 / 06 / 2020)
 	*) Now the base turret will not duplicate its stand on spawning.
 	*) Modified the particle effects for the turret/dispenser construction. 
