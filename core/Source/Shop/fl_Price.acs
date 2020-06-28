@@ -185,6 +185,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_mu_rockets", 		4000);
 	Prices_add("pr_mu_armor", 			5000);
 	Prices_add("pr_mu_speed", 			3000);
+	Prices_add("pr_mu_life_save", 		30000);
 	Prices_add("pr_mu_self_destruct", 	8000);
 	//Prices_add("pr_mu_auto_repair", 	3500); // Heh. Another future thing.
 }

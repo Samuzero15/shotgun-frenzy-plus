@@ -10,11 +10,9 @@ function void MechUpPage_Update(int pageTag){
 		mechpage_vars[49] = 0;
 		//MechUpPage_UpdateStats();
 		
-		MechUpPage_UpdateComps(0);
-		MechUpPage_UpdateComps(1);
-		MechUpPage_UpdateComps(2);
-		MechUpPage_UpdateComps(3);
-		MechUpPage_UpdateComps(4);
+		for(int j = 0; j < MechUpTop; j++){
+			MechUpPage_UpdateComps(j);
+		}
 	
 		if(!CheckInventory("Mech_State")){
 			Label_setText(mechpage_vars[3], strparam(s:"Cost: ", d:checkInventory("Mech_Buy"), s:" $") );
@@ -81,12 +79,9 @@ function void MechUpPage_Init(int pageTag){
 	
 	//MechUpPage_InitStats();
 	
-	MechUpPage_AddComps(0, 1);
-	MechUpPage_AddComps(1, 2);
-	MechUpPage_AddComps(2, 3);
-	MechUpPage_AddComps(3, 4);
-	MechUpPage_AddComps(4, 5);
-	
+	for(int j = 0; j < MechUpTop; j++){
+		MechUpPage_AddComps(j, j+1);
+	}
 }
 
 function void MechUpPage_UpdateStats(void){
@@ -171,7 +166,7 @@ function void MechUpPage_UpdateComps(int upgrade){
 	int maxup = MechUp_GetMax(upgrade);
 	int price = MechUp_GetPrice(upgrade);
 	
-	bool showit = pursached && CheckInventory(actor) <= maxup;
+	bool showit = pursached && CheckInventory(actor) < maxup;
 	
 	int i = MechUpPage_LoadFromGroup(upgrade, 1),
 		j = MechUpPage_LoadFromGroup(upgrade, 2),

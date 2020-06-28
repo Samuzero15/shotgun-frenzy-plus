@@ -13,6 +13,7 @@ ACTOR sfArachnotron : FPlus_Monster replaces Arachnotron
 	deathsound "baby/death"
 	activesound "baby/active"
 	+FLOORCLIP
+	+thruspecies
 	states
 	{
 		Spawn:
@@ -27,8 +28,8 @@ ACTOR sfArachnotron : FPlus_Monster replaces Arachnotron
 			goto See+1
 		Missile:
 			BSPI A 20 bright A_FaceTarget
-			BSPI G 4 bright A_BspiAttack    // See ArachnotronPlasma
-			BSPI H 4 bright
+			BSPI G 4 bright A_CustomMissile("SpiderPlasma")
+			BSPI H 4 bright A_CustomMissile("SpiderPlasma")
 			BSPI H 1 bright A_SpidRefire
 			goto Missile+1
 		Pain:

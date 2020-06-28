@@ -31,4 +31,5 @@ actor MechUp_armor : Integer {}
 actor MechUp_speed : Integer {}
 actor MechUp_nails : Integer {}
 actor MechUp_rockets : Integer {}
+actor MechUp_LifeSave : Integer {}
 actor MechUp_selfdestruct : Integer {}

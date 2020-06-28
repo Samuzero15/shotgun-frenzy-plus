@@ -52,6 +52,21 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+
+-) (28 / 06 / 2020) (Test 11 Relase!)
+	[Life save upgrade for Mechas, yet more fixes.]
+	-) Sandbags will nolonger cause infighting on monsters :/
+	*) Turrets will now fire through sandbags!
+	*) Bullet and Chaingun turret fire mode has been switched to the projectile mode.
+	// Because Zandro is outdated, the projectiles will not have pitch.
+	*) Arachnotron, Spider Mastermind and some more other monsters will fire though themselves.
+	*) Nerfing a bit the Tankguns on their nails and rockets.
+	-) Now mechas loses the ability to teleport back to the base. But instead, lets make that a feature.
+	+) A new Mecha Upgrade has been added! Lifesave Upgrade!
+	// When you press use (in a war-mech). You will be teleported back to the base.
+	   This upgrade costs 30000 whoopin' credits to be installed!
+	// Why so expensive? Well, you can attack and rethreat repeatidly without even minding of the wait time.
+
 -) (27 / 06 / 2020) 
 	[Chaingun Turret now works on SF maps. And More fixes.]
 	+) The chaingun turret is ready to be deployed on SF Maps!

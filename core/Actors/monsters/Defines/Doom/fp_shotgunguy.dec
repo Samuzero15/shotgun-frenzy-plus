@@ -29,6 +29,8 @@ ACTOR sfShotgunGuy : Fplus_Monster replaces ShotgunGuy
 			SPOS F 0 bright A_PlaySound("shotguy/attack", CHAN_WEAPON)
 			SPOS F 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-11.25,11.25), 0, 0)
 			SPOS F 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-11.25,11.25), 0, 0)
+			SPOS F 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-11.25,11.25), 0, 0)
+			SPOS F 0 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-11.25,11.25), 0, 0)
 			SPOS F 10 bright A_CustomMissile("CommonBullet", 32.0, 0, frandom(-11.25,11.25), 0, 0)
 			SPOS E 10
 			goto See

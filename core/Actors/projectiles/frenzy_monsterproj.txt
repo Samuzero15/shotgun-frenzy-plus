@@ -23,12 +23,32 @@ ACTOR BulletProjectile : FastProjectile
    }
 }
 
+Actor SpiderPlasma : ArachnotronPlasma
+{
+	+Mthruspecies
+}
+
 ACTOR ChainBullet : BulletProjectile
 {
    Damage (5*random(1,2)) // Specifies the damage
    Decal "Bulletchip" // Change the bullet hole if you wish
    Speed 200 // and the speed
    //+Mthruspecies
+}
+ACTOR TurretProj_Chaingun : BulletProjectile
+{
+   Damage (random(2,6)*3) // Specifies the damage
+   Decal "Bulletchip" // Change the bullet hole if you wish
+   Speed 200 // and the speed
+   +Mthruspecies
+}
+
+ACTOR TurretProj_Bullet : BulletProjectile
+{
+   Damage (random(1,4)*3) // Specifies the damage
+   Decal "Bulletchip" // Change the bullet hole if you wish
+   Speed 200 // and the speed
+   +Mthruspecies
 }
 
 ACTOR SSGBullet : BulletProjectile

@@ -258,7 +258,7 @@ script 306 (void)
     else{
    	 setactorproperty(0, APROP_HEALTH, 3500);
     }*/
-	setactorproperty(0, APROP_HEALTH, 1500 + 1500 * checkinventory("MechUp_Armor"));
+	setactorproperty(0, APROP_HEALTH, 1500 + 900 * checkinventory("MechUp_Armor"));
 	SetActorProperty(0, APROP_SPEED, 0.5 + 0.25 * checkInventory("MechUp_Speed"));
     
     // setup tank hud
@@ -329,7 +329,8 @@ script 307 (void)
     // purge
     setfont("CONFONT");
     hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
-	giveInventory("StartingPoint", 1); // teleports you back to safety!
+	if(checkInventory("MechUp_LifeSave"))
+		giveInventory("StartingPoint", 1); // teleports you back to safety!
     
     // fix players health
     acs_execute(106, 0, 1, 1, 1);

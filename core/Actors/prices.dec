@@ -135,6 +135,7 @@ Actor pr_mu_armor : Integer {}
 Actor pr_mu_speed : Integer {}
 Actor pr_mu_self_destruct : Integer {}
 Actor pr_mu_auto_repair : Integer {}
+Actor pr_mu_life_save : Integer {}
 
 //Commander research / build
 Actor pr_cmd_genlab : Integer {}
@@ -180,46 +181,3 @@ Actor pr_cmd_sandbags : Integer {}
 Actor pr_cmd_disp_health : Integer {}
 Actor pr_cmd_disp_ammo : Integer {}
 
-
-
-// Old Token Synchers.
-Actor shop_WP_SHOTGUN : Integer {}
-Actor shop_WP_ASSAULT : Integer {}
-Actor shop_WP_SUPPORT : Integer {}
-Actor shop_WP_COMANDO : Integer {}
-Actor shop_WP_HEAVY : Integer {}
-Actor shop_WP_PLASMA : Integer {}
-Actor shop_WP_FLAMER : Integer {}
-Actor shop_WP_BFG : Integer {}
-
-actor price_build_GENLAB : Integer {}
-actor price_build_ARMORY : Integer {}
-actor price_build_MECHFA : Integer {}
-actor price_build_REFINE : Integer {}
-actor price_build_MARCOM : Integer {}
-actor price_build_NUKESY : Integer {}
-
-
-Actor shop_Item_SOULSPHERE : Integer {}
-Actor shop_Item_MEGASPHERE : Integer {}
-Actor shop_Item_GODSPHERE : Integer {}
-Actor shop_Item_QUADDAMAGE : Integer {}
-
-Actor shop_Item_BACKPACK : Integer {}
-Actor shop_Item_DRON_SAW : Integer {}
-Actor shop_Item_DRON_MINE : Integer {}
-Actor shop_Item_MINES : Integer {}
-
-Actor shop_Item_DISP_HEALTH : Integer {}
-Actor shop_Item_DISP_AMMO : Integer {}
-
-//soon...
-Actor shop_Item_DISP_REFRESH : Integer {}
-
-Actor shop_Item_TURR_BULLET : Integer {}
-Actor shop_Item_TURR_SHELLS : Integer {}
-Actor shop_Item_TURR_PLASMA : Integer {}
-Actor shop_Item_TURR_FLAME : Integer {}
-Actor shop_Item_TURR_ROCKET : Integer {}
-Actor shop_Item_TURR_RAIL : Integer {}
-Actor shop_Item_TURR_TESLA : Integer {}

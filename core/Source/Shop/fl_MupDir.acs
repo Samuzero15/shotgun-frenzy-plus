@@ -11,25 +11,36 @@
 #library "fl_MupDir"
 #include "zcommon.acs"
 //#include "samu_tools.acs"
+
+#define FP_MECHUP_MAX 8
+
 int MechUpTop = 0;
-int mechup_list[5][5];
+int mechup_list[FP_MECHUP_MAX][5];
 
 function void SFPlus_DefineMechUps(void){
 	MechUpTop = 0;
-	MechUp_Add ("Nail Upgrade","MechUp_Nails", "nails", 4,
+	MechUp_Add ("Nail Upgrade","MechUp_Nails", "nails", 5,
 		"Make them harder, make them better...");
 	
-	MechUp_Add ("Rocket Upgrade", "MechUp_Rockets", "rockets", 4,  
+	MechUp_Add ("Rocket Upgrade", "MechUp_Rockets", "rockets", 5,  
 		"Face it, explsions can save the day.");
 	
-	MechUp_Add ("Armor Upgrade", "MechUp_Armor", "armor", 4, 
+	MechUp_Add ("Armor Upgrade", "MechUp_Armor", "armor", 5, 
 		"More resistance never done you harm.");
 	
-	MechUp_Add ("Manuvering Upgrade", "MechUp_Speed", "speed", 2,
+	MechUp_Add ("Manuvering Upgrade", "MechUp_Speed", "speed", 3,
 		"Tanks are slow, but you're on a hurry.");
 	
-	MechUp_Add1Up ("Self-Destruct Upgrade", "MechUp_SelfDestruct", "self_destruct",
+	MechUp_Add1Up("Lifesave Upgrade", "MechUp_LifeSave", "life_save",
+		"On eject, you will return to the base.");
+		
+	MechUp_Add1Up("Self-Destruct Upgrade", "MechUp_SelfDestruct", "self_destruct",
 		"If this is it, then finish it with style.");
+		
+	/*
+	MechUp_Add1Up("Self-Repair Upgrade", "MechUp_Lifesave", "life_save",
+		"You armor regens itself.");
+		*/
 }
 
 function void MechUp_Add1Up (str name, str actor, str price, str desc){
@@ -37,6 +48,12 @@ function void MechUp_Add1Up (str name, str actor, str price, str desc){
 }
 function void MechUp_Add (str name, str actor, str price, int maxupgs, str desc){
 	int upg = MechUpTop;
+	
+	if(MechUpTop >= FP_MECHUP_MAX)
+	{ 
+		log(s:"(fl_Mupdir): Too much mecha upgrades!");
+		return;
+	}
 	
 	MechUp_List[upg][0] = name;
 	MechUp_List[upg][1] = desc;

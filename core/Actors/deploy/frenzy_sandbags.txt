@@ -67,8 +67,9 @@ Actor Sandbag_Base{
 	MONSTER
 	Species "Marines"
 	-ISMONSTER //Makes it spawnable everywhere
-	+FASTER +FASTMELEE +FRIENDLY +NEVERRESPAWN +NOBLOOD
-	+thruSpecies +mthruspecies
+	+FASTER +FASTMELEE +NEVERRESPAWN +NOBLOOD +NEVERTARGET
+	+dontharmspecies
+	+thruSpecies
 	
 	// protect from marine damage
 	damagefactor "MarineFire", 0.0
@@ -87,7 +88,7 @@ Actor Sandbag_Base{
 			loop
 		Melee:
 			"####" "##" 8 A_FaceTarget
-			"####" "#" 132 A_CustomMeleeAttack (1, "", "", "", 0) 
+			"####" "#" 132 A_Explode(1, 128, 0, 0, 1) 
 			goto See
 		Pain:
 			"####" "#" 1

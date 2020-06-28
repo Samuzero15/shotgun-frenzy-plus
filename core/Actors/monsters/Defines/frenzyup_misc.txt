@@ -6,7 +6,7 @@ actor sfJuggernaught_tw : sfJuggernaught replaces sfJuggernaught
 	painchance 0
 }
 
-actor SpiderAnnihilator : SpiderMastermind
+actor SpiderAnnihilator : sfSpiderMastermind
 {
 	Health 4500
 	Radius 40
@@ -16,7 +16,7 @@ actor SpiderAnnihilator : SpiderMastermind
 	+thruSpecies
 }
 
-actor sfArachnotron_tw : Arachnotron
+actor sfArachnotron_tw : sfArachnotron
 {
 	Health 800
 	Radius 40
