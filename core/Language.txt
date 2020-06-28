@@ -92,3 +92,6 @@ FP_DEPCD_TURRET_TESCOL		= "Deploys a tesla coil which it damages nearby enemies\
 							  "hiting them without even noticing.";
 FP_DEPCD_TURRET_FLAMER		= "Deploys a powerful flame turret which it spews fire\n"
 							  "to the nearby demons.";
+FP_DEPCD_TURRET_CHAINGUN	= "Deploys a chaingun turret, better than a bullet turret.\n"
+							  "Makes more damage, seeks for new targets, fires constantly\n"
+							  "and resist more.";							  

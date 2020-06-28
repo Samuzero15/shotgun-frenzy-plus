@@ -114,134 +114,6 @@ ACTOR splatEmitter_CFX2
 
 
 // particle actors
-actor splatSandbag1
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SAND D 3
-		SAND D 3
-		SAND D 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SAND D 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
-
-actor splatSandbag2
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SAND E 3
-		SAND E 3
-		SAND E 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SAND E 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
-
-actor splatSandbag3
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SAND F 3
-		SAND F 3
-		SAND F 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SAND F 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
-actor splatShard1
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SHRD B 3
-		SHRD B 3
-		SHRD B 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SHRD B 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
-actor splatShard2
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SHRD C 3
-		SHRD C 3
-		SHRD C 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SHRD C 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
-actor splatShard3
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SHRD D 3
-		SHRD D 3
-		SHRD D 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SHRD D 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
-actor splatShard4
-{
-	health 2
-	radius 1
-	height 1
-	scale 0.5
-	+CLIENTSIDEONLY
-	States
-	{
-		Spawn:
-		SHRD E 3
-		SHRD E 3
-		SHRD E 555 A_PlaySound("inv/sandbag")
-		FadeOut:
-		SHRD E 1 A_FadeOut(0.1)
-		goto FadeOut
-	}
-}
 
 actor splatBlood_Eye
 {
@@ -557,6 +429,41 @@ ACTOR splatBulletCasing
 		BULC G 350
 		Stop
 		BULC H 350
+		Stop
+	}
+}
+
+ACTOR splatBulletCasing_Lite : splatBulletCasing
+{
+	States
+	{
+		Spawn:
+		BULC A 0 A_PlaySound("NULL")
+		BULC ACBHEGFD 1
+		Goto Spawn+1
+		Death:
+		BULC A 0 A_Jump(32,8)
+		BULC A 0 A_Jump(37,8)
+		BULC A 0 A_Jump(43,8)
+		BULC A 0 A_Jump(51,8)
+		BULC A 0 A_Jump(64,8)
+		BULC A 0 A_Jump(85,8)
+		BULC A 0 A_Jump(128,8)
+		BULC A 35
+		Stop
+		BULC B 35
+		Stop
+		BULC C 35
+		Stop
+		BULC D 35
+		Stop
+		BULC E 35
+		Stop
+		BULC F 35
+		Stop
+		BULC G 35
+		Stop
+		BULC H 35
 		Stop
 	}
 }

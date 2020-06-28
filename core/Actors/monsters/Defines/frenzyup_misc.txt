@@ -13,7 +13,7 @@ actor SpiderAnnihilator : SpiderMastermind
 	Height 40
 	Scale 0.4
 	Obituary "%o learned that Spider Annihilators pack a lot of punch for their size."
-	+thruactors
+	+thruSpecies
 }
 
 actor sfArachnotron_tw : Arachnotron
@@ -22,5 +22,5 @@ actor sfArachnotron_tw : Arachnotron
 	Radius 40
 	Height 40
 	Scale 0.65
-	+thruactors
+	+thruSpecies
 }

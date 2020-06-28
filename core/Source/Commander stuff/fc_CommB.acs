@@ -91,6 +91,8 @@ script "SFPlus_CMD_CallSpawnScript" (int which){
 				thing = "Spawn_TurretTesla";		break;
 			case 5: //Flame turret
 				thing = "Spawn_TurretFlame";		break;
+			case 6: //Chaingun turret
+				thing = "Spawn_TurretChaingun";		break;
 			default: terminate;
 		}
 		CMDEvent(4+noSectorCheck*3, thing, which, 0);
@@ -252,8 +254,9 @@ function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_Eve
 				
 				case 4: f_TipShow ("CM46", "Tesla Turret", "Commander is building a Tesla Turret...", 2); break;
 				case 5: f_TipShow ("CM47", "Flame Turret", "Commander is building a Flame Turret...", 2); break;
-				case 6: f_TipShow ("CM45", "Shotgun Turret", "Awaiting Construction...", 2); break;
-				case 7: f_TipShow ("CM43", "Rail Turret", "Awaiting Construction...", 2); break;
+				case 6: f_TipShow ("CM47", "Chaingun Turret", "Commander is building a Chaingun Turret...", 2); break;
+				case 7: f_TipShow ("CM45", "Shotgun Turret", "Awaiting Construction...", 2); break;
+				case 8: f_TipShow ("CM43", "Rail Turret", "Awaiting Construction...", 2); break;
 			}   
 		}
 		else {

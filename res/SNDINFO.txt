@@ -144,6 +144,13 @@ Quadshot/Reload QuadReld
 Quadshot/Fire1  Quad_1Bf
 Quadshot/Fire4	Quad_4BF
 
+
+sb1 DSPUNCH
+sb2 DPSKEPCH
+
+$random inv/sandbag {sb1 sb2}
+$limit inv/sandbag 8
+
 ////// Samu-term sounds
 
 A-Greet1 A-Greet1

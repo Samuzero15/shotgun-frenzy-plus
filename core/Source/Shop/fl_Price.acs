@@ -169,7 +169,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_cmd_turret_plasma", 	800);
 	Prices_add("pr_cmd_turret_flame", 	2000);
 	Prices_add("pr_cmd_turret_tesla", 	1800);
-	Prices_add("pr_cmd_turret_shotgun", 	1000);
+	Prices_add("pr_cmd_turret_chaingun",2300);
+	Prices_add("pr_cmd_turret_shotgun", 1000);
 	Prices_add("pr_cmd_turret_rail", 	1600);
 	Prices_add("pr_cmd_disp_health", 	600);
 	Prices_add("pr_cmd_disp_ammo", 		600);

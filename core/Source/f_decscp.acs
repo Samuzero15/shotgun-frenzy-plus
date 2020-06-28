@@ -25,12 +25,8 @@ script "SecFireTrigger" ENTER
  {
    buttons = GetPlayerInput(-1, INPUT_BUTTONS);
    
-	if (buttons & BT_ALTATTACK)
-	{
-		GiveInventory("Akimbo_Fire2", 1);
-		delay(2);
-	}
-   TakeInventory("Akimbo_Fire2", 1);
+	if (buttons & BT_ALTATTACK)	GiveInventory("Akimbo_Fire2", 1);
+	else 						TakeInventory("Akimbo_Fire2", 1);
    delay(1);
  }
 }
@@ -44,12 +40,8 @@ script "PriFireTrigger" ENTER
  {
    buttons = GetPlayerInput(-1, INPUT_BUTTONS);
    
-	if (buttons & BT_ATTACK)
-	{
-		GiveInventory("Akimbo_Fire1", 1);
-		delay(2);
-	}
-   TakeInventory("Akimbo_Fire1", 1);
+	if (buttons & BT_ATTACK)	GiveInventory("Akimbo_Fire1", 1);
+	else						TakeInventory("Akimbo_Fire1", 1);
    delay(1);
  }
 }

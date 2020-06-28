@@ -69,8 +69,9 @@ int CmdButStack = 0;
 #libdefine FP_CB_DEPLOY_TURRET_PLASMA		54	
 #libdefine FP_CB_DEPLOY_TURRET_TESCOL		55
 #libdefine FP_CB_DEPLOY_TURRET_FLAMER		56
-#libdefine FP_CB_NUKE						57
-#libdefine FP_CB_NUKE_IT_NOW				58
+#libdefine FP_CB_DEPLOY_TURRET_CHAINGUN		57
+#libdefine FP_CB_NUKE						58
+#libdefine FP_CB_NUKE_IT_NOW				59
 
 #libdefine FP_NUMCB 59
 
@@ -142,16 +143,17 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_SUPPORT_IONCAN,			"Fire Ion Cannon",				"CM79",	"FP_SUPCD_IONCAN");
 	CMDBut_Add(FP_CB_SUPPORT_DROPMONEY,			"Drop Money bag",				"CM80",	"FP_SUPCD_DROPMONEY");
 	
-	CMDBut_Add(FP_CB_DEPLOY_MINEFIELD,		"Deploy some mines",			"CM31", "FP_DEPCD_MINEFIELD");
-	CMDBut_Add(FP_CB_DEPLOY_DISP_HEALTH,	"Deploy a Health Dispenser",	"CM33", "FP_DEPCD_DISP_HEALTH");
-	CMDBut_Add(FP_CB_DEPLOY_DISP_AMMO,		"Deploy an Ammo Dispenser",		"CM32", "FP_DEPCD_DISP_AMMO");
-	CMDBut_Add(FP_CB_DEPLOY_BARRIER,		"Deploy a Barrier",				"CM30", "FP_DEPCD_BARRIER");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET,			"Deploy a turret...",			"CG05", "FP_DEPCD_TURRET");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET_BULLET,	"Deploy a Bullet Turret",		"CM40", "FP_DEPCD_TURRET_BULLET");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET_ROCKET,	"Deploy a Rocket Turret",		"CM41", "FP_DEPCD_TURRET_ROCKET");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET_PLASMA,	"Deploy a Plasma Turret",		"CM42", "FP_DEPCD_TURRET_PLASMA");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET_TESCOL,	"Deploy a Tesla coil",			"CM43", "FP_DEPCD_TURRET_TESCOL");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET_FLAMER,	"Deploy a Flame Turret",		"CM47", "FP_DEPCD_TURRET_FLAMER");
+	CMDBut_Add(FP_CB_DEPLOY_MINEFIELD,			"Deploy some mines",			"CM31", "FP_DEPCD_MINEFIELD");
+	CMDBut_Add(FP_CB_DEPLOY_DISP_HEALTH,		"Deploy a Health Dispenser",	"CM33", "FP_DEPCD_DISP_HEALTH");
+	CMDBut_Add(FP_CB_DEPLOY_DISP_AMMO,			"Deploy an Ammo Dispenser",		"CM32", "FP_DEPCD_DISP_AMMO");
+	CMDBut_Add(FP_CB_DEPLOY_BARRIER,			"Deploy a Barrier",				"CM30", "FP_DEPCD_BARRIER");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET,				"Deploy a turret...",			"CG05", "FP_DEPCD_TURRET");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_BULLET,		"Deploy a Bullet Turret",		"CM40", "FP_DEPCD_TURRET_BULLET");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_ROCKET,		"Deploy a Rocket Turret",		"CM41", "FP_DEPCD_TURRET_ROCKET");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_PLASMA,		"Deploy a Plasma Turret",		"CM42", "FP_DEPCD_TURRET_PLASMA");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_TESCOL,		"Deploy a Tesla coil",			"CM43", "FP_DEPCD_TURRET_TESCOL");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_FLAMER,		"Deploy a Flame Turret",		"CM47", "FP_DEPCD_TURRET_FLAMER");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_CHAINGUN,	"Deploy a Chaingun Turret",		"CM47", "FP_DEPCD_TURRET_CHAINGUN");
 	
 	CMDBut_Add(FP_CB_NUKE,			"Activate nuke",			"CM75", "Activate the silo, to nuke the map.");
 	CMDBut_Add(FP_CB_NUKE_IT_NOW,	"Launch the nuke now!",		"CM75", "Click it only if you're sure to nuke this map\njust remember, hold up for 5 minutes and you win.\n\n This action cannot be undone, are you sure?");
@@ -373,6 +375,12 @@ function void CMDBut_UpdateConds(void){
 	btn = FP_CB_DEPLOY_TURRET_FLAMER;
 	CMDBut_SetPrice		 (btn, "turret_flame");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_ADVSYS),
+								"Requires Advanced Systems...");
+								
+	btn = FP_CB_DEPLOY_TURRET_CHAINGUN;
+	CMDBut_SetPrice		 (btn, "turret_chaingun");
+	CMDBut_SetShowCond	 (btn, allow_turret_c());
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_ADVSYS),
 								"Requires Advanced Systems...");
 								

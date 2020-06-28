@@ -1,0 +1,134 @@
+
+Actor Junk_Turret{
+	health 2
+	radius 1
+	height 1
+	scale 0.5
+	+CLIENTSIDEONLY
+	+CORPSE
+	States
+	{
+		Spawn:
+		"####" "#" 1
+		loop
+		Crash:
+		"####" "#" 555 A_PlaySound("inv/sandbag")
+		FadeOut:
+		"####" "#" 1 A_FadeOut(0.1)
+		goto FadeOut
+	}
+}
+
+Actor Junk_Turret_Spawn {
+	states{
+		spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag1")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag2")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag3")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag1")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag2")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag3")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard1")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard2")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard3")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard4")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard1")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard2")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard3")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard4")
+		TNT1 A 1
+		stop
+	}
+}
+
+Actor Junk_Sandbag_Spawn {
+	states{
+		spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag1")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag2")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag3")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag1")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag2")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag3")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag1")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag2")
+		TNT1 A 0 A_SpawnDebris("Junk_Sandbag3")
+		TNT1 A 1
+		stop
+	}
+}
+
+actor Junk_Sandbag1 : Junk_Turret
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		SAND D 1
+		goto Super::Spawn
+	}
+}
+
+actor Junk_Sandbag2 : Junk_Turret
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		SAND E 1
+		goto Super::Spawn
+	}
+}
+
+actor Junk_Sandbag3 : Junk_Turret
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		SAND F 1
+		goto Super::Spawn
+	}
+}
+actor Junk_Shard1 : Junk_Turret
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		SHRD B 1
+		goto Super::Spawn
+	}
+}
+actor Junk_Shard2 : Junk_Turret
+{
+States
+	{
+		Spawn:
+		TNT1 A 0
+		SHRD C 1
+		goto Super::Spawn
+	}
+}
+actor Junk_Shard3 : Junk_Turret
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		SHRD D 1
+		goto Super::Spawn
+	}
+}
+actor Junk_Shard4 : Junk_Turret
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		SHRD E 1
+		goto Super::Spawn
+	}
+}

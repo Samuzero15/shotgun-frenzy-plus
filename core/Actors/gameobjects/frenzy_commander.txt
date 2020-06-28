@@ -41,6 +41,9 @@ ACTOR CommanderCam 2310
 		Spawn_TurretFlame:
 			NULL A 1 A_SpawnItemEx("TurretFlame", 512, 0, 0, 0)
 			goto Spawn
+		Spawn_TurretChaingun:
+			NULL A 1 A_SpawnItemEx("TurretChaingun", 512, 0, 0, 0)
+			goto Spawn
 		Spawn_Landmine:
 			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 512, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))
 			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
@@ -150,6 +153,9 @@ ACTOR CommanderCamLow 2320
 			goto Spawn
 		Spawn_TurretFlame:
 			NULL A 1 A_SpawnItemEx("TurretFlame", 128, 0, 0, 0)
+			goto Spawn
+		Spawn_TurretChaingun:
+			NULL A 1 A_SpawnItemEx("TurretChaingun", 512, 0, 0, 0)
 			goto Spawn
 		Spawn_Landmine:
 			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 128, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))

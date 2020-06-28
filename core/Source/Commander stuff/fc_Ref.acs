@@ -60,6 +60,7 @@ script 350 (void)
     delay(35 * 1);
     floor_raisebyvalue(285, 100, 128);
     delay(35 * 1);
+	int pump1, pump2;
     while(1)
     {
         // movement animation
@@ -73,6 +74,8 @@ script 350 (void)
         delay(35*1);
         
         // increase credit count
-        c_Credits += 2;
+		pump1 = Tech_IsDone(FP_TECH_REFINE_PUMP1);
+		pump2 = Tech_IsDone(FP_TECH_REFINE_PUMP2);
+        c_Credits += (2 + 4*pump1 + 4*pump2);
     }
 }

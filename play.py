@@ -57,7 +57,7 @@ def acs_compile(rootDir, SourceDir):
     acs_dir = os.path.join(rootdir, sourceDir, "acs");
     src_dir = os.path.join(rootdir, sourceDir, "source");
     
-    includes = ['-i'] + ["\"" + tools_dir  + "\""] + ['-i'] + ["\"" + src_dir  + "\""]
+    includes = ['-i'] + [tools_dir] + ['-i'] + [src_dir]
     
     # print(includes);
     
@@ -70,7 +70,7 @@ def acs_compile(rootDir, SourceDir):
     for root, dirs, files in os.walk(os.getcwd()):
         for dir in dirs:
             # print(os.path.join(root, dir))
-            includes = includes + ['-i'] + ["\"" + os.path.join(root, dir)+ "\""]
+            includes = includes + ['-i'] + [os.path.join(root, dir)]
         
         for file in files:
             if file.endswith(".acs"):
@@ -84,8 +84,13 @@ def acs_compile(rootDir, SourceDir):
             if file.endswith(".acs"):
                 f_target = os.path.join(root, file)
                 f_name = os.path.basename(f_target).split('.')[0]
-                compcmd     = ["acc"] +  includes + ["\"" + f_target + "\""] + ["\"" + os.path.join(acs_dir, f_name + '.o')+ "\""]
+                
+                compcmd     = ["acc"] + includes + [f_target] + [os.path.join(acs_dir, f_name + '.o')]
+                
                 subprocess.call(compcmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                # print (includes)
+                # print (os.getcwd())
+                # time.sleep(1)
                 current+=1;
                 printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
                 if(os.path.isfile(os.path.join(root, 'acs.err'))):

@@ -52,6 +52,18 @@ w) Work in progres
 //// Changelog ////
 
 v0 - Before the beginning...
+-) (27 / 06 / 2020) 
+	[Chaingun Turret now works on SF maps. And More fixes.]
+	+) The chaingun turret is ready to be deployed on SF Maps!
+	// Requires Advanced Systems, and it costs 2300 credits.
+	*) Now refinery will give 2 (6 with pump 1 and 10 with pump 2 techs) passive credits.
+	-) Again I had to re-order my folder structure in the Samu Terminal -.- play.py's being a bitch.
+	*) Flame and tesla turrets will attack now on a range of 512 map units.
+	*) Chaingun turret casings will now fade faster for performace.
+	*) Created the fp_Junk.dec to store all junk throwed by turrets and sand bags.
+	// For the sake of refactorization.
+	*) Touched a bit the tank guns, and gave it a new file specially for it. fp_tankguns.dec 
+
 -) (26 / 06 / 2020)
 	+) The chaingun turret is coming in the game!
 	*) Some file renaming, just for notepad++ acessibility.
