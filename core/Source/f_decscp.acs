@@ -62,6 +62,18 @@ script "PersonalBP_Expand" (void) {
 	SetAmmoCapacity("Gasoline", getAmmoCapacity("Gasoline") 			+ 50);
 }
 
+script "PersonalBP_Reset" (void) {
+	SetAmmoCapacity("Clip", 			200);
+	SetAmmoCapacity("Shell", 			60);
+	SetAmmoCapacity("RocketAmmo", 		50);
+	SetAmmoCapacity("HeavyBullets", 	300);
+	SetAmmoCapacity("Dualshot_Ammo",	200);
+	SetAmmoCapacity("Cell", 			300);
+	SetAmmoCapacity("GLauncher_Ammo", 	15);
+	SetAmmoCapacity("Flinger_Ammo", 	50);
+	SetAmmoCapacity("Gasoline", 		200);
+}
+
 script "Repeater_HeatDamage" (void)
 {
 	int bonusDmg = (CheckInventory("Rep_Heat") / 20);

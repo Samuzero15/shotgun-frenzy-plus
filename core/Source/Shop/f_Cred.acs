@@ -63,6 +63,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
  //debugTidPointersStrings(ActivatorTID());
 	//log(s:GetActorClass(0));
 	int l_Amount;
+	int l_amount_copy;
 	int color = CR_GREEN;
 	
 	bool bossmon = enemytype == 2;
@@ -88,6 +89,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 		localambientsound("p/kill", 125);
 
 	l_Amount = p_MonsterCredits[monsterClass] + playercount();
+	l_amount_copy = l_amount;
 	// increase credit
 	
 	if(bossmon) l_Amount *= 5;
@@ -112,7 +114,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	
 	// increase team credits
 
-	sf_AddTeamCredits(l_Amount);
+	sf_AddTeamCredits(l_Amount_copy);
 	// Processing Phase 1
 
 	if (Tech_isDone(FP_TECH_REFINE_PUMP1))	c_Credits += 15;

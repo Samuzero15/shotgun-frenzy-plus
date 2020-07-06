@@ -53,6 +53,17 @@ w) Work in progres
 
 v0 - Before the beginning...
 
+-) (5 / 07 / 2020)
+	[I'm taking a small break...]
+	// Took a small break for modding, I'll be back in 12 - 7 - 2020 or sooner.
+	*) Now the ammo is going to be resetted, for each player entering in game, this is just to take the personal backpack effect.
+
+-) (29 / 06 / 2020)
+	*) Team Credit rewarding has been fixed, on SF maps, when you kill
+	   "hard enemies", your team recives 3 (or 5) times the reward.
+	   Too much reward for let it go wander arround!
+	*) When you kill a "hard enemy", the display should show on sfp_earningdisp = 1
+
 -) (28 / 06 / 2020) (Test 11 Relase!)
 	[Life save upgrade for Mechas, yet more fixes.]
 	-) Sandbags will nolonger cause infighting on monsters :/

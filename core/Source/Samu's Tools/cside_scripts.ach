@@ -57,7 +57,7 @@ function void ShowNumbers(str pf, int howmuch, str sf, int color){
 function void ShowNumbersCrit(str pf, int howmuch, str sf, int color, int yoff, int id){
 	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
 
-	if(cvar == 0 || cvar == 1) return;
+	if(cvar == 0) return;
 	SetHudSize(320, 240, 1);
 	int x = 320 * 0.5;
 	int y = 240 * (0.7 + yoff);

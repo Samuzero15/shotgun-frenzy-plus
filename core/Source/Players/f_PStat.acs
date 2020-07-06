@@ -134,6 +134,8 @@ script 53 ENTER
     // clear any previous items
 	TakeInventory("PlayerKilledDemon", 0xFFFFFFF);
 	TakeInventory("P_Backpack", 0xFFFFFFF);
+	// Just in case
+	ACS_ExecuteAlways("PersonalBP_Reset", 0);
     clearinventory();
 
     // give the player his/her boomstick and beretta
