@@ -1,0 +1,50 @@
+
+d) Done!
+w) Work in progres
+
+[w] Re-Make the SBarInfo
+	[w] Do some more touchs in the normal bar.
+	[ ] Rework the full screen bar.
+[w] Get some more voices for Amy (Yeah that computer lady voice.)
+[d] Clientside the Acs HUD.
+[d] Add the powerups on the genetics terminal.
+[d] Re-arrange buildings to fit on their right places.
+[d] Give the weapon priority for all of them.
+[d] Make a small earn display with the confont.
+[d] Remake the Terminals
+	[d] Armory
+	[d] Genetics 
+	[d] Mech Factory
+	[d] Commander Terminal
+[d] Re-work the monster spawning waves.
+[d] De-hard code prices from samu-tools, for easier access.
+[d] Implement the extra expanding personal backpack. (Forgot to implement that :P)
+[d] Make the Shell Grenade.
+[d] Change the attack type for the railgun, to make it... like an actual railgun.
+[ ] Implement the Bank tech.
+[ ] Implement the rune tech.
+[ ] Flak-Bombs for the dual shot.
+[ ] Achievemets? just for the sake of it? Heck yes!.
+[ ] Make a Process Queue, a way to control the rushing researches.
+[ ] About the Testing map
+	[d] Monster spawner
+	[ ] The set of items and turrets to spawn.
+	[ ] A CF simulator.
+	[ ] Place a mech, and try to check for all of their upgrades.
+	[ ] Put all of the existent terminals.
+[ ] Add some new monsters on the rooster.
+	[ ] The Zombiemarine, a weaker version of a chaingunner, causing trobules in early waves.
+	[ ] The Zsec, good ol doom 3 reference, molesting you on early waves. It got a grenade launcher!
+	[ ] the ZombieRailgunner, you guys better keep distances between friends, cuz this guy can rail you up!
+[ ] Document the acs source, and some of the most important decorate files
+[w] Replace the sprites for...
+	[d] Quadshot
+	[ ] Railgun
+	[ ] Spitter
+[ ] Edit a bit the slug rail attack.
+[ ] Ammo and Health indicators, to let the players know when to rethreat.
+[ ] Inventory/Weapon/Stats saving for the current game. 
+	(As long you're on the same map, you could recover your stuff.)
+	Useful if you're suffering for high ping and therefore, desynching enough 
+	to be kicked out of the game. Resulting in a total loss of your progress.
+[ ] Document the build and play python scripts, to guide the modders how to do special stuff.

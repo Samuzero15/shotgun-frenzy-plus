@@ -35,7 +35,8 @@ def makepkg(sourcePath, destPath, notxt=False):
     distzip = zipfile.ZipFile(destination, "w", zipfile.ZIP_STORED)
     current = 1
     for file in filelist:
-        printProgressBar (current, len (filelist), 'Zipped:', 'files.', 1, 20)
+        # printProgressBar (current, len (filelist), 'Zipped:', 'files.', 1, 20)
+        printProgressTrack (current, len (filelist), 'Zipped:', 'files.')
         distzip.write(*file)
         current += 1
 
@@ -50,6 +51,13 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     # Print New Line on Complete
     if iteration == total: 
         print()
+'''
+    Draw a Lite version of progress track if the last one did'nt worked.
+'''
+def printProgressTrack (iteration, total, prefix = '', suffix = '', decimals = 1):
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    print(f'{prefix} {percent}% {suffix}')
+    
 
 def acs_compile(rootDir, SourceDir):
         
@@ -85,14 +93,16 @@ def acs_compile(rootDir, SourceDir):
                 f_target = os.path.join(root, file)
                 f_name = os.path.basename(f_target).split('.')[0]
                 
-                compcmd     = ["acc"] + includes + [f_target] + [os.path.join(acs_dir, f_name + '.o')]
+                compcmd     = [os.path.join(tools_dir, 'acc.exe')] + includes + [f_target] + [os.path.join(acs_dir, f_name + '.o')]
+                
                 
                 subprocess.call(compcmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 # print (includes)
                 # print (os.getcwd())
                 # time.sleep(1)
                 current+=1;
-                printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
+                # printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
+                printProgressTrack (current, fileslist, 'Compiled', 'acs files.')
                 if(os.path.isfile(os.path.join(root, 'acs.err'))):
                     os.chdir(root);
                     os.system('cls')
@@ -135,7 +145,6 @@ if __name__ == "__main__":
     if(len(config.sections()) == 0):
         print("Hm...It seems there is no project over here. Maybe you did'nt configured the project.ini file.")
     
-    os.path.isdir('./file.txt');
     exe_path    = config["Executable"].get('zandronum_path', '?');
     std_path    = config["Executable"].get('skulldata_path', '?');
     map_test    = config["Executable"].get('testing_map', 'MAP18');
@@ -145,13 +154,15 @@ if __name__ == "__main__":
         print("ACC Complier path does not exist, go fix that in the project.ini file.");
         sys.exit();
     
-    if(not os.path.isdir(std_path)):
+    if(not os.path.isdir(exe_path)):
         print("Zandronum executable path does not exist, go fix that in the project.ini file.");
         sys.exit();
         
-    if(not os.path.isdir(std_path)):
-        print("Skulltag Content path does not exist, go fix that in the project.ini file.");
+    if(not os.path.isfile(std_path + '\\skulltag_content-3.0-beta01.pk3')):
+        print("Skulltag Content file does not exist, go fix that in the project.ini file.");
         sys.exit();
+    else: 
+        std_path += '\\skulltag_content-3.0-beta01.pk3';
         
     rootdir = os.getcwd();
     
