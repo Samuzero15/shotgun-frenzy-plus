@@ -1,5 +1,0 @@
-
-This is the core part from Shotgun Frenzy Plus.
-Version: v0-t11, Built on: 28/06/2020.
-
--Samuzero15tlh-

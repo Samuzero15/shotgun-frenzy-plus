@@ -130,13 +130,32 @@ if __name__ == "__main__":
     config = ConfigParser()
     config.read("project.ini")
     
+    
+    
     if(len(config.sections()) == 0):
         print("Hm...It seems there is no project over here. Maybe you did'nt configured the project.ini file.")
     
+    os.path.isdir('./file.txt');
+    exe_path    = config["Executable"].get('zandronum_path', '?');
+    std_path    = config["Executable"].get('skulldata_path', '?');
+    map_test    = config["Executable"].get('testing_map', 'MAP18');
+    acc_path    = config["Executable"].get('acscomp_path', '?');
+    
+    if(not os.path.isdir(acc_path)):
+        print("ACC Complier path does not exist, go fix that in the project.ini file.");
+        sys.exit();
+    
+    if(not os.path.isdir(std_path)):
+        print("Zandronum executable path does not exist, go fix that in the project.ini file.");
+        sys.exit();
+        
+    if(not os.path.isdir(std_path)):
+        print("Skulltag Content path does not exist, go fix that in the project.ini file.");
+        sys.exit();
+        
     rootdir = os.getcwd();
     
     filelist = []
-    acc_path    = config["Executable"].get('acscomp_path', '?');
     for part in config.sections():
         if part != "Executable":
             
@@ -168,9 +187,6 @@ if __name__ == "__main__":
     
     #print(filelist)
 
-    exe_path    = config["Executable"].get('zandronum_path', '?');
-    std_path    = config["Executable"].get('skulldata_path', '?');
-    map_test    = config["Executable"].get('testing_map', '?');
     os.chdir(exe_path);
     fullcmd     = ["zandronum.exe", "-iwad", "doom2.wad", "-file", std_path]
     subprocess.call(fullcmd + filelist + ['+map', map_test])
