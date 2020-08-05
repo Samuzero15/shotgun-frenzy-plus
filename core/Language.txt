@@ -93,5 +93,15 @@ FP_DEPCD_TURRET_TESCOL		= "Deploys a tesla coil which it damages nearby enemies\
 FP_DEPCD_TURRET_FLAMER		= "Deploys a powerful flame turret which it spews fire\n"
 							  "to the nearby demons.";
 FP_DEPCD_TURRET_CHAINGUN	= "Deploys a chaingun turret, better than a bullet turret.\n"
-							  "Makes more damage, seeks for new targets, fires constantly\n"
-							  "and resist more.";							  
+							  "Makes more damage, seeks for new targets, \n"
+							  "fires constantly and resists more.";			
+FP_DEPCD_TURRET_SHOTGUN		= "Deploys a shotgun turret. Fires depending on the\n"
+							  "enemy distance. \n"
+							  "Fires Both barrels if the enemy is close enough.\n"
+							  "Fires One-by-One barrels if the enemy is close.\n"
+							  "Sure, takes a while to fire, but its better than\n"
+							  "a bullet turret.\n";				
+FP_DEPCD_TURRET_BFG			= "Deploys a BFG turret. Never seen one of these?\n\n"
+							  "Fires 2 Powerful BFG Balls againt the demons!\n"
+							  "Takes a while to fire, but it truly does a big\n"
+							  "damage to the hordes!";								  

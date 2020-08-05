@@ -3,75 +3,10 @@ import os
 import sys
 import subprocess
 import zipfile
-import datetime
+import funs_n_cons as utils
 
-from glob import iglob
-from shutil import copyfile
 from argparse import ArgumentParser
 from configparser import ConfigParser
-
-today = datetime.datetime.now().strftime('%d/%m/%Y')
-
-#
-# Build main package (as .pk3, a good ol' zip, really)
-#
-def makepkg(sourcePath, destPath, notxt=False):
-    destination = destPath + ".pk3"
-    wadinfoPath = destPath + ".txt" # just assume this, 'cause we can.
-
-    print ("\n-- Compressing {filename} --".format (filename=destination))
-    filelist = []
-    for path, dirs, files in os.walk (sourcePath):
-        for file in files:
-            if not (file == "buildinfo.txt" or file == "GAMEINFO.txt"): # special exceptions
-            # Remove sourcepath from filenames in zip
-                splitpath = path.split(os.sep)[1:]
-                splitpath.append(file)
-                name = os.path.join(*splitpath)
-                filelist.append((os.path.join (path, file), name,))
-
-    distzip = zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED)
-    current = 1
-    for file in filelist:
-        printProgressBar (current, len(filelist), 'Zipped: ', ' files', 1, 25)
-        # print ("[{percent:>3d}%] Adding {filename}".format(percent = int(current * 100 / len (filelist)), filename=file[1]))
-        distzip.write(*file)
-        current += 1
-    
-    return (distzip)
-    
-
-def maketxt(sourcePath, destPath, version, filetemplate):
-    textname = os.path.join(sourcePath, filetemplate)
-    destname = destPath + ".txt"
-        
-    print("\n-- Copying {source} to {dest} --".format (source=textname, dest=destname))
-    sourcefile = open (textname, "rt")
-    textfile = open (destname, "wt")
-    for line in sourcefile:
-        line = line.replace('x.x.x', version)
-        line = line.replace('_DEV_', version)
-        line = line.replace('XX/XX/XXXX', today)
-        textfile.write(line)
-    
-    textfile.close()
-    sourcefile.close()
-
-def makever(version, destPath):
-
-	print("\n-- Making distribution version --")
-
-	copyfile(destPath + ".pk3", destPath + "_" + version + ".pk3")
-	copyfile(destPath + ".txt", destPath + "_" + version + ".txt")
-
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
-    # Print New Line on Complete
-    if iteration == total: 
-        print()
 
 if __name__ == "__main__":
     command = "cd"
@@ -80,6 +15,7 @@ if __name__ == "__main__":
     cmd.add_argument("-d", "--dist", action="store_true", dest="dist", default=False, help="Make a versioned build")
     cmd.add_argument("-xr", "--exres", action="store_true", dest="nores", default=False, help="Dont build the resource part")
     cmd.add_argument("-xm", "--exmus", action="store_true", dest="nomus", default=False, help="Dont build the music part")
+    cmd.add_argument("-xrm", "--justcore", action="store_true", dest="justcore", default=False, help="Skips resources and music parts, zipping only the core")
     args = cmd.parse_args()
 
     config = ConfigParser()
@@ -87,6 +23,30 @@ if __name__ == "__main__":
     
     if(len(config.sections()) == 0):
         print("Hm...It seems there is no project over here. Maybe you did'nt configured the project.ini file.")
+        sys.exit();
+    
+    exe_path    = config["Executable"].get('zandronum_path', '?');
+    std_path    = config["Executable"].get('skulldata_path', '?');
+    
+    # Check for relative paths. (use ..\ for a relative path.)
+    if('..\\' in exe_path):
+        exe_path = utils.relativePath(exe_path)
+        
+    if('..\\' in std_path):
+        std_path = utils.relativePath(std_path)
+    
+    # Check if the file exist.
+    if(not os.path.isfile(os.path.join(exe_path, utils.EXE_FNAME))):
+        print("Zandronum executable path does not exist, go fix that in the project.ini file.");
+        sys.exit();
+        
+    if(not os.path.isfile(os.path.join(std_path, utils.STD_FNAME))):
+        print("Skulltag Content file does not exist, go fix that in the project.ini file.");
+        sys.exit();
+    else: 
+        std_path += '\\' + utils.STD_FNAME;
+    
+    rootDir = os.getcwd()
     
     filelist = []
 
@@ -98,40 +58,74 @@ if __name__ == "__main__":
             fileName  = config[part].get('FileName' , part   );
             notxt     = config[part].get('notxt'    , False  );
 
-            if (args.nores and part == "Resources"):
-            	continue
-			
-            print("\n-- Building {name} --".format(name=part));
-            
-            if not os.path.exists(distDir):
-                os.mkdir(distDir)
-
             destPath = os.path.join(distDir, fileName)
             
-            zip = makepkg(sourceDir, destPath, notxt)
+            if (part == "Resources"):
+                if(args.dist):
+                    res_file = fileName + "_" + relase + ".pk3"
+                    res_file_path = destPath + "_" + relase + ".pk3"
+                else:
+                    res_file = fileName + ".pk3"
+                    res_file_path = destPath + ".pk3"
+                
+                # Check for the arguments. 
+                coreonly = (args.justcore or (args.nores and args.nomus))
+                if (coreonly and ("Resources" in part or "Music" in part)):
+                    print ("\n-- Resources and Music parts excluded --")
+                    if(not os.path.isfile(os.path.join(os.getcwd(), res_file_path))):
+                        print ("-- There is not even a file called: " + res_file + " as resource part... --")
+                        print ("-- Run aborted, try 'python build.py [-d]' to generate the resource part --")
+                        sys.exit()
+                    else:
+                        print ("-- Using: " + res_file + " as resource part --")
+                    filelist.append(os.path.join(os.getcwd(), res_file_path));
+                    break
+                
+                if (args.nores and part == "Resources"):
+                    print ("\n-- Resources part excluded --")
+                    if(not os.path.isfile(os.path.join(os.getcwd(), res_file_path))):
+                        print ("-- There is not even a file called: " + res_file + " as resource part... --")
+                        print ("-- Run aborted, try 'python build.py [-d]' to generate the resource part --")
+                        sys.exit()
+                    else:
+                        print ("-- Using: " + res_file + " as resource part --")
+                        
+                    filelist.append(os.path.join(os.getcwd(), res_file_path));
+                    continue
+                
+            if (args.nomus and part == "Music"):
+                print ("\n-- Music part excluded --")
+                continue
+            
+            print("\n-- Building {name} --".format(name=part));
+            # Main stuff. 
+            if not os.path.exists(distDir):
+                os.mkdir(distDir)
+            
+            
+            zip = utils.makepkg(sourceDir, destPath, notxt, True)
             if not notxt: 
+                # For the gameinfo, buildinfo and changelog files.
                 wadinfoPath = destPath + ".txt"
                 if(os.path.isfile(os.path.join(sourceDir, 'GAMEINFO.txt'))):
-                    maketxt(sourceDir, destPath, relase, 'GAMEINFO.txt')
+                    utils.maketxt(sourceDir, destPath, relase, 'GAMEINFO.txt')
                     zip.write(wadinfoPath, 'GAMEINFO.txt')
-                maketxt(sourceDir, destPath, relase, "buildinfo.txt")
+                    utils.maketxt(rootDir, destPath, relase, 'CHANGELOG.md')
+                    zip.write(wadinfoPath, 'CHANGELOG.md')
+                utils.maketxt(sourceDir, destPath, relase, "buildinfo.txt")
                 zip.write(wadinfoPath, 'buildinfo.txt')
+            zip.close()
             
             
             if(args.dist and not notxt):
-                makever(relase, destPath)
-            zip.close();
+                utils.makever(relase, destPath)
             filelist.append(os.getcwd() + '\\' + destPath + '.pk3');
             
-            
-
-        print("\n-- Finished! --")
+            print('-- {p} part Finished! --'.format(p=part))
     
-    #print(filelist)
-
-    exe_path    = config["Executable"].get('zandronum_path', '?');
-    std_path    = config["Executable"].get('skulldata_path', '?');
+    # Finally, run the build.
+    print("\n-- Zandronum.exe will run shortly... --");
     os.chdir(exe_path);
     fullcmd     = ["zandronum.exe", "-iwad", "doom2.wad", "-file", std_path]
-    #print(fullcmd + filelist)
     subprocess.call(fullcmd + filelist)
+    print("\n-- All done! Bye-Bye! --");

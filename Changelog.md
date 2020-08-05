@@ -2,6 +2,15 @@
 
 ## v0 - Before the beginning...
 
+#### -) (4 / 08 / 2020) [Build.py and play.py tweaks]
+	*) Some more edits on the play and build py files.
+	*) Relative paths are now supported on the play.py and build.py files.
+	+) A new file has been added for the building scripts, funs_n_cons.py!
+	*) Now the project.ini file will now read relative paths.
+	*) Updated the Readme.md file, addresing the build instructions.
+	// It was about time to update that readme file.
+	*) The changelog will be written on the core part!
+
 #### -) (3 / 08 / 2020) [Changelog moved. Play.py tweaked.]
 	*) Markdownified the changelog. Just because fuck it.
 	*) Moved the changelog outside of the soruce directory, so it could be shown outside of the repository.

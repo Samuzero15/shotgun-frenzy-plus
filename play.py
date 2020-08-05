@@ -3,117 +3,10 @@ import os
 import sys
 import subprocess
 import zipfile
-import datetime
-import time
+import funs_n_cons as utils
 
-from glob import iglob
-from shutil import copyfile
 from argparse import ArgumentParser
 from configparser import ConfigParser
-
-today = datetime.datetime.now().strftime('%d/%m/%Y')
-
-#
-# Build main package (as .pk3, a good ol' zip, really)
-#
-def makepkg(sourcePath, destPath, notxt=False):
-    destination = destPath + ".pk3"
-    wadinfoPath = destPath + ".txt" # just assume this, 'cause we can.
-
-    print ("\n-- Compressing {filename} --".format (filename=destination))
-    filelist = []
-    for path, dirs, files in os.walk (sourcePath):
-        for file in files:
-            if file != "buildinfo.txt": # special exception
-                # Remove sourcepath from filenames in zip
-                splitpath = path.split(os.sep)[1:]
-                splitpath.append(file)
-                name = os.path.join(*splitpath)
-
-                filelist.append((os.path.join (path, file), name,))
-
-    distzip = zipfile.ZipFile(destination, "w", zipfile.ZIP_STORED)
-    current = 1
-    for file in filelist:
-        # printProgressBar (current, len (filelist), 'Zipped:', 'files.', 1, 20)
-        printProgressTrack (current, len (filelist), 'Zipped:', 'files.')
-        distzip.write(*file)
-        current += 1
-
-'''
-    Draw a nice progress bar.
-'''
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
-    # Print New Line on Complete
-    if iteration == total: 
-        print()
-'''
-    Draw a Lite version of progress track if the last one did'nt worked.
-'''
-def printProgressTrack (iteration, total, prefix = '', suffix = '', decimals = 1):
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    print(f'{prefix} {percent}% {suffix}')
-    
-
-def acs_compile(rootDir, SourceDir):
-        
-    tools_dir = os.path.join(rootdir, "tools");
-    acs_dir = os.path.join(rootdir, sourceDir, "acs");
-    src_dir = os.path.join(rootdir, sourceDir, "source");
-    
-    includes = ['-i'] + [tools_dir] + ['-i'] + [src_dir]
-    
-    # print(includes);
-    
-    os.chdir(tools_dir);
-
-    print("\n--Compiling ACS for {name} --".format(name=part));
-    os.chdir(src_dir);
-    
-    fileslist = 0;
-    for root, dirs, files in os.walk(os.getcwd()):
-        for dir in dirs:
-            # print(os.path.join(root, dir))
-            includes = includes + ['-i'] + [os.path.join(root, dir)]
-        
-        for file in files:
-            if file.endswith(".acs"):
-                fileslist+=1
-    
-    
-    current = 0;
-    for root, dirs, files in os.walk(os.getcwd()):
-        for file in files:
-            
-            if file.endswith(".acs"):
-                f_target = os.path.join(root, file)
-                f_name = os.path.basename(f_target).split('.')[0]
-                
-                compcmd     = [os.path.join(tools_dir, 'acc.exe')] + includes + [f_target] + [os.path.join(acs_dir, f_name + '.o')]
-                
-                
-                subprocess.call(compcmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                # print (includes)
-                # print (os.getcwd())
-                # time.sleep(1)
-                current+=1;
-                # printProgressBar (current, fileslist, 'Compiled', 'acs files.', 1, 20)
-                printProgressTrack (current, fileslist, 'Compiled', 'acs files.')
-                if(os.path.isfile(os.path.join(root, 'acs.err'))):
-                    os.chdir(root);
-                    os.system('cls')
-                    with open('acs.err', 'rt') as errorlog:
-                        print(errorlog.read())
-                        errorlog.close()
-                    time.sleep(3)
-                    os.remove(os.path.join(root, 'acs.err'))
-                    sys.exit()
-                
-    os.chdir(rootdir)
             
 
 if __name__ == "__main__":
@@ -123,16 +16,16 @@ if __name__ == "__main__":
         action="store_true", dest="save",
         default=False,
         help="save testing version.")
-    cmd.add_argument("-srm", "--skipresmus", 
-        action="store_true", dest="skip_resmus",
+    cmd.add_argument("-xrm", "--justcore", 
+        action="store_true", dest="justcore",
         default=False,
-        help="skip rresources and music zipping.")
-    cmd.add_argument("-sr", "--skipres", 
-        action="store_true", dest="skip_res",
+        help="skip resources and music zipping.")
+    cmd.add_argument("-xr", "--skipres", 
+        action="store_true", dest="nores",
         default=False,
         help="skip resources zipping.")
-    cmd.add_argument("-sm", "--skipmus", 
-        action="store_true", dest="skip_mus",
+    cmd.add_argument("-xm", "--skipmus", 
+        action="store_true", dest="nomus",
         default=False,
         help="skip music zipping.")
     args = cmd.parse_args()
@@ -144,25 +37,37 @@ if __name__ == "__main__":
     
     if(len(config.sections()) == 0):
         print("Hm...It seems there is no project over here. Maybe you did'nt configured the project.ini file.")
+        sys.exit();
     
     exe_path    = config["Executable"].get('zandronum_path', '?');
     std_path    = config["Executable"].get('skulldata_path', '?');
     map_test    = config["Executable"].get('testing_map', 'MAP18');
     acc_path    = config["Executable"].get('acscomp_path', '?');
     
-    if(not os.path.isdir(acc_path)):
-        print("ACC Complier path does not exist, go fix that in the project.ini file.");
-        sys.exit();
+    # Check for relative paths. (use ..\ for a relative path.)
+    if('..\\' in exe_path):
+        exe_path = utils.relativePath(exe_path)
+        
+    if('..\\' in acc_path):
+        acc_path = utils.relativePath(acc_path)
     
-    if(not os.path.isdir(exe_path)):
+    if('..\\' in std_path):
+        std_path = utils.relativePath(std_path)
+    
+    # Check if the file exist.
+    if(not os.path.isfile(os.path.join(exe_path, utils.EXE_FNAME))):
         print("Zandronum executable path does not exist, go fix that in the project.ini file.");
         sys.exit();
-        
-    if(not os.path.isfile(std_path + '\\skulltag_content-3.0-beta01.pk3')):
+    
+    if(not os.path.isfile(os.path.join(acc_path, utils.ACC_FNAME))):
+        print("ACC executable path does not exist, go fix that in the project.ini file.");
+        sys.exit();
+    
+    if(not os.path.isfile(os.path.join(std_path, utils.STD_FNAME))):
         print("Skulltag Content file does not exist, go fix that in the project.ini file.");
         sys.exit();
     else: 
-        std_path += '\\skulltag_content-3.0-beta01.pk3';
+        std_path += '\\' + utils.STD_FNAME;
         
     rootdir = os.getcwd();
     
@@ -171,37 +76,99 @@ if __name__ == "__main__":
         if part != "Executable":
             
             sourceDir =      config[part].get('SourceDir'  , 'src' );
-            distDir   =      config[part].get('DistDir'    , 'dist');
+            distDir = config["Resources"].get('DistDir', 'dist');
             fileName  =      config[part].get('FileName'   , part  );
             notxt     = bool(config[part].get('notxt'      , False));
             compileacs= bool(config[part].get('compile_acs', False));
             
-            if(compileacs): 
-                acs_compile(rootdir, sourceDir)
+            destPath = os.path.join(distDir, fileName)
+            
+            if (part == "Resources" or part == "Music"):
+                fileName  = config["Resources"].get('FileName', part  )
+                distDir = config["Resources"].get('DistDir', 'dist');
+                destPath = os.path.join(distDir, fileName)
+                
+                res_file = fileName + ".pk3"
+                res_file_path = destPath + ".pk3"
+                
+                fileName  = config["Music"].get('FileName', part  )
+                distDir = config["Music"].get('DistDir', 'dist');
+                destPath = os.path.join(distDir, fileName)
+                
+                mus_file = fileName + ".pk3"
+                mus_file_path = destPath + ".pk3"
+                
+                coreonly = (args.justcore or (args.nores and args.nomus))
+                if (coreonly and ("Resources" in part or "Music" in part)):
+                    print ("\n-- Resources and Music parts excluded --")
+                    
+                    # Check for resources file
+                    if(not os.path.isfile(os.path.join(os.getcwd(), res_file_path))):
+                        print ("-- There is not even a file called: " + res_file + " as resource part... --")
+                        print ("-- Run aborted, try 'python play.py [-s]' to generate the resource part --")
+                        sys.exit()
+                    else:
+                        print ("-- Using: " + res_file + " as resource part --")
+                        filelist.append(os.path.join(os.getcwd(), res_file_path));
+                    
+                    
+                    # Check for music file
+                    if(not os.path.isfile(os.path.join(os.getcwd(), mus_file_path))):
+                        print ("-- No file: " + mus_file + " as music part... --")
+                        print ("-- Run will resume, but expect a silenced game. --")  
+                    else:
+                        print ("-- Using: " + mus_file + " as music part --")
+                    filelist.append(os.path.join(os.getcwd(), mus_file_path));
+                    
+                    break
+                    
+            # Check them separated
+            if (args.nores and part == "Resources"):
+                res_file = fileName + ".pk3"
+                res_file_path = destPath + ".pk3"
+                print ("\n-- Resources part excluded --")
+                if(not os.path.isfile(os.path.join(os.getcwd(), res_file_path))):
+                    print ("-- There is not even a file called: " + res_file + " as resource part... --")
+                    print ("-- Run aborted, try 'python play.py [-s]' to generate the resource part --")
+                    sys.exit()
+                else:
+                    print ("-- Using: " + res_file + " as resource part --")
+                    
+                filelist.append(os.path.join(os.getcwd(), res_file_path));
+                continue
+                
+            if (args.nomus and part == "Music"):
+                mus_file = fileName + ".pk3"
+                mus_file_path = destPath + ".pk3"
+                print ("\n-- Music part excluded --")
+                if(not os.path.isfile(os.path.join(os.getcwd(), mus_file_path))):
+                    print ("-- No file: " + mus_file + " as music part... --")
+                    print ("-- Run will resume, but expect a silenced game. --")  
+                else:
+                    print ("-- Using: " + res_file + " as music part --")
+                    filelist.append(os.path.join(os.getcwd(), mus_file_path));
+                continue
             
             print("\n-- Building {name} --".format(name=part));
+            if(compileacs): 
+                utils.acs_compile(rootdir, sourceDir, part)
             
             if not os.path.exists(distDir):
                 os.mkdir(distDir)
-
-            destPath = os.path.join(distDir, fileName)
             filelist.append(os.getcwd() + '\\' + destPath + '.pk3')
             
-            if not((part == "Resources" and (args.skip_res or args.skip_resmus)) or (part == "Music" and (args.skip_mus or args.skip_resmus))):
-                makepkg(sourceDir, destPath, notxt)
-            else: 
-                print("\n-- {name} skipped! --".format(name=part))
-                continue
+            utils.makepkg(sourceDir, destPath, notxt)
             
             
-            print("\n-- Finished! --")
+            print("-- Finished! --")
     
-    #print(filelist)
-
+    # Finally run the build
+    print("\n-- Zandronum.exe will run shortly... --");
     os.chdir(exe_path);
     fullcmd     = ["zandronum.exe", "-iwad", "doom2.wad", "-file", std_path]
     subprocess.call(fullcmd + filelist + ['+map', map_test])
-    if( not args.save):
+    if(not args.save):
         for file in filelist:
             os.remove(file)
-    else: print("The files are saved in: " + distDir)
+    else: print("--> The files are saved in: " + distDir)
+    print("\n-- All done! Bye-Bye! --");
