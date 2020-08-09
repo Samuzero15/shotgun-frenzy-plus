@@ -141,8 +141,8 @@ def acs_compile(rootDir, sourceDir, part):
                     with open('acs.err', 'rt') as errorlog:
                         print(errorlog.read())
                         errorlog.close()
-                    time.sleep(3)
                     os.remove(os.path.join(root, 'acs.err'))
+                    print("\n-- Fix those errors and try again. --")
                     sys.exit()
                 
     os.chdir(rootDir)

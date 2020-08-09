@@ -118,7 +118,7 @@ if __name__ == "__main__":
                         print ("-- Run will resume, but expect a silenced game. --")  
                     else:
                         print ("-- Using: " + mus_file + " as music part --")
-                    filelist.append(os.path.join(os.getcwd(), mus_file_path));
+                        filelist.append(os.path.join(os.getcwd(), mus_file_path));
                     
                     break
                     

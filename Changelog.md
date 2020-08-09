@@ -2,6 +2,18 @@
 
 ## v0 - Before the beginning...
 
+#### -) (8 / 08 / 2020) [Fix n Tweaks, H.Terminal Ups on progress...]
+	*) Now health dispensers can give 10HP to the player per 6 tics.
+	*) Some small implementation of some new health terminal upgrades...
+	*) Refactorized f_StockP.acs for a wider and better display of the unit upgrades.
+	*) Small tweak done on the SBARINFO for some of the up-coming Health Terminal Upgrades..
+
+#### -) (5 / 08 / 2020)
+	*) Now the commander kick script will teleport the player outside of the chair, to let the others command.
+	*) Found a bug on spectating while commanding, I should fix that soon.
+	*) The commander terminal will restrict only 1 player (preventing another player to command)
+	*) Giving the inventory "SamuTInv_ForcedExit" will force the exit for the pllayer when it is on the terminal. (needs some testing on MP though)
+
 #### -) (4 / 08 / 2020) [Build.py and play.py tweaks]
 	*) Some more edits on the play and build py files.
 	*) Relative paths are now supported on the play.py and build.py files.

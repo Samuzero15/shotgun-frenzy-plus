@@ -4,6 +4,7 @@ Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 
 #include "Actors/sfrenzy14.dec"
 #include "Actors/acsutils.dec"
+#include "Actors/upgrades.dec"
 #include "Actors/samuterm.dec"
 #include "Actors/prices.dec"
 #include "Actors/huditems.dec"

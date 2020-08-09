@@ -7,7 +7,7 @@ monospacefonts true, "0";
 createpopup status, 800, 150, SlideInBottom, 20;
 statusbar popupstatus, fullscreenoffsets
 {
-	inInventory Not SamuTInv_HideSBAR{
+   inInventory Not SamuTInv_HideSBAR{
    drawString STATBIGS, White, "Unit Upgrades", 20, -200, 0, alignment(left);
    
    InInventory HUD_T_HEALTH2{
@@ -260,18 +260,28 @@ statusbar normal// Standard Doom Status bar
 	alpha 0.5{DrawImage "MEDIA0",  50,  520;}
 	drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
 	
-	inInventory Hud_MaxHP, 3{
+	//[Samu] Health depending on the upgrades.
+	inInventory Hud_MaxHP, 6{ // BodyEnhancement + H.E Phase 2
+	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 201;
+	}else{
+	inInventory Hud_MaxHP, 5{ // BodyEnhancement + H.E Phase 1
+	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 181;
+	}else{
+	inInventory Hud_MaxHP, 4{ // BodyEnhancement
+	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 161;
+	}else{
+	inInventory Hud_MaxHP, 3{ // H.E Phase 2
 	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 141;
 	}else{
-	inInventory Hud_MaxHP, 2{
+	inInventory Hud_MaxHP, 2{ // H.E Phase 1
 	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 121;
-	}else{
+	}else{ // Default
 	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 101;
-	}}
+	}}}}}
 	
-	inInventory BasicArmor{
+	inInventory BasicArmor, 1{
 		alpha 0.5{DrawImage armoricon, 150, 520;}
-		drawString STATBIGS, White, "Armor",  157, 550, 0, alignment(center);
+		drawString STATBIGS, White, "Armor",  157, 550, 0, alignment(center); // bug, This word stays even if you don't have armor.
 		drawnumber 3, StatBigsNums, GREEN, armor, whennotzero, alignment(center), 155, 520, 2, RED, 30, CYAN, 101;
 		
 	}

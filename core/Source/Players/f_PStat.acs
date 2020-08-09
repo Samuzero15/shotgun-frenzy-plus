@@ -216,6 +216,16 @@ script 57 (int num) DISCONNECT
 	//PrintBold(d:ThingCountName("TurretFlame_Head", 0));
 	Thing_Damage(990+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(990+num);
+	// Unfreeze the player, to avoid bugs.
+	
+	//log(s:"Last commander: ", n:c_Commander+1);
+	if(c_Commander == num){
+		SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
+		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+		// [Samu] Bug: Spectating from commander will cause a freeze on the player.
+		Thing_Remove(3568); // Remove the spawn blocker.
+		c_Commander = 99;
+	}
 }
 
 script 599 (void)

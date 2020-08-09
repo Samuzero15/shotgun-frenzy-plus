@@ -166,6 +166,13 @@ script 130 (void)
         f_CenterTip("You cannot command...\nYou're a tank!");
         terminate;
     }
+	
+	//print(d:c_Commander);
+	if(!(c_Commander == 98 || c_Commander == 99))
+    {
+        f_CenterTip(strparam(n:c_Commander+1, s:" is commanding right now!"));
+        terminate;
+    }
     
     //ACS_Execute(133,0,0,0,0); //Script life check
     //ACS_Execute(968,0,0,0,0); //mouse pointer
@@ -237,33 +244,8 @@ script 130 (void)
             //else                                            setactorpitch(130, 0.04);
             setactorpitch(130, 0.085);
 			
-            /*
-            // CLIENTSIDE -- load hudmessage
-            acs_executealways(601, 0, 1, 0, 0);
             
-            //setfont("CONFONT");
-            //hudmessage(s:"Current Selection: ",d:c_ButtonSel; 0, 144, 0, 320.0, 240.0, 1.0);
-            
-            // button scanning
-            // CLIENTSIDE -- load hudmessage
-            if (Cursor_Info[CURSOR_X] > 508 && Cursor_Info[CURSOR_X] < 539 && Cursor_Info[CURSOR_Y] > 369 && Cursor_Info[CURSOR_Y] < 400)   { c_ButtonSel = 1; acs_executealways(601, 0, 2, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 540 && Cursor_Info[CURSOR_X] < 571 && Cursor_Info[CURSOR_Y] > 369 && Cursor_Info[CURSOR_Y] < 400)   { c_ButtonSel = 2; acs_executealways(601, 0, 3, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 572 && Cursor_Info[CURSOR_X] < 603 && Cursor_Info[CURSOR_Y] > 369 && Cursor_Info[CURSOR_Y] < 400)   { c_ButtonSel = 3; acs_executealways(601, 0, 4, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 604 && Cursor_Info[CURSOR_X] < 635 && Cursor_Info[CURSOR_Y] > 369 && Cursor_Info[CURSOR_Y] < 400)   { c_ButtonSel = 4; acs_executealways(601, 0, 5, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 508 && Cursor_Info[CURSOR_X] < 539 && Cursor_Info[CURSOR_Y] > 401 && Cursor_Info[CURSOR_Y] < 432)   { c_ButtonSel = 5; acs_executealways(601, 0, 6, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 540 && Cursor_Info[CURSOR_X] < 571 && Cursor_Info[CURSOR_Y] > 401 && Cursor_Info[CURSOR_Y] < 432)   { c_ButtonSel = 6; acs_executealways(601, 0, 7, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 572 && Cursor_Info[CURSOR_X] < 603 && Cursor_Info[CURSOR_Y] > 401 && Cursor_Info[CURSOR_Y] < 432)   { c_ButtonSel = 7; acs_executealways(601, 0, 8, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 604 && Cursor_Info[CURSOR_X] < 635 && Cursor_Info[CURSOR_Y] > 401 && Cursor_Info[CURSOR_Y] < 432)   { c_ButtonSel = 8; acs_executealways(601, 0, 9, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 508 && Cursor_Info[CURSOR_X] < 539 && Cursor_Info[CURSOR_Y] > 433 && Cursor_Info[CURSOR_Y] < 464)   { c_ButtonSel = 9; acs_executealways(601, 0, 10, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 540 && Cursor_Info[CURSOR_X] < 571 && Cursor_Info[CURSOR_Y] > 433 && Cursor_Info[CURSOR_Y] < 464)   { c_ButtonSel = 10; acs_executealways(601, 0, 11, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 572 && Cursor_Info[CURSOR_X] < 603 && Cursor_Info[CURSOR_Y] > 433 && Cursor_Info[CURSOR_Y] < 464)   { c_ButtonSel = 11; acs_executealways(601, 0, 12, 0, 0); }
-            if (Cursor_Info[CURSOR_X] > 604 && Cursor_Info[CURSOR_X] < 635 && Cursor_Info[CURSOR_Y] > 433 && Cursor_Info[CURSOR_Y] < 464)   { c_ButtonSel = 12; acs_executealways(601, 0, 13, 0, 0); }
-            
-            // display buttons
-            fc_CommandButtons_Call();
-			*/
         }
-        
         delay(1);
     }
     
@@ -289,13 +271,16 @@ script 130 (void)
         // purge commander view
         acs_executealways(650, 0, 5, 0, 0);
         
-        if (c_Commander == 98)
-        {
-            thing_destroy(activatortid(), 1);
-        }
        */
         // disable commanding from player
 		//[Samu] Just in case...
+		if (c_Commander == 98)
+        {
+			GiveInventory("SamuTInv_ForcedExit", 1); // Log him out from the terminal.
+            //thing_destroy(activatortid(), 1); Nah, let's just teleport him.
+			GiveInventory("StartingPoint", 1);
+			f_BigCenterTip ("You've been kicked from the command chair!", CR_BRICK);
+        }
         c_Commander = 99;
         
         f_TipShow("PLAYER", "", "Has left the command chair...", 10);
@@ -309,7 +294,7 @@ script 130 (void)
         
         // unfreeze the player
         delay(10);
-        //setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
+        setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
     //}
     // if not
     /*else
@@ -387,7 +372,7 @@ script 132 (void)
             c_Commander = 98;
         }
         
-        delay(35 * 60);
+        delay(35 * 5);
         
         // reset vote
         p_KickSlot[playernumber()] = 0;

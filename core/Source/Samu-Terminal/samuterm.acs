@@ -37,6 +37,7 @@ Script "SamuTerminal" (int homeTag, int hidestatusbar){
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
 	SetInventory("SamuTInv_HideSBar", hidestatusbar);
+	//print(s:"Statusbar hidden?: ", d:hidestatusbar);
 }	
 
 script "TerminalLoop" (int alphatag) CLIENTSIDE {
@@ -81,6 +82,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 			byemsg = strparam(s:"See you soon ", s:Playername(play),s:".");
 	}
 	
+
 	SamuTerm_InitComps();
 	SamuTerm_Say(himsg);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
@@ -90,8 +92,9 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 			SamuTerm_Update();
 			SamuTerm_Input(play);
 			SamuTerm_Display();
-			
-			debug();
+			if(CheckInventory("SamuTInv_ForcedExit"))
+				STExecute_Shutdown();
+			//debug();
 			Delay(1);
 		}
 	CenterCursor();

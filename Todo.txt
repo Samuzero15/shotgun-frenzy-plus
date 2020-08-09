@@ -48,3 +48,6 @@ w) Work in progres
 	Useful if you're suffering for high ping and therefore, desynching enough 
 	to be kicked out of the game. Resulting in a total loss of your progress.
 [ ] Document the build and play python scripts, to guide the modders how to do special stuff.
+[ ] Slove that issue un the spectatic freezing on commanding.
+[ ] Add the BFG and Shotgun turrets.
+[ ] Add the icons for the Chaingun, BFG and Shotgun Turrets.

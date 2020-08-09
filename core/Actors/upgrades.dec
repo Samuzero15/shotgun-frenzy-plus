@@ -1,0 +1,19 @@
+
+// Mech upgrade tokens
+actor MechUp_armor 				: Integer {}
+actor MechUp_speed 				: Integer {}
+actor MechUp_nails 				: Integer {}
+actor MechUp_rockets 			: Integer {}
+actor MechUp_LifeSave 			: Integer {}
+actor MechUp_selfdestruct 		: Integer {}
+
+// Unit upgrade tokens
+actor UnitUp_PowUpUpgrade 		: Integer {}
+actor UnitUp_MechSync 			: Integer {}
+actor UnitUp_ExpansiveRestock 	: Integer {}
+actor UnitUp_BodyEnhancement 	: Integer {}
+actor UnitUp_ArmorRepair		: Integer {}
+actor UnitUp_SpawnShield		: Integer {}
+actor UnitUp_HealCoins			: Integer {}
+actor UnitUp_Prometeo			: Integer {}
+actor UnitUp_RuneSync 			: Integer {}

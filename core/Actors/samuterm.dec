@@ -1,5 +1,5 @@
 Actor SamuTInv_UsingTerminal : Boolean {}
-
+Actor SamuTInv_ForcedExit: Boolean {}
 Actor SamuTInv_Cooldown : Boolean {}
 
 Actor SamuTInv_ActionKey : Integer {}
@@ -26,10 +26,3 @@ Actor tech_loadflags : Integer {}
 
 Actor mech_buy : Integer {}
 Actor mech_state : Integer {}
-
-actor MechUp_armor : Integer {}
-actor MechUp_speed : Integer {}
-actor MechUp_nails : Integer {}
-actor MechUp_rockets : Integer {}
-actor MechUp_LifeSave : Integer {}
-actor MechUp_selfdestruct : Integer {}
