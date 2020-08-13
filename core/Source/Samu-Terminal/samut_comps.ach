@@ -112,6 +112,14 @@ function void Components_Add(void){
 		Prop_StrDef_End();
 		ImgButton_setProps(ibtn,propstr);
 		
+		ibtn = ImgButton_Add(176.0 + 64.0,400.0, 32.0, 32.0); 
+		Prop_StrDef_Start(common);
+		Prop_StrDef_Add(ST_PSTR_STR, "image",  "BTN5");
+		Prop_StrDef_Add(ST_PSTR_INT, "exe_a1", 2);
+		Prop_StrDef_Add(ST_PSTR_INT, "tag",    pagetags[STTAGS_ALPHA]);
+		Prop_StrDef_End();
+		ImgButton_setProps(ibtn,propstr);
+		
 	} else exitBtn = "BTNEXIT";
 	
 	

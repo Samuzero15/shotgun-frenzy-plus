@@ -7,11 +7,14 @@
 #library "f_Cred"
 
 #import "f_IntDB.acs"
+#import "f_Tip.acs"
 #import "f_Rank.acs"
 #import "fl_techs.acs"
 
 #include "zcommon.acs"
+#include "acsutils.ach"
 #include "samu_tools.ach"
+
 
 
 
@@ -38,6 +41,7 @@ script "SFPlus_CreditPickup" (int howmuch, int color){
 	ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, howmuch, color);
 	sf_AddCredits_S(howmuch, playernumber());
 	sf_AddTeamCredits(howmuch * 5);
+	if(CheckInventory("PlayUp_HealCoins")) GiveInventory("HealthBonus", howmuch);
 }
 
 script "SF_Net_AddCredits" (int l_AmountSpecial, int who) NET{
@@ -125,11 +129,11 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	
 	if(monsterClass < 0){ return; }
 	
-	// increase exp and combo
+	// increase exp and streak
 	p_Exp[playernumber()] += 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass);
-	p_Combo[playernumber()] ++;
+	p_Streak[playernumber()] ++;
     p_SplatCombo[playernumber()] += l_SplatCombo;
-
+	ACS_NamedExecuteAlways("SFPlus_StreakMilestone", 0);
 
   // increase rank
 
@@ -151,6 +155,16 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	}
 } 
 
+script "SFPlus_StreakMilestone" (void) {
+	int play = playernumber();
+	int streakMilestone = getNextStreakMilestone();
+	if(p_Streak[play] >= streakMilestone){
+		p_StreakLevel[play]++;
+		sf_AddUpPoints(1 + p_StreakLevel[play]/2, play);
+		f_BigCenterTip ("You broke a streak milestone!", CR_CYAN);
+		LocalAmbientSound("ksmilestone",127);
+	}else {log(s:"Streak: ", d:p_Streak[play], s:" / ", d:streakMilestone);}
+}
  
 
 

@@ -49,6 +49,13 @@ function void SFPlus_DefineTechs(void){
 	}
 }
 
+// Decorate call.
+Script "SFPlus_SetTech" (int which, int value){
+	if(which > 0 && which < 25)
+		Tech_Set(which, value);
+	else print(s:"Invalid tech");
+}
+
 Script "SFPlus_SyncTechs" ENTER{
 	while(1){
 		SetInventory("tech_doneflags", fp_techflags[0]);

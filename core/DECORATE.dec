@@ -4,23 +4,26 @@ Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 
 #include "Actors/sfrenzy14.dec"
 #include "Actors/acsutils.dec"
-#include "Actors/upgrades.dec"
+
 #include "Actors/samuterm.dec"
 #include "Actors/prices.dec"
 #include "Actors/huditems.dec"
 
 #include "Actors/monsters/fp_monster.dec"
 #include "Actors/gameobjects/fpatch_armor.dec"
+#include "Actors/gameobjects/fp_p_upgrades.dec"
+#include "Actors/gameobjects/fp_techitems.dec"
 #include "Actors/props/fp_trees.dec"
 
 
 #include "Actors/deploy/fp_turret_chaingun.dec"
 #include "Actors/projectiles/frenzy_monsterproj.txt"
 #include "Actors/projectiles/fp_rails.dec"
+#include "Actors/projectiles/fplus_flak.txt"
 #include "Actors/weapons/frenzy_healnstock.txt"
 #include "Actors/weapons/fp_ammo.dec"
 #include "Actors/weapons/fp_tankguns.dec"
-#include "Actors/projectiles/fplus_flak.txt"
+
 #include "Actors/particles/fp_junk.dec"
 
 

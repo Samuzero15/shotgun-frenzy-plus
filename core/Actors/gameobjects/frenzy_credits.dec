@@ -284,11 +284,11 @@ ACTOR Credit_CopperCoin : ClassicCredit
 }
 
 actor CreditSpawner : RandomSpawner{
-	DropItem "Credit_GoldenCoin" "255", 1
-	DropItem "Credit_SilverCoin" "255", 1
-	DropItem "Credit_SilverCoin" "255", 1
-	DropItem "Credit_CopperCoin" "255", 1
-	DropItem "Credit_CopperCoin" "255", 1
+	DropItem "Credit_GoldenCoin" "96", 1
+	DropItem "Credit_SilverCoin" "128", 1
+	DropItem "Credit_SilverCoin" "160", 1
+	DropItem "Credit_CopperCoin" "192", 1
+	DropItem "Credit_CopperCoin" "224", 1
 	DropItem "Credit_CopperCoin" "255", 1
 }
 

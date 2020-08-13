@@ -13,12 +13,14 @@
 #include "samut_pages_armit.ach"
 #include "samut_pages_pwrup.ach"
 #include "samut_pages_mechup.ach"
+#include "samut_pages_playup.ach"
 
 #include "samut_pages_cmd_main.ach"
 
 function void SamuTerm_InitPages(void){
 	if(pagetags[STTAGS_ALPHA] == 20){
 		InitPowBuyPage(1);
+		PlayUpPage_Init(2);
 	}else if(pageTags[STTAGS_ALPHA] == 30){
 		MechUpPage_Init(pageTags[STTAGS_ALPHA]);
 	}else if(pageTags[STTAGS_ALPHA] == 10){
@@ -37,6 +39,7 @@ function void SamuTerm_InitPages(void){
 function void UpdatePages(void){
 	if(pagetags[STTAGS_ALPHA] == 20){
 		UpdatePowBuyPage(1);
+		PlayUpPage_Update(2);
 		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
 	}else if(pageTags[STTAGS_ALPHA] == 30){
 		MechUpPage_Update(pageTags[STTAGS_ALPHA]);

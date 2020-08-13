@@ -137,6 +137,17 @@ Actor pr_mu_self_destruct : Integer {}
 Actor pr_mu_auto_repair : Integer {}
 Actor pr_mu_life_save : Integer {}
 
+//Player upgrade prices.
+Actor pr_pu_powupupgrade		: Integer {}
+Actor pr_pu_mechsync 			: Integer {}
+Actor pr_pu_expansiverestock	: Integer {}
+Actor pr_pu_bodyenhancement		: Integer {}
+Actor pr_pu_armorrepair 		: Integer {}
+Actor pr_pu_spawnshield			: Integer {}
+Actor pr_pu_healcoins 			: Integer {}
+Actor pr_pu_prometeo 			: Integer {}
+Actor pr_pu_runesync 			: Integer {}
+
 //Commander research / build
 Actor pr_cmd_genlab : Integer {}
 Actor pr_cmd_armory : Integer {}

@@ -11,15 +11,15 @@
 #include "Actors/particles/frenzy_explosion.txt"
 
 // game objects
-#include "Actors/gameobjects/frenzy_spawnblocker.txt"
-#include "Actors/gameobjects/frenzy_commander.txt"
-#include "Actors/gameobjects/frenzy_commupgrades.txt"
-#include "Actors/gameobjects/frenzy_commmarker.txt"
-#include "Actors/gameobjects/frenzy_commnuke.txt"
-#include "Actors/gameobjects/frenzy_demonside.txt"
-#include "Actors/gameobjects/frenzy_credits.txt"
-#include "Actors/gameobjects/frenzy_battery.txt"
-#include "Actors/gameobjects/frenzy_inventory.txt"
+#include "Actors/gameobjects/frenzy_spawnblocker.dec"
+#include "Actors/gameobjects/frenzy_commander.dec"
+#include "Actors/gameobjects/frenzy_commupgrades.dec"
+#include "Actors/gameobjects/frenzy_commmarker.dec"
+#include "Actors/gameobjects/frenzy_commnuke.dec"
+#include "Actors/gameobjects/frenzy_demonside.dec"
+#include "Actors/gameobjects/frenzy_credits.dec"
+#include "Actors/gameobjects/frenzy_battery.dec"
+#include "Actors/gameobjects/frenzy_inventory.dec"
 
 // map
 #include "Actors/map/frenzy_cf01.txt"

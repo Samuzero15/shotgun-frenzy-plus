@@ -91,16 +91,19 @@ function void ShowImage (int iid){
 	int alignx = Image_getAlignX(iid);
 	int aligny = Image_getAlignY(iid);
 	
+	int scalex = Image_getScaleX(iid);
+	int scaley = Image_getScaleY(iid);
+	
 	int hid = Image_getHudID(iid);
 	
 	int p = Image_getParent(iid);
-	
 	
 	int iw = RectWidth(p) >> 16;
 	//log(d:hid);
 	HudPushState();
     HudResetState();
 	HudSetAlign(alignx,aligny);
+	HudSetScaleXY(scalex, scaley);
 	if(p != -1) SetHudClipRect(0, 0, 0, 0, iw - 16);
 		HudPrintImage(x, y, hid, img);
 	SetHudClipRect(0, 0, 0, 0, 0);

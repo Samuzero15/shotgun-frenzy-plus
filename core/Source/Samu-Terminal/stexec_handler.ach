@@ -12,6 +12,12 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 	// Eitherway, this will list all of the functions about the executions.
 	switch(cmd){
 		
+		case STEXE_PLAYUP_GET: STExecute_PlayUpGet(arg1); break;
+		case STEXE_PLAYUP_SET: STExecute_PlayUpSet(arg1); break;
+		case STEXE_PLAYUP_ASK: STExecute_PlayUpAsk(arg1); break;
+		case STEXE_PLAYUP_SETDESC: STExecute_PlayUpSetDesc(arg1); break;
+		case STEXE_PLAYUP_BTNHOVER: STExecute_PlayUpTitleHover(arg1, arg2); break;
+		
 		case STEXE_BUYWP_PSHOW: STExecute_BuyWepSetCat(arg1); break;
 		case STEXE_BUYWP_PDESC: STExecute_BuyWepShowData(arg1); break;
 		case STEXE_GETWP: STExecute_getWeapon(arg1); break;

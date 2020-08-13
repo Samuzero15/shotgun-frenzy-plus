@@ -26,8 +26,10 @@
 #import "fl_WDir.acs"
 #import "fl_IDir.acs"
 #import "fl_MUpDir.acs"
+#import "fl_PUpDir.acs"
 #import "fl_techs.acs"
 #include "zcommon.acs"
+#include "acsutils.ach"
 
 // game
 int g_Status;
@@ -96,6 +98,7 @@ int p_MenuSelection_Active[31];
 int p_MenuSelection_Category[31];
 int p_MenuSelection_Limit[31];
 int p_Streak[31];
+int p_StreakLevel[31];
 int p_TipQue[10];
 int p_TotalPlayerDeaths;
 int p_Combo[31];
@@ -213,6 +216,10 @@ function void addMonsterReward(int class, str item, int dropChance){
 	m_rewardStack++;
 }
 
+function int getNextStreakMilestone(void){
+	return 100 * ipow(2, p_StreakLevel[playernumber()]);
+}
+
 function int getMonsterChanceToDrop(int class,int nitem){
 	return m_rewards[class][1][nitem];
 }
@@ -287,4 +294,5 @@ script "SFPlus_InitializeEverything" OPEN{
 	SFPlus_DefineItems();
 	SFPlus_DefineMechUps();
 	SFPlus_DefineTechs();
+	SFPlus_DefinePlayUps();
 }

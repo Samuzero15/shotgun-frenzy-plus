@@ -47,26 +47,35 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	RemindUpgrade(Tech_IsDone(FP_TECH_GENLAB_RESISB), "+ Resister Unit");
 	RemindUpgrade(Tech_IsDone(FP_TECH_GENLAB_REGENB), "+ Absorber Unit");
 	RemindUpgrade(
-		CheckInventory("UnitUp_BodyEnhancement"), "+ Body Enhancement");
+		CheckInventory("PlayUp_BodyEnhancement"), "+ Body Enhancement");
 	RemindUpgrade(
-		CheckInventory("UnitUp_ExpansiveRestock"), "+ Expansive Restock");
+		CheckInventory("PlayUp_ExpansiveRestock"), "+ Expansive Restock");
 	RemindUpgrade(
-		CheckInventory("UnitUp_ArmorRepair"), "+ Armor Repair");
+		CheckInventory("PlayUp_ArmorRepair"), "+ Armor Repair");
 	RemindUpgrade(
-		CheckInventory("UnitUp_PowUpUpgrade"), "+ Powerup Upgrade");
+		CheckInventory("PlayUp_PowUpUpgrade"), "+ Powerup Upgrade");
 	RemindUpgrade(
-		CheckInventory("UnitUp_MechSync"), "+ MechaSync");
+		CheckInventory("PlayUp_MechSync"), "+ Mech Syncronize");
 	RemindUpgrade(
-		CheckInventory("UnitUp_SpawnShield"), "+ Spawn Shield");
+		CheckInventory("PlayUp_SpawnShield"), "+ Spawn Shield");
 	RemindUpgrade(
-		CheckInventory("UnitUp_HealCoins"), "+ Healing Coins");
+		CheckInventory("PlayUp_HealCoins"), "+ Healing Coins");
 	RemindUpgrade(
-		CheckInventory("UnitUp_Prometeo"), "+ Prometeo Protocol");
+		CheckInventory("PlayUp_Prometeo"), "+ Prometeo Protocol");
 	RemindUpgrade(
-		CheckInventory("UnitUp_RuneSync"), "+ RuneSync");
+		CheckInventory("PlayUp_RuneSync"), "+ Rune Syncronize");
 
 	int hp = getActorProperty(0, APROP_Health);
-
+	bool bodyEnhance = CheckInventory("PlayUp_BodyEnhancement");
+	bool health1 = Tech_IsDone(FP_TECH_GENLAB_HEALTH1);
+	bool health2 = Tech_IsDone(FP_TECH_GENLAB_HEALTH2);
+	bool adrenaline = Tech_IsDone(FP_TECH_GENLAB_SPEEDB);
+	bool resister = Tech_IsDone(FP_TECH_GENLAB_RESISB);
+	bool armorTech = Tech_IsDone(FP_TECH_GENLAB_ARMOR);
+	
+	int healthboost = 20*health1 + 20*health2 + 60*bodyEnhance;
+	int speedboost = 0.3*adrenaline + 0.2*bodyEnhance;
+	int defenseboost = 0.3*resister + 0.2*bodyEnhance;
 
 		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
 		{
@@ -78,30 +87,11 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
              fadeto(0, 0, 255, 0.5, 0.0);
              localambientsound("p/heal", 128);
 			}		
-			int health_up = CheckInventory("UnitUp_BodyEnhancement");
-            if (l_Give > 0){        
-				giveinventory("Health", 100 + 60*health_up);
-				setactorproperty(0, APROP_SpawnHealth, 100 + 60*health_up);
-				SetInventory("HUD_MaxHp", 1 + 3*health_up);
-			}
-            if (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH2)){
-				// [Samu] Preventing Over-Health stat resets.
-				if(hp < 140) giveinventory("Health", 140 + 60*health_up);
-				setactorproperty(0, APROP_SpawnHealth, 140 + 60*health_up);
-				SetInventory("HUD_MaxHp", 3 + 3*health_up);
-			}            
-            else if  (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH1)) {
-				// [Samu] Preventing Over-Health stat resets.
-				if(hp < 120) giveinventory("Health", 120 + 60*health_up);
-				setactorproperty(0, APROP_SpawnHealth, 120 + 60*health_up);
-				SetInventory("HUD_MaxHp", 2 + 3*health_up);
-			}
             
             // check for genetics lab updates
             if (l_Give > 0)
             {
-                if (Tech_IsDone(FP_TECH_GENLAB_SPEEDB))        setactorproperty(0, APROP_SPEED, 1.3);      // adrenaline
-                if (Tech_IsDone(FP_TECH_GENLAB_ARMOR)){
+                if (armorTech){
 					// [Samu] Preventing Armor Overrides.
 					if(CheckInventory("BasicArmor") == 0) {takeInventory("Flag_BlueArmor", 1);}
 					
@@ -110,8 +100,29 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 					}
 					// steel plating
 				}
-                if (Tech_IsDone(FP_TECH_GENLAB_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
-                if (Tech_IsDone(FP_TECH_GENLAB_REGENB))        giveinventory("Upgrade_Asorber", 1);        // asorber unit
+                //if (Tech_IsDone(FP_TECH_GENLAB_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
+                if (Tech_IsDone(FP_TECH_GENLAB_REGENB))        giveinventory("Upgrade_Asorber", 1);  // asorber unit
+				if (CheckInventory("PlayUp_Prometeo")) 
+					ACS_NamedExecuteAlways("SFPlus_PrometeoScript", 0);
+				
+				
+				/*
+				log(s:"============================");
+				log(s:"Before...\n",
+				s:"MaxHP: ", d:getActorProperty(0,APROP_SpawnHealth), s:"\n",
+				s:"Speed Factor: ", f:getActorProperty(0,APROP_Speed),s:"\n",
+				s:"Damage Factor:", f:getActorProperty(0,APROP_DamageFactor));
+				*/
+				
+				// Do all calculations depending on the researches and unit upgrades.
+				//Apply da techs!
+				setactorproperty(0, APROP_SPEED, 1.0 + speedboost);  		
+				
+				setactorproperty(0, APROP_SpawnHealth, 100 + healthboost);
+				giveinventory("Health", 100 + healthboost);
+				SetInventory("HUD_MaxHp", 1 + 1*health1 + 1*health2 + 3*bodyEnhance);
+				
+				setactorproperty(0, APROP_DamageFactor,1.0 - defenseboost);
             }
             
             delay(2);
@@ -186,13 +197,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	if(l_Type == -1){
 		// Do Heal and Stock the player, but do not give the latest techs.
 		
-		if (l_Give > 0)        giveinventory("Health", 100);
-        if (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH2)){
-				giveinventory("Health", 140);
-		}            
-        else if  (l_Give > 0 && Tech_IsDone(FP_TECH_GENLAB_HEALTH1)) {
-				giveinventory("Health", 120);
-		}
+		giveinventory("Health", 100 + healthboost);
 		
 		GiveInventory("Clip", 9999);
 		GiveInventory("Shell", 9999);
@@ -228,7 +233,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	// just to prevent the full stocking on anywhere of the map.
 	if(l_type == -2){
 		// [Samu] Expansive re-stock upgrades for the players.
-		int restock_up = CheckInventory("UnitUp_ExpansiveRestock");
+		int restock_up = CheckInventory("PlayUp_ExpansiveRestock");
 		int extra_ammo = 2*restock_up;
 		
 		GiveInventory("Clip", 			10 * extra_ammo);
@@ -264,17 +269,17 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	// just to prevent the full healing on anywhere of the map.
 	if(l_type == -3){
 		// [Samu] Expansive re-stock and armor repair upgrades for the players.
-		int health_give = 10 + 15*CheckInventory("UnitUp_ExpansiveRestock");
+		int health_give = 10 + 15*CheckInventory("PlayUp_ExpansiveRestock");
 		giveinventory("Health", health_give);
 		
-		if(CheckInventory("UnitUp_ArmorRepair")){
+		if(CheckInventory("PlayUp_ArmorRepair")){
 			
 			int armor = Checkinventory("BasicArmor");
 			int armor_max = 100 + 100*CheckInventory("Flag_BlueArmor");
 			int armor_left = armor_max - armor;
 			int armor_give = health_give;
 			
-			if(armor == 0){
+			if(armor == 0 && armorTech){
 				takeInventory("Flag_BlueArmor", 1);
 				GiveInventory("GreenArmor", 1);
 				f_SmallTip ("Green Armor Granted!", cr_green, 3);
@@ -316,4 +321,26 @@ function void RemindUpgrade(bool condition, str string){
 		setfont("CONFONT");
 		hudmessage(s:string; HUDMSG_TYPEON, 2020 + show_stack, show_color, 600.1, 100.1 + offset, 2.0);
 	}
+}
+
+script "SFPlus_PrometeoScript" (void)
+{
+// Prometeo Script, Saves your life once (recharged at respawning).
+// In addition, grants you a short invul and a x2 Damage multipler.
+// If you use a berserk here, you could get a x6 Damage multipler!
+// Even better, you could get a x12 Damage multipler if you upgrade the powerups!
+// This shit is overpowered when used on the right time!
+	if(CheckInventory("PlayUp_Prometeo_Used") ) Terminate;
+	if(!CheckInventory("PlayUp_Prometeo_Ready")){
+		GiveInventory("PlayUp_Prometeo_Ready", 1);
+	} else terminate;
+	SetPlayerProperty(0, 1, PROP_BUDDHA);
+	while(GetActorProperty(0, APROP_Health) > 1){
+		// Wait until the player is pinned down
+		delay(1);
+	} 
+	SetPlayerProperty(0, 0, PROP_BUDDHA);
+	GiveInventory("PlayUp_Prometeo_Used", 1);
+	TakeInventory("PlayUp_Prometeo_Ready", 1);
+	giveinventory("PlayUp_Prometeo_Activate", 1);
 }

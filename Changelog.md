@@ -2,6 +2,32 @@
 
 ## v0 - Before the beginning...
 
+#### -) (12 / 08 / 2020) [Player Upgrades are ready to go!]
+	+) The Player Upgrades are now ready to be used in the health terminal!
+	// For now all the upgrades cost 1 U.P. better balance those prices.
+	+) Added the scale functions for the images in Samu-Terminal.
+	+) Now when you break a kill-streak milestone, you will hear the old promotion sound.
+	// All it lefts is to get a better display for a kill-streak counter.
+
+#### -) (11 / 08 / 2020)
+	*) The H.Terminal Player Upgrade pages is now in WIP.
+	+) New icons for the Health Terminal Player Upgrade page!
+	*) Silly fix on play.py
+
+#### -) (10 / 08 / 2020)
+	+) New file fl_PupDir.acs has been added, introducing the Player Upgrade directory!
+	*) All of the Player upgrades inside are finished. It just needs their respective page.
+	*) Small debug fixes.
+
+#### -) (9 / 08 / 2020)
+	*) Changing the .txt, to .dec extensions for notepad access.
+	*) Moved and renamed upgrades.dec to fp_p_upgrades.dec, it is inside of the gameobjects folder.
+	*) Some more experiments on those health terminal upgrades.
+	*) Some more re-factoring on f_StockP.acs
+	+) New streak system!, now here you can gain additional upgrade points!
+	// Now you have a reason to keep yourself alive!
+	*) Implementing some more H.Terminal upgrades...
+
 #### -) (8 / 08 / 2020) [Fix n Tweaks, H.Terminal Ups on progress...]
 	*) Now health dispensers can give 10HP to the player per 6 tics.
 	*) Some small implementation of some new health terminal upgrades...

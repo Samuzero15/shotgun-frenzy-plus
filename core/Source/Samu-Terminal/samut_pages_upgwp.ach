@@ -199,7 +199,7 @@ function void InitListUpPage(int pageTag){
 	Component_Save(Label_GetRect(i));
 	listup_vars[8] = i;
 	
-	// 		Notification 2 if no weapons. Slot[6]
+	// 		Notification 2 if no weapons. Slot[9]
 	i = Label_Dup(Vars_Mid_Wid(), Vars_Mid_Hei());
 	Label_setFont(i,"confont");
 	Label_setText(i, "\n\n\n\nEither you upgraded all your guns, or you don't have the basic ones. \n                         Try it next time...");

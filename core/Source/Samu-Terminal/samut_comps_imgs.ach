@@ -215,11 +215,12 @@ function void UpdateImage(int bid, int condit){
 }
 
 function void Image_SetDefaultProps(int i){
-		Image_setFile(i,"");
-		Image_setShow(i, false);
-		Image_setAligns(i,HUD_ALIGN_LEFT,HUD_ALIGN_TOP);
-		Image_setOffsets(i,0.0,0.0);
-		Image_setParent(i, -1);
-		Image_setHudid(i, ST_HID_IMG + i);
-		Image_setTag(i, -1);
+		Image_setFile		(i,"");
+		Image_setShow		(i, false);
+		Image_setAligns		(i,HUD_ALIGN_LEFT,HUD_ALIGN_TOP);
+		Image_setOffsets	(i, 0.0, 0.0);
+		Image_setParent		(i, -1);
+		Image_setHudid		(i, ST_HID_IMG + i);
+		Image_setTag		(i, -1);
+		Image_SetScale		(i, 1.0, 1.0);
 }

@@ -20,11 +20,6 @@
 // player dies
 script 52 DEATH
 {
-    // menu open? kill it
-    // [Samu] Thank you Sameri98! Now you won't have your menu open on your dead body :)
-		p_MenuReveal_Kill();
-
-
 
 if (g_Status == 5){
 	thing_hate(109, 104, 4);
@@ -39,22 +34,16 @@ else{
 	thing_hate(110, 100+g_Status, 4);
 	thing_hate(111, 100+g_Status, 4);
 	thing_hate(112, 100+g_Status, 4);
-	thing_hate(113,100+g_Status, 4);
+	thing_hate(113, 100+g_Status, 4);
 	thing_hate(114, 100+g_Status, 4);
 }
-
-
-
-
-
-
 
     // unmorph incase the player is in a tank
     //Unmorphactor(0, 1);
     hudmessage(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
     
     // check tank status
-	if(checkInventory("TankGun") || checkInventory("TankGunAdvanced") && p_TankSlot[playernumber()] == 2)
+	if(ACS_ExecuteWithResult(781, 0))
 		{
 			acs_executealways(309, 0); // Oh shit they got me.
 		}
@@ -71,16 +60,10 @@ else{
     if(PlayerCount() < 3){
           f_TipShow("DEATH", "", "Has Fallen!", 10);
     }
-
-
-//crap! any idea how to shorten the "if" spam?
-// ^ Nooooope...
-//                              -Chuck Testa
-//[Samu] Im wasting more time refactoring than just improving things.
-	
-	
 	
 	// a nice pretty message for the loser to make them think on the bright side
+	// [Samu] Hm... I got a better idea.
+	/*
 	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 	setfont("BCOUNT");
 	hudmessage(s:"a"; 2, 180, CR_Gold, 0.1, 0.1, 5.0);
@@ -88,7 +71,7 @@ else{
 	//hudmessage(s:"You've been killed!"; 1, 178, CR_Red, 570.0, 370.1, 5.0);
 	setfont("CONFONT");
 	hudmessage(s:"You have been killed!\nThe bodycount sits at ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" dead monsters!\nTotal player deaths is sitting at ", d:p_TotalPlayerDeaths; 2, 179, CR_Gold, 580.0, 420.1, 1.0);
-
+	*/
 
 }
 
@@ -115,6 +98,7 @@ script 53 ENTER
     //Clear potential bugs
     setactorproperty(0, APROP_SPEED, 1.0);
     setactorproperty(0, APROP_Health, 100);
+	setactorproperty(0, APROP_DamageFactor, 1.0);
     setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
     ACS_ExecuteAlways(106,0,3,1,1);
     p_MenuSelection_Active[playernumber()] = 0;
@@ -157,6 +141,7 @@ script 53 ENTER
     p_MechUpgradeWeapons[playernumber()] = 0;
     p_MechUpgradeArmor[playernumber()] = 0;
     p_TankSlot[playernumber()] = 0;
+	p_StreakLevel[playernumber()] = 0;
 	//[Samu] Bruh...
     //ConsoleCommand("setslot 8 Flamer FlamerS BFG BFGS BoomerCannon");
     f_TipShow("PLAYER", "", "Has entered the game...", 10);
@@ -169,9 +154,6 @@ script 53 ENTER
 script 54 RESPAWN
 {
 	
-	
-	
-	
     // give players the 'player' tid
     thing_changetid(0, 990+PlayerNumber());
     
@@ -181,18 +163,29 @@ script 54 RESPAWN
 	// [Samu] In case of tank past life.
 	takeinventory("TankGun", 1);
 	takeinventory("TankGunAdvanced", 1);
+	
+	TakeInventory("BasicArmor", 0xFFFFFFF);
   
     
     // give inventory on respawn
 	delay(5);
 	ACS_Execute(56,0,p_LastWeap[playernumber()],0,0);
     delay(10);
+	// Recharge prometeo protocol.
+	if(CheckInventory("PlayUp_Prometeo_Used"))
+		takeinventory("PlayUp_Prometeo_Used", 1);
+	if(CheckInventory("PlayUp_SpawnShield")) 
+		giveinventory("PlayUp_SpawnShield_Activate", 1);
+		
     acs_execute(106, 0, 1, 1, 0);
     delay(15);
     //t3hdoom: Originally didn't give any ammo if there's no armory. Let's give them ammo on spawn regardless
     acs_execute(106, 0, 3, 1, 0);
 	ACS_NamedExecute("Auto-Use Items", 0);
-    
+    p_Streak[playernumber()] = 0; // Reset the kill-streak.
+	
+	
+	
     // players a bot? delay before spawning
 	// [Samu] I dont care.
 	/*
@@ -238,15 +231,6 @@ script 599 (void)
 	count = count + ThingCountName("TurretTesla_Head", 0);
 	SetResultValue(count);
 }
-
-//realized I don't need this. I'll leave it commented just in case.
-//IF YOU WANT TO ADD A SCRIPT, FEEL FREE TO USE THIS SCRIPT NUMBER
-
-/*script 55 DISCONNECT (int null) //Clearing bugs when player disconnects - just in case
-{
-	p_MenuSelection_Active[playernumber()] = 0;
-	p_TankSlot[playernumber()] = 0;
-}*/
 
 script 56 (int weapon) //Set weapon to last (separated this script from the respawn one because it's going to be executed through Decorate too)
 {
@@ -395,5 +379,5 @@ script 769 (void){
 
 // [Samu] Check if i am on a tank.
 script 781 (void){
-	SetResultValue(CheckInventory("TankGun") || CheckInventory("TankGunAdvanced") && p_TankSlot[playernumber()] == 2);
+	SetResultValue((CheckInventory("TankGun") || CheckInventory("TankGunAdvanced")) && p_TankSlot[playernumber()] == 2);
 }

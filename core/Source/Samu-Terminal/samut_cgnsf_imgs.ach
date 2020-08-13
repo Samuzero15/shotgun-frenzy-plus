@@ -52,6 +52,14 @@ function int Image_getHudId(int bid){
 	return RectGetUserData(Image_getRect(bid), ST_CPROP6);
 }
 
+function int Image_getScaleX(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP7);
+}
+
+function int Image_getScaleY(int bid){
+	return RectGetUserData(Image_getRect(bid), ST_CPROP8);
+}
+
 ///////////////////////////////////////
 // Setters from Images!
 ///////////////////////////////////////
@@ -90,4 +98,9 @@ function void Image_setOffsets(int bid, int offx, int offy){
 
 function void Image_setHudID(int bid, int hudId){
 	SetRectUserData(Image_getRect(bid), ST_CPROP6, hudId);
+}
+
+function void Image_setScale(int bid, int scalex, int scaley){
+	SetRectUserData(Image_getRect(bid), ST_CPROP7, scalex);
+	SetRectUserData(Image_getRect(bid), ST_CPROP8, scaley);
 }

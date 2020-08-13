@@ -1,0 +1,79 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_PUpDir.acs
+// Player Upgrade directory
+
+// Here it lays all of the player upgrades on the game.
+// For the prices, take a look at fl_price.
+// The prices are on UP points!
+
+#library "fl_PupDir"
+#include "zcommon.acs"
+//#include "samu_tools.acs"
+
+#define FP_PLAYUP_MAX 10
+
+int PlayUpTop = 0;
+int PlayUp_list[FP_PLAYUP_MAX][5];
+
+function void SFPlus_DefinePlayUps(void){
+	PlayUpTop = 0;
+	
+	PlayUp_Add ("Powerup Upgrade",		"PowUpUpgrade", 	"HBTN07");
+	PlayUp_Add ("Mech Syncronize",		"MechSync", 		"HBTN05");
+	PlayUp_Add ("Rune Syncronize",		"RuneSync", 		"HBTN08");
+	PlayUp_Add ("Expansive Restock",	"ExpansiveRestock",	"HBTN03");
+	PlayUp_Add ("Body Enhancement",		"BodyEnhancement",	"HBTN02");
+	PlayUp_Add ("Armor Repair",			"ArmorRepair",		"HBTN01");
+	PlayUp_Add ("Spawn Protection",		"SpawnShield",		"HBTN09");
+	PlayUp_Add ("Healing Coins",		"HealCoins",		"HBTN04");
+	PlayUp_Add ("Prometeo Protocol",	"Prometeo",			"HBTN06");
+}
+
+function void PlayUp_Add (str name, str actor, str btnimg){
+	int upg = PlayUpTop;
+	
+	if(PlayUpTop >= FP_PLAYUP_MAX)
+	{ 
+		log(s:"(fl_PUpDir): Too much unit upgrades!");
+		return;
+	}
+	// Look up language.txt
+	PlayUp_List[upg][0] = name;
+	PlayUp_List[upg][1] = strparam(l:strparam(s:"FP_PUD_",s:actor));
+	PlayUp_List[upg][2] = strparam(s:"PlayUp_",s:actor);
+	// Lookup fl_price.acs
+	PlayUp_List[upg][3] = strparam(s:"pr_pu_", s:actor); 
+	PlayUp_List[upg][4] = btnimg;
+	PlayUpTop++;
+}
+
+function str PlayUp_getName(int up){	return PlayUp_List[up][0];}
+function str PlayUp_getDesc(int up){	return PlayUp_List[up][1];}
+function str PlayUp_getActor(int up){	return PlayUp_List[up][2];}
+function str PlayUp_getIcon(int up){	return PlayUp_List[up][4];}
+function int PlayUp_getPrice(int up){	return CheckInventory(PlayUp_List[up][3]);}
+
+script "SFPlus_DebugPlayUps" (void){
+	log(s:"===START===(Player upgrade Directory)===START===");
+	for (int i = 0; i < PlayUpTop; i++ ){
+		giveInventory(PlayUp_getActor(i), 1);
+		log(s:"");
+		log(s:PlayUp_getName(i), s:" (",d:PlayUp_getPrice(i), s:" U.Ps)", s:" [", s:PlayUp_getIcon(i), s:"]");
+		log(s:"-----------------------------------------");
+		log(s:PlayUp_getDesc(i));
+		log(s:"=========================================");
+		delay(1);
+	}
+	log(s:"====END====(Player upgrade Directory)====END====");
+}
+
+Script "SFPlus_FullPlayerUps" (void)
+{
+	for (int i = 0; i < PlayUpTop; i++ ){
+		giveInventory(PlayUp_getActor(i), 1);
+		log(s:PlayUp_getName(i), s:" Set!");
+	}
+}

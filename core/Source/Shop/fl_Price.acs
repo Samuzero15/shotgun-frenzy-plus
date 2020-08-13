@@ -19,14 +19,28 @@ int fp_PriceStack = 0;
 
 //Remember, to let the terminal sync values, It's more efficient to use Inventory items.
 //Sure, you will end up with a long-ass Decorate, but that's a small price worth to pay. 
-script "SFPlus_PriceSyncher" ENTER
-{// Synchs all of the prices so far.
+script "SFPlus_PriceSyncher1" ENTER
+{// Synchs all of the prices so far. Start to End
+	//log(s:"Syncing from start to end.");
 	int counter;
 	while(true){
 		setActivatorToPlayer(playerNumber());
 		if(counter == fp_priceStack) counter = 0;
 		
 		SetInventory(Prices_getKey(counter), Prices_getValue_I(counter));
+		counter++;
+		delay(1);
+	}
+}
+
+script "SFPlus_PriceSyncher2" ENTER
+{// Synchs all of the prices so far. End to Start
+	//log(s:"Syncing from end to start.");
+	int counter;
+	while(true){
+		setActivatorToPlayer(playerNumber());
+		if(counter == fp_priceStack) counter = 0;
+		
 		SetInventory(Prices_getKey(fp_PriceStack-1 - counter), Prices_getValue_I(fp_PriceStack-1 - counter));
 		counter++;
 		delay(1);
@@ -187,6 +201,18 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_mu_speed", 			3000);
 	Prices_add("pr_mu_life_save", 		30000);
 	Prices_add("pr_mu_self_destruct", 	8000);
+	
+	//Play Up. prices
+	Prices_add("pr_pu_powupupgrade",		1);
+	Prices_add("pr_pu_mechsync",			1);
+	Prices_add("pr_pu_expansiverestock",	1);
+	Prices_add("pr_pu_bodyenhancement",		1);
+	Prices_add("pr_pu_armorrepair",			1);
+	Prices_add("pr_pu_spawnshield",			1);
+	Prices_add("pr_pu_healcoins",			1);
+	Prices_add("pr_pu_prometeo",			1);
+	Prices_add("pr_pu_runesync",			1);
+	
 	//Prices_add("pr_mu_auto_repair", 	3500); // Heh. Another future thing.
 }
 

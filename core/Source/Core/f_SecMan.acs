@@ -266,7 +266,7 @@ script 103 (void)
 			case 1:
 			  hudmessageBOLD(s:"Sector 1 recover Bonus!\n+5000 Credits Added!\n+1 Berserk and Godsphere!\n+3 Megaspheres!\n+2 Upgrade Points!";
 				2, 6, cr_Blue, 400.0, 480.1, 6.0);
-				//[Samu] It's hard to recover this sector, so lets give it a juicy reward.
+				//[Samu] It's hard to recover this sector, so let's give it a juicy reward.
 			  giveCashToPlayers(5000);
 			  giveUPToPlayers(2);
 			  giveItemToPlayers("Inventory_Godsphere", 1);
@@ -385,6 +385,8 @@ script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
 			if(PlayerCount() < 3){
 				f_TipShow("PLAYER", "", "Has entered the sector...", 10);
 			}
+			if(CheckInventory("PlayUp_SpawnShield")) 
+				giveinventory("PlayUp_SpawnShield_Activate", 1);
 			delay(secdelay);
 			secdelay = 0;
 		}

@@ -27,7 +27,7 @@ alias usestimpack "use Inventory_Stimpack"
 addmenukey "Use Ammosphere" usebackpack
 alias usebackpack "use Inventory_AmmoGiver"
 
-//alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;summon Inventory_Stimpack; summon Inventory_Megasphere; summon Inventory_Godsphere; summon Inventory_Berserk2; summon Inventory_AmmoGiver; summon Inventory_TurretBullet; summon Inventory_TurretRocket; summon Inventory_TurretPlasma; summon Inventory_TurretFlame; summon Inventory_TeslaCoil"
+alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;summon Inventory_Stimpack; summon Inventory_Megasphere; summon Inventory_Godsphere; summon Inventory_Berserk2; summon Inventory_AmmoGiver; summon Inventory_TurretBullet; summon Inventory_TurretRocket; summon Inventory_TurretPlasma; summon Inventory_TurretFlame; summon Inventory_TeslaCoil"
 //alias TestWeapon "take weapons; give Spitter_GLauncher; give Ammo"
 //alias TestActor "Summon sf_SawDrone"
 

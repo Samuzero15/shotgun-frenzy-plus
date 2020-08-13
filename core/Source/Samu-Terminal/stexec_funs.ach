@@ -14,6 +14,7 @@
 #include "stexec_upgfuns.ach"
 #include "stexec_rcyfuns.ach"
 #include "stexec_mupfuns.ach"
+#include "stexec_pupfuns.ach"
 
 
 function void STExecute_OkayAction(void){

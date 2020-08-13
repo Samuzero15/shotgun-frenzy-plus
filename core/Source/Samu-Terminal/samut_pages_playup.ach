@@ -1,0 +1,140 @@
+int playup_vars[30];
+
+#define PLAYUPPAGE_NCOMPGROUP 1
+#define PLAYUPPAGE_NPRIVARS 8
+
+function void PlayUpPage_SaveGroup(int up, int id, int comp){
+	rcywpn_vars[PLAYUPPAGE_NCOMPGROUP * up + PLAYUPPAGE_NPRIVARS + (id-1)] = comp;
+}
+
+function int PlayUpPage_LoadGroup(int up, int id){
+	return rcywpn_vars[PLAYUPPAGE_NCOMPGROUP * up + PLAYUPPAGE_NPRIVARS + (id-1)];
+}
+
+function void PlayUpPage_Update(int pageTag){
+	setPageTitle(pageTag, "Player Upgrade Page", CR_PURPLE);
+	
+	if(isOnTheSamePage(pageTag)){
+		Label_SetText(playup_vars[0], "");
+		//PlayUpPage_SetDetails(playup_vars[6], cond(playup_vars[6] != -1, true, false));
+		if(playup_vars[6] != -1)
+			PlayUpPage_SetDetails(playup_vars[6]);
+		else
+			PlayUpPage_ShowDetails(false);
+	}else{
+		if(playup_vars[6] != -1){
+			PlayUpPage_ShowDetails(false);
+		}
+		playup_vars[6] = -1;
+	}
+}
+
+
+function void PlayUpPage_Init(int pageTag){
+		
+	int i = 0;
+		i = Label_Add		(320.0, 70.0);
+			Label_SetText	(i, "Remember!");
+			Label_SetFont	(i, "STATBIGS");
+			Label_SetColor	(i, CR_CYAN);
+			Label_SetTag	(i, pagetag);
+			
+		i = Label_Add		(320.0, 80.0);
+			Label_SetText	(i, "Some upgrades needs to be initialized, get to the health pads to do it.");
+			Label_SetFont	(i, "confont");
+			Label_SetColor	(i, CR_CYAN);
+			Label_SetTag	(i, pagetag);
+		
+	PlayUpPage_InitDetails();
+	PlayUpPage_AddButtons(pageTag, 320.0, 330.0);
+	
+	//PlayUpPage_SetDetails(1, true);
+}
+
+function void PlayUpPage_InitDetails(void){
+	int i = 0;
+		i = Label_Add		(320.0, 110.0);
+			Label_SetFont	(i, "STATBIGS");
+			Component_Save(Label_getRect(i));
+			Label_setColor  (i, CR_CYAN);
+		playup_vars[1] = i; // Name
+		
+		i = Label_Dup			(240.0, 190.0);
+			Label_SetFont		(i, "confont");
+			Label_setAligns 	(i, HUD_ALIGN_LEFT, HUD_ALIGN_CENTER);
+			Label_setWrapWidth	(i, 350);
+		playup_vars[2] = i; // Description
+		
+		i = Label_Dup		(160.0, 250.0);
+			Label_SetText	(i, "Cost on ups");
+			Label_setColor  (i, CR_WHITE);
+		playup_vars[3] = i; // Cost
+		
+		i = StrButton_AddMid 	(160.0, 275.0, "Upgrade");
+			StrButton_setColor	(i, CR_CYAN);
+		playup_vars[4] = i; // String button
+		
+		i = Image_Add 	(160.0, 190.0, "HBTN01");
+			Image_SetScale	(i, 3.0, 3.0);
+			Image_SetAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+		playup_vars[5] = i; // Image
+		
+		playup_vars[6] = -1; // Selected upgrade to show info.
+}
+function void PlayUpPage_SetDetails(int up){
+	str name = PlayUp_GetName(up);
+	str desc = PlayUp_GetDesc(up);
+	str upImage = PlayUp_GetIcon(up);
+	bool showbut = !CheckInventory(PlayUp_getActor(up));
+	int cost = PlayUp_GetPrice(up);
+	
+	Label_SetText		(playup_vars[1], name);
+	Label_SetText		(playup_vars[2], desc);
+	Label_SetText		(playup_vars[3], cond(showbut, strparam(s:"Cost: ", d:cost, s:" U.Ps"), "Installed"));
+	StrButton_SetExecute(playup_vars[4], STEXE_PLAYUP_ASK);
+	StrButton_SetExeArgs(playup_vars[4], up,0,0);
+	StrButton_SetColor	(playup_vars[4], cond(GetPlayUpts() >= cost, CR_WHITE, CR_ORANGE));
+	Image_SetFile		(playup_vars[5], upImage);
+	PlayUpPage_ShowDetails(true);
+	StrButton_SetShow	(playup_vars[4], showbut);
+}
+
+function void PlayUpPage_ShowDetails(bool show){
+	Label_SetShow		(playup_vars[1], show);
+	Label_SetShow		(playup_vars[2], show);
+	Label_SetShow		(playup_vars[3], show);
+	StrButton_SetShow	(playup_vars[4], show);
+	Image_SetShow		(playup_vars[5], show);
+}
+
+function void PlayUpPage_AddButtons(int pageTag, int posx, int posy){
+	int i = 0;
+	
+		i = Label_Add		(posx, posy - 8.0);
+			Label_SetText	(i, "Pick an upgrade");
+			Label_SetTag	(i, pagetag);
+		Component_Save(Label_getRect(i));
+		
+		i = Label_Dup		(posx, posy + 40.0);
+			Label_SetText	(i, "");
+			Label_SetFont	(i, "STATBIGS");
+		playup_vars[0] = i; // Upgrade name.
+		
+	// Do all the button clip.
+	Card_setCells(PlayUpTop);
+	Card_setPosition(posx - (36.0*PlayUpTop)/2, posy); // Center aligned in x.
+	Card_setStep(36.0);
+	int layout = Card_Generate();
+	
+	for(int btn = 0; btn < PlayUpTop; btn++){
+		i = ImgButton_AddCard(layout, btn+1, 32.0, 32.0);
+			ImgButton_SetImage		(i, PlayUp_getIcon(btn));
+			ImgButton_SetHoverImage	(i, "BTNHOV");
+			ImgButton_SetTag		(i, pagetag);
+			ImgButton_SetExeHover	(i, STEXE_PLAYUP_BTNHOVER);
+			ImgButton_SetArgsHover	(i, playup_vars[0], btn, 0);
+			ImgButton_SetExecute	(i, STEXE_PLAYUP_SETDESC);
+			ImgButton_SetArgs		(i, btn, 0, 0);
+			PlayUpPage_SaveGroup(btn, 1, i);
+	}
+}

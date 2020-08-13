@@ -1,0 +1,40 @@
+
+// Made only for debug pruposes!
+Actor FP_TechItem : CustomInventory
+{
+	Inventory.PickupMessage 	"You researched something by picking an item, you lazy asshole."
+	args -1
+	States
+	{
+	Spawn:
+		CELL A 1
+		goto Spawn
+	Pickup:
+		CELL A 1 ACS_NamedExecute("SFPlus_setTech", 0, args[0], 1)
+		Stop
+    }
+}
+
+Actor FP_techitem_GENLAB_HEALTH1 : FP_TechItem
+{States{Pickup: CELL A 1 A_SetArg(0, 1)
+goto Super::Pickup}}
+
+Actor FP_techitem_GENLAB_HEALTH2 : FP_TechItem 
+{States{Pickup: CELL A 1 A_SetArg(0, 2)
+goto Super::Pickup}}
+
+Actor FP_techitem_GENLAB_ARMOR : FP_TechItem 
+{States{Pickup: CELL A 1 A_SetArg(0, 3)
+goto Super::Pickup}}
+
+Actor FP_techitem_GENLAB_SPEEDB : FP_TechItem 
+{States{Pickup: CELL A 1 A_SetArg(0, 4)
+goto Super::Pickup}}
+
+Actor FP_techitem_GENLAB_RESISB : FP_TechItem 
+{States{Pickup: CELL A 1 A_SetArg(0, 5)
+goto Super::Pickup}}
+
+Actor FP_techitem_GENLAB_REGENB : FP_TechItem 
+{States{Pickup: CELL A 1 A_SetArg(0, 6)
+goto Super::Pickup}}

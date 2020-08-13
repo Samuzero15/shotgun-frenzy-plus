@@ -84,19 +84,19 @@ if __name__ == "__main__":
             destPath = os.path.join(distDir, fileName)
             
             if (part == "Resources" or part == "Music"):
-                fileName  = config["Resources"].get('FileName', part  )
-                distDir = config["Resources"].get('DistDir', 'dist');
-                destPath = os.path.join(distDir, fileName)
+                a_fileName  = config["Resources"].get('FileName', part  )
+                a_distDir = config["Resources"].get('DistDir', 'dist');
+                a_destPath = os.path.join(a_distDir, a_fileName)
                 
-                res_file = fileName + ".pk3"
-                res_file_path = destPath + ".pk3"
+                res_file = a_fileName + ".pk3"
+                res_file_path = a_destPath + ".pk3"
                 
-                fileName  = config["Music"].get('FileName', part  )
-                distDir = config["Music"].get('DistDir', 'dist');
-                destPath = os.path.join(distDir, fileName)
+                b_fileName  = config["Music"].get('FileName', part  )
+                b_distDir = config["Music"].get('DistDir', 'dist');
+                b_destPath = os.path.join(b_distDir, b_fileName)
                 
-                mus_file = fileName + ".pk3"
-                mus_file_path = destPath + ".pk3"
+                mus_file = b_fileName + ".pk3"
+                mus_file_path = b_destPath + ".pk3"
                 
                 coreonly = (args.justcore or (args.nores and args.nomus))
                 if (coreonly and ("Resources" in part or "Music" in part)):
