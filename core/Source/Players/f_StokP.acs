@@ -233,21 +233,20 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	// just to prevent the full stocking on anywhere of the map.
 	if(l_type == -2){
 		// [Samu] Expansive re-stock upgrades for the players.
-		int restock_up = CheckInventory("PlayUp_ExpansiveRestock");
-		int extra_ammo = 2*restock_up;
+		int extra_ammo = CheckInventory("PlayUp_ExpansiveRestock");
 		
-		GiveInventory("Clip", 			10 * extra_ammo);
-		GiveInventory("Shell", 			2 * extra_ammo);
+		GiveInventory("Clip", 			10 + 10*extra_ammo);
+		GiveInventory("Shell", 			2 + 2*extra_ammo);
 			 
-		GiveInventory("RocketAmmo", 	2 * extra_ammo);
-		GiveInventory("GLauncher_Ammo", 2 * extra_ammo);
-		GiveInventory("Flinger_Ammo", 	2 * extra_ammo);
+		GiveInventory("RocketAmmo", 	2 + 2*extra_ammo);
+		GiveInventory("GLauncher_Ammo", 2 + 2*extra_ammo);
+		GiveInventory("Flinger_Ammo", 	2 + 2*extra_ammo);
 			 
-		GiveInventory("Cell", 			20 * extra_ammo);
-		Giveinventory("Gasoline", 		10 * extra_ammo);
+		GiveInventory("Cell", 			20 + 20*extra_ammo);
+		Giveinventory("Gasoline", 		10 + 10*extra_ammo);
 			
-		GiveInventory("Dualshot_Ammo", 	15 * extra_ammo);
-		GiveInventory("HeavyBullets",	40 * extra_ammo);
+		GiveInventory("Dualshot_Ammo", 	15 + 15*extra_ammo);
+		GiveInventory("HeavyBullets",	40 + 40*extra_ammo);
 			 
 			 /*[Samu] Oh fuck no... You're not gonna exploit this!
 		GiveInventory("Supplies_Health", 9999);

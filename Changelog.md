@@ -2,6 +2,14 @@
 
 ## v0 - Before the beginning...
 
+#### -) (13 / 08 / 2020) [Kill-Streak system implemented]
+	+) New file fp_kshud.acs for the Kill Streak HUD.
+	+) Now the Kill-Streaks will be displayed each time you... kill.
+	*) Modified the prices of the Player Upgrades a bit.
+	*) Modified the Kill-Streak formula for the milestones.
+	+) Now you can see the high score kill-streak in each run.
+	*) For now, the max milestone level for the kill-streaks are capped to level 10.
+
 #### -) (12 / 08 / 2020) [Player Upgrades are ready to go!]
 	+) The Player Upgrades are now ready to be used in the health terminal!
 	// For now all the upgrades cost 1 U.P. better balance those prices.

@@ -28,6 +28,7 @@
 #import "fl_MUpDir.acs"
 #import "fl_PUpDir.acs"
 #import "fl_techs.acs"
+#import "fp_kshud.acs"
 #include "zcommon.acs"
 #include "acsutils.ach"
 
@@ -98,6 +99,7 @@ int p_MenuSelection_Active[31];
 int p_MenuSelection_Category[31];
 int p_MenuSelection_Limit[31];
 int p_Streak[31];
+int p_StreakHi[31];
 int p_StreakLevel[31];
 int p_TipQue[10];
 int p_TotalPlayerDeaths;
@@ -217,7 +219,8 @@ function void addMonsterReward(int class, str item, int dropChance){
 }
 
 function int getNextStreakMilestone(void){
-	return 100 * ipow(2, p_StreakLevel[playernumber()]);
+	int milestonebase = 70;
+	return clamp(milestonebase * ipow(2, p_StreakLevel[playernumber()]), milestonebase, milestonebase * ipow(2, 9));
 }
 
 function int getMonsterChanceToDrop(int class,int nitem){

@@ -1,0 +1,167 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_kshud.acs
+// Kill streak HUD scripts.
+
+// A little nice hud for the streak count in game.
+
+#library "FP_KSHUD"
+
+
+#include "zcommon.acs"
+#include "acsutils.ach"
+
+#import "f_intdb.acs"
+
+#define FP_KSHUD_IDB -2500
+#define FP_KSHUD_ID1 FP_KSHUD_IDB+1
+#define FP_KSHUD_ID2 FP_KSHUD_IDB+2
+#define FP_KSHUD_ID3 FP_KSHUD_IDB+3
+
+#define FP_KSHUD_W 640
+#define FP_KSHUD_H 480
+
+#define FP_KSHUD_FACTOR_X 0.5
+#define FP_KSHUD_FACTOR_Y 0.23
+#define FP_KSHUD_FACTOR_Y_T1 0.25
+#define FP_KSHUD_FACTOR_Y_T2 0.28
+#define FP_KSHUD_FADETIME 0.25
+#define FP_KSHUD_HOLDTIME 2.0
+
+
+script "SFPlus_KillStreakHud" ENTER {
+	int KSLast = 0, KSNow, KSHiScore, KSLastRun;
+	
+	int play = PlayerNumber();
+	int scaleTics = 5, tics, numscale;
+	
+	while(1){
+	KSNow = p_Streak[play];
+	KSHiScore = p_StreakHi[play];
+		if(KSLast != KSNow && KSNow > 1){
+			ACS_NamedExecuteAlways("SFPlus_KSHud_Killstreak", 0,
+				KSNow, KSHiScore, GetNextStreakMilestone());
+			numscale = 1;
+		}
+		
+		if(numscale && tics < scaleTics){
+			if(KSNow < KSHiScore)
+				ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Hiscore", 0, (scaleTics+1-tics), KSNow);
+			else if(KSNow < GetNextStreakMilestone())
+				ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Milestone", 0, (scaleTics+1-tics), KSNow);
+			else 
+				ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Overflow", 0, (scaleTics+1-tics), KSNow);
+			log(d:(scaleTics+1-tics));
+			tics++;
+		}else{ tics = 0; numscale = 0;}
+		
+		
+		if(KSNow <= 1){
+			ClearHudMessage(FP_KSHUD_ID1);
+			ClearHudMessage(FP_KSHUD_ID2);
+			ClearHudMessage(FP_KSHUD_ID3);
+		}
+		KSLast = KSNow;
+		delay (1);
+	}
+}
+
+Script "SFPlus_KSHud_Death" DEATH
+{
+	int KSNow = p_Streak[PlayerNumber()];
+	ACS_NamedExecuteAlways("SFPlus_KSHud_Shutdown", 0, KSNow, p_StreakHi[PlayerNumber()]);
+	if(p_StreakHi[PlayerNumber()] < KSNow)
+		p_StreakHi[PlayerNumber()] = KSNow;
+}
+
+// Clientsided scripts.
+
+Script "SFPlus_KSHud_Number_Add_Overflow" (int scale, int value) CLIENTSIDE 
+{
+	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+		KSHud_ShowNumber(value, scale, CR_GOLD);
+	}
+}
+
+Script "SFPlus_KSHud_Number_Add_Hiscore" (int scale, int value) CLIENTSIDE 
+{
+	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+		KSHud_ShowNumber(value, scale, CR_WHITE);
+	}
+}
+
+Script "SFPlus_KSHud_Number_Add_Milestone" (int scale, int value) CLIENTSIDE 
+{
+	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+		KSHud_ShowNumber(value, scale, CR_CYAN);
+	}
+}
+
+Script "SFPlus_KSHud_Number_End" (int scale, int value) CLIENTSIDE 
+{
+	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+		KSHud_ShowNumber(value, scale, CR_BRICK);
+	}
+}
+
+Script "SFPlus_KSHud_Killstreak" (int ks, int hiscore, int milestone) CLIENTSIDE 
+{
+	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+		if(ks < hiscore){
+			KSHud_ShowText1("Kill-Streak!", CR_WHITE);
+			KSHud_ShowText2(strparam(d:hiscore - ks, s:" kills left for the ", d:hiscore ,s:" kill highscore."),
+			CR_WHITE);
+		}else if(ks < milestone){
+			KSHud_ShowText1("Kill-Streak!", CR_CYAN);
+			KSHud_ShowText2(strparam(d:milestone - ks, s:" kills left for the ", d:milestone ,s:" kill milestone."),
+			CR_CYAN);
+		} else{
+			ClearHudMessage(FP_KSHUD_ID3);
+		}
+	}
+}
+
+Script "SFPlus_KSHud_Shutdown" (int value, int hiscore) CLIENTSIDE 
+{
+	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+		
+		ACS_NamedExecute("SFPlus_KSHud_Number_End", 0, 2, value);
+		KSHud_ShowText1("Shutdown!", CR_BRICK);
+		if(value > hiscore){
+			KSHud_ShowText2(strparam(s:"New Kill-Streak Hi-score: ", d:value, s:" kills!"),
+			CR_WHITE);
+		}else
+			KSHud_ShowText2(strparam(s:"You did a ", d:value, s:" kill streak in this run."),
+			CR_BRICK);
+	}
+}
+
+// Functions to print.
+
+function void KSHud_ShowText1(str msg, int color){
+	KSHud_Print(msg,
+			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T1, color, "STATBIGS", FP_KSHUD_ID2);
+}
+
+function void KSHud_ShowText2(str msg,int color){
+	KSHud_Print(msg,
+			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T2, color, "Confont", FP_KSHUD_ID3);
+}
+
+function void KSHud_ShowNumber(int value, int scale, int color){
+	KSHud_Print(strparam(d:value),
+	scale, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y, color, "STATBIGS", FP_KSHUD_ID1);
+}
+
+function void KSHud_Print(str msg, int scale, int fx, int fy, int color, str font, int id){
+	
+	if(scale == 0) scale = 1;
+	SetHudSize(FP_KSHUD_W/scale, FP_KSHUD_H/scale ,0);
+	SetFont(font);
+	HudMessage(s:msg;
+	HUDMSG_FADEOUT, id, color,
+			((FP_KSHUD_W/scale) * fx), ((FP_KSHUD_H/scale) * fy), FP_KSHUD_HOLDTIME, FP_KSHUD_FADETIME);
+	SetHudSize(0, 0, 0);
+}

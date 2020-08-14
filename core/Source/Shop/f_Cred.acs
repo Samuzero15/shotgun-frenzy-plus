@@ -131,7 +131,9 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	
 	// increase exp and streak
 	p_Exp[playernumber()] += 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass);
-	p_Streak[playernumber()] ++;
+	if(GetActorProperty(0, APROP_HEALTH) > 1)
+		p_Streak[playernumber()] ++;
+		
     p_SplatCombo[playernumber()] += l_SplatCombo;
 	ACS_NamedExecuteAlways("SFPlus_StreakMilestone", 0);
 
@@ -158,12 +160,12 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 script "SFPlus_StreakMilestone" (void) {
 	int play = playernumber();
 	int streakMilestone = getNextStreakMilestone();
-	if(p_Streak[play] >= streakMilestone){
+	if(GetActorProperty(0, APROP_HEALTH) > 1 && p_Streak[play] >= streakMilestone){
 		p_StreakLevel[play]++;
 		sf_AddUpPoints(1 + p_StreakLevel[play]/2, play);
 		f_BigCenterTip ("You broke a streak milestone!", CR_CYAN);
 		LocalAmbientSound("ksmilestone",127);
-	}else {log(s:"Streak: ", d:p_Streak[play], s:" / ", d:streakMilestone);}
+	}
 }
  
 
