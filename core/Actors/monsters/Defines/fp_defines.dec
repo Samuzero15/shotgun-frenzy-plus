@@ -46,5 +46,6 @@
 #include "Actors/monsters/Defines/frenzy_extra.txt"
 #include "Actors/monsters/Defines/frenzyup_misc.txt"
 
+#include "Actors/monsters/Defines/fp_zscientist.dec"
 #include "Actors/monsters/Defines/fp_aracnorb.dec"
 #include "Actors/monsters/Defines/fp_zfodder.dec"

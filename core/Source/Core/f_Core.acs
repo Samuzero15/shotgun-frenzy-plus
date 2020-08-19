@@ -7,10 +7,16 @@
 
 #import "f_Tip.acs"
 #include "zcommon.acs"
+#include "acsutils.ach"
 
 script 122 (void)
 {
-    f_CenterTipBold("BATTERY UNDER ATTACK!");
-    ambientsound("g/alarm", 64);
-    delay(35 * 5);
+	int countMe = 0;
+	ambientsound("g/alarm", 64);
+	while(countMe < 35){
+		
+		f_QuickBigCenterTipBold("BATTERY UNDER ATTACK!", cond(countMe % 2 == 0, CR_RED, CR_YELLOW));
+		delay(5);
+		countMe++;
+	}
 }

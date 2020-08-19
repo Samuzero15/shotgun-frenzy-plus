@@ -1,12 +1,10 @@
 
-// Default spawn list (for all other maps except survival defender)
+// Default spawn list 
 #include "Actors/monsters/Spawners/fp_aidspawn_spot.dec"
+#include "Actors/monsters/Spawners/fp_aidspawn_rand.dec"
 
-#include "Actors/monsters/Spawners/fp_aidspawn_d_easy.dec"
-#include "Actors/monsters/Spawners/fp_aidspawn_d_med.dec"
-#include "Actors/monsters/Spawners/fp_aidspawn_d_hard.dec"
+// Default set.
+#include "Actors/monsters/Spawners/fp_aidspawn_default.dec"
 
-// (for Survival Defender)
-#include "Actors/monsters/Spawners/fp_aidspawn_s_easy.dec"
-#include "Actors/monsters/Spawners/fp_aidspawn_s_med.dec"
-#include "Actors/monsters/Spawners/fp_aidspawn_s_hard.dec"
+// Survival defender set
+#include "Actors/monsters/Spawners/fp_aidspawn_survival.dec"

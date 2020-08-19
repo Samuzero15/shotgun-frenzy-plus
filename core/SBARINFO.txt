@@ -261,23 +261,19 @@ statusbar normal// Standard Doom Status bar
 	drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
 	
 	//[Samu] Health depending on the upgrades.
-	inInventory Hud_MaxHP, 6{ // BodyEnhancement + H.E Phase 2
-	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 201;
-	}else{
-	inInventory Hud_MaxHP, 5{ // BodyEnhancement + H.E Phase 1
-	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 181;
-	}else{
-	inInventory Hud_MaxHP, 4{ // BodyEnhancement
-	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 161;
-	}else{
-	inInventory Hud_MaxHP, 3{ // H.E Phase 2
-	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 141;
-	}else{
-	inInventory Hud_MaxHP, 2{ // H.E Phase 1
-	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 121;
-	}else{ // Default
-	drawnumber 3, StatBigsNums, GREEN, health, alignment(center), fillzeros, 55, 520, 0, RED, 25, CYAN, 101;
-	}}}}}
+	
+	inInventory HUD_DangerHealth, 1
+	{
+		drawnumber 3, StatBigsNums, RED, health, alignment(center), 55, 520;
+	}else{ inInventory HUD_CriticHealth, 1 {  // Over health
+		drawnumber 3, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
+	}else{ inInventory HUD_LowHealth, 1 {  // Low health
+		drawnumber 3, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
+	}else{ inInventory HUD_OverHealth, 1 {  // Critic health
+		drawnumber 3, StatBigsNums, CYAN, health, alignment(center), 55, 520;
+	}else{ // Normal health
+		drawnumber 3, StatBigsNums, GREEN, health, alignment(center), 55, 520;
+	}}}}
 	
 	inInventory BasicArmor, 1{
 		alpha 0.5{DrawImage armoricon, 150, 520;}

@@ -38,7 +38,7 @@ OptionMenu "SFPlusOptions"{
 	StaticText "Game Options", 1
 	StaticText "All options that you need for your server.", 1
 	StaticText ""
-	Slider "Game Length (Mins)", "sf_gamelength", 5, 30, 10, 0
+	Slider "Game Length (Mins) *", "sf_gamelength", 5, 30, 10, 0
 	Slider "Starting Player Cash *", "sf_startcash", 1000, 20000, 500, 0
 	Slider "Starting Team Cash *", "sf_teamcash", 500, 20000, 500, 0
 	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"
@@ -74,6 +74,7 @@ OptionMenu "SFPlusOptions"{
 	NumberField "Megasphere Low HP %", "sfp_megasphere_t" , 5, 75, 5, "sfp_Autouse"
 	Option "Hear Hitmark sound?", "sfp_hitmarksnd", "Boolean"
 	Option "Display earnings?", "sfp_earningdisp", "EarningDispOptions"
+	Option "Enable kill-streak hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 	StaticText ""
@@ -93,10 +94,19 @@ OptionMenu "SFPlusUserOptionHelp"{
 	StaticText "Earnings", 1
 	StaticText "The number that you see after killing a demon. Or buying"
 	StaticText "your weapons, recycles, upgrades..."
+	StaticText ""
+	StaticText "Kill streak hud", 1
+	StaticText "This will change the visibility of the kill streak"
+	StaticText "notifications. Just in case you want to hide it for whatever"
+	StaticText "reason you have."
 }
 
 OptionMenu "SFPlusGameOptionHelp"{
 	Title "About the Game Options"
+	StaticText ""
+	StaticText "Game Length", 1
+	StaticText "This sets the duration of the game. This does'nt take account"
+	StaticText "with the 2 extra minutes for the guardian wave."
 	StaticText ""
 	StaticText "Player Cash", 1
 	StaticText "The amount of credits you get before starting the map."
@@ -134,12 +144,19 @@ OptionValue "Boolean"
 	1, "Yes"
 }
 
+OptionValue "KillStreakHudpOptions"
+{
+	2, "Yes, milestones and hi-score"
+	1, "Yes, but only milestones"
+	0, "No"
+}
+
 OptionValue "EarningDispOptions"
 {
-	3, "Yes, all earnings."
-	2, "Just the most importants."
-	1, "Just my earnings."
-	0, "No, im okay."
+	3, "Yes, all earnings"
+	2, "Just the most importants"
+	1, "Just my earnings"
+	0, "No, im okay"
 }
 
 OptionValue "CacoBoolean"

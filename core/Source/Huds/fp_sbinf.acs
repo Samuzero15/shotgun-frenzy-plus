@@ -1,0 +1,84 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_sbinf.acs
+// SBARINFO syncing scripts.
+
+// This will be useful for syncing the sbarinfo.
+#library "FP_SBINF"
+
+#include "zcommon.acs"
+#include "acsutils.ach"
+
+#import "f_intdb.acs"
+
+Script "SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
+	int play = 0;
+	while(play < 32)
+	{
+		SetActivatorToPlayer(play);
+		//This will sync the spectator inventory for the sbar info.
+		SetInventory("HUD_Spectating", PlayerIsSpectator(play) == 1);
+		if(PlayerIsSpectator(play) == 1){
+		
+			SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
+			SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
+			SetInventory("HUD_Sector", g_Status);
+			if(g_Status == 5)
+				SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
+			else
+				SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
+			if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
+			if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
+		}
+		
+		SetActivator(0,AAPTR_NULL);
+		
+		delay(1);
+		play++;
+	}
+	restart;
+}
+
+script "SyncWithSBARINFO" (int kills) {
+
+	SetInventory("HUD_Sector", g_Status);
+	if(g_Status == 5)
+	SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
+	else
+	SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
+	SetInventory("HUD_Credits", p_Credits[PlayerNumber()]);
+	if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
+	if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
+	SetInventory("HUD_Ups", p_Exp_Points[PlayerNumber()]);
+	SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
+	SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
+	SetInventory("HUD_ExpLeft", kills);
+	SetInventory("HUD_Rank", p_Rank[playernumber()] + 1);
+	SetInventory("HUD_Exp", p_Exp[playernumber()]);
+	SetAmmoCapacity("HUD_Exp", p_RankExp[p_Rank[playernumber()] + 1]);
+}
+
+script "SFPlus_Sbarinfo_Enter" ENTER{
+	ACS_NamedExecuteAlways("SFPlus_Sbarinfo_HealthStatus", 0);
+}
+
+script "SFPlus_Sbarinfo_Respawn" RESPAWN{
+	ACS_NamedExecuteAlways("SFPlus_Sbarinfo_HealthStatus", 0);
+}
+
+script "SFPlus_Sbarinfo_HealthStatus" (void) {
+	int hp = GetActorProperty(0, APROP_HEALTH);
+	int maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
+	while(hp > 0){
+		SetInventory("HUD_Dangerhealth", hp <= ((maxhp * 0.10) >> 16));
+		SetInventory("HUD_Critichealth", hp <= ((maxhp * 0.25) >> 16));
+		SetInventory("HUD_Lowhealth", hp <= ((maxhp * 0.5) >> 16));
+		SetInventory("HUD_Overhealth", hp > maxhp && !(maxHP == 0));
+		hp = GetActorProperty(0, APROP_HEALTH);
+		maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
+		delay(1);
+	}
+	SetInventory("HUD_Dangerhealth", 1);
+}

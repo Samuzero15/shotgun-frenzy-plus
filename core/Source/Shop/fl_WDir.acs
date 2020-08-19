@@ -29,6 +29,7 @@ int fp_WpUps[FP_WEAPONS][FP_WEPUPS][10];
 // Weapon pack tracker. For difficulty increasing.
 int fp_WpTrack[FP_WEP_PACKS];
 int fp_UpTrack;
+
 int fp_WeaponPackStack = 0;
 int fp_WeaponStack = 0;
 

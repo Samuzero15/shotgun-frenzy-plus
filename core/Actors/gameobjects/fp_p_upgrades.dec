@@ -18,6 +18,15 @@ actor PlayUp_HealCoins			: Integer {}
 actor PlayUp_Prometeo			: Integer {}
 actor PlayUp_RuneSync 			: Integer {}
 
+Actor SpecialTeleportFog : TeleportFog replaces TeleportFog {
+	States{
+		Spawn:
+		TFOG A 6 NoDelay ACS_NamedExecuteAlways("Teleport_Effects", 0)
+		TFOG BABCDEFGHIJ 6 Bright
+		Stop
+	}
+}
+
 Actor PlayUp_SpawnShield_Activate : PowerupGiver {
   +INVENTORY.AUTOACTIVATE
   +INVENTORY.ALWAYSPICKUP

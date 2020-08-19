@@ -101,6 +101,22 @@ function void f_BigCenterTip (str l_Tip, int color)
     hudmessage(s:l_Tip; 1, 78, color, 400.0, 400.1, 2.0);
 }
 
+function void f_BigCenterTipBold (str l_Tip, int color)
+{
+    // setup appearence
+    setfont("STATBIGS");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    hudmessagebold(s:l_Tip; 1, 78, color, 400.0, 350.1, 2.0);
+}
+
+function void f_QuickBigCenterTipBold (str l_Tip, int color)
+{
+    // setup appearence
+    setfont("STATBIGS");
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+    hudmessagebold(s:l_Tip; 1, 667, color, 400.0, 380.1, 0.2, 0.5);
+}
+
 function void f_CenterTipQuick (str l_Tip)
 {
     // setup appearence

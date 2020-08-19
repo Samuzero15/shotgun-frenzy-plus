@@ -1,9 +1,19 @@
 
-Actor FPMToken_NoCount : Boolean {} // This enemy is too easy to be paid (grant experienec only.)
+Actor FPMToken_NoCount : Boolean {} // This enemy is too easy to be paid (grant experience only.)
 Actor FPMToken_Gibbed : Boolean {} // The enemy became bits.
 Actor FPMToken_Frozen : Boolean {} // The enemy got frozen. (Same as gibbed)ç
 Actor FPMToken_Hard : Boolean {} // This enemy is hard to kill.
 Actor FPMToken_Boss : Boolean {} // This enemy is a boss (granting a lot of experience and credits.)
+
+/*
+	Quick Monster Addition guide:
+	1) Replace Death, xdeath and Raise states to monDeath, monXDeath, and MonRaise.
+	2) In the last frame from the Death and XDeath States, do NOT use the -1 tic, change it to 1 tic if you do. 
+	   That will keep the monster forever, and it won't be auto-removed.
+	3) Instead of stop, after the last state from death and xdeath states, replace it with:
+		"goto FadeOut" if this monster contains a rise state.
+		"goto FadeOut.NoRaise" if this monster does not need a rise.
+*/
 
 Actor FPlus_Monster {
 	health 10
@@ -13,23 +23,6 @@ Actor FPlus_Monster {
 	+MTHRUSPECIES
 	
 	states{
-		/*
-		XDeath:
-		TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",true) // Flag Token.
-		goto MonXDeath
-		
-		Raise:
-			TNT1 A 0 A_ChangeFlag("EXTREMEDEATH",false)
-			TNT1 A 0 A_ChangeFlag("SKYEXPLODE",false)
-		goto MonRaise
-		
-		Death.Ice:
-			goto Super::Death.Ice
-			
-			
-			// "ExtremeDeath" flag will trigger only for the xdeaths
-			// "SkyExplode" flag will trigger on freezing deaths.
-		*/
 		
 		Spawn:
 			TNT1 a 1 A_Log("Something is wrong on Spawn...")
@@ -76,6 +69,7 @@ Actor FPlus_Monster {
 		stop
 		
 		XDeath:
+			"####" "#" 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			"####" "#" 0 A_SpawnItemEx("ClassicCreditBoom", 0, 0, 0, 0, 0, 0, 0, 0, 235)
 			"####" "#" 0 A_SpawnItem ("splatEmitter_Lite" , 0, 0, 0, 0)
 			"####" "#" 0 A_GiveInventory("FPMToken_Gibbed",1) 

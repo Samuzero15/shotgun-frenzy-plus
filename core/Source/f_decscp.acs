@@ -172,4 +172,14 @@ log(s:GetActorClass(debug),
  s: " TRA:", s:GetActorClass(GetActorProperty(debug, APROP_TracerTID)) );
 }
 
+script "Teleport_Effects" (void) {
+	// What happens to the teleported things?
+	SetActivatorToTarget(0);
+	if(CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
+		// If a player was teleported, check if he got the spawn protection upgrade.
+		if(CheckActorInventory(ActivatorTID(), "PlayUp_SpawnShield")) 
+				giveActorinventory(ActivatorTID(),"PlayUp_SpawnShield_Activate", 1);
+	}
+	
+}
  

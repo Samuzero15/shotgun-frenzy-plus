@@ -2,6 +2,26 @@
 
 ## v0 - Before the beginning...
 
+#### -) (19 / 08 / 2020) [Dmg. Hud, Status bar tweaks and fixes]
+	+) Here it is an experimental Damage hud. Resided on fp_dmhud.acs
+	*) Moved the sbarinfo only scripts to a new file fp_sbinf.acs
+	*) Simplified the health code on the SBarinfo, let that decision-taking to ACS.
+	*) Now the health numbers on the normal Staus Bar will light itself depending on the health state.
+	+) Small reminder added on the fp_monster.dec just in case I forgot how to add another monster.
+
+#### -) (15 / 08 / 2020)
+	+) The zombie scientists joins to the bestiary!
+	*) Simplified the decorate code for the demon wave sets. made the fp_aidspawn_default.dec and fp_aidspawn_survival.dec
+
+#### -) (14 / 08 / 2020)
+	*) Now Player Upgrades will crank up the difficulty.
+	+) New CVAR added, sfp_killstreakhud, this will help you to show and hide this hud.
+	*) Now defending the batteries can grant you Credits and U.Ps
+	*) Edited slightly the battery or core attack warning.
+	-) Deleting some of the old code from the pmen.acs, we're not needing that anymore at all.
+	*) Made a teleportfog replacement to apply the spawn shield effect globally.
+	*) Some more fixes...
+
 #### -) (13 / 08 / 2020) [Kill-Streak system implemented]
 	+) New file fp_kshud.acs for the Kill Streak HUD.
 	+) Now the Kill-Streaks will be displayed each time you... kill.

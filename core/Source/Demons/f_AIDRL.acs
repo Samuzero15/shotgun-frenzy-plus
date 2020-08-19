@@ -343,7 +343,7 @@ script 120 OPEN
 				if (g_BossLevel < l_Level && l_BossCond)
 				{
 					SpawnSpot(boss_levels[l_Level], 199, 4110);
-					GiveActorInventory(4110, "FPMToken_Hard", 1); 
+					//GiveActorInventory(4110, "FPMToken_Hard", 1); 
 					Thing_ChangeTID(4110, 110);
 					g_BossLevel ++;
 				}

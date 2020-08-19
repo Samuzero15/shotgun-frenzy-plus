@@ -102,6 +102,21 @@ ksmilestone mbreak
 
 usefail PISDFIRE
 
+// Zombie Scientists sndinfo
+fem/sight1 FEMZSIT
+fem/sight2 FEMZSI2
+ZombieScientist/F/pain FEMZPAIN
+fem/death1 FEMZDHT
+fem/death2 FEMZDT2
+ZombieScientist/F/active FEMZACT
+ZombieScientist/KnifeHit DSKNIFE
+ZombieScientist/CrowbarHit DSCBAR
+ZombieScientist/Steam/Loop	STEMLOOP
+ZombieScientist/Steam/Fire	STEMFIRE
+$random	ZombieScientist/F/death { fem/death1 fem/death2 }
+$random	ZombieScientist/F/sight { fem/sight1 fem/sight2 }
+
+// Zombie fodder sndinfo
 $random ZombieFodder/Sight { FODDERSEE1 FODDERSEE2 }
 FODDERSEE1	FODDSEE1
 FODDERSEE2	FODDSEE2

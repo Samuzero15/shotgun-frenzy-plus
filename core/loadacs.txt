@@ -2,3 +2,5 @@ samuterm
 f_decscp
 fp_mkill
 fp_hello
+fp_dmhud
+FP_SBINF

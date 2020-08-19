@@ -24,3 +24,4 @@ user int sfp_megasphere_t = 15;
 
 user bool sfp_hitmarksnd = true;
 user int sfp_earningdisp = 3;
+user int sfp_killstreakhud = 1;

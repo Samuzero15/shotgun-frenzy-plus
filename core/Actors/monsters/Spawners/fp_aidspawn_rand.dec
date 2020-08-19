@@ -1,0 +1,12 @@
+
+Actor FPSRSpot_ZombieScientist : RandomSpawner
+{
+	dropitem "FPSSpot_ZombieScientist"
+	dropitem "FPSSpot_ZombieScientist2"
+	dropitem "FPSSpot_ZombieScientist3"
+	dropitem "FPSSpot_ZombieScientist4"
+	dropitem "FPSSpot_FemaleZScientist"
+	dropitem "FPSSpot_FemaleZScientist2"
+	dropitem "FPSSpot_FemaleZScientist3"
+	dropitem "FPSSpot_FemaleZScientist4"
+}

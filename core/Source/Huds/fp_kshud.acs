@@ -5,10 +5,9 @@
 // fp_kshud.acs
 // Kill streak HUD scripts.
 
-// A little nice hud for the streak count in game.
+// A little nice hud for the kill-streak count in game.
 
 #library "FP_KSHUD"
-
 
 #include "zcommon.acs"
 #include "acsutils.ach"
@@ -47,13 +46,30 @@ script "SFPlus_KillStreakHud" ENTER {
 		}
 		
 		if(numscale && tics < scaleTics){
-			if(KSNow < KSHiScore)
-				ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Hiscore", 0, (scaleTics+1-tics), KSNow);
-			else if(KSNow < GetNextStreakMilestone())
-				ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Milestone", 0, (scaleTics+1-tics), KSNow);
-			else 
-				ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Overflow", 0, (scaleTics+1-tics), KSNow);
-			log(d:(scaleTics+1-tics));
+			int scale = 2*(scaleTics-tics);
+			
+			switch(getCvar("sfp_killstreakhud"))
+			{
+				case 2: 
+					if(KSNow < KSHiScore)
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Hiscore", 0, scale, KSNow);
+					else if(KSNow < GetNextStreakMilestone())
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Milestone", 0, scale, KSNow);
+					else
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Overflow", 0, scale, KSNow);
+				break;
+				case 1:
+					if(KSNow >= KSHiScore){
+						if(KSNow < GetNextStreakMilestone())
+							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Milestone", 0, scale, KSNow);
+						else
+							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Overflow", 0, scale, KSNow);
+					}
+				break;
+			}
+			
+			
+			//log(d:scale);
 			tics++;
 		}else{ tics = 0; numscale = 0;}
 		
@@ -109,32 +125,55 @@ Script "SFPlus_KSHud_Number_End" (int scale, int value) CLIENTSIDE
 Script "SFPlus_KSHud_Killstreak" (int ks, int hiscore, int milestone) CLIENTSIDE 
 {
 	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
-		if(ks < hiscore){
-			KSHud_ShowText1("Kill-Streak!", CR_WHITE);
-			KSHud_ShowText2(strparam(d:hiscore - ks, s:" kills left for the ", d:hiscore ,s:" kill highscore."),
-			CR_WHITE);
-		}else if(ks < milestone){
-			KSHud_ShowText1("Kill-Streak!", CR_CYAN);
-			KSHud_ShowText2(strparam(d:milestone - ks, s:" kills left for the ", d:milestone ,s:" kill milestone."),
-			CR_CYAN);
-		} else{
-			ClearHudMessage(FP_KSHUD_ID3);
+		
+		switch(getCvar("sfp_killstreakhud")){
+			case 2: 
+				if(ks < hiscore){
+					KSHud_ShowText1("Kills in a row", CR_WHITE);
+					KSHud_ShowText2(strparam(d:hiscore - ks, s:" kills left for the ", d:hiscore ,s:" kill highscore."),
+					CR_WHITE);
+				}else if(ks < milestone){
+					KSHud_ShowText1("Kill-Streak!", CR_CYAN);
+					KSHud_ShowText2(strparam(d:milestone - ks, s:" kills left for the ", d:milestone ,s:" kill milestone."),
+					CR_CYAN);
+				} else{
+					KSHud_ShowText1("OverKill-Streak!", CR_GOLD);
+					ClearHudMessage(FP_KSHUD_ID3);
+				}
+			break;
+			case 1:
+				if(ks >= hiscore){
+					if(ks < milestone){
+						KSHud_ShowText1("Kill-Streak!", CR_CYAN);
+						KSHud_ShowText2(strparam(d:milestone - ks, s:" kills left for the ", d:milestone ,s:" kill milestone."),
+						CR_CYAN);
+					}else{
+						KSHud_ShowText1("OverKill-Streak!", CR_GOLD);
+						ClearHudMessage(FP_KSHUD_ID3);
+					}
+				}
+			break;
 		}
+		
+		
 	}
 }
 
 Script "SFPlus_KSHud_Shutdown" (int value, int hiscore) CLIENTSIDE 
 {
 	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
-		
+		if(getCvar("sfp_killstreakhud") >= 1){
 		ACS_NamedExecute("SFPlus_KSHud_Number_End", 0, 2, value);
 		KSHud_ShowText1("Shutdown!", CR_BRICK);
 		if(value > hiscore){
 			KSHud_ShowText2(strparam(s:"New Kill-Streak Hi-score: ", d:value, s:" kills!"),
 			CR_WHITE);
 		}else
+		  if(getCvar("sfp_killstreakhud") == 2){
 			KSHud_ShowText2(strparam(s:"You did a ", d:value, s:" kill streak in this run."),
 			CR_BRICK);
+		  }
+		}
 	}
 }
 

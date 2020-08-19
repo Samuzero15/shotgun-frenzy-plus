@@ -6,24 +6,28 @@ Actor HudBar : Ammo {
 	//Ammo.BackpackAmount 0
 }
 
-Actor HUD_MaxHp : Integer {}
+Actor HUD_MaxHp 			: Integer {}
 
-Actor HUD_Exp : Ammo {}
-Actor HUD_ExpLeft : Integer {}
+Actor HUD_Exp 				: Ammo {}
+Actor HUD_ExpLeft 			: Integer {}
 
-Actor HUD_Credits : Integer {}
-Actor HUD_Ups : Integer {}
-Actor HUD_Kills : Integer {}
-Actor Hud_Deaths : Integer {}
-Actor HUD_TeamCredits : Integer {}
+Actor HUD_Credits 			: Integer {}
+Actor HUD_Ups 				: Integer {}
+Actor HUD_Kills 			: Integer {}
+Actor Hud_Deaths 			: Integer {}
+Actor HUD_TeamCredits 		: Integer {}
 
-Actor HUD_Sector : Integer {}
-Actor HUD_CoreHP : Integer {}
+Actor HUD_Sector 			: Integer {}
+Actor HUD_CoreHP 			: Integer {}
 
-Actor HUD_Gamemode : Integer {}
-Actor HUD_Spectating : Integer {}
-Actor HUD_Rank : Integer {}
-Actor HUD_Wave : Integer {}
+Actor HUD_Gamemode 			: Integer {}
+Actor HUD_Spectating 		: Integer {}
+Actor HUD_Rank 				: Integer {}
+Actor HUD_Wave 				: Integer {}
+Actor HUD_LowHealth 		: Integer {}
+Actor HUD_CriticHealth 		: Integer {}
+Actor HUD_OverHealth 		: Integer {}
+Actor HUD_DangerHealth 		: Integer {}
 
 Actor HUD_T_ARMS1 : Inventory {Inventory.Maxamount 1}
 Actor HUD_T_ARMS2 : Inventory {Inventory.Maxamount 1}

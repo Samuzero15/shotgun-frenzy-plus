@@ -32,7 +32,7 @@
 #import "fl_techs.acs"
 
 // load demon wave set, for custom sets look in the ACS directory for any fa files
-#import "fa_SSD01.acs"
+//#import "fa_SSD01.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.ach"

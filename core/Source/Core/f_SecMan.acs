@@ -385,8 +385,6 @@ script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
 			if(PlayerCount() < 3){
 				f_TipShow("PLAYER", "", "Has entered the sector...", 10);
 			}
-			if(CheckInventory("PlayUp_SpawnShield")) 
-				giveinventory("PlayUp_SpawnShield_Activate", 1);
 			delay(secdelay);
 			secdelay = 0;
 		}

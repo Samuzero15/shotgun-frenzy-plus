@@ -1,0 +1,497 @@
+ACTOR ZombieScientist : FPlus_Monster
+{
+  Game Doom
+  obituary "%o was axe-murdered by a zombie scientist."
+  health 15
+  mass 90
+  speed 12
+  Radius 20
+  Height 52
+  painchance 200
+  seesound "grunt/sight"
+  painsound "grunt/pain"
+  deathsound "grunt/death"
+  activesound "grunt/active"
+  MONSTER
+  +FLOORCLIP +FASTMELEE +FASTER
+  States
+  {
+   Spawn:
+    SCZA AB 10 A_Look
+    loop
+  See:
+    SCZA AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    SCZA E 8 A_FaceTarget
+    SCZA F 16 A_CustomMeleeAttack (random (2, 6) *5, "ZombieScientist/KnifeHit", "skeleton/swing")
+    SCZA E 4
+    goto See
+  Pain:
+    SCZA G 3
+    SCZA G 3 A_Pain
+    goto See
+  MonDeath:
+    SCZA H 5
+    SCZA I 5 A_Scream
+    SCZA J 5 A_NoBlocking
+    SCZA K 5
+    SCZA L 5
+    SCZA M 5
+    SCZA N 1
+    goto Super::FadeOut
+  MonXDeath:
+    SCZA O 5
+    SCZA P 5 A_XScream
+    SCZA Q 5 A_NoBlocking
+    SCZA RSTUV 5
+    SCZA W 1
+    goto Super::FadeOut
+  MonRaise:
+    SCZA MLKJIH 5
+    goto See
+  }
+}
+
+Actor ZombieScientist2 : ZombieScientist
+{
+	obituary "%o was prised open by a zombie scientist."
+  States
+  {
+   Spawn:
+    SCZC AB 10 A_Look
+    loop
+  See:
+    SCZC AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    SCZC E 8 A_FaceTarget
+    SCZC F 16 A_CustomMeleeAttack (random (2, 6) *5, "ZombieScientist/CrowbarHit", "skeleton/swing")
+    SCZC E 4
+    goto See
+  Pain:
+    SCZC G 3
+    SCZC G 3 A_Pain
+    goto See
+  MonDeath:
+    SCZC H 5
+    SCZC I 5 A_Scream
+    SCZC J 5 A_NoBlocking
+    SCZC K 5
+    SCZC L 5
+    SCZC M 5
+    SCZC N 1
+    goto Super::FadeOut
+  MonXDeath:
+    SCZC O 5
+    SCZC P 5 A_XScream
+    SCZC Q 5 A_NoBlocking
+    SCZC RSTUV 5
+    SCZC W 1
+    goto Super::FadeOut
+  MonRaise:
+    SCZC MLKJIH 5
+    goto See
+  }
+}
+
+Actor ZombieScientist3 : ZombieScientist
+{
+	obituary "%o got smashed in the head by a zombie scientist."
+  States
+  {
+   Spawn:
+    SCZH AB 10 A_Look
+    loop
+  See:
+    SCZH AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    SCZH E 8 A_FaceTarget
+    SCZH F 16 A_CustomMeleeAttack (random (2, 6) *5, "skeleton/melee", "skeleton/swing")
+    SCZH E 4
+    goto See
+  Pain:
+    SCZH G 3
+    SCZH G 3 A_Pain
+    goto See
+  MonDeath:
+    SCZH H 5
+    SCZH I 5 A_Scream
+    SCZH J 5 A_NoBlocking
+    SCZH K 5
+    SCZH L 5
+    SCZH M 5
+    SCZH N 1
+    goto Super::FadeOut
+  MonXDeath:
+    SCZH O 5
+    SCZH P 5 A_XScream
+    SCZH Q 5 A_NoBlocking
+    SCZH RSTUV 5
+    SCZH W 1
+    goto Super::FadeOut
+  MonRaise:
+    SCZH MLKJIH 5
+    goto See
+  }
+}
+
+Actor ZombieScientist4 : ZombieScientist
+{
+ obituary "%o was put out by a zombie scientist."
+ States
+  {
+   Spawn:
+    SCFE AB 10 A_Look
+    loop
+  See:
+    SCFE AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    SCFE E 1 A_FaceTarget
+    SCFE E 1 A_PlaySound ("ZombieScientist/Steam/Fire")
+    SCFE F 1 A_CustomMissile ("HalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("DummyHalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("DummyHalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("DummyHalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("HalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("DummyHalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("DummyHalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    SCFE F 1 A_CustomMissile ("DummyHalonParticle", 32, 8, (0.1)*Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3))
+    goto See
+  Pain:
+    SCFE G 3
+    SCFE G 3 A_Pain
+    goto See
+  MonDeath:
+    SCFE H 5
+    SCFE I 5 A_Scream
+    SCFE J 5 A_NoBlocking
+    SCFE K 5
+    SCFE L 5
+    SCFE M 5
+    SCFE N 1
+    goto Super::FadeOut
+  MonXDeath:
+    SCFE O 5
+    SCFE P 5 A_XScream
+    SCFE Q 5 A_NoBlocking
+    SCFE RSTUV 5
+    SCFE W 1
+    goto Super::FadeOut
+  MonRaise:
+    SCFE MLKJIH 5
+    goto See
+  }
+}
+
+Actor FemaleZScientist : ZombieScientist{
+  obituary "%o was stabbed by a zombie scientist."
+  seesound "ZombieScientist/F/sight"
+  painsound "ZombieScientist/F/pain"
+  deathsound "ZombieScientist/F/death"
+  activesound "ZombieScientist/F/active"
+  States
+  {
+   Spawn:
+    FSZK AB 10 A_Look
+    loop
+  See:
+    FSZK AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    FSZK E 4 A_FaceTarget
+    FSZK F 8 A_CustomMeleeAttack (random (1, 5) *5, "ZombieScientist/KnifeHit", "skeleton/swing")
+    FSZK E 4
+    goto See
+  Pain:
+    FSZK G 3
+    FSZK G 3 A_Pain
+    goto See
+  MonDeath:
+    FSZK H 5
+    FSZK I 5 A_Scream
+    FSZK J 5 A_NoBlocking
+    FSZK K 5
+    FSZK L 5
+    FSZK M 5
+    FSZK N 1
+    goto Super::FadeOut
+  MonXDeath:
+    FSZK O 5
+    FSZK P 5 A_XScream
+    FSZK Q 5 A_NoBlocking
+    FSZK RSTUV 5
+    FSZK W 1
+    goto Super::FadeOut
+  MonRaise:
+    FSZK MLKJIH 5
+    goto See
+  }
+}
+
+Actor FemaleZScientist2 : FemaleZScientist {
+	obituary "%o was bludgeoned to death by a zombie scientist."
+States
+  {
+   Spawn:
+    FSZW AB 10 A_Look
+    loop
+  See:
+    FSZW AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    FSZW E 4 A_FaceTarget
+    FSZW F 8 A_CustomMeleeAttack (random (1, 5) *5, "skeleton/melee", "skeleton/swing")
+    FSZW D 4
+    goto See
+  Pain:
+    FSZW G 3
+    FSZW G 3 A_Pain
+    goto See
+  MonDeath:
+    FSZW H 5
+    FSZW I 5 A_Scream
+    FSZW J 5 A_NoBlocking
+    FSZW K 5
+    FSZW L 5
+    FSZW M 5
+    FSZW N 1
+    goto Super::FadeOut
+  MonXDeath:
+    FSZW O 5
+    FSZW P 5 A_XScream
+    FSZW Q 5 A_NoBlocking
+    FSZW RSTUV 5
+    FSZW W 1
+    goto Super::FadeOut
+  MonRaise:
+    FSZW MLKJIH 5
+    goto See
+  }
+}
+
+Actor FemaleZScientist3 : FemaleZScientist {
+	obituary "%o was bludgeoned to death by a zombie scientist."
+States
+  {
+   Spawn:
+    FSZC AB 10 A_Look
+    loop
+  See:
+    FSZC AABBCCDD 4 A_Chase
+    loop
+  Melee:
+    FSZC E 4 A_FaceTarget
+    FSZC F 8 A_CustomMeleeAttack (random (1, 5) *5, "ZombieScientist/knifehit", "skeleton/swing")
+    FSZC D 4
+    goto See
+  Pain:
+    FSZC G 3
+    FSZC G 3 A_Pain
+    goto See
+  MonDeath:
+    FSZC H 5
+    FSZC I 5 A_Scream
+    FSZC J 5 A_NoBlocking
+    FSZC K 5
+    FSZC L 5
+    FSZC M 5
+    FSZC N 1
+    goto Super::FadeOut
+  MonXDeath:
+    FSZC O 5
+    FSZC P 5 A_XScream
+    FSZC Q 5 A_NoBlocking
+    FSZC RSTUV 5
+    FSZC W 1
+    goto Super::FadeOut
+  MonRaise:
+    FSZC MLKJIH 5
+    goto See
+  }
+}
+
+Actor FemaleZScientist4 : FemaleZScientist
+{
+	obituary "%o was poisoned by a zombie scientist."
+States
+  {
+   Spawn:
+    FSZS AB 10 A_Look
+    loop
+  See:
+    FSZS AABB 4 A_Chase
+    TNT1 A 0 A_JumpIfCloser (128, "Squirt")
+    FSZS CCDD 4 A_Chase
+    TNT1 A 0 A_JumpIfCloser (128, "Squirt")
+    loop
+  Melee:
+    FSZS E 4 A_FaceTarget
+    FSZS E 0 A_SkelWhoosh
+    FSZS F 8 A_CustomMeleeAttack (random (1, 5) *3, "ZombieScientist/knifehit", "skeleton/swing")
+    FSZS F 0 A_CustomMissile ("PoisonDrop", 32, 8, 0, CMF_OFFSETPITCH, 12) 
+	goto See
+  Squirt:
+    FSZS E 4 A_FaceTarget
+    FSZS F 0 A_PlaySound ("skeleton/swing")
+    FSZS F 1 A_CustomMissile ("PoisonDrop", 32, 8, 0, CMF_OFFSETPITCH, 12) 
+    FSZS F 1 A_CustomMissile ("DummyDrop", 32, 8, 0, CMF_OFFSETPITCH, 12)  
+    FSZS F 1 A_CustomMissile ("DummyDrop", 32, 8, 0, CMF_OFFSETPITCH, 12)  
+    FSZS F 1 A_CustomMissile ("DummyDrop", 32, 8, 0, CMF_OFFSETPITCH, 12) 
+    FSZS F 1 A_CustomMissile ("PoisonDrop", 32, 8, 0, CMF_OFFSETPITCH, 12) 
+    FSZS F 1 A_CustomMissile ("DummyDrop", 32, 8, 0, CMF_OFFSETPITCH, 12)  
+    FSZS F 1 A_CustomMissile ("DummyDrop", 32, 8, 0, CMF_OFFSETPITCH, 12)  
+    FSZS F 1 A_CustomMissile ("DummyDrop", 32, 8, 0, CMF_OFFSETPITCH, 12) 
+    FSZS D 4
+    goto See
+  Pain:
+    FSZS G 3
+    FSZS G 3 A_Pain
+    goto See
+  MonDeath:
+    FSZS H 5
+    FSZS I 5 A_Scream
+    FSZS J 5 A_NoBlocking
+    FSZS K 5
+    FSZS L 5
+    FSZS M 5
+    FSZS N 1
+    goto Super::FadeOut
+  MonXDeath:
+    FSZS O 5
+    FSZS P 5 A_XScream
+    FSZS Q 5 A_NoBlocking
+    FSZS RSTUV 5
+    FSZS W -1
+    goto Super::FadeOut
+  MonRaise:
+    FSZS MLKJIH 5
+    goto See
+  }
+}
+
+
+// Other effects for some zscientists.
+Actor HalonParticle
+{
+  Height 1
+  Radius 1
+  Speed 5
+  +Missile
+  +NoGravity
+  +NoBlockMap
+  RenderStyle Add
+  Damage 2
+  DamageType Ice
+  Scale 0.4
+  Alpha 0.65
+  States
+  {
+  Spawn:
+    STEM A 2 A_SetTranslucent(0.6, 1)
+    STEM B 2 A_SetTranslucent(0.55, 1)
+    STEM C 2 A_SetTranslucent(0.5, 1)
+    STEM D 2 A_SetTranslucent(0.45, 1)
+    STEM E 2 A_SetTranslucent(0.4, 1)
+    STEM F 2 A_SetTranslucent(0.35, 1)
+    STEM G 2 A_SetTranslucent(0.3, 1)
+    STEM H 2 A_SetTranslucent(0.25, 1)
+    STEM I 2 A_SetTranslucent(0.2, 1)
+    STEM J 2 A_SetTranslucent(0.15, 1)
+    STEM K 2 A_SetTranslucent(0.1, 1)
+    STEM L 2 A_SetTranslucent(0.05, 1)
+    Stop
+  }
+}
+
+Actor DummyHalonParticle
+{
+  Height 1
+  Radius 1
+  Speed 5
+  +Missile
+  +NoGravity
+  +NoBlockMap
+  RenderStyle Add
+  Scale 0.4
+  Alpha 0.65
+  States
+  {
+  Spawn:
+    STEM A 2 A_SetTranslucent(0.6, 1)
+    STEM B 2 A_SetTranslucent(0.55, 1)
+    STEM C 2 A_SetTranslucent(0.5, 1)
+    STEM D 2 A_SetTranslucent(0.45, 1)
+    STEM E 2 A_SetTranslucent(0.4, 1)
+    STEM F 2 A_SetTranslucent(0.35, 1)
+    STEM G 2 A_SetTranslucent(0.3, 1)
+    STEM H 2 A_SetTranslucent(0.25, 1)
+    STEM I 2 A_SetTranslucent(0.2, 1)
+    STEM J 2 A_SetTranslucent(0.15, 1)
+    STEM K 2 A_SetTranslucent(0.1, 1)
+    STEM L 2 A_SetTranslucent(0.05, 1)
+    Stop
+  }
+}
+
+
+actor PoisonDrop
+{
+  Game Doom
+  Radius 3
+  Height 3
+  Scale 0.5
+  Speed 10
+  FastSpeed 15
+  Damage 1
+  PoisonDamage 5
+  Alpha 1
+  bloodcolor "DarkGreen"
+  Decal "BloodSplat"
+  Projectile
+  -NOGRAVITY
+  +RANDOMIZE
+  states
+  {
+  Spawn:
+    POIS ABCD 4
+    goto Active
+  Active:
+    POIS D 4
+    loop
+  Death:
+    TNT1 A 0
+    stop
+  }
+}
+
+actor DummyDrop
+{
+  Game Doom
+  Radius 3
+  Height 3
+  Scale 0.5
+  Speed 10
+  FastSpeed 15
+  Damage 0
+  Alpha 1
+  bloodcolor "DarkGreen"
+  Decal "BloodSplat"
+  Projectile
+  -NOGRAVITY
+  +RANDOMIZE
+  states
+  {
+  Spawn:
+    POIS ABCD 4
+    goto Active
+  Active:
+    POIS D 4
+    loop
+  Death:
+    TNT1 A 0
+    stop
+  }
+}

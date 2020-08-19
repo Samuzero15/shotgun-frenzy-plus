@@ -9,7 +9,9 @@
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
 #import "f_AIDir.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
+#include "samu_tools.ach"
 
 // define a useful variable (for dev purposes only, use to instantly goto the boss)
 int instant_guardian = 0;
@@ -75,10 +77,26 @@ script 108 (int l_RemainingMonsters)
     // collect AI director information and turn it off
     g_SkillScore = f_AIDir_Check();
 	log(s:"Score catched: ", d:g_SkillScore);
-	
-	if(g_Status == 1){bonusPoints += 30; Print(s:"The battery 1, 2 and 3 are safe!");}
-	if(g_Status == 2){bonusPoints += 20; print(s:"The battery 2 and 3 are safe!");}
-	if(g_Status == 3){bonusPoints += 10; print(s:"The battery 3 is safe!");}
+	// [Samu] Give it some bonus credits and ups.
+	if(g_Status == 1){
+		bonusPoints += 30;
+		f_BigCenterTipBold ("The batteries 1, 2 and 3 are safe!", CR_WHITE);
+		giveCashToPlayers(25000);
+		giveUPToPlayers(4);
+	}
+	if(g_Status == 2){
+		bonusPoints += 20; 
+		f_BigCenterTipBold ("The batteries 2 and 3 are safe!", CR_WHITE);
+		giveCashToPlayers(10000);
+		giveUPToPlayers(2);
+	}
+	if(g_Status == 3){
+		bonusPoints += 10;
+		f_BigCenterTipBold ("The battery 3 is safe!",CR_WHITE);
+		giveCashToPlayers(5000);
+		giveUPToPlayers(1);
+		
+	}
 	
 	g_SkillScore += bonusPoints;
 	

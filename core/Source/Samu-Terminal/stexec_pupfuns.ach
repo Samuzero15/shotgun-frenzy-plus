@@ -21,8 +21,9 @@ function void STExecute_PlayUpGet(int which){
 	sf_RemoveUpPoints(payprice, PlayerNumber());
 	/*
 	//Yes, even when upgrading, will crank up the difficulty too.
-	fp_UpTrack += payprice;
 	*/
+	fp_PlayUpTrack += payprice; 
+	
 	
 	GiveInventory(PlayUp_getActor(which), 1);
 }

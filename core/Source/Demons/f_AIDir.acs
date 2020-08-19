@@ -9,6 +9,7 @@
 #library "f_AIDir"
 #import "f_IntDB.acs"
 #import "fl_WDir.acs"
+#import "fl_PupDir.acs"
 #include "zcommon.acs"
 
 // check function
@@ -55,6 +56,7 @@ function int f_AIDir_Check (void)
 	
 	//[Samu] The more and expensier upgrades, the harder it gets!
 	l_Score += UPTrack_GetScore();
+	l_Score += PUTrack_GetScore();
     
 	l_Score -= aiSubtract;
 	//print(d:aiSubstract);
@@ -83,9 +85,12 @@ script 269 (void)
     while(1)
     {
 		
-		msg = strParam(s:"AI Director status: ", d:f_AIDir_Check(), 
+		msg = strParam(
+		s:"Players in game: ", d:PlayerCount(),
 		s:"\nWDir Packs Score: ", d:WPTrack_GetScore(),
-		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore());
+		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore(),
+		s:"\nPupDir Upgrades Score: ", d:PUTrack_GetScore(),
+		s:"\nAI Director status: ", d:f_AIDir_Check());
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
         delay(1);
 		

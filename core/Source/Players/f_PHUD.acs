@@ -166,61 +166,14 @@ script 999 ENTER
 	{
 		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
 			5, getactorproperty(104,APROP_Health));
-		/*
-	    if(getactorproperty(104,APROP_Health) > 0)
-	    {
-	      hudmessage(s:"\nCore: ",
-              d:getactorproperty(104, APROP_Health); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-       	    }
-	    else
-	    {
-	      hudmessage(s:"\nCore: ",
-              s:"0"; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-	    }
-		*/
 	}
 	else if (c_NukeLaunched == 0 || g_Status < 4)
         {
 		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
 			g_Status, getactorproperty(100 + g_status,APROP_Health));
-		/*
-            if (thingcount(0, 100 + g_Status) > 1)
-              hudmessage(s:"\nSector: ", d:g_Status, 
-                s:"\nBatteries Remaining: ", 
-                d:thingcount(0, 100 + g_Status); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-            else
-              
-	    	if(getactorproperty(100 + g_Status,APROP_Health) > 0)
-	    	{
-			hudmessage(s:"\nSector: ", d:g_Status,s:"\nBattery: ", 
-            		d:getactorproperty(100 + g_Status, APROP_Health); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-	    
-			}
-			else
-			{
-				hudmessage(s:"\nSector: ", d:g_Status,s:"\nBattery: ", 
-					s:"0"; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-			   
-			}
-	    */
-	
         }
         else if(c_NukeLaunched == 1 || g_Status == 4)
         {
-			/*
-            if(getactorproperty(104,APROP_Health) > 0)
-				{
-				
-				
-				hudmessage(s:"\nSector: ", d:g_Status, s:"\nCore: ",
-              d:getactorproperty(104, APROP_Health); 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-				}
-			else
-				{
-				hudmessage(s:"\nSector: ", d:g_Status, s:"\nCore: ",
-				s:"0"; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
-				}
-			*/
 			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0, 4, getactorproperty(104,APROP_Health));
 		}
 	
@@ -245,7 +198,6 @@ script 999 ENTER
 script "Hud_ShowCoreHealth" (int which, int hp) clientside
 {
 	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
-		//print(d: getCvar("screenblocks"));
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		int maxhp, percent, color;
@@ -336,51 +288,4 @@ script "Hud_ShowExperienceBar" (int kills, int rankexp) clientside
 		setfont(expbar);
 		hudmessage(s:"a"; 0, 91, 0, 0.1, 0.1, 1.0);
 	}else ClearHudMessage(91);
-}
-
-Script "SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
-	int play = 0;
-	while(play < 32)
-	{
-		SetActivatorToPlayer(play);
-		//This will sync the spectator inventory for the sbar info.
-		SetInventory("HUD_Spectating", PlayerIsSpectator(play) == 1);
-		if(PlayerIsSpectator(play) == 1){
-		
-			SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
-			SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
-			SetInventory("HUD_Sector", g_Status);
-			if(g_Status == 5)
-				SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
-			else
-				SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
-			if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
-			if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
-		}
-		
-		SetActivator(0,AAPTR_NULL);
-		
-		delay(1);
-		play++;
-	}
-	restart;
-}
-
-script "SyncWithSBARINFO" (int kills) {
-
-	SetInventory("HUD_Sector", g_Status);
-	if(g_Status == 5)
-	SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
-	else
-	SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
-	SetInventory("HUD_Credits", p_Credits[PlayerNumber()]);
-	if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
-	if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
-	SetInventory("HUD_Ups", p_Exp_Points[PlayerNumber()]);
-	SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
-	SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
-	SetInventory("HUD_ExpLeft", kills);
-	SetInventory("HUD_Rank", p_Rank[playernumber()] + 1);
-	SetInventory("HUD_Exp", p_Exp[playernumber()]);
-	SetAmmoCapacity("HUD_Exp", p_RankExp[p_Rank[playernumber()] + 1]);
 }

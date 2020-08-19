@@ -1,234 +1,155 @@
 
+/* // Pattern
+Actor FPSSpot_*{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("*",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+*/
 //This actors are here for just 1 single reason, Space check.
 
-Actor FPSSpot_sfFastZombie{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfFastZombie",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfFastZombie{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfFastZombie",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfZombieman{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfZombieman",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_ZombieScientist{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("ZombieScientist",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfShotgunguy{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfShotgunguy", 0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_ZombieScientist2{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("ZombieScientist2",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfChaingunguy{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfChaingunguy",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_ZombieScientist3{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("ZombieScientist3",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Chaingunguy2{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("Chaingunguy2",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_ZombieScientist4{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("ZombieScientist4",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfDoomimp{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfDoomimp",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_FemaleZScientist{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("FemaleZScientist",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfDemon{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfDemon",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_FemaleZScientist2{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("FemaleZScientist2",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_SSGZombie{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("SSGZombie",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_FemaleZScientist3{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("FemaleZScientist3",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_ChainsawZombie{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("ChainsawZombie",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_FemaleZScientist4{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("FemaleZScientist4",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_NamiDarkImp{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("NamiDarkImp",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfZombieman{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfZombieman",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_VoidDarkImp{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("VoidDarkImp",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfShotgunguy{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfShotgunguy", 0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Nailborg{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("Nailborg",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfChaingunguy{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfChaingunguy",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_NailborgCommando{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("NailborgCommando",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_Chaingunguy2{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("Chaingunguy2",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Hellion{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("Hellion",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfDoomimp{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfDoomimp",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_BloodFiend{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("BloodFiend",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfDemon{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfDemon",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_BloodDemonClone{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("BloodDemonClone",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_SSGZombie{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("SSGZombie",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfRevenant{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfRevenant",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_ChainsawZombie{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("ChainsawZombie",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfHellknight{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfHellknight",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_NamiDarkImp{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("NamiDarkImp",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfBaronOfHell{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfBaronOfHell",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_VoidDarkImp{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("VoidDarkImp",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfFatso{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfFatso",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_Nailborg{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("Nailborg",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Cybruiser{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("Cybruiser",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_NailborgCommando{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("NailborgCommando",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Cyberbaron{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("Cyberbaron",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_Hellion{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("Hellion",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfArachnotron_tw{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfArachnotron_tw",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_BloodFiend{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("BloodFiend",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_SlimeImp{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("SlimeImp",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_BloodDemonClone{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("BloodDemonClone",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfArchvile{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfArchvile",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfRevenant{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfRevenant",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_sfCyberdemon{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("sfCyberdemon",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfHellknight{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfHellknight",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Annihilator{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("Annihilator",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfBaronOfHell{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfBaronOfHell",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_SpiderAnnihilator{
-	states{
-		Spawn: 
-			TNT1 A 0 NoDelay A_SpawnItemEx("SpiderAnnihilator",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+Actor FPSSpot_sfFatso{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfFatso",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
 
-Actor FPSSpot_Demolisher{
-	states{
-		Spawn: 
+Actor FPSSpot_Cybruiser{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("Cybruiser",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_Cyberbaron{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("Cyberbaron",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_sfArachnotron_tw{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfArachnotron_tw",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_SlimeImp{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("SlimeImp",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_sfArchvile{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfArchvile",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_sfCyberdemon{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfCyberdemon",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_Annihilator{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("Annihilator",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_SpiderAnnihilator{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("SpiderAnnihilator",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_Demolisher{states{Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Demolisher",0,0,0,0,0,0,0,0,0,tid)  
-		stop
-	}
-}
+stop}}
