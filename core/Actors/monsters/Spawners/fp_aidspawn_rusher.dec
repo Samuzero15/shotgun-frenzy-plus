@@ -1,0 +1,337 @@
+
+//////////////////////////////////
+// (EASY) Easy levels			//
+//////////////////////////////////
+
+Actor FPSpawn_RE1 : RandomSpawner {
+	dropitem "FPSRSpot_ZombieScientist"
+}
+
+Actor FPSpawn_RE2 : RandomSpawner {
+	dropitem "FPSRSpot_ZombieScientist"
+}
+
+Actor FPSpawn_RE3 : RandomSpawner {
+	dropitem "FPSRSpot_ZombieScientist"
+}
+
+Actor FPSpawn_RE4 : RandomSpawner {
+	dropitem "FPSRSpot_ZombieScientist"
+}
+
+Actor FPSpawn_RE5 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE6 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE7 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE8 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE9 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE10 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE11 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE12 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE13 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE14 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE15 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE16 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE17 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE18 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE19 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RE20 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+//////////////////////////////////
+// (MEDI) Medium levels			//
+//////////////////////////////////
+
+Actor FPSpawn_RM1 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RM2 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RM3 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RM4 : RandomSpawner {
+	dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_RM5 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM6 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM7 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM8 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM9 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM10 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM11 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM12 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM13 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM14 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM15 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM16 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM17 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM18 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM19 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RM20 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+//////////////////////////////////
+// (HARD) Hard levels			//
+//////////////////////////////////
+
+Actor FPSpawn_RH1 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH2 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH3 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH4 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH5 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH6 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH7 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH8 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH9 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH10 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH11 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH12 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH13 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH14 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH15 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH16 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH17 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH18 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH19 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+Actor FPSpawn_RH20 : RandomSpawner {
+	dropitem "FPSSpot_ChainsawZombie"
+}
+
+// These monsters will appear once.
+//////////////////////////////////
+// (BOSS) Boss levels			//
+//////////////////////////////////
+
+Actor FPSpawn_RB1 : RandomSpawner {
+	dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_RB2 : RandomSpawner {
+	dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_RB3 : RandomSpawner {
+	dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_RB4 : RandomSpawner {
+	dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_RB5 : RandomSpawner {
+	dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_RB6 : RandomSpawner {
+	dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_RB7 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_RB8 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_RB9 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_RB10 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_RB11 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_RB12 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_RB13 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_RB14 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_RB15 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_RB16 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_RB17 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_RB18 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_RB19 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_RB20 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}

@@ -10,6 +10,10 @@ Actor FPSSpot_sfFastZombie{states{Spawn:
 	TNT1 A 0 NoDelay A_SpawnItemEx("sfFastZombie",0,0,0,0,0,0,0,0,0,tid)  
 stop}}
 
+Actor FPSSpot_SuicideBomber{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("SuicideBomber",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
 Actor FPSSpot_ZombieScientist{states{Spawn: 
 	TNT1 A 0 NoDelay A_SpawnItemEx("ZombieScientist",0,0,0,0,0,0,0,0,0,tid)  
 stop}}

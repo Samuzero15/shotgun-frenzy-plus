@@ -15,8 +15,8 @@
 #import "f_Cred.acs"
 #import "f_PStat.acs"
 #import "f_StokP.acs"
-//#import "f_TaticalMap.acs"
 #import "fl_techs.acs"
+#import "fp_AISet.acs"
 
 #include "zcommon.acs"
 
@@ -35,6 +35,8 @@ script 100 Open{
 	f_Gametype = 0;
 	setupTerminals();
 	f_Startcash =   2500;  
+	
+	SetCameraToTexture(12, "CAMTEX1", 90);
 	
 	addToSpawner("sfFastZombie");
 	addToSpawner("ChainsawZombie");
@@ -224,17 +226,83 @@ script 13 (int who){
 	Floor_RaiseByValue(600 + who, 64, 32);
 }
 
-script 10 (void){
-	Thing_Activate(2);
+int rand_level = 1;
+str rand_diff = 0;
+int rand_set = 0;
+
+script 10 (int fun, int arg){
+	//Randomizer pannel.
+	//Spawn the randomizer.
+	int next;
+	switch(fun){
+		case 0:
+			Thing_remove(11);
+			Thing_remove(16);
+			str randomizer = AISet_GetSpawnActor(rand_set, rand_diff, rand_level);
+			SpawnSpot(randomizer, 10,11,0);
+			SpawnSpot(randomizer, 15,16,0);
+			print(s:"Spawner: \n\cj", s:randomizer, s:"\c-\n Activated.");
+		break;
+		
+		case 1:
+			next = rand_level + arg;
+			if(next < 1) next = 20;
+			if(next > 20) next = 1;
+			rand_level = next;
+			print(s:"Spawner Level: \cj", d:rand_level);
+		break;
+		
+		case 2:
+			next = rand_diff + arg;
+			if(next < 0) next = 3;
+			if(next > 3) next = 0;
+			rand_diff = next;
+			print(s:"Difficulty Set: \cj", 
+				s:AISet_GetMonsterDiff_Name(rand_diff), s:" (",s:AISet_GetMonsterDiff(rand_diff), s:")");
+		break;
+		
+		case 3:
+			next = rand_set + 1;
+			if(next > 2) next = 0;
+			rand_set = next;
+			print(s:"Monster set: \cj", 
+				s:AISet_GetMonsterSet_Name(rand_set), s:" (",s:AISet_GetMonsterSet(rand_set), s:")");
+		break;
+		
+		case 4:
+			rand_level = random (1, 20);
+			rand_diff = random (0, 3);
+			rand_set = random (0, 2);
+			print(s:"Settings randomized\n\n\nSpawner Level: \cj", d:rand_level,
+			s:"\nDifficulty: \cj", 
+				s:AISet_GetMonsterDiff_Name(rand_diff), s:" (",s:AISet_GetMonsterDiff(rand_diff), s:")",
+			s:"\nMonster set: \cj", 
+				s:AISet_GetMonsterSet_Name(rand_set), s:" (",s:AISet_GetMonsterSet(rand_set), s:")");
+		break;
+		
+		case 6:
+			print(s:"Current Spawner Settings.\n\n",
+			s:"\nActor name: \cj", s:AISet_GetSpawnActor(rand_set, rand_diff, rand_level),
+			s:"\nLevel: \cj", d:rand_level,
+			s:"\nDifficulty: \cj", s:AISet_GetMonsterDiff_Name(rand_diff), s:" (",s:AISet_GetMonsterDiff(rand_diff), s:")",
+			s:"\nMonster Set: \cj", s:AISet_GetMonsterSet_Name(rand_set), s:" (",s:AISet_GetMonsterSet(rand_set), s:")");
+		break;
+		
+		case 5:
+			Thing_Remove(11);
+			Thing_Remove(16);
+			print(s:"Randomized Monsters Cleared.");
+		break;
+		
+		
+		default: log(s:"Randomizer pannel: No function defined with the index of ", d:fun); 
+	}
+	
+	
 }
 
-script 12 (void){
-	Thing_Remove(4);
-	SpawnSpotFacing(spawnerList[spawnSelect], 3, 4);
-	Thing_Hate(4,0,0);
-}
-
-script 11 (int dir){
+script 12 (int dir){
+	//Set changer.
 	spawnselect += dir;
 	if(spawnselect < 0) spawnselect = spawnstack-1;
 	else if(spawnselect >= spawnstack) spawnselect = 0;
@@ -247,7 +315,8 @@ script 11 (int dir){
 script 20 (int placeid){
 	str msg = "";
 	switch(placeid){
-		case 0: msg = "Monster Spawner";
+		case 0: msg = "Monster Spawner"; break;
+		case 1: msg = "Monster Randomizer"; break;
 	}
 	SetFont("STATBIGS");
 	HudMessage(s:msg; HUDMSG_FADEOUT, 1,  CR_WHITE, 0.5,0.8, 2.0, 0.5);

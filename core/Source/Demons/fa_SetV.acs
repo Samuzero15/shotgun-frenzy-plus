@@ -33,7 +33,7 @@ Script "SFPlus_LoadDefaultEnemySet" Open
 	
 	for(int i = 0; i < 3; i++){
 		for(int j = 1; j <=20; j++){
-			string = strparam(s:"D");
+			string = strparam(s:"R");
 			if		(i == 0) string = strparam(s:string,s:"E");
 			else if	(i == 1) string = strparam(s:string,s:"M");
 			else if	(i == 2) string = strparam(s:string,s:"H");

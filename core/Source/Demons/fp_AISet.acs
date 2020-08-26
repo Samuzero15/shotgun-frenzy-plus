@@ -1,0 +1,97 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_AISet.acs
+// Ai call set.
+
+#library "fp_AISet"
+#import "f_AIDRL.acs"
+#import "fa_SetList.acs"
+#include "zcommon.acs"
+
+// boss characters that appear per round
+int boss_levels[20];
+int boss_starting_level;
+
+// for survival mode only, the amount of spawns per round
+int demon_spawncount[20] = { 60, 60, 60, 80, 80, 80, 90, 90, 90, 100, 100, 100, 130, 130, 130, 160, 160, 180, 220, 500 };
+
+int enemy_levels[3][20];
+str enemy_sets[3] = {"D", "R", "S"};
+
+Script "SFPlus_LoadDefaultEnemySet" Open
+{
+	AISet_SetMonsterSet(1);
+}
+
+function void AISet_SetMonsterSet(int i){
+	int boss_levels_on;
+	switch (i){
+		case 0: boss_levels_on = 6; break;
+		case 1: boss_levels_on = 3; break;
+		case 2: boss_levels_on = 1; break;
+		default: i = 0; boss_levels_on = 6;
+	}
+	AISet_SetSpawnList(enemy_sets[i]);
+	boss_starting_level = boss_levels_on;
+}
+
+function void AISet_SetSpawnList(str initial){
+		
+	str string;
+	
+	for(int i = 0; i < 4; i++){
+		for(int j = 1; j <=20; j++){
+			string = strparam(s:initial, s:AISet_GetMonsterDiff(i));
+			string = strparam(s:"FPSpawn_", s:string, d:j);
+			//log(s:string);
+			if(i == 3) 	MList_SetBoss	(j,  string);
+			else 		MList_SetSpawner (i, j, string);
+		}
+	}
+}
+
+function str AISet_GetMonsterSet(int index){
+	if(index < 0 || index >= 3){
+		log(s:"AISET: Index error. Default Set Selected.");
+		return enemy_sets[0];
+	} 
+	return enemy_sets[index];
+}
+
+
+function str AISet_GetMonsterSet_Name(int i){
+	switch(i){
+		case 0: return "Default"; break;
+		case 1: return "Rusher"; break;
+		case 2: return "Survival"; break;
+	}
+	return "Not defined";
+}
+
+function str AISet_GetSpawnActor(int set, int diff, int lvl){
+	return strparam(s:"FPSpawn_", s:AISet_GetMonsterSet(set), s:AISet_GetMonsterDiff(set), d:lvl);
+}
+
+function str AISet_GetMonsterDiff(int i){
+	switch(i){
+		case 0: return "E"; break;
+		case 1: return "M"; break;
+		case 2: return "H"; break;
+		case 3: return "B"; break;
+		default: 
+			log(s:"AISET: Difficulty Index error. Easy set selected.");
+	}
+	return "E";
+}
+
+function str AISet_GetMonsterDiff_Name(int i){
+	switch(i){
+		case 0: return "Easy"; break;
+		case 1: return "Medium"; break;
+		case 2: return "Hard"; break;
+		case 3: return "Boss"; break;
+	}
+	return "Not defined";
+}

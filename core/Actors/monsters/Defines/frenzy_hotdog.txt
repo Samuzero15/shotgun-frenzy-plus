@@ -61,7 +61,7 @@ States
        Goto See 
 
    MonDeath: 
-	   TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
+	   //TNT1 A 0 A_GiveInventory("FPMToken_Hard", 1)
        HDOG K 8 
        HDOG L 8 A_Scream 
        HDOG M 4 

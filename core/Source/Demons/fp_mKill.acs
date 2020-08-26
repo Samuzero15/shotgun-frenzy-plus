@@ -39,8 +39,7 @@ Script "SFPlus_MonsterKill" Kill{
 	if(noProfit){
 		p_monsterKilled(monsterClass, splat, true, false);
 	}else{
-		if(splat > 0) p_monsterKilled(monsterClass, splat, false, montype);
-		else if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
+		if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
 			//[Samu] My try to give you the half of amount if a saw drone kills a monster.
 			//The math is simple.
 			//1/00/00
@@ -56,8 +55,8 @@ Script "SFPlus_MonsterKill" Kill{
 			ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0,howMuch/2, CR_Blue);
 			p_monsterKilled_Drone(monsterClass);
 		}
-		else 		 p_monsterKilled(monsterClass, splat, false, montype);
-		
+		else 		 
+			p_monsterKilled(monsterClass, splat, false, montype);
 		}
 	}
 }

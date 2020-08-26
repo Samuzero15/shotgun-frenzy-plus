@@ -9,7 +9,7 @@
 #import "f_AIDir.acs"
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-#import "fa_SetV.acs"
+#import "fp_AISet.acs"
 #import "fa_SetList.acs"
 #include "zcommon.acs"
 
@@ -312,7 +312,6 @@ script 120 OPEN
 	
 	//[Samu] Same script, but refactorized, for readablity pruposes.
 	
-	
 	int l_Level;
     int l_GameStopped;
 	int l_MonDiff;
@@ -330,7 +329,7 @@ script 120 OPEN
     {
 	l_Level = f_AIDir_Check() / 10;
 	l_CacoCond = f_Cacodemons && l_Level >= 4;
-	l_BossCond = l_Level >= 6;
+	l_BossCond = l_Level >= boss_starting_level;
 	
 	l_MonDiff = getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS);
 		if (c_HaltSpawning == 0)
@@ -420,7 +419,7 @@ script 120 OPEN
 }  
 
 function str AIDir_Spawn(int diff, int lvl){
-	return enemy_levels[diff][lvl][0]; 
+	return enemy_levels[diff][lvl]; 
 }
 
 function void MList_SetBoss(int lvl, str m){
@@ -428,6 +427,6 @@ function void MList_SetBoss(int lvl, str m){
 }
 
 function void MList_SetSpawner(int diff, int lvl, str spawner){
-	enemy_levels[diff][lvl-1][0] = spawner;
+	enemy_levels[diff][lvl-1] = spawner;
 }
 

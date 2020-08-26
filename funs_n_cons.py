@@ -15,6 +15,7 @@ BAR_SIZE = 20
 EXE_FNAME = "zandronum.exe"
 ACC_FNAME = "acc.exe"
 STD_FNAME = "skulltag_content-3.0-beta01.pk3"
+EXCLUDE_FILE_EXTS = [".backup1", ".backup2", ".backup3", ".bak", ".dbs"]
 
 #
 # Build main package (as .pk3, a good ol' zip, really)
@@ -27,7 +28,7 @@ def makepkg(sourcePath, destPath, notxt=False, skipGameInfo=False):
     filelist = []
     for path, dirs, files in os.walk (sourcePath):
         for file in files:
-            if not (file == "buildinfo.txt" or (skipGameInfo and file == "GAMEINFO.txt")): # special exceptions
+            if not (file_igonre(file) or file == "buildinfo.txt" or (skipGameInfo and file == "GAMEINFO.txt")): # special exceptions
             # Remove sourcepath from filenames in zip
                 splitpath = path.split(os.sep)[1:]
                 splitpath.append(file)
@@ -43,6 +44,12 @@ def makepkg(sourcePath, destPath, notxt=False, skipGameInfo=False):
     
     return (distzip)
     
+def file_igonre(file):
+    should_ignore = False;
+    for ext in EXCLUDE_FILE_EXTS:
+        if not (should_ignore): should_ignore = file.endswith(ext);
+        else: break;
+    return should_ignore;
 
 def maketxt(sourcePath, destPath, version, filetemplate):
     textname = os.path.join(sourcePath, filetemplate)
@@ -89,7 +96,30 @@ def relativePath (path):
     path = path.replace('..\\', '')
     return path
     
-
+def part_alt(config, part):
+    f_name  = config[part].get('FileName', part  )
+    f_distdir = config[part].get('DistDir', 'dist');
+    f_destpath = os.path.join(f_distdir, f_name)
+    
+    file = f_name + ".pk3"
+    file_path = f_destpath + ".pk3"
+    # print ("\n-- " + file + " part excluded --")
+    if(not os.path.isfile(os.path.join(os.getcwd(), file_path))):
+        print ("-- No file called: " + file + " as "+ part +" part... --")
+        return False
+    else:
+        print ("-- Using: " + file + " as " + part + " part --")
+        return True
+        
+def part_alt_file(config, part):
+    f_name  = config[part].get('FileName', part  )
+    f_distdir = config[part].get('DistDir', 'dist');
+    f_destpath = os.path.join(f_distdir, f_name)
+    
+    file = f_name + ".pk3"
+    file_path = f_destpath + ".pk3"
+    return os.path.join(os.getcwd(), file_path);
+    
 
 def acs_compile(rootDir, sourceDir, part):
         
@@ -101,7 +131,16 @@ def acs_compile(rootDir, sourceDir, part):
     
     # print(includes);
     
-    os.chdir(tools_dir);
+    os.chdir(acs_dir);
+    # Get rid of the old compiled files, for a clean build.
+    print("--> Clearing old compiled ACS for {name}".format(name=part));
+    current = 0;
+    for root, dirs, files in os.walk(os.getcwd()):
+        for file in files:
+            if file.endswith(".o"):
+               os.remove(os.path.join(root, file));
+               printProgress(current, len(files), 'Cleared', '.o files. \t(' + file + ')', 1, BAR_SIZE)
+               current += 1;
 
     print("--> Compiling ACS for {name}".format(name=part));
     os.chdir(src_dir);

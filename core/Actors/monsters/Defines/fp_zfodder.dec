@@ -5,7 +5,7 @@ ACTOR ZombieFodder : FPlus_monster replaces sfFastZombie
 {
   Health 5 // Just a futile resistance
   GibHealth 25
-  Radius 10
+  Radius 15
   Height 56
   Speed 15
   PainChance 256

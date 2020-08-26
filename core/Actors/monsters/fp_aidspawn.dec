@@ -8,3 +8,6 @@
 
 // Survival defender set
 #include "Actors/monsters/Spawners/fp_aidspawn_survival.dec"
+
+// Rusher set (AKA Fast zombies.)
+#include "Actors/monsters/Spawners/fp_aidspawn_rusher.dec"

@@ -2,10 +2,10 @@ ACTOR ZombieScientist : FPlus_Monster
 {
   Game Doom
   obituary "%o was axe-murdered by a zombie scientist."
-  health 15
+  health 20
   mass 90
-  speed 12
-  Radius 20
+  speed 13
+  Radius 15
   Height 52
   painchance 200
   seesound "grunt/sight"
@@ -20,7 +20,7 @@ ACTOR ZombieScientist : FPlus_Monster
     SCZA AB 10 A_Look
     loop
   See:
-    SCZA AABBCCDD 4 A_Chase
+    SCZA AABBCCDD 3 A_Chase
     loop
   Melee:
     SCZA E 8 A_FaceTarget
@@ -364,7 +364,7 @@ States
     FSZS P 5 A_XScream
     FSZS Q 5 A_NoBlocking
     FSZS RSTUV 5
-    FSZS W -1
+    FSZS W 1
     goto Super::FadeOut
   MonRaise:
     FSZS MLKJIH 5

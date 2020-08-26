@@ -28,6 +28,10 @@ if __name__ == "__main__":
         action="store_true", dest="nomus",
         default=False,
         help="skip music zipping.")
+    cmd.add_argument("-xa", "--skipacs", 
+        action="store_true", dest="noacs",
+        default=False,
+        help="skip acs compilation.")
     args = cmd.parse_args()
     
     config = ConfigParser()
@@ -76,81 +80,43 @@ if __name__ == "__main__":
         if part != "Executable":
             
             sourceDir =      config[part].get('SourceDir'  , 'src' );
-            distDir = config["Resources"].get('DistDir', 'dist');
+            distDir   =      config[part].get('DistDir', 'dist');
             fileName  =      config[part].get('FileName'   , part  );
             notxt     = bool(config[part].get('notxt'      , False));
             compileacs= bool(config[part].get('compile_acs', False));
             
             destPath = os.path.join(distDir, fileName)
-            
-            if (part == "Resources" or part == "Music"):
-                a_fileName  = config["Resources"].get('FileName', part  )
-                a_distDir = config["Resources"].get('DistDir', 'dist');
-                a_destPath = os.path.join(a_distDir, a_fileName)
-                
-                res_file = a_fileName + ".pk3"
-                res_file_path = a_destPath + ".pk3"
-                
-                b_fileName  = config["Music"].get('FileName', part  )
-                b_distDir = config["Music"].get('DistDir', 'dist');
-                b_destPath = os.path.join(b_distDir, b_fileName)
-                
-                mus_file = b_fileName + ".pk3"
-                mus_file_path = b_destPath + ".pk3"
-                
-                coreonly = (args.justcore or (args.nores and args.nomus))
-                if (coreonly and ("Resources" in part or "Music" in part)):
-                    print ("\n-- Resources and Music parts excluded --")
-                    
-                    # Check for resources file
-                    if(not os.path.isfile(os.path.join(os.getcwd(), res_file_path))):
-                        print ("-- There is not even a file called: " + res_file + " as resource part... --")
-                        print ("-- Run aborted, try 'python play.py [-s]' to generate the resource part --")
-                        sys.exit()
-                    else:
-                        print ("-- Using: " + res_file + " as resource part --")
-                        filelist.append(os.path.join(os.getcwd(), res_file_path));
-                    
-                    
-                    # Check for music file
-                    if(not os.path.isfile(os.path.join(os.getcwd(), mus_file_path))):
-                        print ("-- No file: " + mus_file + " as music part... --")
-                        print ("-- Run will resume, but expect a silenced game. --")  
-                    else:
-                        print ("-- Using: " + mus_file + " as music part --")
-                        filelist.append(os.path.join(os.getcwd(), mus_file_path));
-                    
-                    break
+            if(args.justcore or (args.nores and args.nomus)):
+                args.nores = True
+                args.nomus = True
+            elif(args.nores):
+                print ("\n-- Resources part excluded --")
+            elif(args.nomus):
+                print ("\n-- Music part excluded --")
                     
             # Check them separated
             if (args.nores and part == "Resources"):
-                res_file = fileName + ".pk3"
-                res_file_path = destPath + ".pk3"
-                print ("\n-- Resources part excluded --")
-                if(not os.path.isfile(os.path.join(os.getcwd(), res_file_path))):
-                    print ("-- There is not even a file called: " + res_file + " as resource part... --")
+                
+                if(not utils.part_alt(config, part)):
                     print ("-- Run aborted, try 'python play.py [-s]' to generate the resource part --")
                     sys.exit()
                 else:
-                    print ("-- Using: " + res_file + " as resource part --")
-                    
-                filelist.append(os.path.join(os.getcwd(), res_file_path));
-                continue
+                    filelist.append(utils.part_alt_file(config, part));
+                    continue
                 
             if (args.nomus and part == "Music"):
-                mus_file = fileName + ".pk3"
-                mus_file_path = destPath + ".pk3"
-                print ("\n-- Music part excluded --")
-                if(not os.path.isfile(os.path.join(os.getcwd(), mus_file_path))):
-                    print ("-- No file: " + mus_file + " as music part... --")
-                    print ("-- Run will resume, but expect a silenced game. --")  
+                
+                if(not utils.part_alt(config, part)):
+                    print ("-- Run will resume, but expect a silenced game. --")
+                    continue
                 else:
-                    print ("-- Using: " + res_file + " as music part --")
-                    filelist.append(os.path.join(os.getcwd(), mus_file_path));
-                continue
-            
+                    filelist.append(utils.part_alt_file(config, part));
+                    continue
+
             print("\n-- Building {name} --".format(name=part));
-            if(compileacs): 
+            if(args.noacs):
+                print("--> ACS Compilation skipped.")
+            elif(compileacs): 
                 utils.acs_compile(rootdir, sourceDir, part)
             
             if not os.path.exists(distDir):

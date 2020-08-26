@@ -250,3 +250,88 @@ Actor FPSpawn_SH19 : RandomSpawner {
 Actor FPSpawn_SH20 : RandomSpawner {
 	dropitem "FPSSpot_sfFastZombie"
 }
+
+// These monsters will appear once.
+//////////////////////////////////
+// (BOSS) Boss levels			//
+//////////////////////////////////
+
+Actor FPSpawn_SB1 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_SB2 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_SB3 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_SB4 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_SB5 : RandomSpawner {
+	dropitem "FPSSpot_sfBaronofHell"
+}
+
+Actor FPSpawn_SB6 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB7 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB8 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB9 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB10 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB11 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB12 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB13 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB14 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB15 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberbaron"
+}
+
+Actor FPSpawn_SB16 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_SB17 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_SB18 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_SB19 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}
+
+Actor FPSpawn_SB20 : RandomSpawner {
+	dropitem "FPSSpot_sfCyberdemon"
+}

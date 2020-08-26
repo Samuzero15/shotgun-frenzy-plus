@@ -1,10 +1,10 @@
 ACTOR ChainsawZombie : FPlus_Monster 3204
 { 
 spawnid 239
-    Health 30 
-    Radius 20 
+    Health 50 
+    Radius 15
     Height 56 
-    Speed 20 // 17 
+    Speed 20 
     MeleeDamage 1 
     PainChance 200 
     +FLOORCLIP 
@@ -26,17 +26,17 @@ spawnid 239
         CHAN B 4 A_PlayWeaponSound("weapons/sawidle") 
         goto Spawn 
     See: 
-        CHAN A 4 A_Chase 
-        CHAN A 4 A_Chase 
+        CHAN A 3 A_Chase 
+        CHAN A 3 A_Chase 
         CHAN B 0 A_PlayWeaponSound("weapons/sawidle") 
-        CHAN B 4 A_Chase 
-        CHAN B 4 A_Chase 
+        CHAN B 3 A_Chase 
+        CHAN B 3 A_Chase 
         CHAN C 0 A_PlayWeaponSound("weapons/sawidle") 
-        CHAN C 4 A_Chase 
-        CHAN C 4 A_Chase 
+        CHAN C 3 A_Chase 
+        CHAN C 3 A_Chase 
         CHAN D 0 A_PlayWeaponSound("weapons/sawidle") 
-        CHAN D 4 A_Chase 
-        CHAN D 4 A_Chase 
+        CHAN D 3 A_Chase 
+        CHAN D 3 A_Chase 
         CHAN A 0 A_PlayWeaponSound("weapons/sawidle") 
         goto See 
     Melee: 

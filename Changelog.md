@@ -2,6 +2,16 @@
 
 ## v0 - Before the beginning...
 
+#### -) (26 / 08 / 2020) [Experimenting with Monster sets]
+	+) Now in the TEST map, you can see the monster waves separatedly. Check out the Monster Randomizer section!
+	+) New file fp_aidspawn_rusher.dec, to create a new monster set. Rusher set.
+	// Fast and weak monsters, pretty dangerous in masse.
+	*) New parameter on play.py: -xa, this will skip the ACS compilation. 
+	   Cool if you need to edit your maps, without compiling all the acs source code again.
+	*) Now acs compilation will clear all old compiled files for cleaning up!
+	*) Small fixes on the play.py file.
+	// Yeah, not so much progress over here due to some health issues, but im pretty good for now, thanks for asking. 
+
 #### -) (19 / 08 / 2020) [Dmg. Hud, Status bar tweaks and fixes]
 	+) Here it is an experimental Damage hud. Resided on fp_dmhud.acs
 	*) Moved the sbarinfo only scripts to a new file fp_sbinf.acs

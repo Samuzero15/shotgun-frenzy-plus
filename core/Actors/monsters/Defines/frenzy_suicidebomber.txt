@@ -45,7 +45,7 @@ spawnid 250
     BMBE N 5 bright A_XScream
     BMBE O 5 A_NoBlocking
     BMBE PQRST 5
-    BMBE U -1
+    BMBE U 1
     goto Super::FadeOut.NoRaise
   }
 }
