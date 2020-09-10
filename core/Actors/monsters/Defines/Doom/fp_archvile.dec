@@ -8,7 +8,7 @@ ACTOR sfArchvile : FPlus_Monster replaces Archvile
 	Mass 500
 	Speed 18
 	PainChance 10
-	MaxTargetRange 896
+	MaxTargetRange 512
 	+QUICKTORETALIATE 
 	+FLOORCLIP 
 	+NOTARGET

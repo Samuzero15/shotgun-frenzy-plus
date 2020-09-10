@@ -76,7 +76,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wu_supplier_up0", 	1);
 	Prices_add("pr_wu_repeater_up1", 	2);
 	Prices_add("pr_wu_repeater_up2", 	2);
-	Prices_add("pr_wu_dualshot_up0", 	2);
+	Prices_add("pr_wu_dualshot_up1", 	2);
+	Prices_add("pr_wu_dualshot_up2", 	2);
 	Prices_add("pr_wu_launcher_up1", 	1);
 	Prices_add("pr_wu_launcher_up2", 	2);
 	Prices_add("pr_wu_flinger_up1", 	1);
@@ -106,7 +107,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wr_repeater_up1", 	3200);
 	Prices_add("pr_wr_repeater_up2", 	3200);
 	Prices_add("pr_wr_dualshot", 		2600);
-	Prices_add("pr_wr_dualshot_up0", 	3500);
+	Prices_add("pr_wr_dualshot_up1", 	3500);
+	Prices_add("pr_wr_dualshot_up2", 	3500);
 	Prices_add("pr_wr_launcher", 		1500);
 	Prices_add("pr_wr_launcher_up1", 	2000);
 	Prices_add("pr_wr_launcher_up2", 	2000);

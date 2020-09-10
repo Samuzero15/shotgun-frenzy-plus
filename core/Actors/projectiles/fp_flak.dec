@@ -1,0 +1,67 @@
+
+actor Flak_Shard
+{
+  Radius 6
+  Height 6
+  Damage (2)
+  Scale 1 // 0.505
+  Speed 40
+  +RIPPER
+  +DOOMBOUNCE
+  PROJECTILE
+  Obituary "%o was torn to shreds."
+  States
+  {
+  Spawn:
+    FBA1 A 1
+	FBA1 A 3 A_SpawnItemEx("Blur_FlakA")
+	FBA1 B 3 A_SpawnItemEx("Blur_FlakB")
+	FBA1 C 3 A_SpawnItemEx("Blur_FlakC")
+    FBA1 A 0 A_Gravity
+    FBA1 ABC 5
+    FBA2 ABC 5
+    FBA3 ABC 5 
+    FBAK ABC 5 
+    goto Spawn+11
+  Death:
+    FBAK A 20
+    stop
+  }
+}
+
+Actor Flak_Grenade{
+	Radius 24
+	Height 24
+	Speed 40
+	Reactiontime 35
+	SEESOUND "Weapons/NBBounce"
+	DEATHSOUND "Weapons/NailBombExp"
+	PROJECTILE
+	-SHOOTABLE
+	+DOOMBOUNCE
+	+RANDOMIZE
+	+GRENADETRAIL
+	-NOGRAVITY
+	+CANBOUNCEWATER
+	+MthruSpecies
+	states
+	{
+	Spawn:
+		NBMB A 2 A_Countdown
+		NBMB AB 6
+		goto Spawn
+	Death:
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 0)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 40)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 80)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 120)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 160)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 200)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 240)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 280)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 320)
+		WSMK E 0 A_CustomMissile("Flak_Shard", 4, 2, 350)
+		WSMK ABCDE 5
+		Stop
+	}
+}

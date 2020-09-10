@@ -89,14 +89,11 @@ if __name__ == "__main__":
             if(args.justcore or (args.nores and args.nomus)):
                 args.nores = True
                 args.nomus = True
-            elif(args.nores):
-                print ("\n-- Resources part excluded --")
-            elif(args.nomus):
-                print ("\n-- Music part excluded --")
+                
                     
             # Check them separated
             if (args.nores and part == "Resources"):
-                
+                print ("\n-- Resources part excluded --")
                 if(not utils.part_alt(config, part)):
                     print ("-- Run aborted, try 'python play.py [-s]' to generate the resource part --")
                     sys.exit()
@@ -105,7 +102,7 @@ if __name__ == "__main__":
                     continue
                 
             if (args.nomus and part == "Music"):
-                
+                print ("\n-- Music part excluded --")
                 if(not utils.part_alt(config, part)):
                     print ("-- Run will resume, but expect a silenced game. --")
                     continue

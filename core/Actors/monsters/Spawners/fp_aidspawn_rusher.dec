@@ -4,83 +4,105 @@
 //////////////////////////////////
 
 Actor FPSpawn_RE1 : RandomSpawner {
-	dropitem "FPSRSpot_ZombieScientist"
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+	dropitem "FPSSpot_sfFastZombie", 		256, 1
 }
 
 Actor FPSpawn_RE2 : RandomSpawner {
-	dropitem "FPSRSpot_ZombieScientist"
+	dropitem "FPSRSpot_ZombieScientist", 	256, 3
+	dropitem "FPSSpot_sfFastZombie", 		256, 1
 }
 
 Actor FPSpawn_RE3 : RandomSpawner {
-	dropitem "FPSRSpot_ZombieScientist"
+	dropitem "FPSRSpot_ZombieScientist"	
+	dropitem "FPSSpot_sfFastZombie"		
 }
 
 Actor FPSpawn_RE4 : RandomSpawner {
-	dropitem "FPSRSpot_ZombieScientist"
+	dropitem "FPSRSpot_ZombieScientist",	256, 1
+	dropitem "FPSSpot_sfFastZombie",		256, 3
 }
 
 Actor FPSpawn_RE5 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSRSpot_ZombieScientist",	256, 1
+	dropitem "FPSSpot_sfFastZombie",		256, 5
+	dropitem "FPSSpot_ChainsawZombie",		256, 1
 }
 
 Actor FPSpawn_RE6 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfFastZombie",		256, 1
+	dropitem "FPSSpot_ChainsawZombie",		256, 3
 }
 
 Actor FPSpawn_RE7 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfFastZombie",		256, 1
+	dropitem "FPSSpot_ChainsawZombie",		256, 5
+	dropitem "FPSSpot_sfDemon",				256, 1
 }
 
 Actor FPSpawn_RE8 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfDemon",				256, 3
+	dropitem "FPSSpot_ChainsawZombie",		256, 2
 }
 
 Actor FPSpawn_RE9 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfDemon",				256, 5
+	dropitem "FPSSpot_ChainsawZombie",		256, 1
 }
 
 Actor FPSpawn_RE10 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfDemon"				,256, 5
+	dropitem "FPSSpot_BloodDemonClone"		,256, 1
 }
 
 Actor FPSpawn_RE11 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfDemon"				,256, 3
+	dropitem "FPSSpot_BloodDemonClone"		,256, 2
 }
 
 Actor FPSpawn_RE12 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfDemon"				,256, 1
+	dropitem "FPSSpot_BloodDemonClone"		,256, 3
 }
 
 Actor FPSpawn_RE13 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_sfDemon"				,256, 1
+	dropitem "FPSSpot_BloodDemonClone"		,256, 5
 }
 
 Actor FPSpawn_RE14 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_BloodFiend"			,256, 1
+	dropitem "FPSSpot_BloodDemonClone"		,256, 5
 }
 
 Actor FPSpawn_RE15 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_BloodDemonClone"		,256, 3
+	dropitem "FPSSpot_BloodFiend"			,256, 2
 }
 
 Actor FPSpawn_RE16 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_StoneDemon"			,256, 1
+	dropitem "FPSSpot_BloodFiend"			,256, 5
 }
 
 Actor FPSpawn_RE17 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_BloodDemonClone"		,256, 1
+	dropitem "FPSSpot_StoneDemon"			,256, 1
+	dropitem "FPSSpot_BloodFiend"			,256, 5
 }
 
 Actor FPSpawn_RE18 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_StoneDemon"			,256, 4
+	dropitem "FPSSpot_BloodFiend"			,256, 2
 }
 
 Actor FPSpawn_RE19 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_StoneDemon"			,256, 5
+	dropitem "FPSSpot_BloodFiend"			,256, 1
 }
 
 Actor FPSpawn_RE20 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_StoneDemon"			,256
 }
 
 //////////////////////////////////
@@ -88,10 +110,12 @@ Actor FPSpawn_RE20 : RandomSpawner {
 //////////////////////////////////
 
 Actor FPSpawn_RM1 : RandomSpawner {
-	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSRSpot_ZombieScientist", 	256, 3
+	dropitem "FPSSpot_sfFastZombie",		256, 1
 }
 
 Actor FPSpawn_RM2 : RandomSpawner {
+	dropitem "FPSRSpot_ZombieScientist"	
 	dropitem "FPSSpot_sfFastZombie"
 }
 
@@ -101,70 +125,91 @@ Actor FPSpawn_RM3 : RandomSpawner {
 
 Actor FPSpawn_RM4 : RandomSpawner {
 	dropitem "FPSSpot_sfFastZombie"
+	dropitem "FPSSpot_SuicideBomber"
 }
 
 Actor FPSpawn_RM5 : RandomSpawner {
 	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"
 }
 
 Actor FPSpawn_RM6 : RandomSpawner {
 	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"
 }
 
 Actor FPSpawn_RM7 : RandomSpawner {
 	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"
+	dropitem "FPSSpot_sfDemon"	
 }
 
 Actor FPSpawn_RM8 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfDemon"	
 }
 
 Actor FPSpawn_RM9 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfDemon"	
 }
 
 Actor FPSpawn_RM10 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfDemon"	
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM11 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodFiend"	
+	dropitem "FPSSpot_sfDemon"	
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM12 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodDemonClone"	
+	dropitem "FPSSpot_sfDemon"		
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM13 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodDemonClone"	
+	dropitem "FPSSpot_sfDemon"		
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM14 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodDemonClone", 256, 1
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM15 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodDemonClone", 256, 1
+	dropitem "FPSSpot_BloodFiend", 		256, 1
+	dropitem "FPSSpot_StoneDemon", 		256, 3
 }
 
 Actor FPSpawn_RM16 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodDemonClone"	
+	dropitem "FPSSpot_BloodFiend"	
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM17 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodDemonClone", 256, 1
+	dropitem "FPSSpot_BloodFiend",		256, 2
+	dropitem "FPSSpot_StoneDemon", 		256, 2
 }
 
 Actor FPSpawn_RM18 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodFiend"	
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM19 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_BloodFiend"	
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 Actor FPSpawn_RM20 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_StoneDemon"	
 }
 
 //////////////////////////////////
@@ -172,83 +217,93 @@ Actor FPSpawn_RM20 : RandomSpawner {
 //////////////////////////////////
 
 Actor FPSpawn_RH1 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"	,64
 }
 
 Actor FPSpawn_RH2 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"	,128
 }
 
 Actor FPSpawn_RH3 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"	,192
 }
 
 Actor FPSpawn_RH4 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_SuicideBomber"
 }
 
 Actor FPSpawn_RH5 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight"	
 }
 
 Actor FPSpawn_RH6 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight"	
 }
 
 Actor FPSpawn_RH7 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight",	256, 4
+	dropitem "FPSSpot_sfBaronofHell",	256, 1	
 }
 
 Actor FPSpawn_RH8 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight",	256, 3
+	dropitem "FPSSpot_sfBaronofHell", 	256, 1
 }
 
 Actor FPSpawn_RH9 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight"
+	dropitem "FPSSpot_sfBaronofHell"
 }
 
 Actor FPSpawn_RH10 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight",	256, 1	
+	dropitem "FPSSpot_sfBaronofHell",	256, 3
 }
 
 Actor FPSpawn_RH11 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfHellKnight",	256, 1	
+	dropitem "FPSSpot_sfBaronofHell",	256, 4
 }
 
 Actor FPSpawn_RH12 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfBaronofHell"
 }
 
 Actor FPSpawn_RH13 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfBaronofHell", 	256, 4
+	dropitem "FPSSpot_CyberBaron",		256, 1
 }
 
 Actor FPSpawn_RH14 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfBaronofHell",	256, 3
+	dropitem "FPSSpot_CyberBaron",		256, 1
 }
 
 Actor FPSpawn_RH15 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfBaronofHell"	
+	dropitem "FPSSpot_CyberBaron"
 }
 
 Actor FPSpawn_RH16 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfBaronofHell",	256, 1
+	dropitem "FPSSpot_CyberBaron",		256, 3
 }
 
 Actor FPSpawn_RH17 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_sfBaronofHell",	256, 1
+	dropitem "FPSSpot_CyberBaron",		256, 4
 }
 
 Actor FPSpawn_RH18 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_CyberBaron"
 }
 
 Actor FPSpawn_RH19 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_CyberBaron"	
 }
 
 Actor FPSpawn_RH20 : RandomSpawner {
-	dropitem "FPSSpot_ChainsawZombie"
+	dropitem "FPSSpot_CyberBaron"
 }
 
 // These monsters will appear once.

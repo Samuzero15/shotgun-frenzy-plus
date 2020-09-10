@@ -22,7 +22,7 @@ str enemy_sets[3] = {"D", "R", "S"};
 
 Script "SFPlus_LoadDefaultEnemySet" Open
 {
-	AISet_SetMonsterSet(1);
+	AISet_SetMonsterSet(GetCVar("sfp_monsterset"));
 }
 
 function void AISet_SetMonsterSet(int i){
@@ -71,7 +71,7 @@ function str AISet_GetMonsterSet_Name(int i){
 }
 
 function str AISet_GetSpawnActor(int set, int diff, int lvl){
-	return strparam(s:"FPSpawn_", s:AISet_GetMonsterSet(set), s:AISet_GetMonsterDiff(set), d:lvl);
+	return strparam(s:"FPSpawn_", s:AISet_GetMonsterSet(set), s:AISet_GetMonsterDiff(diff), d:lvl);
 }
 
 function str AISet_GetMonsterDiff(int i){
@@ -83,7 +83,7 @@ function str AISet_GetMonsterDiff(int i){
 		default: 
 			log(s:"AISET: Difficulty Index error. Easy set selected.");
 	}
-	return "E";
+	return "N";
 }
 
 function str AISet_GetMonsterDiff_Name(int i){

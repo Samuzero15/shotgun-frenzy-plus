@@ -2,6 +2,32 @@
 
 ## v0 - Before the beginning...
 
+#### -) (9 / 08 / 2020) [Flak dualshot(? is here, and some more fixes]
+	*) Now, if a turret is not miss-placed (for occupied sector or things like that), credits will not be charged.
+	*) Yet another small fix on the play.py
+	*) Sticky grenades for the sticky flinger has been tweaked, fixing a couple of bugs.
+	*) Re-Arranging the carpets for the samu-terminal
+
+#### -) (5 / 08 / 2020)
+	+) Added a mirrored saw for the dualshot's upgrade: Razor Saw.
+	+) Added an alt attack for the razor saw's dualshot upgrade, letting you to fire saws 1 per time!
+	*) Small fix on play.py
+
+#### -) (29 / 08 / 2020) 
+	+) Temporally added a new weapon uprgade for the dualshot. The Flak Dualshot
+	+) Added the fp_blur.dec file just to add the blur on the flak shards.
+	*) Small experiment with the flak projectiles.
+	*) Some more edits on the rusher monster set. (needs some mp testing)
+	+) New CVAR created: sfp_monsterset, useful to define which monster set you want to use. by default, this is 0 (the classic monster set)
+	*) In the TEST map, now the monster randomizer buttons can be shoted!, I suggest you to use your common pistol.
+
+#### -) (28 / 08 / 2020)
+	*) Edited the rusher demon set. It consists mainly on the fast demons, starting with zombies with some suicide bombers.
+	// In later levels, you will face a big demon stampede! Along side of the barons.
+	*) Small fix on the TEST map on the monster randomizer.
+	*) Reduced the archvile's target range from 896 to 512. I know, we hate those sniping archviles.
+	*) Modified the Demon, Mech Demon, Blood Fiend and Stone Demon. Specially on their attacks and HP on the Stone and Blood fiends.
+
 #### -) (26 / 08 / 2020) [Experimenting with Monster sets]
 	+) Now in the TEST map, you can see the monster waves separatedly. Check out the Monster Randomizer section!
 	+) New file fp_aidspawn_rusher.dec, to create a new monster set. Rusher set.

@@ -10,6 +10,7 @@
 #import "f_IntDB.acs"
 #import "fl_WDir.acs"
 #import "fl_PupDir.acs"
+#import "fp_AISet.acs"
 #include "zcommon.acs"
 
 // check function
@@ -90,7 +91,8 @@ script 269 (void)
 		s:"\nWDir Packs Score: ", d:WPTrack_GetScore(),
 		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore(),
 		s:"\nPupDir Upgrades Score: ", d:PUTrack_GetScore(),
-		s:"\nAI Director status: ", d:f_AIDir_Check());
+		s:"\nAI Director status: ", d:f_AIDir_Check(),
+		s:"\nAI Spawn Level: ", d:((f_AIDir_Check() / 10) + 1));
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
         delay(1);
 		

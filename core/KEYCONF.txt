@@ -7,7 +7,7 @@ setslot 1 Beretta Beretta_Dual Beretta_SMG
 setslot 2 Boomstick Boomstick_Full
 setslot 3 SSG SSG_Autoload SSG_Explosive Quadshot Quadshot_Full
 setslot 4 Buckshot Buckshot_Chamber Buckshot_Explosive Spitter Spitter_SSG Spitter_GLauncher
-setslot 5 Dualshot Dualshot_Razor Repeater Repeater_DoubleSpeed Repeater_BlastShells
+setslot 5 Dualshot Dualshot_Razor Dualshot_FlakShells Repeater Repeater_DoubleSpeed Repeater_BlastShells
 setslot 6 Launcher Launcher_Multi Launcher_Exploder Flinger Flinger_Expander Flinger_MinePlacer
 setslot 7 SF_Railgun Railgun_Taser Railgun_Slug PlasmaGun PlasmaGun_Advanced PlasmaGun_Spread
 setslot 8 Flamer FlamerS BoomerCannon

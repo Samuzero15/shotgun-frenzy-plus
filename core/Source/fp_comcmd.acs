@@ -336,20 +336,24 @@ function void CMDBut_UpdateConds(void){
 	btn = FP_CB_DEPLOY_DISP_HEALTH;
 	CMDBut_SetPrice		 (btn, "disp_health");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_DISP_AMMO;
 	CMDBut_SetPrice		 (btn, "disp_ammo");
 	CMDBut_SetShowCond	(btn, allow_turret_C());
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_BARRIER;
 	CMDBut_SetPrice		 (btn, "sandbags");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	
 	btn = FP_CB_DEPLOY_MINEFIELD;
 	CMDBut_SetPrice		 (btn, "minefield");
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM), 
 		"Build the marine command to unlock this.");
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_TURRET;
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM), "Build the marine command to unlock this.");
@@ -357,32 +361,38 @@ function void CMDBut_UpdateConds(void){
 	btn = FP_CB_DEPLOY_TURRET_BULLET;
 	CMDBut_SetPrice		 (btn, "turret_bullet");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_TURRET_ROCKET;
 	CMDBut_SetPrice		 (btn, "turret_rocket");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_TURRET_PLASMA;
 	CMDBut_SetPrice		 (btn, "turret_plasma");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_TURRET_TESCOL;
 	CMDBut_SetPrice		 (btn, "turret_tesla");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_ADVSYS),
 								"Requires Advanced Systems...");
+	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_TURRET_FLAMER;
 	CMDBut_SetPrice		 (btn, "turret_flame");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_ADVSYS),
 								"Requires Advanced Systems...");
+	CMDBut_SetIgnorePrice(btn, true);
 								
 	btn = FP_CB_DEPLOY_TURRET_CHAINGUN;
 	CMDBut_SetPrice		 (btn, "turret_chaingun");
 	CMDBut_SetShowCond	 (btn, allow_turret_c());
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_ADVSYS),
 								"Requires Advanced Systems...");
+	CMDBut_SetIgnorePrice(btn, true);
 								
 	CMDBut_SetShowCond		(FP_CB_NUKE, !CheckInventory("c_NukeLaunched") && CheckInventory("f_allownuke"));
 	CMDBut_SetShowCond		(FP_CB_NUKE_IT_NOW, !CheckInventory("c_NukeLaunched") && CheckInventory("f_allownuke"));

@@ -203,10 +203,13 @@ function void SFPlus_DefineWeapons (void){
 	
 	wep = Weapon_Add("Dualshot", "Nail Dualshot", pack, "dualshot", string);
 				
-	WeaponUpgrade_Add("Dualshot_Razor", "Razor Saw Dualshot", wep, 0, "",
-		"Launches saws. They're heavier and the gravity affects them, but it rips a lot."
+	WeaponUpgrade_Add("Dualshot_Razor", "Razor Saw Dualshot", wep, 1, "",
+		"Launches Razor Saw-bolts. They're heavier and the gravity affects them, but it rips a lot."
 		);
 		
+	WeaponUpgrade_Add("Dualshot_FlakShells", "Flak Cannon Dualshot", wep, 2, "",
+		"Launches Flak Shards. They're bouncy and spreadier than the Saw-Bolts, but they deal less damage. Still they can rip through."
+		);
 		
 		
 		

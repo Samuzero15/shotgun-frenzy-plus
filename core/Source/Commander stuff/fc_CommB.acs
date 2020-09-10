@@ -63,7 +63,7 @@ script "SFPlus_CMD_CallSupportScript" (int which){
 		
 }
 
-script "SFPlus_CMD_CallSpawnScript" (int which){
+script "SFPlus_CMD_CallSpawnScript" (int which, int price){
 	str thing;
 	int noSectorCheck = 0;
 	
@@ -95,12 +95,18 @@ script "SFPlus_CMD_CallSpawnScript" (int which){
 				thing = "Spawn_TurretChaingun";		break;
 			default: terminate;
 		}
-		CMDEvent(4+noSectorCheck*3, thing, which, 0);
+		CMDEventEX(4+noSectorCheck*3, thing, which, 0, price);
 	}
 }
 
 // events system
-function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3)
+
+function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3){
+	CMDEventEX (l_Event, l_EventArg1, l_EventArg2, l_EventArg3, 0);
+}
+
+// Same, but space-checks first and then charges.
+function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3, int price)
 {
     // build a structure
     if (l_Event == 2)
@@ -258,6 +264,8 @@ function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_Eve
 				case 7: f_TipShow ("CM45", "Shotgun Turret", "Awaiting Construction...", 2); break;
 				case 8: f_TipShow ("CM43", "Rail Turret", "Awaiting Construction...", 2); break;
 			}   
+			
+			c_credits -= price;
 		}
 		else {
 			if (getactory(130) > getactory(81)) {

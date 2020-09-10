@@ -35,7 +35,7 @@ function void STExecute_CMDExecute(int command, int arg, int btndata){
 		case 4: scriptname = "SFPlus_CMD_CallMarkScript"; break;
 		case 5: scriptname = "SFPlus_CMD_CallSupportScript"; break;
 	}
-	ACS_NamedExecute(scriptname, 0, arg);
+	ACS_NamedExecute(scriptname, 0, arg, cost);
 }
 
 function void STExecute_CMDExecuteF(int command, int arg){

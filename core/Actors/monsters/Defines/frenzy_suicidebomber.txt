@@ -8,8 +8,8 @@ actor SuicideBomber : FPlus_Monster 22099
 {
 spawnid 250
   obituary "%o was killed by a crazy suicide bomber."
-  health 120
-  radius 28
+  health 240
+  radius 20
   height 56
   mass 100
   speed 15

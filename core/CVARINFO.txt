@@ -8,6 +8,7 @@ server int sf_cacodemons = 0;
 server int sf_percentfast = 10;
 server int sf_creditcorrection = -8;
 
+
 //[Samu] acsutil's cvar
 server bool acsutils_noerrors = false;
 
@@ -15,6 +16,8 @@ server bool acsutils_noerrors = false;
 
 // The delay time until the doors opens.
 server int sf_doorholdtime = 30;
+// Which monster set do you want to use?
+server int sfp_monsterset = 0; // Default.
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;

@@ -1,0 +1,135 @@
+Actor Blur     
+{
+   Height 1
+   Radius 1
+   Damage 0
+   Scale 0.6
+   Speed 0.2
+   RenderStyle Translucent
+   +CLIENTSIDEONLY
+   Alpha 0.5
+   +NOGRAVITY
+   +DROPOFF
+   States
+   {
+   Spawn:
+	  "####" "#" 1
+   Loopme:
+      "####" "#" 1 A_FadeOut(0.1)
+      Loop
+   }
+}
+// Razor Saw blur
+Actor Blur_SawA : Blur
+{States{Spawn:
+		SAWS A 1
+goto Super::Spawn}}
+
+Actor Blur_SawB : Blur
+{States{Spawn:
+		SAWS B 1
+goto Super::Spawn}}
+
+Actor Blur_SawC : Blur
+{States{Spawn:
+		SAWS C 1
+goto Super::Spawn}}
+
+Actor Blur_SawD : Blur
+{States{Spawn:
+		SAWS D 1
+goto Super::Spawn}}
+
+Actor Blur_SawE : Blur
+{States{Spawn:
+		SAWS E 1
+goto Super::Spawn}}
+
+Actor Blur_SawF : Blur
+{States{Spawn:
+		SAWS F 1
+goto Super::Spawn}}
+
+Actor Blur_SawG : Blur
+{States{Spawn:
+		SAWS G 1
+goto Super::Spawn}}
+
+Actor Blur_SawH : Blur
+{States{Spawn:
+		SAWS H 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2A : Blur
+{States{Spawn:
+		SAW2 A 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2B : Blur
+{States{Spawn:
+		SAW2 B 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2C : Blur
+{States{Spawn:
+		SAW2 C 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2D : Blur
+{States{Spawn:
+		SAW2 D 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2E : Blur
+{States{Spawn:
+		SAW2 E 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2F : Blur
+{States{Spawn:
+		SAW2 F 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2G : Blur
+{States{Spawn:
+		SAW2 G 1
+goto Super::Spawn}}
+
+Actor Blur_Saw2H : Blur
+{States{Spawn:
+		SAW2 H 1
+goto Super::Spawn}}
+
+// Flak Blur
+actor Blur_FlakA : Blur 
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0 
+		FBA1 A 1
+		goto Super::Spawn
+	}
+}
+
+actor Blur_FlakB : Blur 
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		FBA1 B 1
+		goto Super::Spawn
+	}
+}
+
+actor Blur_FlakC : Blur 
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		FBA1 C 1
+		goto Super::Spawn
+	}
+}

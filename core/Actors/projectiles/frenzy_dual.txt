@@ -81,11 +81,46 @@ ACTOR Dualshot_RazorBolt
 	States
 	{
 		Spawn:
-			SAWS ABCDEFGH 1 bright
-			GRNS B 3 bright A_PlaySound("weapons/sawfull")
+			SAWS A 1 bright A_SpawnItemEx("Blur_SawA")
+			SAWS B 1 bright A_SpawnItemEx("Blur_SawB")
+			SAWS C 1 bright A_SpawnItemEx("Blur_SawC")
+			SAWS D 1 bright A_SpawnItemEx("Blur_SawD")
+			SAWS E 1 bright A_SpawnItemEx("Blur_SawE")
+			SAWS F 1 bright A_SpawnItemEx("Blur_SawF")
+			SAWS G 1 bright A_SpawnItemEx("Blur_SawG")
+			SAWS H 1 bright A_SpawnItemEx("Blur_SawH")
+			TNT1 A 0 A_PlaySound("weapons/sawfull")
 			goto Spawn
 		Death:
-			SAWS B 8 bright A_Explode
+			"####" "#" 0 A_ChangeFlag("NOGRAVITY", true)
+			"####" "#" 0 A_SpawnitemEx("BulletPuff_Standard")
+			"####" "#" 0 A_SpawnitemEx("BulletPuff_Standard")
+			"####" "#" 0 A_SpawnitemEx("BulletPuff_Standard")
+			"####" "#" 35 bright A_Explode
 			stop
+	}
+}
+
+Actor Dualshot_RazorBolt2 : Dualshot_RazorBolt
+{
+States{
+	Spawn:
+		SAW2 A 1 bright A_SpawnItemEx("Blur_Saw2A")
+		SAW2 B 1 bright A_SpawnItemEx("Blur_Saw2B")
+		SAW2 C 1 bright A_SpawnItemEx("Blur_Saw2C")
+		SAW2 D 1 bright A_SpawnItemEx("Blur_Saw2D")
+		SAW2 E 1 bright A_SpawnItemEx("Blur_Saw2E")
+		SAW2 F 1 bright A_SpawnItemEx("Blur_Saw2F")
+		SAW2 G 1 bright A_SpawnItemEx("Blur_Saw2G")
+		SAW2 H 1 bright A_SpawnItemEx("Blur_Saw2H")
+		TNT1 A 0 A_PlaySound("weapons/sawfull")
+		goto Spawn
+	Death:
+		"####" "#" 0 A_ChangeFlag("NOGRAVITY", true)
+		"####" "#" 0 A_SpawnitemEx("BulletPuff_Standard")
+		"####" "#" 0 A_SpawnitemEx("BulletPuff_Standard")
+		"####" "#" 0 A_SpawnitemEx("BulletPuff_Standard")
+		"####" "#" 35 bright A_Explode
+		stop
 	}
 }

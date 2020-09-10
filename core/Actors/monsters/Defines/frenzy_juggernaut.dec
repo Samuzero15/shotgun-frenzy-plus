@@ -97,7 +97,7 @@ actor sfJuggernaught : FPlus_Monster 30175
 			JUGA A 10
 			NULL A 0 A_SpawnItem("MassiveGoreExplosion",0,32)
 			NULL A 30
-			NULL A -1 A_BossDeath
+			NULL A 1 A_BossDeath
 			goto Super::FadeOut.NoRaise
   }
 }

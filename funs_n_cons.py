@@ -155,7 +155,6 @@ def acs_compile(rootDir, sourceDir, part):
             if file.endswith(".acs"):
                 fileslist+=1
     
-    
     current = 0;
     for root, dirs, files in os.walk(os.getcwd()):
         for file in files:
@@ -174,14 +173,24 @@ def acs_compile(rootDir, sourceDir, part):
                 # time.sleep(1)
                 current+=1;
                 printProgress(current, fileslist, 'Compiled', 'acs files. \t(' + f_names + ')', 1, BAR_SIZE,  "--> ACS compiling completed!")
-                if(os.path.isfile(os.path.join(root, 'acs.err'))):
+                acs_err = os.path.join(root, 'acs.err')
+                
+                if os.path.isfile(acs_err):
                     os.chdir(root);
                     os.system('cls')
                     with open('acs.err', 'rt') as errorlog:
                         print(errorlog.read())
                         errorlog.close()
                     os.remove(os.path.join(root, 'acs.err'))
-                    print("\n-- Fix those errors and try again. --")
+                    print("\n-- Fix those errors and try again, compilation failed. --")
+                    sys.exit()
+                
+                # Check this if the output file was'nt created.
+                if not os.path.isfile(os.path.join(acs_dir, f_name + '.o')):
+                    os.chdir(root);
+                    os.system('cls')
+                    if(os.path.isfile(acs_err)): os.remove(acs_err)
+                    print("\n-- The expected file was'nt created, compilation failed. --")
                     sys.exit()
                 
     os.chdir(rootDir)
