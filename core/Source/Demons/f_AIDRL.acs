@@ -408,7 +408,8 @@ script 120 OPEN
         thing_hate(109, g_Status + 100, 4);
         thing_hate(110, g_Status + 100, 4);
 	
-	
+		// Hope this fixes the infinite wave's bug.
+		if(g_GuardianWave) break;
 	
 	
 	

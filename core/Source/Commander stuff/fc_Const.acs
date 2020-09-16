@@ -6,8 +6,57 @@
 // building construction functions
 #library "fc_Const"
 
+#import "f_tip.acs"
+#import "fp_ptdir.acs"
 #import "f_IntDB.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
+
+
+Script "SFPlus_BuildStructure" (int which){
+	
+	// Setup times.
+	int time = 1;
+	int build_progtip = 0;
+	// Lock the techs, as they're being builded right now.
+	switch(which){
+		case 1: 
+			Tech_Set(FP_TECH_GENLAB, FP_TECHF_LOCK); time = 5; 
+			build_progtip = FP_PTID_GENLAB;
+		break;
+		case 2: Tech_Set(FP_TECH_ARMORY, FP_TECHF_LOCK); time = 5; 
+			build_progtip = FP_PTID_ARMORY;
+		break;
+		case 3: Tech_Set(FP_TECH_MECHFA, FP_TECHF_LOCK); time = 10; 
+			build_progtip = FP_PTID_MECHFA;
+		break;
+		case 4: Tech_Set(FP_TECH_REFINE, FP_TECHF_LOCK); time = 10; 
+			build_progtip = FP_PTID_REFINE;
+		break;
+		case 5: Tech_Set(FP_TECH_MARCOM, FP_TECHF_LOCK); time = 15; 
+			build_progtip = FP_PTID_MARCOM;
+		break;
+		case 6: Tech_Set(FP_TECH_NUKESY, FP_TECHF_LOCK); time = 30; 
+			build_progtip = FP_PTID_NUKESY;
+		break;
+		default: log(s:"(SFPlus_BuildStructure): Invalid Structure."); terminate; break;
+	}
+	
+	// Run the timer.
+	int slot = Notify_QueueFreeSpace(); // Allocate a new space for the notifier
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, build_progtip, time, slot);// Call the progress script.
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
+	
+	//Then, build!
+	switch (which) {
+		case 1: acs_execute(200, 0, 0, 0, 0); break;
+		case 2: acs_execute(250, 0, 0, 0, 0); break;
+		case 3: acs_execute(300, 0, 0, 0, 0); break;
+		case 4: acs_execute(350, 0, 0, 0, 0); break;
+		case 5: acs_execute(400, 0, 0, 0, 0); break;
+		case 6: acs_execute(450, 0, 0, 0, 0); break;
+	}
+}
 
 // line construction
 function void c_LineSet (int lineid, str texture, int tex_side, int trans, int trans_add)

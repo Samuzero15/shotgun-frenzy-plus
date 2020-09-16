@@ -111,12 +111,23 @@ FP_TECHD_MARCOM_IONCAN		= "Allows you to fire the Mighty Ion Cannon.\n"
 FP_TECHD_MARCOM_CPULSE		= "You core gains the capacity to create special effects\n"
 							  "that affects in the battle field.";
 							 
-FP_SUPCD_AIRSTK_1			= "Mark first point for your airstrike.";
-FP_SUPCD_AIRSTK_2			= "Mark second point for your airstrike.";
+FP_SUPCD_AIRSTK_POINT		= "Marks a target point for your airstrike attack.";
+FP_SUPCD_AIRSTK_LINE_1		= "Marks the first target point for a line of tagets.";
+FP_SUPCD_AIRSTK_LINE_2		= "Mark first point for your airstrike.";
+FP_SUPCD_AIRSTK_EXE			= "Attacks all the selected target points!." 
+							  "\nPrice depends on the amount of targets placed before the assault.";
+FP_SUPCD_AIRSTK_CANCEL		= "Clears all airstrike markers.";
+FP_SUPCD_AIRSTK_WAVES 		= "This will change the number of attacks made in a single target"
+							  "\n more waves implies more delay on cool down"
+							  "\n and more expensive costs, but also causes more chaos.";
+
 FP_SUPCD_CPULSE				= "Activate a core pulse.";
-FP_SUPCD_CPULSE_HEAL		= "Healing pulse. \nRestores all batteries and core's Hp.";
+FP_SUPCD_CPULSE_HEAL		= "Healing pulse. \nHeals gradually all current working cores for 10 seconds.";
 FP_SUPCD_CPULSE_CRIPPLE		= "Cripple pulse. \nDamages all monsters in the battlefield.";
-FP_SUPCD_CPULSE_HALT		= "Halt pulse. \nHolds up the monster spawning for 30 seconds.";
+FP_SUPCD_CPULSE_SMITE		= "Smite pulse. \nGreatly damages the monsters inside of the risked sector.";
+FP_SUPCD_CPULSE_REVIVE		= "Revive pulse. \nFully heals the current risked sector's core.";
+FP_SUPCD_CPULSE_HALT		= "Halt pulse. \nHolds up the monster spawning for 60 seconds.";
+
 FP_SUPCD_MARK_ATTACK		= "Notify your allies to attack a specific point.";
 FP_SUPCD_MARK_DEFEND		= "Notify your allies to defend a specific point.";
 FP_SUPCD_MARK_DEPLOY		= "Notify your allies to deploy something in a "

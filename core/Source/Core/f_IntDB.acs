@@ -29,6 +29,7 @@
 #import "fl_PUpDir.acs"
 #import "fl_techs.acs"
 #import "fp_kshud.acs"
+#import "fp_ptdir.acs"
 #include "zcommon.acs"
 #include "acsutils.ach"
 
@@ -36,6 +37,7 @@
 int g_Status;
 int g_SkillScore;
 int g_SpecialPortal;
+int g_GuardianWave;
 //int g_AIDirector_TrackRockets;
 //int g_AIDirector_TrackPlasma;
 //int g_AIDirector_TrackFlamer;
@@ -102,6 +104,8 @@ int p_Streak[31];
 int p_StreakHi[31];
 int p_StreakLevel[31];
 int p_TipQue[10];
+int p_TipProcess[10];// Timer signal (True if the tip is using a timed or process script)
+
 int p_TotalPlayerDeaths;
 int p_Combo[31];
 int p_SplatCombo[31];
@@ -298,4 +302,6 @@ script "SFPlus_InitializeEverything" OPEN{
 	SFPlus_DefineMechUps();
 	SFPlus_DefineTechs();
 	SFPlus_DefinePlayUps();
+	
+	ProgTip_Init();
 }

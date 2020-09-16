@@ -14,6 +14,7 @@
 #import "fl_PUpDir.acs" // HEHEh, BOI.
 #import "fp_comcmd.acs"
 #import "fl_techs.acs"
+#import "fc_AStr.acs"
 
 #include "acsutils.ach"
 #include "samu_tools.ach"
@@ -123,6 +124,7 @@ Script "SamuTerm_VariableSync" ENTER{
 		SetInventory("c_allow_turret", 		allow_turret_C());
 		SetInventory("c_timer_turret", 		c_allow_turret);
 		SetInventory("c_timer", 		Timer());
+		SetInventory("pr_cmd_airstrike", AirStrike_GetPrice());
 		SyncAllMechaPrices();
 		
 		delay(1);

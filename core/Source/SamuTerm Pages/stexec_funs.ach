@@ -112,6 +112,8 @@ function void STExecute_Shutdown(void){
 	pagetags[STTAGS_ALPHA] = 0;
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
+	comphover = -1;
+	lasthover = -2;
 	exitResult = -1;
 }
 
@@ -122,6 +124,8 @@ function void STExecute_Close(void){
 	pagetags[STTAGS_ALPHA] = 0;
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
+	comphover = -1;
+	lasthover = -2;
 	exitResult = 0;
 	localambientsound("Amy/Farewell", 127);
 }

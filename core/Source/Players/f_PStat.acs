@@ -17,6 +17,8 @@
 #include "zcommon.acs"
 #include "samu_tools.ach"
 
+str Stats_PlayerNames[32];
+
 // player dies
 script 52 DEATH
 {
@@ -58,7 +60,8 @@ else{
     
     // display message
     if(PlayerCount() < 3){
-          f_TipShow("DEATH", "", "Has Fallen!", 10);
+		   Notify_Player_Death();
+          //f_TipShow("DEATH", "", "Has Fallen!", 10);
     }
 	
 	// a nice pretty message for the loser to make them think on the bright side
@@ -144,8 +147,12 @@ script 53 ENTER
 	p_StreakLevel[playernumber()] = 0;
 	//[Samu] Bruh...
     //ConsoleCommand("setslot 8 Flamer FlamerS BFG BFGS BoomerCannon");
-    f_TipShow("PLAYER", "", "Has entered the game...", 10);
-    
+    //f_TipShow("PLAYER", "", "Has entered the game...", 10);
+    Notify_Player_Enter();
+	
+	//Save the name for disconnect cases.
+	Stats_PlayerNames[playernumber()] = strparam(n:0);
+	
     // perform respawn actions
     acs_executealways(54, 0, 0, 0, 0);
 }
@@ -201,24 +208,44 @@ script 54 RESPAWN
 	
 }
 
+script "SFPlus_NameUpdate" ENTER {
+	// If this boi decides to change the name.
+	while(PlayerInGame(PlayerNumber())){
+		if(StrCmp(Stats_PlayerNames[Playernumber()], strparam(n:0)) != 0){
+			Stats_PlayerNames[Playernumber()] = strparam(n:0);
+		}
+		delay(1);
+	}
+}
+
 script 57 (int num) DISCONNECT 
 {
 	//PrintBold(d:ActivatorTID());
 	//PrintBold(d:ACS_ExecuteWithResult(599,0,0,0));
 	//PrintBold(d:ThingCountName("TurretHeadBase", 0));
 	//PrintBold(d:ThingCountName("TurretFlame_Head", 0));
+	
+	// Clean things leftovers by player.
 	Thing_Damage(990+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(990+num);
+	Thing_Damage(30000+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(30000+num);
 	// Unfreeze the player, to avoid bugs.
-	
+	SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
+	SetPlayerProperty(0, 0, PROP_FROZEN);
 	//log(s:"Last commander: ", n:c_Commander+1);
 	if(c_Commander == num){
 		SetPlayerProperty(0, 1, PROP_TOTALLYFROZEN);
 		SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 		// [Samu] Bug: Spectating from commander will cause a freeze on the player.
-		Thing_Remove(3568); // Remove the spawn blocker.
+		Thing_Remove(3568); // Remove the spawn blocker at least.
 		c_Commander = 99;
 	}
+	
+	if (Stats_PlayerNames[num] != 0){ // Check if the player has joined to the game at least once.
+		 Notify_Player_Leave(Stats_PlayerNames[num]);
+	}
+	Stats_PlayerNames[num] = 0;
 }
 
 script 599 (void)

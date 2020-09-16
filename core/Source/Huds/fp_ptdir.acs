@@ -1,0 +1,206 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_ptdir.acs
+// Progressive notifications directory.
+
+// Basically, the progressive tips (notifications) hint you the progress on something.
+// Like the building of a structure, or the loading of pulses or ion cannon charges
+// This directory can pre-load the properties, and makes it easier to change them.
+// It can also hold a temporary progressive notification too, customized on any part of the script.
+// Note this is only the visuals, for the wait time, pass it through the script parameter.
+
+#library "fp_ptdir"
+#include "zcommon.acs"
+
+#libdefine FP_PTID_GENLAB 	0
+#libdefine FP_PTID_ARMORY 	1
+#libdefine FP_PTID_MECHFA 	2
+#libdefine FP_PTID_REFINE 	3
+#libdefine FP_PTID_MARCOM 	4
+#libdefine FP_PTID_NUKESY 	5
+#libdefine FP_PTID_AIRSTK 	6
+#libdefine FP_PTID_IONCAN_1 7
+#libdefine FP_PTID_IONCAN_2 8
+#libdefine FP_PTID_CPULSE 	9
+
+#define FP_PROGTIP_PROPS 7
+#define FP_PROGTIP_NUMB 10
+#define FP_PROGTIP_FIELDS FP_PROGTIP_PROPS * FP_PROGTIP_NUMB
+
+int progress_tip[FP_PROGTIP_FIELDS];
+int progress_tip_tmp[FP_PROGTIP_PROPS];
+int progress_tip_stack;
+
+
+
+function void ProgTip_Init(void){
+	// Pre-Loaded progress notifications.
+	ProgTip_DefaultProps(-1);// Initialize temporary progress notification
+	
+	int ptid = ProgTip_Def(FP_PTID_GENLAB); // Genlab
+	ProgTip_SetMsg		(ptid, "Genetics Lab is building...");
+	ProgTip_SetImg		(ptid, "CC01");
+	ProgTip_SetEndMsg1	(ptid, "Genetics Lab Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Now the marines will heal themselves.");
+	ProgTip_SetPreSound	(ptid, "cv/genetics1");
+	ProgTip_SetPostSound(ptid, "cv/genetics2");
+	
+	ptid = ProgTip_Def(FP_PTID_ARMORY);  // Armory
+	ProgTip_SetMsg		(ptid, "Armory is building....");
+	ProgTip_SetImg		(ptid, "CC02");
+	ProgTip_SetEndMsg1	(ptid, "Armory Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Lock and load everyone.");
+	ProgTip_SetPreSound	(ptid, "cv/armory1");
+	ProgTip_SetPostSound(ptid, "cv/armory2");
+
+	ptid = ProgTip_Def(FP_PTID_MECHFA);  // Mech factory
+	ProgTip_SetMsg		(ptid, "Mech Factory is building....");
+	ProgTip_SetImg		(ptid, "CC03");
+	ProgTip_SetEndMsg1	(ptid, "Mech Factory Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Heavy machinery awaits you in the base.");
+	ProgTip_SetPreSound	(ptid, "cv/dem1");
+	ProgTip_SetPostSound(ptid, "cv/dem2");
+
+	ptid = ProgTip_Def(FP_PTID_REFINE);  // Refinery
+	ProgTip_SetMsg		(ptid, "Refinery is building....");
+	ProgTip_SetImg		(ptid, "CC04");
+	ProgTip_SetEndMsg1	(ptid, "Refinery Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Extra credits can now be earned periodically.");
+	ProgTip_SetPreSound	(ptid, "cv/refinery1");
+	ProgTip_SetPostSound(ptid, "cv/refinery2");
+
+	ptid = ProgTip_Def(FP_PTID_MARCOM);  // Marine Command
+	ProgTip_SetMsg		(ptid, "Marine Command is building....");
+	ProgTip_SetImg		(ptid, "CC05");
+	ProgTip_SetEndMsg1	(ptid, "Marine Command Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "The commander can aid the marines with some extra support.");
+	ProgTip_SetPreSound	(ptid, "cv/mcom1");
+	ProgTip_SetPostSound(ptid, "cv/mcom2");
+		
+	ptid = ProgTip_Def(FP_PTID_NUKESY);  // Nuclear Sylo
+	ProgTip_SetMsg		(ptid, "Nuclear Sylo is building....");
+	ProgTip_SetImg		(ptid, "BUTTON");
+	ProgTip_SetEndMsg1	(ptid, "Nuclear Sylo Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "The doomsday-clock is ready to be launched in the command chair.");
+	ProgTip_SetPreSound	(ptid, "cv/nsylo1");
+	ProgTip_SetPostSound(ptid, "cv/nsylo2");
+	
+	ptid = ProgTip_Def(FP_PTID_IONCAN_1);  // Ion cannon charges
+	ProgTip_SetMsg		(ptid, "Preparing Ion Cannon...");
+	ProgTip_SetEndMsg1	(ptid, "Firing ION CANNON!");
+	ProgTip_SetEndMsg2	(ptid, "Take Cover!");
+	ProgTip_SetImg		(ptid, "CM79");
+	
+	ptid = ProgTip_Def(FP_PTID_IONCAN_2);  // Ion cannon charges
+	ProgTip_SetMsg		(ptid, "Ion Cannon is re-charging...");
+	ProgTip_SetEndMsg1	(ptid, "Ion Cannon re-charged");
+	ProgTip_SetEndMsg2	(ptid, "Ready to fire!");
+	ProgTip_SetImg		(ptid, "CM79");
+	
+	ptid = ProgTip_Def(FP_PTID_AIRSTK);  // Air Strike charges
+	ProgTip_SetMsg		(ptid, "Air-Strike cooldown...");
+	ProgTip_SetEndMsg1	(ptid, "Air-Strike ready!");
+	ProgTip_SetEndMsg2	(ptid, "Awaiting orders...");
+	ProgTip_SetImg		(ptid, "CM76");
+	ProgTip_SetSilent	(ptid, True);
+		
+	ptid = ProgTip_Def(FP_PTID_CPULSE);  // Core Pulse Charge
+	ProgTip_SetMsg		(ptid, "Core is re-charging...");
+	ProgTip_SetEndMsg1	(ptid, "Core Pulse Recharged");
+	ProgTip_SetImg		(ptid, "CM78");
+}
+
+function int ProgTip_Def(int id){
+	int res = -1;
+	if(id < 0 || id >= FP_PROGTIP_NUMB){
+		log(s:"ProgTip: Unknown identifier:",d:id,s:"!");
+	}
+	else{
+		ProgTip_DefaultProps(id);
+		res = id;
+	}
+	return res;
+}
+
+function void ProgTip_DefaultProps(int which){
+	ProgTip_SetMsg		(which, "Progress");
+	ProgTip_SetImg		(which, "INFO");
+	ProgTip_SetEndMsg1	(which, "Done!");
+	ProgTip_SetEndMsg2	(which, "Ready to go!");
+	ProgTip_SetPreSound	(which, 0);
+	ProgTip_SetPostSound(which, 0);
+	ProgTip_SetSilent	(which, false);
+}
+
+// Getters
+// -1 Will load the temporary properties of a custom notification!
+function int ProgTip_GetMsg(int ptid){
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid)]; 
+	return progress_tip_tmp[0];
+}
+function int ProgTip_GetImg(int ptid){ 	
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 1]; 
+	return progress_tip_tmp[1];
+}
+function int ProgTip_GetEndMsg1(int ptid){ 		
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 2];
+	return progress_tip_tmp[2];
+}
+function int ProgTip_GetEndMsg2(int ptid){ 		
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 3];
+	return progress_tip_tmp[3];
+}
+function int ProgTip_GetPreSound(int ptid){ 	
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 4];
+	return progress_tip_tmp[4];
+}
+function int ProgTip_GetPostSound(int ptid){ 
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 5];
+	return progress_tip_tmp[5];
+}
+
+function int ProgTip_GetSilent(int ptid){ 
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 6];
+	return progress_tip_tmp[6];
+}
+
+
+// Setters
+// -1 Will save the temporary properties of a custom notification!
+// Yes, you can make a customized notification if you wish.
+function void ProgTip_SetMsg(int ptid, str msg){
+	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid)] = msg; 
+	else			progress_tip_tmp[0] = msg;
+}
+
+function void ProgTip_SetImg(int ptid, str img){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 1] = img; 
+	else			progress_tip_tmp[1] = img;
+}
+		
+function void ProgTip_SetEndMsg1(int ptid, str msg){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 2] = msg;
+	else			progress_tip_tmp[2] = msg;
+}
+
+function void ProgTip_SetEndMsg2(int ptid, str msg){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 3] = msg;
+	else			progress_tip_tmp[3] = msg;
+}
+
+function void ProgTip_SetPreSound(int ptid, str snd){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 4] = snd;
+	else			progress_tip_tmp[4] = snd;
+}
+
+function void ProgTip_SetPostSound(int ptid, str snd){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 5] = snd;
+	else			progress_tip_tmp[5] = snd;
+}
+
+function void ProgTip_SetSilent(int ptid, bool silent){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 6] = silent;
+	else			progress_tip_tmp[6] = silent;
+}

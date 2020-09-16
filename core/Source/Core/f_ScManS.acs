@@ -88,12 +88,15 @@ script 100 OPEN
         acs_execute(405, 0, 0, 0, 0);
         
         // the game has started
-                f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "30 seconds...", 0);
+                //f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "30 seconds...", 0);
+				Notify_Message("DEMON WAVE spawns in","30 seconds...", "DEMONT", 0);
                 acs_execute(129, 0, 1, 30, 0);
         delay(35 * 25);
-                f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "5 seconds...", 0);
+                //f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "5 seconds...", 0);
+				Notify_Message("DEMON WAVE spawns in","5 seconds...", "DEMONT", 0);
         delay(35 * 5);
-                f_TipShow("DEMONT", "DEMON WAVE", "Give em hell!", 0);
+                //f_TipShow("DEMONT", "DEMON WAVE", "Give em hell!", 0);
+				Notify_Message("DEMON WAVE is spawning!","Give'em Hell!", "DEMONT", 0);
                 
         // remove first blocker
         thing_remove(50);
@@ -131,7 +134,7 @@ script 100 OPEN
         }
         
         // kill remaining demons
-        f_TipShow("DEMONT", "DEMON WAVE", "Kill the remaining demons...", 0);
+		Notify_Message("DEMON WAVE is flawing!", "Finish cleaning the remaining demons", "DEMONT", 0);
         acs_suspend(120, 0);
         
         // wait until most of the demons are dead

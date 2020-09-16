@@ -17,11 +17,6 @@
 
 //check if we're allowed to put turrets down again
 
-
-//        if (l_TextID == 0)      hudmessage(s:"$", d:l_Price, s:" - ", s:l_Name; 1, 126, cr_gold, 50.1, 419.1, 15.0);
-
-// ***********************************************************
-
 script "SFPlus_CMD_CallBuildScript" (int which){
 	CMDEvent (2, which, 0, 0);
 }
@@ -36,31 +31,53 @@ script "SFPlus_CMD_CallMarkScript" (int which){
 
 script "SFPlus_CMD_CallSupportScript" (int which){
 	int scriptcode;
+	int arg1;
 	switch(which){
-			case 1: //Point 1
-				scriptcode = 301;		break;
-			case 2: //Point 2
-				scriptcode = 302;		break;
+			case 5: //Point
+				scriptcode = 300;		
+				arg1 = 0;
+				break;
+			case 6: //Execute attack.
+				scriptcode = 301;	
+				break;
+			case 1: //Line's point 1
+				scriptcode = 300;		
+				arg1 = 1;
+				break;
+			case 2: //Line's point 2
+				scriptcode = 300;		
+				arg1 = 2;
+				break;
 			case 3: //Cancel airstrike
-				scriptcode = 303;		break;
+				scriptcode = 300;		
+				arg1 = -1;
+				break;
+			case 7: //Point
+				scriptcode = 300;		
+				arg1 = -2;
+				break;
 				
 			case 4: //Ion cannon.
 				scriptcode = 304;		break;
 				
 			case 10: //Core pulses. (Heal)
-				scriptcode = 404;		break;
+				scriptcode = 400;		
+				arg1 = 4;
+				break;
 			case 11: //Core pulses. (Cripple)
-				scriptcode = 402;		break;
+				scriptcode = 400;		
+				arg1 = 1;
+				break;
 			case 12: //Core pulses. (Halt)
-				scriptcode = 403;		break;
+				scriptcode = 400;		
+				arg1 = 5;
+				break;
 				
 			case 66: // Nuke trigger. // Soch deth, soch destruction! -Martin-
 				scriptcode = 451;		break;
 			default: terminate;
 		}
-	CMDEvent(8, scriptcode, 0, 0);
-	//fc_NewButton (4, 79, 8, 304, 0, 0, 79, 18, 12, "");
-		
+	CMDEvent(8, scriptcode, arg1, 0);
 }
 
 script "SFPlus_CMD_CallSpawnScript" (int which, int price){
@@ -112,16 +129,7 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
     if (l_Event == 2)
     {
         // waiting time
-        f_TipShow ("BUTTON", "", "", l_EventArg1 + 10);
-        
-		switch(l_EventArg1){
-			case 1: Tech_Set(FP_TECH_GENLAB, FP_TECHF_LOCK); break;
-			case 2: Tech_Set(FP_TECH_ARMORY, FP_TECHF_LOCK); break;
-			case 3: Tech_Set(FP_TECH_MECHFA, FP_TECHF_LOCK); break;
-			case 4: Tech_Set(FP_TECH_REFINE, FP_TECHF_LOCK); break;
-			case 5: Tech_Set(FP_TECH_MARCOM, FP_TECHF_LOCK); break;
-			case 6: Tech_Set(FP_TECH_NUKESY, FP_TECHF_LOCK); break;
-		}
+        ACS_NamedExecuteAlways("SFPlus_BuildStructure",0, l_EventArg1);
     }
     
     // research and change techflag
@@ -132,106 +140,102 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 		switch(l_EventArg1){
 			case 12:
 				Tech_Set(FP_TECH_GENLAB_HEALTH1, FP_TECHF_DONE);
-				f_TipShow ("CM12", "Human Engineering Phase 1", "Researched!", 1);
+				Notify_Research("HUMAN ENG. (PHASE 1)", "CM12");
 				acs_execute(617, 0, 11, 0, 0);
 			break;
 			
 			case 13:
 				Tech_Set(FP_TECH_GENLAB_HEALTH2, FP_TECHF_DONE);
-				f_TipShow ("CM13", "Human Engineering Phase 2", "Researched!", 1);
+				Notify_Research("HUMAN ENG. (PHASE 2)", "CM13");
 				acs_execute(617, 0, 12, 0, 0);
 			break;
 			
 			case 15:
 				Tech_Set(FP_TECH_GENLAB_SPEEDB, FP_TECHF_DONE);
-				f_TipShow ("CM15", "Adrenaline", "Researched!", 1);
+				Notify_Research("ADRENALINE", "CM15");
 				acs_execute(617, 0, 0, 0, 0);
 			break;
 			
 			case 16:
 				Tech_Set(FP_TECH_GENLAB_ARMOR, FP_TECHF_DONE);
-				f_TipShow ("CM16", "Steel Plating", "Researched!", 1);
+				Notify_Research("STEEL PLATING", "CM16");
 				acs_execute(617, 0, 1, 0, 0);
 			break;
 			
 			case 17:
 				Tech_Set(FP_TECH_GENLAB_RESISB, FP_TECHF_DONE);
-				f_TipShow ("CM17", "Resister Unit", "Researched!", 1);
+				Notify_Research("REISTER UNIT", "CM17");
 				acs_execute(617, 0, 2, 0, 0);
 			break;
 			
 			case 18:
 				Tech_Set(FP_TECH_GENLAB_REGENB, FP_TECHF_DONE);
-				f_TipShow ("CM18", "Asorber Unit", "Researched!", 1);
+				Notify_Research("ABSORBER UNIT", "CM18");
 				acs_execute(617, 0, 3, 0, 0);
 			break;
 			
 			case 26:
 				Tech_Set(FP_TECH_ARMORY_ARMS1, FP_TECHF_DONE);
-				f_TipShow ("CM26", "Arms Phase 1", "Researched!", 1);
+				Notify_Research("ARMS (PHASE 1)", "CM26");
 				acs_execute(617, 0, 4, 0, 0);
 			break;
 			
 			case 27:
 				Tech_Set(FP_TECH_ARMORY_ARMS2, FP_TECHF_DONE);
-				f_TipShow ("CM27", "Arms Phase 2", "Researched!", 1);
+				Notify_Research("ARMS (PHASE 2)", "CM27");
 				acs_execute(617, 0, 5, 0, 0);
 			break;
 			
 			case 28:
 				Tech_Set(FP_TECH_ARMORY_BOOMRN, FP_TECHF_DONE);
-				f_TipShow ("CM28", "Boomshot Rounds", "Researched!", 1);
+				Notify_Research("BOOMSHOT ROUNDS", "CM28");
 				acs_execute(617, 0, 6, 0, 0);
 			break;
 			
 			case 29:
 				Tech_Set(FP_TECH_ARMORY_AMMOBP, FP_TECHF_DONE);
-				f_TipShow ("CM29", "Ammo Backpack", "Researched!", 1);
+				Notify_Research("AMMO BACKPACK", "CM29");
 				acs_execute(617, 0, 7, 0, 0);
 			break;
 			
 			case 44:
 				Tech_Set(FP_TECH_MARCOM_ADVSYS, FP_TECHF_DONE);
-				f_TipShow ("CM44", "Advanced Systems", "Researched!", 1);
+				Notify_Research("ADVANCED TECHS", "CM44");
 			break;
 			
 			case 48:
 				//[Samu] Looks like the drones we're meant to used by the commander too.
-				//SetTechFlag(TECH_HEALT1);
-				
-				f_TipShow ("CM48", "Drone Tech", "Researched!", 1);
+				Notify_Research("Drone tech", "CM48");
 			break;
 			
 			case 53:
 				Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
-				f_TipShow ("CM53", "Ion Heat", "Researched!", 1);
+				Notify_Research("ION CANNON", "CM53");
 			break;
 			
 			case 54:
 				Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
-				f_TipShow ("CM54", "Air Support", "Researched!", 1);
+				Notify_Research("AIR SUPPORT", "CM54");
 			break;
 			
 			case 56:
 				Tech_Set(FP_TECH_REFINE_PUMP1, FP_TECHF_DONE);
-				f_TipShow ("CM56", "Processing Phase 1", "Researched!", 1);
+				Notify_Research("PROCESSING PHASE 1", "CM56");
 			break;
 			
 			case 57:
 				Tech_Set(FP_TECH_REFINE_PUMP2, FP_TECHF_DONE);
-				f_TipShow ("CM57", "Processing Phase 2", "Researched!", 1);
+				Notify_Research("PROCESSING PHASE 2", "CM57");
 			break;
 			
 			case 66: 
-				//[Samu] Not used. Probably was there to give the players a rage rune for a short time.
-				//SetTechFlag(TECH_HEALT1);
 				Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
-				f_TipShow ("CM66", "Core Pulses", "Researched!", 1);
+				Notify_Research("CORE PULSES",  "CM66");
 			break;
 			
 			case 71:
 				Tech_Set(FP_TECH_ARMORY_STIMPK, FP_TECHF_DONE);
-				f_TipShow ("CM71", "Stimpacks", "Researched!", 1);
+				Notify_Research("STIMPACKS", "CM71");
 				acs_execute(617, 0, 8, 0, 0);
 			break;
 		}
@@ -251,18 +255,18 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 			
 			// show the message
 			switch(l_EventArg2){
-				case 10: f_TipShow ("CM32", "Ammo Dispenser", "Commander is building an Ammo Dispenser...", 2); break;
-				case 11: f_TipShow ("CM33", "Health Dispenser", "Commander is building a Health Dispenser...", 2); break;
-				case 12: f_TipShow ("CM33", "Sandbags", "Commander is building some sandbags...", 2); break;
-				case 1: f_TipShow ("CM40", "Bullet Turret", "Commander is building a Bullet Turret...", 2); break;
-				case 2: f_TipShow ("CM41", "Rocket Turret", "Commander is building a Rocket Turret...", 2); break;
-				case 3: f_TipShow ("CM42", "Plasma Turret", "Commander is building a Plasma Turret...", 2); break;
+				case 10: Notify_Deploy("Ammo Dispenser", 	"CM32"); break;
+				case 11: Notify_Deploy("Health Dispenser", 	"CM33"); break;
+				case 12: Notify_Deploy("Sandbags", 			"CM33"); break;
+				case 1:  Notify_Deploy("Bullet Turret", 	"CM40");  break;
+				case 2:  Notify_Deploy("Rocket Turret",		"CM41"); break;
+				case 3:  Notify_Deploy("Plasma Turret",		"CM42"); break;
 				
-				case 4: f_TipShow ("CM46", "Tesla Turret", "Commander is building a Tesla Turret...", 2); break;
-				case 5: f_TipShow ("CM47", "Flame Turret", "Commander is building a Flame Turret...", 2); break;
-				case 6: f_TipShow ("CM47", "Chaingun Turret", "Commander is building a Chaingun Turret...", 2); break;
-				case 7: f_TipShow ("CM45", "Shotgun Turret", "Awaiting Construction...", 2); break;
-				case 8: f_TipShow ("CM43", "Rail Turret", "Awaiting Construction...", 2); break;
+				case 4:  Notify_Deploy("Tesla Turret",		"CM46"); break;
+				case 5:  Notify_Deploy("Flame Turret",		"CM47"); break;
+				case 6:  Notify_Deploy("Chaingun Turret", 	"CM47"); break;
+				case 7:  Notify_Deploy("Shotgun Turret", 	"CM45"); break;
+				case 8:  Notify_Deploy("Rail Turret", 		"CM43"); break;
 			}   
 			
 			c_credits -= price;
@@ -331,7 +335,9 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 		*/
 		
 		switch(l_EventArg2){
-			case 13: f_TipShow ("CM30", "Minefield", "Commander deployed some mines, priming now....", 2); break;
+			case 13: 
+				Notify_Message("Making Minefield","Commander is spreading some mines...", "CM30", 2);
+			break;
 		} 
     }
     
@@ -339,7 +345,14 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
     if (l_Event == 8)
     {
         // run the script
-        acs_execute(l_EventArg1, 0, l_EventArg2, l_EventArg3, 0);
+		if(l_EventArg1 == 300){
+			ACS_NamedExecute("SFPlus_AirStrikeTarget", 0, l_EventArg2);
+		}else if(l_EventArg1 == 301){
+			ACS_NamedExecute("SFPlus_AirStrikeAttack", 0);
+		}else if(l_EventArg1 == 400){
+			ACS_NamedExecute("SFPlus_CorePulse", 0, l_EventArg2);
+		}
+        else acs_execute(l_EventArg1, 0, l_EventArg2, l_EventArg3, 0);
     }
     
     // money bag spawn

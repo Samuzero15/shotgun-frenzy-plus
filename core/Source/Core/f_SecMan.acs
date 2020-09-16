@@ -76,13 +76,23 @@ script 100 OPEN
 	
 	if(time < 15) time = 15; // Just to keep a default timer.
 	acs_execute(129, 0, 1, time, 0);
-	f_TipShow("INFO", "DOORS BREACHED!", strParam(d:time, s:" seconds..."), 0);
+	Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
+	//f_TipShow("INFO", "DOORS BREACHED!", strParam(d:time, s:" seconds..."), 0);
 	
 	while(time != 0){
 		if(time == 10 || time == 5){
-			f_TipShow("INFO", "DOORS BREACHED!", strParam(d:time, s:" seconds..."), 0);
+			Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
 			
 		}
+		
+		if (m_CalcSector() == 0 && g_Status > 1){
+			// Check again if th sector is actually clear.
+			acs_terminate(129);// Kill the timer script.
+            acs_execute(103, 0, 0, 0, 0);
+			
+			terminate;
+            break;
+        }
 		
 		if(Time <= 5){
 			if (alarmsUsed == 0){
@@ -93,7 +103,7 @@ script 100 OPEN
 		delay(35);
 		time--;
 	}
-	f_TipShow("INFO", "DOORS BREACHED!", "Demons are entering!", 0);
+	Notify_Message("DOORS BREACHED!","Demons are entering!", "INFO", 0);
 	if (alarmsUsed == 0){
 		ambientsound("ATTACK", 125);
 	}
@@ -181,7 +191,8 @@ script 102 (void)
     // make sure there aren't any more batteries in the sector
     if (thingcount(0, 100 + g_Status) > 0)
     {
-        f_TipShow("INFO", "Battery Status", "One of our batteries have been destroyed!", 9);
+        //f_TipShow("INFO", "Battery Status", "One of our batteries have been destroyed!", 9);
+		Notify_Message("BATTERY DOWN!","One of our batteries has been destroyed!", "INFO", 0);
         terminate;
     }
     
@@ -191,16 +202,16 @@ script 102 (void)
     switch (g_Status)
     {
         case 1:
-            f_TipShow("INFO", "Sector 1 Battery Status", "Destroyed!", 9);
+            Notify_Message("Sector 1 CORE DESTROYED!","We've lost the control of Sector 1", "INFO", 2);
             break;
         case 2:
-            f_TipShow("INFO", "Sector 2 Battery Status", "Destroyed!", 9);
+            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 2", "INFO", 2);
             break;
         case 3:
-            f_TipShow("INFO", "Sector 3 Battery Status", "Destroyed!", 9);
+            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 3", "INFO", 2);
             break;
         case 4:
-            f_TipShow("INFO", "Marine Core Status", "Destroyed! GAME OVER...", 9);
+            Notify_Message("Main CORE DESTROYED!", "The Hell Forces wins this round!", "INFO", 2);
             acs_execute(125, 0, 4, 0, 0);
             break;
     }
@@ -239,17 +250,24 @@ script 102 (void)
 // sector reclaimed
 script 103 (void)
 {
+	int i;
     // close doors/gates
     if (f_Doortype == 0)
     {
-        ceiling_lowerandcrush(100 + g_Status, f_Doorspeed, 2);
-        ceiling_lowerandcrush(99 + g_Status, f_Doorspeed, 2);
+		// Make sure the other sectors that aren't risked are completly shut. 
+		for(i = g_Status; i <= 4; i++){
+			ceiling_lowerandcrush(100 + i, f_Doorspeed, 2);
+			ceiling_lowerandcrush(99 + i, f_Doorspeed, 2);
+		}
         ambientsound("g/sector_reclaim", 125);
     }
     else
     {
-        floor_raisetohighest(100 + g_Status, f_Doorspeed);
-        floor_raisetohighest(99 + g_Status, f_Doorspeed);
+		// Make sure the other sectors that aren't risked are completly shut. 
+		for(i = g_Status; i <= 4; i++){
+			floor_raisetohighest(100 + i, f_Doorspeed);
+			floor_raisetohighest(99 + i, f_Doorspeed);
+		}
         ambientsound("g/sector_reclaim", 125);
     }
     
@@ -322,15 +340,15 @@ script 103 (void)
     switch (g_Status)
     {
         case 1:
-            f_TipShow("INFO", "Sector 1 Battery Status", "Restored!", 0);
+            Notify_Message("Sector 1 Recovered!", "The Sector 1 CORE has been restored!", "INFO", 2);
             thing_raise(101);
             break;
         case 2:
-            f_TipShow("INFO", "Sector 2 Battery Status", "Restored!", 0);
+            Notify_Message("Sector 2 Recovered!", "The Sector 2 CORE has been restored!", "INFO", 2);
             thing_raise(102);
             break;
         case 3:
-            f_TipShow("INFO", "Sector 3 Battery Status", "Restored!", 0);
+            Notify_Message("Sector 3 Recovered!", "The Sector 3 CORE has been restored!", "INFO", 2);
             thing_raise(103);
             break;
     }
@@ -383,7 +401,7 @@ script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
 			if(p_TankSlot[playernumber()] == 2) secdelay = 2; //Give tank more time
 			else secdelay = 2; //Players
 			if(PlayerCount() < 3){
-				f_TipShow("PLAYER", "", "Has entered the sector...", 10);
+				Notify_Player("Entered the Sector", "PLAYER", 0);
 			}
 			delay(secdelay);
 			secdelay = 0;
@@ -412,7 +430,7 @@ script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
     {
         teleport_nostop(120, 0, 0);
         if(PlayerCount() < 3){
-             f_TipShow("PLAYER", "", "Has LEFT the sector...", 10);
+             Notify_Player("LEFT from sector", "PLAYER", 0);
         }
     }
 }

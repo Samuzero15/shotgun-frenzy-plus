@@ -82,6 +82,10 @@ ACTOR CommanderCam 2310
 			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
 			goto Spawn
 			*/
+		Spawn_StrikeMarker:
+			NULL A 1 A_SpawnItemEx("StrikeMarkerP", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			goto Spawn
 		Spawn_StrikeMarker1:
 			NULL A 1 A_SpawnItemEx("StrikeMarker1", 512, 0, 64, 0)
 			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
@@ -203,6 +207,10 @@ ACTOR CommanderCamLow 2320
 			NULL A 1 A_SpawnItemEx("StrikeMarker2", 128, 0, 64, 0)
 			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
 			goto Spawn
+		Spawn_StrikeMarker:
+			NULL A 1 A_SpawnItemEx("StrikeMarkerP", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			goto Spawn
 		Spawn_IonCannon:
 			NULL A 1 A_SpawnItemEx("IonBeam", 128, 0, 64, 0)
 			goto Spawn
@@ -253,6 +261,8 @@ ACTOR StrikeMarker
 
 }
 
+Actor StrikeMarker_Line : StrikeMarker {}
+
 ACTOR StrikeMarker1
 {
 	+NOBLOCKMAP
@@ -261,7 +271,8 @@ ACTOR StrikeMarker1
 	{
 		Spawn:
 		ASDT A 0
-		ASDT A 1 ACS_Execute(142, 0, 140, 0, 0)
+		TNT1 A 0 Thing_ChangeTID(0, 140) // Just in case
+		ASDT A 1 //ACS_Execute(142, 0, 140, 0, 0)
 		ASDT A -1
 		stop
 	}
@@ -276,12 +287,30 @@ ACTOR StrikeMarker2
 	{
 		Spawn:
 		ASDT A 0
-		ASDT A 1 ACS_Execute(142, 0, 141, 0, 0)
+		TNT1 A 0 Thing_ChangeTID(0, 141) // Just in case
+		ASDT A 1 //ACS_Execute(142, 0, 141, 0, 0)
 		ASDT A -1
 		stop
 	}
 
 }
+
+ACTOR StrikeMarkerP
+{
+	+NOBLOCKMAP
+	renderstyle add
+	States
+	{
+		Spawn:
+		ASDT A 0
+		TNT1 A 0 Thing_ChangeTID(0, ACS_ExecuteWithResult(143, 0)) // Just in case
+		ASDT A 1 //ACS_Execute(142, 0, 141, 0, 0)
+		ASDT A -1
+		stop
+	}
+
+}
+
 
 actor StrikerRocket
 {

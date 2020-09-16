@@ -2,6 +2,32 @@
 
 ## v0 - Before the beginning...
 
+#### -) (14 - 15 / 08 / 2020) [Better Air Strikes, and incoming Pulses.]
+	+) 2 New pulses WILL be fully implemented, SMITE and HEAL. (WIP)
+	// Wait, HEAL?, we did'nt had that already?
+		Yes and no, we had REVIVE, which actually fully heals all the Cores (Or at least the risked one.)
+		Heal will repair ALL Turrets in game (Thought it actually heals gradually all the cores right now, but I'll get that idea working soon.)
+		Smite is a cripple pulse, except its limited to the risked sector, and deals a whoopin 3000 dmg to the demons on the sector!
+	*) Small touches with the CMDer Terminal.
+	*) Replacing the old message functions with the new notifiers...
+	+) The spot light of this 2 days, an Air Strike menu overhaul!
+		Now, with the Air-strike menu, you can make Point Targeted attacks!
+		The amount of attacks made in the targets can be changed! (Between 1, 3 or 5 projectiles per target)
+		The airstrike will no longer be executed after making a line of targets. INSTEAD, you can plan the air strike strategy and THEN Activate it with the button!
+		Also you can cancel your Air-Strikes as well.
+		Depending on how complex is your plan, and how many attacks you require, The price of an air strike will vary.
+	*) Now, if a sector is re-captured too quickly, the timer will be reset (and re-shut all safe sectors doors).
+	*) Yet, some small other fixes in the Tip notifications...
+	*) Oh yeah, made some small touches on the blood particles, let's hope it reduces the incoming lag after doing an explosive attack... I think.
+
+#### -) (11 - 12 / 08 / 2020)
+	-) Removed the old progresive scripts for the construction and re-charging.
+	*) Revamped the progress counter and timer scripts, for a more general and extended use!
+	+) Added the fp_ptdir.acs file, which it contains a wrapper for the timed notifications.
+	*) Re-factoring the scripts a bit in the f_tip.acs file
+	+) Not an official feature. But, a small new core pulse is coming up to the game.
+	*) Now, if you spawn a turret in the command chair, the space will be checked before charging credits to the team.
+
 #### -) (9 / 08 / 2020) [Flak dualshot(? is here, and some more fixes]
 	*) Now, if a turret is not miss-placed (for occupied sector or things like that), credits will not be charged.
 	*) Yet another small fix on the play.py

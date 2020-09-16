@@ -52,7 +52,7 @@ script 250 (void)
 	Tech_Set(FP_TECH_ARMORY, FP_TECHF_DONE);
     
     // constructed message
-    f_TipShow ("BUTTON", "Armory", "Construction Complete!", 1);
+    //f_TipShow ("BUTTON", "Armory", "Construction Complete!", 1);
     
     // check bridge
     delay(35 * 2);

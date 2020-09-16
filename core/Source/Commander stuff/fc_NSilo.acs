@@ -33,7 +33,7 @@ script 450 (void)
 	Tech_Set(FP_TECH_NUKESY, FP_TECHF_DONE);
     
     // constructed message
-    f_TipShow ("BUTTON", "Nuclear Silo", "Construction Complete!", 1);
+    //f_TipShow ("BUTTON", "Nuclear Silo", "Construction Complete!", 1);
     
     delay(35 * 2);
     

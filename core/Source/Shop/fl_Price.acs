@@ -8,6 +8,7 @@
 #library "fl_Price"
 #import "fl_techs.acs"
 #import "f_intDB.acs"
+#import "fc_AStr.acs"
 #include "zcommon.acs"
 #include "acsutils.ach"
 #include "samu_tools.ach"
@@ -190,7 +191,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_cmd_turret_rail", 	1600);
 	Prices_add("pr_cmd_disp_health", 	600);
 	Prices_add("pr_cmd_disp_ammo", 		600);
-	Prices_add("pr_cmd_airstrike", 		850);
+	//Prices_add("pr_cmd_airstrike", 		850);// Updateable price.
 	Prices_add("pr_cmd_moneybag", 		3000);
 	Prices_add("pr_cmd_minefield", 		750);
 	Prices_add("pr_cmd_sandbags", 		200);
@@ -216,6 +217,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_pu_runesync",			2);
 	
 	//Prices_add("pr_mu_auto_repair", 	3500); // Heh. Another future thing.
+	//ACS_NamedExecute("SFPlus_UpdatePrices", 0);
 }
 
 function void Prices_add(str inv, int price){
@@ -247,6 +249,10 @@ function int Prices_getIndex(str key){
 	}
 	
 	return indx;
+}
+
+function void Prices_Set(str key,int value){
+	fp_Price[Prices_getIndex(key)][1] = value;
 }
 
 function int Prices_getValue_K(str key){

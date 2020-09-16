@@ -14,9 +14,22 @@
 #import "f_IntDB.acs"
 #import "fl_price.acs"
 #import "fl_techs.acs"
+#import "fp_ptdir.acs"
 
 #include "zcommon.acs"
+#include "acsutils.ach"
 #include "samu_tools.ach"
+
+
+
+#define TIP_NOTIFY_POS 1
+#define TIP_NOTIFY_ID 2
+
+#libdefine TIP_NOTIFY_COLORSET_COMM 0
+#libdefine TIP_NOTIFY_COLORSET_GOOD 1
+#libdefine TIP_NOTIFY_COLORSET_SPAWN 2
+#libdefine TIP_NOTIFY_COLORSET_BAD 3
+
 
 function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
 {
@@ -73,13 +86,13 @@ function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
     }
     
     // run the subtraction script
-    if (l_Type == 11)            acs_executealways(160, 0, l_Position, l_TipQue_Selection, l_ID);        // genetics lab
+    /*if (l_Type == 11)            acs_executealways(160, 0, l_Position, l_TipQue_Selection, l_ID);        // genetics lab
     else if (l_Type == 12)       acs_executealways(161, 0, l_Position, l_TipQue_Selection, l_ID);        // armory
     else if (l_Type == 13)       acs_executealways(162, 0, l_Position, l_TipQue_Selection, l_ID);        // marine command
     else if (l_Type == 14)       acs_executealways(163, 0, l_Position, l_TipQue_Selection, l_ID);        // refinery
     else if (l_Type == 15)       acs_executealways(164, 0, l_Position, l_TipQue_Selection, l_ID);        // demonic lab
     else if (l_Type == 16)       acs_executealways(165, 0, l_Position, l_TipQue_Selection, l_ID);        // nuclear silo
-    else if (l_Type == 17)       acs_executealways(166, 0, l_Position, l_TipQue_Selection, l_ID);        // ion cannon charge
+    else */if (l_Type == 17)       acs_executealways(166, 0, l_Position, l_TipQue_Selection, l_ID);        // ion cannon charge
     else if (l_Type == 18)       acs_executealways(167, 0, l_Position, l_TipQue_Selection, l_ID);        // pulse rage charge
     else if (l_Type == 19)       acs_executealways(168, 0, l_Position, l_TipQue_Selection, l_ID);        // other core stuff
     else                         acs_executealways(150, 0, 3, l_TipQue_Selection, 0);                    // normal tip timing
@@ -158,241 +171,14 @@ script 150 (int l_Delay, int l_TipQue_Selection)
     p_TipQue[l_TipQue_Selection] --;
 }
 
-// genetics lab construction
-script 160 (int l_Position, int l_TipQue_Selection, int l_ID)
-{
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/genetics1", 125);
-    
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("BUTTON");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Genetics Lab Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(5);//5
-    }
-    p_TipQue[l_TipQue_Selection] --;
-    
-    // build structure
-    acs_execute(200, 0, 0, 0, 0);
-    ambientsound("cv/genetics2", 125);
-    
-}
-
-// armory construction
-script 161 (int l_Position, int l_TipQue_Selection, int l_ID)
-{
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/armory1", 125);
-    
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("BUTTON");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Armory Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(5);//5
-    }
-    p_TipQue[l_TipQue_Selection] --;
-    
-    // build structure
-    acs_execute(250, 0, 0, 0, 0);
-    ambientsound("cv/armory2", 125);
-    
-}
-
-// marine command construction (NOW MECH FACTORY)
-script 162 (int l_Position, int l_TipQue_Selection, int l_ID)
-{
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/dem1", 125);
-    
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("BUTTON");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Mech Factory Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(10);       // 10
-    }
-    p_TipQue[l_TipQue_Selection] --;
-    
-    // build structure
-    acs_execute(300, 0, 0, 0, 0);
-    ambientsound("cv/dem2", 125);
-	
-    
-}
-
-// refinery construction
-script 163 (int l_Position, int l_TipQue_Selection, int l_ID)
-{
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/refinery1", 125);
-    
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("BUTTON");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Refinery Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(15);//15
-    }
-    p_TipQue[l_TipQue_Selection] --;
-    
-    // build structure
-    acs_execute(350, 0, 0, 0, 0);
-    ambientsound("cv/refinery2", 125);
-	
-    
-}
-
-// demonic lab construction (NOW MARINE COMMAND)
-script 164 (int l_Position, int l_TipQue_Selection, int l_ID)
-{
-	SetActivator(0); //Preventing a major disaster
-    //ambientsound("cv/dem1", 125);
-	ambientsound("cv/mcom1", 125);
-    
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("BUTTON");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Marine Command Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(15);  // 15
-    }
-    p_TipQue[l_TipQue_Selection] --;
-    
-    // build structure
-    acs_execute(400, 0, 0, 0, 0);
-    //ambientsound("cv/dem2", 125);
-	ambientsound("cv/mcom2", 125);
-	
-    
-}
-
-// nuclear silo construction
-script 165 (int l_Position, int l_TipQue_Selection, int l_ID)
-{
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/nsilo1", 125);
-    
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("BUTTON");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Nuclear Silo Construction"; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(30); //30
-    }
-    p_TipQue[l_TipQue_Selection] --;
-    
-    // build structure
-    acs_execute(450, 0, 0, 0, 0);
-    ambientsound("cv/nsilo2", 125);
-	
-    
-}
-
 // ion cannon charge
 script 166 (int l_Position, int l_TipQue_Selection, int l_ID)
 {
 	SetActivator(0); //Preventing a major disaster
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("CM79");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Ion Cannon Charging..."; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(50);
-    }
-    p_TipQue[l_TipQue_Selection] --;
+	
+	int slot = Notify_QueueFreeSpace(); // Allocate
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, 6, 50, slot);// Wrap the waiting time.
+	do{ delay(1);}while (p_TipProcess[slot]);
     
     // re enable the ion cannon
 	Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
@@ -402,27 +188,10 @@ script 166 (int l_Position, int l_TipQue_Selection, int l_ID)
 script 167 (int l_Position, int l_TipQue_Selection, int l_ID)
 {
 	SetActivator(0); //Preventing a major disaster
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("CM78");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Core Charging..."; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(35);
-    }
-    p_TipQue[l_TipQue_Selection] --;
+	
+	int slot = Notify_QueueFreeSpace(); // Allocate
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, 7, 35, slot);// Wrap the waiting time.
+	do{ delay(1);}while (p_TipProcess[slot]);
     
     // re enable the pulse rage
     c_Techflag[66] = 1;
@@ -432,27 +201,10 @@ script 167 (int l_Position, int l_TipQue_Selection, int l_ID)
 script 168 (int l_Position, int l_TipQue_Selection, int l_ID)
 {
 	SetActivator(0); //Preventing a major disaster
-    // define a local variable
-    int l_Percent;
-    
-    // delay before subtracting from que position
-    while(l_Percent < 101)
-    {
-        // display message and image
-        setfont("CM78");
-        sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-        hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
-        
-        setfont("CONFONT");
-        hudmessagebold(s:"Core Charging..."; 1, l_ID + 1, CR_CREAM, 64.1, l_Position, 3.0);
-        hudmessagebold(s:"\n", d:l_Percent, s:"%"; 1, l_ID + 2, CR_WHITE, 64.1, l_Position, 3.0);
-        
-        // increase percent
-        l_Percent ++;
-        
-        delay(35);
-    }
-    p_TipQue[l_TipQue_Selection] --;
+	
+	int slot = Notify_QueueFreeSpace(); // Allocate
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, 7, 35, slot);// Wrap the waiting time.
+	do{ delay(1);}while (p_TipProcess[slot]);
     
     // re enable the core stuff
 	Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
@@ -482,6 +234,313 @@ script 126 (int l_Colour)
     
 }
 
+Script "SFPlus_NotifyTest" (void){
+
+}
+
+Script "SFPlus_ProgressScript" (int pnid, int wait_time, int slot)
+{	
+    int l_Percent;
+	str msg = ProgTip_GetMsg(pnid);
+	str img = ProgTip_GetImg(pnid);
+	str end_msg1 = ProgTip_GetEndMsg1(pnid);
+	str end_msg2 = ProgTip_GetEndMsg2(pnid);
+	str pre_sound = ProgTip_GetPreSound(pnid);
+	str post_sound = ProgTip_GetPostSound(pnid);
+	bool silent = ProgTip_GetSilent(pnid);
+	
+	//int wait_time = 1;
+	if(wait_time < 0) wait_time = 1; // Remember, this value is on tics.
+	
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	p_TipQue[slot] ++;
+	p_TipProcess[slot] = True;
+	
+	
+    ambientsound("patch/newmessage", 56);
+	if(pre_sound != 0) ambientsound(pre_sound, 56);
+    
+	while(l_Percent < 101)
+    {
+        // display message and image
+		
+		Notify_ShowPercent(msg, l_Percent, img, id, pos, 0);
+
+        // increase percent
+        l_Percent ++;
+        
+        delay(wait_time);
+    }
+	
+	p_TipQue[slot] --;
+	p_TipProcess[slot] = False;
+	
+	ambientsound("patch/newmessage", 56);
+	if(post_sound != 0) ambientsound(post_sound, 56);
+	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
+
+}
+
+Script "SFPlus_TimerScript" (int pnid, int timehit, int pslot)
+{	
+	SetActivator(0); 
+    int time = timehit; // Remember, this is in seconds!
+	str msg = ProgTip_GetMsg(pnid);
+	str img = ProgTip_GetImg(pnid);
+	str end_msg1 = ProgTip_GetEndMsg1(pnid);
+	str end_msg2 = ProgTip_GetEndMsg2(pnid);
+	str pre_sound = ProgTip_GetPreSound(pnid);
+	str post_sound = ProgTip_GetPostSound(pnid);
+	bool silent = ProgTip_GetSilent(pnid);
+	
+	// Notify_QueueFreeSpace can prioritize the timers first rather than the messages!
+	int timer_slot = Notify_QueueFreeSpace();
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, timer_slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, timer_slot);
+	
+    ambientsound("patch/newmessage", 56);
+	if(pre_sound != 0) ambientsound(pre_sound, 56);
+	
+	p_TipProcess[pslot] = True;
+    p_TipQue[timer_slot] ++;
+	
+	int time_mins = time / 60;
+	int last_time = time_mins;
+	int count_slot = -1;
+	int last_count_slot = count_slot;
+	if(time > 0) do // Timer loop
+    {
+		ambientsound("beep", 56);
+		Notify_ShowTime(msg, time, img, id, pos, 0);
+		
+		if(!silent){
+			time_mins = time / 60;
+			if(last_time != time_mins && time_mins > 0){ // Remember how many minutes left
+				Notify_Message(msg, strparam(d:time_mins+1, s:" MINUTE(S) LEFT..."), img, 0);
+				last_time = time_mins;
+			}
+			else 
+			{	if(time == 10 || time == 15 || time == 30 || time == 45 || time == 60) 
+					// Remember how many seconds left
+					Notify_Message(msg, strparam(d:time, s:" SECOND(S) LEFT!"), img, 0);
+				else if(time <= 5){
+					// Check for a free space, and make a small little counter that updates in each second.
+					if(count_slot != last_count_slot || count_slot == -1){
+						Notify_Clear(last_count_slot);
+						count_slot = Notify_QueueFreeSpace();
+						p_TipQue[count_slot] ++;
+					}
+					ambientsound("TIME", 56);
+					Notify_MessageSlot(msg, strparam(d:time, s:"!"), img, TIP_NOTIFY_COLORSET_BAD, count_slot);
+					last_count_slot = count_slot;
+				}
+			}
+		}
+		
+        time--;
+        delay(35);
+    }while(time > 0);
+	
+	p_TipQue[timer_slot] --;
+	p_TipProcess[pslot] = False;
+	
+	Notify_Clear(last_count_slot);
+	ambientsound("patch/newmessage", 56);
+	if(post_sound != 0) ambientsound(post_sound, 56);
+	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
+	
+}
+
+// Common player notifiers...
+function void Notify_Player_Enter(void){
+	// Notify the entering of player
+	Notify_Player("Joined to the fray.", "PLAYER", TIP_NOTIFY_COLORSET_COMM);
+}
+
+function void Notify_Player_Death(void){
+	// Notify the death of player
+	Notify_Player("Has fallen!", "DEATH", TIP_NOTIFY_COLORSET_BAD);
+}
+
+function void Notify_Player_Leave(str name){
+	// Notifiy the leaving of this player. 
+	// (Since disconnect scripts losses the name on disconnects,
+	// you need the name instead of the player number.)
+	
+	int slot = Notify_QueueFreeSpace();
+	Notify_Clear2(slot); // Clear it just in case.
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	Notify_QueueAlloc(slot);
+	
+	ambientsound("patch/newmessage", 56);
+	Notify_Show(name, "Leaves from game.", "PLAYER",id, pos, TIP_NOTIFY_COLORSET_COMM);
+}
+
+function void Notify_Player(str what, int img, int set) {
+	// Simpler version of notify_playerEx
+	Notify_PlayerEX(0, "", what, img, set);
+}
+
+function void Notify_PlayerEX(int who, str what1, str what2, int img, int set) {
+	// Notify something about the player.
+	int slot = Notify_QueueFreeSpace();
+	Notify_Clear2(slot); // Clear it just in case.
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	Notify_QueueAlloc(slot);
+	
+	ambientsound("patch/newmessage", 56);
+	Notify_Show(strparam(n:who, s:what1), what2, img, id, pos, set);
+}
+
+function void Notify_Message(str what1, str what2, int img, int set) {
+	// Notify a quick message.
+	int slot = Notify_QueueFreeSpace();
+	Notify_Clear2(slot); // Clear it just in case.
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	Notify_QueueAlloc(slot);
+	
+	ambientsound("patch/newmessage", 56);
+	Notify_Show(what1, what2, img, id, pos, set);
+}
+
+function void Notify_MessagePriv(str what1, str what2, int img, int set) {
+	// Notify a quick message.
+	int slot = Notify_QueueFreeSpace();
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	Notify_Clear2(slot); // Clear it
+	
+	ambientsound("patch/newmessage", 56);
+	Notify_Show(what1, what2, img, id, pos, set);
+}
+
+function void Notify_MessageSlot(str what1, str what2, int img, int set, int slot) {
+	// Notify a quick message.
+	Notify_Clear2(slot); // Clear it
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	Notify_QueueAlloc(slot);
+	
+	ambientsound("patch/newmessage", 56);
+	Notify_Show(what1, what2, img, id, pos, set);
+}
+
+function void Notify_Research(str what, str img){
+	Notify_Message(what, "Researched!", img, TIP_NOTIFY_COLORSET_GOOD);
+}
+
+function void Notify_Deploy(str what, str img){
+	Notify_Message(strparam(s:"\ci"s:what, s:" \c-Deployed"), strparam(s:"Commander deplyed a(n) \ci",s:what), img, TIP_NOTIFY_COLORSET_SPAWN);
+}
+
+function void Notify_ShowTime(str msg1, int time, str img, int id,int pos, int set){
+	// Notify the remaining time
+	// time is in seconds!
+	int mins = time / 60;
+	int secs = time % 60;
+	str time_disp = cond(mins > 0, strparam(d:mins, s:" min(s) and ", d:secs), strparam(d:secs));
+	Notify_Show(msg1, strparam(s:time_disp, s:" sec(s) Left..."), img, id, pos, set);
+}
+
+function void Notify_ShowPercent(str msg1, int perc, str img, int id,int pos, int set){
+	// Notify the progress
+	Notify_ShowEx(msg1, strparam(d:perc, s:"%"), img, id, pos, set, true);
+}
+
+function void Notify_Show(str msg1, str msg2, str img, int id, int pos, int set){
+	Notify_ShowEx(msg1, msg2, img, id, pos, set, true);
+}
+
+function void Notify_ShowEx(str msg1, str msg2, str img, int id, int pos, int set, bool bold){
+	// Generalized notify message, just because why not?
+	int color1;
+	int color2;
+
+	switch (set){
+        case TIP_NOTIFY_COLORSET_COMM: // Common color set
+            color1 = CR_CREAM;
+			color2 = CR_WHITE;
+            break;
+        case TIP_NOTIFY_COLORSET_GOOD: // Good-event color set
+            color1 = CR_CYAN;
+            color2 = CR_BLUE;
+            break;
+        case TIP_NOTIFY_COLORSET_SPAWN: // Spawn color set
+            color1 = CR_GREEN;
+            color2 = CR_DARKGREEN;
+            break;
+        case TIP_NOTIFY_COLORSET_BAD: // Bad-event color set
+            color1 = CR_RED;
+            color2 = CR_BRICK;
+            break;
+    }
+
+	setfont(img);
+    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+	if(bold)	hudmessagebold(s:"a"; 1, id, color1, 16.1, pos, 3.0);
+	else		hudmessage(s:"a"; 1, id, color1, 16.1, pos, 3.0);
+        
+    setfont("CONFONT");
+    if(bold)	hudmessagebold(s:msg1; 1, id + 1, color1, 64.1, pos, 3.0);
+	else		hudmessage(s:msg1; 1, id + 1, color1, 64.1, pos, 3.0);
+	SetHudClipRect(0, 0, 0, 0, 300);
+	
+    if(bold)	hudmessagebold(s:strparam(s:"\n", s:msg2); 1, id + 2, color2, 64.1, pos, 3.0);
+	else		hudmessage(s:strparam(s:"\n", s:msg2); 1, id + 2, color2, 64.1, pos, 3.0);
+	SetHudClipRect(0, 0, 0, 0, 0);
+}
+
+function void Notify_Clear(int slot){
+	// Clear the notification from a slot.
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+    ClearHudMessage(id);
+	ClearHudMessage(id + 1);
+	ClearHudMessage(id + 2);
+	p_TipQue[slot] --;
+}
+
+function void Notify_Clear2(int slot){
+	// Clear the notification from a slot.
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+    ClearHudMessage(id);
+	ClearHudMessage(id + 1);
+	ClearHudMessage(id + 2);
+}
+
+function int Notify_QueueFreeSpace(void){
+	// Finds a free space from the queue
+	int free_space = 8; // Defaults to the last aviable space
+	for (int i = 0; i < 9; i++){
+		if(p_TipQue[i] == 0) { free_space = i; break; }
+	}
+	return free_space;
+}
+
+function void Notify_QueueAlloc(int free_space){
+	// Allocates the message in that space, and run the cleaning up script.
+	p_TipQue[free_space] ++;
+	ACS_ExecuteAlways(150, 0, 3, free_space);
+}
+
+function int Notify_QueueGet(int what, int free_space){
+	// A Generalized getter, for the message setup.
+	int pos = 100.1;
+	int id = 400;
+	
+	pos += 40.0 * free_space;
+	id += 3 * free_space;
+	
+	if		(what == TIP_NOTIFY_POS) return pos;
+	else if (what == TIP_NOTIFY_ID) return id;
+	
+	return 0;
+}
+
+// Classic door timer.
 script 129 (int l_TextType, int l_StartTime)
 {
     while(l_StartTime > 0){

@@ -8,10 +8,12 @@
 
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
+#import "fp_ptdir.acs"
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
 #import "fl_mupDir.acs"
 #import "fl_techs.acs"
+#import "fc_AStr.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.ach"
@@ -52,9 +54,6 @@ script 300 (void)
     // open heavy vehicle bay
     door_open(155, 50);
     
-    // constructed message
-    f_TipShow ("BUTTON", "Mecha Factory", "Construction Complete!", 1);
-    
     // check bridge
     delay(35 * 2);
     if (Tech_isDone(FP_TECH_MARCOM) &&  Tech_isDone(FP_TECH_MECHFA)
@@ -63,89 +62,6 @@ script 300 (void)
         c_BridgeStatus_4 = 1;
         floor_raisetonearest(343, 125);
     }
-}
-
-// strike placement 1
-script 301 (void)
-{
-    // place marker and change menus
-    setactorstate(130, "Spawn_StrikeMarker1", 0);
-	
-}
-
-// strike placement 2
-script 302 (void)
-{
-	SetActivator(0); //Preventing a major disaster
-    // disable air attacks
-	Tech_SetDone(FP_TECH_MARCOM_AIRSUP, FP_TECHF_LOCK);
-    
-    // place marker and change menus
-    setactorstate(130, "Spawn_StrikeMarker2", 0);
-    
-    delay(1);
-    
-    
-    // create a line between the markers
-    acs_execute(140, 0, 140, 141, 10);
-    delay(3);
-    
-    // message
-    f_TipShow ("CM76", "Airstrike", "Incoming! Take cover", 2);
-    ambientsound("c/airstrike1", 125);
-    ambientsound("cv/airstrike", 125);
-    
-    delay(35 * 5);
-    
-    // spawn 10 rockets
-    thing_projectile(500, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(501, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(502, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(503, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(504, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(505, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(506, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(507, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(508, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(509, 170, random(0,224), 20, -10);     delay(35);
-    thing_projectile(500, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(501, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(502, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(503, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(504, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(505, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(506, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(507, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(508, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(509, 170, random(0,224), 20, -10);     delay(35);
-    thing_projectile(500, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(501, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(502, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(503, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(504, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(505, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(506, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(507, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(508, 170, random(0,224), 20, -10);     delay(5);
-    thing_projectile(509, 170, random(0,224), 20, -10);     delay(35);
-    
-    // remove markers
-    thing_remove(140);
-    thing_remove(141);
-    acs_execute(141, 0, 0, 0, 0);
-    
-    delay(35 * 5);
-    
-    // enable air attacks
-	Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
-}
-
-// cancel strike
-script 303 (void)
-{
-    // remove striker points
-    thing_remove(140);
-    thing_remove(141);
 }
 
 // fire ion cannon
@@ -158,10 +74,9 @@ script 304 (void)
     // switch off flags
     Tech_SetDone(FP_TECH_MARCOM_IONCAN, FP_TECHF_LOCK);
     
-    // message
-    f_TipShow ("CM79", "Ion Cannon", "Firing in 5 seconds...", 2);
-    
-    delay(35 * 5);
+    int slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, FP_PTID_IONCAN_1, 5, slot);
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
     
     // fire
     acs_executealways(126, 0, 1, 0, 0);
@@ -176,10 +91,12 @@ script 304 (void)
     delay(35);
     
     // charge the cannon
-    f_TipShow ("BUTTON", "", "", 17);
+    //f_TipShow ("BUTTON", "", "", 17);
+	slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, FP_PTID_IONCAN_2, 50, slot);
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
     
-    // refresh commanders menu
-    delay(35);
+	Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
 }
 
 
@@ -389,8 +306,6 @@ script 158 (void)
 // mech upgrade: weapons
 
 script "AnnounceMechUpgrade" (int which){
-	//MechUpList_init();
-
 	str upg;
 	if(MechUp_getMax(which) != 0)	
 		upg = strparam(s:MechUp_getName(which), s:" Lv.", d:CheckInventory(MechUp_getActor(which)));

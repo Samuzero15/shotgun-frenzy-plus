@@ -11,7 +11,7 @@
 #import "f_Tip.acs"
 
 // minor
-#import "fc_AStr.acs"
+//#import "fc_AStr.acs"
 #import "fc_Comm.acs"
 #import "fc_Entr.acs"
 #import "f_SecMan.acs"

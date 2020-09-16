@@ -60,7 +60,8 @@ script 107 OPEN
         }
         
         // five minute warning
-        f_TipShow ("DEMONT", "Guardian Appearence", "2 Minutes remaining...", 0);
+		Notify_Message("GUARDIAN WAVE", "2 minutes remaining!", "DEMONT", 0);
+        //f_TipShow ("DEMONT", "Guardian Appearence", "2 Minutes remaining...", 0);
         
         // wait 2 minutes
         delay(35 * 60 * 2);
@@ -121,8 +122,9 @@ script 108 (int l_RemainingMonsters)
     thing_remove(102);
     thing_remove(103);
     
-    f_TipShow ("DEMONT", "Guardian Appearence", "Kill the remaining demons!", 0);
-    
+    //f_TipShow ("DEMONT", "Guardian Appearence", "Kill the remaining demons!", 0);
+    Notify_Message("GUARDIAN WAVE", "Finish cleaning the remaining demons!", "DEMONT", 0);
+	
     // open doors/gates
     if (f_Doortype == 0)
     {
@@ -186,6 +188,7 @@ script 108 (int l_RemainingMonsters)
         delay(5);
     }
 	log(s:"Guardian wave started.");
+	g_GuardianWave = True;
     // kill off the remaining demons
     thing_destroy(110, 0);
     thing_destroy(111, 0);
@@ -196,7 +199,7 @@ script 108 (int l_RemainingMonsters)
     delay(35);
     
     // display message
-    f_TipShow ("DEMONT", "Guardian Appearence", "Arrived!", 0);
+	Notify_Message("GUARDIAN WAVE", "Arrived!", "DEMONT", 0);
     
 	
 	// kill all scripts!
@@ -249,8 +252,14 @@ script 125 (int l_Condition)
 		str again = StrParam(s:"Changemap ", n:-2);
 		ConsoleCommand(again);
 	}
-    else if (l_Condition == 4)       {hudmessagebold(s:"Defeat!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);}
-    else                        {hudmessagebold(s:"Victory!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);}
+    else if (l_Condition == 4)       {
+	hudmessagebold(s:"Defeat!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
+	Notify_Message("GAME OVER", "Mission Failed!", "DEATH", 3);
+	}
+    else                {        
+	hudmessagebold(s:"Victory!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
+	Notify_Message("GAME OVER", "Mission Complete!", "PLAYER", 1);
+	}
     
     delay(35 * 6);
     // change camera and remove huds (and exit mechs)

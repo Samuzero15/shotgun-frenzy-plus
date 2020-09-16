@@ -7,10 +7,18 @@
 // made by Tribeam
 
 #library "fc_AStr"
+#import "f_intDB.acs"
+#import "f_Tip.acs"
+#import "fp_ptdir.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
 
 #define AIRSTRIKE_TIDSTART 500          // First bomb tid, all bombs after add up from this tid, so bomb2 is 501 and bomb3 is 502 and so on.
-
+#define AIRSTRIKE_POINT_TIDSTART 550 
+#define AIRSTRIKE_POINT_MAX 30
+int airstk_n_targets = 0;
+int airstk_line = 0;
+int airstk_waves = 3;
 
 // All these functions come from the zdoom wiki and 
 // are generic functions. You should but them in a misc.acs or something.
@@ -45,15 +53,15 @@ script 140 (int tid1, int tid2, int amount)
     int angle = gettargetangle(tid1, tid2);
     int x = getactorx(tid1);
     int y = getactory(tid1);
-    int z = getactorz(tid1) + 1.0 + 128;
+    int z = getactorz(tid1) + 1.0 + 128.0;
     int x2;
     int y2;
     int tidcounter = 0;
     
     
-    if(Thingcount("StrikeMarker", 0) != 0)
+    if(ThingCountName("StrikeMarker_Line", 0) != 0)
         {
-            int spotamount = Thingcount("StrikeMarker", 0);
+            int spotamount = ThingCountName("StrikeMarker_Line", 0);
             
             for(int i = 0; i <= spotamount; i++)
                 {
@@ -65,31 +73,147 @@ script 140 (int tid1, int tid2, int amount)
         {
             x2 = x + (rad * cos(angle));
             y2 = y + (rad * sin(angle));
-            spawn("StrikeMarker", x2, y2, z, AIRSTRIKE_TIDSTART + tidcounter, 0);
+            spawn("StrikeMarker_Line", x2, y2, z, AIRSTRIKE_TIDSTART + tidcounter, 0);
             tidcounter++;
         }
+}
+
+
+script "SFPlus_AirstrikeTarget" (int fun){
+	int last_airstk_waves;
+	switch (fun){
+		
+		case 0: // Single target point
+			if(airstk_n_targets+1 < AIRSTRIKE_POINT_MAX){
+				//setactorstate(130, "Spawn_StrikeMarker", 0);
+				setactorstate(130, "Spawn_StrikeMarker", 0);
+			}
+			else Notify_Message("Airstrike marker failed", "Too much target points!", "INFO", 3);
+			//print(s:"Target points:", d:airstk_n_targets);
+		break;
+		case 1: // Point 1 for the line of targets.
+			//print(s:"Replacing strike marker 1: ", d:ThingCount(0, 140));
+			if(ThingCount(0, 140)) Thing_remove(140);
+			
+			setactorstate(130, "Spawn_StrikeMarker1", 0);	delay(1);
+			if(ThingCount(0, 140) != 0 && ThingCount(0, 141) != 0){
+				acs_execute(140, 0, 140, 141, 10);// Make a line of targets before blasting.
+				airstk_line = true;
+			}
+		break;
+		case 2: // Point 2 for the line of targets.
+			//print(s:"Replacing strike marker 2: ", d:ThingCount(0, 141));
+			if(ThingCount(0, 141)) Thing_remove(141);
+			setactorstate(130, "Spawn_StrikeMarker2", 0);	delay(1);
+			if(ThingCount(0, 140) != 0 && ThingCount(0, 141) != 0){
+				acs_execute(140, 0, 140, 141, 10);// Make a line of targets before blasting.
+				airstk_line = true;
+			}
+		break;
+		case -1: // Clear them all.
+			thing_remove(140);
+			thing_remove(141);
+			acs_execute(141, 0);
+		break;
+		case -2: // Change the amount of attack waves for the air strike.
+			last_airstk_waves = airstk_waves;
+			switch(airstk_waves){
+				case 1: airstk_waves = 3; break;
+				case 3: airstk_waves = 5; break;
+				case 5: airstk_waves = 1; break;
+			}
+			Notify_MessagePriv("Airstrike Wave Change",
+			strparam(s:"Switched from: \ci", d:last_airstk_waves, s:" \c-to \ci ",
+			d:airstk_waves,s:"wave attacks."), "INFO", 0);
+		break;
+	}
+}
+
+function int AirStrike_GetPrice(void) {
+	//[Samu] I dunno, i think this is way too expensive.
+	return airstk_waves*(50*airstk_n_targets + 100*airstk_line);
+}
+
+function int AirStrike_GetCooldown(void) {
+	return airstk_waves*(airstk_n_targets + 10 * airstk_line);
+}
+
+script "SFPlus_AirstrikeAttack" (void)
+{
+	SetActivator(0); //Preventing a major disaster
+    // disable air attacks
+	
+	if(airstk_n_targets == 0 && !airstk_line){
+		Notify_MessagePriv("Airstrike Failed", "No airstrike target found!", "CM76", 2);
+		terminate;
+	}/*else{ // Charge the price of airstrikes.
+		// Each airstrike point worths 300 I think. 
+		c_Credits -= AirStrike_GetPrice(); 
+	}*/
+	
+	Tech_SetDone(FP_TECH_MARCOM_AIRSUP, FP_TECHF_LOCK);
+    
+    // message
+    Notify_Message("Airstrike", "Incoming! Take cover!", "CM76", 2);
+    ambientsound("c/airstrike1", 125);
+    ambientsound("cv/airstrike", 125);
+    
+    delay(35 * 5);
+    
+    // spawn 10 rockets
+	
+	int i = 0;
+	for (int j = 0; j < airstk_waves; j++){
+		if(airstk_line){
+			for (i = 0; i < 10; i ++){ // N amount of airstrike targets.
+				thing_projectile(AIRSTRIKE_TIDSTART + i, 170, random(0,224), 20, -10); 
+				delay(5);
+			}
+		}
+		for (i = 0; i < airstk_n_targets; i ++){ // N amount of airstrike targets.
+			thing_projectile(AIRSTRIKE_POINT_TIDSTART + i, 170, random(0,224), 20, -10); 
+			delay(5);
+		}
+		delay(30);
+	}
+	
+    // remove markers
+    ACS_NamedExecute("SFPlus_AirstrikeTarget", 0, -1);
+	
+	int cooldown = AirStrike_GetCooldown();
+	
+	int slot = Notify_QueueFreeSpace(); // Allocate a new space for the notifier
+	// Call the progress script.
+	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, FP_PTID_AIRSTK, cooldown, slot);
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
+    
+    // enable air attacks
+	Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
 }
 
 
 // use this function to remove the spots when you're done with them
 script 141 (void)
 {
-    thing_remove(500);
-    thing_remove(501);
-    thing_remove(502);
-    thing_remove(503);
-    thing_remove(504);
-    thing_remove(505);
-    thing_remove(506);
-    thing_remove(507);
-    thing_remove(508);
-    thing_remove(509);
-    thing_remove(510);
-    thing_remove(511);
-    thing_remove(512);
-    thing_remove(513);
-    thing_remove(514);
-    thing_remove(515);
+	int i = 0;
+	for (i = 0; i < airstk_n_targets; i++){ // Clear them up.
+		thing_remove(AIRSTRIKE_POINT_TIDSTART + i);
+		if(i % 20 == 0) delay(1); // Run away prevention.
+	}
+	airstk_n_targets = 0;
+	
+	// Generally, 10 points are made in a line, so...
+	for (i = 0; i < 10; i++){ // Clear them up.
+		thing_remove(AIRSTRIKE_TIDSTART + i);
+	}
+	airstk_n_targets = 0;
+	airstk_line = false;
+}
+
+script 143 (void)
+{// Add a target (decorate script)
+	airstk_n_targets++;
+	SetResultValue(AIRSTRIKE_POINT_TIDSTART + airstk_n_targets - 1);
 }
 
 // setup a tid

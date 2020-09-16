@@ -11,6 +11,7 @@
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
 #import "fl_techs.acs"
+#import "fp_ptdir.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.ach"
@@ -44,7 +45,7 @@ script 400 (void)
 	Tech_Set(FP_TECH_MARCOM, FP_TECHF_DONE);
     
     // constructed message
-    f_TipShow ("BUTTON", "Marine Command", "Construction Complete!", 1);
+    //f_TipShow ("BUTTON", "Marine Command", "Construction Complete!", 1);
     
     // check bridge
     delay(35 * 2);
@@ -60,95 +61,166 @@ script 400 (void)
     //morphactor(104, "", "AttackBattery", 99999999999);
 }
 
-// core pulse
-script 402 (void)
-{
+#define FP_MCOM_CPULSE_CRIPPLE	"SFPLus_CripplePulse"
+#define FP_MCOM_CPULSE_HEAL		"SFPLus_HealPulse"
+#define FP_MCOM_CPULSE_SMITE	"SFPLus_SmitePulse"
+#define FP_MCOM_CPULSE_REVIVE	"SFPLus_RevivePulse"
+#define FP_MCOM_CPULSE_HALT		"SFPLus_HaltPulse"
+
+script "SFPlus_CoreRecharge" (int delay_time){	
+	int slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, FP_PTID_CPULSE, delay_time, slot);
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
+	
+	Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
+}
+
+script "SFPlus_CorePulse" (int pulse_cmd)
+{	// A Generalized script for all of the core pulses.
+	if(Tech_isLock(FP_TECH_MARCOM_CPULSE)){
+		Notify_Message("Core pulse failed",
+		"The core pulse is still charging!", "INFO", 3);
+		terminate;
+	}
 	SetActivator(0); //Preventing a major disaster
     ambientsound("cv/corepulse", 125);
     
     // disable use of core weapons
 	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
-    
-    // 5 second warning
-    f_TipShow("INFO", "CORE PULSE", "5 seconds...", 0);
+	
+	str pulse_name;
+	int execute;
+	int charge_delay;
+	switch(pulse_cmd){
+		case 1: // Harms all demons with 500 dmg.
+			pulse_name = "CRIPPLE"; 
+			execute = FP_MCOM_CPULSE_CRIPPLE; 
+			charge_delay = 20; 
+		break;
+		case 2: // Repairs the living cores gradually for 10 seconds.
+			pulse_name = "HEAL"; 
+			execute = FP_MCOM_CPULSE_HEAL; 
+			charge_delay = 15; 
+		break;
+		case 3: // Harms all demons within the risked sector with 3000 dmg.
+			pulse_name = "SMITE"; 
+			execute = FP_MCOM_CPULSE_SMITE; 
+			charge_delay = 30; 
+		break;
+		case 4: // Instantly repairs the risked core.
+			pulse_name = "REVIVE"; 
+			execute = FP_MCOM_CPULSE_REVIVE; 
+			charge_delay = 30; 
+		break;
+		case 5: // Stops monster spawning for a minute.
+			pulse_name = "HALT"; 
+			execute = FP_MCOM_CPULSE_HALT; 
+			charge_delay = 25; 
+		break;
+	}
+	
+	Notify_Message(strparam(s:pulse_name, s:" PULSE ACTIVATED"),
+		"Activating in 5 seconds...", "INFO", 2);
     delay(35 * 5);
-    
-    // activate
-    acs_execute(126, 0, 1, 0, 0);
+	acs_execute(126, 0, 1, 0, 0);
     ambientsound("x1/taser", 125);
-    thing_damage(110, 500, 5);
-    thing_damage(111, 500, 5);
-    thing_damage(112, 500, 5);
-    thing_damage(113, 500, 5);
-    thing_damage(114, 500, 5);
-    
-    // charge the core
-    delay(35 * 2);
-    f_TipShow ("BUTTON", "", "", 19);
+	//Effects
+	
+	acs_NamedExecuteWait(execute, 0);
+	
+	delay(35 * 2);
+    //f_TipShow ("BUTTON", "", "", 19);
+	ACS_NamedExecuteAlways("SFPlus_CoreRecharge",0, charge_delay);
+}
+
+// core pulse: Cripple
+// Harms all demons with 500 of damage.
+script FP_MCOM_CPULSE_CRIPPLE (void)
+{
+	thing_damage(110, 500, 5);
+	thing_damage(111, 500, 5);
+	thing_damage(112, 500, 5);
+	thing_damage(113, 500, 5);
+	thing_damage(114, 500, 5);
+}
+
+// core pulse: Smite (NEW!)
+// Harms any demon inside of the risked sector with 3000 hp.
+script FP_MCOM_CPULSE_SMITE (void)
+{
+	thing_damage(110 + g_Status, 3000, 5);
 }
 
 // halt pulse
-script 403 (void)
+// Halts the demon spawning
+script FP_MCOM_CPULSE_HALT (void)
 {
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/corepulse", 125);
-    
-    // disable use of core weapons
-	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
-    
-    // 5 second warning
-    f_TipShow("INFO", "HALT PULSE", "5 seconds...", 0);
-    delay(35 * 5);
-    
-    // activate
-    acs_execute(126, 0, 1, 0, 0);
-    ambientsound("x1/taser", 125);
-    c_HaltSpawning = 1;
-    
-    // delay
-    f_TipShow("INFO", "HALT PULSE", "Holding demons... 60 seconds...", 0);
-    delay(35 * 30);
-    f_TipShow("INFO", "HALT PULSE", "Holding demons... 30 seconds...", 0);
-    delay(35 * 20);
-    f_TipShow("INFO", "HALT PULSE", "Holding demons... 10 seconds...", 0);
-    delay(35 * 10);
-    f_TipShow("INFO", "HALT PULSE", "Holding demons... Stopped...", 0);
-    
-    // reactivate demons
-    c_HaltSpawning = 0;
-    
-    // charge the core
-    delay(35 * 2);
-    f_TipShow ("BUTTON", "", "", 19);
+	c_HaltSpawning = 1;
+
+	ProgTip_DefaultProps(-1);
+	ProgTip_SetMsg		(-1, "HALT PULSE");
+	ProgTip_SetEndMsg1	(-1, "HALT PULSE EXPIRED!");
+	ProgTip_SetEndMsg2	(-1, "Hostiles are spawning again!");
+
+	int slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, -1, 60, slot);
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
+
+	// reactivate demons
+	c_HaltSpawning = 0;
+}
+
+// heal pulse
+script FP_MCOM_CPULSE_HEAL (int pslot)
+{
+	ProgTip_DefaultProps(-1);
+	ProgTip_SetMsg		(-1, "HEAL PULSE");
+	ProgTip_SetEndMsg1	(-1, "HEAL PULSE EXPIRED!");
+	ProgTip_SetEndMsg2	(-1, "Cores will no longer repair themselves!");
+
+	int heal_time = 0;
+	int hp, maxhp, hp_gain, hp_cap;
+	int slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, -1, 10, slot);
+	do{ 
+		// Yes, you can do stuff while you wait for the script!
+		if(heal_time % 5 == 0){ // Each 5 tics
+			for(int i = 1; i <= 4; i++){
+				int tid = 100 + i;
+				if(GetActorProperty(tid, APROP_Health) > 0){// Check if this core is still standing.
+					hp = GetActorProperty(tid, APROP_Health);
+					
+					// Check which core is it, the base one will always be the strongest.
+					if(i == 4) 	maxhp = 1500;
+					else 		maxhp = 750;
+					
+					// Cap hp per 5 tics.
+					hp_cap = 10;
+					if(maxhp - hp < hp_cap) hp_gain = maxhp - hp;
+					else 					hp_gain = hp_cap;
+					// Finally heal it.
+					setactorproperty(tid, APROP_Health, hp + hp_gain);
+					// Fun fact: using just hp_gain, will kill the cores instantly in full hp!
+				}
+			}
+			
+		}
+		heal_time++;
+		delay(1);
+	}while (p_TipProcess[slot]); // Wait for it.
 }
 
 // core revive
-script 404 (void)
+script FP_MCOM_CPULSE_REVIVE (void)
 {
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/corepulse", 125);
-    
-    // disable use of core weapons
-	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
-    
-    // 5 second warning
-    f_TipShow("INFO", "CORE REVIVE", "5 seconds...", 0);
-    delay(35 * 5);
-    
-    // activate
-    acs_execute(126, 0, 1, 0, 0);
-    ambientsound("x1/taser", 125);
-    if (100 + g_Status != 104)       setactorproperty(100 + g_Status, APROP_Health, 750);
-    else                             setactorproperty(100 + g_Status, APROP_Health, 1500);
-    
-    // charge the core
-    delay(35 * 2);
-    f_TipShow ("BUTTON", "", "", 19);
+	if (100 + g_Status != 104)       setactorproperty(100 + g_Status, APROP_Health, 750);
+	else                             setactorproperty(100 + g_Status, APROP_Health, 1500);
 }
 
 // core revive (generic)
 script 405 (int l_BypassProperty)
 {
+	
 	SetActivator(0); //Preventing a major disaster
     ambientsound("cv/corepulse", 125);
     
