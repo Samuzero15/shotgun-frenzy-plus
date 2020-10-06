@@ -122,7 +122,8 @@ ACTOR ArchonComet
 
 ACTOR ArchonSoul
 {   
-	+CLIENTSIDEONLY
+   +NOINTERACTION
+   +CLIENTSIDEONLY
    Radius 1
    Height 1
    Speed 3

@@ -56,6 +56,10 @@ script 88 OPEN
 script 11 OPEN
 {
     sector_setcolor(3, 239, 181, 119);
+
+    // spawn dispensers
+    spawnspot("AmmoDispenser", 1, 0, 0);
+    spawnspot("HealthDispenser", 1, 0, 0);
     
     delay(35);
 //	c_Credits = c_Startcash;

@@ -15,7 +15,7 @@ ACTOR sfCyberdemon : FPlus_Monster replaces Cyberdemon
 	activesound "cyber/active"
 	
 	+FLOORCLIP
-	+NORADIUSDMG
+	-NORADIUSDMG //Enemies should NOT ignore splash damage
 	+DONTMORPH
 	+MISSILEMORE
 	

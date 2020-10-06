@@ -12,6 +12,7 @@ ACTOR TurretBase
 	MONSTER
 	-ISMONSTER //Makes it spawnable everywhere
 	+FRIENDLY
+	+DROPOFF
         DamageFactor "BFGSplash", 0.0
         DamageFactor "BFGSpray", 0.0
 		damagefactor "NoProfitKill", 0.0

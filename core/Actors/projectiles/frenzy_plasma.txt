@@ -64,13 +64,8 @@ actor PlasmaTrail{
   Alpha 0.12
   Renderstyle Add
   +FORCEXYBILLBOARD
-  	+NOBLOCKMAP
-	+FloorClip
-	+SPECIALFLOORCLIP
-	+NOGRAVITY
-	+NOTELEPORT
-    +DoomBounce
 	+ClientsideOnly
+	+NOINTERACTION
 }
 
 
@@ -255,8 +250,7 @@ Actor Gauss_Puff
 	Height				2
 	DamageType			MarineFire
 	+AlwaysPuff
-	+NoBlockMap
-	+nogravity
+	+NOINTERACTION
 	+NODAMAGETHRUST
 	
 	states	

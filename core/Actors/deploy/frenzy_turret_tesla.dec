@@ -11,6 +11,7 @@ ACTOR TurretTesla
 	+FRIENDLY
 	//+SOLID
 	-ISMONSTER //Makes it spawnable everywhere
+	+DROPOFF
         DamageFactor "BFGSplash", 0.0
         DamageFactor "BFGSpray", 0.0
 		damagefactor "NoProfitKill", 0.0

@@ -10,6 +10,7 @@ ACTOR TurretBullet
 	+FRIENDLY
 	+FLOORCLIP
 	+NODAMAGETHRUST
+	+DROPOFF
 	//+SOLID
         DamageFactor "BFGSplash", 0.0
         DamageFactor "BFGSpray", 0.0

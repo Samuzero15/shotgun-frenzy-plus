@@ -18,6 +18,7 @@ ACTOR TurretRail 24304
 	+LOOKALLAROUND
 	+SHORTMISSILERANGE
 	+NEVERRESPAWN
+	+DROPOFF
 	PainSound "turret/pain"
 	
 	// protect from marine damage

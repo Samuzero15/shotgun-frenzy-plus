@@ -72,7 +72,7 @@ actor Rocket2
   radius 11
   height 8
   speed 35
-  damage 20
+  damage (20)
   seesound "weapons/rocklf"
   deathsound "weapons/rocklx"
   PROJECTILE  

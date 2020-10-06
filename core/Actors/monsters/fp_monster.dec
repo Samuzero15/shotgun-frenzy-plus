@@ -25,11 +25,11 @@ Actor FPlus_Monster {
 	states{
 		
 		Spawn:
-			TNT1 a 1 A_Log("Something is wrong on Spawn...")
+			TNT1 a 1 A_Log("WARNING: Monster logic issue in Spawn State")
 		Loop
 		
 		See:
-			TNT1 a 1 a_Log("Something is wrong on See...")
+			TNT1 a 1 a_Log("WARNING: Monster logic issue in See State")
 		Loop
 		
 		MonXDeath: // Overridable, if does not have it, go to it's death.
@@ -40,11 +40,11 @@ Actor FPlus_Monster {
 		
 		MonDeath:
 			"####" "#" 0 A_TakeInventory("FPMToken_Gibbed",1) // Flag Token.
-			"####" "#" 1 a_Log("Something is wrong on death / xdeath...")
+			"####" "#" 1 a_Log("WARNING: Monster logic issue in Death State")
 		goto FadeOut+1
 		
 		MonRaise:
-			"####" "#" 0 a_Log("Something is wrong on monraise...")
+			"####" "#" 0 a_Log("WARNING: Monster logic issue in Raise State")
 		goto FadeOut+1
 		
 		FadeOut:

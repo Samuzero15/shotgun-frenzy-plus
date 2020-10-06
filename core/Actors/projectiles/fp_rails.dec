@@ -69,8 +69,7 @@ Actor Rail_Puff
 	DamageType			MarineFire
 	+AlwaysPuff
 	+PUFFONACTORS
-	+NoBlockMap
-	+nogravity
+	+NOINTERACTION
 	+NODAMAGETHRUST
 	
 	states	
@@ -99,7 +98,6 @@ ACTOR Rail_Standard_Tracer
 	
 	DamageType			MarineFire
 	
-	+CLIENTSIDEONLY
 	+NOINTERACTION
 	+NODAMAGETHRUST
 	
