@@ -63,7 +63,6 @@ map CF02 lookup "District"
 	next = "CF03"
 	music = "KLENDROP"
 	intermusic = "Q4FINAL"
-	outsidefog = "52 00 00"
 	allowrespawn
 }
 
@@ -74,7 +73,6 @@ map CF03 lookup "Checkpoint"
 	music = "DOOM2005"
 	intermusic = "Q4FINAL"
 	sky1 = RSKYG, 0.0
-	outsidefog = "82 82 b4"
 	allowrespawn
 }
 
@@ -129,7 +127,6 @@ map SF01 lookup "Refinery"
 	music = "NCONTRA"
 	intermusic = "Q4FINAL"
 	sky1 = "RSKYM", 0.0
-	outsidefog = "44 5c 57"
 	allowrespawn
 }
 
@@ -140,7 +137,6 @@ map SF02 lookup "Wasteland"
 	music = "ZANIKINE"
 	intermusic = "Q4FINAL"
 	sky1 = "RSKYW", 0.0
-	outsidefog = "77 5f 4b"
 	allowrespawn
 	lightning
 	fallingdamage
@@ -152,7 +148,6 @@ map SF03 lookup "Grid"
 	next = "SF04"
 	music = "MZRESPWN"
 	intermusic = "Q4FINAL"
-	outsidefog = "52 00 00"
 	allowrespawn
 }
 
@@ -176,7 +171,8 @@ map SF05 lookup "Underworld"
 	allowrespawn
 }
 
-map TEST lookup "Testing map"{
+map TEST lookup "Testing map"
+{
 	music = "LABHub"
 	intermusic = "Q4FINAL"
 	allowrespawn

@@ -1,5 +1,25 @@
 ACTOR TurretBase : Deploy_Building
 {
+<<<<<<< HEAD
+=======
+	radius 8
+	height 8
+	mass 10000
+	speed 0
+	health 99999
+	+FLOORCLIP
+	+NODAMAGETHRUST
+	+SOLID
+	-SHOOTABLE
+	MONSTER
+	-ISMONSTER //Makes it spawnable everywhere
+	+FRIENDLY
+	+DROPOFF
+        DamageFactor "BFGSplash", 0.0
+        DamageFactor "BFGSpray", 0.0
+		damagefactor "NoProfitKill", 0.0
+	
+>>>>>>> 2492302f3607848b918c9bad4cd876e7c3d05834
 	states
 	{
 		Deploy:

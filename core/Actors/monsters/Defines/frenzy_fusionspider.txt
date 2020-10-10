@@ -88,8 +88,8 @@ ACTOR FusionShot
   Radius 13
   Height 8
   Speed 6
-  Damage 5  
-  Scale 1.0   
+  Damage (4) //Jesus fucking christ, if they are allowed to snipe you behind the hordes, then damage should be low! 
+  Scale 1.0
   RENDERSTYLE Add
   SEESOUND "fusionspid/see" 
   DEATHSOUND "fusionspid/die"
@@ -111,11 +111,8 @@ ACTOR FusionTrail
 {
   Radius 4
   Height 8
-  Speed 0
-  Damage 0
   Scale 1.0 
   RENDERSTYLE Add 
-  PROJECTILE
   +CLIENTSIDEONLY
   +NOINTERACTION
   states

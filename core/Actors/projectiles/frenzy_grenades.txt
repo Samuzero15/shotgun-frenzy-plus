@@ -52,13 +52,13 @@ ACTOR Grenade_Flinger_Exploder
 	Mass				100
 	DamageType			MarineFire2
 	
-	+NOBLOCKMAP
 	+DROPOFF
 	+MISSILE
 	+ACTIVATEIMPACT
 	+ACTIVATEPCROSS
 	+DOOMBOUNCE
 	+MTHRUSPECIES
+	+NOINTERACTION
 	bouncecount 16
 	
 	SeeSound "w9/fire1"
@@ -80,9 +80,9 @@ ACTOR Grenade_Flinger_Exploder
 }
 
 Actor Grenade_Debris_Spawner {
-	radius 1
-	height 1
-	+NoBlockMap
+	radius 2
+	height 4
+	+NOINTERACTION
 	States
 	{
 		Spawn:
@@ -116,18 +116,11 @@ ACTOR Grenade_Flinger_Exploder_Debris
 	scale 0.5
 	Mass				100
 	Gravity				0.5
-	
-	+NoBlockMap
 	+ACTIVATEIMPACT
 	+ACTIVATEPCROSS
-	+DOOMBOUNCE
 	+FORCERADIUSDMG
 	+NODAMAGETHRUST
 	+MTHRUSPECIES
-	bouncecount 16
-	
-	ExplosionRadius			90		// reduced from 128 to 90
-	ExplosionDamage			26		// reduced from 32 to 26
 	DamageType			MarineFire2
 	
 	States

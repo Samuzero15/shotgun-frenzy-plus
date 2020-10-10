@@ -8,6 +8,7 @@ ACTOR sfSpiderMastermind replaces SpiderMastermind
 	mass 1000
 	speed 13
 	painchance 40
+	MaxStepHeight 48 //This should help the Mastermind climb up steep slopes and staircases better
 	seesound "spider/sight"
 	attacksound "spider/attack"
 	painsound "spider/pain"
@@ -19,7 +20,7 @@ ACTOR sfSpiderMastermind replaces SpiderMastermind
 	//+BOSS
 	
 	+FLOORCLIP
-	+NORADIUSDMG
+	-NORADIUSDMG //Enemies should NOT ignore splash damage
 	+DONTMORPH
 	+MISSILEMORE
 	states

@@ -21,8 +21,10 @@ ACTOR Battery 30001
 	radius 16
 	height 56
 	speed 0
-	painchance 200
+	painchance 255
+	Mass 0xffffffff
         bloodtype "CoreShock"
+	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
 	MONSTER
 	+FRIENDLY
 	+FLOORCLIP
@@ -72,8 +74,10 @@ ACTOR AttackBattery : MorphedMonster 30002
 	radius 16
 	height 56
 	speed 0
-	painchance 200
+	painchance 255
+	Mass 0xffffffff
         bloodtype "CoreShock"
+	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
 	MONSTER
 	+FRIENDLY
 	+FLOORCLIP
@@ -128,8 +132,10 @@ ACTOR BatteryCore 30003
 	radius 16
 	height 56
 	speed 0
-	painchance 200
+	painchance 255
+	Mass 0xffffffff
         bloodtype "CoreShock"
+	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
 	MONSTER
 	+FRIENDLY
 	+FLOORCLIP

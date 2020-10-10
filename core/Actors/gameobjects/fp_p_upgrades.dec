@@ -109,6 +109,7 @@ Actor SuperMegasphere_Health : Soulsphere
 Actor SuperMegasphere_Armor : BlueArmor
 {
 	Armor.SaveAmount 300
+	Armor.Savepercent 90
 }
 
 ACTOR PlayUp_PowUpUpgrade_6xDmg : PowerDamage

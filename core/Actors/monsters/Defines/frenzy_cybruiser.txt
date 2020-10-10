@@ -84,7 +84,7 @@ ACTOR BruiserMissile
       goto Spawn
    Death:
       BAL3 C 0 Bright A_SetTranslucent (0.67,1)
-      BAL3 C 6 Bright A_Explode(40,128,0,0,32)
+      BAL3 C 6 Bright A_Explode(20,128,0,0,32)
       BAL3 D 6 Bright
       BAL3 E 6 Bright
       stop
