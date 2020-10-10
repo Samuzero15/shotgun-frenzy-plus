@@ -76,7 +76,8 @@
 #libdefine FP_CB_DEPLOY_TURRET_TESCOL		FP_CB_DEPLOY_TURRET_PLASMA+1
 #libdefine FP_CB_DEPLOY_TURRET_FLAMER		FP_CB_DEPLOY_TURRET_TESCOL+1
 #libdefine FP_CB_DEPLOY_TURRET_CHAINGUN		FP_CB_DEPLOY_TURRET_FLAMER+1
-#libdefine FP_CB_NUKE						FP_CB_DEPLOY_TURRET_CHAINGUN+1
+#libdefine FP_CB_DEPLOY_TURRET_SHOTGUN		FP_CB_DEPLOY_TURRET_CHAINGUN+1
+#libdefine FP_CB_NUKE						FP_CB_DEPLOY_TURRET_SHOTGUN+1
 #libdefine FP_CB_NUKE_IT_NOW				FP_CB_NUKE+1
 
 #libdefine FP_COM_BUTTONS FP_CB_NUKE_IT_NOW+1// As the last one, add 1 to get numerated total of this!
@@ -168,7 +169,8 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_DEPLOY_TURRET_PLASMA,		"Deploy a Plasma Turret",		"CM42", "FP_DEPCD_TURRET_PLASMA");
 	CMDBut_Add(FP_CB_DEPLOY_TURRET_TESCOL,		"Deploy a Tesla coil",			"CM43", "FP_DEPCD_TURRET_TESCOL");
 	CMDBut_Add(FP_CB_DEPLOY_TURRET_FLAMER,		"Deploy a Flame Turret",		"CM47", "FP_DEPCD_TURRET_FLAMER");
-	CMDBut_Add(FP_CB_DEPLOY_TURRET_CHAINGUN,	"Deploy a Chaingun Turret",		"CM47", "FP_DEPCD_TURRET_CHAINGUN");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_CHAINGUN,	"Deploy a Chaingun Turret",		"CC14", "FP_DEPCD_TURRET_CHAINGUN");
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_SHOTGUN,		"Deploy a Shotgun Turret",		"CC13", "FP_DEPCD_TURRET_SHOTGUN");
 	
 	CMDBut_Add(FP_CB_NUKE,			"Activate nuke",			"CM75", "Activate the silo, to nuke the map.");
 	CMDBut_Add(FP_CB_NUKE_IT_NOW,	"Launch the nuke now!",		"CM75", "Click it only if you're sure to nuke this map\njust remember, hold up for 5 minutes and you win.\n\n This action cannot be undone, are you sure?");
@@ -177,19 +179,6 @@ function void SFPlus_DefineCMDButtons(void){
 }
 
 function void CMDBut_UpdateConds(void){
-		/*
-	CMDBut_Conds (FP_CB_EXIT, 	"Exit", 			  "CG01", "Eject from the commander's chair."); // 0
-	CMDBut_Conds (FP_CB_RETURN, 	"Return",			  "CG01", "To the last category."); // 1
-	CMDBut_Conds (FP_CB_BUILD, 	"Build Structure", 	  "CG02", "Expand your base by building an additional structure."); 
-	CMDBut_Conds (FP_CB_UPGRADE, "Research New Techs", "CG03", "Upgrade and research to powerup your allies."); 
-	
-	string = strparam(s:"Launch aerial strikes, mark objectives, activate core",
-					  s:" pulses and fire the ion cannon to support your allies.");
-					  
-	CMDBut_Conds (FP_CB_SUPPORT, 	"Support allies", 	  "CG04",  string); 
-	CMDBut_Conds (FP_CB_DEPLOY, 	"Deploy structures",  "CG05", "Deploy turrets, dispensers, walls and mines to aid in the battle.");
-		*/
-	//id's 8-14 for building structures.
 	int btn;
 	
 	/**
@@ -327,6 +316,7 @@ function void CMDBut_UpdateConds(void){
 	btn = FP_CB_SUPPORT_CPULSE_HALT;
 	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(FP_TECH_MARCOM_CPULSE));
 	
+	// Airstrike commands.
 	btn = FP_CB_SUPPORT_AIRSTK;
 	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(FP_TECH_MARCOM_AIRSUP));
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_AIRSUP), "Research it in the Marine Command first!");
@@ -357,7 +347,7 @@ function void CMDBut_UpdateConds(void){
 	CMDBut_SetPrice		 (btn, "airstrike");
 	CMDBut_SetIgnorePrice(btn, true);
 	
-	
+	// Drop money bag.
 	btn = FP_CB_SUPPORT_DROPMONEY;
 	CMDBut_SetPrice		 (btn, "moneybag");
 	CMDBut_SetShowCond	 (btn, checkInventory("c_allow_moneybag") && checkInventory("p_team_credits") >= 3000);
@@ -384,7 +374,6 @@ function void CMDBut_UpdateConds(void){
 	CMDBut_SetShowCond	(btn, allow_turret_c());
 	CMDBut_SetIgnorePrice(btn, true);
 	
-	
 	btn = FP_CB_DEPLOY_MINEFIELD;
 	CMDBut_SetPrice		 (btn, "minefield");
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM), 
@@ -399,6 +388,11 @@ function void CMDBut_UpdateConds(void){
 	CMDBut_SetShowCond	(btn, allow_turret_c());
 	CMDBut_SetIgnorePrice(btn, true);
 	
+	btn = FP_CB_DEPLOY_TURRET_SHOTGUN;
+	CMDBut_SetPrice		 (btn, "turret_shotgun");
+	CMDBut_SetShowCond	 (btn, allow_turret_c());
+	CMDBut_SetIgnorePrice(btn, true);
+	
 	btn = FP_CB_DEPLOY_TURRET_ROCKET;
 	CMDBut_SetPrice		 (btn, "turret_rocket");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
@@ -407,6 +401,8 @@ function void CMDBut_UpdateConds(void){
 	btn = FP_CB_DEPLOY_TURRET_PLASMA;
 	CMDBut_SetPrice		 (btn, "turret_plasma");
 	CMDBut_SetShowCond	(btn, allow_turret_c());
+	CMDBut_SetAccessCond (btn, Tech_IsDoneC(FP_TECH_MARCOM_ADVSYS),
+								"Requires Advanced Systems...");
 	CMDBut_SetIgnorePrice(btn, true);
 	
 	btn = FP_CB_DEPLOY_TURRET_TESCOL;

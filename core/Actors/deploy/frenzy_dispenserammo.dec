@@ -376,6 +376,7 @@ ACTOR AmmoDispenser_Base
 		Spawn:
 			TNT1 A 0
 			TNT1 A 1 A_setUserVar("user_rd", 32)
+			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 60)
 		Loopy:
 			DEAM A 3 
 			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_rd,user_rd), random(-user_rd,user_rd), 0, 0, 0, 3)

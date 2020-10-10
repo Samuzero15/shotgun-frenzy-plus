@@ -182,4 +182,51 @@ script "Teleport_Effects" (void) {
 	}
 	
 }
- 
+
+
+int Turret_pool;
+Script "Turret_HPBar" (int height){
+	// This is a Health bar for the turrets and dispensers!
+	int hp = GetActorProperty(0, APROP_HEALTH);
+	int max_hp = GetActorProperty(0, APROP_SPAWNHEALTH);
+	int z = height<<16 + 4.0;
+	int id = (++turret_pool)+4000;
+	spawn("Turret_HealthBar", getactorx(0), getactory(0), getactorz(0) + z, id);
+	while (hp > 0){
+		hp = GetActorProperty(0, APROP_HEALTH);
+		
+		setactorposition(id, getactorx(0), getactory(0), getactorz(0) + z, 0);
+		Bar_State(id, hp, max_hp);
+		Bar_Color(id, hp, max_hp);
+		delay(1);
+	}
+	setActorState(id, "HP_0");
+	delay(70);
+	Thing_Remove(id);
+}
+
+function void Bar_State(int id, int var, int max_val){
+	// Quick division function to show sprite.
+	int bar_amount = FixedMul(FixedDiv(var, max_val), 100.0) >> 16;
+	int bar_state_num = bar_amount / 5;
+	if(bar_state_num >= 20) bar_state_num = 20;
+	setActorState(id, Strparam(s:"HP_", d:bar_state_num));
+} 
+
+function void Bar_Color(int id, int var, int max_val){
+	//Colour your life.
+	int bar_amount = FixedMul(FixedDiv(var, max_val), 100.0) >> 16;
+	int color = bar_amount / 20;
+	if(color >= 5) color = 5;
+	int res =  0xFFFFFF;
+	switch(color){
+		case 0:	res = 0xFF0000; break; // Red (20 %)
+		case 1:	res = 0xFF8800; break; // Orange (40 %)
+		case 2:	res = 0xFFFF00; break; // Yellow (60 %)
+		case 3:	res = 0x00FF00; break; // Green (80 %)
+		case 4:	res = 0xAAAAFF; break; // cyan (100 %)
+		case 5:	res = 0xFFFFFF; break; // White (Overhealth)
+	}
+	SetActorProperty(id, APROP_STENCILCOLOR, res);
+}
+

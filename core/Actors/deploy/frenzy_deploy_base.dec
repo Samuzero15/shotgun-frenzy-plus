@@ -21,6 +21,494 @@ actor BuildBase
 	}
 }
 
+Actor Deploy_Column_Frame : Integer {}// The sprite to show.
+Actor Deploy_Column_Repeat : Integer {}// The Random interval of repeats.
+Actor Deploy_Column_Done : Integer {}
+Actor Deploy_Column_Destroyed : Integer {}
+Actor Deploy_Column_Tics : Integer {}
+
+Actor Deploy_Column {
+	radius 8
+	height 56
+	mass 10000
+	speed 0
+	Health 1
+	+FLOORCLIP
+	+DONTOVERLAP
+	+NODAMAGETHRUST
+	Monster
+	-countkill
+	-shootable
+	+Noblockmap
+	+noclip
+	states
+	{
+	Spawn:
+		BLDC A 0
+		BLDC A 1 A_PlaySound("plats/pt1_strt", CHAN_AUTO)
+	See:
+	Col.Raise:
+		BLDC ABCDEFGHI 1
+		BLDC I 1 A_Jump(256, "Col.Build")
+		goto Col.Build
+	Col.Lower:
+		BLDC IHGFEDCBA 1
+		stop
+	Col.Build: // Frames, 0 ticked for the common display
+		BLDC J 0 
+		goto Col.Build.Frame
+	Col.Build.F1:
+		BLDC K 0 
+		goto Col.Build.Frame
+	Col.Build.F2:
+		BLDC L 0 
+		goto Col.Build.Frame
+	Col.Build.F3:
+		BLDC M 0
+		goto Col.Build.Frame
+	Col.Build.F4:
+		BLDC N 0 
+		goto Col.Build.Frame
+	Col.Build.F5:
+		BLDC O 0 
+		goto Col.Build.Frame
+	Col.Build.F6:
+		BLDC P 0 
+		goto Col.Build.Frame
+	Col.Build.F7:
+		BLDC O 0
+		goto Col.Build.Frame
+	Col.Build.F8:
+		BLDC N 0 
+		goto Col.Build.Frame
+	Col.Build.F9:
+		BLDC M 0 
+		goto Col.Build.Frame
+	Col.Build.F10:
+		BLDC L 0 
+		goto Col.Build.Frame
+	Col.Build.F11:
+		BLDC K 0 
+		goto Col.Build.Frame.Last
+	
+	Col.Build.Repeat: // In random intervals, spawn sparks after 4 - 12 frames.
+		TNT1 A 0 A_Giveinventory("Deploy_Column_Repeat", random(4, 12))
+	Col.Build.Jump:// Jumper depending on frame.
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 11, "Col.Build.F11")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 10, "Col.Build.F10")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 9, "Col.Build.F9")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 8, "Col.Build.F8")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 7, "Col.Build.F7")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 6, "Col.Build.F6")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 5, "Col.Build.F5")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 4, "Col.Build.F4")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 3, "Col.Build.F3")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 2, "Col.Build.F2")
+		TNT1 A 0 A_JumpIfInventory("Deploy_Column_Frame", 1, "Col.Build.F1")
+		goto Col.Build
+	
+	Col.Build.Frame: // Display frame
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Destroyed", 1, "XDeath", AAPTR_MASTER) // Just in case.
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Done", 1, "Death", AAPTR_MASTER)
+		"####" "#" 1 
+		"####" "#" 0 A_JumpIfMasterCloser(128, 1) // If anything happens with the master item.
+		goto XDeath
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Destroyed", 1, "XDeath", AAPTR_MASTER) // Just in case.
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Done", 1, "Death", AAPTR_MASTER)
+		"####" "#" 0 A_JumpifInventory("Deploy_Column_Repeat", 1, 2)// Skip spark if countdown not over.
+		"####" "#" 1 A_Jump(256, "Col.Spark")
+		"####" "#" 0 A_TakeInventory("Deploy_Column_Repeat", 1) // repeater countdown.
+		"####" "#" 0 A_GiveInventory("Deploy_Column_Frame", 1) // Next frame (back to 0)
+		goto Col.Build.Jump
+	
+	Col.Build.Frame.Last: // Same, but resets back to 0
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Destroyed", 1, "XDeath", AAPTR_MASTER) // Just in case.
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Done", 1, "Death", AAPTR_MASTER)
+		"####" "#" 1 
+		"####" "#" 0 A_JumpIfMasterCloser(128, 1) // If anything happens with the master item.
+		goto XDeath
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Destroyed", 1, "XDeath", AAPTR_MASTER) // Just in case.
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Done", 1, "Death", AAPTR_MASTER)
+		"####" "#" 0 A_JumpifInventory("Deploy_Column_Repeat", 1, 2)// Sparking interval.
+		"####" "#" 1 A_Jump(256, "Col.Spark")
+		"####" "#" 0 A_TakeInventory("Deploy_Column_Repeat", 1) // repeat countdown
+		"####" "#" 0 A_TakeInventory("Deploy_Column_Frame", 99) // Next frame (back to 0)
+		goto Col.Build.Jump
+		
+	Col.Spark: // Sparky
+		"####" "#" 0 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+		// 50 Tic looper.
+		"####" "#" 0 A_Giveinventory("Deploy_Column_Tics", 1)
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Destroyed", 1, "XDeath", AAPTR_MASTER)
+		"####" "#" 1 A_JumpIfInventory("Deploy_Column_Done", 1, "Death", AAPTR_MASTER)
+		"####" "#" 0 A_JumpIfInventory("Deploy_Column_Tics", 50, 1)
+		goto Col.Spark+1
+		"####" "#" 0 A_TakeInventory("Deploy_Column_Tics", 99)
+		"####" "#" 0 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
+		goto Col.Build.Repeat
+	
+		Death:
+		"####" "#" 1
+		goto Col.Lower
+		
+		XDeath:
+		"####" "#" 1
+		stop
+	}
+}
+
+// All turrets and dispensers are built in nearly 10 seconds.
+
+// Actor wrappers, for the turrets and dispenser build columns
+Actor Deploy_TurretBuilders {
+	// Dummy actor for tracking the building time for each building.
+	Health 1
+	radius 1
+	height 1
+	-Solid
+	Monster
+	-CountKill
+	-Shootable
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 // Building set spawner.
+		TNT1 A 0 A_SpawnItemEx("Deploy_Counter", 0, 0, 64, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", 32, 32, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", -32, 32, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", -32, -32, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", 32, -32, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 1 A_Jump(256, "Timer")
+		goto Timer
+		
+		Timer: // Overridable!
+			TNT1 A 0 A_JumpIfInventory("Deploy_Building_Tics", 29, "Timer.Ticker")
+			TNT1 A 0 A_JumpIfInventory("Deploy_Building_Destroyed", 1, "Death", AAPTR_MASTER) // Delay time, Death check safe.
+			TNT1 A 1 A_giveInventory("Deploy_Building_Tics", 1)
+			TNT1 A 1 A_Jump(256, "Timer")
+		loop
+		Timer.Ticker: // Add up 1 for each delay.
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 11, "Build.Done")
+			TNT1 A 0 A_GiveInventory("Deploy_Counter_Progress", 1)
+			TNT1 A 0 A_TakeInventory("Deploy_Building_Tics", 999999)
+			TNT1 A 1 A_Jump(256, "Timer")
+		goto Timer
+		
+		Build.Done: // Hide the building set, and send the finished signal.
+			TNT1 A 1 A_GiveInventory("Deploy_Counter_Done", 1)
+			TNT1 A 0 A_GiveInventory("Deploy_Column_Done", 1)
+			TNT1 A 0 A_GiveInventory("Deploy_Building_Done", 1, AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Column_Done", 1, "Done") // Just in case.
+		loop
+		Death: // Guys this boi is ded.
+			TNT1 A 0 A_KillSiblings
+			TNT1 A 0 A_KillChildren
+			TNT1 A 0 A_KillMaster // Kill the builder
+			TNT1 A 1 A_GiveInventory("Deploy_Counter_Done", 1)
+			TNT1 A 1 A_GiveInventory("Deploy_Column_Destroyed", 1)
+			TNT1 A 1 //A_Log("The deployer is gone!")
+		stop
+		Done:
+			TNT1 A 1
+		Stop
+	}
+}
+
+
+Actor Deploy_DispenserBuilders : Deploy_TurretBuilders {
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("Deploy_Counter", 0, 0, 64, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", 16, 16, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", -16, 16, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", -16, -16, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 0 A_SpawnItemEx("Deploy_Column", 16, -16, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+		TNT1 A 1 A_Jump(256, "Timer")
+		goto Timer
+	}
+}
+
+Actor Deploy_Building_Tics : Integer {}
+Actor Deploy_Building_Done : Boolean {}
+Actor Deploy_Building_Destroyed : Boolean {}
+
+ACTOR Deploy_Building
+{
+	radius 8
+	height 8
+	mass 99999
+	speed 0
+	health 999999
+	MONSTER
+	-CountKill
+	+FRIENDLY
+	+FLOORCLIP
+	+NODAMAGETHRUST
+	+Thruspecies
+	Species "Marines"
+		// Immnune to Marine fire.
+		
+		damagefactor "MarineFire", 0.0
+		damageFactor "MarineFire2", 0.0
+		DamageFactor "MarineFire3", 0.0
+		
+        DamageFactor "BFGSplash", 0.0
+        DamageFactor "BFGSpray", 0.0
+	damagefactor "NoProfitKill", 0.0
+	Painchance 256
+	states
+	{
+		Spawn:
+			TBAS A 1
+			TBAS A 0 A_Jump(256, "Build")
+		Build:
+			TBLD A 1 A_SpawnItemEx("Deploy_TurretBuilders", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+			goto Delay
+		Delay:
+			TNT1 A 0 A_JumpIfInventory("Deploy_Building_Done", 1, "Deploy")
+			TBLD AAAAABBBBB 1 bright A_JumpIfInventory("Deploy_Building_Done", 1, "Deploy")
+			TNT1 A 0 A_JumpIfInventory("Deploy_Building_Done", 1, "Deploy")
+			loop
+		Deploy: // Deploy something here!
+			TNT1 A 1 
+			stop
+		
+		Pain:
+			TNT1 A 0 A_JumpIfHealthLower(999949, 1) // 50 HP.
+			goto Delay
+			TNT1 A 1 A_GiveInventory("Deploy_Building_Destroyed", 1)
+			goto Delay
+		
+		Death: // Boom explosive
+			TNT1 A 1 A_GiveInventory("Deploy_Building_Destroyed", 1)
+			NULL A 1 A_SpawnItemEx("Boom", 0, 0, 64)
+			NULL A 1 //A_NoBlocking
+			stop
+		
+		
+	}
+}
+
+Actor Deploy_Counter_Progress : Integer {}
+ACTOR Deploy_Counter_Done : Boolean {}
+ACTOR Deploy_Counter
+{	// Same good old counter, except it warps to the deployer.
+	radius 3
+	height 3
+	scale 0.5
+	+NOGRAVITY
+	
+	Health 1
+	Monster
+	-countkill
+	-shootable
+	+Noblockmap
+	
+	renderstyle add
+	
+	States
+	{
+		Spawn:
+			CONT A 1 
+			goto Frame
+		Bar:
+			CONT A 0 
+		goto Frame
+		Bar.F1:
+			CONT B 0 
+		goto Frame
+		Bar.F2:
+			CONT C 0 
+		goto Frame
+		Bar.F3:
+			CONT D 0 
+		goto Frame
+		Bar.F4:
+			CONT E 0 
+		goto Frame
+		Bar.F5:
+			CONT F 0 
+		goto Frame
+		Bar.F6:
+			CONT G 0 
+		goto Frame
+		Bar.F7:
+			CONT H 0
+		goto Frame
+		Bar.F8:
+			CONT I 0 
+		goto Frame
+		Bar.F9:
+			CONT J 0 
+		goto Frame
+		Bar.F10:
+			CONT K 0 
+		goto Frame
+		Bar.F11:
+			CONT L 0 
+		goto Frame
+		Bar.F12:
+			TNT1 A 0 
+		goto Frame.Last
+		
+		Jump:
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 12, "Bar.F12", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 11, "Bar.F11", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 10, "Bar.F10", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 9, "Bar.F9", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 8, "Bar.F8", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 7, "Bar.F7", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 6, "Bar.F6", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 5, "Bar.F5", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 4, "Bar.F4", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 3, "Bar.F3", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 2, "Bar.F2", AAPTR_MASTER)
+			TNT1 A 0 A_JumpIfInventory("Deploy_Counter_Progress", 1, "Bar.F1", AAPTR_MASTER)
+		goto Bar
+		
+		Frame:
+			"####" "#" 1
+			"####" "#" 0 A_Warp(AAPTR_Master, 0, 0, 64, 0, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+			"####" "#" 0 A_JumpIfInventory("Deploy_Counter_Done", 1, "Death", AAPTR_MASTER)
+		goto Jump
+		
+		Frame.Last:
+			TNT1 A 1
+		Death:
+			TNT1 A 1
+		Stop
+	}
+}
+
+/**
+	A Samu's Quick note.
+	The column builders will always be modified by the time delay.
+	This means the time can be finally customized upon deploying stuff!
+	Override it like this:
+	
+	***
+	Actor TurretBuilders_Bullet : Deploy_TurretBuilders 
+	{
+		States
+		{
+			Timer:
+				TNT1 AAAAAAAAAAAAAAA 1 A_JumpIfInventory("Deploy_Building_Destroyed", 1, "Death", AAPTR_MASTER)
+			goto Super::Timer.Ticker
+		}
+	}
+	***
+	The more "A" you add, the longer it takes.
+	
+	And then on the deployable building, override build and death states.
+	
+	***
+	ACTOR TurretBullet : Deploy_Building // The item to be deployed.
+	{
+		states
+		{
+			Build:
+				TBLD A 1 A_SpawnItemEx("TurretBuilders_Bullet", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+				// ^^ The delay time ^^
+				goto Super::Delay
+		
+			Deploy:
+				NULL A 1 A_SpawnItemEx("TurretBullet_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+				// ^^ The item to deploy ^^
+				NULL A 1 //A_NoBlocking
+				stop
+		}
+	}
+	***
+*/
+
+
+Actor Turret_HealthBar {
+	Height 1
+	Radius 1
+	
+	scale 0.30
+	renderstyle Shaded
+	
+	+NOINTERACTION
+	+CLIENTSIDEONLY
+	+NOCLIP
+	-SOLID
+	
+	//RenderStyle "Stencil"
+	
+	States{
+		Spawn:
+			BUHB A -1 BRIGHT
+		stop
+		HP_0:
+			BUHB A -1 BRIGHT
+		stop
+		HP_1:
+			BUHB B -1 BRIGHT
+		stop
+		HP_2:
+			BUHB C -1 BRIGHT
+		stop
+		HP_3:
+			BUHB D -1 BRIGHT
+		stop
+		HP_4:
+			BUHB E -1 BRIGHT
+		stop
+		HP_5:
+			BUHB F -1 BRIGHT
+		stop
+		HP_6:
+			BUHB G -1 BRIGHT
+		stop
+		HP_7:
+			BUHB H -1 BRIGHT
+		stop
+		HP_8:
+			BUHB I -1 BRIGHT
+		stop
+		HP_9:
+			BUHB J -1 BRIGHT
+		stop
+		HP_10:
+			BUHB K -1 BRIGHT
+		stop
+		HP_11:
+			BUHB L -1 BRIGHT
+		stop
+		HP_12:
+			BUHB M -1 BRIGHT
+		stop
+		HP_13:
+			BUHB N -1 BRIGHT
+		stop
+		HP_14:
+			BUHB O -1 BRIGHT
+		stop
+		HP_15:
+			BUHB P -1 BRIGHT
+		stop
+		HP_16:
+			BUHB Q -1 BRIGHT
+		stop
+		HP_17:
+			BUHB R -1 BRIGHT
+		stop
+		HP_18:
+			BUHB S -1 BRIGHT
+		stop
+		HP_19:
+			BUHB T -1 BRIGHT
+		stop
+		HP_20:
+			BUHB U -1 BRIGHT
+		stop
+	}
+}
+
 ACTOR TurretStand
 {
 	radius 16
@@ -63,6 +551,13 @@ Actor DispenserPickup : CustomInventory{
 	height 32
 	+INVENTORY.QUIET//[Samu] Shadap!
 }
+
+actor BulletPuffTurret : BulletPuff { 
+	+Mthruspecies
+	+thruspecies
+	damagetype "MarineFire" 
+}
+
 
 //move this if incorrect placement
 ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or anything else)

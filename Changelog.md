@@ -2,7 +2,35 @@
 
 ## v0 - Before the beginning...
 
-#### -) (14 - 15 / 08 / 2020) [Better Air Strikes, and incoming Pulses.]
+#### -) (9 - 10 / 10 / 2020) [Turret touchups, and a Shotgun Turret]
+	*) Generalized the guardian wave end script for all the maps.
+	// At least if this fails it will be repeated on the other maps.
+	+) New icons for the turrets in the commander terminal.
+	// Going to commit on this point, I should merge the Zanieon fixes.
+
+#### -) (1 - 8 / 10 / 2020) 
+	*) Some clean up on the turret's code. (Needs mp testing if they still works as usual)
+	+) The turret deployer decorate code has been generalized and improved a lot.
+	// In fact, the columns will always vary themselves on their building state.
+	*) The turret progress bar now can warp itself to the deployer, so no more flying bars!
+	+) The turret construction time can be modified though decorate! and in a simple way to do it.
+	// That opens me another possible tech in the game.
+	*) The blue particles will not be rendered in large distances, so just 512 map units will be good.
+	// Spamming the turrets will always cause lag, for the shieton of sparks puked by the columns.
+	// I'm just saving you the lag spikes caused by the sparks, maybe I should do this with the other casings, and blood gibs.
+
+#### -) (21, 29 / 09 / 2020)
+	+) Shotgun turret is finally here!
+	//	Thank you madcat for the sprites!
+		The shotgun turret, (only on SF maps for now) can now shoot shells against the horde!
+		Slightly resistant than the bullet turret, and fires twice before recharging.
+		With this, and with the incoming BFG turret, the turret research access might vary a bit on the commander chair.
+		But for now, adding this, and the bfg turret, should do the trick.
+		
+	+) Just as a small addednum, now turrets can display health!
+	*) Fixed up the changelog dates xd
+
+#### -) (14 - 15 / 09 / 2020) [Better Air Strikes, and incoming Pulses.]
 	+) 2 New pulses WILL be fully implemented, SMITE and HEAL. (WIP)
 	// Wait, HEAL?, we did'nt had that already?
 		Yes and no, we had REVIVE, which actually fully heals all the Cores (Or at least the risked one.)
@@ -20,7 +48,7 @@
 	*) Yet, some small other fixes in the Tip notifications...
 	*) Oh yeah, made some small touches on the blood particles, let's hope it reduces the incoming lag after doing an explosive attack... I think.
 
-#### -) (11 - 12 / 08 / 2020)
+#### -) (11 - 12 / 09 / 2020)
 	-) Removed the old progresive scripts for the construction and re-charging.
 	*) Revamped the progress counter and timer scripts, for a more general and extended use!
 	+) Added the fp_ptdir.acs file, which it contains a wrapper for the timed notifications.
@@ -28,13 +56,13 @@
 	+) Not an official feature. But, a small new core pulse is coming up to the game.
 	*) Now, if you spawn a turret in the command chair, the space will be checked before charging credits to the team.
 
-#### -) (9 / 08 / 2020) [Flak dualshot(? is here, and some more fixes]
-	*) Now, if a turret is not miss-placed (for occupied sector or things like that), credits will not be charged.
+#### -) (9 / 09 / 2020) [Flak dualshot(? is here, and some more fixes]
+	*) Now, if a turret is miss-placed (for occupied sector or things like that), credits will not be charged.
 	*) Yet another small fix on the play.py
 	*) Sticky grenades for the sticky flinger has been tweaked, fixing a couple of bugs.
 	*) Re-Arranging the carpets for the samu-terminal
 
-#### -) (5 / 08 / 2020)
+#### -) (5 / 09 / 2020)
 	+) Added a mirrored saw for the dualshot's upgrade: Razor Saw.
 	+) Added an alt attack for the razor saw's dualshot upgrade, letting you to fire saws 1 per time!
 	*) Small fix on play.py
@@ -110,7 +138,7 @@
 	*) Small debug fixes.
 
 #### -) (9 / 08 / 2020)
-	*) Changing the .txt, to .dec extensions for notepad access.
+	*) Changing the .txt, to .dec extensions for notepad++ access.
 	*) Moved and renamed upgrades.dec to fp_p_upgrades.dec, it is inside of the gameobjects folder.
 	*) Some more experiments on those health terminal upgrades.
 	*) Some more re-factoring on f_StockP.acs
@@ -128,7 +156,7 @@
 	*) Now the commander kick script will teleport the player outside of the chair, to let the others command.
 	*) Found a bug on spectating while commanding, I should fix that soon.
 	*) The commander terminal will restrict only 1 player (preventing another player to command)
-	*) Giving the inventory "SamuTInv_ForcedExit" will force the exit for the pllayer when it is on the terminal. (needs some testing on MP though)
+	*) Giving the inventory "SamuTInv_ForcedExit" will force the exit for the player when it is on the terminal. (needs some testing on MP though)
 
 #### -) (4 / 08 / 2020) [Build.py and play.py tweaks]
 	*) Some more edits on the play and build py files.

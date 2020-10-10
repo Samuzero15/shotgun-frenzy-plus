@@ -62,6 +62,7 @@ int f_AIDir_SpawnCount;
 int f_Gametype;
 int g_TenMinMark;
 int g_GuardianMode;
+int g_GameOver;
 
 // For Samu Terminal
 int g_TechFlags = 0;

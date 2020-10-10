@@ -194,6 +194,7 @@ ACTOR CoreExplosion
 {
 	+NOGRAVITY
         +CLIENTSIDEONLY
+		+nointeraction
 	states
 	{
 		Spawn:

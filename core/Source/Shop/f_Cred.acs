@@ -88,7 +88,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 		localambientsound("p/kill", 64);
 	}
 
-	if(Human()){
+	if(Human() && CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
 	if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
 		localambientsound("p/kill", 125);
 

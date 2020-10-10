@@ -164,11 +164,13 @@ function void CMDPage_Init(void){
 	CMDPage_MakeButton(i, 1, 4, FP_CB_DEPLOY_BARRIER, 				cmd, 12);
 	CMDPage_MakeLinkButton(i, 3, 1, FP_CB_DEPLOY_TURRET, p);
 		CMDPage_MakeButton(p, 1, 1, FP_CB_DEPLOY_TURRET_BULLET, 	cmd, 1);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_DEPLOY_TURRET_ROCKET, 	cmd, 2);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_DEPLOY_TURRET_PLASMA, 	cmd, 3);
-		CMDPage_MakeButton(p, 1, 4, FP_CB_DEPLOY_TURRET_TESCOL, 	cmd, 4);
-		CMDPage_MakeButton(p, 2, 1, FP_CB_DEPLOY_TURRET_FLAMER, 	cmd, 5);
-		CMDPage_MakeButton(p, 2, 2, FP_CB_DEPLOY_TURRET_CHAINGUN, 	cmd, 6);
+		CMDPage_MakeButton(p, 1, 2, FP_CB_DEPLOY_TURRET_SHOTGUN, 	cmd, 7);
+		CMDPage_MakeButton(p, 1, 3, FP_CB_DEPLOY_TURRET_ROCKET, 	cmd, 2);
+		CMDPage_MakeButton(p, 1, 4, FP_CB_DEPLOY_TURRET_PLASMA, 	cmd, 3);
+		CMDPage_MakeButton(p, 2, 1, FP_CB_DEPLOY_TURRET_CHAINGUN, 	cmd, 6);
+		CMDPage_MakeButton(p, 2, 2, FP_CB_DEPLOY_TURRET_TESCOL, 	cmd, 4);
+		CMDPage_MakeButton(p, 2, 3, FP_CB_DEPLOY_TURRET_FLAMER, 	cmd, 5);
+		
 		CMDPage_MakeReturnButton(p, i);
 	CMDPage_MakeReturnButton(i, m);
 }

@@ -7,7 +7,7 @@ ACTOR Landmine
 	{
 		Spawn:
 			MINE CDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD 5
-                        MINE C 5 A_SpawnItemEX("Landmine_Spawned2", 0,0,0,0,0,0,0,SXF_TransferPointers)
+                        MINE C 5 A_SpawnItemEX("Landmine_Spawned2", 0,0,0,0,0,0,0,SXF_TransferPointers, 0, tid)
                         stop
 	}
 }
@@ -125,11 +125,13 @@ ACTOR Landmine_Spawned2
 			MINE A 5 bright
 			MINE B 2 bright A_Explode(400,0,0,0,128)
 			MINE B 0 bright A_CustomMissile("LandmineBoom")
+			/*
 			MINE B 6 bright
 			NULL A 50
 			MINE A 0 A_PlaySound("weapons/rocklx")
 			NULL A 50
 			MINE A 0 A_PlaySound("weapons/rocklx")
+			*/
 			stop
 		Raise:
 			SAWD NMLKJI 5

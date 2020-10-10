@@ -152,6 +152,7 @@ script 452 (void){
     acs_terminate(102, 0);
     acs_terminate(103, 0);
     thing_destroy(24, 1);
+	thing_destroy(118, 1);
     thing_destroy(110, 1);
     thing_destroy(111, 1);
     thing_destroy(112, 1);

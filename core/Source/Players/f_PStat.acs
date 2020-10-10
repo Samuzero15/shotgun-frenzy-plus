@@ -122,7 +122,7 @@ script 53 ENTER
 	TakeInventory("PlayerKilledDemon", 0xFFFFFFF);
 	TakeInventory("P_Backpack", 0xFFFFFFF);
 	// Just in case
-	ACS_ExecuteAlways("PersonalBP_Reset", 0);
+	//ACS_ExecuteAlways("PersonalBP_Reset", 0);
     clearinventory();
 
     // give the player his/her boomstick and beretta
@@ -228,6 +228,7 @@ script 57 (int num) DISCONNECT
 	// Clean things leftovers by player.
 	Thing_Damage(990+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(990+num);
+	
 	Thing_Damage(30000+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(30000+num);
 	// Unfreeze the player, to avoid bugs.

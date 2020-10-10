@@ -85,14 +85,11 @@ script "SFPlus_AirstrikeTarget" (int fun){
 		
 		case 0: // Single target point
 			if(airstk_n_targets+1 < AIRSTRIKE_POINT_MAX){
-				//setactorstate(130, "Spawn_StrikeMarker", 0);
 				setactorstate(130, "Spawn_StrikeMarker", 0);
 			}
 			else Notify_Message("Airstrike marker failed", "Too much target points!", "INFO", 3);
-			//print(s:"Target points:", d:airstk_n_targets);
 		break;
 		case 1: // Point 1 for the line of targets.
-			//print(s:"Replacing strike marker 1: ", d:ThingCount(0, 140));
 			if(ThingCount(0, 140)) Thing_remove(140);
 			
 			setactorstate(130, "Spawn_StrikeMarker1", 0);	delay(1);
@@ -102,7 +99,6 @@ script "SFPlus_AirstrikeTarget" (int fun){
 			}
 		break;
 		case 2: // Point 2 for the line of targets.
-			//print(s:"Replacing strike marker 2: ", d:ThingCount(0, 141));
 			if(ThingCount(0, 141)) Thing_remove(141);
 			setactorstate(130, "Spawn_StrikeMarker2", 0);	delay(1);
 			if(ThingCount(0, 140) != 0 && ThingCount(0, 141) != 0){
@@ -124,7 +120,7 @@ script "SFPlus_AirstrikeTarget" (int fun){
 			}
 			Notify_MessagePriv("Airstrike Wave Change",
 			strparam(s:"Switched from: \ci", d:last_airstk_waves, s:" \c-to \ci ",
-			d:airstk_waves,s:"wave attacks."), "INFO", 0);
+			d:airstk_waves,s:"\c- wave attacks."), "INFO", 0);
 		break;
 	}
 }
@@ -144,12 +140,9 @@ script "SFPlus_AirstrikeAttack" (void)
     // disable air attacks
 	
 	if(airstk_n_targets == 0 && !airstk_line){
-		Notify_MessagePriv("Airstrike Failed", "No airstrike target found!", "CM76", 2);
+		Notify_MessagePriv("Airstrike Failed", "No airstrike targets found!", "CM76", 2);
 		terminate;
-	}/*else{ // Charge the price of airstrikes.
-		// Each airstrike point worths 300 I think. 
-		c_Credits -= AirStrike_GetPrice(); 
-	}*/
+	}
 	
 	Tech_SetDone(FP_TECH_MARCOM_AIRSUP, FP_TECHF_LOCK);
     

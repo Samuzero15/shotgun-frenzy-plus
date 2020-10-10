@@ -69,7 +69,9 @@ ACTOR DemonCore 10002
 			DCRE A 1 A_Scream
 			DCRE A 1 A_NoBlocking
 			MISL BCD 5
-                     	MISL A 0 ACS_Execute(125, 0, 3, 0, 0)
+                     	//MISL A 0 ACS_Execute(125, 0, 3, 0, 0)
+						MISL A 0 ACS_NamedExecute("SFPlus_KillnEnd", 0, 3)
+						// That will show em.
 			MISL BCD 5
 		Stop
 	}
@@ -119,6 +121,7 @@ ACTOR DemonWall 10004
 	Health 5000
 	Height 64
 	Radius 32
+	Mass 0x7FFFFFFF
 	+SOLID
 	+SHOOTABLE
 	Species "DemonSide"

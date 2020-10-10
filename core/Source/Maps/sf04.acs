@@ -91,15 +91,7 @@ script 90 (void)
         delay(35 * 10);
     }
     ticker = 0;
-    while(thingcount(0, 118) > 8 || thingcount(0, 111) > 8 || thingcount(0, 112) > 8 || thingcount(0, 113) > 8 || thingcount(0, 114) > 8)
-        delay(35 * 1);
-    thing_destroy(118, 0);
-    thing_destroy(111, 0);
-    thing_destroy(112, 0);
-    thing_destroy(113, 0);
-    thing_destroy(114, 0);
-    // endgame
-    acs_execute(125, 0, 2, 0, 0);
+    ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 8);
 }
 
 script 92 (void)

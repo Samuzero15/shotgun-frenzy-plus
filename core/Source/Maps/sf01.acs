@@ -86,11 +86,7 @@ script 90 (void)
     }
     acs_terminate(89, 0);
     l_HoltSpawning = 1;
-    while(thingcount(0, 118) > 10 || thingcount(0, 111) > 10 || thingcount(0, 112) > 10 || thingcount(0, 113) > 10 || thingcount(0, 114) > 10 || thingcount(0, 24) > 10)
-        delay(35 * 1);
-    
-    // endgame
-    acs_execute(125, 0, 2, 0, 0);
+    ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 10);
 }
 
 script 1 (void)

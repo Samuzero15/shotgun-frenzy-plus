@@ -85,17 +85,7 @@ script 90 (void)
         delay(35 * 20);
     }
     ticker = 0;
-    while(thingcount(0, 118) > 15 || thingcount(0, 111) > 15 || thingcount(0, 112) > 15 || thingcount(0, 113) > 15 || thingcount(0, 114) > 15)
-        delay(35 * 1);
-    thing_destroy(118, 1);
-    thing_destroy(110, 1);
-    thing_destroy(111, 1);
-    thing_destroy(112, 1);
-    thing_destroy(113, 1);
-    thing_destroy(114, 1);
-    
-    // endgame
-    acs_execute(125, 0, 2, 0, 0);
+    ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 15);
 }
 
 // moving platforms

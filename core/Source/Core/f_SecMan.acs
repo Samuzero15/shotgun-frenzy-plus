@@ -87,7 +87,7 @@ script 100 OPEN
 		
 		if (m_CalcSector() == 0 && g_Status > 1){
 			// Check again if th sector is actually clear.
-			acs_terminate(129);// Kill the timer script.
+			acs_terminate(129, 0);// Kill the timer script.
             acs_execute(103, 0, 0, 0, 0);
 			
 			terminate;
@@ -202,16 +202,16 @@ script 102 (void)
     switch (g_Status)
     {
         case 1:
-            Notify_Message("Sector 1 CORE DESTROYED!","We've lost the control of Sector 1", "INFO", 2);
+            Notify_Message("Sector 1 CORE DESTROYED!","We've lost the control of Sector 1", "INFO", 3);
             break;
         case 2:
-            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 2", "INFO", 2);
+            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 2", "INFO", 3);
             break;
         case 3:
-            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 3", "INFO", 2);
+            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 3", "INFO", 3);
             break;
         case 4:
-            Notify_Message("Main CORE DESTROYED!", "The Hell Forces wins this round!", "INFO", 2);
+            Notify_Message("Main CORE DESTROYED!", "The Hell Forces wins this round!", "INFO", 3);
             acs_execute(125, 0, 4, 0, 0);
             break;
     }
@@ -340,15 +340,15 @@ script 103 (void)
     switch (g_Status)
     {
         case 1:
-            Notify_Message("Sector 1 Recovered!", "The Sector 1 CORE has been restored!", "INFO", 2);
+            Notify_Message("Sector 1 Recovered!", "The Sector 1 CORE has been restored!", "INFO", 1);
             thing_raise(101);
             break;
         case 2:
-            Notify_Message("Sector 2 Recovered!", "The Sector 2 CORE has been restored!", "INFO", 2);
+            Notify_Message("Sector 2 Recovered!", "The Sector 2 CORE has been restored!", "INFO", 1);
             thing_raise(102);
             break;
         case 3:
-            Notify_Message("Sector 3 Recovered!", "The Sector 3 CORE has been restored!", "INFO", 2);
+            Notify_Message("Sector 3 Recovered!", "The Sector 3 CORE has been restored!", "INFO", 1);
             thing_raise(103);
             break;
     }

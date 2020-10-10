@@ -21,28 +21,28 @@ ACTOR CommanderCam 2310
 			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 0, 0)
 			goto Spawn
 		Spawn_TurretBullet:
-			NULL A 1 A_SpawnItemEx("TurretBullet", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretBullet", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretRocket:
-			NULL A 1 A_SpawnItemEx("TurretRocket", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretRocket", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretPlasma:
-			NULL A 1 A_SpawnItemEx("TurretPlasma", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretPlasma", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretRail:
-			NULL A 1 A_SpawnItemEx("TurretRail", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretRail", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretShotgun:
-			NULL A 1 A_SpawnItemEx("TurretShotgun", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretShotgun", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretTesla:
-			NULL A 1 A_SpawnItemEx("TurretTesla", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretTesla", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretFlame:
-			NULL A 1 A_SpawnItemEx("TurretFlame", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretFlame", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretChaingun:
-			NULL A 1 A_SpawnItemEx("TurretChaingun", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretChaingun", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_Landmine:
 			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 512, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))
@@ -138,28 +138,28 @@ ACTOR CommanderCamLow 2320
 			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 0, 0)
 			goto Spawn
 		Spawn_TurretBullet:
-			NULL A 1 A_SpawnItemEx("TurretBullet", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretBullet", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretRocket:
-			NULL A 1 A_SpawnItemEx("TurretRocket", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretRocket", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretPlasma:
-			NULL A 1 A_SpawnItemEx("TurretPlasma", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretPlasma", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretRail:
-			NULL A 1 A_SpawnItemEx("TurretRail", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretRail", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretShotgun:
-			NULL A 1 A_SpawnItemEx("TurretShotgun", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretShotgun", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretTesla:
-			NULL A 1 A_SpawnItemEx("TurretTesla", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretTesla", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretFlame:
-			NULL A 1 A_SpawnItemEx("TurretFlame", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretFlame", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_TurretChaingun:
-			NULL A 1 A_SpawnItemEx("TurretChaingun", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("TurretChaingun", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 			goto Spawn
 		Spawn_Landmine:
 			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 128, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))

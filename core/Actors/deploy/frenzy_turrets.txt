@@ -258,8 +258,6 @@ ACTOR TurretShotgun
 	}
 }
 
-actor BulletPuffTurret : BulletPuff { damagetype "MarineFire" }
-
 actor InvisiblePuff { damagetype "MarineFire" }
 
 //////////////////

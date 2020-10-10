@@ -434,7 +434,7 @@ function void Notify_Research(str what, str img){
 }
 
 function void Notify_Deploy(str what, str img){
-	Notify_Message(strparam(s:"\ci"s:what, s:" \c-Deployed"), strparam(s:"Commander deplyed a(n) \ci",s:what), img, TIP_NOTIFY_COLORSET_SPAWN);
+	Notify_Message(strparam(s:"\ci", s:what, s:" \c-Deployed"), strparam(s:"Commander deplyed a(n) \ci",s:what), img, TIP_NOTIFY_COLORSET_SPAWN);
 }
 
 function void Notify_ShowTime(str msg1, int time, str img, int id,int pos, int set){

@@ -332,6 +332,7 @@ script 120 OPEN
 	l_BossCond = l_Level >= boss_starting_level;
 	
 	l_MonDiff = getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS);
+	//print (d:l_MonDiff);
 		if (c_HaltSpawning == 0)
 		{
 			if(l_Level > 20) l_Level = 19;

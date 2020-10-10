@@ -70,16 +70,7 @@ script 90 (void)
         thing_hate(114, 104, 0);
     }
     
-    while(thingcount(0, 118) > 3 || thingcount(0, 111) > 3 || thingcount(0, 112) > 3 || thingcount(0, 113) > 3 || thingcount(0, 114) > 3)
-        delay(35 * 1);
-    thing_destroy(118, 100);
-    thing_destroy(111, 100);
-    thing_destroy(112, 100);
-    thing_destroy(113, 100);
-    thing_destroy(114, 100);
-    
-    // endgame
-    acs_execute(125, 0, 2, 0, 0);
+    ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 3);
 }
 
 script 1 (void)

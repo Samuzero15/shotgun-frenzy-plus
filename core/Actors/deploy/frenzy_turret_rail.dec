@@ -33,6 +33,7 @@ ACTOR TurretRail 24304
 	{
 		Spawn:
 			TRT1 A 1 A_Look
+			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
 			TRT1 A 5  A_PlaySound("turret/active", CHAN_AUTO, 6)
 			loop
 		See:

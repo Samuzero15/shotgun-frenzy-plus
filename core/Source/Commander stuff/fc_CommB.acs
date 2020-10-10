@@ -110,6 +110,8 @@ script "SFPlus_CMD_CallSpawnScript" (int which, int price){
 				thing = "Spawn_TurretFlame";		break;
 			case 6: //Chaingun turret
 				thing = "Spawn_TurretChaingun";		break;
+			case 7: //Shotgun turret
+				thing = "Spawn_TurretShotgun";		break;
 			default: terminate;
 		}
 		CMDEventEX(4+noSectorCheck*3, thing, which, 0, price);
@@ -261,11 +263,11 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 				case 1:  Notify_Deploy("Bullet Turret", 	"CM40");  break;
 				case 2:  Notify_Deploy("Rocket Turret",		"CM41"); break;
 				case 3:  Notify_Deploy("Plasma Turret",		"CM42"); break;
-				
 				case 4:  Notify_Deploy("Tesla Turret",		"CM46"); break;
 				case 5:  Notify_Deploy("Flame Turret",		"CM47"); break;
 				case 6:  Notify_Deploy("Chaingun Turret", 	"CM47"); break;
 				case 7:  Notify_Deploy("Shotgun Turret", 	"CM45"); break;
+				
 				case 8:  Notify_Deploy("Rail Turret", 		"CM43"); break;
 			}   
 			

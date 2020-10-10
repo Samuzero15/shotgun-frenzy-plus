@@ -129,14 +129,6 @@ function void p_MenuReveal_Button (str l_Name, int l_ItemID, str l_SpecialNumber
         }
     }
 }
-#Define SHOP_BUY_SHOTGUN_PK 34
-#Define SHOP_BUY_ASSAULT_PK 35
-#Define SHOP_BUY_SUPPORT_PK 36
-#Define SHOP_BUY_COMANDO_PK 25
-#Define SHOP_BUY_HEAVY_PK 37
-#Define SHOP_BUY_PLASMA_PK 38
-#Define SHOP_BUY_FLAMER 39
-#Define SHOP_BUY_BFG 72
 
 function void p_MenuReveal (int l_InputType, int l_Category)
 {

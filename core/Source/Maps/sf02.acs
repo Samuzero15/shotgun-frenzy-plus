@@ -72,17 +72,7 @@ script 90 (void)
         delay(35*2);
     }
     acs_terminate(89, 0);
-    while(thingcount(0, 118) > 10 || thingcount(0, 111) > 10 || thingcount(0, 112) > 10 || thingcount(0, 113) > 10 || thingcount(0, 114) > 10 || thingcount(0, 24) > 3)
-        delay(35 * 1);
-    thing_destroy(118, 100);
-    thing_destroy(111, 100);
-    thing_destroy(112, 100);
-    thing_destroy(113, 100);
-    thing_destroy(114, 100);
-    thing_destroy(24, 100);
-    
-    // endgame
-    acs_execute(125, 0, 2, 0, 0);
+    ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 10);
 }
     
 script 91 (void)

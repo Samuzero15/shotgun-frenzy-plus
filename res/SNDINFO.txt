@@ -160,6 +160,12 @@ Quadshot/Reload QuadReld
 Quadshot/Fire1  Quad_1Bf
 Quadshot/Fire4	Quad_4BF
 
+STRT_S1 STRT_S1 
+STRT_S2 STRT_S2 
+STRT_S3 STRT_S3 
+STRT_S4 STRT_S4
+turret/shotgun/load STRT_L
+$random turret/shotgun/fire {STRT_S1 STRT_S2 STRT_S3 STRT_S4 }
 
 sb1 DSPUNCH
 sb2 DPSKEPCH
