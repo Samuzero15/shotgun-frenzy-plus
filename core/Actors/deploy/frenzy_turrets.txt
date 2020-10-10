@@ -16,6 +16,7 @@ actor TeslaCoil
 	+LOOKALLAROUND
 	+SHORTMISSILERANGE
 	+NEVERRESPAWN
+	+DROPOFF
 	
 	// protect from marine damage
 	damagefactor "MarineFire", 0.0
@@ -114,6 +115,7 @@ ACTOR TurretRail
 	+LOOKALLAROUND
 	+SHORTMISSILERANGE
 	+NEVERRESPAWN
+	+DROPOFF
 	PainSound "turret/pain"
 	
 	// protect from marine damage
@@ -182,6 +184,7 @@ ACTOR TurretShotgun
 	+LOOKALLAROUND
 	+SHORTMISSILERANGE
 	+NEVERRESPAWN
+	+DROPOFF
 	PainSound "turret/pain"
 	
 	// protect from marine damage
@@ -552,10 +555,8 @@ ACTOR Smoke
   RenderStyle Translucent
   Alpha 0.5
   VSpeed 1
-  +NOBLOCKMAP 
-  +NOGRAVITY 
-  +DONTSPLASH
-  +NOTELEPORT
+  +NOINTERACTION
+  +CLIENTSIDEONLY
   States
   {
   Spawn:

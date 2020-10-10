@@ -147,8 +147,6 @@ actor SoulBallTrail
 {
     Radius 1
     Height 1
-    Speed 0
-    PROJECTILE
     +CLIENTSIDEONLY
     +NOINTERACTION
     RENDERSTYLE ADD

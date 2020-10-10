@@ -209,7 +209,8 @@ actor seekerRockTrail
 	Scale 0.8
 	RenderStyle Add
 	Alpha 0.5
-	+NOGRAVITY
+	+NOINTERACTION
+	+CLIENTSIDEONLY
 	+NOTIMEFREEZE
   DamageType MarineFire
 	States

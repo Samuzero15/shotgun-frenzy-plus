@@ -581,7 +581,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	+DONTOVERLAP
 	+NORADIUSDMG
 	+DONTRIP
-	
+	+DROPOFF
 	PainSound "turret/pain"
 	DeathSound "turret/death"
 	scale 0.5

@@ -86,16 +86,13 @@ ACTOR SlimeBall
 
 ACTOR SlimeBallTrail
 {
-        Speed 0
-        Damage 0
         Height 8
         Radius 5
         SeeSound "NULL"
         DeathSound "NULL"
         RENDERSTYLE ADD
-        PROJECTILE
-	+CLIENTSIDEONLY
-	+NOINTERACTION
+		+CLIENTSIDEONLY
+		+NOINTERACTION
         States
         {
         Spawn:

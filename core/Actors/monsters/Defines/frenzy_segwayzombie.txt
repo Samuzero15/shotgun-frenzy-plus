@@ -69,12 +69,7 @@ actor SegwayPuff
   renderstyle Add
   alpha 0.2
   +CLIENTSIDEONLY
-  +NOBLOCKMAP
-  +NOGRAVITY
-  +MISSILE
-  +NOTELEPORT
-  +DONTSPLASH
-  +NOCLIP
+  +NOINTERACTION
   states
   {
   Spawn:
