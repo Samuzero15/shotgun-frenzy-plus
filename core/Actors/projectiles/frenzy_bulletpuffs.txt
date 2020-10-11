@@ -68,8 +68,7 @@ ACTOR BulletPuff_ExplosiveQuad
 	+RANDOMIZE
 	+PUFFONACTORS
 	+MTHRUSPECIES
-	+NODAMAGETHRUST
-	
+	+FORCERADIUSDMG
 	+AlwaysPuff
 	
 	DamageType			MarineFire
@@ -114,6 +113,7 @@ ACTOR BulletPuff_Explosive
 	+ALLOWPARTICLES
 	+RANDOMIZE
 	+PUFFONACTORS
+	+PUFFGETSOWNER
 	+MTHRUSPECIES
 	+NODAMAGETHRUST
 	
@@ -188,8 +188,7 @@ Actor FireRemainBase
   RenderStyle Add
   Alpha 0.75
   scale 0.5
-  DamageType MarineFire
-  DamageType NoProfitKill
+  DamageType MarineFire2
   +NODAMAGETHRUST
   +FORCERADIUSDMG
   +PAINLESS

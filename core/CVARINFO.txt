@@ -1,7 +1,7 @@
 //[Samu] t3h player could'nt add the cvarinfo to make this cvars work.
 server int sf_startcash = 2500;
 server int sf_teamcash = 5000;
-server int sf_gamelength = 10;
+server int sf_gamelength = 23;
 server int sf_skillmult = 3;
 server int sf_adaptivespawn = 0;
 server int sf_cacodemons = 0;
@@ -15,7 +15,7 @@ server bool acsutils_noerrors = false;
 //[Samu] Additional cvars!
 
 // The delay time until the doors opens.
-server int sf_doorholdtime = 30;
+server int sf_doorholdtime = 20;
 // Which monster set do you want to use?
 server int sfp_monsterset = 0; // Default.
 

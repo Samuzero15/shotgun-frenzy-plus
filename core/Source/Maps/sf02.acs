@@ -55,6 +55,9 @@ script 88 OPEN
 // map setup
 script 1 OPEN
 {
+	// spawn dispensers
+    spawnspot("AmmoDispenser", 3, 0, 0);
+    spawnspot("HealthDispenser", 4, 0, 0);
     sector_setfade(3, 0, 0, 0);
 }
 

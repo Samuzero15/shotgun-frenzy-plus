@@ -31,7 +31,7 @@ Actor DemonVein 10001
 
 ACTOR DemonCore 10002
 {
-	Health 100000
+	Health 250000
 	Height 64
 	Radius 16
 	Monster

@@ -2,8 +2,9 @@ ACTOR CommanderCam 2310
 {
 	height 16
 	radius 8
-	+NOBLOCKMAP +SLIDESONWALLS +NOCLIP -SOLID +FLOORHUGGER
-	cameraheight 4096
+	+NOINTERACTION
+	+FLOORHUGGER
+	cameraheight 256 //wtf was this? why was it at 4096?
 	
 	states
 	{
@@ -119,7 +120,8 @@ ACTOR CommanderCamLow 2320
 {
 	height 16
 	radius 8
-	+NOBLOCKMAP +SLIDESONWALLS +NOCLIP -SOLID +FLOORHUGGER
+	+NOINTERACTION
+	+FLOORHUGGER
 	cameraheight 96
 	
 	states
@@ -352,9 +354,9 @@ actor StrikerRocket_SelfDestruct
   Speed 20
   Damage 10
   Projectile
+  RenderStyle Add
   Scale 4.0
   +RANDOMIZE
-  +DEHEXPLOSION
   +ROCKETTRAIL
   +FORCERADIUSDMG
   SeeSound "weapons/rocklf"
