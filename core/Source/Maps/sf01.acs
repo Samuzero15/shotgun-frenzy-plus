@@ -59,7 +59,7 @@ script 11 OPEN
 
     // spawn dispensers
     spawnspot("AmmoDispenser", 1, 0, 0);
-    spawnspot("HealthDispenser", 1, 0, 0);
+    spawnspot("HealthDispenser", 2, 0, 0);
     
     delay(35);
 //	c_Credits = c_Startcash;

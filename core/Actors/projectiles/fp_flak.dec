@@ -10,6 +10,7 @@ actor Flak_Shard
   +DOOMBOUNCE
   PROJECTILE
   Obituary "%o was torn to shreds."
+  DamageType MarineFire2
   States
   {
   Spawn:
@@ -36,6 +37,7 @@ Actor Flak_Grenade{
 	Reactiontime 35
 	SEESOUND "Weapons/NBBounce"
 	DEATHSOUND "Weapons/NailBombExp"
+	DamageType MarineFire2
 	PROJECTILE
 	-SHOOTABLE
 	+DOOMBOUNCE

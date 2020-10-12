@@ -22,14 +22,14 @@ ACTOR Battery 30001
 	height 56
 	speed 0
 	painchance 255
-	Mass 0xffffffff
+	Mass 0x7fffffff
         bloodtype "CoreShock"
 	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
 	MONSTER
 	+FRIENDLY
 	+FLOORCLIP
 	+NOBLOODDECALS
-	
+	+NORADIUSDMG
 	// protect from marine damage
 	damagefactor "MarineFire", 0.0
 	damageFactor "MarineFire2", 0.0
@@ -75,14 +75,14 @@ ACTOR AttackBattery : MorphedMonster 30002
 	height 56
 	speed 0
 	painchance 255
-	Mass 0xffffffff
+	Mass 0x7fffffff
         bloodtype "CoreShock"
 	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
 	MONSTER
 	+FRIENDLY
 	+FLOORCLIP
 	+NOBLOODDECALS
-	
+	+NORADIUSDMG
 	damagefactor "MarineFire", 0.0
 	damageFactor "MarineFire2", 0.0
 	DamageFactor "MarineFire3", 0.0
@@ -133,14 +133,14 @@ ACTOR BatteryCore 30003
 	height 56
 	speed 0
 	painchance 255
-	Mass 0xffffffff
+	Mass 0x7fffffff
         bloodtype "CoreShock"
 	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
 	MONSTER
 	+FRIENDLY
 	+FLOORCLIP
 	+NOBLOODDECALS
-	
+	+NORADIUSDMG
 	damagefactor "MarineFire", 0.0
 	damageFactor "MarineFire2", 0.0
 	DamageFactor "MarineFire3", 0.0

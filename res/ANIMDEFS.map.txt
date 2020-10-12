@@ -67,3 +67,5 @@ texture PHEAL01
 	pic PHEAL05 tics 1
 	pic PHEAL06 tics 1
 	pic PHEAL07 tics 1
+
+cameratexture TCAMTEX1 1024 1024 fit 64 64
