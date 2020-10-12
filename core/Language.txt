@@ -30,10 +30,10 @@ FP_PUD_BodyEnhancement  =	"Your body gains the following perks: \n\n"
 							"It's stackable with the H.Eng. 1 and 2, Resister unit and "
 							"Adrenaline techs. Too bad you're still human afterall.";
 							
-FP_PUD_ArmorRepair  	=	"The health dispenser can repair your current armor.\n\n"
+FP_PUD_ArmorRepair  	=	"The health dispenser can repair your current armor faster.\n\n"
 							"If Steel Plating is researched, and if you don't "
 							"have any armor, a green armor is granted.\n\n"
-							"It repairs faster if you have the Expansive Restock "
+							"It repairs more if you have the Expansive Restock "
 							"upgrade equipped.";
 							
 FP_PUD_SpawnShield  	=	"Upon teleporting to the battlefield (or in re-spawning) "

@@ -38,7 +38,7 @@ ACTOR TurretRocket_Head : TurretHeadBase 24305
 	//$Title Rocket Turret
 	//$Color 1
 	obituary "%o was shot up by a Bullet Turret."
-	health 500
+	health 800 // Let's give it some health.
         DamageFactor "BFGSplash", 0.0
         DamageFactor "BFGSpray", 0.0
 		BloodType "none"

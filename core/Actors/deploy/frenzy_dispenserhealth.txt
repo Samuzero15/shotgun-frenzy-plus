@@ -1,59 +1,9 @@
-ACTOR HealthDispenser
+ACTOR HealthDispenser : Deploy_Building
 {
-	radius 8
-	height 64
-	mass 10000
-	speed 0
-	+FLOORCLIP
-	+NODAMAGETHRUST
-	+SOLID
-	
-	states
+	States
 	{
-		Spawn:
-			TBAS A 0
-			TBAS A 0 A_SpawnItemEx("AmmoDispenser_Count", 0, 0, 64, 0, 0, 0, 0, 0, 0, tid)
-			TBAS A 0 A_SpawnItemEx("AmmoDispenser_BuildC1", 16, 16, 0, 0, 0, 0, 0, 0, 0, tid)
-			TBAS A 0 A_SpawnItemEx("AmmoDispenser_BuildC2", -16, 16, 0, 0, 0, 0, 0, 0, 0, tid)
-			TBAS A 0 A_SpawnItemEx("AmmoDispenser_BuildC3", -16, -16, 0, 0, 0, 0, 0, 0, 0, tid)
-			TBAS A 0 A_SpawnItemEx("AmmoDispenser_BuildC4", 16, -16, 0, 0, 0, 0, 0, 0, 0, tid)
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright
-			TBLD AB 5 bright A_NoBlocking
-			TBLD A 2 bright
-			TBAS A 1 A_SpawnItemEx("HealthDispenser_Base", 0, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		Deploy:
+			NULL A 1 A_SpawnItemEx("HealthDispenser_Base", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
 			stop
 	}
 }

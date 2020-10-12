@@ -2,6 +2,13 @@
 
 ## v0 - Before the beginning...
 
+#### -) (12 / 10 / 2020) [Turret deployer hot-fix]
+	*) Now the base clase for the turret has been patched up (let's hope they don't break in mp again.)
+	-) Removed the turret destruction in mid-deploying. That was a low punch tbh.
+	*) Now heath dispensers, can shield you up!
+	// Armor repair and expansive restock will grant more protection.
+	// Yet again, must merge the zanieon changes to fix up somethings.
+
 #### -) (9 - 10 / 10 / 2020) [Turret touchups, and a Shotgun Turret]
 	*) Generalized the guardian wave end script for all the maps.
 	// At least if this fails it will be repeated on the other maps.

@@ -2,9 +2,9 @@ Actor TurretBuilders_Shotgun : Deploy_TurretBuilders // the builders, except you
 {
 	States
 	{
-		Timer:
-			TNT1 A 0 A_JumpIfInventory("Deploy_Building_Tics", 29, "Timer.Ticker")
-		goto Super::Timer+1
+		Timer.Set: // Holy shiet.
+			TNT1 A 0 A_SetUserVar("user_prog", 18)
+		goto Super::Timer
 	}
 }
 
