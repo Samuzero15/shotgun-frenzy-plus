@@ -7,6 +7,8 @@ server int sf_adaptivespawn = 0;
 server int sf_cacodemons = 0;
 server int sf_percentfast = 10;
 server int sf_creditcorrection = -8;
+// Let the players drop money?
+server bool sfp_allowdropcredits = true;
 
 
 //[Samu] acsutil's cvar

@@ -2,6 +2,13 @@
 
 ## v0 - Before the beginning...
 
+#### -) (13 / 10 / 2020) [Any spare change?]
+	+) Now marines can drop credits! 
+	//	Use sfp_dropcredits (amount) to drop credits!
+	+) New CVAR added! sfp_allowcreditdrop, this will allow the already shown command.
+	*) Small fix on the commander camera.
+	*) Now airstrikes waves goes faster than the usual.
+
 #### -) (12 / 10 / 2020) [Turret deployer hot-fix]
 	*) Now the base clase for the turret has been patched up (let's hope they don't break in mp again.)
 	-) Removed the turret destruction in mid-deploying. That was a low punch tbh.

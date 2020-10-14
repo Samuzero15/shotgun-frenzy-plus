@@ -157,17 +157,9 @@ script "SFPlus_AirstrikeAttack" (void)
 	
 	int i = 0;
 	for (int j = 0; j < airstk_waves; j++){
-		if(airstk_line){
-			for (i = 0; i < 10; i ++){ // N amount of airstrike targets.
-				thing_projectile(AIRSTRIKE_TIDSTART + i, 170, random(0,224), 20, -10); 
-				delay(5);
-			}
-		}
-		for (i = 0; i < airstk_n_targets; i ++){ // N amount of airstrike targets.
-			thing_projectile(AIRSTRIKE_POINT_TIDSTART + i, 170, random(0,224), 20, -10); 
-			delay(5);
-		}
-		delay(30);
+		// There, a bit more faster.
+		ACS_NamedExecuteAlways("SFPlus_AirstrikeWaveAttack", 0);
+		delay(35);
 	}
 	
     // remove markers
@@ -182,6 +174,21 @@ script "SFPlus_AirstrikeAttack" (void)
     
     // enable air attacks
 	Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
+}
+
+Script "SFPlus_AirstrikeWaveAttack" (void)
+{
+	int i;
+	if(airstk_line){
+		for (i = 0; i < 10; i ++){ // N amount of airstrike targets.
+			thing_projectile(AIRSTRIKE_TIDSTART + i, 170, random(0,224), 20, -10); 
+			delay(5);
+		}
+	}
+	for (i = 0; i < airstk_n_targets; i ++){ // N amount of airstrike targets.
+		thing_projectile(AIRSTRIKE_POINT_TIDSTART + i, 170, random(0,224), 20, -10); 
+		delay(5);
+	}
 }
 
 
