@@ -16,11 +16,12 @@ EXE_FNAME = "zandronum.exe"
 ACC_FNAME = "acc.exe"
 STD_FNAME = "skulltag_content-3.0-beta01.pk3"
 EXCLUDE_FILE_EXTS = [".backup1", ".backup2", ".backup3", ".bak", ".dbs"]
+VARIABLE_FILES = ["Language.txt", "GAMEINFO.txt"]
 
 #
 # Build main package (as .pk3, a good ol' zip, really)
 #
-def makepkg(sourcePath, destPath, notxt=False, skipGameInfo=False):
+def makepkg(sourcePath, destPath, notxt=False, skipVariableTexts=False):
     destination = destPath + ".pk3"
     wadinfoPath = destPath + ".txt" # just assume this, 'cause we can.
 
@@ -28,7 +29,7 @@ def makepkg(sourcePath, destPath, notxt=False, skipGameInfo=False):
     filelist = []
     for path, dirs, files in os.walk (sourcePath):
         for file in files:
-            if not (file_igonre(file) or file == "buildinfo.txt" or (skipGameInfo and file == "GAMEINFO.txt")): # special exceptions
+            if not (file_igonre(file) or file == "buildinfo.txt" or (skipVariableTexts and file_placeholder(file))): # special exceptions
             # Remove sourcepath from filenames in zip
                 splitpath = path.split(os.sep)[1:]
                 splitpath.append(file)
@@ -50,6 +51,13 @@ def file_igonre(file):
         if not (should_ignore): should_ignore = file.endswith(ext);
         else: break;
     return should_ignore;
+    
+def file_placeholder(file):
+    should_ignore = False;
+    for f in VARIABLE_FILES:
+        if not (should_ignore): should_ignore = (file == f);
+        else: break;
+    return should_ignore;
 
 def maketxt(sourcePath, destPath, version, filetemplate):
     textname = os.path.join(sourcePath, filetemplate)
@@ -60,12 +68,30 @@ def maketxt(sourcePath, destPath, version, filetemplate):
     textfile = open (destname, "wt")
     for line in sourcefile:
         line = line.replace('x.x.x', version)
+        line = line.replace('_SHOWCASE_', print_showcase_changes (filetemplate == "Language.txt"))
         line = line.replace('_DEV_', version)
         line = line.replace('XX/XX/XXXX', TODAY)
         textfile.write(line)
     
     textfile.close()
     sourcefile.close()
+
+def print_showcase_changes (lang_print=False):
+    textfile = open (relativePath ("showcase.txt"), "rt")
+    changes = [];
+    strchanges = "";
+    color = True
+    for line in textfile:
+        if (lang_print):
+            if (line.endswith("\n")): line = line.replace("\n", "")
+            
+            if(color):  strchanges += "\\cg-> \\cn" + line + "\c-\\n"
+            else:       strchanges += "\\ci-> \\cv" + line + "\c-\\n"
+            color = not color
+        else:
+            strchanges += line
+        
+    return strchanges
 
 def makever(version, destPath):
     print("--> Making distribution version --")

@@ -1,6 +1,7 @@
 [Enu default]
 PATCH_VERSION = "_DEV_";
-CHANGES = "";
+BUILD_DATE = "XX/XX/XXXX";
+CHANGES = "_SHOWCASE_";
 // Player upgrade descriptions
 
 FP_PUD_PowUpUpgrade 	=	"Your good old powerups gains stronger effects!\n\n"

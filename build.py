@@ -46,6 +46,9 @@ if __name__ == "__main__":
     else: 
         std_path += '\\' + utils.STD_FNAME;
     
+    # print(utils.print_showcase_changes(True))
+    # sys.exit()
+    
     rootDir = os.getcwd()
     
     filelist = []
@@ -108,10 +111,14 @@ if __name__ == "__main__":
                 # For the gameinfo, buildinfo and changelog files.
                 wadinfoPath = destPath + ".txt"
                 if(os.path.isfile(os.path.join(sourceDir, 'GAMEINFO.txt'))):
-                    utils.maketxt(sourceDir, destPath, relase, 'GAMEINFO.txt')
-                    zip.write(wadinfoPath, 'GAMEINFO.txt')
-                    utils.maketxt(rootDir, destPath, relase, 'CHANGELOG.md')
-                    zip.write(wadinfoPath, 'CHANGELOG.md')
+                    # Get all writeable files and replace them with the version and time.
+                    files = ['Language.txt', 'gameinfo.txt', 'changelog.md']
+                    
+                    for file in files:
+                        source = sourceDir
+                        if (file == 'changelog.md'): source = rootDir
+                        utils.maketxt(source, destPath, relase, file)
+                        zip.write(wadinfoPath, file)
                 utils.maketxt(sourceDir, destPath, relase, "buildinfo.txt")
                 zip.write(wadinfoPath, 'buildinfo.txt')
             zip.close()
@@ -119,7 +126,9 @@ if __name__ == "__main__":
             
             if(args.dist and not notxt):
                 utils.makever(relase, destPath)
-            filelist.append(os.getcwd() + '\\' + destPath + '.pk3');
+                filelist.append(os.getcwd() + '\\' + destPath + "_" + relase + '.pk3');
+            else: 
+                filelist.append(os.getcwd() + '\\' + destPath + '.pk3');
             
             print('-- {p} part Finished! --'.format(p=part))
     

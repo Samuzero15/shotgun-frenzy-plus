@@ -76,6 +76,8 @@ OptionMenu "SFPlusOptions"{
 	Option "Hear Hitmark sound?", "sfp_hitmarksnd", "Boolean"
 	Option "Display earnings?", "sfp_earningdisp", "EarningDispOptions"
 	Option "Enable kill-streak hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
+	Option "Welcome MSG?", "sfp_welcome", "Boolean"
+	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 	StaticText ""
@@ -95,6 +97,14 @@ OptionMenu "SFPlusUserOptionHelp"{
 	StaticText "Earnings", 1
 	StaticText "The number that you see after killing a demon. Or buying"
 	StaticText "your weapons, recycles, upgrades..."
+	StaticText ""
+	StaticText "Welcome MSG", 1
+	StaticText "Do you want to keep watching the start-up message?"
+	StaticText ""
+	StaticText "Play old soundtrack", 1
+	StaticText "Since the people remembers shotgun frenzy for,"
+	StaticText "the old soundtrack, toggle this to make sure you play it!"
+	StaticText "It's okay, sometimes I miss the old soundtrack."
 	StaticText ""
 	StaticText "Kill streak hud", 1
 	StaticText "This will change the visibility of the kill streak"
@@ -141,6 +151,12 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "Allow Credit Drop", 1
 	StaticText "This will let the players to drop money on the server."
 	StaticText ""
+}
+
+OptionValue "NostalgiaBoolean"
+{
+	0, "Nah, thanks."
+	1, "Yes, please."
 }
 
 OptionValue "Boolean"
