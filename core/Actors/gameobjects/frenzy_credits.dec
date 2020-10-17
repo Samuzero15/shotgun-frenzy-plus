@@ -292,6 +292,107 @@ actor CreditSpawner : RandomSpawner{
 	DropItem "Credit_CopperCoin" "255", 1
 }
 
+//Actor DropCredits_Amount : Integer {}
+
+ACTOR DropCredits : CustomInventory 
+{// The front sprite.
+	//Inventory.PickupMessage 	"You took some money from someone!"
+	+INVENTORY.QUIET //[Samu] Shadap!
+	//+SOLID
+	-COUNTITEM
+	+INVENTORY.NEVERRESPAWN
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+	Spawn:
+		MBAG A 1
+		loop
+	
+	Pickup:
+		MBAG A 1 A_PlaySound("Monies")
+		TNT1 A 1 
+		stop
+    }
+}
+
+ACTOR DropCredits_1 : CustomInventory 
+{// Dummy items to give credits.
+	//Inventory.PickupMessage 	"You took some money from someone!"
+	+INVENTORY.QUIET //[Samu] Shadap!
+	//+SOLID
+	-COUNTITEM
+	+INVENTORY.NEVERRESPAWN
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		loop
+	
+	Pickup:
+		TNT1 A 1
+		TNT1 A 1 A_Jump(256, "Give")
+		goto Give
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 1)
+		stop
+    }
+}
+// Ah shiet... I dont want to do this.
+ACTOR DropCredits_10 : DropCredits_1{
+	States
+	{
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 10)
+		stop
+    }
+}
+
+ACTOR DropCredits_100 : DropCredits_1{
+	States
+	{
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 100)
+		stop
+    }
+}
+
+ACTOR DropCredits_1000 : DropCredits_1{
+	States
+	{
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 1000)
+		stop
+    }
+}
+
+ACTOR DropCredits_10000 : DropCredits_1{
+	States
+	{
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 10000)
+		stop
+    }
+}
+
+ACTOR DropCredits_100000 : DropCredits_1{
+	States
+	{
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 100000)
+		stop
+    }
+}
+
+ACTOR DropCredits_1000000 : DropCredits_1{
+	States
+	{
+	Give:
+		TNT1 A 1 ACS_NamedExecuteAlways("SFPlus_AddDroppedCredits", 0, 1000000)
+		stop
+    }
+}
+
 ACTOR RankIcon
 {
 	radius 32

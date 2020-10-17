@@ -2,7 +2,7 @@
 
 #include "upgrade_list.ach"
 #include "upgrade_funs.ach"
-#include "weapon_funs.ach"
+//#include "weapon_funs.ach"
 #include "recycle_funs.ach"
 
 #include "tech_research.ach"

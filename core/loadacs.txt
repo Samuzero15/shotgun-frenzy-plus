@@ -4,3 +4,4 @@ fp_mkill
 fp_hello
 fp_dmhud
 FP_SBINF
+fp_credd

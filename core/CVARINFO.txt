@@ -7,6 +7,8 @@ server int sf_adaptivespawn = 0;
 server int sf_cacodemons = 0;
 server int sf_percentfast = 10;
 server int sf_creditcorrection = -8;
+// Let the players drop money?
+server bool sfp_allowdropcredits = true;
 
 
 //[Samu] acsutil's cvar
@@ -25,6 +27,8 @@ user int sfp_stimpack_t = 25;
 user int sfp_soulsphere_t = 20;
 user int sfp_megasphere_t = 15;
 
+user bool sfp_oldsoundtrack = false;
+user bool sfp_welcome = true;
 user bool sfp_hitmarksnd = true;
 user int sfp_earningdisp = 3;
 user int sfp_killstreakhud = 1;

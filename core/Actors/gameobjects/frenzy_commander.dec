@@ -2,9 +2,11 @@ ACTOR CommanderCam 2310
 {
 	height 16
 	radius 8
-	+NOINTERACTION
+	//+NOINTERACTION // [Samu] This will make the cam move slippery (like walking on ice), not to mention it breaks the map barriers.
 	+FLOORHUGGER
+	+NoClip // Let's no-clip this little boy.
 	cameraheight 256 //wtf was this? why was it at 4096?
+	
 	
 	states
 	{
@@ -120,7 +122,7 @@ ACTOR CommanderCamLow 2320
 {
 	height 16
 	radius 8
-	+NOINTERACTION
+	//+NOINTERACTION
 	+FLOORHUGGER
 	cameraheight 96
 	

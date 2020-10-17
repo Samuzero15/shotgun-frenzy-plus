@@ -1,6 +1,7 @@
 [Enu default]
 PATCH_VERSION = "_DEV_";
-CHANGES = "";
+BUILD_DATE = "XX/XX/XXXX";
+CHANGES = "_SHOWCASE_";
 // Player upgrade descriptions
 
 FP_PUD_PowUpUpgrade 	=	"Your good old powerups gains stronger effects!\n\n"
@@ -30,10 +31,10 @@ FP_PUD_BodyEnhancement  =	"Your body gains the following perks: \n\n"
 							"It's stackable with the H.Eng. 1 and 2, Resister unit and "
 							"Adrenaline techs. Too bad you're still human afterall.";
 							
-FP_PUD_ArmorRepair  	=	"The health dispenser can repair your current armor.\n\n"
+FP_PUD_ArmorRepair  	=	"The health dispenser can repair your current armor faster.\n\n"
 							"If Steel Plating is researched, and if you don't "
 							"have any armor, a green armor is granted.\n\n"
-							"It repairs faster if you have the Expansive Restock "
+							"It repairs more if you have the Expansive Restock "
 							"upgrade equipped.";
 							
 FP_PUD_SpawnShield  	=	"Upon teleporting to the battlefield (or in re-spawning) "
@@ -100,7 +101,7 @@ FP_TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
 							  "enabling the pump #2 from the refinery";
 
 FP_TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
-							  "\nbombs in a straight line.";
+							  "\nbombs in the selected targets.";
 							  
 FP_TECHD_MARCOM_ADVSYS		= "Powerful turrets are avilable to be deployed on "
 							  "\nthe battlefield";	
@@ -122,11 +123,11 @@ FP_SUPCD_AIRSTK_WAVES 		= "This will change the number of attacks made in a sing
 							  "\n and more expensive costs, but also causes more chaos.";
 
 FP_SUPCD_CPULSE				= "Activate a core pulse.";
-FP_SUPCD_CPULSE_HEAL		= "Healing pulse. \nHeals gradually all current working cores for 10 seconds.";
-FP_SUPCD_CPULSE_CRIPPLE		= "Cripple pulse. \nDamages all monsters in the battlefield.";
-FP_SUPCD_CPULSE_SMITE		= "Smite pulse. \nGreatly damages the monsters inside of the risked sector.";
-FP_SUPCD_CPULSE_REVIVE		= "Revive pulse. \nFully heals the current risked sector's core.";
-FP_SUPCD_CPULSE_HALT		= "Halt pulse. \nHolds up the monster spawning for 60 seconds.";
+FP_SUPCD_CPULSE_HEAL		= "Repairs all turrets and dispensers deployed.";
+FP_SUPCD_CPULSE_CRIPPLE		= "Damages all monsters in the battlefield.";
+FP_SUPCD_CPULSE_SMITE		= "Greatly damages the monsters inside of the risked sector.";
+FP_SUPCD_CPULSE_REVIVE		= "Fully heals the current risked sector's core.";
+FP_SUPCD_CPULSE_HALT		= "Holds up the monster spawning for 60 seconds.";
 
 FP_SUPCD_MARK_ATTACK		= "Notify your allies to attack a specific point.";
 FP_SUPCD_MARK_DEFEND		= "Notify your allies to defend a specific point.";

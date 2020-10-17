@@ -269,28 +269,23 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	if(l_type == -3){
 		// [Samu] Expansive re-stock and armor repair upgrades for the players.
 		int health_give = 10 + 15*CheckInventory("PlayUp_ExpansiveRestock");
+		int armor = Checkinventory("BasicArmor");
+		int armor_max = 100 + 100*CheckInventory("Flag_BlueArmor");
+		int armor_left = armor_max - armor;
+		int armor_give = 5 + 15*CheckInventory("PlayUp_ArmorRepair") + 30*CheckInventory("PlayUp_ExpansiveRestock");
 		giveinventory("Health", health_give);
-		
-		if(CheckInventory("PlayUp_ArmorRepair")){
 			
-			int armor = Checkinventory("BasicArmor");
-			int armor_max = 100 + 100*CheckInventory("Flag_BlueArmor");
-			int armor_left = armor_max - armor;
-			int armor_give = health_give;
-			
-			if(armor == 0 && armorTech){
-				takeInventory("Flag_BlueArmor", 1);
-				GiveInventory("GreenArmor", 1);
-				f_SmallTip ("Green Armor Granted!", cr_green, 3);
-			}
-			else if (armor < armor_max){
-				//log(s:"Armor to give: ", d:armor_give, s:", Armor left: ", d:armor_left);
-				if(armor_left < armor_give) armor_give = armor_left;
-				giveinventory("ArmorBonus", armor_give);
-				f_SmallTip ("Repairing armor...", cr_green, 3);
-			}
-			
+		if(armor == 0 && armorTech && CheckInventory("PlayUp_ArmorRepair")){
+			takeInventory("Flag_BlueArmor", 1);
+			GiveInventory("SteelPlatingArmor", 1);
+			f_SmallTip ("Green Armor Granted!", cr_green, 3);
 		}
+		else if (armor < armor_max){
+			if(armor_left < armor_give) armor_give = armor_left;
+			giveinventory("ArmorBonus", armor_give);
+			f_SmallTip ("Repairing armor...", cr_green, 3);
+		}
+		
 		
 		if (l_DisableFlash == 0){
 			 f_SmallTip ("Healing...", cr_blue, 1);

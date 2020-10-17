@@ -11,6 +11,12 @@ What is inside?
 	===) Customizable parematers with the sf+ settings!
 	===) Lotta Fixes from the original!
 	===) Mechanical Upgrades! In the right way.
+	===) Player Upgrades on the Health terminal!
+	===) Drop monies to the players!
+	===) New turrets like the Shotgun Turret are here!
+	===) An improved commander terminal, keeping their good old looks!
+	===) Slain more demons with a (kind-of) updated monster rooster!
+	===) Kill-Streaks are here! Break milestones and earn extra U.Ps! 
 
 -Samuzero15tlh-
 
@@ -22,7 +28,7 @@ What is inside?
 	
 	*) I'm NOT, the owner of Shotgun Frenzy, that credit goes to Wad'a'Holic.
 	
-	*) I have no Permission to edit Shotgun Frenzy directly, yet taking the 
+	*) I have no permission to edit Shotgun Frenzy directly, yet taking the 
 	same action as T3h Player, I made this, as a paralel version for the same 
 	mod.
 	
@@ -97,6 +103,12 @@ What is inside?
 	Zanieon:
 		He did balanced some more things, and changed the Soundtrack from it.
 		Actually he made me to make this in the first place :v
+	
+	Kennon and pals:
+		For the private testing server in these dark times!
+	
+	Madcat:
+		Thanks for the turret sprites my man!
 		
 	Korshun, TDDR and Mr. Satan:
 		They Helped me out with some acs questions :D
@@ -108,7 +120,8 @@ What is inside?
 		Domo arigato, Mister robotto! 10010101 01011100
 	
 	Myself (Samuzero15tlh):
-		I just added, fixed and tweaked some more stuff. 
+		Now i think i've took this WAY personal. 
+		Meh fuck it.
 		
 	My sis:
 		Moral help... What i can do without you? <3

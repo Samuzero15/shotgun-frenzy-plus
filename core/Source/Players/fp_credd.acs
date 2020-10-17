@@ -1,0 +1,118 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// FP_CredD.acs
+// Money droppin between players!
+
+// Drop sum money!
+#library "FP_CredD"
+
+#import "fl_techs.acs"
+#import "f_intdb.acs"
+#import "fp_hello.acs"
+#include "zcommon.acs"
+#include "acsutils.ach"
+#include "samu_tools.ach"
+
+int p_DropCredits[32];
+int p_DropCredits_Delay[32];
+
+#libdefine DROPCREDIT_MIN 100
+#libdefine DROPCREDIT_MAX 9999999
+#libdefine DROPCREDIT_MUL 1000000
+#libdefine DROPCREDIT_DELAY 35*6
+
+Script "SFPlus_DropCredits" (int amount) NET
+{
+	int play = playernumber();
+	int credit_cap = cond(p_Credits[play] < DROPCREDIT_MAX, p_Credits[play], DROPCREDIT_MAX);
+	int cooldown = p_DropCredits_Delay[play] / 35; // in seconds.
+	
+	if(!GetCvar("sfp_allowdropcredits")){ // Check cvar.
+		DropCredits_Log("\cksfp_allowdropcredits\c- is disabled on the server.");
+		terminate;
+	}
+	if(!Playeringame(play)){ // Check if the player is in game.
+		DropCredits_Log("\ckYou're spectating\c-, join the game before using this.");
+		terminate;
+	}
+	if(cooldown > 0){
+		DropCredits_Log(strparam(s:"You must wait \ck", d:cooldown, 
+						s:" seconds \c-before dropping credits again."));
+		terminate;
+	}
+	if(amount == 0){// Check parameter
+		DropCredits_Log("Missing the\ck amount\c- argument.");
+		terminate;
+	}
+	if(amount < DROPCREDIT_MIN || amount > credit_cap){// Check range and amount
+		DropCredits_Log(strparam(s:"\nYou can't drop that amount of credits.\n",
+		s:"Use a value between \ck", d:DROPCREDIT_MIN, s:"\c- and \ck", d:credit_cap));
+		terminate;
+	}
+	p_credits[play] -= amount;
+	
+	int utid = UniqueTID();
+	int x = GetActorX(0) + FixedMul(cos(getActorAngle(0)), 128.0);
+	int y = GetActorY(0) + FixedMul(sin(getActorAngle(0)), 128.0);
+	int z = GetActorZ(0) + 16.0;
+	
+	int amount_spawned = 0;
+	int amount_to_drop = amount;
+	int multipler = DROPCREDIT_MUL;
+	while (amount_spawned != amount){
+		if(amount_to_drop >= multipler){
+			Spawn(strparam(s:"DropCredits_", d:multipler), x, y, z);
+			amount_to_drop-=multipler;
+			amount_spawned+=multipler;
+		}else {multipler /= 10; delay(1);}
+	}
+	Spawn("DropCredits", x, y, z);
+	
+	p_DropCredits_Delay[play] = DROPCREDIT_DELAY;
+	
+	if(p_DropCredits[play] != amount)
+		ACS_NamedExecuteAlways("SF_CreditRemoveDisplay", 0, amount, CR_WHITE, 1);
+	p_DropCredits[play] = 0; // For the displayer.
+	
+	DropCredits_Log(Strparam(s:"\ck", d:amount ,s:"\c- credits dropped."));
+}
+
+function void DropCredits_Log(str msg){
+	Hello_Log(strparam(s:"\cf(sfp_dropcredits): \c-", s:msg));
+	LocalAmbientSound("misc/chat2",127);
+}
+
+Script "SFPlus_AddDroppedCredits" (int howmuch){
+	sf_AddCredits_S(howmuch, playernumber());
+	p_DropCredits[playernumber()] += howmuch; // For the displayer.
+}
+
+Script "SFPlus_DisplayChange_Respawn" RESPAWN{
+	ACS_NamedExecute("SFPlus_DisplayChange", 0);
+}
+
+Script "SFPlus_DisplayChange" ENTER {
+	// This loop is here to show the real amount of the credits you got.
+	int last = 0;
+	int count = 0;
+	int play = playernumber();
+	while(GetActorProperty(0,APROP_HEALTH) > 1){
+		if(p_DropCredits[play] > last){
+			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, p_DropCredits[play], 5, 1);
+			last = p_DropCredits[play];
+		}
+		else{
+			if(p_DropCredits[play] != 0) count++;
+			if(count == 35*3 || p_DropCredits[play] == 0){ 
+				p_DropCredits[play] = 0; 
+				last = 0;
+				count = 0;
+			}
+		}
+		if(p_DropCredits_Delay[play] > 0)p_DropCredits_Delay[play]--;
+		
+		delay(1);
+	}
+}

@@ -2,6 +2,32 @@
 
 ## v0 - Before the beginning...
 
+#### -) (14 - 15 / 10 / 2020) [Being freindly to the players.]
+	*) Fixing up the messages coming from the drop credits module.
+	*) Now sfp_dropcredits contains a delay time between uses, to prevent over-charging the server.
+	+) Now, I can print the most important changes about the game with the showcase.txt!
+	+) New commands! sfp_ccmdlist (shows all mod commands) and sfp_changelog (shows the most relevant changes). 
+	*) Some more touches in play.py and build.py files
+	+) Now all players will be greet with a simple welcome message :) (Quick tutorial soon!)
+	// If you find this annoying, disable it with sfp_welcome 0.
+	*) Updated the readme.txt a bit more...
+	*) Updated the buildinfo.txt files for the core and resource part.
+	*) Not implemented yet, but, sfp_oldsoundtrack will make it sound the good old music, just for nostalgia peeps.
+
+#### -) (13 / 10 / 2020) [Any spare change?]
+	+) Now marines can drop credits! 
+	//	Use sfp_dropcredits (amount) to drop credits!
+	+) New CVAR added! sfp_allowcreditdrop, this will allow the already shown command.
+	*) Small fix on the commander camera.
+	*) Now airstrikes waves goes faster than the usual.
+
+#### -) (12 / 10 / 2020) [Turret deployer hot-fix]
+	*) Now the base clase for the turret has been patched up (let's hope they don't break in mp again.)
+	-) Removed the turret destruction in mid-deploying. That was a low punch tbh.
+	*) Now heath dispensers, can shield you up!
+	// Armor repair and expansive restock will grant more protection.
+	// Yet again, must merge the zanieon changes to fix up somethings.
+
 #### -) (9 - 10 / 10 / 2020) [Turret touchups, and a Shotgun Turret]
 	*) Generalized the guardian wave end script for all the maps.
 	// At least if this fails it will be repeated on the other maps.

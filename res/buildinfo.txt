@@ -2,4 +2,15 @@
 This is the resource part from Shotgun Frenzy Plus.
 Version: x.x.x, Built on: XX/XX/XXXX.
 
+The main-changes for this version are:
+_SHOWCASE_
+
+Look up this mod in the following links.
+Zandronum thread (The main thread, to announce the updates)
+	->) https://zandronum.com/forum/viewtopic.php?t=9954
+Samu's Chambers Discord (Where I put some of the updates and talk with you guys)
+	->) https://discord.gg/s3eWNxe
+GitHub Repository (The main repository for the latest changes)
+	->) https://github.com/Samuzero15/shotgun-frenzy-plus
+
 -Samuzero15tlh-

@@ -31,7 +31,7 @@ w) Work in progres
 [ ] Flak-Bombs for the dual shot.
 [ ] Achievemets? just for the sake of it? Heck yes!.
 [ ] Make a Process Queue, a way to control the rushing researches.
-[ ] About the Testing map
+[w] About the Testing map
 	[d] Monster spawner
 	[ ] The set of items and turrets to spawn.
 	[ ] A CF simulator.

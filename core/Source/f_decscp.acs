@@ -46,20 +46,24 @@ script "PriFireTrigger" ENTER
  }
 }
 
+function void AddAmmoCapacity (str ammo, int amount){
+	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
+}
+
 script "PersonalBP_Expand" (void) {
 	if(getAmmoCapacity("Clip") == 300 || getAmmoCapacity("Clip") == 500){
 			terminate; // Dont expand if already expanded.
 		}
 	
-	SetAmmoCapacity("Clip", getAmmoCapacity("Clip") 					+ 100);
-	SetAmmoCapacity("Shell", getAmmoCapacity("Shell") 					+ 30);
-	SetAmmoCapacity("RocketAmmo", getAmmoCapacity("RocketAmmo") 		+ 25);
-	SetAmmoCapacity("HeavyBullets", getAmmoCapacity("HeavyBullets") 	+ 100);
-	SetAmmoCapacity("Dualshot_Ammo", getAmmoCapacity("Dualshot_Ammo") 	+ 50);
-	SetAmmoCapacity("Cell", getAmmoCapacity("Cell") 					+ 200);
-	SetAmmoCapacity("GLauncher_Ammo", getAmmoCapacity("GLauncher_Ammo") + 25);
-	SetAmmoCapacity("Flinger_Ammo", getAmmoCapacity("Flinger_Ammo") 	+ 50);
-	SetAmmoCapacity("Gasoline", getAmmoCapacity("Gasoline") 			+ 50);
+	AddAmmoCapacity("Clip", 			100);
+	AddAmmoCapacity("Shell", 			30);
+	AddAmmoCapacity("RocketAmmo", 		25);
+	AddAmmoCapacity("HeavyBullets", 	100);
+	AddAmmoCapacity("Dualshot_Ammo", 	50);
+	AddAmmoCapacity("Cell", 			200);
+	AddAmmoCapacity("GLauncher_Ammo", 	25);
+	AddAmmoCapacity("Flinger_Ammo", 	50);
+	AddAmmoCapacity("Gasoline",			50);
 }
 
 script "PersonalBP_Reset" (void) {

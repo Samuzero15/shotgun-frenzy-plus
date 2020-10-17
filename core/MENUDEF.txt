@@ -46,6 +46,7 @@ OptionMenu "SFPlusOptions"{
 	Option "Adaptive Spawning *", "sf_adaptivespawn", "Boolean"
 	Slider "Door Hold-Time Seconds", "sf_doorholdtime", 15, 45, 1, 0
 	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
+	Option "Allow Credit Drop", "sfp_allowdropcredits", "Boolean"
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
 	StaticText ""
@@ -75,6 +76,8 @@ OptionMenu "SFPlusOptions"{
 	Option "Hear Hitmark sound?", "sfp_hitmarksnd", "Boolean"
 	Option "Display earnings?", "sfp_earningdisp", "EarningDispOptions"
 	Option "Enable kill-streak hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
+	Option "Welcome MSG?", "sfp_welcome", "Boolean"
+	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 	StaticText ""
@@ -94,6 +97,14 @@ OptionMenu "SFPlusUserOptionHelp"{
 	StaticText "Earnings", 1
 	StaticText "The number that you see after killing a demon. Or buying"
 	StaticText "your weapons, recycles, upgrades..."
+	StaticText ""
+	StaticText "Welcome MSG", 1
+	StaticText "Do you want to keep watching the start-up message?"
+	StaticText ""
+	StaticText "Play old soundtrack", 1
+	StaticText "Since the people remembers shotgun frenzy for,"
+	StaticText "the old soundtrack, toggle this to make sure you play it!"
+	StaticText "It's okay, sometimes I miss the old soundtrack."
 	StaticText ""
 	StaticText "Kill streak hud", 1
 	StaticText "This will change the visibility of the kill streak"
@@ -136,6 +147,16 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "Spectating and re-joining can cause to gain more or less cash for"
 	StaticText "the player losing their weapons. Set it to -10 to deny this bonus."
 	StaticText "< -10 = - credits, > -10 = + credits.", -1
+	StaticText ""
+	StaticText "Allow Credit Drop", 1
+	StaticText "This will let the players to drop money on the server."
+	StaticText ""
+}
+
+OptionValue "NostalgiaBoolean"
+{
+	0, "Nah, thanks."
+	1, "Yes, please."
 }
 
 OptionValue "Boolean"
