@@ -35,9 +35,9 @@ Script "SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
 		
 		SetActivator(0,AAPTR_NULL);
 		
-		delay(1);
 		play++;
 	}
+	delay(1);
 	restart;
 }
 

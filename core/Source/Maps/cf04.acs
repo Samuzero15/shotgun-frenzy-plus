@@ -10,32 +10,15 @@
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
 
-// minor
-#import "f_SecMan.acs"
-#import "f_MonAtt.acs"
-#import "f_AIDRL.acs"
-#import "f_FinalF.acs"
-#import "f_PMen.acs"
-#import "f_PHUD.acs"
-#import "f_Rank.acs"
-#import "f_Cred.acs"
-#import "f_PStat.acs"
-#import "f_StokP.acs"
-#import "f_Battr.acs"
-//#import "f_TaticalMap.acs"
-#import "f_Core.acs"
-#import "f_CfSpec.acs"
-#import "fl_techs.acs"
+#import "fp_cf.acs"
 
 #include "zcommon.acs"
+#import "fl_techs.acs"
 #include "samu_tools.ach"
-
 // setup techflags
 script 91 OPEN
 {
 	spawnspot("TurretPlasma", 12);
-// game settings
-	f_UseScoreSystem = 1;
 	f_Startcash =   2500;                   // player starting cash, 2500 is the default
 	c_Startcash =   0;                      // starting cash for the commander (SF maps only)
 	f_Doortype =    0;                      // 0 is a normal door, 1 is a floor based door
@@ -45,15 +28,13 @@ script 91 OPEN
 
 	f_Cacodemons = 0;
 	f_AdaptiveSpawning = 0;
-
-        readconsole();
-
+	
+	readconsole();
 	setupTerminals();
 }
 // final boss
 script 90 (void)
 {
-    music_change("NONELIVE",0);
     int ticker;
 	thing_destroy(118, 1);
 	thing_destroy(110, 1);

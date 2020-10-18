@@ -188,7 +188,7 @@ script 108 (int l_RemainingMonsters)
         delay(5);
     }
 	//log(s:"Guardian wave started.");
-	g_GuardianWave = True;
+
     // kill off the remaining demons
     thing_destroy(110, 0);
     thing_destroy(111, 0);
@@ -205,11 +205,12 @@ script 108 (int l_RemainingMonsters)
 	// kill all scripts!
 	acs_terminate(120, 0);
 	
-	
+	g_GuardianWave = True;
 	
     // spawn boss script
     if(c_NukeLaunched != 1){
     acs_execute(90, 0, 0, 0, 0);}
+	
 }
 
 function bool GuardianWave_LoopCond(int surv){

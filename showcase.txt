@@ -10,4 +10,6 @@ Archviles will no longer push you this time, whew what a relief.
 Armors absorbs 90% of damage! Now charge!
 Some small welcome message is added to all the players.
 Done some optimization fixes for the hate of lag
+Mechs can fire the nails in high velocities, make sure you beef up nails too!
+You want to hear the old soundtrack? Well, do sfp_oldsoundtrack 1 in the console!, You're welcome.
 Some more miscaleneous fixes...

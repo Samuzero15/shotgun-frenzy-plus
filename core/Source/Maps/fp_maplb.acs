@@ -1,0 +1,15 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_maplb.acs
+// All the stuff for the maps!
+
+#library "fp_maplb.acs"
+
+#import "f_PMen.acs" // The old menu, for launching the samu-terminal
+#import "f_PHUD.acs" // Player hud, your good old hud.
+#import "f_Rank.acs" // The rank scripts
+#import "f_Cred.acs" // Here comes the moneeeeeeeey.
+#import "f_PStat.acs" // All the player status.
+#import "f_StokP.acs" // Restocking pads.

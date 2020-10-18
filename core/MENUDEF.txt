@@ -102,7 +102,7 @@ OptionMenu "SFPlusUserOptionHelp"{
 	StaticText "Do you want to keep watching the start-up message?"
 	StaticText ""
 	StaticText "Play old soundtrack", 1
-	StaticText "Since the people remembers shotgun frenzy for,"
+	StaticText "Since the people remembers shotgun frenzy for"
 	StaticText "the old soundtrack, toggle this to make sure you play it!"
 	StaticText "It's okay, sometimes I miss the old soundtrack."
 	StaticText ""

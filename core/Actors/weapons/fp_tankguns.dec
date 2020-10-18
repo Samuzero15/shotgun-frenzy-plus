@@ -512,7 +512,7 @@ actor NailShot
 		Stop
 	}
 }
-actor MiniNailShot
+actor MiniNailShot : FastProjectile
 {// Basic attack.
 	Radius 6
 	Height 6
@@ -539,31 +539,31 @@ actor MiniNailShot
 
 actor MiniNailShot_Lv2 : MiniNailShot
 { // A bit speedier and harmful
-	Speed 40
+	Speed 50
 	Damage (35)
 }
 
 actor MiniNailShot_Lv3 : MiniNailShot
 { // more speedier, spready, and harmful
-	Speed 50
+	Speed 70
 	Damage (45)
 }
 
 actor MiniNailShot_Lv4 : MiniNailShot
 { // more speedier, wider and harmful
-	Speed 60
+	Speed 90
 	Damage (60)
-	Radius 8
-	Height 8
+	Radius 12
+	Height 12
 	Scale 0.25
 }
 
 actor MiniNailShot_Lv5 : MiniNailShot
 { // The plasma nails.
-	Speed 70
+	Speed 110
 	Damage (80)
-	Radius 10
-	Height 10
+	Radius 24
+	Height 24
 	Scale 0.35
 }
 
