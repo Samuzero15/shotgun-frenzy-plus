@@ -348,12 +348,18 @@ function void Weapon_SwapWeapon(str this, str withThis){
 	setWeapon(withThis);
 }
 
+function void Weapon_Swap(str this, str withThis){
+	TakeInventory(this,1);
+	GiveInventory(withThis,1);
+	setWeapon(withThis);
+}
+
 function void Weapon_Upgrade(int wid, int type){
 	//printbold(n:(playernumber() + 1), s:" Upgrades ", s:Weapon_GetActor(wid), s:" to: ", s:WeaponUpgrade_getActor(wid, type-1));
 if(type == 1)
-		Weapon_SwapWeapon(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 0));
+		Weapon_Swap(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 0));
 	else if( type == 2) 
-		Weapon_SwapWeapon(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 1));
+		Weapon_Swap(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 1));
 
 }
 

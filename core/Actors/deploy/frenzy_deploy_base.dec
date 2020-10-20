@@ -415,8 +415,8 @@ Actor Turret_HealthBar {
 	Radius 1
 	
 	scale 0.30
-	renderstyle Shaded
-	
+	renderstyle Add
+	Alpha 0.5
 	+NOINTERACTION
 	+CLIENTSIDEONLY
 	+NOCLIP

@@ -40,8 +40,6 @@ script 400 (void)
     spawnspot("TurretBase", 154, 0, 0);
     
     // set techflag
-    //c_Techflag[5] = 1;
-	SetBuildState(BUILD_MARCOM, BUILT);
 	Tech_Set(FP_TECH_MARCOM, FP_TECHF_DONE);
     
     // constructed message
@@ -215,32 +213,4 @@ script FP_MCOM_CPULSE_REVIVE (void)
 {
 	if (100 + g_Status != 104)       setactorproperty(100 + g_Status, APROP_Health, 750);
 	else                             setactorproperty(100 + g_Status, APROP_Health, 1500);
-}
-
-// core revive (generic)
-script 405 (int l_BypassProperty)
-{
-	
-	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/corepulse", 125);
-    
-    int setValue;
-    
-    // 5 second warning
-    f_TipShow("INFO", "THE CORE IS ABOUT TO BE HEALED", "Activating in 5 seconds...", 0);
-    delay(35 * 5);
-    
-    // activate
-    acs_execute(126, 0, 1, 0, 0);
-    ambientsound("x1/taser", 125);
-    if (l_BypassProperty != 0)
-    {
-    	setValue = 100+g_Status;
-    }
-    else
-    {
-    	setValue = 104;
-    }
-    if (100 + g_Status < 104)       setactorproperty(setValue, APROP_Health, 750);
-    else                             setactorproperty(setValue, APROP_Health, 1500);
 }

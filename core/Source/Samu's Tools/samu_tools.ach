@@ -1,28 +1,17 @@
 
 
-#include "upgrade_list.ach"
-#include "upgrade_funs.ach"
 //#include "weapon_funs.ach"
-#include "recycle_funs.ach"
+//#include "recycle_funs.ach"
 
-#include "tech_research.ach"
 #include "players_funs.ach"
-#include "build_research.ach"
-#include "item_list.ach"
 #include "cside_scripts.ach"
 #include "autouse_scripts.ach"
-#include "cmdbut_list.ach"
 
 function void setupTerminals(void){
 	Tech_Set(FP_TECH_GENLAB, 		FP_TECHF_DONE);
 	Tech_Set(FP_TECH_ARMORY, 		FP_TECHF_DONE);
 	Tech_Set(FP_TECH_ARMORY_ARMS1, 	FP_TECHF_DONE);
 	Tech_Set(FP_TECH_ARMORY_ARMS2, 	FP_TECHF_DONE);
-
-	SetBuildState(Build_GENLAB, BUILT);
-	SetBuildState(Build_ARMORY, BUILT);
-	TogTechFlag(TECH_ARMSP1);
-	TogTechFlag(TECH_ARMSP2);
 }
 
 function bool IsActivatingClient(void){

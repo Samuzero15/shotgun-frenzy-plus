@@ -1,0 +1,19 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// sfplus.acs
+// The global scripts!
+
+#library "sfplus"
+#include "zcommon.acs"
+
+#import "fp_hello.acs" // Intro messages, and command helps.
+#import "samuterm.acs" // The main core for the terminals!
+#import "f_decscp.acs" // Decorate only scripts!
+#import "fp_mkill.acs" // Monster kill script
+#import "fp_dmhud.acs" // The Damage HUD
+#import "FP_SBINF.acs"  // SBarInfo Manipulation
+#import "fp_credd.acs" // The credit dropper command.
+#import "fp_music.acs" // Music changing
+//#import "f_TMap.acs" <- intresting stuff...

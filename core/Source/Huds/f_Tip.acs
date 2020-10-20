@@ -415,7 +415,7 @@ function void Notify_MessagePriv(str what1, str what2, int img, int set) {
 	Notify_Clear2(slot); // Clear it
 	
 	ambientsound("patch/newmessage", 56);
-	Notify_Show(what1, what2, img, id, pos, set);
+	Notify_ShowEx(what1, what2, img, id, pos, set, false);
 }
 
 function void Notify_MessageSlot(str what1, str what2, int img, int set, int slot) {

@@ -7,13 +7,12 @@
 
 #library "FP_HELLO"
 #include "zcommon.acs"
-#import "fl_PupDir.acs"
 #import "f_intdb.acs"
 #import "fp_credd.acs"
 
 Script "SFPlus_Welcome" Enter
 {
-	if(GetCVar("sfp_welcome")){
+	if(GetCVar("sfp_welcome") && StrIcmp("titlemap", strparam(n:-2))!= 0 ){
 		SetFont("STATBIGS");
 			Hello_Print("Welcome to Shotgun Frenzy Plus!", 3000, 0.45);
 		SetFont("CONFONT");
@@ -27,12 +26,12 @@ Script "SFPlus_Welcome" Enter
 }
 
 
-Script "SFPlus_Changelog" (void) NET{
+Script "SFPlus_Changelog" (void) NET {
 	Hello_Log(strparam(s:"\cfThe changes for this relase (", l:"PATCH_VERSION", s:") are: \c-\n", l:"CHANGES"));
 	LocalAmbientSound("misc/chat2",127);
 }
 
-Script "SFPlus_CCMDList" (void) NET
+Script "SFPlus_CCMDList" (void) NET 
 {
 	Hello_Log(strparam(
 		s:"Console Command list (START)\n",
@@ -58,6 +57,7 @@ Script "SFPlus_CCMDList" (void) NET
 		s:Hello_CMD("sfp_earningdisp", 	   "0, 1, 2, 3", "Show your current earnings?"),
 		s:Hello_CMD("sfp_dropcredits", 		strparam(d:DROPCREDIT_MIN, s:" - ",d:p_Credits[playernumber()]),
 														 "Drop any amount of credits on the floor."),
+		s:Hello_CMD("sfp_oldsoundtrack", 	   	 "0, 1", "Toggle between the new soundtrack and the old soundtrack"),
 		s:Hello_CMD("sfp_welcome", 			   	 "0, 1", "Keep the welcome message?."),
 		s:Hello_CMD("sfp_changelog", 			   	  0, "Show the main changes for this version."),
 		s:Hello_CMD("sfp_ccmdlist", 			   	  0, "Show this list again."),

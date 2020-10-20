@@ -58,7 +58,6 @@ ACTOR Grenade_Flinger_Exploder
 	+ACTIVATEPCROSS
 	+DOOMBOUNCE
 	+MTHRUSPECIES
-	+NOINTERACTION
 	bouncecount 16
 	
 	SeeSound "w9/fire1"

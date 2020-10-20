@@ -10,32 +10,14 @@
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
 #import "fl_techs.acs"
-
-// minor
-//#import "fc_AStr.acs"
-#import "fc_Comm.acs"
-#import "fc_Entr.acs"
-#import "f_SecMan.acs"
-#import "f_MonAtt.acs"
 #import "f_AIDRL.acs"
-#import "f_FinalF.acs"
-#import "f_PMen.acs"
-#import "f_PHUD.acs"
-#import "f_Rank.acs"
-#import "f_Cred.acs"
-#import "f_PStat.acs"
-#import "f_StokP.acs"
-#import "f_Battr.acs"
-//#import "f_TaticalMap.acs"
-#import "f_Core.acs"
+
+#import "fp_sf.acs" // Modulize that crap!
 
 #include "zcommon.acs"
 
 script 88 OPEN
 {
-	// setup gametype value
-	f_UseScoreSystem = 0;
-	f_Gametype =    1;
 	// game settings
 	f_Startcash =   2500;                   // player starting cash, 2500 is the default
 	c_Startcash =   5000;                   // starting cash for the commander (SF maps only)
@@ -44,13 +26,7 @@ script 88 OPEN
 	f_GameLength =  18;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime)
 	f_AISkillMultiplier = 2;               // increase in levels, higher means harder (aka: the RapeFactor variable)
 	
-	f_AdaptiveSpawning = 0;
-	f_Cacodemons = 0;
-
         readconsole();
-
-	f_AllowNuke =   1;
-	f_AllowIon =    1;
 }
 
 script 11 OPEN
@@ -80,7 +56,6 @@ int l_HoltSpawning = 0;
 script 90 (void)
 {
     // change music
-    Music_Change("BVSWWTHM", 1);
     acs_execute(89, 0, 0, 0, 0);
     int ticker;
     while(ticker < 60)

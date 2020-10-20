@@ -1,46 +1,45 @@
 ///////////////////////////////////////////////////
-//      SHOTGUN FRENZY
-//   a mod by Wad'a'Holic
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
 
-// fl_Classic.acs
-// loads the 'Classic' (aka Frenzy) gametype scripts
+// fp_CF.acs
+// The typical combat frenzy scripts!
 
-// top priority
+#library "fp_cf"
+
 #import "f_IntDB.acs"
+#import "fl_techs.acs"
 #import "f_Tip.acs"
 
-// minor
+#import "fp_maplb.acs" // All the common stuff for the mod maps.
+
 #import "f_SecMan.acs"
 #import "f_MonAtt.acs"
 #import "f_AIDRL.acs"
 #import "f_FinalF.acs"
-#import "f_PMen.acs"
-#import "f_PHUD.acs"
-#import "f_Rank.acs"
-#import "f_Cred.acs"
-#import "f_PStat.acs"
-#import "f_StokP.acs"
-#import "f_Battr.acs"
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
+//#import "f_CfSpec.acs" muda.
+
+#include "zcommon.acs"
+#include "samu_tools.ach"
 
 // setup techflags
-script 91 OPEN
+script "SFPlus_CF_Default" OPEN
 {
 	// setup gametype value
 	f_Gametype = 0;
+	f_UseScoreSystem = 1;
 	// game settings
 	f_Startcash =   2500;                   // player starting cash, 2500 is the default
 	c_Startcash =   0;                      // starting cash for the commander (SF maps only)
 	f_Doortype =    0;                      // 0 is a normal door, 1 is a floor based door
 	f_Doorspeed =   50;                     // speed of the door opening, 50 is the default
-	f_GameLength =  13;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime)
+	f_GameLength =  9;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime)
 	f_AISkillMultiplier = 5;               // increase in levels, higher means harder (aka: the RapeFactor variable)
 
 	f_Cacodemons = 0;
 	f_AdaptiveSpawning = 0;
-    c_Techflag[1] = 1;
-    c_Techflag[2] = 1;
-    c_Techflag[26] = 1;
-    c_Techflag[27] = 1;
+
+        readconsole();
 }

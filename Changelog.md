@@ -2,6 +2,17 @@
 
 ## v0 - Before the beginning...
 
+#### -) (17 - 18 / 10 / 2020) [Good-old music is here + some fixes]
+	*) Removed the +nointeraction flag for the spready grenade. (Why?)
+	*) Made the tank nails a fast projectile, improving their current speed for all levels.
+	*) Gauss J Repeater is kind of beefed up. Damages the first enemy more than the rest of them.
+	-) Repeaters will spin-down before switching to another weapon.
+	+) Alright, now sfp_oldsoundtrack works!, when you feel nostalgic, put this to true, and have fun!
+	*) All the acs for the maps we're been library-compacted! (1 step close for mapping!)
+	*) Some cleanup later...
+	-) Turret health bar will no longer be coloured depending on the health (stoopid zandronum)
+	*) Smol fixes not worth mentioning.
+
 #### -) (14 - 15 / 10 / 2020) [Being freindly to the players.]
 	*) Fixing up the messages coming from the drop credits module.
 	*) Now sfp_dropcredits contains a delay time between uses, to prevent over-charging the server.
