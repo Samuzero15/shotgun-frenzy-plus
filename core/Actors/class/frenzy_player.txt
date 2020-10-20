@@ -31,7 +31,7 @@ ACTOR FrenzyPlayer : PlayerPawn
 	
 	
 	//+NOSKIN
-	+MTHRUSPECIES
+	+THRUSPECIES
 	
 	States
 	{
