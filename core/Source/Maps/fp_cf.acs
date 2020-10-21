@@ -14,12 +14,9 @@
 #import "fp_maplb.acs" // All the common stuff for the mod maps.
 
 #import "f_SecMan.acs"
-#import "f_MonAtt.acs"
+//#import "f_MonAtt.acs"
 #import "f_AIDRL.acs"
 #import "f_FinalF.acs"
-//#import "f_TaticalMap.acs"
-#import "f_Core.acs"
-//#import "f_CfSpec.acs" muda.
 
 #include "zcommon.acs"
 #include "samu_tools.ach"

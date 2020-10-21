@@ -10,15 +10,16 @@
 // include external commander scripts
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-#import "fc_CommB.acs"
-#import "fc_Mouse.acs"
-#import "fc_Const.acs"
-#import "fc_GLab.acs"
-#import "fc_Armor.acs"
-#import "fc_MComm.acs"
-#import "fc_Ref.acs"
-#import "fc_DLab.acs"
-#import "fc_NSilo.acs"
+#import "fc_Entr.acs" // The entering platforms.
+#import "fc_CommB.acs" // All commander events.
+#import "fc_Mouse.acs" // Old mouse script (not actually used anyway :p)
+#import "fc_Const.acs" // Construction script
+#import "fc_GLab.acs" // Gen-lab main script
+#import "fc_Armor.acs" // Armory main script
+#import "fc_MComm.acs" // Mech Factory -  Marine Command main script
+#import "fc_Ref.acs" // Refinery main script
+#import "fc_DLab.acs" // Pulse scripts main script
+#import "fc_NSilo.acs" // Nuclear silo scripts main script
 #import "fp_Baners.acs"
 
 #include "zcommon.acs"

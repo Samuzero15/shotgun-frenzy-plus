@@ -98,7 +98,7 @@ Script "SFPlus_DisplayChange" ENTER {
 	int last = 0;
 	int count = 0;
 	int play = playernumber();
-	while(GetActorProperty(0,APROP_HEALTH) > 1){
+	while(PlayerInGame(play)){
 		if(p_DropCredits[play] > last){
 			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, p_DropCredits[play], 5, 1);
 			last = p_DropCredits[play];
@@ -111,6 +111,7 @@ Script "SFPlus_DisplayChange" ENTER {
 				count = 0;
 			}
 		}
+		
 		if(p_DropCredits_Delay[play] > 0)p_DropCredits_Delay[play]--;
 		
 		delay(1);

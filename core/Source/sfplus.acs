@@ -17,3 +17,7 @@
 #import "fp_credd.acs" // The credit dropper command.
 #import "fp_music.acs" // Music changing
 //#import "f_TMap.acs" <- intresting stuff...
+
+script "SFPlus_ClearSector" (int sector){
+	Thing_Remove(110 + sector);
+}

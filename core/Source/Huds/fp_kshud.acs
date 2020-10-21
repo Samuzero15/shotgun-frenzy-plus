@@ -31,12 +31,12 @@
 
 
 script "SFPlus_KillStreakHud" ENTER {
-	int KSLast = 0, KSNow, KSHiScore, KSLastRun;
+	int KSLast = 0, KSNow, KSHiScore;
 	
 	int play = PlayerNumber();
 	int scaleTics = 5, tics, numscale;
 	
-	while(1){
+	while(playeringame(play)){
 	KSNow = p_Streak[play];
 	KSHiScore = p_StreakHi[play];
 		if(KSLast != KSNow && KSNow > 1){
@@ -69,7 +69,7 @@ script "SFPlus_KillStreakHud" ENTER {
 			}
 			
 			
-			//log(d:scale);
+			log(s:"Number scale: ", d:scale);
 			tics++;
 		}else{ tics = 0; numscale = 0;}
 		

@@ -8,7 +8,7 @@
 
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-#import "fa_SetV.acs"
+#import "fp_AISet.acs"
 #include "zcommon.acs"
 
 function int m_CalcSector (void)
@@ -147,7 +147,7 @@ script 100 OPEN
 			
 			//log(s:"l_RemainingMonsters = ", d:l_RemainingMonsters);
             if (l_RemainingMonsters < 5)     break;
-            delay(35 * 3);
+            delay(1);
         }
     
         // kill off the remaining demons
@@ -156,6 +156,7 @@ script 100 OPEN
         thing_destroy(112, 0);
         thing_destroy(113, 0);
         thing_destroy(114, 0);
+		delay(35 * 3);
         
         // proceed
         f_AIDir_SpawnCount = 0;

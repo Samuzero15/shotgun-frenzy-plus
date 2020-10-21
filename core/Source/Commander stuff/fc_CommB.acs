@@ -88,30 +88,31 @@ script "SFPlus_CMD_CallSpawnScript" (int which, int price){
 		CMDEvent(9, 0, 0, 0);
 	}else if (which > 0){
 		switch(which){
-			case 10: //Ammo dispenser
-				thing = "Spawn_AmmoDispenser"; 		break;
-			case 11:  //Health dispenser
-				thing = "Spawn_HealthDispenser";	break;
+			
+			case 10:  //Health dispenser
+				thing = "HealthDispenser";	break;
+			case 11: //Ammo dispenser
+				thing = "AmmoDispenser"; 	break;
 			case 12:  //Sandbags
-				thing = "Spawn_Sandbags";			break;
+				thing = "Sandbags";			break;
 			case 13:  //Landmines.
 				thing = "Spawn_Landmine";	
 				noSectorCheck = 1;
 				break;
 			case 1: //Bullet turret
-				thing = "Spawn_TurretBullet";		break;
+				thing = "TurretBullet";		break;
 			case 2: //Rocket turret
-				thing = "Spawn_TurretRocket";		break;
+				thing = "TurretRocket";		break;
 			case 3: //Plasma turret
-				thing = "Spawn_TurretPlasma";		break;
+				thing = "TurretPlasma";		break;
 			case 4: //Tesla Coil
-				thing = "Spawn_TurretTesla";		break;
+				thing = "TurretTesla";		break;
 			case 5: //Flame turret
-				thing = "Spawn_TurretFlame";		break;
+				thing = "TurretFlame";		break;
 			case 6: //Chaingun turret
-				thing = "Spawn_TurretChaingun";		break;
+				thing = "TurretChaingun";	break;
 			case 7: //Shotgun turret
-				thing = "Spawn_TurretShotgun";		break;
+				thing = "TurretShotgun";	break;
 			default: terminate;
 		}
 		CMDEventEX(4+noSectorCheck*3, thing, which, 0, price);
@@ -250,17 +251,17 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 	// check current sector before placing
 		if (getactory(130) < getactory(81) & g_Status == 1 | getactory(130) < getactory(82) & g_Status == 2 | getactory(130) < getactory(83) & g_Status == 3 | getactory(130) < getactory(84) & g_Status == 4){
 			// add object
-			setactorstate(130, l_EventArg1, 0);
+			setactorstate(130, strparam(s:"Spawn_", s:l_EventArg1), 0);
 			
 			//[Samu] for lazyness sake, and for controlling turret - dispenser spawning.
 			c_allow_turret = Timer();
 			
 			// show the message
 			switch(l_EventArg2){
-				case 10: Notify_Deploy("Ammo Dispenser", 	"CM32"); break;
-				case 11: Notify_Deploy("Health Dispenser", 	"CM33"); break;
+				case 10: Notify_Deploy("Health Dispenser", 	"CM33"); break;
+				case 11: Notify_Deploy("Ammo Dispenser", 	"CM32"); break;
 				case 12: Notify_Deploy("Sandbags", 			"CM33"); break;
-				case 1:  Notify_Deploy("Bullet Turret", 	"CM40");  break;
+				case 1:  Notify_Deploy("Bullet Turret", 	"CM40"); break;
 				case 2:  Notify_Deploy("Rocket Turret",		"CM41"); break;
 				case 3:  Notify_Deploy("Plasma Turret",		"CM42"); break;
 				case 4:  Notify_Deploy("Tesla Turret",		"CM46"); break;

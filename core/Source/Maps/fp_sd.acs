@@ -14,10 +14,10 @@
 #import "fp_maplb.acs" // All the common stuff for the mod maps.
 
 // The unique stuff to use here.
-#import "f_ScManS.acs"
-#import "f_MonAtt.acs"
-#import "f_AIDRL.acs"
-#import "f_FinalF.acs"
+#import "f_ScManS.acs" // Sector Management for survival defender games.
+//#import "f_MonAtt.acs"
+#import "f_AIDRL.acs" // AI Director Levels
+#import "f_FinalF.acs" // The final fight
 //#import "fa_SSD01.acs"
 
 #include "zcommon.acs"

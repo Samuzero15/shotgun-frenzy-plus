@@ -47,7 +47,7 @@ script 451 (void)
     // start the nuclear launch
     c_NukeLaunched = 1;
     acs_execute(89, 0, 0, 0, 0);
-    Music_Change("D_BOSS", 1);
+    //Music_Change("D_BOSS", 1);
     
     acs_terminate(120, 0);
     acs_terminate(100, 0);

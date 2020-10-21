@@ -13,3 +13,4 @@
 #import "f_Cred.acs" // Here comes the moneeeeeeeey.
 #import "f_PStat.acs" // All the player status.
 #import "f_StokP.acs" // Restocking pads.
+#import "f_Core.acs" // The core's distress call script

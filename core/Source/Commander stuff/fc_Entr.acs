@@ -12,61 +12,27 @@
 #include "zcommon.acs"
 #include "samu_tools.ach"
 
-// lift function (entrance) 1 - Genetics Lab
-script 81 (void)
-{
-/*
-	if(PlayerIsBot(playernumber()) == 1)	terminate;		// dont open if bot
-	if(!isBuilt(BUILD_GENLAB))				terminate;		// dont open if not built
-	
-	// open the door
-	door_open(225, 100);
-	
-	// lower the floor
-	floor_lowerbyvalue(223, 70, 104);
-	
-	
-	delay(95);
-	
-	// restore
-	ceiling_lowerandcrush(225, 100, 200);
-	//door_close(225, 100);
-	floor_raisebyvalue(223, 70, 104);
-	
-	// reset floor level incase of exploited use
-	delay(15);
-	floor_movetovalue(223, 100, 128, 0);
-	ceiling_lowerbyvalue (225, 10, 8);
-*/
+script 81 (void) { // Uh...
+
 }
 
-// lift function (entrance) 2 - Armory
-script 82 (void)
-{
-/*
-	if(PlayerIsBot(playernumber()) == 1)	terminate;		// dont open if bot
-	if(!isBuilt(BUILD_ARMORY))				terminate;		// dont open if not built
-	
-	// open the door
-	door_open(252, 100);
-	
-	// lower the floor
-	floor_lowerbyvalue(250, 70, 104);
-	
-	
-	delay(75);
-	
-	// restore
-	ceiling_lowerandcrush(252, 100, 200);
-	//door_close(252, 100);
-	floor_raisebyvalue(250, 70, 104);
-	
-	// reset floor level incase of exploited use
-	delay(15);
-	floor_movetovalue(250, 100, 128, 0);
-	ceiling_lowerbyvalue (252, 10, 8);
-	ceiling_lowerbyvalue (252, 10, 8);
-*/
+script 85 (void) { // Uh...
+
+}
+
+script 86 (void) { // Uh...
+
+}
+script 84 (void) { // Uh...
+
+}
+
+script 82 (void) { // Uh...
+
+}
+
+script 83 (void) { // Uh...
+
 }
 
 //Armory
@@ -185,115 +151,4 @@ script 235 OPEN
                 floor_movetovalue(192, 50, 128, 0);
 		DELAY(35);
 	}
-}
-
-// lift function (entrance) 3 - Refinery
-script 83 (void)
-{
-/*
-	if(PlayerIsBot(playernumber()) == 1)	terminate;		// dont open if bot
-	if(c_Techflag[4] != 1)				terminate;		// dont open if not built
-	
-	// open the door
-	door_open(196, 100);
-	
-	// lower the floor
-	floor_lowerbyvalue(195, 70, 104);
-	
-	
-	delay(75);
-	
-	// restore
-	ceiling_lowerandcrush(196, 100, 200);
-	//door_close(196, 100);
-	floor_raisebyvalue(195, 70, 104);
-	
-	// reset floor level incase of exploited use
-	delay(15);
-	floor_movetovalue(195, 100, 128, 0);
-	ceiling_lowerbyvalue (196, 10, 8);
-*/
-}
-
-// lift function (entrance) 4 - Demonic Lab
-script 84 (void)
-{
-/*
-	if(PlayerIsBot(playernumber()) == 1)	terminate;		// dont open if bot
-	if(!isBuilt(BUILD_MECHFA))				terminate;		// dont open if not built
-	
-	// open the door
-	door_open(206, 100);
-	
-	// lower the floor
-	floor_lowerbyvalue(204, 70, 104);
-	
-	
-	delay(75);
-	
-	// restore
-	ceiling_lowerandcrush(206, 100, 200);
-	//door_close(206, 100);
-	floor_raisebyvalue(204, 70, 104);
-	
-	// reset floor level incase of exploited use
-	delay(15);
-	floor_movetovalue(204, 100, 128, 0);
-	ceiling_lowerbyvalue (206, 10, 8);
-*/
-}
-
-// lift function (entrance) 5 - Marine Command
-script 85 (void)
-{
-/*
-	if(PlayerIsBot(playernumber()) == 1)	terminate;		// dont open if bot
-	if(c_Techflag[3] != 1)				terminate;		// dont open if not built
-	
-	// open the door
-	door_open(198, 100);
-	
-	// lower the floor
-	floor_lowerbyvalue(197, 70, 104);
-	
-	
-	delay(75);
-	
-	// restore
-	ceiling_lowerandcrush(198, 100, 200);
-	//door_close(198, 100);
-	floor_raisebyvalue(197, 70, 104);
-	
-	// reset floor level incase of exploited use
-	delay(15);
-	floor_movetovalue(197, 100, 128, 0);
-	ceiling_lowerbyvalue (198, 10, 8);
-*/
-}
-
-// lift function (entrance) 6 - Command Center
-script 86 (void)
-{
-/*
-	if(PlayerIsBot(playernumber()) == 1)	terminate;		// dont open if bot
-	
-	// open the door
-	door_open(191, 100);
-	
-	// lower the floor
-	floor_lowerbyvalue(192, 70, 104);
-	
-	
-	delay(75);
-	
-	// restore
-	ceiling_lowerandcrush(191, 100, 200);
-	//door_close(191, 100);
-	floor_raisebyvalue(192, 70, 104);
-	
-	// reset floor level incase of exploited use
-	delay(15);
-	floor_movetovalue(192, 100, 128, 0);
-	ceiling_lowerbyvalue (191, 10, 8);
-*/
 }

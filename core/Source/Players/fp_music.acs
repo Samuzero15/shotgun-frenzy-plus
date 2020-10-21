@@ -43,24 +43,62 @@ str f_BossMus[10][2] = {
 
 // Variable updaters, good to have in variable changes.
 int var_updater[32][3];
+bool music_init;
+
+Script "SFPlus_ResetSndVariables" (int play) Disconnect
+{
+	var_updater[play][0] = -1;
+	var_updater[play][1] = -1;
+	var_updater[play][2] = -1;
+}
 
 Script "SFPlus_PlayOldSoundtrack" OPEN {
 	// For the nostalgic players!
 	int play = 0;
 	int i;
 	int cvar;
+		//Initialize them if not done yet.
+	if(!music_init){
+		for(i = 0; i < 32; i++){
+			var_updater[i][0] = -1;
+			var_updater[i][1] = -1;
+			var_updater[i][2] = -1;
+		}
+		//printbold(s:"music initialized.");
+		music_init = true;
+	}
 	while(play < 32){
 		SetActivatorToPlayer(play);
+		if(!PlayerIsSpectator(play) && !PlayerIngame(play)){ // Player is not on the game (as spectator or game player).
+			SetActivator(0,AAPTR_NULL);
+			play++;
+			continue;
+		}
+		
+		if(g_GameOver){
+			switch(g_GameEnding){
+				case 1: LocalSetMusic("D_END1"); break;
+				case 2: LocalSetMusic("D_END2"); break;
+				case 3: LocalSetMusic("D_END3"); break;
+				case 4: LocalSetMusic("D_END4"); break;
+				default: LocalSetMusic("D_IN"); 
+			}
+			SetActivator(0,AAPTR_NULL);
+			play++;
+			continue;
+		}
+		
 		cvar = GetUserCvar(play , "sfp_oldsoundtrack");
+		str map = strparam(n:-2);
 		if (cvar 			!= 	var_updater[play][0] || 
 			g_GuardianWave	!= 	var_updater[play][1] || 
 			c_NukeLaunched 	!= 	var_updater[play][2]){ 
-		//print(s:"Changing music.");
-		// Activate only on guardian waves or when changing the cvar.
+		//print(s:"Cvar: ", d:cvar,s:" Guardian: ", d:g_GuardianWave,  s:" Nuke Active:",d:c_NukeLaunched);
+		// Activate only on guardian waves, nuke launchings or when changing the cvar.
 			if(cvar == 1){ // Old soundtrack.
-				if(g_GuardianWave || c_NukeLaunched) LocalSetMusic("D_BOSSo");
-				else {
-					str map = strparam(n:-2);
+				if(g_GuardianWave || c_NukeLaunched){
+					LocalSetMusic("D_BOSSo");
+				}else{
 					for (i = 0; i < 12; i++){
 						if(stricmp(map,f_OldMus[i][FP_SNDTRK_MAP]) == 0){
 							//log(s:"strcmp(",s:map, s:", ", s:f_oldMus[i][0], s:") = ", d:stricmp(map,f_OldMus[i][0]));
@@ -70,22 +108,25 @@ Script "SFPlus_PlayOldSoundtrack" OPEN {
 					}
 				}
 			}else{ // New soundtrack
-				if(g_GuardianWave){
-					for (i = 0; i < 10; i++){
-						if(stricmp(map,f_BossMus[i][FP_SNDTRK_MAP]) == 0){
+				if(g_GuardianWave || c_NukeLaunched){
+					if(g_GuardianWave){
+						for (i = 0; i < 10; i++){
 							//log(s:"strcmp(",s:map, s:", ", s:f_BossMus[i][0], s:") = ", d:stricmp(map,f_BossMus[i][0]));
-							LocalSetMusic(f_BossMus[i][FP_SNDTRK_MUS]);
-							break;
+							if(stricmp(map,f_BossMus[i][FP_SNDTRK_MAP]) == 0){
+								LocalSetMusic(f_BossMus[i][FP_SNDTRK_MUS]);
+								break;
+							}
 						}
 					}
-				}
-				else if (c_NukeLaunched) 	LocalSetMusic("D_BOSS");
-				else 						LocalSetMusic("*");
+					if(c_NukeLaunched){
+						LocalSetMusic("D_BOSS");
+					}
+				}else LocalSetMusic("*");
 			}
+			var_updater[play][0] = cvar;
+			var_updater[play][1] = g_GuardianWave;
+			var_updater[play][2] = c_NukeLaunched;
 		}
-		var_updater[play][0] = cvar;
-		var_updater[play][1] = g_GuardianWave;
-		var_updater[play][2] = c_NukeLaunched;
 		SetActivator(0,AAPTR_NULL);
 		
 		play++;

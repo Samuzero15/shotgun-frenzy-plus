@@ -2,6 +2,15 @@
 
 ## v0 - Before the beginning...
 
+#### -) (20 / 10 / 2020) [Quick Fixes & More Fixes]
+	*) Rewritten the sector management script for the sf/cf maps.
+	*) The non-risked cores, will be de-activated. (unless i find a way to animate them in this state) For the archvile protection, and for not breaking the sector flow so quickly.
+	*) Put back the Battery script again.
+	*) Some more fixes on the music player, minding on initialization.
+	*) Fixing up the dropping script on the enter script...
+	*) Alright, Health and Ammo dispensers are placed in their respective cmd buttons, as it should be.
+	*) Merging up some quick fixes from zanieon.
+
 #### -) (17 - 18 / 10 / 2020) [Good-old music is here + some fixes]
 	*) Removed the +nointeraction flag for the spready grenade. (Why?)
 	*) Made the tank nails a fast projectile, improving their current speed for all levels.

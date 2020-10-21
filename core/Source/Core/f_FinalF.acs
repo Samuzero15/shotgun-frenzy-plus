@@ -103,10 +103,10 @@ script 108 (int l_RemainingMonsters)
 	
 	log(s:"Score before the guardian wave: ", d:g_SkillScore);
     acs_terminate(13, 0);
-    acs_terminate(120, 0);
-    acs_terminate(100, 0);
-    acs_terminate(102, 0);
-    acs_terminate(103, 0);
+    acs_terminate(120, 0); // Shuts The core-rambling.
+    acs_terminate(100, 0); // Shuts the sector main loop.
+    acs_terminate(102, 0); // Shuts The loss sector script if already executed.
+    acs_terminate(103, 0); // Shuts The reclaiming sector script if already executed.
 	
 	//[Samu] To shut up the counter.
 	acs_terminate(129, 0);
@@ -251,6 +251,8 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		delay(35 * 1);
 		timeout--;
 	}
+	if(timeout == 0) 
+		Notify_Message("Demon Re-threat!","They're leaving where they came!","DEMONT", 0);
 	if(g_GameOver) Terminate;
 	// Good, time's over, kill the left overs.
 	ACS_NamedExecute("SFPlus_KillnEnd", 0, 2);
@@ -283,6 +285,7 @@ script 125 (int l_Condition)
     int g_FinalSkillScore = 0;
     
 	g_GameOver = true; // Stops the guardian checker loop.
+	g_GameEnding = l_Condition;
 	
     // display center message
     setfont("STATBIGS");
@@ -295,15 +298,7 @@ script 125 (int l_Condition)
 	// Cheaty fucks.
 	//if(!alarmsUsed) g_finalSkillScore = -1;
 	
-	str music;
-	switch(l_Condition){
-		case 1: music = "D_END1"; break;
-		case 2: music = "D_END2"; break;
-		case 3: music = "D_END3"; break;
-		case 4: music = "D_END4"; break;
-		default: music = "D_IN";
-	}
-    SetMusic(music,0);
+	
 	if (l_Condition < 1 || l_condition > 4){
 		hudmessagebold(s:"No Count!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
 		delay(35*6);

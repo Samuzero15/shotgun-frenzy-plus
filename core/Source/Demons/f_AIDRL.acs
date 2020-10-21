@@ -13,6 +13,7 @@
 #import "fa_SetList.acs"
 #include "zcommon.acs"
 
+// Reduced to minimize lagg.
 int AIDirector_Demonlimit = 250; // 250 = default
 
 

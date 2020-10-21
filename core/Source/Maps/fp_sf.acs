@@ -13,12 +13,11 @@
 
 #import "fp_maplb.acs" // All the common stuff for the mod maps.
 
-#import "fc_Comm.acs"
-#import "fc_Entr.acs"
-#import "f_SecMan.acs"
-#import "f_MonAtt.acs"
-#import "f_AIDRL.acs"
-#import "f_FinalF.acs"
+#import "fc_Comm.acs" // Commander's main scripts
+#import "f_SecMan.acs" // Sector Management.
+//#import "f_MonAtt.acs" // Monster attack(?
+#import "f_AIDRL.acs"	//AI Director Levels (as usual.)
+#import "f_FinalF.acs"	// The final fight scripts
 
 script "SFPlus_SF_Default" OPEN
 {

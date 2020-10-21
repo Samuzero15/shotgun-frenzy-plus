@@ -52,11 +52,131 @@ script 51 OPEN
     g_Status = 1; 
 }
 
+function int SecMan_RecapCond(int sector){
+	return (m_CalcSector() < 5 && sector > 1);
+}
+
+Function void SecMan_ToggleDoors(bool closed, int sector, int doortype, int doorspeed){
+	int i = 0;
+
+	if(closed){
+		if (doortype == 0)
+			for(i = sector; i <= 4; i++){
+				ceiling_lowerandcrush(100 + i, doorspeed, 2);
+				ceiling_lowerandcrush(99 + i, doorspeed, 2);
+			}
+		else
+			for(i = sector; i <= 4; i++){
+				floor_raisetohighest(100 + i, doorspeed);
+				floor_raisetohighest(99 + i, doorspeed);
+			}
+	}else { // 1 Line madness.
+		if (doortype == 0) for(i = 1; i <= sector; i++) door_open(100+i, doorspeed);
+		else for(i = 1; i <= sector; i++) floor_lowertolowest(100+i, doorspeed);
+	}
+
+}
+
+Function void SecMan_ToggleCores(int sector){
+	for(int i = 1; i <= 4; i++){
+		if(i == sector) Thing_Activate(100 + i);
+		else 			Thing_DeActivate(100 + i);
+	}
+}
+
 int alarmsUsed = 0;
+
+Script "SFPlus_SectorManagerMainLoop" OPEN {
+	// Same Script, but without the termination riskes.
+	floor_raisetonearest(105, 50);
+	int current_sector;
+	int time;
+	int timecvar = GetCvar("sf_doorholdtime");
+	bool skip_recap = false;
+	while(!g_GameOver){
+		skip_recap = false;
+		while(g_Status == 0) // Be prepared to start.
+			delay(35);
+			
+		current_sector = g_Status;
+		delay(1);
+		
+		time = timecvar;
+		acs_execute(129, 0, 1, time, 0);
+		while(time != 0){// The timer before opening a door.
+			if(time == 10 || time == 5){
+				Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
+				
+			}
+
+			if (SecMan_RecapCond(g_Status)){
+				// Check again if the sector is actually clear.
+				delay(1);
+				acs_terminate(129, 0);// Kill the timer script.
+				SecMan_ToggleDoors(1, g_Status, f_Doortype, f_Doorspeed); // Close them again.
+				acs_execute(103, 0, 0, 0, 0);
+				
+				skip_recap = true;
+				break; // Break the time wait-up
+			}
+
+			if(Time <= 5){
+				if (alarmsUsed == 0){
+					ambientsound("TIME", 125);
+				}
+			}
+
+			delay(35);
+			time--;
+		}
+		
+		Notify_Message("DOORS BREACHED!","Demons are entering!", "INFO", 0);
+		if (alarmsUsed == 0){
+			ambientsound("ATTACK", 125);
+		}
+		alarmsUsed += 1;
+	
+		// breached sound
+		if(!skip_recap){
+			switch(g_Status)
+			{
+				case 1:
+					ambientsound("cv/sector1", 125);
+					break;
+				case 2:
+					ambientsound("cv/sector2", 125);
+					break;
+				case 3:
+					ambientsound("cv/sector3", 125);
+					break;
+				case 4:
+					ambientsound("cv/sector4", 125);
+					break;
+			}
+		}
+    
+    // open doors/gates
+		SecMan_ToggleDoors(0, g_Status, f_Doortype, f_Doorspeed);
+		SecMan_ToggleCores(g_Status);// Protects the cores from any damage if they're not risked.
+		
+		while (current_sector == g_Status && !skip_recap){ 
+			// While there is no updates on the sector control or we already did a quick re-cap.
+			if (SecMan_RecapCond(g_Status)){
+				SecMan_ToggleDoors(1, g_Status, f_Doortype, f_Doorspeed);
+				acs_execute(103, 0, 0, 0, 0);
+				break;
+			}
+			delay(5);
+		}
+		
+		delay(35 * 2);// Giving it 1 tic will make this script a lotta aggesive.
+	}
+}
 
 // sector open
 script 100 OPEN
 {
+	/*
     // activate beginning lift
     floor_raisetonearest(105, 50);
     
@@ -86,12 +206,12 @@ script 100 OPEN
 		}
 		
 		if (m_CalcSector() == 0 && g_Status > 1){
-			// Check again if th sector is actually clear.
+			// Check again if the sector is actually clear.
+			delay(1);
 			acs_terminate(129, 0);// Kill the timer script.
             acs_execute(103, 0, 0, 0, 0);
-			
+			printbold(s:"Quick recapture.");
 			terminate;
-            break;
         }
 		
 		if(Time <= 5){
@@ -181,6 +301,7 @@ script 100 OPEN
         
         delay(5);
     }
+	*/
 }
 
 // sector lost (upon battery destruction)
@@ -221,8 +342,10 @@ script 102 (void)
     delay(35 * 2);
     
     // recall sector open script
+	/*
     if (g_Status < 5){
         acs_execute(100, 0, 0, 0, 0);}
+		*/
     
         
         // hate the next area
@@ -251,6 +374,7 @@ script 102 (void)
 script 103 (void)
 {
 	int i;
+	/*
     // close doors/gates
     if (f_Doortype == 0)
     {
@@ -270,6 +394,9 @@ script 103 (void)
 		}
         ambientsound("g/sector_reclaim", 125);
     }
+	*/
+	
+	ambientsound("g/sector_reclaim", 125);
     
     // change sectors
     if (g_Status > 1)

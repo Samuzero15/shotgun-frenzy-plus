@@ -63,6 +63,7 @@ int f_Gametype;
 int g_TenMinMark;
 int g_GuardianMode;
 int g_GameOver;
+int g_GameEnding;
 
 // For Samu Terminal
 int g_TechFlags = 0;
