@@ -554,8 +554,10 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	mass 0x7FFFFFF
 	speed 0
 	painchance 0
+	reactiontime 1
 	MONSTER
 	//-ISMONSTER //Makes it spawnable everywhere
+	+QUICKTORETALIATE
 	+FLOORCLIP
 	+FRIENDLY
 	+FASTER
@@ -563,10 +565,12 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	+LOOKALLAROUND
 	+NEVERRESPAWN
 	+NODAMAGETHRUST
-	+DONTOVERLAP
 	+NORADIUSDMG
 	+DONTRIP
 	+DROPOFF
+	+THRUSPECIES
+	+MISSILEMORE
+	+MISSILEEVENMORE
 	PainSound "turret/pain"
 	DeathSound "turret/death"
 	scale 0.5

@@ -69,6 +69,7 @@ Actor Sandbag_Base{
 	+THRUSPECIES
 	+SOLID
 	+SHOOTABLE
+	+FRIENDLY //Turrets should not target those
 	
 	// protect from marine damage
 	damagefactor "MarineFire", 0.0
