@@ -29,6 +29,10 @@
 #define FP_KSHUD_FADETIME 0.25
 #define FP_KSHUD_HOLDTIME 2.0
 
+#define FP_KSHUD_SCALETICS 5
+#define FP_KSHUD_CR_OVERFLOW 	5
+#define FP_KSHUD_CR_MILESTONE	21
+#define FP_KSHUD_CR_HISCORE		9
 
 script "SFPlus_KillStreakHud" ENTER {
 	int KSLast = 0, KSNow, KSHiScore;
@@ -45,33 +49,28 @@ script "SFPlus_KillStreakHud" ENTER {
 			numscale = 1;
 		}
 		
-		if(numscale && tics < scaleTics){
-			int scale = 2*(scaleTics-tics);
-			
+		if(numscale){
 			switch(getCvar("sfp_killstreakhud"))
 			{
 				case 2: 
 					if(KSNow < KSHiScore)
-						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Hiscore", 0, scale, KSNow);
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_HISCORE);
 					else if(KSNow < GetNextStreakMilestone())
-						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Milestone", 0, scale, KSNow);
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_MILESTONE);
 					else
-						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Overflow", 0, scale, KSNow);
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_OVERFLOW);
 				break;
 				case 1:
 					if(KSNow >= KSHiScore){
 						if(KSNow < GetNextStreakMilestone())
-							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Milestone", 0, scale, KSNow);
+							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_MILESTONE);
 						else
-							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add_Overflow", 0, scale, KSNow);
+							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_OVERFLOW);
 					}
 				break;
 			}
-			
-			
-			log(s:"Number scale: ", d:scale);
-			tics++;
-		}else{ tics = 0; numscale = 0;}
+		numscale = 0;
+		}
 		
 		
 		if(KSNow <= 1){
@@ -94,24 +93,17 @@ Script "SFPlus_KSHud_Death" DEATH
 
 // Clientsided scripts.
 
-Script "SFPlus_KSHud_Number_Add_Overflow" (int scale, int value) CLIENTSIDE 
+Script "SFPlus_KSHud_Number_Add" (int value, int color) CLIENTSIDE 
 {
 	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
-		KSHud_ShowNumber(value, scale, CR_GOLD);
-	}
-}
-
-Script "SFPlus_KSHud_Number_Add_Hiscore" (int scale, int value) CLIENTSIDE 
-{
-	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
-		KSHud_ShowNumber(value, scale, CR_WHITE);
-	}
-}
-
-Script "SFPlus_KSHud_Number_Add_Milestone" (int scale, int value) CLIENTSIDE 
-{
-	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
-		KSHud_ShowNumber(value, scale, CR_CYAN);
+		int tics, scale;
+		while(tics < FP_KSHUD_SCALETICS){
+			scale = 2*(FP_KSHUD_SCALETICS-tics);
+			KSHud_ShowNumber(value, scale, color);
+			tics++;
+			delay(1);
+		}
+			
 	}
 }
 

@@ -345,6 +345,16 @@ script 120 OPEN
 				{
 					SpawnSpot(boss_levels[l_Level], 199, 4110);
 					//GiveActorInventory(4110, "FPMToken_Hard", 1); 
+					
+					// Experimental bosses buffs. Because, the bosses should be strong mofos.
+					/*
+					SetActorFlag(4110, "PAINLESS", TRUE);
+					SetActorFlag(4110, "NORADIUSDMG", TRUE);
+					SetActorFlag(4110, "MISSILEMORE", TRUE);
+					SetActorFlag(4110, "MISSILEEVENMORE", TRUE);
+					SetActorFlag(4110, "QUICKTORETALIATE", TRUE);
+					*/
+					
 					Thing_ChangeTID(4110, 110);
 					g_BossLevel ++;
 				}

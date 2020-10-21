@@ -77,6 +77,12 @@ Function void SecMan_ToggleDoors(bool closed, int sector, int doortype, int door
 
 }
 
+function void SecMan_MonsterAttack(int sector) {
+	for(int i = 0; i <= sector; i++){
+		Thing_Hate(109 + i, 100 + sector, 4);
+	}
+}
+
 Function void SecMan_ToggleCores(int sector){
 	for(int i = 1; i <= 4; i++){
 		if(i == sector) Thing_Activate(100 + i);
@@ -176,132 +182,7 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 // sector open
 script 100 OPEN
 {
-	/*
-    // activate beginning lift
-    floor_raisetonearest(105, 50);
-    
-    // locals
-    int l_CurrentSector;
-    
-    // wait until the game is active
-    while(g_Status == 0)
-        delay(35);
-    
-    // setup current sector
-    l_CurrentSector = g_Status;
-    
-    // the game has started
-	// [Samu] Let it be parametrizable!
-	int time = GetCvar("sf_doorholdtime");
-	
-	if(time < 15) time = 15; // Just to keep a default timer.
-	acs_execute(129, 0, 1, time, 0);
-	Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
-	//f_TipShow("INFO", "DOORS BREACHED!", strParam(d:time, s:" seconds..."), 0);
-	
-	while(time != 0){
-		if(time == 10 || time == 5){
-			Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
-			
-		}
-		
-		if (m_CalcSector() == 0 && g_Status > 1){
-			// Check again if the sector is actually clear.
-			delay(1);
-			acs_terminate(129, 0);// Kill the timer script.
-            acs_execute(103, 0, 0, 0, 0);
-			printbold(s:"Quick recapture.");
-			terminate;
-        }
-		
-		if(Time <= 5){
-			if (alarmsUsed == 0){
-				ambientsound("TIME", 125);
-			}
-		}
-		
-		delay(35);
-		time--;
-	}
-	Notify_Message("DOORS BREACHED!","Demons are entering!", "INFO", 0);
-	if (alarmsUsed == 0){
-		ambientsound("ATTACK", 125);
-	}
-    alarmsUsed += 1;
-	
-    // breached sound
-    switch(g_Status)
-    {
-        case 1:
-            ambientsound("cv/sector1", 125);
-            break;
-        case 2:
-            ambientsound("cv/sector2", 125);
-            break;
-        case 3:
-            ambientsound("cv/sector3", 125);
-            break;
-        case 4:
-            ambientsound("cv/sector4", 125);
-            break;
-    }
-    
-    // open doors/gates
-    if (f_Doortype == 0)
-    {
-	if (100+g_Status == 101){
-		door_open(101, f_Doorspeed);
-	}
-	else if (100+g_Status == 102){
-		door_open(101, f_Doorspeed);
-		door_open(102, f_Doorspeed);
-	}
-	else if (100+g_Status == 103){
-		door_open(101, f_Doorspeed);
-		door_open(102, f_Doorspeed);
-		door_open(103, f_Doorspeed);
-	}
-	else if (100+g_Status == 104){
-		door_open(101, f_Doorspeed);
-		door_open(102, f_Doorspeed);
-		door_open(103, f_Doorspeed);
-		door_open(104, f_Doorspeed);
-	}
-    }
-    else
-    {
-	if (100+g_Status == 101){
-		floor_lowertolowest(101, f_Doorspeed);
-	}
-	else if (100+g_Status == 102){
-		floor_lowertolowest(101, f_Doorspeed);
-		floor_lowertolowest(102, f_Doorspeed);
-	}
-	else if (100+g_Status == 103){
-		floor_lowertolowest(101, f_Doorspeed);
-		floor_lowertolowest(102, f_Doorspeed);
-		floor_lowertolowest(103, f_Doorspeed);
-	}
-	else if (100+g_Status == 104){
-		floor_lowertolowest(101, f_Doorspeed);
-		floor_lowertolowest(102, f_Doorspeed);
-		floor_lowertolowest(103, f_Doorspeed);
-		floor_lowertolowest(104, f_Doorspeed);
-	}
-    }
-    
-    // can reclaim?
-    while (l_CurrentSector == g_Status)
-    {
-        if (m_CalcSector() == 0 && g_Status > 1)
-        {
-            acs_execute(103, 0, 0, 0, 0);
-            break;
-        }
-        
-        delay(5);
-    }
-	*/
+	// Lookup SFPlus_SectorManagerMainLoop script.
 }
 
 // sector lost (upon battery destruction)
@@ -339,69 +220,30 @@ script 102 (void)
     
     // change sectors
     g_Status ++;
+	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.
     delay(35 * 2);
+	SecMan_MonsterAttack(g_Status); // Charge!
     
     // recall sector open script
 	/*
     if (g_Status < 5){
         acs_execute(100, 0, 0, 0, 0);}
 		*/
-    
-        
-        // hate the next area
-        thing_hate(109, g_Status + 100, 4);
-	if(g_Status == 1){
-        	thing_hate(110, g_Status + 100, 4);
-        }
-	if(g_Status == 2){
-        	thing_hate(110, g_Status + 100, 4);
-        	thing_hate(111, g_Status + 100, 4);
-        }
-	if(g_Status == 3){
-        	thing_hate(110, g_Status + 100, 4);
-        	thing_hate(111, g_Status + 100, 4);
-        	thing_hate(112, g_Status + 100, 4);
-        }
-	if(g_Status == 4){
-        	thing_hate(110, g_Status + 100, 4);
-        	thing_hate(111, g_Status + 100, 4);
-        	thing_hate(112, g_Status + 100, 4);
-        	thing_hate(113, g_Status + 100, 4);
-        }
 }
 
 // sector reclaimed
 script 103 (void)
 {
 	int i;
-	/*
-    // close doors/gates
-    if (f_Doortype == 0)
-    {
-		// Make sure the other sectors that aren't risked are completly shut. 
-		for(i = g_Status; i <= 4; i++){
-			ceiling_lowerandcrush(100 + i, f_Doorspeed, 2);
-			ceiling_lowerandcrush(99 + i, f_Doorspeed, 2);
-		}
-        ambientsound("g/sector_reclaim", 125);
-    }
-    else
-    {
-		// Make sure the other sectors that aren't risked are completly shut. 
-		for(i = g_Status; i <= 4; i++){
-			floor_raisetohighest(100 + i, f_Doorspeed);
-			floor_raisetohighest(99 + i, f_Doorspeed);
-		}
-        ambientsound("g/sector_reclaim", 125);
-    }
-	*/
 	
 	ambientsound("g/sector_reclaim", 125);
     
     // change sectors
     if (g_Status > 1)
         g_Status --;
-		
+	
+	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.
+	
 	//[Samu] To refresh their fighting-spirit.
 		refreshPlayers();
 	//[Samu] Give a reward for everyone.
@@ -438,30 +280,9 @@ script 103 (void)
 		sethudsize(0, 0, 0);
 	//[Samu] Now the sector recovery should worth the effort now!
         
-    delay(1);
     
         // hate the next area
-        thing_hate(109, g_Status + 100, 4);
-	if(g_Status == 1){
-        	thing_hate(110, g_Status + 100, 4);
-        }
-	if(g_Status == 2){
-        	thing_hate(110, g_Status + 100, 4);
-        	thing_hate(111, g_Status + 100, 4);
-        }
-	if(g_Status == 3){
-        	thing_hate(110, g_Status + 100, 4);
-        	thing_hate(111, g_Status + 100, 4);
-        	thing_hate(112, g_Status + 100, 4);
-        }
-	if(g_Status == 4){
-        	thing_hate(110, g_Status + 100, 4);
-        	thing_hate(111, g_Status + 100, 4);
-        	thing_hate(112, g_Status + 100, 4);
-        	thing_hate(113, g_Status + 100, 4);
-        }
-        
-        
+    SecMan_MonsterAttack(g_Status); // Charge!
         
     // message
     switch (g_Status)
@@ -483,12 +304,10 @@ script 103 (void)
     
     delay(35 * 2);
     
-    // recall sector open script
-    acs_execute(100, 0, 0, 0, 0);
-    
     // kill any left over demons
-    delay(35 * 3);
-    thing_destroy(110 + g_Status, 500);
+	// Clear again the non risked sectors from monsters.
+	for(i = g_Status+1; i <= 4; i++)
+		thing_destroy(110 + i, 500);
 }
 
 int secdelay;

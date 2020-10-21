@@ -2,6 +2,11 @@
 
 ## v0 - Before the beginning...
 
+#### -) (21 / 10 / 2020) [Some late fixes]
+	*) Modified the Kill-Streak Clientside scripts, now the number should scale pretty well on clientside.
+	*) Some small touches on the sector management scripts.
+	*) Forgot to show the player upgrades for the health terminal, now it should be shown
+
 #### -) (20 / 10 / 2020) [Quick Fixes & More Fixes]
 	*) Rewritten the sector management script for the sf/cf maps.
 	*) The non-risked cores, will be de-activated. (unless i find a way to animate them in this state) For the archvile protection, and for not breaking the sector flow so quickly.

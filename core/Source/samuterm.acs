@@ -54,6 +54,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	SFPlus_DefineWeapons();
 	SFPLUS_DefineItems();
 	SFPlus_DefineCMDButtons();
+	SFPlus_DefinePlayUps();
 	SFPlus_DefineMechUps();
 	
 		
