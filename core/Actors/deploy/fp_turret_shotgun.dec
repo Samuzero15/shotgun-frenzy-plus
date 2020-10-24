@@ -17,7 +17,7 @@ ACTOR TurretShotgun : Deploy_Building // The item to be deployed.
 			goto Super::Delay
 	
 		Deploy:
-			NULL A 1 A_SpawnItemEx("TurretShotgun_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+			NULL A 1 A_SpawnItemEx("TurretShotgun_Head", 0, 0, 0, 0, 0, 0, 0, 0, 0, CallACS("Deploy_TID", tid, 1))
 			stop
 	}
 }
@@ -42,7 +42,8 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24306
 		Spawn:
 			STRT A 1 A_Look
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
-			STRT A 0 A_SpawnItemEx("TurretBullet2_Base", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+			TNT1 A 0 A_SetArg(0, CallACS("Turret_StandTID", 0))
+			STRT A 0 A_SpawnItemEx("TurretBullet2_Base", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
 			//STRT A 1 A_SpawnItemEx("TurretBase1", 0)
 		goto Spawn3
 		Spawn3:
@@ -134,24 +135,6 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24306
 		
 		Pain:
 			STRT A 1
-			STRT A 1 A_Pain
-			goto See
-		Death:
-			//STRT A 1 bright A_SpawnItemEx ("Boom", 0, 0, 60, 0, 0, 0, 0, 160)
-			STRT A 0
-			STRT A 0 A_KillChildren
-                        NULL A 0 A_NoBlocking
-			STRT A 1 bright A_SpawnItemEx("explosionemitter_t", 0)
-			STRT A 0 bright A_StopSoundEx ("SoundSlot5")
-			STRT A 0 bright A_PlaySound ("weapons/rocklx")
-			STRT B 1
-                       		NULL A 0 A_NoBlocking
-			NULL A 0 A_KillMaster
-			TNT1 A 0 A_SpawnItem("Junk_Turret_Spawn")
-			
-			MISL B 8 bright
-			MISL C 6 bright
-			MISL D 4 bright
-			stop
+			goto Super::Pain
 	}
 }

@@ -507,6 +507,7 @@ ACTOR TurretStand
         DamageFactor "BFGSplash", 0.0
         DamageFactor "BFGSpray", 0.0
 	+NOBLOOD
+	+NoTarget
 	States
 	{
 		Spawn:
@@ -556,7 +557,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	painchance 0
 	reactiontime 1
 	MONSTER
-	//-ISMONSTER //Makes it spawnable everywhere
+	-ISMONSTER //Perfect to keep an own tid, and not the summoner tid.
 	+QUICKTORETALIATE
 	+FLOORCLIP
 	+FRIENDLY
@@ -586,6 +587,28 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	{
 		Spawn:
 			NULL A 1
+			stop
+		
+		Pain:
+			"####" "#" 1
+			"####" "#" 1 A_Pain
+			"####" "#" 1 A_Jump(256, "See")
+			goto See
+		
+		Death:
+			//BTRT A 1 bright A_SpawnItemEx ("Boom", 0, 0, 60, 0, 0, 0, 0, 160)
+			"####" "#" 0
+			"####" "#" 0 Thing_Damage(args[0],0xFFFFFFFF, 0) // Destroy the stand.
+            "####" "#" 0 A_NoBlocking
+			"####" "#" 0 bright A_SpawnItemEx("explosionemitter_t", 0)
+			"####" "#" 0 bright A_StopSoundEx ("SoundSlot5")
+			"####" "#" 0 bright A_PlaySound ("weapons/rocklx")
+			"####" "#" 1
+			"####" "#" 0 A_SpawnItem("Junk_Turret_Spawn")
+			
+			MISL B 8 bright
+			MISL C 6 bright
+			MISL D 4 bright
 			stop
 	}
 }

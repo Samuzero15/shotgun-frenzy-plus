@@ -1,20 +1,30 @@
 
-script "SF_CreditAddDisplay" (int howMuch, int color, int crit) clientside
+script "SF_CreditAddDisplay" (int howMuch, int color, int mode) clientside
 {
-	if(crit) ShowNumbersCrit("+", howmuch, "$", color, 0.0, 0);
-	else ShowNumbers("+", howmuch, "", color);
+	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
+	//log(s:"cvar sfp_earningdisp ", d:cvar);
+
+	if(mode == 2) 			ShowNumbersCrit("+", howmuch, "$", color, 0.0, 0); 
+	// Critical gain.
+	else if (mode == 1)		ShowNumbersBig("+", howmuch, color, cvar);
+	// Big gain, but not too rare-ish to get.
+	else if (mode == -1) 	ShowNumbersSmall("+", howmuch, color, (cvar == 1 && color != CR_WHITE) || cvar == 3);
+	// Small gain.
+	else 					ShowNumbers("+", howmuch, "", color, "BIGFONT", cvar);
+	// Standard gain.
 }
 
 script "SF_CreditAddDisplaySmall" (int howMuch, int color) clientside
 {
-	ShowNumbersSmall("+", howmuch, color);
+	//ShowNumbersSmall("+", howmuch, color);
 }
 
 
 script "SF_CreditRemoveDisplay" (int howMuch, int color, int crit) clientside
 {
+	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
 	if(crit) ShowNumbersCrit("-", howmuch, "$", color, 0.0, 0);
-	else ShowNumbers("-", howmuch, "", color);
+	else ShowNumbers("-", howmuch, "", color, "BIGFONT", cvar);
 }
 
 script "SF_UPAddDisplay" (int howMuch, int color) clientside
@@ -27,11 +37,8 @@ script "SF_UPRemoveDisplay" (int howMuch, int color) clientside
 	ShowNumbersCrit("- ", howmuch, "UP", color, 0.1, 1);
 }
 
-function void ShowNumbers(str pf, int howmuch, str sf, int color){
-
-	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
-
-	if(cvar == 0 || cvar == 2 || (cvar == 1 && color == CR_WHITE)) return;
+function void ShowNumbers(str pf, int howmuch, str sf, int color, str font, bool disp_cond){
+	if(!disp_cond) return;
 	
 	int x = random(0.45, 0.55);
 	int y = random(0.65, 0.75);
@@ -41,7 +48,7 @@ function void ShowNumbers(str pf, int howmuch, str sf, int color){
 	int shadowFlags = HUDMSG_FADEOUT;
 	int shineFlags = HUDMSG_FADEINOUT | HUDMSG_AddBlend;
 	str msg = StrParam(s:pf, d:howMuch, s:sf);
-	setfont("BIGFONT");
+	setfont(font);
 	
 	//Shine
 	hudmessage(s:msg; shineFlags, 0, color, x, y, 0.2,0.15,0.15);
@@ -85,29 +92,10 @@ function void ShowNumbersCrit(str pf, int howmuch, str sf, int color, int yoff, 
 	SetHudSize(0,0,0);
 }
 
-function void ShowNumbersSmall(str pf, int howmuch, int color){
+function void ShowNumbersSmall(str pf, int howmuch, int color, int cvar){
+	ShowNumbers(pf, howmuch, "",color, "CONFONT", cvar);
+}
 
-	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
-
-	if(cvar == 0 || cvar == 2 || (cvar == 1 && color == CR_WHITE)) return;
-	
-	int x = random(0.45, 0.55);
-	int y = random(0.65, 0.75);
-
-	int shadowX = x + 0.0020;
-	int shadowY = y + 0.0020;
-	int shadowFlags = HUDMSG_FADEOUT;
-	int shineFlags = HUDMSG_FADEINOUT | HUDMSG_AddBlend;
-	str msg = StrParam(s:pf, d:howMuch);
-	setfont("Confont");
-	
-	//Shine
-	hudmessage(s:msg; shineFlags, 0, color, x, y, 0.2,0.15,0.15);
-	//Broad
-	hudmessage(s:msg; 1, 0, color, x, y, 0.5);
-
-	//Shady Shine
-	hudmessage(s:msg; shineFlags, 0, cr_Black, shadowX, shadowY, 0.2,0.15,0.15);
-	//Shadeugh
-	hudmessage(s:msg; shadowFlags, 0, cr_BLACK, shadowX, shadowY, 0.5);
+function void ShowNumbersBig(str pf, int howmuch, int color, int cvar){
+	ShowNumbers(pf, howmuch, "",color, "STATBIGS", cvar);
 }

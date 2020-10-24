@@ -162,9 +162,6 @@ script "SF_Checc" (void){
 	debugTidPointersStrings(ActivatorTID());
 	*/
 }
-script "SF_UniqueDrone" (void){
-	setResultValue(UniqueTID(10000 + 100*playernumber()));
-}
 
 function void debugTidPointers (int debug1){
 log(d:debug1, s:") TAR:", d:GetActorProperty(debug1, APROP_TargetTID), s:" MAS:", d:GetActorProperty(debug1, APROP_MasterTID), s: " TRA:", d:GetActorProperty(debug1, APROP_TracerTID) );
@@ -184,6 +181,52 @@ script "Teleport_Effects" (void) {
 		if(CheckActorInventory(ActivatorTID(), "PlayUp_SpawnShield")) 
 				giveActorinventory(ActivatorTID(),"PlayUp_SpawnShield_Activate", 1);
 	}
+	
+}
+
+Script "Deploy_TID" (int tid, int type) { 
+	// Assuming the players are the only ones spawning turrets.
+	int play = tid - 990;
+	int dtid;
+	if(play >= 0 && play < 32){
+		switch(type){
+			case 1: dtid = 15000+play; break;
+			case 2: dtid = 10000+play; break;
+		}
+		//log(s:"Owner: ", d:play, s:" TID:", d:dtid);
+		SetResultValue(dtid);
+		terminate;
+	}else 
+	SetResultValue(0);
+}
+
+Script "Deploy_Count" (int tid, int type){
+	int play = tid - 990;
+	int dtid;
+	int limit;
+	if(play >= 0 && play < 32){
+		switch(type){
+			case 1: dtid = 15000+play; limit = 20; break; // Turret
+			case 2: dtid = 10000+play; limit = 8; break; // Drone
+		}
+		//printbold(s:"Owner: ", d:play, s:" Can i Place? :", d:ThingCount(0,dtid) < limit);
+		SetResultValue(ThingCount(0,dtid) < limit);
+		terminate;
+	}else 
+	SetResultValue(0);
+}
+
+Script "Turret_StandTID" (void) { // Assuming the players are the only ones spawning turrets.
+	SetResultValue(UniqueTID(15200));
+}
+
+Script "Turret_Count" (int tid) {
+	int play = tid - 990;
+	if(play >= 0 && play < 32){
+		SetResultValue(ThingCount(0,15000+play));
+		terminate;
+	}
+	SetResultValue(0);
 	
 }
 

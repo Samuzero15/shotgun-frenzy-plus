@@ -413,43 +413,43 @@ Actor FPSpawn_DB5 : RandomSpawner {
 }
 
 Actor FPSpawn_DB6 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB7 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB8 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB9 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB10 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB11 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB12 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB13 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB14 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB15 : RandomSpawner {
-	dropitem "FPSSpot_sfCyberbaron"
+	dropitem "FPSSpot_Cyberbaron"
 }
 
 Actor FPSpawn_DB16 : RandomSpawner {

@@ -45,6 +45,11 @@ str f_BossMus[10][2] = {
 int var_updater[32][3];
 bool music_init;
 
+Script "SFPlus_SoundtrackResetter" ENTER
+{
+	ACS_NamedExecuteAlways("SFPlus_ResetSndVariables", 0, playernumber());
+}
+
 Script "SFPlus_ResetSndVariables" (int play) Disconnect
 {
 	var_updater[play][0] = -1;
@@ -64,7 +69,6 @@ Script "SFPlus_PlayOldSoundtrack" OPEN {
 			var_updater[i][1] = -1;
 			var_updater[i][2] = -1;
 		}
-		//printbold(s:"music initialized.");
 		music_init = true;
 	}
 	while(play < 32){

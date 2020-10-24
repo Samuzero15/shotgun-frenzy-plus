@@ -2,6 +2,19 @@
 
 ## v0 - Before the beginning...
 
+#### -) (22 - 23 / 10 / 2020) [Hotfix #2]
+	*) Removed the welcome messages from the server log.
+	*) Gave some fixes on the soundtrack mixer script, now it should work properly.
+	*) Guardian wave can now terminate the sector management main loop script.
+	*) Turrets and drones TID assignment has been separated from the player tid. For the monster kill script fixes.
+	*) Small fixes on the credit display thing.
+	*) Auto-Use scripts should act faster now.
+	*) Resetted the monster limit to 250.
+	*) Now the Turrets and Drones will properly grant credits. 
+		// For the drones, they have a 25% to grant a kill (experience).
+	*) Boss-waves should grant more credits and experience now.
+	+) Added the fp_cons.acs, just to hold all the variables. (Not being used for now.)
+
 #### -) (21 / 10 / 2020) [Some late fixes]
 	*) Modified the Kill-Streak Clientside scripts, now the number should scale pretty well on clientside.
 	*) Some small touches on the sector management scripts.

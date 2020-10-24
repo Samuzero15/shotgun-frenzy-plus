@@ -86,7 +86,9 @@ function void SecMan_MonsterAttack(int sector) {
 Function void SecMan_ToggleCores(int sector){
 	for(int i = 1; i <= 4; i++){
 		if(i == sector) Thing_Activate(100 + i);
+			//SetActorFlag(100 + i, "SHOOTABLE", TRUE);
 		else 			Thing_DeActivate(100 + i);
+			//SetActorFlag(100 + i, "SHOOTABLE", FALSE);
 	}
 }
 

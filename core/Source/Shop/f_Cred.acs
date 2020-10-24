@@ -16,9 +16,6 @@
 #include "samu_tools.ach"
 
 
-
-
-
 // old credit hook - just to be sure
 
 //[Samu] Time for the Clientside rape!
@@ -63,8 +60,6 @@ script "SF_Net_KillRewardCredits" (int monster, int splat) NET{
 function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, int enemytype)
 
 {
- //debugTidPointers(ActivatorTID());
- //debugTidPointersStrings(ActivatorTID());
 	//log(s:GetActorClass(0));
 	int l_Amount;
 	int l_amount_copy;
@@ -75,6 +70,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	
 	if(l_splatCombo) color = CR_BRICK;
 	
+	/*
 	if(monsterClass < 0){
 	monsterClass += 1;
 	// [Samu] It's killed by a drone!
@@ -86,7 +82,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 		
 		if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
 		localambientsound("p/kill", 64);
-	}
+	}*/
 
 	if(Human() && CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
 	if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
@@ -104,33 +100,29 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(!noProfit){
 		if(bossmon || hardmon){
 			sf_AddCredits_S(l_Amount, playerNumber());
-			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, l_Amount, CR_WHITE, true);
+			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, l_Amount, color, 1);
 		}else{
 			sf_AddCredits_S(l_Amount, playerNumber());
 			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,l_Amount, color);
 		}
 	}
 	
-	
- 
-	// message 
-	// [Samu] What they where thinking on mixing client and net scripts huh?
-	
 	// increase team credits
 
 	sf_AddTeamCredits(l_Amount_copy);
+	
 	// Processing Phase 1
-
 	if (Tech_isDone(FP_TECH_REFINE_PUMP1))	c_Credits += 15;
 	
 	// Processing Phase 2
 	if (Tech_isDone(FP_TECH_REFINE_PUMP2))	c_Credits += 15;
+	
 	GiveInventory("PlayerKilledDemon",1);
 	
 	if(monsterClass < 0){ return; }
 	
 	// increase exp and streak
-	p_Exp[playernumber()] += 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass);
+	Rank_GrantEXP(playernumber(), 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
 	if(GetActorProperty(0, APROP_HEALTH) > 1)
 		p_Streak[playernumber()] ++;
 		
@@ -139,21 +131,29 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 
   // increase rank
 
-  if (p_Exp[playernumber()] > 0)
-
-    for (int i = 0; i < NUM_RANKS; i++)
-      if (p_RankExp[i] <= p_Exp[playernumber()] && p_RankExp[i] >= p_RankExp[p_Rank[playernumber()]+1])
-       {
-      p_IncreaseRank();
-          break;
-        }
-	}else{ // [Samu] 
-	// give a quarter part of the loot for everyone.
-	// dont grant any experience for that.
+  
+	}else{
 		l_Amount = p_MonsterCredits[monsterClass] + playercount();
-		l_Amount = l_Amount/4;
-		if(l_amount > 0)
-			giveTipsToPlayers(l_Amount);
+		int drone_owner = ActivatorTID() - 10000;
+		//log(s:"Drone: ", d:drone_owner);
+		if(drone_owner >= 0 && drone_owner < 32){ 
+		// Drone exeption, grant 1 kill per drone, and some money to the player.
+			l_Amount = l_Amount/2;
+			
+			SetActivatorToPlayer(drone_owner);
+			// 25% Chance to get an experience point!
+			Rank_GrantEXP(drone_owner, cond(random(0, 99) < 25, 1, 0));
+			sf_AddDroneTips(l_Amount, drone_owner);
+		}
+		else{
+			// give a quarter part of the loot for everyone.
+			// dont grant any experience for that.
+			l_Amount = l_Amount/4;
+			//log(s:"Amount: ", d:l_amount, s:" Activator: ", d:ActivatorTID());
+			if(l_amount > 0){
+				giveTipsToPlayers(l_Amount);
+			}
+		}
 	}
 } 
 
@@ -193,25 +193,8 @@ script 500 (int monsterID, int splat, int noProfit)
 
 }
 
-function void p_monsterKilled_Drone(int monsterClass)
-{
-	int l_Amount;
-	
-	// [Samu] It's killed by a drone!
-	// Let's give credits to the owner!
-		l_Amount = p_MonsterCredits[monsterClass] + playercount();
-		l_Amount = l_Amount / 2; 
-		if(l_amount > 0)
-		sf_AddCredits_S(l_Amount, playerNumber());
-		
-		if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
-		localambientsound("p/kill", 64);
-} 
-
-
-
-
 // mmm: drop reward item on monster death
+
 
 
 function void p_dropItem(int monsterClass)

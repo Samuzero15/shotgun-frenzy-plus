@@ -73,11 +73,13 @@ script 107 OPEN
 
 script 108 (int l_RemainingMonsters)
 {
+	if(c_NukeLaunched) Terminate; // Don't execute this if we're nuking the map.
+
 	int bonusPoints;
     guardianActive = 1;
     // collect AI director information and turn it off
     g_SkillScore = f_AIDir_Check();
-	log(s:"Score catched: ", d:g_SkillScore);
+	//log(s:"Score catched: ", d:g_SkillScore);
 	// [Samu] Give it some bonus credits and ups.
 	if(g_Status == 1){
 		bonusPoints += 30;
@@ -104,23 +106,19 @@ script 108 (int l_RemainingMonsters)
 	log(s:"Score before the guardian wave: ", d:g_SkillScore);
     acs_terminate(13, 0);
     acs_terminate(120, 0); // Shuts The core-rambling.
-    acs_terminate(100, 0); // Shuts the sector main loop.
+	ACS_NamedTerminate("SFPlus_SectorManagerMainLoop", 0); // Shuts the sector main loop.
     acs_terminate(102, 0); // Shuts The loss sector script if already executed.
     acs_terminate(103, 0); // Shuts The reclaiming sector script if already executed.
 	
 	//[Samu] To shut up the counter.
 	acs_terminate(129, 0);
-    
-    // deactivate cores
-    //thing_deactivate(101);
-    //thing_deactivate(102);
-    //thing_deactivate(103);
-    
+	
     g_Status = 4;
     g_GuardianMode = 1;
     thing_remove(101);
     thing_remove(102);
     thing_remove(103);
+	
     
     //f_TipShow ("DEMONT", "Guardian Appearence", "Kill the remaining demons!", 0);
     Notify_Message("GUARDIAN WAVE", "Kill the remaining demons!", "DEMONT", 0);
@@ -161,11 +159,15 @@ script 108 (int l_RemainingMonsters)
         floor_lowertonearest(104, f_Doorspeed);
     }
     
+	thing_activate(104); // If the last core was de-activated...
+	delay(1);
         thing_hate(110, 104, 0);
         thing_hate(111, 104, 0);
         thing_hate(112, 104, 0);
         thing_hate(113, 104, 0);
         thing_hate(114, 104, 0);
+		
+	
 	
 	int mtotal, mkilled;
         
@@ -200,10 +202,6 @@ script 108 (int l_RemainingMonsters)
     
     // display message
 	Notify_Message("GUARDIAN WAVE", "Arrived!", "DEMONT", 0);
-    
-	
-	// kill all scripts!
-	acs_terminate(120, 0);
 	
 	g_GuardianWave = True;
 	
@@ -239,7 +237,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		thing_hate(114, 104, 0);
 		
 	int mkilled, mTotal; 
-	int timeout = 300; // 5 Minutes (in tics) before moving to next map.
+	int timeout = 300; // 5 Minutes (in secs) before moving to next map.
 	int remains;
     while(GuardianWave_LoopCond(surv) && timeout > 1){
        //[Samu] Zandronum is dumb counting monsters.
@@ -248,6 +246,13 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		
 		f_BigCenterTipBold(strparam(s:"Monsters remaining: ", d:remains), CR_BRICK);
 		if(g_GameOver) Terminate;
+		// Keep hatin'
+		thing_hate(118, 104, 4);
+		thing_hate(110, 104, 4);
+		thing_hate(111, 104, 4);
+		thing_hate(112, 104, 4);
+		thing_hate(113, 104, 4);
+		thing_hate(114, 104, 4);
 		delay(35 * 1);
 		timeout--;
 	}
@@ -337,13 +342,6 @@ script 125 (int l_Condition)
     if (l_Condition == 2)       g_FinalSkillScore += 15;
     if (l_Condition == 3)       g_FinalSkillScore += 10;
     if (l_Condition == 4)       g_FinalSkillScore -= 20;
-	
-	//[Samu] you think you can get a good score by dying a lot!?
-	if(PlayerCount() == 0) g_FinalSkillScore = 0;
-	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 5;
-	// Well not on my watch!
-	
-	log(s:"Test: ", d:g_FinalSkillScore, s:" %");
     
     // check limits
     if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
@@ -357,6 +355,14 @@ script 125 (int l_Condition)
 		case 4: msg = "Soon, ashes will remain..."; break;
 	}
 	
+	//[Samu] you think you can get a good score by dying a lot!?
+	if(PlayerCount() == 0) g_FinalSkillScore = 0;
+	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 5;
+	// Well not on my watch!
+	
+	// Debug info.
+	log(s:"Monster Kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" kills.");
+	log(s:"Players Died ", d:p_TotalPlayerDeaths, s:" times.");
 	log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
     
     // display killed demons

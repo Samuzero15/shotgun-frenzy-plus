@@ -1,0 +1,37 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_cons.acs
+// All constants storage goes here, because it's not right to hardcode.
+
+#library "FP_Cons"
+
+#include "zcommon.acs"
+
+// Main consts
+#libdefine FP_CONST_MAXPLAYERS 		   32
+
+// Thing IDs
+#libdefine FP_CONST_TID_PLAYER  		  990
+#libdefine FP_CONST_TID_TURRET			15000
+#libdefine FP_CONST_TID_DRONES			14000
+#libdefine FP_CONST_TID_STICKYNADES		30000
+
+#libdefine FP_CONST_TID_SECN_MONSTER		99
+#libdefine FP_CONST_TID_SEC0_MONSTER		100
+#libdefine FP_CONST_TID_SEC1_BATTERY		101
+#libdefine FP_CONST_TID_SEC1_MONSTER		111
+#libdefine FP_CONST_TID_SEC2_BATTERY		102
+#libdefine FP_CONST_TID_SEC2_MONSTER		112
+#libdefine FP_CONST_TID_SEC3_BATTERY		103
+#libdefine FP_CONST_TID_SEC3_MONSTER		113
+#libdefine FP_CONST_TID_BASE_BATTERY		104
+#libdefine FP_CONST_TID_BASE_MONSTER		114
+
+#libdefine FP_CONST_TID_COM_SPAWNBLOCKER 	3568
+
+// Hud IDs
+//#libdefine
+
+// Getter Functions

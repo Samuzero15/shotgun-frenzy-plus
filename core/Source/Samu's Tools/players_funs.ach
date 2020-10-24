@@ -29,7 +29,7 @@ function void giveTipsToPlayers(int howmuch){
 		if(PlayerInGame(i)){
 			SetActivatorToPlayer(i);
 			
-			sf_AddTips(howmuch, playerNumber());
+			sf_AddTips(howmuch, i);
 			
 			SetActivator(0);
 		}

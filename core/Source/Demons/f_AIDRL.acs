@@ -307,6 +307,21 @@ function void readwaves(void)
     }
 }
 */
+/*
+script "SFPlus_SpawnBossWave" (int l_Level) {
+	int btid = 3000;
+	int bhealth;
+	SpawnSpot(boss_levels[l_Level], 199, btid);
+	delay(1);
+	bhealth = getactorproperty(btid, APROP_Health);
+	GiveActorInventory(btid, "FPMToken_Hard", 1); 
+	SetActorState(btid,"BeHard");
+	SetActorProperty(btid,APROP_Health, bhealth + ((bhealth*0.5)>>16));
+	//log(s:"Original Health: ", d:bhealth, s:", Buffed Health: ", d:getactorproperty(btid,APROP_Health));
+	//Thing_ChangeTID(btid, 110);
+}
+*/
+
 script 120 OPEN
 {
     // define some local containers
@@ -316,12 +331,17 @@ script 120 OPEN
 	int l_Level;
     int l_GameStopped;
 	int l_MonDiff;
+	int l_BossAmount;
+	
     l_GameStopped = 0;
     
     int l_RemainingMonsters;
     g_TenMinMark = 0;
 	bool l_CacoCond;
 	bool l_BossCond;
+	bool l_BossRespawn;
+	int btid = 3000;
+	int bhealth;
 
 	//Check if the server wants modified waves
     //readwaves();
@@ -330,7 +350,7 @@ script 120 OPEN
     {
 	l_Level = f_AIDir_Check() / 10;
 	l_CacoCond = f_Cacodemons && l_Level >= 4;
-	l_BossCond = l_Level >= boss_starting_level;
+	l_BossCond = l_Level >= boss_starting_level && g_BossLevel <= l_Level;
 	
 	l_MonDiff = getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS);
 	//print (d:l_MonDiff);
@@ -341,21 +361,16 @@ script 120 OPEN
 			
 			if(l_Mondiff < AIDirector_Demonlimit)
 			{
-				if (g_BossLevel < l_Level && l_BossCond)
-				{
-					SpawnSpot(boss_levels[l_Level], 199, 4110);
-					//GiveActorInventory(4110, "FPMToken_Hard", 1); 
-					
-					// Experimental bosses buffs. Because, the bosses should be strong mofos.
-					/*
-					SetActorFlag(4110, "PAINLESS", TRUE);
-					SetActorFlag(4110, "NORADIUSDMG", TRUE);
-					SetActorFlag(4110, "MISSILEMORE", TRUE);
-					SetActorFlag(4110, "MISSILEEVENMORE", TRUE);
-					SetActorFlag(4110, "QUICKTORETALIATE", TRUE);
+				if (l_BossCond){
+					l_BossAmount = SpawnSpot(boss_levels[l_Level], 199, btid);
+					/* Smoll buffs.
+					delay(1);
+					bhealth = getactorproperty(btid, APROP_Health);
+					GiveActorInventory(btid, "FPMToken_Hard", 1); 
+					SetActorState(btid,"BeHard");
+					SetActorProperty(btid,APROP_Health, bhealth + ((bhealth*0.5)>>16));
 					*/
-					
-					Thing_ChangeTID(4110, 110);
+					Thing_ChangeTID(btid, 110);
 					g_BossLevel ++;
 				}
 				if (f_AdaptiveSpawning == 0 || g_Status < 2)
@@ -427,7 +442,6 @@ script 120 OPEN
 	
 	
         delay(35 * 3);
-        delay(1);
     }
 }  
 
@@ -443,3 +457,43 @@ function void MList_SetSpawner(int diff, int lvl, str spawner){
 	enemy_levels[diff][lvl-1] = spawner;
 }
 
+
+Script "Monster_HPBar" (int height){
+	// This is a health bar for the hard-boss monsters!
+	int hp = GetActorProperty(0, APROP_HEALTH);
+	int max_hp = hp;
+	int x = getactorx(0);
+	int y = getactory(0);
+	int zoff = height<<16 + 4.0;
+	int z = getactorz(0) + zoff;
+	int id = UniqueTID(3001);
+	spawn("Turret_HealthBar", x, y, z, id);
+	/*
+	log(
+	s:"Height: ", f:zoff, 
+	s:" Health: ", d:hp, 
+	s:" Health(GetActorProperty): ",d:GetActorProperty(0, APROP_HEALTH));
+	*/
+	while (hp > 0){
+		x = getactorx(0);
+		y = getactory(0);
+		z = getactorz(0) + zoff;
+		hp = GetActorProperty(0, APROP_HEALTH);
+		
+		setactorposition(id, x, y, z, 0);
+		Bar2_State(id, hp, max_hp);
+		//Bar_Color(id, hp, max_hp); // Damn you zandronum!
+		delay(1);
+	}
+	setActorState(id, "HP_0");
+	delay(20);
+	Thing_Remove(id);
+}
+
+function void Bar2_State(int id, int var, int max_val){
+	// Quick division function to show sprite.
+	int bar_amount = FixedMul(FixedDiv(var, max_val), 100.0) >> 16;
+	int bar_state_num = bar_amount / 5;
+	if(bar_state_num >= 20) bar_state_num = 20;
+	setActorState(id, Strparam(s:"HP_", d:bar_state_num));
+} 

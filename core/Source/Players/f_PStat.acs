@@ -32,6 +32,7 @@ if (g_Status == 5){
 	thing_hate(114, 104, 4);
 }
 else{
+	log(s:"Hating on sector: ", d:g_Status);
 	thing_hate(109, 100+g_Status, 4);
 	thing_hate(110, 100+g_Status, 4);
 	thing_hate(111, 100+g_Status, 4);
@@ -191,21 +192,6 @@ script 54 RESPAWN
 	ACS_NamedExecute("Auto-Use Items", 0);
     p_Streak[playernumber()] = 0; // Reset the kill-streak.
 	
-	
-	
-    // players a bot? delay before spawning
-	// [Samu] I dont care.
-	/*
-    if (playerisbot(playernumber()))
-    {
-        delay(35 * random(3, 15));
-        acs_executealways(104, 0, 0, 1, 0);
-    }
-    */
-    // rehate for survival gametype
-    //thing_hate(110, g_Status + 100, 4);
-	
-	
 }
 
 script "SFPlus_NameUpdate" ENTER {
@@ -228,6 +214,9 @@ script 57 (int num) DISCONNECT
 	// Clean things leftovers by player.
 	Thing_Damage(990+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(990+num);
+	
+	Thing_Damage(15000+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(15000+num);
 	
 	Thing_Damage(30000+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(30000+num);

@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_mKill.acs
+// The main kill script. For all the monsters!.
 
 #library "fp_mKill"
 
@@ -17,13 +23,17 @@ Script "SFPlus_MonsterKill" Kill{
 	  bool flag_frozen = checkinventory("FPMToken_Frozen");
 	  bool flag_gibbed = checkinventory("FPMToken_Gibbed");
 	  bool flag_NoCount = checkinventory("FPMToken_NoCount");
+	  
+	  if(flag_hard)log(s:"This monster is a boss/like monster");
+	  if(flag_boss)log(s:"This monster is a Hard monster");
+	  if(CheckFlag(0, "PAINLESS"))log(s:"This monster goes painless.");
 		 // monster class
 	  int monsterClass = sf_GetMonsterClass_Health();
 	  int splat = flag_gibbed;
 	  int noprofit = 0;
 	  int montype;
-	  if	 (flag_boss) montype = 2;
-	  else if(flag_hard) montype = 1;
+	  if	(flag_boss) montype = 2;
+	  if	(flag_hard) montype = 1;
 
 	 // drop reward item
 	 int howMuch = p_MonsterCredits[monsterClass] + playercount();
@@ -34,29 +44,8 @@ Script "SFPlus_MonsterKill" Kill{
 		//debugTidPointersStrings(0);
 	  // give credits and xp
 	 SetActivatorToTarget(0);
-		//if ((ClassifyActor(0) & ACTOR_Monster)) Print(s:"I am a monster.");
-		//print(d:noProfit);
-	if(noProfit){
-		p_monsterKilled(monsterClass, splat, true, false);
-	}else{
-		if(ActivatorTID() >= 10000 && CheckActorClass(ActivatorTID(), "sf_SawDrone")){
-			//[Samu] My try to give you the half of amount if a saw drone kills a monster.
-			//The math is simple.
-			//1/00/00
-			//Type of Drone/Player number/Number Of Drone
-			
-			// I'll hope to do not encounter a player spamming to 100 and more drones.
-			int owner = ((ActivatorTID() / 100) % 100);
-			//log(s:"Died by a saw drone. With tid: ", d:ActivatorTid(), s:" Owned by: ", n:owner+1,s:" ", d:owner); 
-			// Attempting to retrive the owner of this drone.
-			
-			setActivatorToPlayer(owner);
-			
-			ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0,howMuch/2, CR_Blue);
-			p_monsterKilled_Drone(monsterClass);
-		}
-		else 		 
-			p_monsterKilled(monsterClass, splat, false, montype);
-		}
+	 
+	p_monsterKilled(monsterClass, splat, noProfit, montype);
+	
 	}
 }

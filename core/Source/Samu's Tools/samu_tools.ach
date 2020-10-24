@@ -21,16 +21,21 @@ function bool IsActivatingClient(void){
 
 function void sf_AddCredits(int howMuch, int who){
 	p_Credits[who] += howMuch;
-	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_GOLD, true);
+	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_GOLD, 2);
 }
 
 function void sf_AddCredits_S(int howMuch, int who){
 	p_Credits[who] += howMuch;
 }
 
+function void sf_AddDroneTips(int howMuch, int who){
+	p_Credits[who] += howMuch;
+	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_BLUE, -1);
+}
+
 function void sf_AddTips(int howMuch, int who){
 	p_Credits[who] += howMuch;
-	ACS_NamedExecuteAlways("SF_CreditAddDisplaySmall", 0, howmuch, CR_WHITE, false);
+	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_WHITE, -1);
 }
 
 function void sf_AddUpPoints(int howMuch, int who){

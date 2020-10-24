@@ -10,6 +10,19 @@
 #import "f_Tip.acs"
 #include "zcommon.acs"
 
+function void Rank_GrantEXP(int who, int amount) {
+	int exp_boost; // Hm...
+	p_Exp[who] += amount;
+
+	if (p_Exp[who] > 0)
+		for (int i = 0; i < NUM_RANKS; i++)
+		  if (p_RankExp[i] <= p_Exp[who] && p_RankExp[i] >= p_RankExp[p_Rank[who]+1])
+		   {
+		  p_IncreaseRank();
+			  break;
+			}
+}
+
 function void p_IncreaseRank (void)
 {
     if (p_Rank[playernumber()] < 9){

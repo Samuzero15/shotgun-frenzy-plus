@@ -4,7 +4,7 @@ ACTOR TurretPlasma : Deploy_Building // The item to be deployed.
 	states
 	{
 		Deploy:
-			NULL A 1 A_SpawnItemEx("TurretPlasma_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+			NULL A 1 A_SpawnItemEx("TurretPlasma_Head", 0, 0, 0, 0, 0, 0, 0, 0, 0, CallACS("Deploy_TID", tid, 1))
 			stop
 	}
 }
@@ -37,7 +37,8 @@ ACTOR TurretPlasma_Head : TurretHeadBase 24303
 		Spawn:
 			BTRT A 1 A_Look
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
-			BTRT A 0 A_SpawnItemEx("TurretPlasma_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+			TNT1 A 0 A_SetArg(0, CallACS("Turret_StandTID", 0))
+			BTRT A 0 A_SpawnItemEx("TurretPlasma_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
 			goto Spawn3
 		Spawn3:
 			BTRT A 1 A_Look
@@ -102,20 +103,6 @@ ACTOR TurretPlasma_Head : TurretHeadBase 24303
 		
 		Pain:
 			BTRT A 1
-			BTRT A 1 A_Pain
-			goto See
-		Death:
-			BTRT A 0
-			BTRT A 0 A_KillChildren
-                        NULL A 0 A_NoBlocking
-			BTRT A 1 bright A_SpawnItemEx("explosionemitter_t", 0)
-			BTRT A 0 bright A_StopSoundEx ("SoundSlot5")
-			BTRT A 0 bright A_PlaySound ("weapons/rocklx")
-			BTRT B 1
-			
-                       		NULL A 0 A_NoBlocking
-			NULL A 0 A_KillMaster
-			TNT1 A 0 A_SpawnItem("Junk_Turret_Spawn")
-			stop
+			goto Super::Pain
 	}
 }

@@ -17,7 +17,7 @@ ACTOR TurretChaingun : Deploy_Building // The item to be deployed.
 			goto Super::Delay
 	
 		Deploy:
-			NULL A 1 A_SpawnItemEx("TurretChaingun_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+			NULL A 1 A_SpawnItemEx("TurretChaingun_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, CallACS("Deploy_TID", tid, 1))
 			stop
 	}
 }
@@ -53,7 +53,8 @@ ACTOR TurretChaingun_Head : TurretHeadBase 24306
 		Spawn:
 			TNT1 A 1
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
-			CTRT G 0 A_SpawnItemEx("TurretChaingun_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+			TNT1 A 0 A_SetArg(0, CallACS("Turret_StandTID", 0))
+			CTRT G 0 A_SpawnItemEx("TurretChaingun_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
 			CTRT ABCDE 3
 			CTRT F 2 A_Look
 			goto Spawn3
@@ -134,22 +135,7 @@ ACTOR TurretChaingun_Head : TurretHeadBase 24306
 			
 		Pain:
 			CTRT F 1
-			CTRT F 1 A_Pain
-			goto See
-		Death:
-			//CTRT G 1 bright A_SpawnItemEx ("Boom", 0, 0, 60, 0, 0, 0, 0, 160)
-			CTRT F 0
-			CTRT F 0 A_KillChildren
-                        NULL A 0 A_NoBlocking
-			CTRT F 1 bright A_SpawnItemEx("explosionemitter_t", 0)
-			CTRT G 0 bright A_StopSoundEx ("SoundSlot5")
-			CTRT G 0 bright A_PlaySound ("weapons/rocklx")
-			CTRT F 1
-			
-                       		NULL A 0 A_NoBlocking
-			NULL A 0 A_KillMaster
-			TNT1 A 0 A_Spawnitem("Junk_Turret_Spawn")
-			stop
+			goto SUPER::Pain
 	}
 }
 
