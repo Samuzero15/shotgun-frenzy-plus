@@ -2,6 +2,11 @@
 
 ## v0 - Before the beginning...
 
+#### -) (24 / 10 / 2020) [Hotfix #3]
+	*) Clearing some of the few log messages I left out.
+	*) Deploy TID Assigner is set to the dispensers too.
+	*) Build.py should compile the acs before packing.
+
 #### -) (22 - 23 / 10 / 2020) [Hotfix #2]
 	*) Removed the welcome messages from the server log.
 	*) Gave some fixes on the soundtrack mixer script, now it should work properly.

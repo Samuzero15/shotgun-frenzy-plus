@@ -24,9 +24,9 @@ Script "SFPlus_MonsterKill" Kill{
 	  bool flag_gibbed = checkinventory("FPMToken_Gibbed");
 	  bool flag_NoCount = checkinventory("FPMToken_NoCount");
 	  
-	  if(flag_hard)log(s:"This monster is a boss/like monster");
-	  if(flag_boss)log(s:"This monster is a Hard monster");
-	  if(CheckFlag(0, "PAINLESS"))log(s:"This monster goes painless.");
+	  //if(flag_hard)log(s:"This monster is a boss/like monster");
+	  //if(flag_boss)log(s:"This monster is a Hard monster");
+	  //if(CheckFlag(0, "NOPAIN"))log(s:"This monster goes painless.");
 		 // monster class
 	  int monsterClass = sf_GetMonsterClass_Health();
 	  int splat = flag_gibbed;

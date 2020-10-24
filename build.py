@@ -60,6 +60,7 @@ if __name__ == "__main__":
             distDir   = config[part].get('DistDir'  , 'dist' );
             fileName  = config[part].get('FileName' , part   );
             notxt     = config[part].get('notxt'    , False  );
+            compileacs= bool(config[part].get('compile_acs', False));
 
             destPath = os.path.join(distDir, fileName)
             
@@ -100,11 +101,15 @@ if __name__ == "__main__":
                 print ("\n-- Music part excluded --")
                 continue
             
+
+            
             print("\n-- Building {name} --".format(name=part));
             # Main stuff. 
             if not os.path.exists(distDir):
                 os.mkdir(distDir)
             
+            if(compileacs): 
+                utils.acs_compile(rootDir, sourceDir, part)
             
             zip = utils.makepkg(sourceDir, destPath, notxt, True)
             if not notxt: 

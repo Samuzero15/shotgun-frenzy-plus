@@ -103,7 +103,7 @@ script 108 (int l_RemainingMonsters)
 	
 	g_SkillScore += bonusPoints;
 	
-	log(s:"Score before the guardian wave: ", d:g_SkillScore);
+	//log(s:"Score before the guardian wave: ", d:g_SkillScore);
     acs_terminate(13, 0);
     acs_terminate(120, 0); // Shuts The core-rambling.
 	ACS_NamedTerminate("SFPlus_SectorManagerMainLoop", 0); // Shuts the sector main loop.
