@@ -96,6 +96,9 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(hardmon) l_Amount *= 3;
 	
 	if(l_SplatCombo > 0)	l_Amount += l_Amount/2;
+	
+	if(Checkinventory("Inv_Power_Wealth")
+	) l_Amount *= 2;
 
 	if(!noProfit){
 		if(bossmon || hardmon){

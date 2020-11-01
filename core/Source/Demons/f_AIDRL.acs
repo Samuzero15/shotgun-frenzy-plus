@@ -13,7 +13,6 @@
 #import "fa_SetList.acs"
 #include "zcommon.acs"
 
-// Reduced to minimize lagg.
 int AIDirector_Demonlimit = 250; // 250 = default
 
 
@@ -345,7 +344,9 @@ script 120 OPEN
 
 	//Check if the server wants modified waves
     //readwaves();
-    
+	delay(1);
+	AIDirector_Demonlimit = m_AIDCap; // Check the user's defined cap amount.
+    //log(s:"Demon limit: ", d:AIDirector_Demonlimit);
     while(l_GameStopped == 0)
     {
 	l_Level = f_AIDir_Check() / 10;

@@ -549,6 +549,8 @@ statusbar normal// Standard Doom Status bar
 	
 	drawswitchableimage "Inventory_MineDrone", "MINDRI_0", "MINDRI_1", 500, 585;
 	drawnumber 3, VerVibes, GOLD, "Inventory_MineDrone", whennotzero, 516, 590;
+	
+	drawswitchableimage "Inventory_GreedSphere", "GREEDI_0", "GREEDI_1", 520, 585;
 	}// INVENTORY ITEMS list end
 	
 	}

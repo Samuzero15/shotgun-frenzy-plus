@@ -27,6 +27,7 @@ script 88 OPEN
 	f_AISkillMultiplier = 5;               // increase in levels, higher means harder (aka: the RapeFactor variable)
 
 	f_AllowNuke =   0;
+	readconsole();
 }
 
 script 90 (void)

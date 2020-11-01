@@ -6,6 +6,7 @@
 // Damage hud scripts.
 
 // Meant to remeber you: you're still human and you could die in any minute.
+// Now, this should display correctly on different aspect ratios!
 
 #library "FP_DMHUD"
 #include "zcommon.acs"
@@ -43,8 +44,19 @@ script "SFPlus_DamagedHud" (void) {
 script "SFPlus_DamagedHud_Show" (int hp, int lowHp) CLIENTSIDE{
 	int percLowHp = fixedDiv(hp << 16, lowHP);
 	int alpha = DMHUD_ALPHA_MIN + (DMHUD_ALPHA_MAX - fixedMul(DMHUD_ALPHA_MAX, percLowHp));
-	SetHudSize(640,480, 0);
-	Setfont("HUD_DMGD");
-	HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA, DMHUD_ID, CR_UNTRANSLATED, 0.1, 0.1, 0.2, 0.2, 0.2, alpha);
+	int w, h;
+	
+	// Kennon told me to make this graphic wide-screen friendly.
+	w = fixedDiv(640.0, fixedDiv(GetAspectRatio(), ASPECT_4_3));
+	h = 480.0;
+	
+	SetHudSize(w>>16, h>>16, 0);
+	SetFont("HUD_DMG1");
+	HudMessage(s:"A"; HUDMSG_FADEINOUT | HUDMSG_ALPHA, DMHUD_ID, CR_UNTRANSLATED, 
+	// Put it on the center point, being a centered msg.
+	ut_floor(fixedDiv(w, 2.0)),
+	ut_floor(fixedDiv(h, 2.0)), 
+	0.2, 0.2, 0.2, alpha);
+	
 	SetHudSize(0,0, 0);
 }

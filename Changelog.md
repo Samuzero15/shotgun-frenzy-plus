@@ -2,6 +2,21 @@
 
 ## v0 - Before the beginning...
 
+#### -) (30 - 31 / 10 / 2020) [Hotfix 4 + A Greedsphere]
+	+) Hidden on the game, only spawnable with summon command, but... Meet the greedsphere!
+	// x2 Credits for 15 seconds! (30 with the Player Up. Powerup Upgrade)
+	*) Fixed up the spawning tids for the SF maps, that should set the monsters correctly.
+	*) Just to add a little bit of softness for the SF02 map. Archons of hell and Dark Dogs(New!) will come to cause some grief!
+	// Not a big fan of the difficulty spike when the cyberdemons come.
+	*) Now the damage hud, can be streched depending on the aspect ratio!
+	*) Now, the batteries should'nt be revived by the archviles.
+	+) Added the cvars: sfp_minrecap (Minimum monsters before recapturing) and sfp_monstercap (Max monsters)
+
+#### -) (28 - 29 / 10 / 2020)
+	*) Re-factorized the inventoy item's decorate. Less code, more read.
+	+) Added the fp_puhud.acs, showing you the current powerups you got in your blood!
+	*) Now, when going no-hud, the old hud will not be shown.
+
 #### -) (24 / 10 / 2020) [Hotfix #3]
 	*) Clearing some of the few log messages I left out.
 	*) Deploy TID Assigner is set to the dispensers too.

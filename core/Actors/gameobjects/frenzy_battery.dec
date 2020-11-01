@@ -43,6 +43,12 @@ ACTOR Battery 30001
 		Spawn:
 			CORE ABC 2 bright A_Look
 			goto Spawn
+		See.Safe:
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", true)
+			goto See
+		See.Risk:
+			TNT1 A 0 A_ChangeFlag("INVULNERABLE", false)
+			goto See
 		See:
 			CORE ABC 2 bright A_Chase
 			goto See
@@ -59,11 +65,47 @@ ACTOR Battery 30001
 			NULL A 0 A_SpawnItem("BatteryExplosion",0,32)
 			NULL A 35 bright //20 original
 			NULL A 1 bright ACS_Execute(102, 0, 0, 0, 0)
+		Death.Loopme: // This will deny the archvile revival. Since there will be no revivable tics.
+			NULL A 35
+			Loop
+		Raise.Prepare:// Called by SetActorState!, in this moment, Thing_Raise should do the proper trick.
 			NULL A -1
-			stop
+			Stop
 		Raise:
 			CORE CBA 5 bright
 			goto See
+	}
+}
+
+ACTOR BatteryTest : Battery
+{
+	
+	states
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 Thing_ChangeTID(0, 9999)
+			CORE ABC 2 bright A_Look
+			goto Spawn
+		See:
+			TNT1 A 0 
+			CORE ABC 2 bright A_Chase
+			goto See	
+		
+		Death:
+			CORE B 1 bright A_Scream
+			CORE B 0 bright A_PlaySound("cv/batteryd")
+			CORE C 1 bright A_NoBlocking
+			//MISL BCD 5 bright
+			NULL A 0 A_SpawnItem("BatteryExplosion",0,32)
+			NULL A 35 bright //20 original
+			NULL A 1 bright //ACS_Execute(102, 0, 0, 0, 0)
+		Death.Loopme: // This will deny the archvile revival. Since there will be no revivable tics.
+			NULL A 35
+			Loop
+		Raise.Prepare:// Called by SetActorState!, in this moment, Thing_Raise should do the proper trick.
+			NULL A -1
+			Stop
 	}
 }
 
@@ -125,42 +167,11 @@ ACTOR AttackBattery : MorphedMonster 30002
 	}
 }
 
-ACTOR BatteryCore 30003
+ACTOR BatteryCore : Battery 30003
 {
-	obituary "%o was killed by our Core... lol!?"
-	health 1500
-	radius 16
-	height 56
-	speed 0
-	painchance 255
-	Mass 0x7fffffff
-        bloodtype "CoreShock"
-	RadiusDamageFactor 0.0 //Ignore Splash even through +FORCERADIUSDMG flag
-	MONSTER
-	+FRIENDLY
-	+FLOORCLIP
-	+NOBLOODDECALS
-	+NORADIUSDMG
-	damagefactor "MarineFire", 0.0
-	damageFactor "MarineFire2", 0.0
-	DamageFactor "MarineFire3", 0.0
-        DamageFactor "BFGSplash", 0.0
-        DamageFactor "BFGSpray", 0.0
-		DamageFactor "NoProfitKill", 0.0
 	
 	states
 	{
-		Spawn:
-			CORE ABC 2 bright A_Look
-			goto Spawn
-		See:
-			CORE ABC 2 bright A_Chase
-			goto See
-		Pain:
-			CORE A 1 bright A_Pain
-			CORE A 1 bright ACS_Execute(122, 0, 0, 0, 0)
-			goto See
-
 		Death:
 			CORE B 1 bright A_Scream
 			CORE B 0 bright A_PlaySound("cv/batteryd")
@@ -172,9 +183,6 @@ ACTOR BatteryCore 30003
 			NULL A 1 bright ACS_Execute(125, 0, 4, 0, 0)
 			NULL A -1
 			stop
-		Raise:
-			CORE CBA 5 bright
-			goto See
 	}
 }
 

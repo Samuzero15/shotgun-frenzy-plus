@@ -15,7 +15,7 @@
 // display rank
 script 604 (int l_Rank) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		int x = 164.1;
@@ -41,7 +41,7 @@ script 604 (int l_Rank) clientside
 // display hud
 script 605 (int l_Type) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11  && !CheckInventory("SamuTInv_UsingTerminal")){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("HUD");
 		hudmessage(s:"a"; 0, 90, 0, 0.1, 0.1, 1.0);
@@ -197,7 +197,7 @@ script 999 ENTER
 
 script "Hud_ShowCoreHealth" (int which, int hp) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11  && !CheckInventory("SamuTInv_UsingTerminal")){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		int maxhp, percent, color;
@@ -229,7 +229,7 @@ script "Hud_ShowCoreHealth" (int which, int hp) clientside
 
 script "Hud_ShowPlayerStats" (int credits, int exp, int  kills) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
 	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		
@@ -242,7 +242,7 @@ script "Hud_ShowPlayerStats" (int credits, int exp, int  kills) clientside
 
 script "Hud_ShowTeamCredits_YesCMD" (int teamcredits, int commander) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
 	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		hudmessage(s:"Team Credits: ", d:teamcredits, 
@@ -252,7 +252,7 @@ script "Hud_ShowTeamCredits_YesCMD" (int teamcredits, int commander) clientside
 
 script "Hud_ShowTeamCredits_NoCMD" (int teamcredits) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
 	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		hudmessage(s:"Team Credits: ", d:teamcredits, 
@@ -262,7 +262,7 @@ script "Hud_ShowTeamCredits_NoCMD" (int teamcredits) clientside
 
 script "Hud_ShowExperienceBar" (int kills, int rankexp) clientside
 {
-	if(getCvar("screenblocks") > 10 && !CheckInventory("SamuTInv_UsingTerminal")){
+	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		str expbar;
 		if	   (kills > rankexp *20)        expbar = "EXP01";

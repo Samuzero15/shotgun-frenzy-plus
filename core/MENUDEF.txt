@@ -34,6 +34,7 @@ ListMenu "EpisodeMenu"
 OptionMenu "SFPlusOptions"{
 	Title "Shotgun Frenzy Plus Settings"
 	StaticText "*) Requires a map restart to take effect",1
+	StaticText "0 means use the map default varable.", 1
 	StaticText ""
 	StaticText "Game Options", 1
 	StaticText "All options that you need for your server.", 1
@@ -47,6 +48,8 @@ OptionMenu "SFPlusOptions"{
 	Slider "Door Hold-Time Seconds", "sf_doorholdtime", 15, 45, 1, 0
 	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
 	Option "Allow Credit Drop", "sfp_allowdropcredits", "Boolean"
+	NumberField "Re-Capture Minimal *", "sfp_recapmin", 0, 10, 1, 0
+	NumberField "Monster Cap *", "sfp_maxmonsters", 0, 500, 50, 0
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
 	StaticText ""
@@ -150,6 +153,15 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText ""
 	StaticText "Allow Credit Drop", 1
 	StaticText "This will let the players to drop money on the server."
+	StaticText ""
+	StaticText "Re-Capture Minimal", 1
+	StaticText "On SF and CF maps, when re-capturing a sector,"
+	StaticText "the re-capture script can be executed when there is"
+	StaticText "less enemies than the minimal recapture specified here."
+	StaticText ""
+	StaticText "Monster Cap", 1
+	StaticText "Modifies the amount of monsters available to spawn."
+	StaticText "Bigger amounts means more lag! Be extremly careful with this cvar!"
 	StaticText ""
 }
 

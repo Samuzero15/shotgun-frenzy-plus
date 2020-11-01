@@ -27,11 +27,17 @@ Actor SpecialTeleportFog : TeleportFog replaces TeleportFog {
 	}
 }
 
+ACTOR PlayUp_Spawnshield_Power : PowerInvulnerable
+{
+	Powerup.Duration -10
+	Powerup.ColorMap 0.2,0.2,0.0, 1.0,1.0,1.0
+}
+
 Actor PlayUp_SpawnShield_Activate : PowerupGiver {
   +INVENTORY.AUTOACTIVATE
   +INVENTORY.ALWAYSPICKUP
   Inventory.MaxAmount 0
-  Powerup.Type "Invulnerable"
+  Powerup.Type "PlayUp_Spawnshield_Power"
   Powerup.ColorMap 0.2,0.2,0.0, 1.0,1.0,1.0
   Powerup.Duration -10
   Inventory.PickupMessage "Spawn-shield activated!" // "Invulnerability!"
@@ -43,10 +49,21 @@ Actor PlayUp_SpawnShield_Activate : PowerupGiver {
   }
 }
 
-Actor PlayUp_Prometeo_Activate_Invul : PlayUp_SpawnShield_Activate {
+ACTOR PlayUp_Prometeo_Power_Invul : PowerInvulnerable
+{
   Powerup.ColorMap 0.0,0.2,0.2, 1.0,1.0,1.0
   Powerup.Duration -20
   Inventory.PickupMessage "Prometeo protocol invul powerup!"
+}
+
+Actor PlayUp_Prometeo_Activate_Invul : PowerupGiver {
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Powerup.ColorMap 0.0,0.2,0.2, 1.0,1.0,1.0
+  Powerup.Duration -20
+  Inventory.PickupMessage "Prometeo protocol invul powerup!"
+  Powerup.Type PlayUp_Prometeo_Power_Invul
+  
 }
 
 ACTOR PlayUp_Prometeo_Power_2xDmg : PowerDamage

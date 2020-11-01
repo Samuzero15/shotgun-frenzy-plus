@@ -27,6 +27,7 @@ script 88 OPEN
 
 	f_AdaptiveSpawning = 0;
 	f_Cacodemons = 0;
+	readconsole();
 }
 
 // map setup
@@ -43,15 +44,42 @@ script 90 (void)
 {
     // change music
     
-    acs_execute(89, 0, 0, 0, 0);
+    acs_execute(189, 0, 0, 0, 0);
     int ticker;
     while(ticker < PlayerCount() * 3 + 5)
     {
         ticker++;
         delay(35*2);
     }
-    acs_terminate(89, 0);
+    acs_terminate(189, 0);
     ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 10);
+}
+
+// guardian wave
+script 189 (void)
+{
+    floor_lowertonearest(4, 10);
+    while(1)
+    {
+        spawnspot("sfCacodemon", 21, 118, 0);
+        spawnspot("sfCacodemon", 22, 118, 0);
+        if (PlayerCount() > 3){
+			switch(random(0,2)){
+				case 2: 
+				if (PlayerCount() > 5){
+					spawnspot("Cyberdemon", 117, 118, 0);
+					break;
+				}
+				case 1: spawnspot("ArchonOfHell", 117, 118, 0); break;
+				case 0: spawnspot("DarkDog", 117, 118, 0);  break;
+			}
+        
+		
+		}
+        
+        thing_hate(118, 104, 4);
+        delay(35 * 5);
+    }
 }
     
 script 91 (void)
@@ -221,12 +249,21 @@ script 89 (void)
     floor_lowertonearest(4, 10);
     while(1)
     {
-        spawnspot("sfCacodemon", 21, 24, 0);
-        spawnspot("sfCacodemon", 22, 24, 0);
+        spawnspot("sfCacodemon", 21, 118, 0);
+        spawnspot("sfCacodemon", 22, 118, 0);
         if (PlayerCount() > 3){
-        spawnspot("Cyberdemon", 117, 24, 0);}
+			switch(random(0,2)){
+				case 2: 
+				if (PlayerCount() > 5){
+					spawnspot("Cyberdemon", 117, 118, 0);
+					break;
+				}
+				case 1: spawnspot("ArchonOfHell", 117, 118, 0); break;
+				case 0: spawnspot("DarkDog", 117, 118, 0);  break;
+			}
+		}
         
-        thing_hate(24, 104, 4);
+        thing_hate(118, 104, 4);
         thing_hate(110, 104, 4);
         thing_hate(111, 104, 4);
         thing_hate(112, 104, 4);

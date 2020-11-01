@@ -7,19 +7,18 @@ server int sf_adaptivespawn = 0;
 server int sf_cacodemons = 0;
 server int sf_percentfast = 10;
 server int sf_creditcorrection = -8;
-// Let the players drop money?
-server bool sfp_allowdropcredits = true;
-
 
 //[Samu] acsutil's cvar
 server bool acsutils_noerrors = false;
 
 //[Samu] Additional cvars!
 
-// The delay time until the doors opens.
-server int sf_doorholdtime = 20;
-// Which monster set do you want to use?
-server int sfp_monsterset = 0; // Default.
+
+server int sf_doorholdtime = 20; 			// The delay time until the doors opens.
+server int sfp_monsterset = 0; // Default.  // Which monster set do you want to use?
+server bool sfp_allowdropcredits = true; 	// Let the players drop money?
+server int sfp_recapmin = 0;				// Minimum monsters before sector re-capturing.
+server int sfp_maxmonsters = 250;			// The total monster limit.
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;

@@ -76,6 +76,24 @@ States
    } 
 }
 
+ACTOR DarkDog : HotDog { 
+	// Nerfed version of this little doggy, except it only bites and its less meaty.
+	// Only Can be seen in SF02.
+	Health 3000
+	scale 0.7
+	Speed 16
+	HitObituary "A darkhound tasted %o fresh meat."
+	states{
+	Melee: 
+       HDOG GH 6 A_FaceTarget
+       HDOG I 6 A_MeleeAttack
+       Goto See
+	Missile:
+       HDOG G 0 
+       Goto See
+	}
+}
+
 ACTOR DogFire
 {
    Radius 2

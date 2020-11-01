@@ -16,6 +16,7 @@
 #import "FP_SBINF.acs"  // SBarInfo Manipulation
 #import "fp_credd.acs" // The credit dropper command.
 #import "fp_music.acs" // Music changing
+#import "fp_puhud.acs"
 //#import "f_TMap.acs" <- intresting stuff...
 
 script "SFPlus_ClearSector" (int sector){

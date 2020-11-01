@@ -53,7 +53,7 @@ script 51 OPEN
 }
 
 function int SecMan_RecapCond(int sector){
-	return (m_CalcSector() < 5 && sector > 1);
+	return (m_CalcSector() < m_recapmin && sector > 1);
 }
 
 Function void SecMan_ToggleDoors(bool closed, int sector, int doortype, int doorspeed){
@@ -85,10 +85,11 @@ function void SecMan_MonsterAttack(int sector) {
 
 Function void SecMan_ToggleCores(int sector){
 	for(int i = 1; i <= 4; i++){
-		if(i == sector) Thing_Activate(100 + i);
-			//SetActorFlag(100 + i, "SHOOTABLE", TRUE);
-		else 			Thing_DeActivate(100 + i);
-			//SetActorFlag(100 + i, "SHOOTABLE", FALSE);
+		if(i == sector) //Thing_Activate(100 + i);
+			SetActorState(100 + i, "See.Risk");
+		else 			//Thing_DeActivate(100 + i);
+			if(GetActorProperty(100 + i, APROP_HEALTH) > 0)
+				SetActorState(100 + i, "See.Safe");
 	}
 }
 
@@ -116,7 +117,7 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 				Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
 				
 			}
-
+			
 			if (SecMan_RecapCond(g_Status)){
 				// Check again if the sector is actually clear.
 				delay(1);
@@ -133,7 +134,6 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 					ambientsound("TIME", 125);
 				}
 			}
-
 			delay(35);
 			time--;
 		}
@@ -291,15 +291,18 @@ script 103 (void)
     {
         case 1:
             Notify_Message("Sector 1 Recovered!", "The Sector 1 CORE has been restored!", "INFO", 1);
-            thing_raise(101);
+            //thing_raise(101);
+			ACS_NamedExecute("SecMan_RaiseBattery",0,101); 
             break;
         case 2:
             Notify_Message("Sector 2 Recovered!", "The Sector 2 CORE has been restored!", "INFO", 1);
-            thing_raise(102);
+            //thing_raise(102);
+			ACS_NamedExecute("SecMan_RaiseBattery",0,102); 
             break;
         case 3:
             Notify_Message("Sector 3 Recovered!", "The Sector 3 CORE has been restored!", "INFO", 1);
-            thing_raise(103);
+            //thing_raise(103);
+			ACS_NamedExecute("SecMan_RaiseBattery",0,103); 
             break;
     }
     
@@ -310,6 +313,12 @@ script 103 (void)
 	// Clear again the non risked sectors from monsters.
 	for(i = g_Status+1; i <= 4; i++)
 		thing_destroy(110 + i, 500);
+}
+
+script "SecMan_RaiseBattery" (int which) {
+	SetActorState(which, "Raise.Prepare");
+	delay (1);
+	Thing_Raise(which);
 }
 
 int secdelay;

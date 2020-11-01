@@ -31,7 +31,7 @@ alias sfp_dropcredits "pukename SFPlus_DropCredits %1"
 alias sfp_ccmdlist "pukename SFPlus_CCmdList"
 alias sfp_changelog "pukename SFPlus_Changelog"
 
-//alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;summon Inventory_Stimpack; summon Inventory_Megasphere; summon Inventory_Godsphere; summon Inventory_Berserk2; summon Inventory_AmmoGiver; summon Inventory_TurretBullet; summon Inventory_TurretRocket; summon Inventory_TurretPlasma; summon Inventory_TurretFlame; summon Inventory_TeslaCoil"
+alias TestPowerHud "summon Inventory_Soulsphere; summon Inventory_TurretRail;summon Inventory_Stimpack; summon Inventory_Megasphere; summon Inventory_Godsphere; summon Inventory_Berserk2; summon Inventory_AmmoGiver; summon Inventory_TurretBullet; summon Inventory_TurretRocket; summon Inventory_TurretPlasma; summon Inventory_TurretFlame; summon Inventory_TeslaCoil"
 //alias TestWeapon "take weapons; give Spitter_GLauncher; give Ammo"
 //alias TestActor "Summon sf_SawDrone"
 

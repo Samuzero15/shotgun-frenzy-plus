@@ -32,7 +32,7 @@ script 88 OPEN
 
 	f_Cacodemons = 1;
 
-        readconsole();
+    readconsole();
 	
 	delay(35 * 10);
 	activateTurrets = 1;
@@ -42,7 +42,7 @@ script 88 OPEN
 int p_StarionaryTurret_Status[31];
 int f_TurretStatus[99];
 
-script 55 RESPAWN
+script 55 Death
 {
     if (activateTurrets == 1) {
  	   if (p_StarionaryTurret_Status[playernumber()] > 0)
@@ -153,6 +153,7 @@ script 61 (int l_TurretSpawn, int l_TurretReturn)
         setweapon("BoomerCannon");
         delay(5);
     }
+	f_TurretStatus[p_StarionaryTurret_Status[playernumber()]] = 0;
 }
 
 // turret tower

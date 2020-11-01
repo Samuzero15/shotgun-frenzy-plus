@@ -11,6 +11,7 @@
 
 #library "fl_PupDir"
 #include "zcommon.acs"
+#include "acsutils.ach"
 //#include "samu_tools.acs"
 
 #define FP_PLAYUP_MAX 10
@@ -82,6 +83,12 @@ script "SFPlus_DebugPlayUps" (void){
 		delay(1);
 	}
 	log(s:"====END====(Player upgrade Directory)====END====");
+}
+
+Script "SFPlus_TogglePlayerUp" (int which)
+{
+	ToggleInventory(PlayUp_getActor(which));
+	log(s:PlayUp_getName(which), s:cond(CheckInventory(PlayUp_getActor(which)) > 0, " Enabled!", " Disabled!"));
 }
 
 Script "SFPlus_FullPlayerUps" (void)

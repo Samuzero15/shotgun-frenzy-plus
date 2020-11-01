@@ -120,6 +120,25 @@ Graphic "MINESI_1", 29, 23
 	Patch "IMIN0", -1, -6
 }
 
+Graphic "GREEDI_1", 25, 25
+{
+	XScale 2.300
+	YScale 2.300
+	Patch "ITP3A0", 0, 0
+}
+
+
+Graphic "GREEDI_0", 25, 25
+{
+	XScale 2.000
+	YScale 2.000
+	Patch "ITP3A0", 0, 0
+	{
+		Alpha 0.40
+		Style Add
+	}
+}
+
 Graphic "100HPI_0", 25, 25
 {
 	XScale 2.000

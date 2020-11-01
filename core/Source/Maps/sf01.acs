@@ -55,7 +55,6 @@ script 11 OPEN
 int l_HoltSpawning = 0;
 script 90 (void)
 {
-    // change music
     acs_execute(89, 0, 0, 0, 0);
     int ticker;
     while(ticker < 60)
@@ -147,21 +146,21 @@ script 71 (int l_MonsterType, int l_DelayTime){
 	while(l_HoltSpawning == 0){
 		if (l_MonsterType == 0){
 			if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200){
-			spawnspot("sfCacodemon", 21, 24, 0);
-			spawnspot("sfCacodemon", 22, 24, 0);
+			spawnspot("sfCacodemon", 21, 118, 0);
+			spawnspot("sfCacodemon", 22, 118, 0);
 			}
 		}
 		if (l_MonsterType == 1){
 			if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200){
-			spawnspot("sfBaronOfHell", 23, 24, 0);
+			spawnspot("sfBaronOfHell", 23, 118, 0);
 			}
 		}
 		if (l_MonsterType == 2){
 			if (getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS) < AIDirector_Demonlimit+200){
-			spawnspot("sfCyberdemon", 117, 24, 0);
+			spawnspot("sfCyberdemon", 117, 118, 0);
 			}
 		}
-		thing_hate(24, 104, 4);
+		thing_hate(118, 104, 4);
 		delay(35*l_DelayTime);
 	}
 }

@@ -373,5 +373,5 @@ script 769 (void){
 
 // [Samu] Check if i am on a tank.
 script 781 (void){
-	SetResultValue((CheckInventory("TankGun") || CheckInventory("TankGunAdvanced")) && p_TankSlot[playernumber()] == 2);
+	SetResultValue(checkinventory("GotTank") || ((CheckInventory("TankGun") || CheckInventory("TankGunAdvanced")) && p_TankSlot[playernumber()] == 2));
 }

@@ -151,6 +151,9 @@ int m_Wave = 1;
 int m_WaveSub;
 int m_SurvivalWave = 1;
 
+int m_RecapMin = 0; // The minimum monster amount for sector re-capturing.
+int m_AIDCap = 250; // The maximum monster count.
+
 // settings
 int s_ScreenSize[3] = {800, 600, 1};
 #libdefine SFHUD_WIDTH 800
@@ -260,41 +263,25 @@ function void readconsole(void)
 	int sf_adaptivespawn = GetCVar("sf_adaptivespawn");
 	int sf_cacodemons = GetCVar("sf_cacodemons");
     int sf_percentfast = GetCVar("sf_percentfast");
+	int sfp_recapmin = GetCvar("sfp_recapmin");
+	int sfp_maxmonsters = GetCvar("sfp_maxmonsters");
 
-	if (sf_startcash)
-	{
-		f_Startcash = sf_startcash;
-	}
+	if (sf_startcash)  f_Startcash 	  = InitDB_Clamp(sf_startcash, 1000,  20000, 2500);
+	if (sf_teamcash)   c_Startcash 	  = InitDB_Clamp(sf_teamcash, 	500,  20000, 5000);
+	
+	if (sf_gamelength) f_Gamelength = sf_gamelength;
+	if (sf_skillmult)f_AISkillMultiplier = sf_skillmult;
+	if (sf_adaptivespawn)f_AdaptiveSpawning = sf_adaptivespawn;
+	if (sf_cacodemons)f_Cacodemons = sf_cacodemons;
+	
+	if(sf_percentfast)  f_PercentFast = InitDB_Clamp(sf_percentfast,  1,  50, 0);
+	if(sfp_recapmin) 	m_RecapMin    = InitDB_Clamp(sfp_recapmin, 	  1,  10, 0);
+	if(sfp_maxmonsters) m_AIDCap 	  = InitDB_Clamp(sfp_maxmonsters, 50, 500, 250);
+}
 
-	if (sf_teamcash)
-	{
-		c_Startcash = sf_teamcash;
-	}
-
-	if (sf_gamelength)
-	{
-		f_Gamelength = sf_gamelength;
-	}
-
-	if (sf_skillmult)
-	{
-		f_AISkillMultiplier = sf_skillmult;
-	}
-
-	if (sf_adaptivespawn)
-	{
-		f_AdaptiveSpawning = sf_adaptivespawn;
-	}
-
-	if (sf_cacodemons)
-	{
-		f_Cacodemons = sf_cacodemons;
-	}
-
-	if (sf_percentfast)
-	{
-		f_PercentFast = sf_percentfast;
-	}
+function int InitDB_Clamp(int var, int min_v, int max_v, int def){
+	if(var >= min_v && var <= max_v) return var;
+	return def;
 }
 
 script "SFPlus_InitializeEverything" OPEN{

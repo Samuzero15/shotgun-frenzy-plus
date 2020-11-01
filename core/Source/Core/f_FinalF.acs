@@ -213,11 +213,12 @@ script 108 (int l_RemainingMonsters)
 
 function bool GuardianWave_LoopCond(int surv){
 	bool cond_1 = thingcount(0, 118) > surv;
-	bool cond_2 = thingcount(0, 111) > surv;
-	bool cond_3 = thingcount(0, 112) > surv;
-	bool cond_4 = thingcount(0, 113) > surv;
-	bool cond_5 = thingcount(0, 114) > surv;
-	bool win_cond = (cond_1 + cond_2 + cond_3 + cond_4 + cond_5) < 1;
+	bool cond_2 = thingcount(0, 110) > surv;
+	bool cond_3 = thingcount(0, 111) > surv;
+	bool cond_4 = thingcount(0, 112) > surv;
+	bool cond_5 = thingcount(0, 113) > surv;
+	bool cond_6 = thingcount(0, 114) > surv;
+	bool win_cond = (cond_1 + cond_2 + cond_3 + cond_4 + cond_5 + cond_6) < 1;
 
 	return (thingcount(0, 118) > surv || 
 			thingcount(0, 110) > surv || 
@@ -242,7 +243,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
     while(GuardianWave_LoopCond(surv) && timeout > 1){
        //[Samu] Zandronum is dumb counting monsters.
 		
-		remains = thingcount(0, 118) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
+		remains = thingcount(0, 118) + thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
 		
 		f_BigCenterTipBold(strparam(s:"Monsters remaining: ", d:remains), CR_BRICK);
 		if(g_GameOver) Terminate;

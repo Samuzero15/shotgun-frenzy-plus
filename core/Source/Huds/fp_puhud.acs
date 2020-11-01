@@ -1,0 +1,93 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_puhud.acs
+// Powerup HUD.
+
+// For the information about the current active powerups.
+#library "fp_puhud"
+
+#include "zcommon.acs"
+#include "acsutils.ach"
+#include "queue.acs"
+int puphud_list[10];
+int puphud_stack;
+
+Script "SFPlus_PowerupList" Enter Clientside{
+	int pow_quadsphere;
+	int pow_hexasphere;
+	int pow_godsphere;
+	int pow_spawnshield;
+	int pow_prometeo;
+	int pow_wealth;
+	if(ConsolePlayerNumber() == Playernumber()){
+		while(PlayerInGame(PlayerNumber())){
+			pow_quadsphere   = GetActorPowerupTics(0, "PowerQuadDamage");
+			pow_hexasphere   = GetActorPowerupTics(0, "PlayUp_PowUpUpgrade_6xDmg");
+			pow_godsphere    = GetActorPowerupTics(0, "PowerInvulnerable");
+			pow_spawnshield  = GetActorPowerupTics(0, "PlayUp_Spawnshield_Power");
+			pow_prometeo 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_2xDmg");
+			pow_wealth 	 	 = GetActorPowerupTics(0, "Inv_Power_Wealth");
+			//log(s:"Quad: ", d:GetActorPowerupTics(0, "PowerQuadDamage"));
+			PowHud_Show("x4 Damage", 	pow_quadsphere);
+			PowHud_Show("x6 Damage", 	pow_hexasphere);
+			PowHud_Show("Invulnerable", pow_godsphere);
+			PowHud_Show("Prometeo", 	pow_prometeo);
+			PowHud_Show("Spawn Shield", pow_spawnshield);
+			PowHud_Show("x2 Credits", 	pow_wealth);
+			/*
+			
+			PowHud_Show("x3 Credits", 		0); // Soon...
+			PowHud_Show("Flight", 			0); // Soon...
+			PowHud_Show("Inf. Ammo", 		0); // Soon...
+			*/
+			delay(1);
+			PowHud_Clear();
+		}
+	}
+}
+
+function void PowHud_Clear(void){
+	for (int i = puphud_stack; i >= 0; i--)
+		ClearHudMessage(6100+i); 
+	puphud_stack = 0;
+}
+
+function void PowHud_Show(str effect, int powtime) {
+	int index = puphud_stack;
+	int w = 640, h = 480;
+	int wearoff = (powtime / 35 < 5);
+	int flicker = ((powtime / 12) % 2 == 0);
+	int x, y, space = index*16.0;
+	str msg;
+	
+	// Draw only if there is time for it.
+	
+	if(powtime != 0){
+		// Set position
+		if(getCvar("screenblocks") == 11) {
+			x = w*(0.85) + 0.2; 
+			y = (h*(0.95) - space) + 0.1;
+			/*
+			msg = Strparam(
+				d:((35 +powtime )/ 35), 
+				s:cond(wearoff, cond(flicker," \cf" ," \ci")," \cv"),
+				s:effect);
+				*/
+		}else if (getCvar("screenblocks") < 11){
+			x = w*(0.95) + 0.2; 
+			y = (h*(0.78) - space) + 0.1;
+			
+		}
+		msg = Strparam(
+				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cv"),
+				s:effect, s:" \c-",
+				d:((35 +powtime )/ 35));
+		SetHudSize(w, h, 1);
+		SetFont("STATBIGS");
+		HudMessage(s:msg; HUDMSG_PLAIN, 6100+index, CR_WHITE, x, y, 3.0);
+		puphud_stack++;
+	}
+	
+}

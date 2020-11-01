@@ -49,6 +49,8 @@ Script "SFPlus_CCMDList" (void) NET
 		s:Hello_CMD("sf_creditcorrection",  	 "int", "Grants extra coins to the late players, -10 will stop this. < -10 will take, > -10 will give."),
 		s:Hello_CMD_R("sf_doorholdtime", 	 "15 - 45", "Modifies the door delay time on changing sectors."),
 		s:Hello_CMD("sfp_allowdropcredits", 	"0, 1", "Allow the credit dropping on players."),
+		s:Hello_CMD_R("sfp_recapmin",   	  "0 - 10",	"Set the minimal monster number before activating the re-capturing script."),
+		s:Hello_CMD_R("sfp_maxmonsters", 	"50 - 500", "Set the maximum monster number to spawn in each game."),
 		
 		s:"\nUser commands:\n",
 		s:Hello_CMD("sfp_autouse", 				 "0, 1", "Enable the autouse script for the healing items."),
