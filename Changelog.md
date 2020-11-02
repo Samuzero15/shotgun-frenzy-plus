@@ -2,6 +2,13 @@
 
 ## v0 - Before the beginning...
 
+#### -) (1 / 11 / 2020) [Hotfix 5]
+	*) Re-factorized the variable setting for each sf map.
+	*) Now, when a cvar is set to 0, the map will load the defautl variables.
+	*) SD maps have an editable time between waves, use sf_doorholdtime to change it!
+	*) SD maps will now sound the starting horn (and the timer beeps) once the game starts.
+	*) Some other fixes
+
 #### -) (30 - 31 / 10 / 2020) [Hotfix 4 + A Greedsphere]
 	+) Hidden on the game, only spawnable with summon command, but... Meet the greedsphere!
 	// x2 Credits for 15 seconds! (30 with the Player Up. Powerup Upgrade)

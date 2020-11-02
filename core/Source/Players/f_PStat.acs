@@ -146,9 +146,7 @@ script 53 ENTER
     p_MechUpgradeArmor[playernumber()] = 0;
     p_TankSlot[playernumber()] = 0;
 	p_StreakLevel[playernumber()] = 0;
-	//[Samu] Bruh...
-    //ConsoleCommand("setslot 8 Flamer FlamerS BFG BFGS BoomerCannon");
-    //f_TipShow("PLAYER", "", "Has entered the game...", 10);
+	
     Notify_Player_Enter();
 	
 	//Save the name for disconnect cases.

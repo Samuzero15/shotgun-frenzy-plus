@@ -39,12 +39,12 @@ OptionMenu "SFPlusOptions"{
 	StaticText "Game Options", 1
 	StaticText "All options that you need for your server.", 1
 	StaticText ""
-	Slider "Game Length (Mins) *", "sf_gamelength", 5, 30, 10, 0
-	Slider "Starting Player Cash *", "sf_startcash", 1000, 20000, 500, 0
-	Slider "Starting Team Cash *", "sf_teamcash", 500, 20000, 500, 0
+	Slider "Game Length (Mins) *", "sf_gamelength", 0, 30, 10, 0
+	Slider "Starting Player Cash *", "sf_startcash", 0, 20000, 500, 0
+	Slider "Starting Team Cash *", "sf_teamcash", 0, 20000, 500, 0
 	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"
 	Slider "Fast Percent (+ 3P) *", "sf_percentfast", 0, 50, 5, 0
-	Option "Adaptive Spawning *", "sf_adaptivespawn", "Boolean"
+	Option "Adaptive Spawning *", "sf_adaptivespawn", "MapBoolean"
 	Slider "Door Hold-Time Seconds", "sf_doorholdtime", 15, 45, 1, 0
 	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
 	Option "Allow Credit Drop", "sfp_allowdropcredits", "Boolean"
@@ -192,8 +192,16 @@ OptionValue "EarningDispOptions"
 	0, "No, im okay"
 }
 
+OptionValue "MapBoolean"
+{
+	-1, "No"
+	0, "Depending on the map"
+	1, "Yes"
+}
+
 OptionValue "CacoBoolean"
 {
-	0, "No thanks."
+	-1, "No thanks"
+	0, "Depending on the map"
 	1, "Ye we like cacos!"
 }

@@ -48,7 +48,8 @@ script 51 OPEN
     // setup default credits for the commander
     c_Credits = c_Startcash;
     
-    while(playercount() == 0) delay(1);
+    while(playercount() == 0 || !g_Initialized) delay(1);
+	delay(1);
     g_Status = 1; 
 }
 
@@ -106,7 +107,9 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 		skip_recap = false;
 		while(g_Status == 0) // Be prepared to start.
 			delay(35);
-			
+		
+		SecMan_ToggleCores(g_Status);
+		
 		current_sector = g_Status;
 		delay(1);
 		

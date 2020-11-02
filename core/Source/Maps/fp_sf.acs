@@ -19,7 +19,7 @@
 #import "f_AIDRL.acs"	//AI Director Levels (as usual.)
 #import "f_FinalF.acs"	// The final fight scripts
 
-script "SFPlus_SF_Default" OPEN
+function void SFPlus_DefaultVars(void)
 {
 	// setup gametype value
 	f_UseScoreSystem = 0;
@@ -34,8 +34,6 @@ script "SFPlus_SF_Default" OPEN
 	
 	f_AdaptiveSpawning = 0;
 	f_Cacodemons = 0;
-
-        readconsole();
 
 	f_AllowNuke =   1;
 	f_AllowIon =    1;

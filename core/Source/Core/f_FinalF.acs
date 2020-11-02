@@ -43,8 +43,10 @@ script 107 OPEN
     // wait until the game is active
     while(g_Status == 0)
         delay(35);
-    // survival?
-    if(f_Gametype == 5){
+	
+	//InitDB_Debug();
+    
+    if(f_Gametype == 5){ // survival?
          acs_terminate(107,0);
     }
     if (instant_guardian == 0)
@@ -240,7 +242,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 	int mkilled, mTotal; 
 	int timeout = 300; // 5 Minutes (in secs) before moving to next map.
 	int remains;
-    while(GuardianWave_LoopCond(surv) && timeout > 1){
+    while(GuardianWave_LoopCond(surv) && timeout > 0){
        //[Samu] Zandronum is dumb counting monsters.
 		
 		remains = thingcount(0, 118) + thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
@@ -290,6 +292,9 @@ script 125 (int l_Condition)
     int l_SkillLevel = -1;
     int g_FinalSkillScore = 0;
     
+	ACS_Terminate(100,0); // Kill the sector management survival script if used at all.
+	acs_Terminate(129,0); // Kill the timer counter.
+	
 	g_GameOver = true; // Stops the guardian checker loop.
 	g_GameEnding = l_Condition;
 	

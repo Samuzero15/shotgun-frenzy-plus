@@ -2,7 +2,7 @@
 server int sf_startcash = 2500;
 server int sf_teamcash = 5000;
 server int sf_gamelength = 23;
-server int sf_skillmult = 3;
+server int sf_skillmult = 0;
 server int sf_adaptivespawn = 0;
 server int sf_cacodemons = 0;
 server int sf_percentfast = 10;

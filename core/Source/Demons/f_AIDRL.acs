@@ -344,13 +344,16 @@ script 120 OPEN
 
 	//Check if the server wants modified waves
     //readwaves();
-	delay(1);
+	
+	// Don't spawn anything if the game did'nt started.
+	while(g_Status == 0)
+        delay(35);
+	
 	AIDirector_Demonlimit = m_AIDCap; // Check the user's defined cap amount.
-    //log(s:"Demon limit: ", d:AIDirector_Demonlimit);
     while(l_GameStopped == 0)
     {
 	l_Level = f_AIDir_Check() / 10;
-	l_CacoCond = f_Cacodemons && l_Level >= 4;
+	l_CacoCond = f_Cacodemons == 1 && l_Level >= 4;
 	l_BossCond = l_Level >= boss_starting_level && g_BossLevel <= l_Level;
 	
 	l_MonDiff = getlevelinfo(LEVELINFO_TOTAL_MONSTERS) - getlevelinfo(LEVELINFO_KILLED_MONSTERS);
@@ -374,7 +377,7 @@ script 120 OPEN
 					Thing_ChangeTID(btid, 110);
 					g_BossLevel ++;
 				}
-				if (f_AdaptiveSpawning == 0 || g_Status < 2)
+				if (f_AdaptiveSpawning <= 0 || g_Status < 2)
 				{
 					SpawnSpot(AIDir_Spawn(DIFF_EASY, l_Level), 		115, 110);
 					SpawnSpot(AIDir_Spawn(DIFF_MED,  l_Level), 		116, 110);

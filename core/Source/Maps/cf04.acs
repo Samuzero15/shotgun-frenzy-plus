@@ -18,19 +18,8 @@
 // setup techflags
 script 91 OPEN
 {
+	SFPlus_DefaultVars();
 	spawnspot("TurretPlasma", 12);
-	f_Startcash =   2500;                   // player starting cash, 2500 is the default
-	c_Startcash =   0;                      // starting cash for the commander (SF maps only)
-	f_Doortype =    0;                      // 0 is a normal door, 1 is a floor based door
-	f_Doorspeed =   50;                     // speed of the door opening, 50 is the default
-	f_GameLength =  9;                     // Gametime in minutes, +2 min after guardian warning, 28 default (30 min gametime) 18
-	f_AISkillMultiplier = 3;               // increase in levels, higher means harder (aka: the RapeFactor variable)
-
-	f_Cacodemons = 0;
-	f_AdaptiveSpawning = 0;
-	
-	readconsole();
-	setupTerminals();
 }
 // final boss
 script 90 (void)

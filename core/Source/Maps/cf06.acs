@@ -46,7 +46,6 @@ script 91 OPEN
 	f_Cacodemons = 0;
 	f_AdaptiveSpawning = 0;
 
-        readconsole();
 	
 	setupTerminals();
 }

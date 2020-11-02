@@ -77,38 +77,6 @@ ACTOR Battery 30001
 	}
 }
 
-ACTOR BatteryTest : Battery
-{
-	
-	states
-	{
-		Spawn:
-			TNT1 A 0
-			TNT1 A 0 Thing_ChangeTID(0, 9999)
-			CORE ABC 2 bright A_Look
-			goto Spawn
-		See:
-			TNT1 A 0 
-			CORE ABC 2 bright A_Chase
-			goto See	
-		
-		Death:
-			CORE B 1 bright A_Scream
-			CORE B 0 bright A_PlaySound("cv/batteryd")
-			CORE C 1 bright A_NoBlocking
-			//MISL BCD 5 bright
-			NULL A 0 A_SpawnItem("BatteryExplosion",0,32)
-			NULL A 35 bright //20 original
-			NULL A 1 bright //ACS_Execute(102, 0, 0, 0, 0)
-		Death.Loopme: // This will deny the archvile revival. Since there will be no revivable tics.
-			NULL A 35
-			Loop
-		Raise.Prepare:// Called by SetActorState!, in this moment, Thing_Raise should do the proper trick.
-			NULL A -1
-			Stop
-	}
-}
-
 ACTOR AttackBattery : MorphedMonster 30002
 {
 	obituary "%o was killed by the core!"
@@ -169,7 +137,7 @@ ACTOR AttackBattery : MorphedMonster 30002
 
 ACTOR BatteryCore : Battery 30003
 {
-	
+	Health 1400
 	states
 	{
 		Death:

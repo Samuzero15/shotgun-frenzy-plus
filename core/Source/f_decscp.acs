@@ -155,7 +155,6 @@ script "InfAmmoCheck" (void)
 }
 
 
-
 script "SF_Checc" (void){
 	/*
 	debugTidPointers(ActivatorTID());

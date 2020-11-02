@@ -254,7 +254,7 @@ function int allow_turret(void)
     return 0;
 }
 
-function void readconsole(void)
+function void InitDB_ReadConsole(void)
 {
 	int sf_startcash = GetCVar("sf_startcash");
 	int sf_teamcash = GetCVar("sf_teamcash");
@@ -284,6 +284,7 @@ function int InitDB_Clamp(int var, int min_v, int max_v, int def){
 	return def;
 }
 
+bool g_Initialized = false;
 script "SFPlus_InitializeEverything" OPEN{
 	Acs_NamedExecuteAlways("SfPlus_DefinePrices", 0);
 	SFPlus_DefineWeapons();
@@ -293,4 +294,30 @@ script "SFPlus_InitializeEverything" OPEN{
 	SFPlus_DefinePlayUps();
 	
 	ProgTip_Init();
+	delay(1); // give this tic to the map default variables.
+	InitDB_ReadConsole(); // Read the console if the server needs customized variables.
+	g_Initialized = true;
+}
+
+Function void InitDB_Debug(void){
+	log(s:"====== Debug ======");
+	
+	InitDB_Log("f_Startcash", f_Startcash);
+	InitDB_Log("c_Startcash",c_Startcash);
+	
+	InitDB_Log("f_Gamelength",f_Gamelength);
+	InitDB_Log("f_AISkillMultiplier",f_AISkillMultiplier);
+	InitDB_Log("f_AdaptiveSpawning",f_AdaptiveSpawning);
+	InitDB_Log("f_Cacodemons",f_Cacodemons);
+	
+	InitDB_Log("f_PercentFast",f_PercentFast);
+	InitDB_Log("m_RecapMin",m_RecapMin );
+	InitDB_Log("m_AIDCap",m_AIDCap);
+	InitDB_Log("f_AllowIon",f_AllowIon);
+	InitDB_Log("f_AllowNuke",f_AllowNuke);
+	log(s:"====== Debug ======");	
+}
+
+function void InitDB_Log(str name, str var){
+	log(s:name, s:" = ", d:var);
 }

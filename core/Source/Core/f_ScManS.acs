@@ -47,7 +47,7 @@ script 51 OPEN
     // setup default credits for the commander
     c_Credits = c_Startcash;
     
-    while(playercount() == 0) delay(1);
+    while(playercount() == 0 || !g_Initialized) delay(1);
     g_Status = 4; 
 }
 
@@ -62,7 +62,8 @@ script 100 OPEN
     
     // locals
     int l_CurrentSector;
-    
+    int time, timecvar = GetCvar("sf_doorholdtime");
+	int alarmsUsed = 0;
     // wait until the game is active
     while(g_Status == 0)
         delay(35);
@@ -86,17 +87,32 @@ script 100 OPEN
         
         // heal core
         acs_execute(405, 0, 0, 0, 0);
+		
+		time = timecvar;
+		acs_execute(129, 0, 1, time, 0);
+		if(time != 30 || time != 15 || time != 5) Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
         
-        // the game has started
-                //f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "30 seconds...", 0);
-				Notify_Message("DEMON WAVE spawns in","30 seconds...", "DEMONT", 0);
-                acs_execute(129, 0, 1, 30, 0);
-        delay(35 * 25);
-                //f_TipShow("DEMONT", "DEMON WAVE BEGINNING IN...", "5 seconds...", 0);
-				Notify_Message("DEMON WAVE spawns in","5 seconds...", "DEMONT", 0);
-        delay(35 * 5);
-                //f_TipShow("DEMONT", "DEMON WAVE", "Give em hell!", 0);
-				Notify_Message("DEMON WAVE is spawning!","Give'em Hell!", "DEMONT", 0);
+		while(time != 0){// The timer before opening a door.
+			if(time == 10 || time == 5 || time == 30){
+				Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
+			}
+
+			if(Time <= 5){
+				if (alarmsUsed == 0){
+					ambientsound("TIME", 125);
+				}
+			}
+			delay(35);
+			time--;
+		}
+		Notify_Message("DEMON WAVE is spawning!","Give'em Hell!", "DEMONT", 0);
+        
+		if (alarmsUsed == 0){
+			ambientsound("ATTACK", 125);
+		}
+		alarmsUsed += 1;
+		
+		
                 
         // remove first blocker
         thing_remove(50);

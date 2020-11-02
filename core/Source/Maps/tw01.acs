@@ -48,7 +48,6 @@ script 91 OPEN
 	f_AdaptiveSpawning = 0;
 	f_Cacodemons = 0;
 
-        readconsole();
 
 	f_AllowNuke =   0;
 	f_AllowIon =	0;
