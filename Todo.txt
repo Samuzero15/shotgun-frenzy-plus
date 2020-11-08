@@ -24,8 +24,6 @@ w) Work in progres
 [d] Document the build and play python scripts, to guide the modders how to do special stuff.
 [d] Kill-streak system.
 	[d] Display 
-	[ ] HUD on Fullscreen
-	[ ] HUD on SBARINFO
 [d] Health Terminal's Player upgrades
 [ ] Implement the Bank tech.
 [ ] Flak-Bombs for the dual shot.
@@ -40,7 +38,7 @@ w) Work in progres
 [ ] Add some new monsters on the rooster.
 	[ ] The Zombiemarine, a weaker version of a chaingunner, causing trobules in early waves.
 	[ ] The Zsec, good ol doom 3 reference, molesting you on early waves. It got a grenade launcher!
-	[ ] The Science Zombie Team. Stronger than a fodder, but a bit slower.
+	[d] The Science Zombie Team. Stronger than a fodder, but a bit slower.
 [ ] Document the acs source, and some of the most important decorate files
 [w] Replace the sprites for...
 	[d] Quadshot

@@ -68,7 +68,6 @@ int g_GameEnding;
 // For Samu Terminal
 int g_TechFlags = 0;
 int g_BuildFlags = 0;
-
 int c_BuildState[8];
 
 int aiSubtract;
@@ -153,6 +152,9 @@ int m_SurvivalWave = 1;
 
 int m_RecapMin = 0; // The minimum monster amount for sector re-capturing.
 int m_AIDCap = 250; // The maximum monster count.
+
+int p_dmgmult = 0.0;
+int m_hpmult = 0.0;
 
 // settings
 int s_ScreenSize[3] = {800, 600, 1};
@@ -265,6 +267,8 @@ function void InitDB_ReadConsole(void)
     int sf_percentfast = GetCVar("sf_percentfast");
 	int sfp_recapmin = GetCvar("sfp_recapmin");
 	int sfp_maxmonsters = GetCvar("sfp_maxmonsters");
+	int sfp_playerdmgmult = GetCvar("sfp_playerdmgmult");
+	int sfp_monsterhpmult = GetCvar("sfp_monsterhpmult");
 
 	if (sf_startcash)  f_Startcash 	  = InitDB_Clamp(sf_startcash, 1000,  20000, 2500);
 	if (sf_teamcash)   c_Startcash 	  = InitDB_Clamp(sf_teamcash, 	500,  20000, 5000);
@@ -274,9 +278,11 @@ function void InitDB_ReadConsole(void)
 	if (sf_adaptivespawn)f_AdaptiveSpawning = sf_adaptivespawn;
 	if (sf_cacodemons)f_Cacodemons = sf_cacodemons;
 	
-	if(sf_percentfast)  f_PercentFast = InitDB_Clamp(sf_percentfast,  1,  50, 0);
-	if(sfp_recapmin) 	m_RecapMin    = InitDB_Clamp(sfp_recapmin, 	  1,  10, 0);
-	if(sfp_maxmonsters) m_AIDCap 	  = InitDB_Clamp(sfp_maxmonsters, 50, 500, 250);
+	if(sf_percentfast)  	f_PercentFast 	= InitDB_Clamp(sf_percentfast,  1,  50, 0);
+	if(sfp_recapmin) 		m_RecapMin    	= InitDB_Clamp(sfp_recapmin, 	  1,  10, 0);
+	if(sfp_maxmonsters) 	m_AIDCap 	  	= InitDB_Clamp(sfp_maxmonsters, 50, 500, 250);
+	if(sfp_playerdmgmult)	p_dmgmult		= InitDB_Clamp(sfp_playerdmgmult, 1.00, 200.0, 0.0);
+	if(sfp_monsterhpmult)	m_hpmult		= InitDB_Clamp(sfp_monsterhpmult, 1.00, 200.0, 0.0);
 }
 
 function int InitDB_Clamp(int var, int min_v, int max_v, int def){
@@ -299,9 +305,15 @@ script "SFPlus_InitializeEverything" OPEN{
 	g_Initialized = true;
 }
 
+int debug_var = 0;
+
+script "SFPlus_DebugVar" (int i){
+	debug_var = i;
+}
+
 Function void InitDB_Debug(void){
 	log(s:"====== Debug ======");
-	
+	/*
 	InitDB_Log("f_Startcash", f_Startcash);
 	InitDB_Log("c_Startcash",c_Startcash);
 	
@@ -315,6 +327,9 @@ Function void InitDB_Debug(void){
 	InitDB_Log("m_AIDCap",m_AIDCap);
 	InitDB_Log("f_AllowIon",f_AllowIon);
 	InitDB_Log("f_AllowNuke",f_AllowNuke);
+	*/
+	InitDB_Log("p_dmgmult", p_dmgmult);
+	InitDB_Log("m_hpmult", m_hpmult);
 	log(s:"====== Debug ======");	
 }
 

@@ -13,8 +13,10 @@
 #import "f_PMenP.acs"
 #import "fl_techs.acs"
 #import "fl_wdir.acs"
+#import "fp_credd.acs"
 
 #include "zcommon.acs"
+#include "acsutils.ach"
 #include "samu_tools.ach"
 
 str Stats_PlayerNames[32];
@@ -62,7 +64,6 @@ else{
     // display message
     if(PlayerCount() < 3){
 		   Notify_Player_Death();
-          //f_TipShow("DEATH", "", "Has Fallen!", 10);
     }
 	
 	// a nice pretty message for the loser to make them think on the bright side
@@ -123,7 +124,7 @@ script 53 ENTER
 	TakeInventory("PlayerKilledDemon", 0xFFFFFFF);
 	TakeInventory("P_Backpack", 0xFFFFFFF);
 	// Just in case
-	//ACS_ExecuteAlways("PersonalBP_Reset", 0);
+	ACS_NamedExecuteAlways("PersonalBP_Reset", 0);
     clearinventory();
 
     // give the player his/her boomstick and beretta
@@ -132,20 +133,25 @@ script 53 ENTER
     setweapon("Boomstick");
 
     int creditmult = GetCVar("sf_creditcorrection");
-	int StartCashCvar = GetCVar("sf_startcash");
-    p_Credits[playernumber()] = f_Startcash + (10 + creditmult) * Timer() / 35;
-    if (p_Credits[playernumber()] > 20000)
+	
+	int play = playernumber();
+    p_Credits[play] = cond(g_Status != 0,
+							f_Startcash + (10 + creditmult) * Timer() / 35,
+							f_Startcash);
+    if (p_Credits[play] > 20000)
     {
-      p_Credits[playernumber()] = 20000;
+      p_Credits[play] = 20000;
     }
-    p_Rank[playernumber()] = 0;
-    p_Exp_Points[playernumber()] = 0;
-    p_Exp[playernumber()] = 0;
-    p_KickSlot[playernumber()] = 0;
-    p_MechUpgradeWeapons[playernumber()] = 0;
-    p_MechUpgradeArmor[playernumber()] = 0;
-    p_TankSlot[playernumber()] = 0;
-	p_StreakLevel[playernumber()] = 0;
+	p_dropCredits_Starter[play] = p_Credits[play];
+	
+    p_Rank[play] = 0;
+    p_Exp_Points[play] = 0;
+    p_Exp[play] = 0;
+    p_KickSlot[play] = 0;
+    p_MechUpgradeWeapons[play] = 0;
+    p_MechUpgradeArmor[play] = 0;
+    p_TankSlot[play] = 0;
+	p_StreakLevel[play] = 0;
 	
     Notify_Player_Enter();
 	

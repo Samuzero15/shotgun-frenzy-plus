@@ -2,9 +2,20 @@
 
 ## v0 - Before the beginning...
 
+#### -) (2 - 6 / 11 / 2020) [Scalable Monster HP and Player Damage]
+	*) Game is getting high on players? Well now you can change the incremental scale for the monster health and the player damage!
+	// Since the game get's harder when the server gets more popularized, it's completly fair to add this.
+	// Both things works when the player count rises to 3 and adobe.
+	+) Added a bunch of cvars. All of them for the server.
+		-) sfp_monsterhpmult, to set an incremental percentage depending on players, in monster health.
+		-) sfp_monsterhpmult, to set an incremental percentage depending on players, in player damage.
+		-) sfp_dropcredits_delay, to change the delay time between droppings.
+		-) sfp_dropcredits_nostartcredits, to only drop the current credits without using the starting credits. Leave this activated to reduce exploits.
+	*) Some more fixes upon the game variables.
+
 #### -) (1 / 11 / 2020) [Hotfix 5]
 	*) Re-factorized the variable setting for each sf map.
-	*) Now, when a cvar is set to 0, the map will load the defautl variables.
+	*) Now, when a cvar is set to 0, the map will load the default variables.
 	*) SD maps have an editable time between waves, use sf_doorholdtime to change it!
 	*) SD maps will now sound the starting horn (and the timer beeps) once the game starts.
 	*) Some other fixes

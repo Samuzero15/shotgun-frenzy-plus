@@ -13,12 +13,15 @@ server bool acsutils_noerrors = false;
 
 //[Samu] Additional cvars!
 
-
-server int sf_doorholdtime = 20; 			// The delay time until the doors opens.
-server int sfp_monsterset = 0; // Default.  // Which monster set do you want to use?
-server bool sfp_allowdropcredits = true; 	// Let the players drop money?
-server int sfp_recapmin = 0;				// Minimum monsters before sector re-capturing.
-server int sfp_maxmonsters = 250;			// The total monster limit.
+server int sf_doorholdtime = 20; 					// The delay time until the doors opens.
+server int sfp_monsterset = 0; // Default.  		// Which monster set do you want to use?
+server bool sfp_allowdropcredits = true; 			// Let the players drop money?
+server int sfp_dropcredits_delay = 5; 				// Modify the delay time between drops.
+server bool sfp_dropcredits_nostartcredits = true; 		// Only drop if the player credits - starter credits > 0 (Meant to reduce the exploit.)
+server int sfp_recapmin = 0;						// Minimum monsters before sector re-capturing.
+server int sfp_maxmonsters = 250;					// The total monster limit.
+server float sfp_playerdmgmult = 50.0;				// Player's extra oomph
+server float sfp_monsterhpmult = 50.0;				// Monster's extra meat
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;

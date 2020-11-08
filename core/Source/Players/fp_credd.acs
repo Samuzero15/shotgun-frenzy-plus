@@ -17,18 +17,23 @@
 
 int p_DropCredits[32];
 int p_DropCredits_Delay[32];
+int p_DropCredits_Starter[32];
 
-#libdefine DROPCREDIT_MIN 100
+#libdefine DROPCREDIT_MIN 0
 #libdefine DROPCREDIT_MAX 9999999
 #libdefine DROPCREDIT_MUL 1000000
-#libdefine DROPCREDIT_DELAY 35*6
+#libdefine DROPCREDIT_DELAY 6
 
 Script "SFPlus_DropCredits" (int amount) NET
 {
 	int play = playernumber();
 	int credit_cap = cond(p_Credits[play] < DROPCREDIT_MAX, p_Credits[play], DROPCREDIT_MAX);
 	int cooldown = p_DropCredits_Delay[play] / 35; // in seconds.
+	int credit_cap_notstarter = credit_cap - p_DropCredits_Starter[playernumber()];
+	if (GetCvar("sfp_dropcredits_nostartcredits")) credit_cap = credit_cap_notstarter;
 	
+	str credit_range = cond(DROPCREDIT_MIN < credit_cap, strparam(s:"Use a value between \ck", d:DROPCREDIT_MIN, s:"\c- and \ck", d:credit_cap), "");
+	//log(s:"starting credits: ", d:p_DropCredits_Starter[playernumber()]);
 	if(!GetCvar("sfp_allowdropcredits")){ // Check cvar.
 		DropCredits_Log("\cksfp_allowdropcredits\c- is disabled on the server.");
 		terminate;
@@ -37,18 +42,26 @@ Script "SFPlus_DropCredits" (int amount) NET
 		DropCredits_Log("\ckYou're spectating\c-, join the game before using this.");
 		terminate;
 	}
+	
 	if(cooldown > 0){
 		DropCredits_Log(strparam(s:"You must wait \ck", d:cooldown, 
 						s:" seconds \c-before dropping credits again."));
 		terminate;
 	}
 	if(amount == 0){// Check parameter
-		DropCredits_Log("Missing the\ck amount\c- argument.");
+		DropCredits_Log(strparam(s:"Missing the\ck amount\c- argument.", s:credit_range));
 		terminate;
 	}
+	
+	if(GetCvar("sfp_dropcredits_nostartcredits")
+		&& (credit_cap_notstarter <= 0) ){ // Check cvar.
+		DropCredits_Log(strparam(
+		s:"Your starting money does'nt count, earn a bit more than ", d:p_DropCredits_Starter[play], s:" and try again."));
+		terminate;
+	}
+	
 	if(amount < DROPCREDIT_MIN || amount > credit_cap){// Check range and amount
-		DropCredits_Log(strparam(s:"\nYou can't drop that amount of credits.\n",
-		s:"Use a value between \ck", d:DROPCREDIT_MIN, s:"\c- and \ck", d:credit_cap));
+		DropCredits_Log(strparam(s:"\nYou can't drop that amount of credits.", s:credit_range));
 		terminate;
 	}
 	p_credits[play] -= amount;
@@ -70,7 +83,9 @@ Script "SFPlus_DropCredits" (int amount) NET
 	}
 	Spawn("DropCredits", x, y, z);
 	
-	p_DropCredits_Delay[play] = DROPCREDIT_DELAY;
+	int delay_time = 35*InitDB_Clamp(GetCVar("sfp_dropcredits_delay"), 1, 11, DROPCREDIT_DELAY); 
+	
+	p_DropCredits_Delay[play] = delay_time;
 	
 	if(p_DropCredits[play] != amount)
 		ACS_NamedExecuteAlways("SF_CreditRemoveDisplay", 0, amount, CR_WHITE, 1);

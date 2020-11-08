@@ -11,7 +11,9 @@
 #import "f_AIDir.acs"
 #import "fl_techs.acs"
 #include "zcommon.acs"
+#include "acsutils.ach"
 #include "samu_tools.ach"
+
 
 // define a useful variable (for dev purposes only, use to instantly goto the boss)
 int instant_guardian = 0;
@@ -22,16 +24,55 @@ script 231 (void)
 	// get current attributes
 	int health = getactorproperty(0, APROP_Health);
 	int alpha = getactorproperty(0, APROP_Alpha);
-	int adjustedCount = PlayerCount()/2;
+	int damage_factor = 1.0;
+	//int adjustedCount = PlayerCount()/2;
+	int extrahealth = 0;
 	
 	// auto adjust monsters based on player count
 	if (alpha != 0.9 && PlayerCount() > 2){
-		setactorproperty(0, APROP_Health, health*adjustedCount);
+		extrahealth = (health*((PlayerCount() - 2)*(fixedDiv(m_hpmult, 100.0))))>>16;
+		damage_factor = 1.0 + (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
+		
+		log(s:"Health: ", d:health, 
+		s:"\nExtra health: ", d:extrahealth, 
+		s:"\nPlayer count: ", d:playercount(),
+		s:"\nHP Multipler: ", f:m_hpmult,
+		s:"\nTotal health: ", d:(health + extrahealth),
+		s:"\nDamage Multipler: ", f:p_dmgmult,
+		s:"\nDamage Factor: ", f:damage_factor);
+		
+		// [Samu] Fuck your 50% health increase!, let the server modify that!
+		//setactorproperty(0, APROP_Health, health*adjustedCount);
+		setactorproperty(0, APROP_Health, health + extrahealth);
+		setactorproperty(0, APROP_DamageFactor, damage_factor);
 		setactorproperty(0, APROP_Alpha, 0.9);
+		
 		if (f_PercentFast > random(0,99)) {
 			setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 		}
 	}
+	ACS_NamedExecuteAlways("SFPlus_MonsterScript", 0);
+}
+
+Script "SFPlus_MonsterScript" (void){
+	int hp = getActorProperty(0, APROP_Health);
+	int playercount_last = -1;
+	int damage_factor = 0.0;
+	int pdmg_mult = a_GetCvarFixed("sfp_playerdmgmult");
+	do{
+		hp = getActorProperty(0, APROP_Health);
+			if(playercount_last != PlayerCount()){
+				damage_factor = (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
+				if(damage_factor > 0)
+					setactorproperty(0, APROP_DamageFactor, 1.0 + damage_factor);
+				else 
+					setactorproperty(0, APROP_DamageFactor, 1.0);
+				/*log(s:"Player Count (debug-var): ", d:debug_var,
+				s:"\nCurrent DMG Factor: ", f:getActorProperty(0, APROP_DamageFactor));*/
+			}
+		playercount_last = PlayerCount();
+		delay(1);
+	}while(hp > 0);
 }
 
 // final fight

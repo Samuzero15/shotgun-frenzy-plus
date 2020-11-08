@@ -14,4 +14,5 @@ Mechs can fire the nails in high velocities, make sure you beef up nails too!
 You want to hear the old soundtrack? Well, do sfp_oldsoundtrack 1 in the console!, You're welcome.
 The flak-dualshot upgrade has been added!
 A plenty of new commands are ready to be used, check them out on the sf+ options menu!
+Monster's HP multipler can be modified, and the player damage too!
 Some more miscaleneous fixes...
