@@ -2,6 +2,18 @@
 
 ## v0 - Before the beginning...
 
+#### -) (10 / 11 / 2020) [Mechs touches and addons. SF04 map turrets fixed.]
+	*) Alright, map SF04's map turrets should be cleared and occupied correctly.
+	+) Now, you can look up the current mech upgrades when using a mech.
+	*) This time the Mech factory door can be used again to open the entrance, just like always.
+	*) The use key will no longer exit the vehicle inmediatly, but instead, you exit as long as you hold use for 1 second.
+	// Meant to let the mech players use the door entrance in case they got stuck once again.
+	+) A small Mech Upgrade is here, Auto-Repair!
+	// A stereotypical regeneration upgrade that it does'nt take too long to work!
+	+) Soulspheres and Megaspheres, (With the Mech-Sync upgrade) are now cappable to heal the Mech units!
+	// Although, they don't over heal it, sadly.
+	*) Other small fixes...
+
 #### -) (2 - 6 / 11 / 2020) [Scalable Monster HP and Player Damage]
 	*) Game is getting high on players? Well now you can change the incremental scale for the monster health and the player damage!
 	// Since the game get's harder when the server gets more popularized, it's completly fair to add this.

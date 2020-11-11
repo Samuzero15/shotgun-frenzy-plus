@@ -302,7 +302,7 @@ script "SFPlus_InitializeEverything" OPEN{
 	ProgTip_Init();
 	delay(1); // give this tic to the map default variables.
 	InitDB_ReadConsole(); // Read the console if the server needs customized variables.
-	g_Initialized = true;
+	//g_Initialized = true;
 }
 
 int debug_var = 0;

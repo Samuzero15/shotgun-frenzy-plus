@@ -30,20 +30,6 @@ script 88 OPEN
 	activateTurrets = 1;
 }
 
-// stationary turret use
-int p_StarionaryTurret_Status[31];
-int f_TurretStatus[99];
-
-script 55 Death
-{
-    if (activateTurrets == 1) {
- 	   if (p_StarionaryTurret_Status[playernumber()] > 0)
-  	  {
- 	       p_StarionaryTurret_Status[playernumber()] = 0;
-  	  }
-   }
-}
-
 script 90 (void)
 {
     int ticker;
@@ -104,37 +90,61 @@ script 91 (void)
     thing_changetid(0, 55);
 }
 
+// stationary turret use
+int p_MapTurret_Return[32];
+int f_MapTurret_OnUse[99];
+
+function void SF04_UseMapTurret(int returnpoint){
+	p_MapTurret_Return[playernumber()] = returnpoint;
+	f_MapTurret_OnUse[returnpoint] = 1;
+}
+
+function void SF04_FreeMapTurret(void){
+	f_MapTurret_OnUse[p_MapTurret_Return[playernumber()]] = 0;
+	p_MapTurret_Return[playernumber()] = 0;
+}
+
+script 55 Death
+{
+    if (activateTurrets == 1) {
+	  if (p_MapTurret_Return[playernumber()] > 0)
+  	  {
+		SF04_FreeMapTurret();
+  	  }
+   }
+}
+
 script 95 (void)
 {
-    if (p_StarionaryTurret_Status[playernumber()] > 0)
+    //if (p_StarionaryTurret_Status[playernumber()] > 0)
+	if(p_MapTurret_Return[playernumber()] > 0)
     {
         takeinventory("BoomerCannon", 1);
-        teleport(p_StarionaryTurret_Status[playernumber()]);
+		takeinventory("Boomer_Resister", 1);
+		teleport(p_MapTurret_Return[playernumber()]);
         SetPlayerProperty(0, 0, PROP_FROZEN);
-        f_TurretStatus[p_StarionaryTurret_Status[playernumber()]] = 0;
-        p_StarionaryTurret_Status[playernumber()] = 0;
+		
+		SF04_FreeMapTurret();
     }
 }
 
 script 61 (int l_TurretSpawn, int l_TurretReturn)
 {
-    p_StarionaryTurret_Status[playernumber()] = l_TurretReturn;
-    if (f_TurretStatus[p_StarionaryTurret_Status[playernumber()]] > 0)
-    {
+    if (f_MapTurret_OnUse[l_TurretReturn] > 0)
+	{
         setfont("CONFONT");
-        p_StarionaryTurret_Status[playernumber()] = 0;
         print(s:"Already in use...");
         terminate;
     }
-    
-    teleport(l_TurretSpawn);
+	
+	SF04_UseMapTurret(l_TurretReturn);
+	
+	teleport(l_TurretSpawn);
     SetPlayerProperty(0, 1, PROP_FROZEN);
     giveinventory("BoomerCannon", 1);
     
-    f_TurretStatus[p_StarionaryTurret_Status[playernumber()]] = 1;
-    
-    while(p_StarionaryTurret_Status[playernumber()] == l_TurretReturn)
-    {
+	while(p_MapTurret_Return[playernumber()] == l_TurretReturn)
+	{
         if (!getactorproperty(0, APROP_Health) > 0)
         {
             acs_execute(95, 0, 0, 0, 0);
@@ -145,7 +155,7 @@ script 61 (int l_TurretSpawn, int l_TurretReturn)
         setweapon("BoomerCannon");
         delay(5);
     }
-	f_TurretStatus[p_StarionaryTurret_Status[playernumber()]] = 0;
+	SF04_FreeMapTurret();
 }
 
 // turret tower

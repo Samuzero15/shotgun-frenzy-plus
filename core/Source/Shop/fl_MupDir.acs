@@ -10,7 +10,7 @@
 
 #library "fl_MupDir"
 #include "zcommon.acs"
-//#include "samu_tools.acs"
+#include "acsutils.ach"
 
 #define FP_MECHUP_MAX 8
 
@@ -37,10 +37,9 @@ function void SFPlus_DefineMechUps(void){
 	MechUp_Add1Up("Self-Destruct Upgrade", "MechUp_SelfDestruct", "self_destruct",
 		"If this is it, then finish it with style.");
 		
-	/*
-	MechUp_Add1Up("Self-Repair Upgrade", "MechUp_Lifesave", "life_save",
-		"You armor regens itself.");
-		*/
+	MechUp_Add1Up("Auto-Repair Upgrade", "MechUp_AutoRepair", "auto_repair",
+		"Hey, if it's not broken, don't fix it.");
+		
 }
 
 function void MechUp_Add1Up (str name, str actor, str price, str desc){
@@ -72,3 +71,38 @@ function int MechUp_getPrice(int up){
 
 }
 function int MechUp_getMax(int up){		return MechUp_List[up][4];}
+
+function str MechUp_ReportUps(bool colored){
+	str result = "Current stats";
+	if(colored) result = Strparam(s:"\cn", s:result);
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Armor        ", 		2, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Nails        ", 		0, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Rockets      ",		1, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Manuvering   ", 		3, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Life Saver   ", 		4, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Self Destruct", 	5, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Auto Repair  ",   	6, colored));
+	
+	return result;
+}
+
+function str MechUp_StrUpgrade(str string, int up, bool coloured){
+	str res;
+	int lvl_amount = CheckInventory(MechUp_getActor(up));
+	str lvl_str = cond(lvl_amount == MechUp_getMax(up), "LV. MAX", strparam(s:"LV. ", d:lvl_amount));
+	
+	if(coloured){
+		if(MechUp_getMax(up) > 1)
+			res = Strparam(s:"\n \ch", s:string, s:" \cj", s:lvl_str);
+		else if(lvl_amount) 
+			res = Strparam(s:"\n \ch", s:string, s:" \cjREADY");
+	}
+	else{
+		if(MechUp_getMax(up) > 1)
+			res = Strparam(s:"\n ", s:string, s:" ", s:lvl_str);
+		else if(lvl_amount) 
+			res = Strparam(s:"\n ", s:string, s:" READY");
+		
+	}
+	return res;
+}

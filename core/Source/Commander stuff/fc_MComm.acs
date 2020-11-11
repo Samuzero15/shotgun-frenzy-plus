@@ -16,7 +16,9 @@
 #import "fc_AStr.acs"
 
 #include "zcommon.acs"
+#include "acsutils.ach"
 #include "samu_tools.ach"
+
 
 // build
 script 300 (void)
@@ -125,6 +127,18 @@ script 308 (void)
 	}
 }
 
+function str ProgressDot(int amount, int progress, int base){
+	int intervals = 100 / amount;
+	int now = progress * 100 / base;
+	int dotamount = now / intervals;
+	str dotres = ".";
+	for(int i = 0; i < dotamount; i++){
+		dotres = strparam(s:dotres, s:".");
+	}
+	
+	return dotres;
+}
+
 // enter tank
 script 306 (void)
 {
@@ -137,12 +151,12 @@ script 306 (void)
 	
 	setfont("BIGFONT");
     hudmessage(s:
-	"\caTo \cgexit the \caMech, \cbwalk up to the entrance of the Mech Factory.\
-	\n\n\caOr press \cguse \cato \cbteleport yourself \caback to safety!\
+	"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory\
+	or hold \cguse \ca for 1 second!\
 	\n\n\cbQuit early \cato \cgavoid death!\
 	\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
 	\n\n\cgPrimary fire \cafor your \cbNails\
-	\n\n\cgSecondary Fire \cafor your \cbRockets \cg(if you got the upgrade)\
+	\n\n\cgSecondary Fire \cafor your \cbRockets\
 	\n\n\n\ci Now give em' Hell!"
 	; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
 	
@@ -187,18 +201,53 @@ script 306 (void)
     delay(5);
 	//setActivatortoPlayer(playernumber());
 	ACS_ExecuteAlways(308, 0);
+	int ticks_use;
+	int exit_progress;
+	str dots;
+	int ticks_repair;
+	int max_armor = 1500 + 900 * checkinventory("MechUp_Armor");
+	int auto_repair_heal = 10 + 10*checkInventory("MechUp_Armor");
+	int hp, diff;
     while(p_TankSlot[playernumber()] == 2 && g_Status != 299)
     {
-			// [Samu] Press use to get out of the tank!
-		if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE) ACS_ExecuteAlways(307, 0);
+		// [Samu] Hold use for 3 seconds to get out of the tank!
+		if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE) ticks_use++;
+		else ticks_use = 0;
+		
+		
+		if(ticks_use != 0){
+			dots = ProgressDot(3, ticks_use, 35);
+			f_CenterTip(strparam(s:dots, s:"Ejecting", s:dots));
+		}
+		else ClearHudMessage(78);
+		
+		if(ticks_use == 35) {
+			f_CenterTip("Ejection sucessful.");
+			ACS_ExecuteAlways(307, 0);
+		}
+		
+		if(CheckInventory("MechUp_AutoRepair")){
+			// [Samu] Auto-repair the mech, because im an impacient person.
+			ticks_repair++;
+			if(ticks_repair % 5 == 0){ // Heh
+				hp = GetActorProperty(0, APROP_HEALTH);
+				if(hp < max_armor){
+					diff = max_armor - hp;
+					if(diff < auto_repair_heal) setactorproperty(0, APROP_HEALTH, hp + diff);
+					else 		  				setactorproperty(0, APROP_HEALTH, hp + auto_repair_heal);
+				}
+				ticks_repair = 0;
+			}
+		}
+		
         
         // switch to tank weapon
        	 setweapon("TankGun");
         
-        // display tank health
+        // display tank health and upgrades.
         setfont("CONFONT");
-        hudmessage(s:"Armor: ", d:getactorproperty(0, APROP_HEALTH); 0, 202, CR_BLUE, 128.1, 300.1, 1.0);
-        
+        hudmessage(s:"Armor: \cv", d:getactorproperty(0, APROP_HEALTH), s:" / ", d:max_armor
+				,s:"\n\n\c-", s:MechUp_ReportUps(true); 0, 202, CR_lightBlue, 128.1, 300.1, 1.0);
         delay(1);
     }
 	
@@ -208,6 +257,15 @@ script 306 (void)
 		setfont("CONFONT");
 		print(s:"Cannot enter while Godsphere\nis in use!");
 	}
+}
+
+Script "SFPlus_MechHeal" (int amount) {
+	// Called by the soulsphere and megasphere, for a stimpack-esque item.
+	int max_armor = 1500 + 900 * checkinventory("MechUp_Armor");
+	int hp = getactorproperty(0, APROP_HEALTH);
+	int diff = max_armor - hp;
+	if(diff < amount) setactorproperty(0, APROP_HEALTH, hp + diff);
+	else 		  	  setactorproperty(0, APROP_HEALTH, hp + amount);
 }
 
 script 309 (void){
@@ -296,7 +354,7 @@ script 310 (int l_Type)
 // tank emergency exit from marine command (the player might get locked inside)
 script 158 (void)
 {
-    if (c_Techflag[3] == 1)
+    if (Tech_isDone(FP_TECH_MECHFA))
     {
         door_raise(347, 10, 150, 0);
         setweapon("TankGun");
