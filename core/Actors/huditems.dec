@@ -16,6 +16,7 @@ Actor HUD_Ups 				: Integer {}
 Actor HUD_Kills 			: Integer {}
 Actor Hud_Deaths 			: Integer {}
 Actor HUD_TeamCredits 		: Integer {}
+Actor HUD_Streak			: Integer {}
 
 Actor HUD_Sector 			: Integer {}
 Actor HUD_CoreHP 			: Integer {}

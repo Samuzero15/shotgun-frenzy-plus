@@ -152,6 +152,7 @@ script 53 ENTER
     p_MechUpgradeArmor[play] = 0;
     p_TankSlot[play] = 0;
 	p_StreakLevel[play] = 0;
+	p_Mechtimer[play] = -2;
 	
     Notify_Player_Enter();
 	
@@ -168,6 +169,12 @@ script 54 RESPAWN
 	
     // give players the 'player' tid
     thing_changetid(0, 990+PlayerNumber());
+	// Set the max health upon spawn.
+	
+	setactorproperty(0, APROP_SpawnHealth, getActorProperty(0, AProp_Health));
+	
+	ACS_NamedExecute("Auto-Use Items", 0);
+    p_Streak[playernumber()] = 0; // Reset the kill-streak.
     
     // take boomer cannon incase it glitched
     takeinventory("BoomerCannon", 1);
@@ -193,9 +200,6 @@ script 54 RESPAWN
     delay(15);
     //t3hdoom: Originally didn't give any ammo if there's no armory. Let's give them ammo on spawn regardless
     acs_execute(106, 0, 3, 1, 0);
-	ACS_NamedExecute("Auto-Use Items", 0);
-    p_Streak[playernumber()] = 0; // Reset the kill-streak.
-	
 }
 
 script "SFPlus_NameUpdate" ENTER {

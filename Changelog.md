@@ -2,6 +2,16 @@
 
 ## v0 - Before the beginning...
 
+#### -) (11 - 12 / 11 / 2020) [Map Doors, Sector Cap, Mech and HUD fixes.]
+	*) Now the doors should open-close properly in the SF maps!
+	+) Now, the old hud will display the mech status, which it shows the current time for re-using a mech!
+	*) Now, when you hop off the mech, you should wait a small cooldown of 15 seconds.
+	*) Small touches on the SF04 map. Cursed AF.
+	*) Mech users shall now gain experience and credits!
+	*) Some more fixes on the sector management scripts.
+	*) Moved the icons for the normal status bar a bit. It's a lil' bigger.
+	*) Now the kill streaks should be seen in the normal status bar.
+
 #### -) (10 / 11 / 2020) [Mechs touches and addons. SF04 map turrets fixed.]
 	*) Alright, map SF04's map turrets should be cleared and occupied correctly.
 	+) Now, you can look up the current mech upgrades when using a mech.

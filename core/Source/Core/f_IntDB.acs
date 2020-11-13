@@ -114,6 +114,7 @@ int p_UpgradeStack[31];         // soon to be redundant
 int p_TankSlot[31];             // player tank status
 int p_KickSlot[31];
 int p_LastWeap[31];//for the autowep switching feature
+int p_MechTimer[32];
 int p_MechUpgradeWeapons[31];
 int p_MechUpgradeArmor[31];
 

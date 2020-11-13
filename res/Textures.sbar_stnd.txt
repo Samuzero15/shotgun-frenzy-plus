@@ -388,29 +388,29 @@ Graphic "EXPBR0", 486, 11
 
 Graphic "HUDCREIC", 32, 32
 {
-	XScale 1.600
-	YScale 1.600
+	XScale 1.000
+	YScale 1.000
 	Patch "HUDCREIC", 0, 0
 }
 
 Graphic "HUDPDHIC", 32, 32
 {
-	XScale 1.600
-	YScale 1.600
+	XScale 1.000
+	YScale 1.000
 	Patch "HUDPDHIC", 0, 0
 }
 
 Graphic "HUDUPGIC", 32, 32
 {
-	XScale 1.600
-	YScale 1.600
+	XScale 1.000
+	YScale 1.000
 	Patch "HUDUPGIC", 0, 0
 }
 
 Graphic "HUDKILIC", 32, 32
 {
-	XScale 1.600
-	YScale 1.600
+	XScale 1.000
+	YScale 1.000
 	Patch "HUDKILIC", 0, 0
 }
 

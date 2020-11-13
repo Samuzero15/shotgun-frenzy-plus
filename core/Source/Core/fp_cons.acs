@@ -3,7 +3,7 @@
 //   a Shotgun Frenzy fork by Samuzero15tlh
 
 // fp_cons.acs
-// All constants storage goes here, because it's not right to hardcode.
+// All constants goes here, because it's not right to hardcode.
 
 #library "FP_Cons"
 

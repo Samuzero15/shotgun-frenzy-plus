@@ -18,7 +18,7 @@ ACTOR Battery 30001
 {
 	obituary "%o was killed by a battery... lol!?"
 	health 750
-	radius 16
+	radius 15
 	height 56
 	speed 0
 	painchance 255
@@ -69,8 +69,8 @@ ACTOR Battery 30001
 			NULL A 35
 			Loop
 		Raise.Prepare:// Called by SetActorState!, in this moment, Thing_Raise should do the proper trick.
-			NULL A -1
-			Stop
+			NULL A 1 CanRaise
+			Loop
 		Raise:
 			CORE CBA 5 bright
 			goto See

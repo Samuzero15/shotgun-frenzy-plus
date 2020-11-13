@@ -408,29 +408,40 @@ statusbar normal// Standard Doom Status bar
 	
 	// [Samu] Credits, Upgrade Points, Kills and Deaths.
 	inInventory not HUD_Spectating{
-		drawimage "HUDCREIC", 462, 530;
+		drawimage "HUDCREIC", 16, 452;
 		
-		drawnumber 10,  Confont, white,  HUD_TeamCredits,  alignment(left), whennotzero, 482, 532;
-		drawnumber 10,  Confont,  gold,      HUD_Credits,  alignment(left), whennotzero, 482, 540;
+		inInventory HUD_TeamCredits{
+			drawnumber 10,  STATBIGS, white,  HUD_TeamCredits,  alignment(left), whennotzero, 50, 456;
+			drawnumber 10,  STATBIGS,  gold,      HUD_Credits,  alignment(left), whennotzero, 50, 472;
+		}else{
+			drawnumber 10,  STATBIGS,  gold,      HUD_Credits,  alignment(left), whennotzero, 50, 464;
+		}
 		
 		inInventory HUD_Ups{
-			drawimage "HUDUPGIC", 462, 550;
-			drawnumber 10, STATBIGS,  cyan, HUD_Ups,  alignment(left), whennotzero, 482, 558;
+			drawimage "HUDUPGIC", 16, 422;
+			drawnumber 10, STATBIGSNums,  cyan, HUD_Ups,  alignment(left), whennotzero, 50, 425;
 		}
 	}
 	else{
 		inInventory HUD_TeamCredits{
-			drawimage "HUDCREIC", 462, 550;
-			drawnumber 10,  Confont, white, HUD_TeamCredits,  alignment(left), whennotzero, 482, 532;
+			drawimage "HUDCREIC", 16, 452;
+			drawnumber 10,  STATBIGS, white,  HUD_TeamCredits,  alignment(left), whennotzero, 50, 464;
 		}
 	}
 	
-	drawimage "HUDKILIC", 318, 530;
-	drawnumber 6,  Confont,   Red, kills,  alignment(right), 318, 540;
+	drawimage "HUDPDHIC", 752, 452;
+	//drawnumber 6,  STATBIGS,   Red, kills,  alignment(right), 750, 464;
 	
 	inInventory HUD_Deaths{
-		drawimage "HUDPDHIC", 318, 550;
-		drawnumber 3,  STATBIGS,  Red, HUD_Deaths,  alignment(right), 318, 558;
+			drawnumber 10,  STATBIGS,  brick,  	   kills,  alignment(right), whennotzero, 750, 456;
+			drawnumber 10,  STATBIGS,  red, HUD_Deaths,  alignment(right), whennotzero, 750, 472;
+		}else{
+			drawnumber 10,  STATBIGS,  brick,      kills,  alignment(right), whennotzero, 750, 464;
+		}
+	
+	inInventory HUD_Streak{
+		drawimage "HUDKILIC", 752, 422;
+		drawnumber 3,  STATBIGSNums,  Orange, HUD_Streak,  alignment(right), 750, 425;
 	}
 	
 	

@@ -57,6 +57,7 @@ script "SyncWithSBARINFO" (int kills) {
 	SetInventory("HUD_ExpLeft", kills);
 	SetInventory("HUD_Rank", p_Rank[playernumber()] + 1);
 	SetInventory("HUD_Exp", p_Exp[playernumber()]);
+	SetInventory("HUD_Streak", p_Streak[playernumber()]);
 	SetAmmoCapacity("HUD_Exp", p_RankExp[p_Rank[playernumber()] + 1]);
 }
 
@@ -71,6 +72,8 @@ script "SFPlus_Sbarinfo_Respawn" RESPAWN{
 script "SFPlus_Sbarinfo_HealthStatus" (void) {
 	int hp = GetActorProperty(0, APROP_HEALTH);
 	int maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
+	
+	//log(s:"Called? ActivatorTID: ", d:ActivatorTID(), s:" Max HP:", d:GetActorProperty(0, APROP_SPAWNHEALTH));
 	while(hp > 0){
 		SetInventory("HUD_Dangerhealth", hp <= ((maxhp * 0.10) >> 16));
 		SetInventory("HUD_Critichealth", hp <= ((maxhp * 0.25) >> 16));

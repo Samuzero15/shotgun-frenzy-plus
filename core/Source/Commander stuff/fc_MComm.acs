@@ -106,6 +106,8 @@ script 304 (void)
 script 305 (void)
 {
     // change flags
+	p_MechTimer[playernumber()] = 0;// Initialize timer.
+	
     f_CenterTip("Mech Purchased!");
     f_TipShow("VEHIC", "", "Has purchased a War Mech!", 10);
 	LocalAmbientSound("veh/tankstartup",128);
@@ -152,7 +154,7 @@ script 306 (void)
 	setfont("BIGFONT");
     hudmessage(s:
 	"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory\
-	or hold \cguse \ca for 1 second!\
+\	or hold \cguse \ca for 1 second!\
 	\n\n\cbQuit early \cato \cgavoid death!\
 	\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
 	\n\n\cgPrimary fire \cafor your \cbNails\
@@ -166,6 +168,7 @@ script 306 (void)
     
     // change flags
     p_TankSlot[playernumber()] = 2;
+	p_MechTimer[playernumber()] = -1;// Initialize timer.
     
     // teleport to new location
     teleport(142, 0, 0);
@@ -276,11 +279,21 @@ script 309 (void){
     setfont("CONFONT");
     hudmessage(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
 	p_TankSlot[playernumber()] = 99;
-	delay(35 * 5);
-	f_CenterTip ("Your mech has been destroyed and is now repairing...");
-	delay(35 * 2);
-	f_CenterTip ("Your mech will be ready for use in 2 minutes...");
-	delay(35 * 60 * 2 - 35 * 7);
+	p_MechTimer[playernumber()] = 35 * 60 * 2;
+	
+	int msgtimer;
+	while(p_MechTimer[playernumber()] > 0){
+		
+		if(msgTimer == (35 * 5)) 
+			f_CenterTip ("Your mech has been destroyed and is now repairing...");
+		else if (msgTimer == (35 * 7)) 
+			f_CenterTip ("Your mech will be ready for use in 2 minutes...");
+			
+		p_MechTimer[playernumber()] --;
+		msgtimer++;
+		delay(1);
+	}
+	
 	p_TankSlot[playernumber()] = 1;
 	f_TipShow("VEHIC", " War Mech State", "Reparings completed!", 10);
 	f_CenterTip ("Your mech is now ready for deployment!");
@@ -295,18 +308,15 @@ script 307 (void)
 {
 	f_TipShow("VEHIC", " War Mech State", "Returned for Maintenance.", 10);
 	
-    // change flags
-    p_TankSlot[playernumber()] = 1;
-             takeinventory("MechMorph",1);
-    Unmorphactor(0, 1);
-	
-	    
-    // purge
+	// purge
     setfont("CONFONT");
     hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
 	if(checkInventory("MechUp_LifeSave"))
 		giveInventory("StartingPoint", 1); // teleports you back to safety!
-    
+	
+	takeinventory("MechMorph",1);
+    Unmorphactor(0, 1);
+	    
     // fix players health
     acs_execute(106, 0, 1, 1, 1);
 	
@@ -314,31 +324,34 @@ script 307 (void)
 	
 	takeinventory("TankGun",1);
     takeinventory("TankGunAdvanced",1);
+	
+	p_MechTimer[playernumber()] = 35 * 15;
+	p_TankSlot[playernumber()] = 99;
+	
+	int msgtimer;
+	while(p_MechTimer[playernumber()] > 0){
+		
+		if(msgTimer == (35 * 5)) 
+			f_CenterTip ("Your mech should be ready in a few seconds..");
+			
+		p_MechTimer[playernumber()] --;
+		msgtimer++;
+		delay(1);
+	}
+	
+	f_CenterTip ("Your mech is ready to go!");
+    // change flags
+	p_MechTimer[playernumber()] = 0;
+    p_TankSlot[playernumber()] = 1;
+    
 }
 
 // exit tank (map version)
 script 31 (void)
 {
-	
     // player is tank?
     if (p_TankSlot[playernumber()] == 2){
-	f_TipShow("VEHIC", " War Mech State", "Returned for Maintenance.", 10);
-    // change flags
-    p_TankSlot[playernumber()] = 1;
-             takeinventory("MechMorph",1);
-    Unmorphactor(0, 1);
-	
-	// purge
-	setfont("CONFONT");
-    hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
-    
-    // fix players health
-    acs_execute(106, 0, 1, 1, 1);
-    
-	ACS_Execute(56,0,p_LastWeap[playernumber()],0,0);
-	
-	takeinventory("TankGun",1);
-    takeinventory("TankGunAdvanced",1);
+		ACS_Execute(307,0);
     }
 }
 

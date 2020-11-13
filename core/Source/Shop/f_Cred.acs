@@ -69,22 +69,10 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	bool hardmon = enemytype == 1;
 	
 	if(l_splatCombo) color = CR_BRICK;
-	
-	/*
-	if(monsterClass < 0){
-	monsterClass += 1;
-	// [Samu] It's killed by a drone!
-	// Let's give credits to the owner!
-		l_Amount = p_MonsterCredits[-monsterClass] + playercount();
-		l_Amount = l_Amount / 2; 
-		if(l_amount > 0)
-		sf_AddCredits_S(l_Amount, playerNumber());
-		
-		if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
-		localambientsound("p/kill", 64);
-	}*/
 
-	if(Human() && CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
+	if(Human() && 
+		(CheckActorClass(ActivatorTID(), "FrenzyPlayer") 
+		|| CheckActorClass(ActivatorTID(), "MONSTEREDITED_MechPlayer"))){
 	if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
 		localambientsound("p/kill", 125);
 

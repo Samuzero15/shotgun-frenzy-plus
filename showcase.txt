@@ -1,6 +1,7 @@
 Players can drop money with sfp_dropcredits command!
 Shotgun Turret is now here! (On SF Maps)
 Rocket Turret has been beefed up a bit.
+New Mech Upgrade! Auto-Repair, which it regenerates the Mech armor!
 Improved the CMD Airstrikes, plan your targets and launch the bombers!
 New Kill-Streak System! An alternative to rack-up Upgrade Points!
 Player Upgrades are now here! Look them up in the Health Terminal!

@@ -19,7 +19,6 @@
 script 91 OPEN
 {
 	SFPlus_DefaultVars();
-	f_AdaptiveSpawning = 1;
 	f_AISkillMultiplier = 5;
 }
 

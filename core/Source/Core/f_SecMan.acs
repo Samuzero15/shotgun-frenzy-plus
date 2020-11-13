@@ -13,7 +13,7 @@
 #include "samu_tools.ach"
 
 function int m_CalcSector (void)
-{
+{ // Calculates the demon count between the risked sectors.
     // locals
     int l_Result;
     
@@ -32,8 +32,7 @@ function int m_CalcSector (void)
 }
 
 function int m_CalcTotal (void)
-{
-    // locals
+{// Counts all monsters on the battlefield.
     int l_Result;
     
     // count total demons
@@ -54,50 +53,67 @@ script 51 OPEN
 }
 
 function int SecMan_RecapCond(int sector){
+	// Decides if the selected sector is recapturable.
 	return (m_CalcSector() < m_recapmin && sector > 1);
 }
 
 Function void SecMan_ToggleDoors(bool closed, int sector, int doortype, int doorspeed){
+	// Switches the doors, and unclogs them off if there is some monsters stucking the door.
 	int i = 0;
-
+	bool close = false;
+	ACS_NamedTerminate("SecMan_DoorUnclogger",0);
 	if(closed){
-		if (doortype == 0)
-			for(i = sector; i <= 4; i++){
-				ceiling_lowerandcrush(100 + i, doorspeed, 2);
-				ceiling_lowerandcrush(99 + i, doorspeed, 2);
-			}
-		else
-			for(i = sector; i <= 4; i++){
-				floor_raisetohighest(100 + i, doorspeed);
-				floor_raisetohighest(99 + i, doorspeed);
-			}
-	}else { // 1 Line madness.
-		if (doortype == 0) for(i = 1; i <= sector; i++) door_open(100+i, doorspeed);
-		else for(i = 1; i <= sector; i++) floor_lowertolowest(100+i, doorspeed);
+		ACS_NamedExecute("SecMan_DoorUnclogger",0);
+	}
+	for (i = 1; i <= 4; i++){
+		if(i > sector) close = true;
+		else if(i == sector) close = closed;
+		if(close){
+			if (doortype == 0) 	ceiling_lowerandcrush(100 + i, doorspeed, 2);
+			else 				floor_raisetohighest(100 + i, doorspeed);
+		}else {
+			if (doortype == 0)  door_open(100+i, doorspeed);
+			else 				floor_lowertolowest(100+i, doorspeed);
+		}
 	}
 
 }
 
 function void SecMan_MonsterAttack(int sector) {
+	// Simple enough, targets to the next sector battery.
 	for(int i = 0; i <= sector; i++){
 		Thing_Hate(109 + i, 100 + sector, 4);
 	}
 }
 
 Function void SecMan_ToggleCores(int sector){
+	// Toggles the invulnerability between batteries.
 	for(int i = 1; i <= 4; i++){
 		if(i == sector) //Thing_Activate(100 + i);
-			SetActorState(100 + i, "See.Risk");
+			if(GetActorProperty(100 + i, APROP_HEALTH) > 0)
+				SetActorState(100 + i, "See.Risk");
 		else 			//Thing_DeActivate(100 + i);
 			if(GetActorProperty(100 + i, APROP_HEALTH) > 0)
 				SetActorState(100 + i, "See.Safe");
 	}
 }
 
+Script "SecMan_DoorUnclogger" (void){
+	// Kills any demon in between the doors.
+	int i;
+	int time;
+	while (time != 35*5){
+		for (i = 1; i < 5; i++)
+			SectorDamage(100 + i, 9999999, 0, "", DAMAGE_NONPLAYERS | DAMAGE_IN_AIR);
+		time++;
+		delay(1);
+	}
+}
+
 int alarmsUsed = 0;
 
-Script "SFPlus_SectorManagerMainLoop" OPEN {
-	// Same Script, but without the termination riskes.
+Script "SFPlus_SecManMainLoop" OPEN {
+	// Same Script, but without the termination riskes. Sector Cap Main loop.
 	floor_raisetonearest(105, 50);
 	int current_sector;
 	int time;
@@ -125,7 +141,7 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 				// Check again if the sector is actually clear.
 				delay(1);
 				acs_terminate(129, 0);// Kill the timer script.
-				SecMan_ToggleDoors(1, g_Status, f_Doortype, f_Doorspeed); // Close them again.
+				SecMan_ToggleDoors(1, g_Status-1, f_Doortype, f_Doorspeed); // Close them again.
 				acs_execute(103, 0, 0, 0, 0);
 				
 				skip_recap = true;
@@ -173,7 +189,7 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 		while (current_sector == g_Status && !skip_recap){ 
 			// While there is no updates on the sector control or we already did a quick re-cap.
 			if (SecMan_RecapCond(g_Status)){
-				SecMan_ToggleDoors(1, g_Status, f_Doortype, f_Doorspeed);
+				SecMan_ToggleDoors(1, g_Status-1, f_Doortype, f_Doorspeed);
 				acs_execute(103, 0, 0, 0, 0);
 				break;
 			}
@@ -184,11 +200,6 @@ Script "SFPlus_SectorManagerMainLoop" OPEN {
 	}
 }
 
-// sector open
-script 100 OPEN
-{
-	// Lookup SFPlus_SectorManagerMainLoop script.
-}
 
 // sector lost (upon battery destruction)
 script 102 (void)
@@ -206,22 +217,8 @@ script 102 (void)
     ambientsound("cv/batterydestroyed", 125);
     
     // message
-    switch (g_Status)
-    {
-        case 1:
-            Notify_Message("Sector 1 CORE DESTROYED!","We've lost the control of Sector 1", "INFO", 3);
-            break;
-        case 2:
-            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 2", "INFO", 3);
-            break;
-        case 3:
-            Notify_Message("Sector 2 CORE DESTROYED!","We've lost the control of Sector 3", "INFO", 3);
-            break;
-        case 4:
-            Notify_Message("Main CORE DESTROYED!", "The Hell Forces wins this round!", "INFO", 3);
-            acs_execute(125, 0, 4, 0, 0);
-            break;
-    }
+	Notify_Message(Strparam(s:"Sector ", d:g_Status, s:" control lost!"),
+			"The battery is destroyed!", "INFO", 3);
     
     // change sectors
     g_Status ++;
@@ -229,25 +226,19 @@ script 102 (void)
     delay(35 * 2);
 	SecMan_MonsterAttack(g_Status); // Charge!
     
-    // recall sector open script
-	/*
-    if (g_Status < 5){
-        acs_execute(100, 0, 0, 0, 0);}
-		*/
 }
 
 // sector reclaimed
 script 103 (void)
 {
 	int i;
+	int msg;
 	
 	ambientsound("g/sector_reclaim", 125);
     
     // change sectors
     if (g_Status > 1)
         g_Status --;
-	
-	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.
 	
 	//[Samu] To refresh their fighting-spirit.
 		refreshPlayers();
@@ -256,8 +247,7 @@ script 103 (void)
 		setfont("CONFONT");
 		switch(g_Status){
 			case 1:
-			  hudmessageBOLD(s:"Sector 1 recover Bonus!\n+5000 Credits Added!\n+1 Berserk and Godsphere!\n+3 Megaspheres!\n+2 Upgrade Points!";
-				2, 6, cr_Blue, 400.0, 480.1, 6.0);
+			  msg = "\n+5000 Credits!\n+1 Berserk and Godsphere!\n+3 Megaspheres!\n+2 Upgrade Points!";
 				//[Samu] It's hard to recover this sector, so let's give it a juicy reward.
 			  giveCashToPlayers(5000);
 			  giveUPToPlayers(2);
@@ -266,8 +256,7 @@ script 103 (void)
 			  giveItemToPlayers("Inventory_Megasphere", 3);
 			break;
 			case 2:
-			  hudmessageBOLD(s:"Sector 2 recover Bonus!\n+2500 Credits Added!\n+1 Berserk!\n+2 Megaspheres!\n+1 Upgrade Points!";
-				2, 6, cr_Blue, 400.0, 480.1, 6.0);
+			  msg = "\n+2500 Credits!\n+1 Berserk!\n+2 Megaspheres!\n+1 Upgrade Points!";
 			  //[Samu] Not much people can pull off this one, but its possible to do.
 			  giveCashToPlayers(2500);
 			  giveUPToPlayers(1);
@@ -276,38 +265,26 @@ script 103 (void)
 			break;
 			case 3:
 			  //[Samu] Easy to get, just give a simple reward.
-			  hudmessageBOLD(s:"Sector 3 recover Bonus!\n+1000 Credits Added!\n+1 Megasphere!";
-				2, 6, cr_Blue, 400.0, 480.1, 6.0);
+			  msg = "\n+1000 Credits!\n+1 Megasphere!";
 			  giveCashToPlayers(1000);
 			  giveItemToPlayers("Inventory_Megasphere", 1);
 			break;
 		}
 		sethudsize(0, 0, 0);
 	//[Samu] Now the sector recovery should worth the effort now!
-        
-    
-        // hate the next area
-    SecMan_MonsterAttack(g_Status); // Charge!
-        
-    // message
-    switch (g_Status)
-    {
-        case 1:
-            Notify_Message("Sector 1 Recovered!", "The Sector 1 CORE has been restored!", "INFO", 1);
-            //thing_raise(101);
-			ACS_NamedExecute("SecMan_RaiseBattery",0,101); 
-            break;
-        case 2:
-            Notify_Message("Sector 2 Recovered!", "The Sector 2 CORE has been restored!", "INFO", 1);
-            //thing_raise(102);
-			ACS_NamedExecute("SecMan_RaiseBattery",0,102); 
-            break;
-        case 3:
-            Notify_Message("Sector 3 Recovered!", "The Sector 3 CORE has been restored!", "INFO", 1);
-            //thing_raise(103);
-			ACS_NamedExecute("SecMan_RaiseBattery",0,103); 
-            break;
-    }
+		// Show the message with the spoils of war.
+        hudmessageBOLD(s:"Sector recover Bonus! ", s:msg;
+				2, 6, cr_Blue, 400.0, 480.1, 6.0);
+			
+		// Notify the recapturing.
+		 Notify_Message(Strparam(s:"Sector ", d:g_Status, s:" Re-Captured!"),
+			"The battery has been restored!", "INFO", 1);
+		
+		// Raise the battery
+		ACS_NamedExecute("SecMan_RaiseBattery",0,100 + g_Status); 
+		
+	SecMan_MonsterAttack(g_Status); // Charge!
+	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.
     
     
     delay(35 * 2);
@@ -319,16 +296,22 @@ script 103 (void)
 }
 
 script "SecMan_RaiseBattery" (int which) {
+	// Simple script that raises the batteries.
 	SetActorState(which, "Raise.Prepare");
 	delay (1);
 	Thing_Raise(which);
+}
+
+script "SecMan_SwitchDoors" (int sect, int close) {
+	// A debug function to show the potential of doors.
+	SecMan_ToggleDoors(close, sect, f_doortype, f_doorspeed);
 }
 
 int secdelay;
 
 // enter/exit sector
 script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
-{
+{// Teleporting to sector script
     // terminate if bot
     if (playerisbot(playernumber()) && l_Bypass == 0)        terminate;
     

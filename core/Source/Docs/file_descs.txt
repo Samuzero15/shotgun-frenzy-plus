@@ -76,4 +76,14 @@ Samu's File Summary for ACS source code.
 		"SyncWithSBARINFO")	Same as adobe, but it sinches when the player
 							is in the game.
 // More documanting soon...
-		
+
+-) Commander stuff: Everything needed for the commander in SF Maps.
+		@)fc_Armor: Armory scripts.
+		@)fc_GLab: Genetic lab scripts.
+		@)fc_DLab: Marine command scripts, holding all the core pulse scripts for now.
+		@)fc_MComm: Mech factory scripts, holding the mech scripts and some of the special
+					actions for the Marine Command.
+		@)fc_Ref: Refinery scripts.
+		@)fc_NSilo: Nuclear Sylo scripts, handling the nuking ending scripts.
+		@)fp_baners: The banner from the command base, just because lols.
+		@)fp_comcmd: The commander buttons for the commander terminal.
