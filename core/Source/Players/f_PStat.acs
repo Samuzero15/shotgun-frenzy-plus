@@ -148,8 +148,6 @@ script 53 ENTER
     p_Exp_Points[play] = 0;
     p_Exp[play] = 0;
     p_KickSlot[play] = 0;
-    p_MechUpgradeWeapons[play] = 0;
-    p_MechUpgradeArmor[play] = 0;
     p_TankSlot[play] = 0;
 	p_StreakLevel[play] = 0;
 	p_Mechtimer[play] = -2;

@@ -33,6 +33,7 @@
 
 function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
 {
+	//log(s:"(f_tip): f_tipShow is depercarted, please use Notify_Message. Thank you.");
     // local containers
     int l_Position;
     int l_ID;

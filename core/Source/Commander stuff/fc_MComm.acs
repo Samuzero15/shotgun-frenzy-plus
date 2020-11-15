@@ -107,9 +107,11 @@ script 305 (void)
 {
     // change flags
 	p_MechTimer[playernumber()] = 0;// Initialize timer.
+	p_TankSlot[playernumber()] = 1;
 	
     f_CenterTip("Mech Purchased!");
-    f_TipShow("VEHIC", "", "Has purchased a War Mech!", 10);
+    //f_TipShow("VEHIC", "", "Has purchased a War Mech!", 10);
+	Notify_Player("Has Pursached a Mech!", "VEHIC", 1);
 	LocalAmbientSound("veh/tankstartup",128);
 	delay(35);
     localambientsound("veh/tankshutdown", 128);
@@ -124,7 +126,7 @@ script 308 (void)
 		else if (GetPlayerInput(-1, INPUT_YAW) > 0)      setfont("TANKH2");
 		else setfont("TANKH1");
 			
-		hudmessage(s:"a"; 0, 201, 0, 400.0, 0.1, 1.0);
+		hudmessage(s:"a"; HUDMSG_LAYER_UNDERHUD, 201, 0, 400.0, 0.1, 1.0);
 		delay(6);
 	}
 }
@@ -154,7 +156,7 @@ script 306 (void)
 	setfont("BIGFONT");
     hudmessage(s:
 	"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory\
-\	or hold \cguse \ca for 1 second!\
+\ or hold \cguse \ca for 1 second!\
 	\n\n\cbQuit early \cato \cgavoid death!\
 	\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
 	\n\n\cgPrimary fire \cafor your \cbNails\
@@ -162,7 +164,8 @@ script 306 (void)
 	\n\n\n\ci Now give em' Hell!"
 	; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
 	
-	f_TipShow("VEHIC", " War Mech State", "Deployed for action!", 10);
+	//f_TipShow("VEHIC", " War Mech State", "Deployed for action!", 10);
+	Notify_PlayerEX(0, " Mech State", "Deployed!", "VEHIC", 0);
 	
     // welcome message
     
@@ -176,12 +179,7 @@ script 306 (void)
     // change skin and class
     //morphactor(0, "TankPlayer", "", 999999, 2, "", "");
     giveinventory("MechMorph",1);
-    if (p_MechUpgradeWeapons[playernumber()] == 0){
-    	giveinventory("TankGun", 1);
-    }
-    else{
-    	giveinventory("TankGunAdvanced", 1);
-    }
+    giveinventory("TankGun", 1);
 	
     
     // give more health
@@ -209,7 +207,7 @@ script 306 (void)
 	str dots;
 	int ticks_repair;
 	int max_armor = 1500 + 900 * checkinventory("MechUp_Armor");
-	int auto_repair_heal = 10 + 10*checkInventory("MechUp_Armor");
+	int auto_repair_heal = 5 + 5*checkInventory("MechUp_Armor");
 	int hp, diff;
     while(p_TankSlot[playernumber()] == 2 && g_Status != 299)
     {
@@ -274,7 +272,8 @@ Script "SFPlus_MechHeal" (int amount) {
 script 309 (void){
 	TakeInventory("TankGun", 1);
 	TakeInventory("TankGunAdvanced", 1);
-    f_TipShow("VEHIC", " War Mech State", "Has been destroyed!", 10);
+    //f_TipShow("VEHIC", " War Mech State", "Has been destroyed!", 10);
+	Notify_PlayerEX(0, " Mech State", "Destroyed!", "VEHIC", 3);
     // purge
     setfont("CONFONT");
     hudmessage(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
@@ -295,7 +294,8 @@ script 309 (void){
 	}
 	
 	p_TankSlot[playernumber()] = 1;
-	f_TipShow("VEHIC", " War Mech State", "Reparings completed!", 10);
+	//f_TipShow("VEHIC", " War Mech State", "Reparings completed!", 10);
+	Notify_PlayerEX(0, " Mech State", "Repaired!", "VEHIC", 1);
 	f_CenterTip ("Your mech is now ready for deployment!");
 
     
@@ -306,7 +306,8 @@ script 309 (void){
 // exit tank
 script 307 (void)
 {
-	f_TipShow("VEHIC", " War Mech State", "Returned for Maintenance.", 10);
+	//f_TipShow("VEHIC", " War Mech State", "Returned for Maintenance.", 10);
+	Notify_PlayerEX(0, " Mech State", "Returned for Maintenance", "VEHIC", 0);
 	
 	// purge
     setfont("CONFONT");
@@ -378,28 +379,14 @@ script 158 (void)
 
 script "AnnounceMechUpgrade" (int which){
 	str upg;
-	if(MechUp_getMax(which) != 0)	
+	if(MechUp_getMax(which) != 1)	
 		upg = strparam(s:MechUp_getName(which), s:" Lv.", d:CheckInventory(MechUp_getActor(which)));
 	else upg = strparam(s:MechUp_getName(which));
 	str msg = strparam(s:"Installed the ", s:upg ,s:"!");
 
-    f_TipShow("VEHICA", " Mech upgrade!", msg, 10);
-    delay(35);
-    localambientsound("veh/tankshutdown", 125);
-}
-
-script 421 (void){
-	p_MechUpgradeWeapons[playernumber()] = 1;
-    f_TipShow("VEHICA", "", "Has upgraded their Mechs weapons...", 10);
-    localambientsound("vehicle/mechupgrade", 125);
-    delay(35);
-    localambientsound("veh/tankshutdown", 125);
-}
-// mech upgrade: armor
-script 422 (void){
-	p_MechUpgradeArmor[playernumber()] = 1;
-    f_TipShow("VEHICB", "", "Has upgraded their Mechs armor...", 10);
-    localambientsound("vehicle/mechupgrade", 125);
+    //Notify_Message(msg, " Mech upgrade!", "VEHICA", 10);
+	Notify_PlayerEX(0, " got a Mech Upgrade!", msg, "VEHICA", 0);
+	
     delay(35);
     localambientsound("veh/tankshutdown", 125);
 }

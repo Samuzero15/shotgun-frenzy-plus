@@ -257,154 +257,143 @@ statusbar normal// Standard Doom Status bar
 
     //[Samu] If use secondary ammo...
 	
-	alpha 0.5{DrawImage "MEDIA0",  50,  520;}
-	drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
+	
 	
 	//[Samu] Health depending on the upgrades.
 	
-	inInventory HUD_DangerHealth, 1
-	{
-		drawnumber 3, StatBigsNums, RED, health, alignment(center), 55, 520;
-	}else{ inInventory HUD_CriticHealth, 1 {  // Over health
-		drawnumber 3, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
-	}else{ inInventory HUD_LowHealth, 1 {  // Low health
-		drawnumber 3, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
-	}else{ inInventory HUD_OverHealth, 1 {  // Critic health
-		drawnumber 3, StatBigsNums, CYAN, health, alignment(center), 55, 520;
-	}else{ // Normal health
-		drawnumber 3, StatBigsNums, GREEN, health, alignment(center), 55, 520;
-	}}}}
+	inInventory not HUD_OnMech{
 	
-	inInventory BasicArmor, 1{
-		alpha 0.5{DrawImage armoricon, 150, 520;}
-		drawString STATBIGS, White, "Armor",  157, 550, 0, alignment(center); // bug, This word stays even if you don't have armor.
-		drawnumber 3, StatBigsNums, GREEN, armor, whennotzero, alignment(center), 155, 520, 2, RED, 30, CYAN, 101;
-		
+		alpha 0.5{DrawImage "MEDIA0",  50,  520;}
+		drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
+	
+		inInventory HUD_DangerHealth, 1
+		{
+			drawnumber 3, StatBigsNums, RED, health, alignment(center), 55, 520;
+		}else{ inInventory HUD_CriticHealth, 1 {  // Over health
+			drawnumber 3, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
+		}else{ inInventory HUD_LowHealth, 1 {  // Low health
+			drawnumber 3, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
+		}else{ inInventory HUD_OverHealth, 1 {  // Critic health
+			drawnumber 3, StatBigsNums, CYAN, health, alignment(center), 55, 520;
+		}else{ // Normal health
+			drawnumber 3, StatBigsNums, GREEN, health, alignment(center), 55, 520;
+		}}}}
+	}else {
+		drawString STATBIGS, White, "Mech Armor",  85, 550, 0, alignment(center);
+		inInventory HUD_DangerHealth, 1
+		{
+			drawnumber 4, StatBigsNums, RED, health, alignment(center), 80, 520;
+		}else{ inInventory HUD_CriticHealth, 1 {  // Over health
+			drawnumber 4, StatBigsNums, ORANGE, health, alignment(center), 80, 520;
+		}else{ inInventory HUD_LowHealth, 1 {  // Low health
+			drawnumber 4, StatBigsNums, YELLOW, health, alignment(center), 80, 520;
+		}else{ inInventory HUD_OverHealth, 1 {  // Critic health
+			drawnumber 4, StatBigsNums, CYAN, health, alignment(center), 80, 520;
+		}else{ // Normal health
+			drawnumber 4, StatBigsNums, GREEN, health, alignment(center), 80, 520;
+		}}}}
 	}
 	
-	usesammo{
-		isSelected "Repeater"{
-		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
-		}
-		isSelected "Repeater_DoubleSpeed"{
-		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
-		}
-		isSelected "Repeater_BlastShells"{
-		drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
-		}
+	inInventory not HUD_OnMech{
 	
-	usessecondaryammo not
-     {
-	 	//alpha 0.5{DrawImage ammoicon1, 308, 184, none, 10,10;}
+		drawString STATBIGS, White, "Armor",  157, 550, 0, alignment(center);
 		
-		isSelected "Buckshot"{
-			drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
-		}
-		isSelected "Buckshot_Chamber"{
-			drawnumber 3, StatBigsNums, white, "Buckshot_Chamber_LoadedShells",alignment(center), drawshadow, 725, 490;
-		}
-		isSelected "Buckshot_Explosive"{
-			drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
-		}
-		
-	 	drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
-		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
-        drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
-		
-     }
-    usessecondaryammo
-     {	
+		inInventory BasicArmor, 1{
+			alpha 0.5{DrawImage armoricon, 150, 520;}
 			
-		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
-		//alpha 0.5{DrawImage ammoicon1, 305, 190, none, 10,10;}
-		//alpha 0.5{DrawImage ammoicon2, 305, 180, none, 10,10;}
+			drawnumber 3, StatBigsNums, GREEN, armor, whennotzero, alignment(center), 155, 520, 2, RED, 30, CYAN, 101;
+			
+		}
 		
-		drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
-		drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520, 2, RED, 0;
+		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
+		
+		usesammo{
+			isSelected "Repeater"{
+			drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+			}
+			isSelected "Repeater_DoubleSpeed"{
+			drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+			}
+			isSelected "Repeater_BlastShells"{
+			drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
+			}
+		
+		usessecondaryammo not
+		 {
+			//alpha 0.5{DrawImage ammoicon1, 308, 184, none, 10,10;}
+			
+			isSelected "Buckshot"{
+				drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
+			}
+			isSelected "Buckshot_Chamber"{
+				drawnumber 3, StatBigsNums, white, "Buckshot_Chamber_LoadedShells",alignment(center), drawshadow, 725, 490;
+			}
+			isSelected "Buckshot_Explosive"{
+				drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
+			}
+			
+			drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
+			drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
+			
+		 }
+		usessecondaryammo
+		 {	
+			//alpha 0.5{DrawImage ammoicon1, 305, 190, none, 10,10;}
+			//alpha 0.5{DrawImage ammoicon2, 305, 180, none, 10,10;}
+			
+			drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
+			drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520, 2, RED, 0;
 
-			
-		drawnumber 3, VERVIBES, Brown, ammo2capacity, 775, 510;
-		drawnumber 3, StatBigsNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
-     }
-	}	
-	
-	
-	
-	drawbar "AC1_BULL", "AC0_BULL", Clip, vertical,  			   	    			540, 495;
-	drawbar "AC1_SHEL", "AC0_SHEL", Shell, vertical,  			   	    			572, 495;
-	drawbar "AC1_ROKT", "AC0_ROKT", RocketAmmo, vertical,  			    			604, 495;
-	drawbar "AC1_CELL", "AC0_CELL", Cell, vertical,  			   					636, 495;
-	drawbar "AC1_HBUL", "AC0_HBUL", HeavyBullets, vertical,  			   			540, 527;
-	drawbar "AC1_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical,  			   			572, 527;
-	drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   			604, 527;
-	drawbar "AC1_GASL", "AC0_GASL", Gasoline, vertical,  			   				636, 527;
-	
-	WeaponAmmo "Clip"{			drawbar "AC2_BULL", "AC0_BULL", Clip, vertical,  			540, 495;}
-	WeaponAmmo "Shell"{			drawbar "AC2_SHEL", "AC0_SHEL", Shell, vertical,  			572, 495;}
-	WeaponAmmo "RocketAmmo"{	drawbar "AC2_ROKT", "AC0_ROKT", RocketAmmo, vertical,  		604, 495;}
-	WeaponAmmo "Cell"{			drawbar "AC2_CELL", "AC0_CELL", Cell, vertical,  			636, 495;}
-	WeaponAmmo "HeavyBullets"{	drawbar "AC2_HBUL", "AC0_HBUL", HeavyBullets, vertical,  	540, 527;}
-	WeaponAmmo "Dualshot_Ammo"{ drawbar "AC2_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical, 	572, 527;}
-	WeaponAmmo "Flinger_Ammo"{ 	drawbar "AC2_GREN", "AC0_GREN", Flinger_Ammo, vertical,		604, 527;}
-	WeaponAmmo "Gasoline"{ 		drawbar "AC2_GASL", "AC0_GASL", Gasoline, vertical,    		636, 527;}
-	
-	drawnumber 3, confont, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 499;
-	drawnumber 3, confont, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 499;
-	drawnumber 3, confont, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 499;
-	drawnumber 3, confont, Gold, ammocapacity("Cell"), alignment(center), 			652, 499;
-	drawnumber 3, confont, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 531;
-	drawnumber 3, confont, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 531;
-	drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 531;
-	drawnumber 3, confont, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 531;
-	
-	drawnumber 3, confont, White, ammo("Clip"), alignment(center), 	   	 			556, 515;
-	drawnumber 3, confont, White, ammo("Shell"), alignment(center), 	    		588, 515;
-	drawnumber 3, confont, White, ammo("RocketAmmo"), alignment(center), 			620, 515;
-	drawnumber 3, confont, White, ammo("Cell"), alignment(center), 					652, 515;
-	drawnumber 3, confont, White, ammo("HeavyBullets"), alignment(center), 			556, 547;
-	drawnumber 3, confont, White, ammo("Dualshot_Ammo"), alignment(center), 		588, 547;	
-	drawnumber 3, confont, White, ammo("Flinger_Ammo"), alignment(center), 			620, 547;
-	drawnumber 3, confont, White, ammo("Gasoline"), alignment(center), 				652, 547;
-	
-	
+				
+			drawnumber 3, VERVIBES, Brown, ammo2capacity, 775, 510;
+			drawnumber 3, StatBigsNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
+		 }
+		}	
+		
+		// Ammo counters START
+		drawbar "AC1_BULL", "AC0_BULL", Clip, vertical,  			   	    			540, 495;
+		drawbar "AC1_SHEL", "AC0_SHEL", Shell, vertical,  			   	    			572, 495;
+		drawbar "AC1_ROKT", "AC0_ROKT", RocketAmmo, vertical,  			    			604, 495;
+		drawbar "AC1_CELL", "AC0_CELL", Cell, vertical,  			   					636, 495;
+		drawbar "AC1_HBUL", "AC0_HBUL", HeavyBullets, vertical,  			   			540, 527;
+		drawbar "AC1_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical,  			   			572, 527;
+		drawbar "AC1_GREN", "AC0_GREN", Flinger_Ammo, vertical,  			   			604, 527;
+		drawbar "AC1_GASL", "AC0_GASL", Gasoline, vertical,  			   				636, 527;
+		
+		WeaponAmmo "Clip"{			drawbar "AC2_BULL", "AC0_BULL", Clip, vertical,  			540, 495;}
+		WeaponAmmo "Shell"{			drawbar "AC2_SHEL", "AC0_SHEL", Shell, vertical,  			572, 495;}
+		WeaponAmmo "RocketAmmo"{	drawbar "AC2_ROKT", "AC0_ROKT", RocketAmmo, vertical,  		604, 495;}
+		WeaponAmmo "Cell"{			drawbar "AC2_CELL", "AC0_CELL", Cell, vertical,  			636, 495;}
+		WeaponAmmo "HeavyBullets"{	drawbar "AC2_HBUL", "AC0_HBUL", HeavyBullets, vertical,  	540, 527;}
+		WeaponAmmo "Dualshot_Ammo"{ drawbar "AC2_NAIL", "AC0_NAIL", Dualshot_Ammo, vertical, 	572, 527;}
+		WeaponAmmo "Flinger_Ammo"{ 	drawbar "AC2_GREN", "AC0_GREN", Flinger_Ammo, vertical,		604, 527;}
+		WeaponAmmo "Gasoline"{ 		drawbar "AC2_GASL", "AC0_GASL", Gasoline, vertical,    		636, 527;}
+
+		drawnumber 3, confont, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 499;
+		drawnumber 3, confont, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 499;
+		drawnumber 3, confont, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 499;
+		drawnumber 3, confont, Gold, ammocapacity("Cell"), alignment(center), 			652, 499;
+		drawnumber 3, confont, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 531;
+		drawnumber 3, confont, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 531;
+		drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 531;
+		drawnumber 3, confont, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 531;
+		
+		drawnumber 3, confont, White, ammo("Clip"), alignment(center), 	   	 			556, 515;
+		drawnumber 3, confont, White, ammo("Shell"), alignment(center), 	    		588, 515;
+		drawnumber 3, confont, White, ammo("RocketAmmo"), alignment(center), 			620, 515;
+		drawnumber 3, confont, White, ammo("Cell"), alignment(center), 					652, 515;
+		drawnumber 3, confont, White, ammo("HeavyBullets"), alignment(center), 			556, 547;
+		drawnumber 3, confont, White, ammo("Dualshot_Ammo"), alignment(center), 		588, 547;	
+		drawnumber 3, confont, White, ammo("Flinger_Ammo"), alignment(center), 			620, 547;
+		drawnumber 3, confont, White, ammo("Gasoline"), alignment(center), 				652, 547;
+		
+		// Ammo counters END
+	}
 	
 	drawselectedinventory center, artiflash, VerVibes, 250, 530, 260, 530;
-	//[Samu] Well this is ridiculous, but if there is no other option to hide it...
 	
+	drawString STATBIGS, White, "ITEM", 250, 550, 0, alignment(center);
 	
-	InInventory "Inventory_Soulsphere"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_Megasphere"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_Berserk2"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_Godsphere"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_AmmoGiver"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_HealthDispenser"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_AmmoDispenser"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_MineDrone"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_SawDrone"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_TurretBullet"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_TurretRocket"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_TurretPlasma"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_TurretFlame"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_TurretRail"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{ InInventory "Inventory_TeslaCoil"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}else{InInventory "Inventory_Stimpack"{
-		drawString STATBIGS, White, "Item",  250, 550, 0, alignment(center);
-	}}}}}}}}}}}}}}}}
 	
 	// [Samu] Credits, Upgrade Points, Kills and Deaths.
 	inInventory not HUD_Spectating{
@@ -421,6 +410,25 @@ statusbar normal// Standard Doom Status bar
 			drawimage "HUDUPGIC", 16, 422;
 			drawnumber 10, STATBIGSNums,  cyan, HUD_Ups,  alignment(left), whennotzero, 50, 425;
 		}
+		
+		inInventory HUD_MechState {
+			inInventory HUD_MechState, 3{
+				drawimage "HUDMECH3", 16, 392;
+			}else{inInventory HUD_MechState, 2{
+				drawimage "HUDMECH2", 16, 392;
+			}else{
+				drawimage "HUDMECH1", 16, 392;
+			}}
+		}
+		
+		// Mech status.
+		inInventory HUD_MechTime_Sec || HUD_MechTime_Min{
+			// Mech cooldown.
+			//drawimage "HUDUPGIC", 16, 422;
+			drawnumber 2, STATBIGS,  white, HUD_MechTime_Min,  alignment(left), fillzeros, 50, 395;
+			drawstring STATBIGS, white, ":", 75, 395, 0, alignment(left);
+			drawnumber 2, STATBIGS,  white, HUD_MechTime_Sec,  alignment(left), fillzeros, 85, 395;
+		}
 	}
 	else{
 		inInventory HUD_TeamCredits{
@@ -429,19 +437,17 @@ statusbar normal// Standard Doom Status bar
 		}
 	}
 	
-	drawimage "HUDPDHIC", 752, 452;
-	//drawnumber 6,  STATBIGS,   Red, kills,  alignment(right), 750, 464;
-	
-	inInventory HUD_Deaths{
-			drawnumber 10,  STATBIGS,  brick,  	   kills,  alignment(right), whennotzero, 750, 456;
-			drawnumber 10,  STATBIGS,  red, HUD_Deaths,  alignment(right), whennotzero, 750, 472;
+	drawimage "HUDKILIC", 752, 452;
+	inInventory HUD_Streak{
+			drawnumber 10,  STATBIGS,  brick,  	   kills,  alignment(right), 750, 456;
+			drawnumber 10,  STATBIGS,  orange, HUD_Streak,  alignment(right), whennotzero, 750, 472;
 		}else{
-			drawnumber 10,  STATBIGS,  brick,      kills,  alignment(right), whennotzero, 750, 464;
+			drawnumber 10,  STATBIGS,  brick,      kills,  alignment(right), 750, 464;
 		}
 	
-	inInventory HUD_Streak{
-		drawimage "HUDKILIC", 752, 422;
-		drawnumber 3,  STATBIGSNums,  Orange, HUD_Streak,  alignment(right), 750, 425;
+	inInventory HUD_Deaths{
+		drawimage "HUDPDHIC", 752, 422;
+		drawnumber 3,  STATBIGSNums,  Red, HUD_Deaths,  alignment(right), 750, 425;
 	}
 	
 	

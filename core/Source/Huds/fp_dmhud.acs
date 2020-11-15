@@ -9,6 +9,9 @@
 // Now, this should display correctly on different aspect ratios!
 
 #library "FP_DMHUD"
+
+#import "f_intdb.acs"
+
 #include "zcommon.acs"
 #include "acsutils.ach" 
 
@@ -29,7 +32,10 @@ script "SFPlus_DamagedHud" (void) {
 	
 	while(GetActorProperty(0, APROP_HEALTH) > 0){
 		int hp = GetActorProperty(0, APROP_HEALTH);
-		int maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
+		int maxhp = // If we're using the mech, the max health changes.
+		cond(p_TankSlot[playernumber()] == 2, 
+			1500 + 900 * checkinventory("MechUp_Armor"), 
+			GetActorProperty(0, APROP_SPAWNHEALTH));
 		int lowHp = ut_floor(maxHp * DMHUD_PERC);
 		if(lowHp == 0) lowHP = 1;
 		

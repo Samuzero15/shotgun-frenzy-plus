@@ -43,22 +43,42 @@ Script "SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
 
 script "SyncWithSBARINFO" (int kills) {
 
+	int play = PlayerNumber();
+
 	SetInventory("HUD_Sector", g_Status);
 	if(g_Status == 5)
 	SetInventory("HUD_CoreHP", getactorproperty(104, APROP_Health));
 	else
 	SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
-	SetInventory("HUD_Credits", p_Credits[PlayerNumber()]);
+	SetInventory("HUD_Credits", p_Credits[play]);
 	if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
 	if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
-	SetInventory("HUD_Ups", p_Exp_Points[PlayerNumber()]);
+	SetInventory("HUD_Ups", p_Exp_Points[play]);
 	SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
 	SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
 	SetInventory("HUD_ExpLeft", kills);
-	SetInventory("HUD_Rank", p_Rank[playernumber()] + 1);
-	SetInventory("HUD_Exp", p_Exp[playernumber()]);
-	SetInventory("HUD_Streak", p_Streak[playernumber()]);
-	SetAmmoCapacity("HUD_Exp", p_RankExp[p_Rank[playernumber()] + 1]);
+	SetInventory("HUD_Rank", p_Rank[play] + 1);
+	SetInventory("HUD_Exp", p_Exp[play]);
+	SetInventory("HUD_Streak", p_Streak[play]);
+	
+	if(p_MechTimer[play] > 0){
+		SetInventory("Hud_MechTime_Min", ((p_MechTimer[play] + 35) / (35*60))%60);
+		SetInventory("Hud_MechTime_Sec", ((p_MechTimer[play] + 35) / 35)%60);
+	}else{
+		SetInventory("Hud_MechTime_Min" ,0);
+		SetInventory("Hud_MechTime_Sec" ,0);
+	}
+	
+	SetInventory("HUD_OnMech", cond(p_TankSlot[play] == 2, 1, 0));
+	
+	switch(p_TankSlot[play]){
+		case 1: SetInventory("HUD_MechState", 1); break;
+		case 2: SetInventory("HUD_MechState", 2); break;
+		case 99: SetInventory("HUD_MechState", 3); break;
+		default: SetInventory("HUD_MechState", 0);
+	}
+	
+	SetAmmoCapacity("HUD_Exp", p_RankExp[p_Rank[play] + 1]);
 }
 
 script "SFPlus_Sbarinfo_Enter" ENTER{
@@ -80,7 +100,10 @@ script "SFPlus_Sbarinfo_HealthStatus" (void) {
 		SetInventory("HUD_Lowhealth", hp <= ((maxhp * 0.5) >> 16));
 		SetInventory("HUD_Overhealth", hp > maxhp && !(maxHP == 0));
 		hp = GetActorProperty(0, APROP_HEALTH);
-		maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
+		// If we're using the mech, the max health changes.
+		maxhp = cond(p_TankSlot[playernumber()] == 2, 
+			1500 + 900 * checkinventory("MechUp_Armor"), 
+			GetActorProperty(0, APROP_SPAWNHEALTH));
 		delay(1);
 	}
 	SetInventory("HUD_Dangerhealth", 1);

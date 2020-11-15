@@ -242,9 +242,10 @@ script "Hud_ShowPlayerStats" (int credits, int exp, int  kills) clientside
 } 
 
 function str PlayHUD_Timer(int tics){
-	int min_i = tics / (35*60);
+	int min_i = ((tics + 35) / (35*60)) % 60;
+	int sec_i = ((tics + 35) / 35)		% 60;
 	str min_s = cond(min_i > 0, strparam(d:min_i, s:" m"), "");
-	return StrParam(s:min_s,s:" ",d:((tics / 35)%60), s:" s");
+	return StrParam(s:min_s,s:" ",d:sec_i, s:" s");
 }
 
 function str PlayHUD_MechStatus(int mech_tics){

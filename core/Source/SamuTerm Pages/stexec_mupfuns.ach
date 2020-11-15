@@ -13,7 +13,6 @@ function void STExecute_GetMechTank(void){
 	sf_RemoveCredits(CheckInventory("Mech_Buy"), PlayerNumber());
 	
 	SetActivatorToPlayer(PlayerNumber());
-	p_TankSlot[playernumber()] = 1;
 	Acs_ExecuteAlways(305, 0);
 }
 

@@ -17,6 +17,10 @@ Actor HUD_Kills 			: Integer {}
 Actor Hud_Deaths 			: Integer {}
 Actor HUD_TeamCredits 		: Integer {}
 Actor HUD_Streak			: Integer {}
+Actor HUD_OnMech			: Integer {}
+Actor HUD_MechState			: Integer {}
+Actor HUD_MechTime_min		: Integer {}
+Actor HUD_MechTime_sec		: Integer {}
 
 Actor HUD_Sector 			: Integer {}
 Actor HUD_CoreHP 			: Integer {}

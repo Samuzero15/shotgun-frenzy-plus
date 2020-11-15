@@ -2,6 +2,15 @@
 
 ## v0 - Before the beginning...
 
+#### -) (13 - 14 - 15 / 11 / 2020) [SBARINFO and Mech related stuff perks]
+	*) Re-arranged the kill counters, for a better comprehension.
+	+) Now, a timer should be displayed when the mech is on cool-down phase on the normal status bar.
+	*) Now the timer should display correctly, forgot to add that extra second to make it work.
+	+) Small new icons for the normal status bar, only to reference the mech status.
+	*) Small fixes on the Mech buy page, on samu-terminal, also, you can check out the current upgrades you got so far.
+	*) Small touches on the Mech in cf04.
+	*) Since the plasma turret upgraded is overwhelming on cf04, the cacodemon waves from the rear attack will spawn more (and appear like a jumping ambush :D)
+
 #### -) (11 - 12 / 11 / 2020) [Map Doors, Sector Cap, Mech and HUD fixes.]
 	*) Now the doors should open-close properly in the SF maps!
 	+) Now, the old hud will display the mech status, which it shows the current time for re-using a mech!

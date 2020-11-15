@@ -4,11 +4,12 @@ int mechpage_vars[50];
 #define MECHPAGE_NCOMPGROUP 4
 #define MECHPAGE_NPRIVARS 15
 
+
 function void MechUpPage_Update(int pageTag){
 	setPageTitle(pageTag, "Mecha Factory Terminal", CR_CYAN);
 	if(isOnTheSamePage(pageTag)){
 		mechpage_vars[49] = 0;
-		//MechUpPage_UpdateStats();
+		MechUpPage_UpdateStats();
 		
 		for(int j = 0; j < MechUpTop; j++){
 			MechUpPage_UpdateComps(j);
@@ -19,6 +20,7 @@ function void MechUpPage_Update(int pageTag){
 			StrButton_setShow(mechpage_vars[4], false);
 			Image_setFile(mechpage_vars[6], "MECHANO");
 		}else{
+			Label_SetShow(mechpage_vars[7], true);
 			Label_SetShow(mechpage_vars[3], false);
 			StrButton_setShow(mechpage_vars[2], false);
 			
@@ -77,7 +79,12 @@ function void MechUpPage_Init(int pageTag){
 	Image_setShow(i, true);
 	mechpage_vars[6] = i;
 	
-	//MechUpPage_InitStats();
+	i = Label_Add(50.0, 50.0);
+	Label_setFont(i, "Confont");
+	Label_setColor(i, CR_Cream);
+	Label_setAligns(i, Hud_Align_Left, Hud_Align_TOP);
+	Component_Save(Label_getRect(i));
+	mechpage_vars[7] = i;
 	
 	for(int j = 0; j < MechUpTop; j++){
 		MechUpPage_AddComps(j, j+1);
@@ -85,76 +92,13 @@ function void MechUpPage_Init(int pageTag){
 }
 
 function void MechUpPage_UpdateStats(void){
-	int naillv = CheckInventory(MechUp_GetActor(0));
-	int nailmax = MechUp_GetMax(0);
-	
-	int rocklv = CheckInventory(MechUp_GetActor(1));
-	int rockmax = MechUp_GetMax(1);
-	
-	int armorlv = CheckInventory(MechUp_GetActor(2));
-	int armormax = MechUp_GetMax(2);
-	
-	int speedlv = CheckInventory(MechUp_GetActor(3));
-	int speedmax = MechUp_GetMax(3);
-	
-	bool pursached = CheckInventory("Mech_State");
-	Label_setShow(mechpage_vars[8], pursached);
-	Label_setShow(mechpage_vars[9], pursached);
-	Label_setShow(mechpage_vars[10], pursached);
-	Label_setShow(mechpage_vars[11], pursached);
-	Label_setShow(mechpage_vars[12], pursached);
-	
-	Label_setText(mechpage_vars[12], 
-		strparam(s:"Speed: Lv.", s:(cond(speedlv > speedmax, "MAX", strparam(d:speedlv))))
-		);
-	
-	Label_setText(mechpage_vars[9], 
-		strparam(s:"Armor: Lv.", s:(cond(armorlv > armormax, "MAX", strparam(d:armorlv))))
-		);
-	
-	Label_setText(mechpage_vars[10], 
-		strparam(s:"Nails: Lv.", s:(cond(naillv > nailmax, "MAX", strparam(d:naillv))))
-		);
-		
-	Label_setText(mechpage_vars[11], 
-		strparam(s:"Rockets: Lv.", s:(cond(rocklv > rockmax, "MAX", strparam(d:rocklv))))
-		);
-	
+	Label_setText(mechpage_vars[7],MechUp_ReportUps(false));
 }
 
 function void MechUpPage_InitStats(void){
 	int i;
 	
-	Card_SetPosition(50.0, 100.0);
-	Card_SetCells(10);
-	Card_SetStep(10.0);
-	Card_SetVerticalOri(true);
-	mechpage_vars[7] = Card_Generate();
-
-	i = Label_Add(140.0, 80.0);
-	Label_setText(i, "Your Mecha Stats:");
-	Label_setFont(i, "StatBigs");
-	Label_setColor(i, CR_WHITE);
-	mechpage_vars[8] = i;
 	
-	i = Label_AddCard(mechpage_vars[6], 1);
-	Label_setFont(i, "Confont");
-	Label_setColor(i, CR_Cream);
-	Label_setAligns(i, Hud_Align_Left, Hud_Align_CENTER);
-	Component_Save(Label_getRect(i));
-	mechpage_vars[9] = i;
-	
-	i = Label_AddCard(mechpage_vars[6], 2);
-	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
-	mechpage_vars[10] = i;
-	
-	i = Label_AddCard(mechpage_vars[6], 3);
-	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
-	mechpage_vars[11] = i;
-	
-	i = Label_AddCard(mechpage_vars[6], 4);
-	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
-	mechpage_vars[12] = i;
 }
 
 function void MechUpPage_UpdateComps(int upgrade){
@@ -191,7 +135,7 @@ function void MechUpPage_UpdateComps(int upgrade){
 	Label_setColor(k, cond(isaffordable, CR_Green, CR_RED));
 	ImgButton_setImage(l, cond(isaffordable, "BTUP00", "BTNDEN"));
 	
-	Label_setText(i, cond(maxup != 0, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)), name));
+	Label_setText(i, cond(maxup != 1, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)), name));
 	Label_setText(j, strparam(d:price, s:" $"));
 	
 	Label_SetPosToCardOff(i, mechpage_vars[1], topping, 40.0, 2.0);
@@ -222,7 +166,7 @@ function void MechUpPage_AddComps(int upgrade,int cell){
 	MechUpPage_SaveToGroup(upgrade, 4, i);
 	
 	i = Label_AddCardOff(mechpage_vars[1], cell, 40.0, 2.0);
-	if(maxup == 0)	Label_setText(i, name);
+	if(maxup == 1)	Label_setText(i, name);
 	else			Label_setText(i, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)));
 	Label_setFont(i, "StatBigs");
 	Label_setTag(i, mechpage_vars[0]);

@@ -115,8 +115,6 @@ int p_TankSlot[31];             // player tank status
 int p_KickSlot[31];
 int p_LastWeap[31];//for the autowep switching feature
 int p_MechTimer[32];
-int p_MechUpgradeWeapons[31];
-int p_MechUpgradeArmor[31];
 
 // commander
 int c_Commander = 99;
@@ -303,7 +301,7 @@ script "SFPlus_InitializeEverything" OPEN{
 	ProgTip_Init();
 	delay(1); // give this tic to the map default variables.
 	InitDB_ReadConsole(); // Read the console if the server needs customized variables.
-	//g_Initialized = true;
+	g_Initialized = true;
 }
 
 int debug_var = 0;
