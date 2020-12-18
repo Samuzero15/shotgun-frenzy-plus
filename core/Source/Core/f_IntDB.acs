@@ -31,7 +31,7 @@
 #import "fp_kshud.acs"
 #import "fp_ptdir.acs"
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 
 // game
 int g_Status;

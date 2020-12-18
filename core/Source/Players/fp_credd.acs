@@ -12,8 +12,8 @@
 #import "f_intdb.acs"
 #import "fp_hello.acs"
 #include "zcommon.acs"
-#include "acsutils.ach"
-#include "samu_tools.ach"
+#include "acsutils.acs"
+#include "samu_tools.acs"
 
 int p_DropCredits[32];
 int p_DropCredits_Delay[32];

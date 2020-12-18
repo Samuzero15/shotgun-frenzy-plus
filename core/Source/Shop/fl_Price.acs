@@ -10,8 +10,8 @@
 #import "f_intDB.acs"
 #import "fc_AStr.acs"
 #include "zcommon.acs"
-#include "acsutils.ach"
-#include "samu_tools.ach"
+#include "acsutils.acs"
+#include "samu_tools.acs"
 
 int fp_Price[499][2]; // [Samu] I'll do a clone of this.
 int fp_PriceStack = 0;

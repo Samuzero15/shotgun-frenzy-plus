@@ -1,0 +1,54 @@
+
+script "Auto-Use Items" (void){
+	// Let's autouse the stimpack if they're low on hp.
+	int health = 1;
+	int maxhealth;
+	
+	int cvar = GetUserCvar(PlayerNumber(),"sfp_autouse");
+	int result;
+	while(cvar){
+		health = GetActorProperty(0, APROP_HEALTH);
+		maxHealth = GetActorProperty(0, APROP_SPAWNHEALTH);
+		cvar = GetUserCvar(PlayerNumber(),"sfp_autouse");
+		/*
+		log(s:"You have: ", d:CheckInventory("Inventory_Stimpack"),
+		s:" Stimpacks. HP: ", d: health, s:" / ", d:maxhealth, s:" ( ",d:result, s:" )");
+		*/
+		
+		// Disable autohealing when using tanks.
+		if(MaxHealth == 0 || ACS_ExecuteWithResult(781, 0) == 1){
+			delay(1);
+			continue;
+		}
+		result = (health * 100) / maxHealth;
+		
+		// For the lazy-ass me.
+		if(result <= GetUserCvar(PlayerNumber(), "sfp_stimpack_t")){
+			if(CheckInventory("Inventory_Stimpack")){
+				UseInventory("Inventory_Stimpack");
+				delay(1);
+				continue;
+			}
+		}
+		
+		if(result <= GetUserCvar(PlayerNumber(), "sfp_soulsphere_t")){
+			if(CheckInventory("Inventory_Soulsphere"))
+			{
+				UseInventory("Inventory_Soulsphere");
+				delay(1);
+				continue;
+			}
+		}
+		
+		if(result <= GetUserCvar(PlayerNumber(), "sfp_megasphere_t")){
+			if(CheckInventory("Inventory_Megasphere"))
+			{
+				UseInventory("Inventory_Megasphere");
+				delay(1);
+				continue;
+			}
+		}
+		
+		delay(1);
+	}
+}

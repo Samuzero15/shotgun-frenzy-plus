@@ -10,7 +10,7 @@
 #import "fl_techs.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 script 81 (void) { // Uh...
 

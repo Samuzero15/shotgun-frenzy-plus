@@ -12,8 +12,8 @@
 #import "f_Tip.acs"
 
 #include "zcommon.acs"
-#include "acsutils.ach"
-#include "samu_tools.ach"
+#include "acsutils.acs"
+#include "samu_tools.acs"
 
 int show_stack = 0;
 int show_color = CR_WHITE;

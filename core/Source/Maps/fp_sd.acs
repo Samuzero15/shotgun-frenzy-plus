@@ -21,7 +21,7 @@
 //#import "fa_SSD01.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 function void SFPlus_DefaultVars(void){
 	// game settings

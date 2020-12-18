@@ -32,11 +32,11 @@ ACTOR sfCyberdemon : FPlus_Monster replaces Cyberdemon
 			goto See
 		Missile:
 			CYBR E 6 A_FaceTarget
-			CYBR F 12 A_CyberAttack //See Rocket
+			CYBR F 12 A_CustomMissile("Mon_Rocket") //See Rocket
 			CYBR E 12 A_FaceTarget
-			CYBR F 12 A_CyberAttack
+			CYBR F 12 A_CustomMissile("Mon_Rocket")
 			CYBR E 12 A_FaceTarget
-			CYBR F 12 A_CyberAttack
+			CYBR F 12 A_CustomMissile("Mon_Rocket")
 			goto See
 		Pain:
 			CYBR G 10 A_Pain

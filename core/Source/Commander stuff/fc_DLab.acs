@@ -14,7 +14,7 @@
 #import "fp_ptdir.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 // build
 script 400 (void)
 {

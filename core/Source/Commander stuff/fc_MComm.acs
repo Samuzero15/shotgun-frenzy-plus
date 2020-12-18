@@ -16,8 +16,8 @@
 #import "fc_AStr.acs"
 
 #include "zcommon.acs"
-#include "acsutils.ach"
-#include "samu_tools.ach"
+#include "acsutils.acs"
+#include "samu_tools.acs"
 
 
 // build

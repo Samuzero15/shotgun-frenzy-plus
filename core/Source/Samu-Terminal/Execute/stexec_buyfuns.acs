@@ -1,0 +1,52 @@
+
+
+function void STExecute_BuyWeapon(int which){
+	
+	int price = WeaponPack_getPrice(which);
+	//print(d:which);
+	if(getPlayCredits() < price)
+	{	
+		Toaster_ShowToast("Ya dont have enough!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		//SamuTerm_CallOpExecute (STEXE_GIVEWP, which, price,0);
+		Prompt_Resize(20,5);
+		Prompt_Ask("Confirm", "Are you sure to buy this weapon pack?", CR_BRICK);
+		Prompt_ExecuteOnTrue(STEXE_GETWP, which, 0, 0);
+		//Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
+	}
+}
+
+function void STExecute_GetWeapon(int which){
+	Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
+	buywpn_vars[25] = -99; // To let it update.
+	SamuTerm_CallOpExecute(STEXE_GIVEWP, which, 0, 0);
+	LocalAmbientSound("p/deploy",128);
+}
+
+function void STExecute_GiveWeapon(int which){
+	int payprice = WeaponPack_getPrice(which);
+	sf_RemoveCredits(payprice, PlayerNumber());
+	
+	WeaponPack_Give(which);
+}
+
+function void STExecute_BuyWepShowData(int which){
+	buywpn_vars[25] = buywpn_vars[24];
+	buywpn_vars[24] = which;
+}
+
+function void STExecute_BuyWepSetCat(int which){
+	buywpn_vars[23] = which;
+}
+/*
+function void STExecute_ShowPage(int which){
+	SetUpBuyPage_WP(which);
+	SamuTerm_CallOpExecute(STEXE_GTCAT,10,0,0);
+}
+
+function void STExecute_ShowBuyPage(int which){
+	SetUpBuyPage_WP(which);
+	SamuTerm_CallOpExecute(STEXE_GTCAT,10,0,0);
+}*/

@@ -9,7 +9,7 @@
 #library "fp_puhud"
 
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 #include "queue.acs"
 int puphud_list[10];
 int puphud_stack;

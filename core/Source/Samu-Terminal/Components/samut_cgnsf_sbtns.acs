@@ -1,0 +1,134 @@
+
+
+////////////////////////////////////////
+// Getters from String buttons!
+////////////////////////////////////////
+
+function int StrButton_getRect(int bid){ 
+	return comp_rects_many[STCOMP_SBTN][bid];
+}
+
+function int StrButton_getX1(int bid){
+	return RectX1(StrButton_getRect(bid));
+}
+
+function int StrButton_getX2(int bid){
+	return RectX2(StrButton_getRect(bid));
+}
+
+function int StrButton_getY1(int bid){
+	return RectY1(StrButton_getRect(bid));
+}
+
+function int StrButton_getY2(int bid){
+	return RectY2(StrButton_getRect(bid));
+}
+
+function int StrButton_getWidth(int bid){
+	return RectWidth(StrButton_getRect(bid));
+}
+
+function int StrButton_getHeight(int bid){
+	return RectHeight(StrButton_getRect(bid));
+}
+
+function int StrButton_getTag(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP0);
+}
+
+function str StrButton_getText(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP1);
+}
+
+function int StrButton_getDesc(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP2);
+}
+
+function int StrButton_getShow(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP3);
+}
+
+function int StrButton_getExecute(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP4);
+}
+
+function int StrButton_getExeArg1(int bid){
+	return UnpackByte1(RectGetUserData(StrButton_getRect(bid), ST_CPROP5));
+}
+
+function int StrButton_getExeArg2(int bid){
+	return UnpackByte2(RectGetUserData(StrButton_getRect(bid), ST_CPROP5));
+}
+
+function int StrButton_getExeArg3(int bid){
+	return UnpackByte3(RectGetUserData(StrButton_getRect(bid), ST_CPROP5));
+}
+
+function int StrButton_getColor(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP6);
+}
+
+function int StrButton_getHudId(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP7);
+}
+
+function int StrButton_getBack(int bid){
+	return RectGetUserData(StrButton_getRect(bid), ST_CPROP8);
+}
+
+///////////////////////////////////////
+// Setters for the String Buttons!
+///////////////////////////////////////
+
+function void StrButton_setRect(int bid, int rect){
+	comp_rects_many[STCOMP_SBTN][bid] = rect;
+}
+
+function void StrButton_setPosition(int bid, int x, int y){
+	SetRectPosition(StrButton_getRect(bid), x, y);
+}
+
+function void StrButton_setDimensions(int bid, int w, int h){
+	SetRectSize(StrButton_getRect(bid), w, h);
+}
+
+function void StrButton_setTag(int bid, int tag){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP0, tag);
+}
+
+function void StrButton_setText(int bid, str text){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP1, text);
+}
+
+function void StrButton_setDescription(int bid, str description){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP2, description);
+}
+
+function void StrButton_setShow(int bid, bool show){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP3, show);
+}
+
+function void StrButton_setExecute(int bid, int execute){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP4, execute);
+}
+function void StrButton_setExeArgs(int bid, int arg1, int arg2, int arg3){
+	int args = PackBytes(arg1, arg2, arg3, 0);
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP5, args);
+	/*
+	print(s:"getting arg1: ", d:StrButton_getExeArg1(bid), s:"\n",
+	s:"getting arg2: ", d:StrButton_getExeArg2(bid), s:"\n",
+	s:"getting arg3: ", d:StrButton_getExeArg3(bid));
+	*/
+}
+
+function void StrButton_setColor(int bid, int color){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP6, color);
+}
+
+function void StrButton_setHudId(int bid, int hudid){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP7, hudid);
+}
+
+function void StrButton_setBack(int bid, str back){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP8, back);
+}

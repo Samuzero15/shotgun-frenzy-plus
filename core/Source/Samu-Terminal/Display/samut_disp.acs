@@ -1,0 +1,57 @@
+/**
+*
+* 	<samut_disp.acs> 
+* 	Display module!
+*
+**/
+
+function void SamuTerm_Display(void){
+
+	int i = 0, rect;
+	ShowBackground();
+	
+	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
+		if(ImgButton_getShow(i)){
+		rect = ImgButton_getRect(i);
+			if (RectIsHovered(rect) && (comphover != -1)){
+				//localAmbientSound("SamuTerm/Hover",127);
+				HilightImgButton(i);
+			}
+		ShowImgButton(i);
+		}
+	}
+	
+	for (i = 0; i < comp_count[STCOMP_LBL]; i++){
+			if(Label_getShow(i))
+			ShowLabel(i);
+	}
+	
+	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
+			if(Image_getShow(i))
+			ShowImage(i);
+	}
+	
+	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
+		if(StrButton_getShow(i)){
+		rect = StrButton_getRect(i);
+			if(RectIsHovered(rect) && (comphover != -1)){
+				//localAmbientSound("SamuTerm/Hover",127);
+				HilightStrButton(i);
+			}
+			ShowStrButton(i);
+		}
+	}
+	
+	/*
+	for(i = 0; i < pancount; i++){
+		ShowPanels(i);
+	}*/
+	
+	if(getPromptState())ShowPrompt();
+	
+	ShowCursor();
+	
+}
+
+#include "samut_disp_funs.acs"
+#include "samut_disp_comps.acs"

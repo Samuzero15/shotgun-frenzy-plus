@@ -12,8 +12,8 @@
 #import "fl_techs.acs"
 
 #include "zcommon.acs"
-#include "acsutils.ach"
-#include "samu_tools.ach"
+#include "acsutils.acs"
+#include "samu_tools.acs"
 
 
 // old credit hook - just to be sure

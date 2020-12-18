@@ -27,7 +27,7 @@
 #import "fl_techs.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 // setup techflags and game settings
 script 91 OPEN

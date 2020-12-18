@@ -8,7 +8,7 @@
 
 #import "f_IntDB.acs"
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 
 // ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
 

@@ -20,7 +20,7 @@
 
 #include "zcommon.acs"
 
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 #define List 100
 str spawnerList[List];

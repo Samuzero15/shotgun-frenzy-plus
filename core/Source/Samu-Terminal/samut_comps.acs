@@ -1,0 +1,193 @@
+/**
+*
+*	<samut_comps.acs>
+*	Here it declares all of the components for the terminal.
+*	This is the part where you can customize your menu stuff!
+*
+*/
+
+
+#include "samut_comps_ibtns.acs"
+#include "samut_comps_sbtns.acs"
+#include "samut_comps_lbls.acs"
+#include "samut_comps_imgs.acs"
+#include "samut_comps_toast.acs"
+#include "samut_comps_prompt.acs"
+#include "samut_comps_cursor.acs"
+
+
+function void SamuTerm_InitComps(void){
+	Components_Clear();
+	pagetags[STTAGS_NOW] = pagetags[STTAGS_ALPHA];
+	Cursor_Initialize(32.0, 32.0);
+	
+	initTitle();
+	Toaster_Initialize();
+	Prompt_Initialize();
+	
+	if(pagetags[STTAGS_ALPHA] != 10) Components_Add();
+	else Toast_SetPosition(320.0, 150.0);
+	//Custom shiet.
+	SamuTerm_InitPages();
+}
+
+function void Components_Clear(void){
+	RectsDelete(0);
+	Vars_ClearCompCounts();
+	Vars_ClearTmps();
+	Grid_ClearAll();
+	Card_ClearAll();
+	pagetags[STTAGS_NOW] = 0;
+	pagetags[STTAGS_LAST] = 0;
+}
+
+function void Components_Add(void){
+	int lbl;
+	
+	wallet = Label_Add(320.0,470.0); 
+	Label_setText(wallet, "");
+	Label_setFont(wallet,"CONFONT");
+	Label_setColor(wallet,CR_gold);
+	Label_setShow(wallet, true);
+
+	int ibtn;
+	str exitbtn;
+	str props;
+	int card;
+	str common = "hoverimage=BTNHOV, execute=STEXE_GTCAT, ";
+	
+	Card_SetPosition(176.0, 400.0);
+	Card_SetStep(64.0);
+	Card_SetCells(4);
+	card = Card_Generate();
+	
+	
+	ibtn = ImgButton_AddCard(card, 1, 32.0, 32.0); 
+	Prop_StrDef_Start(common);
+	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN1");
+	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  1);
+	Prop_StrDef_End();
+	ImgButton_setProps(ibtn, propstr);
+	ImgButton_setTag(ibtn, 0);
+	
+	
+	ibtn = ImgButton_AddCard(card, 2, 32.0, 32.0);
+	Prop_StrDef_Start(common);
+	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN2");
+	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  2);
+	Prop_StrDef_End();
+	ImgButton_setProps(ibtn,propstr);
+	ImgButton_setTag(ibtn, 0);
+	
+	
+	ibtn = ImgButton_AddCard(card, 3, 32.0, 32.0);
+	Prop_StrDef_Start(common);
+	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN3");
+	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  3);
+	Prop_StrDef_End(); 
+	ImgButton_setProps(ibtn,propstr);
+	ImgButton_setTag(ibtn, 0);
+	//ImgButton_setDescription(ibtn, "Recycle weapons");
+		
+	ibtn = ImgButton_AddCard(card, 4, 32.0, 32.0);
+	Prop_StrDef_Start(common);
+	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTNOK");
+	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  4);
+	Prop_StrDef_End();
+	ImgButton_setProps(ibtn,propstr);
+	ImgButton_setTag(ibtn, 0);
+	//ImgButton_setDescription(ibtn, "More items");
+	
+	
+	//print(d:Grid_Generate());
+	if(pagetags[STTAGS_ALPHA] == 20){
+		exitBtn = "BTNEXIT2";
+		
+		//ACS POWAAAAAAAAAAR
+		ibtn = ImgButton_Add(176.0,400.0, 32.0, 32.0); 
+		Prop_StrDef_Start(common);
+		Prop_StrDef_Add(ST_PSTR_STR, "image",  "BTN7");
+		Prop_StrDef_Add(ST_PSTR_INT, "exe_a1", 1);
+		Prop_StrDef_Add(ST_PSTR_INT, "tag",    pagetags[STTAGS_ALPHA]);
+		Prop_StrDef_End();
+		ImgButton_setProps(ibtn,propstr);
+		
+		ibtn = ImgButton_Add(176.0 + 64.0,400.0, 32.0, 32.0); 
+		Prop_StrDef_Start(common);
+		Prop_StrDef_Add(ST_PSTR_STR, "image",  "BTN5");
+		Prop_StrDef_Add(ST_PSTR_INT, "exe_a1", 2);
+		Prop_StrDef_Add(ST_PSTR_INT, "tag",    pagetags[STTAGS_ALPHA]);
+		Prop_StrDef_End();
+		ImgButton_setProps(ibtn,propstr);
+		
+	} else exitBtn = "BTNEXIT";
+	
+	
+	ibtn = ImgButton_Add(432.0,400.0, 32.0, 32.0);
+	Prop_StrDef_Start("hoverimage=BTNHOV,");
+	Prop_StrDef_Add(ST_PSTR_STR, "image",   exitBtn);
+	Prop_StrDef_Add(ST_PSTR_INT, "tag",     pagetags[STTAGS_ALPHA]);
+	Prop_StrDef_Add(ST_PSTR_INT, "execute", STEXE_CLOSE);
+	Prop_StrDef_End();
+	ImgButton_setProps(ibtn,propstr);
+	
+	//ImgButton_setDescription(ibtn, "Back to the reality");
+}
+
+function void Component_Save(int comprect){
+	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
+		comp_propsave[i] = RectGetUserData(comprect, i);
+	}
+}
+
+function void Component_LoadProps(int id, int type, int rect){
+	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
+		SetRectUserData(rect, i, comp_propsave[i]);
+	}
+
+	switch(type) {// Hud Id is overriden. Fix that with a redefining.
+		case STCOMP_IBTN:	ImgButton_setHudId(id, ST_HID_IBTN + id); break;
+		case STCOMP_SBTN:	StrButton_setHudId(id, ST_HID_SBTNF + id); break;
+		case STCOMP_IMG:	Image_setHudId	(id, ST_HID_IMG + id); break;
+		case STCOMP_LBL:	Label_setHudId	(id, ST_HID_LBL + id); break;
+	}
+}
+
+function int Component_Allocate(int comptype, int x, int y, int w, int h){
+	int id = comp_count[comptype];
+	if(id < ST_NCOMPS){
+		int rect = RectCreate(x,y,w,h);
+		switch(comptype){
+			case STCOMP_IBTN:	ImgButton_setRect(id, rect); break;
+			case STCOMP_SBTN:	StrButton_setRect(id, rect); break;
+			case STCOMP_IMG:	Image_setRect	(id, rect); break;
+			case STCOMP_LBL:	Label_setRect	(id, rect); break;
+		}
+		//if(comptype == STCOMP_IBTN) print(s:"Id: ", d:id, s:" for image button added.");
+		comp_count[comptype]++;
+	}else{
+		print(s:"Too many components!");
+		id = -1;
+	}
+	//print(d:id);
+	
+	return id;
+}
+
+function void initTitle(void){
+
+	ptitle = Label_Add(320.0,40.0); 
+	Label_setText(ptitle,"Title");
+	Label_setFont(ptitle,"STATBIGS");
+	Label_setColor(ptitle,CR_WHITE);
+	Label_setTag(ptitle, -1);
+	Label_setShow(ptitle, false);
+}
+
+function void setTitleText(str title){
+	Label_setText(ptitle, title);
+}
+
+function void setTitleColor(int color){
+	Label_setColor(ptitle, color);
+}

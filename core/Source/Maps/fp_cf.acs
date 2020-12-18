@@ -19,7 +19,7 @@
 #import "f_FinalF.acs"
 
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 // setup techflags
 function void SFPlus_DefaultVars(void){

@@ -11,7 +11,7 @@
 #import "fl_Price.acs"
 #import "f_Tip.acs"
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 #Define MENU_MAX_SLOTS 9
 

@@ -13,7 +13,7 @@
 #import "f_intdb.acs"
 #import "fl_techs.acs"
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 
 #libdefine FP_ITEM_NUM 255

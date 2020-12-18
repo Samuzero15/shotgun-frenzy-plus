@@ -1,0 +1,138 @@
+
+/**
+*
+*	stexec_funs.acs
+* 	What it's gonna happen when the handler calls a function.
+* 	Get wild with the functions!
+*	Note: The arguments are limited to bytes. (0 - 255)
+*
+*/
+
+#include "stexec_sfactions.acs"
+#include "stexec_cmdfuns.acs"
+#include "stexec_buyfuns.acs"
+#include "stexec_upgfuns.acs"
+#include "stexec_rcyfuns.acs"
+#include "stexec_mupfuns.acs"
+#include "stexec_pupfuns.acs"
+
+
+function void STExecute_OkayAction(void){
+	localAmbientSound("SamuTerm/HopOut",127);
+	setPromptState(false);
+}
+
+function void STExecute_SayHi(void){
+	Prompt_Resize(40,20);
+	Prompt_Notify("Greetings", 
+	" I am Amy, your computarizated voice, and welcome to the Systemic Advanced Monitored User-frendly Terminal. S.A.M.U. Terminal for short.\n\n My duty is to serve you for any needings you'd wish.\n\n Try interacting with the \cgPrimary Click \c-button to gain acesss for many functions for you.\n\n Now, tell me, what do you need this time?"
+	, CR_GREEN);
+	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
+}
+function void STExecute_Ask(void){
+	Prompt_Resize(20,10);
+	Prompt_Ask("A simple question", 
+	"Do you love me?", 
+	CR_BRICK);
+	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
+}
+
+function void STExecute_GoToCategory(int tagCategory, str title){
+	pagetags[STTAGS_LAST] = pagetags[STTAGS_NOW];
+	pagetags[STTAGS_NOW] = tagCategory; 
+	
+}
+
+function void STExecute_AYesFun(void){
+	int rand = random(0,2);
+	//print(s:"Yes execute");
+	switch(rand){
+		case 0:
+			Toaster_ShowToast("How kind of you.",CR_BLUE);
+		break;
+		case 1:
+			Toaster_ShowToast("I'd love more, if you tell me what you need.",CR_BLUE);
+		break;
+		case 2:
+			Toaster_ShowToast("I'd wish to be a human right now, to give you a hug.",CR_BLUE);
+		break;
+	}
+	
+}
+
+function void STExecute_ANoFun(void){
+	int rand = random(0,2);
+	switch(rand){
+		case 0:
+			Toaster_ShowToast("It's because I'm a A.I.?",CR_RED);
+		break;
+		case 1:
+			Toaster_ShowToast("I have programmed feelings you know.",CR_RED);
+		break;
+		case 2:
+			Toaster_ShowToast("Well, I wish your worst too, idiot.",CR_RED);
+		break;
+	}
+}
+
+function void STExecute_YesAction(void){
+	setPromptValue(true);
+	setPromptState(false);
+	int cmd = getPromptExecute_YesAction();
+	int arg1 = getPromptExeArg1_YesAction();
+	int arg2 = getPromptExeArg2_YesAction();
+	int arg3 = getPromptExeArg3_YesAction();
+	//print(d:arg1);
+	
+	SamuTerm_CallOpExecute(cmd,arg1,arg2,arg3);
+	localAmbientSound("SamuTerm/HopOut",127);
+	
+	//print(s: "Yes");
+	//print(s:"Yes execute, completed.");
+}
+
+function void STExecute_NoAction(void){
+	setPromptValue(false);
+	setPromptState(false);
+	int cmd = getPromptExecute_NoAction();
+	int arg1 = getPromptExeArg1_NoAction();
+	int arg2 = getPromptExeArg2_NoAction();
+	int arg3 = getPromptExeArg3_NoAction();
+	
+	SamuTerm_CallOpExecute(cmd,arg1,arg2,arg3);
+	localAmbientSound("SamuTerm/HopOut",127);
+	//print(s: "No");
+	//print(s:"No execute, completed.");
+}
+
+function void STExecute_Shutdown(void){
+	SetInventory("SamuTInv_UsingTerminal", 0);
+	SetInventory("SamuTInv_HideSBAR", 0);
+	SetInventory("SamuTInv_ForcedExit", 0);
+	pagetags[STTAGS_ALPHA] = 0;
+	pagetags[STTAGS_LAST] = 0;
+	pagetags[STTAGS_NOW] = 0;
+	comphover = -1;
+	lasthover = -2;
+	exitResult = -1;
+}
+
+function void STExecute_Close(void){
+	SetInventory("SamuTInv_UsingTerminal", 0);
+	SetInventory("SamuTInv_HideSBAR", 0);
+	SetInventory("SamuTInv_ForcedExit", 0);
+	pagetags[STTAGS_ALPHA] = 0;
+	pagetags[STTAGS_LAST] = 0;
+	pagetags[STTAGS_NOW] = 0;
+	comphover = -1;
+	lasthover = -2;
+	exitResult = 0;
+	localambientsound("Amy/Farewell", 127);
+}
+
+function void STExecute_Open(int taggy){
+	SetInventory("SamuTInv_UsingTerminal", 1);
+	ACS_NamedExecuteAlways("TerminalLoop",0,taggy);
+	localambientsound("Amy/Welcome", 127);
+	lockPlayer(playernumber());
+}

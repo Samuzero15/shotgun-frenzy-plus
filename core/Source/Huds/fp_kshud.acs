@@ -10,7 +10,7 @@
 #library "FP_KSHUD"
 
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 
 #import "f_intdb.acs"
 

@@ -1,0 +1,50 @@
+
+function void STExecute_PlayUpTitleHover(int title, int btndata){
+	bool alreadygot = CheckInventory(PlayUp_getActor(btndata));
+	bool canigetit = getPlayUPts() >= PlayUp_getPrice(btndata);
+	
+	int color = cond(alreadygot, CR_CYAN, cond(canigetit, CR_WHITE, CR_ORANGE));
+
+	Label_SetText(title,PlayUp_GetName(btndata));
+	Label_setColor(title, color);
+}
+
+function void STExecute_PlayUpSetDesc(int up){
+	playup_vars[6] = up;
+	PlayUpPage_SetDetails(up);
+}
+
+function void STExecute_PlayUpGet(int which){
+	int payprice;
+	payprice = PlayUp_getPrice(which);
+	
+	sf_RemoveUpPoints(payprice, PlayerNumber());
+	/*
+	//Yes, even when upgrading, will crank up the difficulty too.
+	*/
+	fp_PlayUpTrack += payprice; 
+	
+	
+	GiveInventory(PlayUp_getActor(which), 1);
+}
+
+function void STExecute_PlayUpSet(int which){
+	SamuTerm_CallOpExecute(STEXE_PLAYUP_GET, which, 0, 0);
+	Toaster_ShowToast("Upgrade implemented sucessfully!", CR_PURPLE);
+	LocalAmbientSound("p/heal",128);
+}
+
+function void STExecute_PlayUpAsk(int up){
+	int affordable = getPlayUPts() >= PlayUp_getPrice(up);
+	
+	if(!affordable){
+		Toaster_ShowToast("You need more \cgUpgrade Points\c-!",CR_ORANGE);
+		localAmbientSound("SamuTerm/Error",127);
+		}
+	else{
+		Prompt_Resize(20,8);
+		Prompt_Ask("Conf. Upgrade", 
+			"Are you sure you want to apply this upgrade to your unit?", CR_CYAN);
+		Prompt_ExecuteOnTrue(STEXE_PLAYUP_SET, up, 0, 0);
+	}
+}

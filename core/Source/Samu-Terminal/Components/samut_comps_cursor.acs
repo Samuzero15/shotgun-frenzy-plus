@@ -1,0 +1,23 @@
+
+/**
+	Do you see that pointing arrow that kindly aims to what youre selecting?
+	Yeah that's a cursor.
+*/
+
+#include "samut_cgnsf_cursor.acs"
+
+function void Cursor_Initialize(int w, int h){
+	int rect = RectCreate(CursorX(),CursorY(),w,h);
+	setCursorRect(rect);
+	Cursor_SetDefaultProps();
+}
+
+function void Cursor_SetDefaultProps (void){
+	setCursorIcon("PNTR");
+}
+
+function void Cursor_UpdatePosition(void){
+	UpdateCursor();
+	setCursorPosition(CursorX(),CursorY());
+	setRectPosition(getCursorRect(), CursorX(), CursorY());
+}

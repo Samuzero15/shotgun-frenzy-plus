@@ -1,0 +1,51 @@
+////////////////////////////////////////
+// Getters from Toast!
+////////////////////////////////////////
+
+function int getToastRect(void){ 
+	return comp_rects_once[STCOMP_TOAST];
+}
+
+function int getToastX(void){
+	return RectX1(getToastRect());
+}
+
+function int getToastY(void){
+	return RectY1(getToastRect());
+}
+
+function str getToastString(void){ 
+	return RectGetUserData(getToastRect(), ST_CPROP1);
+}
+
+function int getToastColor(void){ 
+	return RectGetUserData(getToastRect(), ST_CPROP2);
+}
+
+function str getToastBack(void){ 
+	return RectGetUserData(getToastRect(), ST_CPROP3);
+}
+
+///////////////////////////////////////
+// Setters for teh Toast!
+///////////////////////////////////////
+
+function void setToastRect(int rect){ 
+	comp_rects_once[STCOMP_TOAST] = rect;
+}
+
+function void Toast_setPosition(int x, int y){
+	SetRectPosition(getToastRect(), x, y);
+}
+
+function void setToastString(str string){ 
+	SetRectUserData(getToastRect(), ST_CPROP1, string);
+}
+
+function void setToastColor(int color){ 
+	SetRectUserData(getToastRect(), ST_CPROP2, color);
+}
+
+function void setToastBack(str back){ 
+	SetRectUserData(getToastRect(), ST_CPROP3, back);
+}

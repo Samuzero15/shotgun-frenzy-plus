@@ -1,0 +1,65 @@
+
+
+function void StExecute_BuyMechTank(void){
+	if(GetPlayCredits() < CheckInventory("Mech_Buy")){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+	}else{
+		Toaster_ShowToast("The War Mech is your's to drive!",CR_GREEN);
+		SamuTerm_CallOpExecute(STEXE_GetMechTank, 0, 0, 0);
+	}
+}
+
+function void STExecute_GetMechTank(void){
+	sf_RemoveCredits(CheckInventory("Mech_Buy"), PlayerNumber());
+	
+	SetActivatorToPlayer(PlayerNumber());
+	Acs_ExecuteAlways(305, 0);
+}
+
+function void STExecute_EnterMechTank(void){
+	SetActivatorToPlayer(PlayerNumber());
+	Acs_ExecuteAlways(306, 0);
+	STExecute_Close();
+}
+
+function void STExecute_UpgradeMech(int which){
+	int name = MechUp_getName(which);
+	int actor = MechUp_getActor(which);
+	int price = MechUp_getPrice(which);
+	
+	if(CheckInventory("Mech_State") == 99) {
+		Toaster_ShowToast("You can't upgrade what its broken!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+		return;
+		}
+	
+	if(GetPlayCredits() < price){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = which + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(stradd(stradd("Sure to apply the ", name), "?"),CR_ORANGE);
+		else{
+			localambientsound("vehicle/mechupgrade",128);
+			Toaster_ShowToast(stradd(name," Installed! (click for more)"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_GETMECHUPG, which, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+
+function void STExecute_getMechUpgrade(int which){
+	str actor = MechUp_getActor(which);
+	int payprice = MechUp_getPrice(which);
+	
+	
+	sf_RemoveCredits(payprice, PlayerNumber());
+	
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(actor, 1);
+	ACS_NamedExecuteAlways("AnnounceMechUpgrade", 0, which);
+}
+

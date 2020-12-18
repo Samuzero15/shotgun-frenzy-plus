@@ -1,0 +1,226 @@
+
+/**	
+	The Image contains a string. And nothing more.
+*/
+
+#include "samut_cgnsf_imgs.acs"
+
+function int Image_Add (int x, int y, str file){
+	int id = Component_Allocate(STCOMP_IMG, x, y, 0.0, 0.0);
+	if(id != -1){
+		Image_SetDefaultProps(id);
+		Image_setFile(id,file);
+	}
+	return id;
+}
+
+function int Image_AddGrid(int grid, int row, int col, str file){
+	int x = Grid_GetX(grid, row, col);
+	int y = Grid_GetY(grid, row, col);
+	
+	int id = Component_Allocate(STCOMP_IMG, x, y, 0.0, 0.0);
+	if(id != -1){
+		Image_SetDefaultProps(id);
+		Image_setFile(id,file);
+	}
+	return id;
+}
+
+function int Image_AddCard(int grid, int cell, str file){
+	int x = Card_GetX(grid, cell);
+	int y = Card_GetY(grid, cell);
+	
+	int id = Component_Allocate(STCOMP_IMG, x, y, 0.0, 0.0);
+	if(id != -1){
+		Image_SetDefaultProps(id);
+		Image_setFile(id,file);
+	}
+	return id;
+}
+
+function int Image_AddCardOff(int grid, int cell, str file, int offx, int offy){
+	int x = Card_GetX(grid, cell);
+	int y = Card_GetY(grid, cell);
+	
+	int id = Component_Allocate(STCOMP_IMG, x + offx, y + offy, 0.0, 0.0);
+	if(id != -1){
+		Image_SetDefaultProps(id);
+		Image_setFile(id,file);
+	}
+	return id;
+}
+
+function void Image_SetPosToGridOff(int i, int grid, int row, int col, int offx, int offy){
+	int x = Grid_GetX(grid, row, col);
+	int y = Grid_GetY(grid, row, col);
+	Image_setPosition(i, x + offx, y + offy);
+}
+
+function void Image_SetPosToCardOff(int i, int card, int cell, int offx, int offy){
+	int x = Card_GetX(card, cell);
+	int y = Card_GetY(card, cell);
+	
+	Image_setPosition(i, x + offx, y + offy);
+}
+
+function void Image_SetPosToGrid(int i, int grid, int row, int col){
+	int x = Grid_GetX(grid, row, col);
+	int y = Grid_GetY(grid, row, col);
+	Image_setPosition(i, x, y);
+}
+
+function void Image_SetPosToCard(int i, int card, int cell){
+	int x = Card_GetX(card, cell);
+	int y = Card_GetY(card, cell);
+	
+	Image_setPosition(i, x, y);
+}
+
+function int Image_Add_P (str file, int coffx, int coffy, int align, int parent){
+	int posX = 0;
+	int posY = 0;
+	
+	int alx = 0, aly = 0;
+	
+	switch(align){
+		Case ST_COMPALIGN_NORTH:
+			
+			posX = coffx + RectCenterX(parent) + 8.0;
+			posY = coffy + RectY1(parent) + 4.0;
+			aly = HUD_ALIGN_TOP;
+		break;
+		Case ST_COMPALIGN_South:
+			posX = coffx + RectCenterX(parent) + 4.0;
+			posY = -coffy + RectY2(parent) - 4.0;
+			aly = HUD_ALIGN_BOTTOM;
+		break;
+		Case ST_COMPALIGN_East:
+			posX = coffx + RectX1(parent) + 4.0;
+			posY = coffy + RectCenterY(parent) + 4.0;
+			alx = HUD_ALIGN_LEFT;
+		break;
+		Case ST_COMPALIGN_West:
+			posX = -coffx + RectX2(parent) - 4.0;
+			posY = coffy + RectCenterY(parent) + 4.0;
+			alx = HUD_ALIGN_RIGHT;
+		break;
+
+		Case ST_COMPALIGN_Center:
+			posX = coffx + RectCenterX(parent);
+			posY = coffy + RectCenterY(parent);
+		break;
+		
+		default: // NorthEast
+			alX = HUD_ALIGN_LEFT;
+			aly = HUD_ALIGN_TOP;
+			posX = coffx + RectX1(parent);
+			posY = coffy + RectY1(parent);
+		break;
+	}
+
+	int id = Component_Allocate(STCOMP_IMG, posX, posY, 0.0, 0.0);
+	if(id != -1){
+		Image_SetDefaultProps(id);
+		Image_setFile(id,file);
+	}
+	return id;
+}
+
+//Duplicate constructors.
+//This will make another component with the same properties saved with Component_SaveProps function.
+
+//A time saver if you dont like to re-define the component again and again.
+function int Image_AddDup(int x, int y, int w, int h){
+	int id = Component_Allocate(STCOMP_LBL, x, y, w, h);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_IMG, Image_getRect(id));
+	}
+	
+	return id;
+}
+
+function int Image_AddDupGrid(int grid, int row, int col, int w, int h){
+	int x = Grid_GetX(grid, row, col);
+	int y = Grid_GetY(grid, row, col);
+	
+	int id = Component_Allocate(STCOMP_LBL, x, y, w, h);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_IMG, Image_getRect(id));
+		Image_setPosition(id, x, y);
+	}
+	return id;
+}
+
+function int Image_AddDupCard(int grid, int cell, int w, int h){
+	int x = Card_GetX(grid, cell);
+	int y = Card_GetY(grid, cell);
+	
+	int id = Component_Allocate(STCOMP_LBL, x, y, w, h);
+	if(id != -1){
+		Component_LoadProps(id, STCOMP_IMG, Image_getRect(id));
+		Image_setPosition(id, x, y);
+	}
+	return id;
+}
+
+
+function void AdjustImage_P (int lid, int coffx, int coffy, int align, int parent){
+	int posX = 0;
+	int posY = 0;
+	
+	int alx = 0, aly = 0;
+	
+	switch(align){
+		Case ST_COMPALIGN_NORTH:
+			
+			posX = coffx + RectCenterX(parent);
+			posY = coffy + RectY1(parent) + 4.0;
+			aly = HUD_ALIGN_BOTTOM;
+		break;
+		Case ST_COMPALIGN_South:
+			posX = coffx + RectCenterX(parent);
+			posY = -coffy + RectY2(parent) - 4.0;
+			aly = HUD_ALIGN_TOP;
+		break;
+		Case ST_COMPALIGN_East:
+			posX = coffx + RectX1(parent) + 4.0;
+			posY = coffy + RectCenterY(parent);
+			alx = HUD_ALIGN_LEFT;
+		break;
+		Case ST_COMPALIGN_West:
+			posX = -coffx + RectX2(parent) - 4.0;
+			posY = coffy + RectCenterY(parent);
+			alx = HUD_ALIGN_RIGHT;
+		break;
+
+		Case ST_COMPALIGN_Center:
+			posX = coffx + RectCenterX(parent);
+			posY = coffy + RectCenterY(parent);
+		break;
+		
+		default: // NorthEast
+			alX = HUD_ALIGN_LEFT;
+			aly = HUD_ALIGN_TOP;
+			posX = coffx + RectX1(parent);
+			posY = coffy + RectY1(parent);
+		break;
+	}
+	Image_setPosition(lid, posX, posY);
+}
+
+function void UpdateImage(int bid, int condit){
+	if(Image_getParent(bid) > -1){
+		Image_setShow(bid, condit);
+	}
+}
+
+function void Image_SetDefaultProps(int i){
+		Image_setFile		(i,"");
+		Image_setShow		(i, false);
+		Image_setAligns		(i,HUD_ALIGN_LEFT,HUD_ALIGN_TOP);
+		Image_setOffsets	(i, 0.0, 0.0);
+		Image_setParent		(i, -1);
+		Image_setHudid		(i, ST_HID_IMG + i);
+		Image_setTag		(i, -1);
+		Image_SetScale		(i, 1.0, 1.0);
+}

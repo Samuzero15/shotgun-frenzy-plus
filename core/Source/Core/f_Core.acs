@@ -7,7 +7,7 @@
 
 #import "f_Tip.acs"
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 
 script 122 (void)
 {

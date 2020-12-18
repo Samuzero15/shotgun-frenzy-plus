@@ -6,7 +6,7 @@
 #import "fc_CommB.acs"
 #import "fc_AStr.acs"
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 //Auto enumerating with ACS!
 // The first constant will always be 0

@@ -12,7 +12,7 @@
 #import "fc_CommB.acs"
 #import "fl_techs.acs"
 #include "zcommon.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 // build
 script 250 (void)

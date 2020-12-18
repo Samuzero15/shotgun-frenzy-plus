@@ -11,7 +11,7 @@
 
 #library "fl_PupDir"
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 //#include "samu_tools.acs"
 
 #define FP_PLAYUP_MAX 10

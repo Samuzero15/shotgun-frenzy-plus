@@ -13,7 +13,7 @@
 
 #include "zcommon.acs"
 #import "fl_techs.acs"
-#include "samu_tools.ach"
+#include "samu_tools.acs"
 
 // setup techflags
 script 91 OPEN

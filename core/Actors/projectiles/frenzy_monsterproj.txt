@@ -122,3 +122,7 @@ Actor Mon_BFGBall : BFGBall
 		Stop
 	}
 }
+
+Actor Mon_Rocket : Rocket {
+	DamageType "DemonFire"
+}

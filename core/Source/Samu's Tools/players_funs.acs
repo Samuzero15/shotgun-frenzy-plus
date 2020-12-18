@@ -1,0 +1,63 @@
+
+function void refreshPlayers(void){
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			ACS_ExecuteAlways(106, 0, -1);
+			SetActivator(0);
+		}
+	}
+}
+
+function void giveCashToPlayers(int howmuch){
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			
+			sf_AddCredits(howmuch, playerNumber());
+			
+			SetActivator(0);
+		}
+	}
+}
+
+function void giveTipsToPlayers(int howmuch){
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			
+			sf_AddTips(howmuch, i);
+			
+			SetActivator(0);
+		}
+	}
+}
+
+function void giveUPToPlayers(int howmuch){
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			
+			sf_AddUpPoints(howmuch, playerNumber());
+			
+			SetActivator(0);
+		}
+	}
+}
+
+function void giveItemToPlayers(str what, int howmuch){
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			
+			GiveInventory(what,howmuch);
+			
+			SetActivator(0);
+		}
+	}
+}

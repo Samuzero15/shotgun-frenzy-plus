@@ -33,24 +33,7 @@ Loading order should be:
 
 ## Build setup
 
-For building, get Python 3, and run the Play.py or Build.py files.
-
-##### Play.py parameters
-	-s  -> Saves the generated temporary files.
-	-xr -> Skips the resource folder zipping routine.
-	-xm -> Skips the music folder zipping routine.
-	-xrm -> Skips the resource and music folders zipping routine. Meant for quick tests.
-For a faster run, do:
-``` python play.py -s ```
-For the first time and:
-``` **python play.py -s -srm** ```
-The rest of them, that should get you playing the mod in no time. Note that in the play.py compiles the ACS before running.
-
-##### Build.py parameters
-	-d  -> Makes a versioned copy (depending on project.ini).
-	-xr -> Skips the resource folder zipping routine.
-	-xm -> Skips the music folder zipping routine.
-	-xrm -> Skips the resources and music folder zipping routine. Building only the core directory.
-With this, you can make the pk3 files to be used in Slade, just in case you want to do something else. Also, this is useful for making new versions.
+Just run the pack-o-daemon.exe, and press the build and play buttons.
+Adjust the project.ini file to the zandronum path to make the play button work properly.
 
 ## For all of changes made, read the changelog.md file!

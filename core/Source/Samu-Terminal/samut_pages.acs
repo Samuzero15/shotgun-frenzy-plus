@@ -1,0 +1,77 @@
+/**
+*
+* 	<samut_pages.acs> 
+* 	Functions that initializes components, 
+*	but specially done for some dynamic segments.
+*
+**/
+
+
+#include "samut_pages_upgwp.acs"
+#include "samut_pages_buywp.acs"
+#include "samut_pages_rcywp.acs"
+#include "samut_pages_armit.acs"
+#include "samut_pages_pwrup.acs"
+#include "samut_pages_mechup.acs"
+#include "samut_pages_playup.acs"
+
+#include "samut_pages_cmd_main.acs"
+
+function void SamuTerm_InitPages(void){
+	if(pagetags[STTAGS_ALPHA] == 20){
+		InitPowBuyPage(1);
+		PlayUpPage_Init(2);
+	}else if(pageTags[STTAGS_ALPHA] == 30){
+		MechUpPage_Init(pageTags[STTAGS_ALPHA]);
+	}else if(pageTags[STTAGS_ALPHA] == 10){
+		CMDPage_Init();
+	}
+	else{
+		setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
+		BuyWpnPage_Init(1);
+		RcyWpnPage_Init(3);
+		
+		ArmItmPage_Init(4);
+		InitListUPPage(2);
+	}
+}
+
+function void UpdatePages(void){
+	if(pagetags[STTAGS_ALPHA] == 20){
+		UpdatePowBuyPage(1);
+		PlayUpPage_Update(2);
+		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+	}else if(pageTags[STTAGS_ALPHA] == 30){
+		MechUpPage_Update(pageTags[STTAGS_ALPHA]);
+		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+	}else if(pageTags[STTAGS_ALPHA] == 10){
+		CMDPage_Update();
+	}else{
+		BuyWpnPage_Update(1);
+		RcyWpnPage_Update(3);
+		ArmItmPage_Update(4);
+		//UpdateUpgPage(11);
+
+		UpdateListUPPage(2);
+		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+		//Label_setText(wallet, StrParam(s:"Price of p_key: ", d:Prices_getValue_K("pr_wb_bfg")));
+	}
+}
+
+function void setPageTitle_Alpha(str title, int color){
+		setTitleText(title);
+		setTitleColor(color);
+		Label_setTag(ptitle, pagetags[STTAGS_ALPHA]);
+}
+
+function void setPageTitle(int pageTag, str title, int color){
+	if(isOnTheSamePage(pageTag)){
+		setTitleText(title);
+		setTitleColor(color);
+		Label_setTag(ptitle, pagetags[STTAGS_ALPHA]);
+	}
+}
+
+function bool isOnTheSamePage(int pageTag){
+	return pagetags[STTAGS_NOW] == pageTag;
+}

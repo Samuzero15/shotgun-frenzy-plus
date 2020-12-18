@@ -1,0 +1,159 @@
+int rcywpn_vars[200];
+
+#define RCYWPNPAGE_NCOMPGROUP 4
+#define RCYWPNPAGE_NPRIVARS 5
+
+
+function void RcyWpnPage_SaveGroup(int up, int id, int comp){
+	rcywpn_vars[RCYWPNPAGE_NCOMPGROUP * up + RCYWPNPAGE_NPRIVARS + (id-1)] = comp;
+}
+
+function int RcyWpnPage_LoadGroup(int up, int id){
+	return rcywpn_vars[RCYWPNPAGE_NCOMPGROUP * up + RCYWPNPAGE_NPRIVARS + (id-1)];
+}
+
+function void RcyWpnPage_Update(int pageTag){
+	setPageTitle(pageTag, "Recycle Weapons", CR_RED);
+	if(isOnTheSamePage(pageTag)){
+		for(int i = 0; i < fp_WeaponStack; i++){
+			if(Weapon_getWepPack(i) != -1)
+				RcyWpnPage_updateOptions(i);
+		}
+		rcywpn_vars[1] = 0; // reset stack.
+	}
+	
+}
+
+
+function void RcyWpnPage_Init(int pageTag){
+	Grid_SetPosition(40.0, 50.0);
+	Grid_SetCellSize(300.0, 35.0);
+	Grid_SetDimensions(10, 2);
+	rcywpn_vars[0] = Grid_Generate(); 
+	rcywpn_vars[1] = 0; // Top.
+	
+	for(int i = 0; i < fp_WeaponStack; i++){
+		if(Weapon_getWepPack(i) != -1) // Excludes boomstick.
+			RcyWpnPage_AddOptions(pagetag, i);
+	}
+	
+}
+
+function void RcyWpnPage_AddOptions(int pagetag, int wpn){
+	int i = 0;
+	bool ihaveup1, ihaveup2;
+	int stat0, stat1, stat2, stat3;
+	
+	stat0 = Weapon_GetName(wpn);
+	
+	int price = Weapon_getPrice(wpn);
+	int priceup1 = WeaponUpgrade_getRcyPrice(wpn,0);
+	int priceup2 = WeaponUpgrade_getRcyPrice(wpn,1);
+	ihaveup1 = CheckInventory(WeaponUpgrade_GetActor(wpn,0));
+	ihaveup2 = CheckInventory(WeaponUpgrade_GetActor(wpn,1));
+	
+	if(WeaponUpgrade_getActor(wpn, 1) == -1){
+		stat1 = cond(ihaveup1, "Up. Type: 0", "Not Upgraded");
+		stat2 = cond(ihaveup1, priceup1, price);
+	}else{
+		stat1 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, "Up. Type: 1", "Up. Type: 2"), "Not Upgraded");
+		stat2 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, priceup1, priceup2), 			price);
+	}
+	
+	i = Label_Add	(0.0, 0.0); 
+	Label_setText	(i, stat0);
+	Label_setFont	(i,"StatBigs");
+	Label_setShow	(i, false);
+	Label_setAligns	(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_setTag	(i, pageTag);
+	Component_Save(Label_getRect(i));
+	RcyWpnPage_SaveGroup(wpn, 1, i);
+	
+	i = Label_Dup	(0.0, 0.0); 
+	Label_setText	(i,stat1);
+	Label_setFont	(i,"confont");
+	RcyWpnPage_SaveGroup(wpn, 2, i);
+	
+	i = Label_Dup(0.0, 0.0); 
+	Label_setText	(i,strparam(s:"+ ",d:stat2,s:" $"));
+	Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+	Label_setFont	(i, "confont");
+	RcyWpnPage_SaveGroup(wpn, 3, i);
+	
+	i = StrButton_Add	(0,0, "Recycle"); 
+	StrButton_setShow	(i, false);
+	StrButton_setTag	(i, pageTag);
+	StrButton_setExecute(i, STEXE_ASKRC);
+	StrButton_setExeArgs(i, wpn, 0, 0);
+	RcyWpnPage_SaveGroup(wpn, 4, i);
+}
+
+function int RcyWpnPage_getColorCat(int cat){
+	if(cat == 1) return CR_GREEN;
+	if(cat == 2) return CR_CYAN;
+	if(cat == 3) return CR_ORANGE;
+	return cr_white;
+}
+
+function void RcyWpnPage_UpdateOptions(int wpn){
+	int comp1 = RcyWpnPage_LoadGroup(wpn, 1);
+	int comp2 = RcyWpnPage_LoadGroup(wpn, 2);
+	int comp3 = RcyWpnPage_LoadGroup(wpn, 3);
+	int comp4 = RcyWpnPage_LoadGroup(wpn, 4);
+	
+	Label_setShow(comp1, false);
+	Label_setShow(comp2, false);
+	Label_setShow(comp3, false);
+	StrButton_setShow(comp4, false);
+	
+	bool ihaveup1, ihaveup2, ihavewpn;
+	int stat0, stat1, stat2, stat3;
+	
+	stat0 = Weapon_GetName(wpn);
+	
+	int price = Weapon_getPrice(wpn);
+	int priceup1 = WeaponUpgrade_getRcyPrice(wpn,0);
+	int priceup2 = WeaponUpgrade_getRcyPrice(wpn,1);
+	ihavewpn = CheckInventory(Weapon_GetActor(wpn));
+	ihaveup1 = CheckInventory(WeaponUpgrade_GetActor(wpn,0));
+	ihaveup2 = CheckInventory(WeaponUpgrade_GetActor(wpn,1));
+	
+	if(WeaponUpgrade_getActor(wpn, 1) == -1){
+		stat1 = cond(ihaveup1, "Up. Type: 0", "Not Upgraded");
+		stat2 = cond(ihaveup1, priceup1, price);
+		stat3 = cond(ihaveup1, 0, 255);
+	}else{
+		stat1 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, "Up. Type: 1", "Up. Type: 2"), "Not Upgraded");
+		stat2 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, priceup1, priceup2), 			price);
+		stat3 = cond(ihaveup1 || ihaveup2, cond(ihaveup1, 1, 2), 			255);
+	}
+	
+	if(ihavewpn || ihaveup1 || ihaveup2){
+		
+		int color = RcyWpnPage_getColorCat(Weapon_getCat(wpn));
+		int toppy = (rcywpn_vars[1] % 10) + 1;
+		int col = (rcywpn_vars[1] / 10) + 1;
+		
+		Label_setText	(comp1, stat0);
+		Label_setText	(comp2, stat1);
+		Label_setText	(comp3, strparam(s:"+ ",d:stat2,s:" $"));
+		StrButton_setExeArgs(comp4, wpn, stat3, 0);
+		
+		Label_setColor	(comp1, color);
+		Label_setColor	(comp2, color);
+		Label_setColor	(comp3, color);
+		StrButton_setColor(comp4, color);
+		
+		Label_setPosToGridOff(comp1, rcywpn_vars[0], toppy, col, 0.0, 4.0);
+		Label_setPosToGridOff(comp2, rcywpn_vars[0], toppy, col, 0.0, 20.0);
+		Label_setPosToGridOff(comp3, rcywpn_vars[0], toppy, col, 204.0, 24.0);
+		StrButton_setPosToGridOff(comp4, rcywpn_vars[0], toppy, col, 150.0, -2.0);
+		
+		Label_setShow(comp1, true);
+		Label_setShow(comp2, true);
+		Label_setShow(comp3, true);
+		StrButton_setShow(comp4, true);
+		
+		rcywpn_vars[1]++;
+	}
+}

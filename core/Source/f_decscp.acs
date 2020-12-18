@@ -11,7 +11,7 @@
 #library "f_decscp"
 
 #include "zcommon.acs"
-#include "acsutils.ach"
+#include "acsutils.acs"
 
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.

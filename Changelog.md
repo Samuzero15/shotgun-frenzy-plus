@@ -2,6 +2,16 @@
 
 ## v0 - Before the beginning...
 
+#### -) (23 / 11 to 18 / 12 / 2020) [Bye buy.py and play.py, Hello pack-o-daemon!]
+	// Miss me?
+	-) Like the commit said, the buy.py and play.py scripts are deleted.
+	+) But now they're replaced with a parallel project that I've been working since a month, pack-o-daemon!
+	// It's the build and play scripts, but in a GUI interface. Really it's the same thing.
+	*) Now the Samu-Terminal old folder structure is now back to action!
+	*) Renmed back the file extensions from .ach to .acs to make the pack-o-daemon acs compilation work.
+	*) Cyberdemons will no longer be harmed by their own rockets. However, they're vulnerable to the area-damage of explosives!
+	*) Updated the README.MD regarding about the pack-o-daemon addition.
+
 #### -) (13 - 14 - 15 / 11 / 2020) [SBARINFO and Mech related stuff perks]
 	*) Re-arranged the kill counters, for a better comprehension.
 	+) Now, a timer should be displayed when the mech is on cool-down phase on the normal status bar.
