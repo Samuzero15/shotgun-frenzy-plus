@@ -214,6 +214,7 @@ script 130 (void)
     // begin commanding
     while(c_Commander == playernumber() && playeringame(c_Commander) && getactorproperty(0, APROP_Health) > 0)
     {
+		changecamera(130, 0, 0);
 		scriptpulse = 0;
         // camera restrictions
         if (getactory(130) > getactory(131))       thrustthing(192, 200, 0, 130);       // top

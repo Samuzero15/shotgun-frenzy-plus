@@ -117,7 +117,6 @@ Script "SFPlus_SecManMainLoop" OPEN {
 	floor_raisetonearest(105, 50);
 	int current_sector;
 	int time;
-	int timecvar = GetCvar("sf_doorholdtime");
 	bool skip_recap = false;
 	while(!g_GameOver){
 		skip_recap = false;
@@ -129,7 +128,7 @@ Script "SFPlus_SecManMainLoop" OPEN {
 		current_sector = g_Status;
 		delay(1);
 		
-		time = timecvar;
+		time = GetCvar("sf_doorholdtime");
 		acs_execute(129, 0, 1, time, 0);
 		while(time != 0){// The timer before opening a door.
 			if(time == 10 || time == 5){

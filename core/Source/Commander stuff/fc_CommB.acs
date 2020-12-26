@@ -119,6 +119,54 @@ script "SFPlus_CMD_CallSpawnScript" (int which, int price){
 	}
 }
 
+function bool CMDR_AreaCheck(int y){
+	return 
+		y < getactory(81) & g_Status == 1 ||
+		y < getactory(82) & g_Status == 2 || 
+		y < getactory(83) & g_Status == 3 || 
+		y < getactory(84) & g_Status == 4;
+}
+
+function bool CMDR_FloorCheck(int tid){
+	return !(
+	CheckActorFloorTexture(tid, "") || CheckActorFloorTexture(tid, "F_SKY1")
+	
+	);
+}
+
+// Spawn something in the indicated position, minding the area
+function bool CMDR_Spawn(str something, int tid){
+	int angle = GetActorAngle(130);
+	int r = 512.0;
+	
+	int x = GetActorX(130) + FixedMul(r,cos(angle));
+	int y = GetActorY(130) + FixedMul(r,sin(angle));
+	int z = GetSectorFloorZ(0,x>>16, y>>16);
+	
+	SpawnForced("DeploySpot", x , y, z, 500);
+	int floorz = GetActorZ(500);
+	bool free;
+	int zoff = 0.0;
+	for (int i = 0; i < 5 && !free; i++){ // Try spawning it. Give up after 5 attempts if you can't spawn it.
+		free = Spawn("DeployBlocker", x, y, floorz + zoff, 500);
+		zoff += 8.0;
+	}
+	int sucess = False;
+	bool valid_area = CMDR_AreaCheck(y);
+	bool valid_floor = CMDR_FloorCheck(500);
+	if (free && valid_area && valid_floor){
+		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), tid);
+	}
+	if(sucess == false){
+		if		(!valid_area) 	print (s:"Can't build in a lost sector!");
+		else if (!valid_floor)  print (s:"Can't build over the liquids or void!");
+		else if (!free) 		print (s:"The area is blocked or unstable for building!");
+	}
+	thing_Remove(500);
+	return sucess;
+}
+
+
 // events system
 
 function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3){
@@ -250,10 +298,23 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 
 	// check current sector before placing
 		if (getactory(130) < getactory(81) & g_Status == 1 | getactory(130) < getactory(82) & g_Status == 2 | getactory(130) < getactory(83) & g_Status == 3 | getactory(130) < getactory(84) & g_Status == 4){
+			// Hold up, check if there is something blocking this deployable!
+			
+			
+			
+			
+			//thing_remove(500);
+			/*
 			// add object
 			setactorstate(130, strparam(s:"Spawn_", s:l_EventArg1), 0);
-			
+			*/
 			//[Samu] for lazyness sake, and for controlling turret - dispenser spawning.
+			
+			
+			if(!CMDR_Spawn(l_EventArg1, 0)) {
+				c_credits += price; // Refund it.
+				return;
+			}
 			c_allow_turret = Timer();
 			
 			// show the message
@@ -272,7 +333,6 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 				case 8:  Notify_Deploy("Rail Turret", 		"CM43"); break;
 			}   
 			
-			c_credits -= price;
 		}
 		else {
 			if (getactory(130) > getactory(81)) {
@@ -281,7 +341,9 @@ function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_E
 			else {
 				print(s: "This sector has been lost!\nCan only place this in sectors you have control of...");
 			}
+			c_credits += price; // Refund it.
 		}
+		
 
 		   
     }

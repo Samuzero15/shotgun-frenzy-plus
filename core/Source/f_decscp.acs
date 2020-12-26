@@ -175,6 +175,7 @@ log(s:GetActorClass(debug2),
 script "Teleport_Effects" (void) {
 	// What happens to the teleported things?
 	SetActivatorToTarget(0);
+	delay(5);
 	if(CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
 		// If a player was teleported, check if he got the spawn protection upgrade.
 		if(CheckActorInventory(ActivatorTID(), "PlayUp_SpawnShield")) 
@@ -189,6 +190,7 @@ Script "Deploy_TID" (int tid, int type) {
 	int dtid;
 	if(play >= 0 && play < 32){
 		switch(type){
+			case 0: dtid = 11000+play; break;
 			case 1: dtid = 15000+play; break;
 			case 2: dtid = 10000+play; break;
 		}
@@ -196,7 +198,7 @@ Script "Deploy_TID" (int tid, int type) {
 		SetResultValue(dtid);
 		terminate;
 	}else 
-	SetResultValue(0);
+	SetResultValue(UniqueTID(15200));
 }
 
 Script "Deploy_Count" (int tid, int type){
@@ -213,10 +215,6 @@ Script "Deploy_Count" (int tid, int type){
 		terminate;
 	}else 
 	SetResultValue(0);
-}
-
-Script "Turret_StandTID" (void) { // Assuming the players are the only ones spawning turrets.
-	SetResultValue(UniqueTID(15200));
 }
 
 Script "Turret_Count" (int tid) {

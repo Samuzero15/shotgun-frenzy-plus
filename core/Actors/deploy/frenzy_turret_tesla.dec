@@ -3,7 +3,7 @@ ACTOR TurretTesla : Deploy_Building
 	states
 	{
 		Deploy:
-			NULL A 1 A_SpawnItemEx("TurretTesla_Head", 0, 0, 0, 0, 0, 0, 0, 0, 0, CallACS("Deploy_TID", tid, 1))
+			NULL A 1 A_SpawnItemEx("TurretTesla_Head", 0, 0, 0, 0, 0, 0, 0, 0, 0, args[2])
 			stop
 	}
 }
@@ -38,7 +38,7 @@ ACTOR TurretTesla_Head : TurretHeadBase 24306
 		Spawn:
 			TTRT A 1 A_Look
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
-			TNT1 A 0 A_SetArg(0, CallACS("Turret_StandTID", 0))
+			TNT1 A 0 A_SetArg(0, tid)
 			TTRT A 0 A_SpawnItemEx("TurretTesla_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
 			goto Spawn3
 		Spawn3:

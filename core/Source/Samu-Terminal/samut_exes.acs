@@ -35,7 +35,7 @@ function void SamuTerm_CallOpExecute (int cmd, int arg1, int arg2, int arg3){
 	else if (sgn(cmd) == -1){
 		//Net Packets are Unreliable huh?
 		//NamedRequestScriptPuke("SamuTerm_ServerExecute", cmd , arg1, arg2, arg3);
-		ACS_NamedExecuteAlways("SamuTerm_RequestServExe", 0, cmd, args);
+		ACS_NamedExecute("SamuTerm_RequestServExe", 0, cmd, args);
 	}
 	else return;
 }
@@ -50,11 +50,12 @@ function void SamuTerm_ClientExecute (int cmd, int args){
 
 script "SamuTerm_RequestServExe" (int cmd, int args){
 	int key = CheckInventory("SamuTInv_ActionKey") + 1;
-	
+	GiveInventory("SamuTInv_LockInput", 1);
 	while(!SamuTerm_ClientCheck(key)) {
 		NamedRequestScriptPuke("SamuTerm_ServerExecute", cmd , args, key);
 		delay(5);
 	}
+	TakeInventory("SamuTInv_LockInput", 1);
     
 }
 Script "SamuTerm_ServerExecute" (int cmd, int args, int key) NET{

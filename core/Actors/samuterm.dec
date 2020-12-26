@@ -1,6 +1,7 @@
 Actor SamuTInv_UsingTerminal : Boolean {}
 Actor SamuTInv_ForcedExit: Boolean {}
 Actor SamuTInv_Cooldown : Boolean {}
+Actor SamuTInv_LockInput : Boolean {}
 
 Actor SamuTInv_ActionKey : Integer {}
 Actor SamuTInv_HideSBar : Boolean {}

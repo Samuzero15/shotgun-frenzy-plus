@@ -32,7 +32,7 @@ script 231 (void)
 	if (alpha != 0.9 && PlayerCount() > 2){
 		extrahealth = (health*((PlayerCount() - 2)*(fixedDiv(m_hpmult, 100.0))))>>16;
 		damage_factor = 1.0 + (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
-		
+		/*
 		log(s:"Health: ", d:health, 
 		s:"\nExtra health: ", d:extrahealth, 
 		s:"\nPlayer count: ", d:playercount(),
@@ -40,6 +40,7 @@ script 231 (void)
 		s:"\nTotal health: ", d:(health + extrahealth),
 		s:"\nDamage Multipler: ", f:p_dmgmult,
 		s:"\nDamage Factor: ", f:damage_factor);
+		*/
 		
 		// [Samu] Fuck your 50% health increase!, let the server modify that!
 		//setactorproperty(0, APROP_Health, health*adjustedCount);
@@ -392,10 +393,6 @@ script 125 (int l_Condition)
     if (l_Condition == 3)       g_FinalSkillScore += 10;
     if (l_Condition == 4)       g_FinalSkillScore -= 20;
     
-    // check limits
-    if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
-    if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
-	
 	str msg;
 	switch(l_Condition){
 		case 1: msg = "Nukes sloves everything"; break;
@@ -408,6 +405,10 @@ script 125 (int l_Condition)
 	if(PlayerCount() == 0) g_FinalSkillScore = 0;
 	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 5;
 	// Well not on my watch!
+	
+	// check limits
+    if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
+    if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
 	
 	// Debug info.
 	log(s:"Monster Kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" kills.");

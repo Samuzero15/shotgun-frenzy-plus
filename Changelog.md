@@ -2,13 +2,25 @@
 
 ## v0 - Before the beginning...
 
-#### -) (23 / 11 to 18 / 12 / 2020) [Bye buy.py and play.py, Hello pack-o-daemon!]
+#### -) (23 to 26 / 12 / 2020) [Winterish Hotfixes]
+	*) Fixed a glitch which let's you create turrets, but without checking the credits.
+	*) Now the commander should check the terrain, if the spawning of a turret or dispenser is being blocked, or placed in liquids (wip) the spawning will fail, but the team credits will be refunded.
+	*) Hidden some spamming on the server log console.
+	*) The turrets shall now delete themselves with the base included.
+	*) Now the kill-streak flow will not be interrupted by the building of a deployable item.
+	*) Spawnshield should work again (needs some testing though)
+	*) Pressing F12 (Coop Spy) will force you to look at the commander screen.
+	*) Small fix on the sf_doorholdtime cvar.
+	*) Removed the useless rune sync from the player upgrades. But this is'nt the last time you see it.
+	*) Other smoll fixes.
+
+#### -) (23 / 11 to 18 / 12 / 2020) [Relase! v0-t12] [Bye buy.py and play.py, Hello pack-o-daemon!]
 	// Miss me?
 	-) Like the commit said, the buy.py and play.py scripts are deleted.
 	+) But now they're replaced with a parallel project that I've been working since a month, pack-o-daemon!
 	// It's the build and play scripts, but in a GUI interface. Really it's the same thing.
 	*) Now the Samu-Terminal old folder structure is now back to action!
-	*) Renmed back the file extensions from .ach to .acs to make the pack-o-daemon acs compilation work.
+	*) Renamed back the file extensions from .ach to .acs to make the pack-o-daemon acs compilation work.
 	*) Cyberdemons will no longer be harmed by their own rockets. However, they're vulnerable to the area-damage of explosives!
 	*) Updated the README.MD regarding about the pack-o-daemon addition.
 

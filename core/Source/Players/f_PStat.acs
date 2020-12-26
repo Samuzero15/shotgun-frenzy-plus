@@ -221,6 +221,12 @@ script 57 (int num) DISCONNECT
 	Thing_Damage(990+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(990+num);
 	
+	Thing_Damage(11000+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(11000+num);
+	
+	Thing_Damage(10000+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(10000+num);
+	
 	Thing_Damage(15000+num, 90000000, MOD_UNKNOWN);
 	Thing_Remove(15000+num);
 	

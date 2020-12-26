@@ -167,7 +167,7 @@ Actor Deploy_TurretBuilders {
 	{
 		Spawn:
 		TNT1 A 0
-		TNT1 A 1 // Building set spawner.
+		TNT1 A 1 // Building set spawner
 		TNT1 A 0 A_SpawnItemEx("Deploy_Counter", 0, 0, 64, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
 		TNT1 A 0 A_SpawnItemEx("Deploy_Column", 32, 32, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
 		TNT1 A 0 A_SpawnItemEx("Deploy_Column", -32, 32, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
@@ -255,9 +255,14 @@ ACTOR Deploy_Building
 	{
 		Spawn:
 			TBAS A 1
+			// Make sure you don't mix up the Player TID with other actors.
+			TNT1 A 0 A_SetArg(0, tid)
+			TNT1 A 0 A_SetArg(1, CallACS("Deploy_TID", tid, 0))
+			TNT1 A 0 A_SetArg(2, CallACS("Deploy_TID", tid, 1))
+			TNT1 A 0 Thing_ChangeTID(0, args[1])
 			TBAS A 0 A_Jump(256, "Build")
 		Build:
-			TBLD A 1 A_SpawnItemEx("Deploy_TurretBuilders", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+			TBLD A 1 A_SpawnItemEx("Deploy_TurretBuilders", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, args[1])
 			goto Delay
 		Delay:
 			TNT1 A 0 A_JumpIfInventory("Deploy_Building_Done", 1, "Deploy")
@@ -395,12 +400,12 @@ ACTOR Deploy_Counter
 		states
 		{
 			Build:
-				TBLD A 1 A_SpawnItemEx("TurretBuilders_Bullet", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, tid)
+				TBLD A 1 A_SpawnItemEx("TurretBuilders_Bullet", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION, 0, args[1])
 				// ^^ The delay time ^^
 				goto Super::Delay
 		
 			Deploy:
-				NULL A 1 A_SpawnItemEx("TurretBullet_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, tid)
+				NULL A 1 A_SpawnItemEx("TurretBullet_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, args[2])
 				// ^^ The item to deploy ^^
 				NULL A 1 //A_NoBlocking
 				stop

@@ -105,6 +105,37 @@ actor CommanderBlocker
 	}
 }
 
+actor DeploySpot : MapSpot{
+	radius 8
+	height 8
+	states{
+		Spawn:
+			TNT1 A 0
+			BAL1 A 1 A_Warp(AAPTR_DEFAULT, 0, 0, 0, 0, WARPF_NOCHECKPOSITION | WARPF_TOFLOOR)
+		Loop
+	}
+}
+
+actor DeployBlocker
+{
+	mass 999999999
+	radius 16
+	height 48
+	
+	
+	+SOLID
+	+FLOORHUGGER
+	-SHOOTABLE
+	
+	
+	states
+	{
+		Spawn:
+		HEAD A -1
+		stop
+	}
+}
+
 
 
 ACTOR MarinePlasma_SF: ScriptedMarine replaces MarinePlasma
