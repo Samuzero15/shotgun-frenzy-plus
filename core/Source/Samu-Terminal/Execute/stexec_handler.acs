@@ -28,16 +28,11 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_UPG0PAGEDESC: StExecute_Upg0PageDesc(arg1, arg2, arg3); break;
 		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
 		
-		case STEXE_CMDEXECUTE: StExecute_CMDExecute(arg1, arg2, arg3); break;
-		case STEXE_CMDSUPPORT: StExecute_CMDSupport(arg1, arg2); break;
-		case STEXE_CMDDEPLOY: StExecute_CMDSpawn(arg1, arg2); break;
-		case STEXE_CMDSUPPORT_MARK: StExecute_CMDSupport_Mark(arg1); break;
+		case STEXE_CMDEVENT_CHECK: STExecute_CMDEvent_Check(arg1, arg2); break;
+		case STEXE_CMDEVENT_DOIT: STExecute_CMDEvent_DoIt(arg1); break;
 		case STEXE_CMDEXIT: StExecute_CMDExit(); break;
-		case STEXE_CMDRESEARCH: StExecute_CMDUpgrade(arg1, arg2); break;
-		case STEXE_CMDBUILD: StExecute_CMDBuild(arg1, arg2); break;
 		case STEXE_CMDBTNDESC: StExecute_CMDBtnDesc(arg1, arg2, arg3); break;
 		case STEXE_CMDCAT: STExecute_CMDGotToCat(arg1, arg2); break;
-		
 		
 		case STEXE_BUYMECHTANK: StExecute_BuyMechTank(); break;
 		case STEXE_GETMECHTANK: StExecute_GetMechTank(); break;

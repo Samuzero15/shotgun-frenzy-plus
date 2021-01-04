@@ -26,32 +26,6 @@
 
 int scriptpulse;
 
-// money bag temp disable
-script 966 (int amount)
-{
-	str msg = strparam(d:amount, s:" credits for the lucky one!");
-	
-	//[Samu] Extended, for wealthier and bigger drops.
-	if(c_credits < amount) terminate;
-	
-
-	if(Thingcount(T_NONE, 5550)) {
-		
-		Thing_Remove(5550);
-		c_credits += c_MoneyDropped;
-		// add desired message
-        f_TipShow ("CM80", "Money Bag Re-Placed!", msg, 2);
-	}else{
-		f_TipShow ("CM80", "Money Bag Dropped!", msg, 2);
-	}
-	c_MoneyDropped = amount;
-	c_credits -= amount;
-	Thing_ChangeTID(ActivatorTID(), 5550);
-    c_allow_moneybag = 0;
-    delay(35 * 3);
-    c_allow_moneybag = 1;
-}
-
 // ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
 
 script 601 (int l_Type)
@@ -208,7 +182,7 @@ script 130 (void)
     // load up demon count per sector
     //acs_execute(969, 0, 0, 0, 0);
     
-	//[Samu] A Commander terminal which it work more efficiently, and hopefuly more easier to mantain.
+	//[Samu] A Commander terminal which it works more efficiently, and hopefuly more easier to mantain.
 	ACS_NamedExecute("SamuTerminal", 0, 10, true);
 	
     // begin commanding

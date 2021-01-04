@@ -403,7 +403,7 @@ ACTOR Inventory_TurretPlasma : Inventory_Item
 	}
 }
 
-ACTOR Inventory_TurretRail : CustomInventory
+ACTOR Inventory_TurretRail : Inventory_Item
 {
 	inventory.pickupmessage "Rail Turret!"
 	inventory.icon "ITEMD"

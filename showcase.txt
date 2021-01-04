@@ -7,4 +7,9 @@ Spawnshield should work again (needs some testing though)
 Pressing F12 (Coop Spy) will force you to look at the commander screen.
 Small fix on the sf_doorholdtime cvar.
 Removed the useless rune sync from the player upgrades. But this is'nt the last time you see it.
+Rewritten the CMD event handling system, and optimized the cmd terminal.
+Turret Rail in the ammo terminal should be given after pursache once again.
+Prosesing phase 1 and 2 can boost up the enemy bounty for the players and commander together!
+Enemies killed with cripple pulse will not grant credits to the player. (However, the commander can gain credits for that)
+Auto-Researching's Script has been revamped too, now notifying the players the new researchs on CF and SD maps! (Also, stimpacks and adrenaline can be given with this revamp.)
 Other smoll fixes.

@@ -5,8 +5,9 @@ function void StExecute_CMDBtnDesc(int lbl_title, int lbl_desc, int btndata){
 	int price = CMDBut_getPrice(btndata);
 	bool acess = CMDBut_getAccessCond(btndata);
 	//log(s:name);
-	if(price > 0) name = strParam(s:name, s:" - ", d:price, s:" $.");
+	
 	if(!acess) name = strParam(s:name, s:" - Locked.");
+	else if (price > 0) name = strParam(s:name, s:" - ", d:price, s:" $.");
 	
 	if(!CMDBut_getAccessCond(btndata)){
 		Label_SetText(lbl_desc, CMDBut_getNoAccessReason(btndata));
@@ -38,6 +39,31 @@ function void STExecute_CMDExecute(int command, int arg, int btndata){
 	ACS_NamedExecute(scriptname, 0, arg, cost);
 }
 
+function void STExecute_CMDEvent_DoIt(int btndata){
+	int cost = 		CMDBut_getPrice(btndata);
+	int e = 		CMDBut_getEvent(btndata);
+	//print(s:"WIP. fuf");
+	if(e != -1) 
+		ACS_NamedExecute("SFPlus_CMDEvent", 0, e, cost);
+}
+
+function void STExecute_CMDEvent_Check(int plzdontuseme, int btndata){
+	int ignore = 	CMDBut_getIgnorePrice(btndata);
+	int cost = 		CMDBut_getPrice(btndata);
+	int e = 		CMDBut_getEvent(btndata);
+	if(e != -1) {
+		if(CMDBut_GetAccessCond(btndata)){
+			if(getTeamCredits() >= cost || ignore){
+				SamuTerm_CallOpExecute(STEXE_CMDEVENT_DOIT, btndata, 0, 0);
+			}else Toaster_ShowToast("Needs more credits to do this, Access Denied.", CR_RED);
+		}
+		else{
+			Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+		}
+	}else Toaster_ShowToast("This button does not contain a cmd event.", CR_RED);
+}
+
+/*
 function void STExecute_CMDExecuteF(int command, int arg){
 	str scriptname; 
 	switch(command){
@@ -49,64 +75,8 @@ function void STExecute_CMDExecuteF(int command, int arg){
 	}
 	ACS_NamedExecute(scriptname, 0, arg);
 }
+*/
 
-function void StExecute_CMDBuild(int which, int btndata){
-	int cost = CMDBut_getPrice(btndata);
-	
-	if(CMDBut_GetAccessCond(btndata)){
-		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
-			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 1, which, btndata);
-		}else Toaster_ShowToast("Insufficient funds to start building, Access Denied.", CR_RED);
-	}
-	else{
-		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
-	}
-	
-}
-
-function void StExecute_CMDUpgrade(int which, int btndata){
-	int cost = CMDBut_getPrice(btndata);
-	
-	if(CMDBut_GetAccessCond(btndata))
-		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
-			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 2, which, btndata);
-		}else Toaster_ShowToast("Insufficient funds to start researching, Access Denied!.", CR_RED);
-	else{
-		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
-	}
-	
-	
-}
-
-function void StExecute_CMDSupport_Mark(int which){
-	ACS_NamedExecute("SFPlus_CMD_CallMarkScript", 0, which);
-}
-
-function void StExecute_CMDSpawn(int which, int btndata){
-	int cost = CMDBut_getPrice(btndata);
-
-	if(CMDBut_GetAccessCond(btndata)){
-		//log(d:getTeamCredits(),s:" $, - ", d:cost, s:"$ = ", d:(getTeamCredits() - cost), s:", Ignore price? =" , d:CMDBut_GetIgnorePrice(btndata));
-		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
-			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 3, which, btndata);
-			
-		}else Toaster_ShowToast("Insufficient funds for deploying, Access Denied!.", CR_RED);
-	}else{
-		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
-	}
-}
-
-function void StExecute_CMDSupport(int which, int btndata){
-	int cost = CMDBut_getPrice(btndata);
-
-	if(CMDBut_GetAccessCond(btndata)){
-		if(getTeamCredits() >= cost || CMDBut_GetIgnorePrice(btndata)){
-			SamuTerm_CallOpExecute(STEXE_CMDEXECUTE, 5, which, btndata);
-		}else Toaster_ShowToast("Insufficient funds for deploying, Access Denied!.", CR_RED);
-	}else{
-		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
-	}
-}
 
 function void STExecute_CMDGotToCat(int tagdest, int btndata){
 
@@ -120,7 +90,7 @@ function void STExecute_CMDGotToCat(int tagdest, int btndata){
 
 function void STExecute_CMDExit(void){
 	c_Commander = 99;
-	ACS_NamedExecute("SFPlus_CMD_CallSupportScript", 0, 304); // Remove the left over markers from the air support.
+	ACS_NamedExecute("SFPlus_CMDCleanup", 0); // Remove the left over markers from the air support.
 	SamuTerm_Execute(STEXE_CLOSE, 0,0,0);
 }
 

@@ -1,0 +1,401 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_cmdev.acs
+// All the commander events defined here.
+
+#library "fp_cmdevt"
+
+#import "f_IntDb.acs"
+#import "f_tip.acs"
+#import "fc_CommB.acs"
+#import "fl_techs.acs"
+#include "zcommon.acs"
+
+#define CMDEVT_TYPE_DEPLOY 		0 // Spacechecked spawning
+#define CMDEVT_TYPE_SPAWN 		CMDEVT_TYPE_DEPLOY+1 // Free spawning
+#define CMDEVT_TYPE_MARKER 		CMDEVT_TYPE_SPAWN+1 // Marker spawning
+#define CMDEVT_TYPE_RESEARCH 	CMDEVT_TYPE_MARKER+1 // Tech researching
+#define CMDEVT_TYPE_SCRIPT 		CMDEVT_TYPE_RESEARCH+1 // Executes an script
+#define CMDEVT_TYPE_BUILD 		CMDEVT_TYPE_SCRIPT+1 // Builds a structure
+#define CMDEVT_TYPE_AIRSTK 		CMDEVT_TYPE_BUILD+1 // Air-support actions
+#define CMDEVT_TYPE_CPULSE 		CMDEVT_TYPE_AIRSTK+1 // Call a Core Pulse
+#define CMDEVT_TYPE_REWARD		CMDEVT_TYPE_CPULSE+1 // Grant's the research in CF and SD maps.
+
+// Indexes, to the refered scripted events.
+#libdefine CMDEVT_DEPLOY_DISP_HEALTH 		0
+#libdefine CMDEVT_DEPLOY_DISP_AMMO 			CMDEVT_DEPLOY_DISP_HEALTH+1
+#libdefine CMDEVT_DEPLOY_TURRET_BULLET 		CMDEVT_DEPLOY_DISP_AMMO+1
+#libdefine CMDEVT_DEPLOY_TURRET_ROCKET 		CMDEVT_DEPLOY_TURRET_BULLET+1
+#libdefine CMDEVT_DEPLOY_TURRET_PLASMA 		CMDEVT_DEPLOY_TURRET_ROCKET+1
+#libdefine CMDEVT_DEPLOY_TURRET_TESLA 		CMDEVT_DEPLOY_TURRET_PLASMA+1
+#libdefine CMDEVT_DEPLOY_TURRET_FLAME 		CMDEVT_DEPLOY_TURRET_TESLA+1
+#libdefine CMDEVT_DEPLOY_TURRET_CHAINGUN	CMDEVT_DEPLOY_TURRET_FLAME+1
+#libdefine CMDEVT_DEPLOY_TURRET_SHOTGUN 	CMDEVT_DEPLOY_TURRET_CHAINGUN+1
+#libdefine CMDEVT_SPAWN_LANDMINES 			CMDEVT_DEPLOY_TURRET_SHOTGUN+1
+#libdefine CMDEVT_SPAWN_MONEYBAG			CMDEVT_SPAWN_LANDMINES+1
+#libdefine CMDEVT_SPAWN_SANDBAGS 			CMDEVT_SPAWN_MONEYBAG+1
+#libdefine CMDEVT_MARKER_ATTACK 			CMDEVT_SPAWN_SANDBAGS+1
+#libdefine CMDEVT_MARKER_DEFEND 			CMDEVT_MARKER_ATTACK+1
+#libdefine CMDEVT_MARKER_DEPLOY 			CMDEVT_MARKER_DEFEND+1
+#libdefine CMDEVT_MARKER_REGROUP 			CMDEVT_MARKER_DEPLOY+1
+#libdefine CMDEVT_MARKER_CLEAR 				CMDEVT_MARKER_REGROUP+1
+#libdefine CMDEVT_RESEARCH_HEALTH1 			CMDEVT_MARKER_CLEAR+1
+#libdefine CMDEVT_RESEARCH_HEALTH2 			CMDEVT_RESEARCH_HEALTH1+1
+#libdefine CMDEVT_RESEARCH_SPEEDB			CMDEVT_RESEARCH_HEALTH2+1
+#libdefine CMDEVT_RESEARCH_ARMOR			CMDEVT_RESEARCH_SPEEDB+1
+#libdefine CMDEVT_RESEARCH_RESISB			CMDEVT_RESEARCH_ARMOR+1
+#libdefine CMDEVT_RESEARCH_REGENB			CMDEVT_RESEARCH_RESISB+1
+#libdefine CMDEVT_RESEARCH_ARMS1			CMDEVT_RESEARCH_REGENB+1
+#libdefine CMDEVT_RESEARCH_ARMS2			CMDEVT_RESEARCH_ARMS1+1
+#libdefine CMDEVT_RESEARCH_BOOMRN			CMDEVT_RESEARCH_ARMS2+1
+#libdefine CMDEVT_RESEARCH_AMMOBP			CMDEVT_RESEARCH_BOOMRN+1
+#libdefine CMDEVT_RESEARCH_ADVSYS			CMDEVT_RESEARCH_AMMOBP+1
+#libdefine CMDEVT_RESEARCH_IONCAN			CMDEVT_RESEARCH_ADVSYS+1
+#libdefine CMDEVT_RESEARCH_AIRSUP			CMDEVT_RESEARCH_IONCAN+1
+#libdefine CMDEVT_RESEARCH_PUMP1			CMDEVT_RESEARCH_AIRSUP+1
+#libdefine CMDEVT_RESEARCH_PUMP2			CMDEVT_RESEARCH_PUMP1+1
+#libdefine CMDEVT_RESEARCH_CPULSE			CMDEVT_RESEARCH_PUMP2+1
+#libdefine CMDEVT_RESEARCH_STIMPK			CMDEVT_RESEARCH_CPULSE+1
+#libdefine CMDEVT_AIRSTK_POINT				CMDEVT_RESEARCH_STIMPK+1
+#libdefine CMDEVT_AIRSTK_LINE1				CMDEVT_AIRSTK_POINT+1
+#libdefine CMDEVT_AIRSTK_LINE2				CMDEVT_AIRSTK_LINE1+1
+#libdefine CMDEVT_AIRSTK_WAVES				CMDEVT_AIRSTK_LINE2+1
+#libdefine CMDEVT_AIRSTK_CANCEL				CMDEVT_AIRSTK_WAVES+1
+#libdefine CMDEVT_AIRSTK_EXECUTE			CMDEVT_AIRSTK_CANCEL+1
+#libdefine CMDEVT_SCRIPT_IONCAN				CMDEVT_AIRSTK_EXECUTE+1
+#libdefine CMDEVT_CPULSE_HEAL				CMDEVT_SCRIPT_IONCAN+1
+#libdefine CMDEVT_CPULSE_CRIPPLE			CMDEVT_CPULSE_HEAL+1
+#libdefine CMDEVT_CPULSE_HALT				CMDEVT_CPULSE_CRIPPLE+1
+#libdefine CMDEVT_SCRIPT_NUKE				CMDEVT_CPULSE_HALT+1
+#libdefine CMDEVT_BUILD_GENLAB				CMDEVT_SCRIPT_NUKE+1
+#libdefine CMDEVT_BUILD_ARMORY				CMDEVT_BUILD_GENLAB+1
+#libdefine CMDEVT_BUILD_MECHFA				CMDEVT_BUILD_ARMORY+1
+#libdefine CMDEVT_BUILD_REFINE				CMDEVT_BUILD_MECHFA+1
+#libdefine CMDEVT_BUILD_MARCOM				CMDEVT_BUILD_REFINE+1
+#libdefine CMDEVT_BUILD_NUKESY				CMDEVT_BUILD_MARCOM+1
+#libdefine CMDEVT_REWARD_HEALTH1 			CMDEVT_BUILD_NUKESY+1
+#libdefine CMDEVT_REWARD_HEALTH2 			CMDEVT_REWARD_HEALTH1+1
+#libdefine CMDEVT_REWARD_SPEEDB				CMDEVT_REWARD_HEALTH2+1
+#libdefine CMDEVT_REWARD_ARMOR				CMDEVT_REWARD_SPEEDB+1
+#libdefine CMDEVT_REWARD_RESISB				CMDEVT_REWARD_ARMOR+1
+#libdefine CMDEVT_REWARD_REGENB				CMDEVT_REWARD_RESISB+1
+#libdefine CMDEVT_REWARD_BOOMRN				CMDEVT_REWARD_REGENB+1
+#libdefine CMDEVT_REWARD_AMMOBP				CMDEVT_REWARD_BOOMRN+1
+#libdefine CMDEVT_REWARD_PUMP1				CMDEVT_REWARD_AMMOBP+1
+#libdefine CMDEVT_REWARD_PUMP2				CMDEVT_REWARD_PUMP1+1
+#libdefine CMDEVT_REWARD_STIMPK				CMDEVT_REWARD_PUMP2+1
+
+#libdefine CMDEVT_NULL -1
+
+// Total, and the rest of stuff
+#define CMDEVT_TOTAL CMDEVT_REWARD_STIMPK+1
+#define CMDEVT_PROPS 6
+int cmd_event[CMDEVT_TOTAL][CMDEVT_PROPS];
+
+function void CmdEvent_Initialize(void){
+	// Called upon start
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_DISP_HEALTH,		"HealthDispenser", 	 "Health Dispenser", "CM33");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_DISP_AMMO,		"AmmoDispenser", 	 "Ammo Dispenser", 	 "CM32");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_BULLET,	"TurretBullet", 	 "Bullet Turret", 	 "CM40");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_ROCKET,	"TurretRocket",		 "Rocket Turret",	 "CM41");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_PLASMA,	"TurretPlasma", 	 "Plasma Turret",	 "CM42");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_TESLA,		"TurretTesla",		 "Tesla Turret",	 "CM46");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_FLAME,		"TurretFlame",		 "Flame Turret",	 "CM47");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_CHAINGUN,	"TurretChaingun",	 "Chaingun Turret",	 "CM47");
+	CmdEvent_Add_Deploy(CMDEVT_DEPLOY_TURRET_SHOTGUN,	"TurretShotgun",	 "Shotgun Turret", 	 "CM45");
+	
+	CmdEvent_Add_Spawn(CMDEVT_SPAWN_LANDMINES,			"Spawn_Landmine",	 "Land mines", 	 	 "CM30", 0);
+	CmdEvent_Add_Spawn(CMDEVT_SPAWN_SANDBAGS,			"Spawn_Sandbags", 	 "Sandbags", 		 "CM33", 0);
+	CmdEvent_Add_Spawn(CMDEVT_SPAWN_MONEYBAG,			"Spawn_Moneybag", 	 0, 0, true);
+	
+	CmdEvent_Add_Marker(CMDEVT_MARKER_ATTACK, 	"Spawn_Attack", 	"Attack the marked position!", 			"OBJECT1", 143, "c/attack");
+	CmdEvent_Add_Marker(CMDEVT_MARKER_DEFEND, 	"Spawn_Defend", 	"Defend the marked position!", 			"OBJECT2", 144, "c/defend");
+	CmdEvent_Add_Marker(CMDEVT_MARKER_DEPLOY, 	"Spawn_Construct", 	"Deploy something at marked position!", "OBJECT3", 145, "c/construct");
+	CmdEvent_Add_Marker(CMDEVT_MARKER_REGROUP, 	"Spawn_Regroup", 	"Regroup at marked position!", 			"OBJECT4", 146, "c/regroup");
+	CmdEvent_Add_Marker(CMDEVT_MARKER_CLEAR, 0, 0, 0, 0, 0); // Clear Markers
+	
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_HEALTH1,	FP_TECH_GENLAB_HEALTH1, "HUMAN ENG. (PHASE 1)", "CM12");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_HEALTH2,	FP_TECH_GENLAB_HEALTH2,	"HUMAN ENG. (PHASE 2)", "CM13");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_SPEEDB,	FP_TECH_GENLAB_SPEEDB,	"ADRENALINE", 			"CM15");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMOR,	FP_TECH_GENLAB_ARMOR,	"STEEL PLATING", 		"CM16");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_RESISB,	FP_TECH_GENLAB_RESISB,	"REISTER UNIT", 		"CM17");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_REGENB,	FP_TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMS1,	FP_TECH_ARMORY_ARMS1,	"ARMS (PHASE 1)", 		"CM26");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMS2,	FP_TECH_ARMORY_ARMS2,	"ARMS (PHASE 2)", 		"CM27");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_BOOMRN,	FP_TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_AMMOBP,	FP_TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ADVSYS,	FP_TECH_MARCOM_ADVSYS,	"ADVANCED SYSTEMS", 	"CM44");
+	//[Samu] Looks like the drones we're meant to used by the commander too.
+	//Notify_Research("Drone tech", "CM48");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_IONCAN, FP_TECH_MARCOM_IONCAN,	"ION CANNON", 			"CM53");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_AIRSUP, FP_TECH_MARCOM_AIRSUP,	"AIR SUPPORT", 			"CM54");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP1,  FP_TECH_REFINE_PUMP1,		"PROCESSING PHASE 1", 	"CM56");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP2,  FP_TECH_REFINE_PUMP2,		"PROCESSING PHASE 2", 	"CM57");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_CPULSE, FP_TECH_MARCOM_CPULSE,	"CORE PULSES",  		"CM66");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_STIMPK, FP_TECH_ARMORY_STIMPK,	"STIMPACKS", 	 		"CM71");
+	
+	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_POINT	 	,0);
+	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_LINE1	 	,1);
+	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_LINE2	 	,2);
+	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_WAVES	 	,-2);
+	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_CANCEL	,-1);
+	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_EXECUTE 	,-3);
+	
+	CmdEvent_Add_Script(CMDEVT_SCRIPT_IONCAN	,304,0,0,0);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_HEAL		,4);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_CRIPPLE	,1);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_HALT		,5);
+	CmdEvent_Add_Script(CMDEVT_SCRIPT_NUKE		,451,0,0,0);
+	
+	CmdEvent_Add_Build(CMDEVT_BUILD_GENLAB		,1);
+	CmdEvent_Add_Build(CMDEVT_BUILD_ARMORY		,2);
+	CmdEvent_Add_Build(CMDEVT_BUILD_MECHFA		,3);
+	CmdEvent_Add_Build(CMDEVT_BUILD_REFINE   	,4);
+	CmdEvent_Add_Build(CMDEVT_BUILD_MARCOM		,5);
+	CmdEvent_Add_Build(CMDEVT_BUILD_NUKESY		,6);
+	
+	CmdEvent_Add_Reward(CMDEVT_REWARD_HEALTH1,	FP_TECH_GENLAB_HEALTH1, "HUMAN ENG. (PHASE 1)", "CM12");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_HEALTH2,	FP_TECH_GENLAB_HEALTH2,	"HUMAN ENG. (PHASE 2)", "CM13");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_SPEEDB,	FP_TECH_GENLAB_SPEEDB,	"ADRENALINE", 			"CM15");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_ARMOR,	FP_TECH_GENLAB_ARMOR,	"STEEL PLATING", 		"CM16");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_RESISB,	FP_TECH_GENLAB_RESISB,	"REISTER UNIT", 		"CM17");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_REGENB,	FP_TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_BOOMRN,	FP_TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_AMMOBP,	FP_TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_STIMPK, 	FP_TECH_ARMORY_STIMPK,	"STIMPACKS", 	 	"CM71");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP1,  	FP_TECH_REFINE_PUMP1,	"PROCESSING PHASE 1", 	"CM56");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP2,  	FP_TECH_REFINE_PUMP2,	"PROCESSING PHASE 2", 	"CM57");
+
+}
+
+
+// The event handler, which it calls the scripts, spawns the stuff and more.
+function void CmdEvent_Execute(int index, int price){
+	int type, arg1, arg2, arg3, arg4, arg5;
+	type = cmd_event[index][0];
+	arg1 = cmd_event[index][1];
+	arg2 = cmd_event[index][2];
+	arg3 = cmd_event[index][3];
+	arg4 = cmd_event[index][4];
+	arg5 = cmd_event[index][5];
+	//print(s:"YAY");
+	c_credits -= price;
+	switch(type){
+		case CMDEVT_TYPE_DEPLOY:
+			//print(s:"Deploy event.");
+			if (getactory(130) < getactory(81) & g_Status == 1 | getactory(130) < getactory(82) & g_Status == 2 | getactory(130) < getactory(83) & g_Status == 3 | getactory(130) < getactory(84) & g_Status == 4){
+				if(!CMD_Spawn(arg1, 0)) {
+					c_credits += price; // Refund it.
+					return;
+				}
+				c_allow_turret = Timer();
+				
+				Notify_Deploy(arg2, arg3);
+			}
+			else {
+				if (getactory(130) > getactory(81)) {
+					print(s:"Cannot place here...");
+				}
+				else {
+					print(s: "This sector has been lost!\nCan only place this in sectors you have control of...");
+				}
+				c_credits += price; // Refund it.
+			}
+		break;
+		case CMDEVT_TYPE_MARKER:
+			//print(s:"Marker event.");
+			if(arg1 == 0){
+				thing_remove(143);
+                thing_remove(144);
+                thing_remove(145);
+                thing_remove(146);
+                Notify_Message("Objective Markers", "Cleared", "INFO", 0);
+			}else{
+				Notify_CommMarker(arg2, arg3, arg5);
+				thing_remove(arg4);
+				setactorstate(130, arg1, 0);
+			}
+		break;
+		case CMDEVT_TYPE_SPAWN:
+			//print(s:"Spawn event.");
+			setactorstate(130, arg1, 0);
+			if(!arg4) Notify_Deploy(arg2, arg3);
+		break;
+		case CMDEVT_TYPE_REWARD:
+			Tech_Set(arg1, FP_TECHF_DONE);
+			Notify_Reward(arg2, arg3);
+		break;
+		case CMDEVT_TYPE_RESEARCH:
+			//print(s:"Research event.");
+			Tech_Set(arg1, FP_TECHF_DONE);
+			Notify_Research(arg2, arg3);
+			localambientsound("cv/researchcomplete",128);
+		break;
+		case CMDEVT_TYPE_SCRIPT:
+			//print(s:"Script event.");
+			ACS_Execute(arg1, 0, arg2, arg3, arg4);
+		break;
+		case CMDEVT_TYPE_BUILD:
+			//print(s:"Build event.");
+			ACS_NamedExecuteAlways("SFPlus_BuildStructure", 0, arg1, 0, 0);
+		break;
+		case CMDEVT_TYPE_AIRSTK:
+			//print(s:"Airstrike event.");
+			if(arg1 == -3)
+				ACS_NamedExecute("SFPlus_AirStrikeAttack", 0);
+			else
+				ACS_NamedExecute("SFPlus_AirStrikeTarget", 0, arg1);
+		break;
+		case CMDEVT_TYPE_CPULSE:
+			//print(s:"CorePulse event.");
+			ACS_NamedExecute("SFPlus_CorePulse", 0, arg1);
+		break;
+	}
+	CmdEvent_Announce(index);
+	
+}
+
+// The anouncement popup, which it announces an important event.
+function void CmdEvent_Announce(int cmd_event_index){
+	str msg = -1;
+	switch(cmd_event_index){
+		case CMDEVT_RESEARCH_HEALTH1: 
+			msg = "Collect at Genetics Lab\n\nHuman Engineering Phase 1\nStandard health increased";
+		break;
+		case CMDEVT_RESEARCH_HEALTH2: 
+			msg = "Collect at Genetics Lab\n\nHuman Engineering Phase 2\nStandard health increased";
+		break;
+		
+		case CMDEVT_RESEARCH_SPEEDB: 
+			msg = "Collect at Genetics Lab\n\nAdrenaline\nFaster run speed";
+		break;
+		
+		case CMDEVT_RESEARCH_RESISB:
+			msg = "Collect at Genetics Lab\n\nResister Unit\nDamage resistance against enemy fire";
+		break;
+		case CMDEVT_RESEARCH_REGENB:
+			msg = "Collect at Genetics Lab\n\nAsorber Unit\nHealth regeneration";
+		break;
+		case CMDEVT_RESEARCH_ARMOR:
+			msg = "Collect at Genetics Lab\n\nSteel Plating\nArmor plating for marines";
+		break;
+		
+		case CMDEVT_RESEARCH_ARMS1:
+			msg = "New weapons unlocked!\n\nExploder, Commando and Plasmatic\n packs are available in the ammo \nterminal!";
+		break;
+		case CMDEVT_RESEARCH_ARMS2:
+			msg = "New weapons unlocked!\n\nBFG-Like and Pyromancer packs \nare available in the ammo terminal!";
+		break;
+		case CMDEVT_RESEARCH_BOOMRN:
+			msg = "Collect at the Armory\n\nBoomshot Rounds\nIncreased weapon damage";
+		break;
+		case CMDEVT_RESEARCH_AMMOBP:
+			msg = "Collect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
+		break;
+		case CMDEVT_RESEARCH_STIMPK:
+			msg = "Collect at the Armory\n\nStimpacks\n10 Stimpacks on spawn!";
+		break;
+		case CMDEVT_RESEARCH_PUMP1:
+			msg = "Refinery Pump 1 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";
+		break;
+		case CMDEVT_RESEARCH_PUMP2:
+			msg = "Refinery Pump 2 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";
+		break;
+		
+		case CMDEVT_REWARD_HEALTH1: 
+			msg = "Human Engineering Phase 1\nStandard health increased";
+		break;
+		case CMDEVT_REWARD_HEALTH2: 
+			msg = "Human Engineering Phase 2\nStandard health increased";
+		break;
+		
+		case CMDEVT_REWARD_SPEEDB: 
+			msg = "Adrenaline\nFaster run speed";
+		break;
+		
+		case CMDEVT_REWARD_RESISB:
+			msg = "Resister Unit\nDamage resistance against enemy fire";
+		break;
+		case CMDEVT_REWARD_REGENB:
+			msg = "Asorber Unit\nHealth regeneration";
+		break;
+		case CMDEVT_REWARD_ARMOR:
+			msg = "Steel Plating\nArmor plating for marines";
+		break;
+		
+		case CMDEVT_REWARD_BOOMRN:
+			msg = "Collect at the Armory\n\nBoomshot Rounds\nIncreased weapon damage";
+		break;
+		case CMDEVT_REWARD_AMMOBP:
+			msg = "Collect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
+		break;
+		case CMDEVT_REWARD_STIMPK:
+			msg = "Collect at the Armory\n\nStimpacks\n10 Stimpacks on spawn!";
+		break;
+		case CMDEVT_REWARD_PUMP1:
+			msg = "Extra credits for the players. Keep up the good work!";
+		break;
+		case CMDEVT_REWARD_PUMP2:
+			msg = "Extra credits for the players. Keep up the good work!";
+		break;
+	}
+	
+	if(msg != -1){
+		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
+		setfont("NEWR");
+		hudmessagebold(s:"a"; 1, -178, CR_Red, 0.1, 0.1, 3.0);
+		setfont("STATBIGS");
+		hudmessagebold(s:"New research available!"; 1, -179, CR_CYAN, 570.0, 290.1, 3.0);
+		setfont("CONFONT");
+		hudmessagebold(s:msg; 1, -180,  CR_CYAN, 480.1, 320.1, 3.0);
+		ambientsound("p/upgrade", 125);
+	}
+}
+
+function void CmdEvent_Add_Marker(int index, int actor_state, int desc, int notif_img, int tid, int snd){
+	CmdEvent_Add(index, CMDEVT_TYPE_MARKER, actor_state, desc, notif_img, tid, snd);
+}
+
+function void CmdEvent_Add_Research(int index, int tech, int name, int img){
+	CmdEvent_Add(index, CMDEVT_TYPE_RESEARCH, tech, name, img, 0, 0);
+}
+
+function void CmdEvent_Add_Reward(int index, int tech, int name, int img){
+	CmdEvent_Add(index, CMDEVT_TYPE_REWARD, tech, name, img, 0, 0);
+}
+
+function void CmdEvent_Add_Deploy(int index, str actor, int name, str img){
+	CmdEvent_Add(index, CMDEVT_TYPE_DEPLOY, actor, name, img, 0, 0);
+}
+
+function void CmdEvent_Add_Spawn(int index, str actor, int name, str img, int silent){
+	CmdEvent_Add(index, CMDEVT_TYPE_SPAWN, actor, name, img, silent, 0);
+}
+
+function void CmdEvent_Add_Script(int index, int num, int arg1, int arg2, int arg3){
+	CmdEvent_Add(index, CMDEVT_TYPE_SCRIPT, num, arg1, arg2, arg3, 0);
+}
+
+function void CmdEvent_Add_Build(int index, int building){
+	CmdEvent_Add(index, CMDEVT_TYPE_BUILD, building, 0, 0, 0, 0);
+}
+
+function void CmdEvent_Add_Aerial(int index, int action){
+	CmdEvent_Add(index, CMDEVT_TYPE_AIRSTK, action, 0, 0, 0, 0);
+}
+
+function void CmdEvent_Add_Pulse(int index, int type){
+	CmdEvent_Add(index, CMDEVT_TYPE_CPULSE, type, 0, 0, 0, 0);
+}
+
+// The general function that adds the event type.
+function void CmdEvent_Add(int index, int type, int arg1, int arg2, int arg3, int arg4, int arg5){
+		cmd_event[index][0] = type;
+		cmd_event[index][1] = arg1;
+		cmd_event[index][2] = arg2;
+		cmd_event[index][3] = arg3;
+		cmd_event[index][4] = arg4;
+		cmd_event[index][5] = arg5;
+}

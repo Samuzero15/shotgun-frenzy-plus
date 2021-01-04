@@ -2,6 +2,17 @@
 
 ## v0 - Before the beginning...
 
+#### -) (1 to 3 / 01 / 2021) [Starting with a good feet]
+	*)Rewritten the CMD event handling system, and optimized the cmd terminal.
+	*)Turret Rail in the ammo terminal should be given after pursache once again.
+	*)Prosesing phase 1 and 2 can boost up the enemy bounty for the players and commander together!
+	*)Enemies killed with cripple pulse will not grant credits to the player. (However, the commander can gain credits for that)
+	*)Auto-Researching's Script has been revamped too, now notifying the players the new researchs on CF and SD maps! (Also, stimpacks and adrenaline can be given with this revamp.)
+	*)Other smoll fixes.
+	// 2020 was filled with updates, with more new mechanics, less bugs, and more. (with coronavirus and all ._.)
+	// So for a 2021 goal, I'll bring this mod up to the v1, the version where the maps can be added.
+	// I've still got some ideas left to add it in, so expect it to be updated =)
+
 #### -) (23 to 26 / 12 / 2020) [Winterish Hotfixes]
 	*) Fixed a glitch which let's you create turrets, but without checking the credits.
 	*) Now the commander should check the terrain, if the spawning of a turret or dispenser is being blocked, or placed in liquids (wip) the spawning will fail, but the team credits will be refunded.

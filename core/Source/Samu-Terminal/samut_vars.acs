@@ -97,6 +97,8 @@
 #libdefine STEXE_CMDRESEARCH 		31
 #libdefine STEXE_CMDBUILD 			30
 #libdefine STEXE_CMDEXECUTE 		-30
+#libdefine STEXE_CMDEVENT_DOIT		-50
+#libdefine STEXE_CMDEVENT_CHECK 	50
 #libdefine STEXE_CMDBTNDESC 		25
 #libdefine STEXE_CMDCAT 			26
 

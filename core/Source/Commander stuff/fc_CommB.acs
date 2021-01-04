@@ -6,120 +6,17 @@
 // script containing commander menu buttons
 #library "fc_CommB"
 
-// ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
-
 #import "f_IntDB.acs"
 #import "fl_Price.acs"
 #import "f_Tip.acs"
 #import "fl_techs.acs"
+#import "fp_cmdevt.acs"
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
 //check if we're allowed to put turrets down again
 
-script "SFPlus_CMD_CallBuildScript" (int which){
-	CMDEvent (2, which, 0, 0);
-}
-
-script "SFPlus_CMD_CallUpgradeScript" (int which){
-	CMDEvent (3, which, 0, 0);
-}
-
-script "SFPlus_CMD_CallMarkScript" (int which){
-	CMDEvent (5, which, 0, 0);
-}
-
-script "SFPlus_CMD_CallSupportScript" (int which){
-	int scriptcode;
-	int arg1;
-	switch(which){
-			case 5: //Point
-				scriptcode = 300;		
-				arg1 = 0;
-				break;
-			case 6: //Execute attack.
-				scriptcode = 301;	
-				break;
-			case 1: //Line's point 1
-				scriptcode = 300;		
-				arg1 = 1;
-				break;
-			case 2: //Line's point 2
-				scriptcode = 300;		
-				arg1 = 2;
-				break;
-			case 3: //Cancel airstrike
-				scriptcode = 300;		
-				arg1 = -1;
-				break;
-			case 7: //Point
-				scriptcode = 300;		
-				arg1 = -2;
-				break;
-				
-			case 4: //Ion cannon.
-				scriptcode = 304;		break;
-				
-			case 10: //Core pulses. (Heal)
-				scriptcode = 400;		
-				arg1 = 4;
-				break;
-			case 11: //Core pulses. (Cripple)
-				scriptcode = 400;		
-				arg1 = 1;
-				break;
-			case 12: //Core pulses. (Halt)
-				scriptcode = 400;		
-				arg1 = 5;
-				break;
-				
-			case 66: // Nuke trigger. // Soch deth, soch destruction! -Martin-
-				scriptcode = 451;		break;
-			default: terminate;
-		}
-	CMDEvent(8, scriptcode, arg1, 0);
-}
-
-script "SFPlus_CMD_CallSpawnScript" (int which, int price){
-	str thing;
-	int noSectorCheck = 0;
-	
-	if(which == 99){ // Money bag Execption.
-		CMDEvent(9, 0, 0, 0);
-	}else if (which > 0){
-		switch(which){
-			
-			case 10:  //Health dispenser
-				thing = "HealthDispenser";	break;
-			case 11: //Ammo dispenser
-				thing = "AmmoDispenser"; 	break;
-			case 12:  //Sandbags
-				thing = "Sandbags";			break;
-			case 13:  //Landmines.
-				thing = "Spawn_Landmine";	
-				noSectorCheck = 1;
-				break;
-			case 1: //Bullet turret
-				thing = "TurretBullet";		break;
-			case 2: //Rocket turret
-				thing = "TurretRocket";		break;
-			case 3: //Plasma turret
-				thing = "TurretPlasma";		break;
-			case 4: //Tesla Coil
-				thing = "TurretTesla";		break;
-			case 5: //Flame turret
-				thing = "TurretFlame";		break;
-			case 6: //Chaingun turret
-				thing = "TurretChaingun";	break;
-			case 7: //Shotgun turret
-				thing = "TurretShotgun";	break;
-			default: terminate;
-		}
-		CMDEventEX(4+noSectorCheck*3, thing, which, 0, price);
-	}
-}
-
-function bool CMDR_AreaCheck(int y){
+function bool CMD_AreaCheck(int y){
 	return 
 		y < getactory(81) & g_Status == 1 ||
 		y < getactory(82) & g_Status == 2 || 
@@ -127,7 +24,7 @@ function bool CMDR_AreaCheck(int y){
 		y < getactory(84) & g_Status == 4;
 }
 
-function bool CMDR_FloorCheck(int tid){
+function bool CMD_FloorCheck(int tid){
 	return !(
 	CheckActorFloorTexture(tid, "") || CheckActorFloorTexture(tid, "F_SKY1")
 	
@@ -135,7 +32,7 @@ function bool CMDR_FloorCheck(int tid){
 }
 
 // Spawn something in the indicated position, minding the area
-function bool CMDR_Spawn(str something, int tid){
+function bool CMD_Spawn(str something, int tid){
 	int angle = GetActorAngle(130);
 	int r = 512.0;
 	
@@ -152,8 +49,8 @@ function bool CMDR_Spawn(str something, int tid){
 		zoff += 8.0;
 	}
 	int sucess = False;
-	bool valid_area = CMDR_AreaCheck(y);
-	bool valid_floor = CMDR_FloorCheck(500);
+	bool valid_area = CMD_AreaCheck(y);
+	bool valid_floor = CMD_FloorCheck(500);
 	if (free && valid_area && valid_floor){
 		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), tid);
 	}
@@ -166,264 +63,43 @@ function bool CMDR_Spawn(str something, int tid){
 	return sucess;
 }
 
+// money bag temp disable
+script 966 (int amount)
+{
+	str msg = strparam(d:amount, s:" credits for the lucky one!");
+	
+	//[Samu] Extended, for wealthier and bigger drops.
+	if(c_credits < amount) terminate;
+	
+
+	if(Thingcount(T_NONE, 5550)) {
+		
+		Thing_Remove(5550);
+		c_credits += c_MoneyDropped;
+		// add desired message
+        f_TipShow ("CM80", "Money Bag Re-Placed!", msg, 2);
+	}else{
+		f_TipShow ("CM80", "Money Bag Dropped!", msg, 2);
+	}
+	c_MoneyDropped = amount;
+	c_credits -= amount;
+	Thing_ChangeTID(ActivatorTID(), 5550);
+    c_allow_moneybag = 0;
+    delay(35 * 3);
+    c_allow_moneybag = 1;
+}
 
 // events system
 
-function void CMDEvent (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3){
-	CMDEventEX (l_Event, l_EventArg1, l_EventArg2, l_EventArg3, 0);
+// Look-up fp_cmdevt.acs
+script "SFPlus_CMDEvent_Init" OPEN {
+	CmdEvent_Initialize();
+}
+// Look-up fp_cmdevt.acs
+script "SFPLus_CMDEvent" (int which, int price) {
+	CmdEvent_Execute(which, price);
 }
 
-// Same, but space-checks first and then charges.
-function void CMDEventEX (int l_Event, int l_EventArg1, int l_EventArg2, int l_EventArg3, int price)
-{
-    // build a structure
-    if (l_Event == 2)
-    {
-        // waiting time
-        ACS_NamedExecuteAlways("SFPlus_BuildStructure",0, l_EventArg1);
-    }
-    
-    // research and change techflag
-    if (l_Event == 3)
-    {
-        ambientsound("cv/researchcomplete", 125);
-        
-		switch(l_EventArg1){
-			case 12:
-				Tech_Set(FP_TECH_GENLAB_HEALTH1, FP_TECHF_DONE);
-				Notify_Research("HUMAN ENG. (PHASE 1)", "CM12");
-				acs_execute(617, 0, 11, 0, 0);
-			break;
-			
-			case 13:
-				Tech_Set(FP_TECH_GENLAB_HEALTH2, FP_TECHF_DONE);
-				Notify_Research("HUMAN ENG. (PHASE 2)", "CM13");
-				acs_execute(617, 0, 12, 0, 0);
-			break;
-			
-			case 15:
-				Tech_Set(FP_TECH_GENLAB_SPEEDB, FP_TECHF_DONE);
-				Notify_Research("ADRENALINE", "CM15");
-				acs_execute(617, 0, 0, 0, 0);
-			break;
-			
-			case 16:
-				Tech_Set(FP_TECH_GENLAB_ARMOR, FP_TECHF_DONE);
-				Notify_Research("STEEL PLATING", "CM16");
-				acs_execute(617, 0, 1, 0, 0);
-			break;
-			
-			case 17:
-				Tech_Set(FP_TECH_GENLAB_RESISB, FP_TECHF_DONE);
-				Notify_Research("REISTER UNIT", "CM17");
-				acs_execute(617, 0, 2, 0, 0);
-			break;
-			
-			case 18:
-				Tech_Set(FP_TECH_GENLAB_REGENB, FP_TECHF_DONE);
-				Notify_Research("ABSORBER UNIT", "CM18");
-				acs_execute(617, 0, 3, 0, 0);
-			break;
-			
-			case 26:
-				Tech_Set(FP_TECH_ARMORY_ARMS1, FP_TECHF_DONE);
-				Notify_Research("ARMS (PHASE 1)", "CM26");
-				acs_execute(617, 0, 4, 0, 0);
-			break;
-			
-			case 27:
-				Tech_Set(FP_TECH_ARMORY_ARMS2, FP_TECHF_DONE);
-				Notify_Research("ARMS (PHASE 2)", "CM27");
-				acs_execute(617, 0, 5, 0, 0);
-			break;
-			
-			case 28:
-				Tech_Set(FP_TECH_ARMORY_BOOMRN, FP_TECHF_DONE);
-				Notify_Research("BOOMSHOT ROUNDS", "CM28");
-				acs_execute(617, 0, 6, 0, 0);
-			break;
-			
-			case 29:
-				Tech_Set(FP_TECH_ARMORY_AMMOBP, FP_TECHF_DONE);
-				Notify_Research("AMMO BACKPACK", "CM29");
-				acs_execute(617, 0, 7, 0, 0);
-			break;
-			
-			case 44:
-				Tech_Set(FP_TECH_MARCOM_ADVSYS, FP_TECHF_DONE);
-				Notify_Research("ADVANCED TECHS", "CM44");
-			break;
-			
-			case 48:
-				//[Samu] Looks like the drones we're meant to used by the commander too.
-				Notify_Research("Drone tech", "CM48");
-			break;
-			
-			case 53:
-				Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
-				Notify_Research("ION CANNON", "CM53");
-			break;
-			
-			case 54:
-				Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
-				Notify_Research("AIR SUPPORT", "CM54");
-			break;
-			
-			case 56:
-				Tech_Set(FP_TECH_REFINE_PUMP1, FP_TECHF_DONE);
-				Notify_Research("PROCESSING PHASE 1", "CM56");
-			break;
-			
-			case 57:
-				Tech_Set(FP_TECH_REFINE_PUMP2, FP_TECHF_DONE);
-				Notify_Research("PROCESSING PHASE 2", "CM57");
-			break;
-			
-			case 66: 
-				Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
-				Notify_Research("CORE PULSES",  "CM66");
-			break;
-			
-			case 71:
-				Tech_Set(FP_TECH_ARMORY_STIMPK, FP_TECHF_DONE);
-				Notify_Research("STIMPACKS", "CM71");
-				acs_execute(617, 0, 8, 0, 0);
-			break;
-		}
-    }
-    
-    // spawn an item requiring construction
-    if (l_Event == 4) //arg1= thingstr, arg2 = msg id, arg3 = screw sector checking. 
-    {
-
-	// check current sector before placing
-		if (getactory(130) < getactory(81) & g_Status == 1 | getactory(130) < getactory(82) & g_Status == 2 | getactory(130) < getactory(83) & g_Status == 3 | getactory(130) < getactory(84) & g_Status == 4){
-			// Hold up, check if there is something blocking this deployable!
-			
-			
-			
-			
-			//thing_remove(500);
-			/*
-			// add object
-			setactorstate(130, strparam(s:"Spawn_", s:l_EventArg1), 0);
-			*/
-			//[Samu] for lazyness sake, and for controlling turret - dispenser spawning.
-			
-			
-			if(!CMDR_Spawn(l_EventArg1, 0)) {
-				c_credits += price; // Refund it.
-				return;
-			}
-			c_allow_turret = Timer();
-			
-			// show the message
-			switch(l_EventArg2){
-				case 10: Notify_Deploy("Health Dispenser", 	"CM33"); break;
-				case 11: Notify_Deploy("Ammo Dispenser", 	"CM32"); break;
-				case 12: Notify_Deploy("Sandbags", 			"CM33"); break;
-				case 1:  Notify_Deploy("Bullet Turret", 	"CM40"); break;
-				case 2:  Notify_Deploy("Rocket Turret",		"CM41"); break;
-				case 3:  Notify_Deploy("Plasma Turret",		"CM42"); break;
-				case 4:  Notify_Deploy("Tesla Turret",		"CM46"); break;
-				case 5:  Notify_Deploy("Flame Turret",		"CM47"); break;
-				case 6:  Notify_Deploy("Chaingun Turret", 	"CM47"); break;
-				case 7:  Notify_Deploy("Shotgun Turret", 	"CM45"); break;
-				
-				case 8:  Notify_Deploy("Rail Turret", 		"CM43"); break;
-			}   
-			
-		}
-		else {
-			if (getactory(130) > getactory(81)) {
-				print(s:"Cannot place here...");
-			}
-			else {
-				print(s: "This sector has been lost!\nCan only place this in sectors you have control of...");
-			}
-			c_credits += price; // Refund it.
-		}
-		
-
-		   
-    }
-    
-    // place objective marker
-    if (l_Event == 5)
-    {
-        switch(l_EventArg1)
-        {
-            case 1:
-                f_TipShow("OBJECT1", "New Objective", "Attack marked position!", 0);
-                thing_remove(143);
-                setactorstate(130, "Spawn_Attack", 0);
-                ambientsound("c/attack", 125);
-            break;
-            case 2:
-                f_TipShow("OBJECT2", "New Objective", "Defend marked position!", 0);
-                thing_remove(144);
-                setactorstate(130, "Spawn_Defend", 0);
-                ambientsound("c/defend", 125);
-            break;
-            case 3:
-                f_TipShow("OBJECT3", "New Objective", "Structures requiring construction at marked position!", 0);
-                thing_remove(145);
-                setactorstate(130, "Spawn_Construct", 0);
-                ambientsound("c/construct", 125);
-            break;
-            case 4:
-                f_TipShow("OBJECT4", "New Objective", "Regroup at marked position!", 0);
-                thing_remove(146);
-                setactorstate(130, "Spawn_Regroup", 0);
-                ambientsound("c/regroup", 125);
-            break;
-            case 5:
-                // removes all markers
-                thing_remove(143);
-                thing_remove(144);
-                thing_remove(145);
-                thing_remove(146);
-                f_TipShow("INFO", "Objective Markers", "All cleared...", 0);
-            break;
-        }
-        
-    }
-    // basic spawn
-    if (l_Event == 7)
-    {
-        // add object
-        setactorstate(130, l_Eventarg1, 0);
-        /*
-        // add desired message
-        if(l_PriceID == 30)        f_TipShow ("CM30", "Sandbags", "Placed!", 2);           // I know this is not in the right place, but it'll do for now
-        if(l_PriceID == 31)        f_TipShow ("CM31", "Minefield", "Constructed! Mines currently priming...", 2);
-		*/
-		
-		switch(l_EventArg2){
-			case 13: 
-				Notify_Message("Making Minefield","Commander is spreading some mines...", "CM30", 2);
-			break;
-		} 
-    }
-    
-    // run a script
-    if (l_Event == 8)
-    {
-        // run the script
-		if(l_EventArg1 == 300){
-			ACS_NamedExecute("SFPlus_AirStrikeTarget", 0, l_EventArg2);
-		}else if(l_EventArg1 == 301){
-			ACS_NamedExecute("SFPlus_AirStrikeAttack", 0);
-		}else if(l_EventArg1 == 400){
-			ACS_NamedExecute("SFPlus_CorePulse", 0, l_EventArg2);
-		}
-        else acs_execute(l_EventArg1, 0, l_EventArg2, l_EventArg3, 0);
-    }
-    
-    // money bag spawn
-    if (l_Event == 9)
-    {
-        setactorstate(130, "Spawn_MoneyBag", 0);
-    }
+script "SFPlus_CMDCleanup" (void){
+	CmdEvent_Execute(CMDEVT_AIRSTK_CANCEL,0);
 }
-

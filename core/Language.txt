@@ -98,7 +98,7 @@ FP_TECHD_ARMORY_STIMPK		= "Marines are stocked with 10 stimpacks, healing 15 hp 
 FP_TECHD_REFINE_PUMP1		= "Increases the credit resource collection by\n"
 							  "enabling the pump #1 from the refinery.";
 FP_TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
-							  "enabling the pump #2 from the refinery";
+							  "enabling the pump #2 from the refinery.";
 
 FP_TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
 							  "\nbombs in the selected targets.";
@@ -114,7 +114,7 @@ FP_TECHD_MARCOM_CPULSE		= "You core gains the capacity to create special effects
 							 
 FP_SUPCD_AIRSTK_POINT		= "Marks a target point for your airstrike attack.";
 FP_SUPCD_AIRSTK_LINE_1		= "Marks the first target point for a line of tagets.";
-FP_SUPCD_AIRSTK_LINE_2		= "Mark first point for your airstrike.";
+FP_SUPCD_AIRSTK_LINE_2		= "Marks the second target point for a line of tagets.";
 FP_SUPCD_AIRSTK_EXE			= "Attacks all the selected target points!." 
 							  "\nPrice depends on the amount of targets placed before the assault.";
 FP_SUPCD_AIRSTK_CANCEL		= "Clears all airstrike markers.";
@@ -149,7 +149,7 @@ FP_DEPCD_BARRIER			= "Deploys a resistent barrier which it works as\n"
 							  "a distraction, as long as it makes time to let the\n"
 							  "marines fight back.";
 FP_DEPCD_TURRET				= "Access to the turret menu.";
-FP_DEPCD_TURRET_BULLET		= "Deploys a basic, weak but cheap, fast-building bullet turret.";
+FP_DEPCD_TURRET_BULLET		= "Deploys a basic, weak, but cheap and fast-building bullet turret.";
 FP_DEPCD_TURRET_ROCKET		= "Deploys an explosive rocket turret. Fires rockets.";
 FP_DEPCD_TURRET_PLASMA		= "Deploys an advanced plasma turret. Fires plasma balls\n"
 							  "quickly to 1 enemy, excelent for dealing damage when\n"

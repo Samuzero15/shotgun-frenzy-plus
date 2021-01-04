@@ -14,6 +14,7 @@
 #import "fp_ptdir.acs"
 
 #include "zcommon.acs"
+#include "acsutils.acs"
 #include "samu_tools.acs"
 // build
 script 400 (void)
@@ -135,18 +136,38 @@ script "SFPlus_CorePulse" (int pulse_cmd)
 // Harms all demons with 500 of damage.
 script FP_MCOM_CPULSE_CRIPPLE (void)
 {
-	thing_damage(110, 500, 5);
-	thing_damage(111, 500, 5);
-	thing_damage(112, 500, 5);
-	thing_damage(113, 500, 5);
-	thing_damage(114, 500, 5);
+	giveActorInventory(110, "FPMToken_NoCount", 1);
+	giveActorInventory(111, "FPMToken_NoCount", 1);
+	giveActorInventory(112, "FPMToken_NoCount", 1);
+	giveActorInventory(113, "FPMToken_NoCount", 1);
+	giveActorInventory(114, "FPMToken_NoCount", 1);
+	// Temporaly disable the credit earning of these monsters.
+	delay(2);
+	thing_damage(110, 500, "NoCount");
+	thing_damage(111, 500, "NoCount");
+	thing_damage(112, 500, "NoCount");
+	thing_damage(113, 500, "NoCount");
+	thing_damage(114, 500, "NoCount");
+	delay(2);
+	// Re-activate the credit earning.
+	takeActorInventory(110, "FPMToken_NoCount", 1);
+	takeActorInventory(111, "FPMToken_NoCount", 1);
+	takeActorInventory(112, "FPMToken_NoCount", 1);
+	takeActorInventory(113, "FPMToken_NoCount", 1);
+	takeActorInventory(114, "FPMToken_NoCount", 1);
 }
 
 // core pulse: Smite (NEW!)
 // Harms any demon inside of the risked sector with 3000 hp.
 script FP_MCOM_CPULSE_SMITE (void)
 {
-	thing_damage(110 + g_Status, 3000, 5);
+	giveActorInventory(114, "FPMToken_NoCount", 1);
+	// Temporaly disable the credit earning of these monsters.
+	delay(2);
+	thing_damage(110 + g_Status, 3000,  "NoCount");
+	delay(2);
+	// Re-activate the credit earning.
+	takeActorInventory(110, "FPMToken_NoCount", 1);
 }
 
 // halt pulse

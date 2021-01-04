@@ -78,55 +78,6 @@ script 616 (void)
 	
 }
 
-// new research available message
-script 617 (int l_Structure)
-{
-			sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-			setfont("NEWR");
-			hudmessagebold(s:"a"; 1, -180, CR_Red, 0.1, 0.1, 3.0);
-			setfont("BIGFONT");
-			//hudmessagebold(s:"DEMONIC CORE"; 1, 178, CR_Blue, 570.0, 290.1, 3.0);
-			setfont("CONFONT");
-			str msg;
-			
-			if (l_Structure == 11){
-				msg = "New research available!\nCollect at Genetics Lab\n\nHuman Engineering Phase 1\nStandard health increased";
-			}
-			if (l_Structure == 12){
-				msg = "New research available!\nCollect at Genetics Lab\n\nHuman Engineering Phase 2\nStandard health increased";
-			}
-			if (l_Structure == 0){
-				msg = "New research available!\nCollect at Genetics Lab\n\nAdrenaline\nFaster run speed";
-			}
-			if (l_Structure == 1){
-				msg = "New research available!\nCollect at Genetics Lab\n\nSteel Plating\nArmor plating for marines";
-			}
-			if (l_Structure == 2){
-				msg = "New research available!\nCollect at Genetics Lab\n\nResister Unit\nDamage resistance against enemy fire";
-			}
-			if (l_Structure == 3){
-				msg = "New research available!\nCollect at Genetics Lab\n\nAsorber Unit\nHealth regeneration";
-			}
-			if (l_Structure == 4){
-				msg = "New weapons available at the Armory!";
-			}
-			if (l_Structure == 5){
-				msg = "Flamers now available at the Armory!";
-			}
-			if (l_Structure == 6){
-				msg = "New research available!\nCollect at the Armory\n\nBoomshot Rounds\nIncreased weapon damage";
-			}
-			if (l_Structure == 7){
-				msg = "New research available!\nCollect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
-			}
-			if (l_Structure == 8){
-				msg = "New research available!\nCollect at the Armory\n\nStimpacks\n10 Stimpacks on spawn!";
-			}
-			hudmessagebold(s:msg; 1, 179, CR_Blue, 580.0, 320.1, 3.0);
-			ambientsound("p/upgrade", 125);
-	
-}
-
 script 999 ENTER
 {
     // display loop

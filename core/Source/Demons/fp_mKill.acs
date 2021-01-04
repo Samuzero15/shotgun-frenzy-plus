@@ -30,7 +30,7 @@ Script "SFPlus_MonsterKill" Kill{
 		 // monster class
 	  int monsterClass = sf_GetMonsterClass_Health();
 	  int splat = flag_gibbed;
-	  int noprofit = 0;
+	  int noprofit = flag_NoCount;
 	  int montype;
 	  if	(flag_boss) montype = 2;
 	  if	(flag_hard) montype = 1;
@@ -44,7 +44,7 @@ Script "SFPlus_MonsterKill" Kill{
 		//debugTidPointersStrings(0);
 	  // give credits and xp
 	 SetActivatorToTarget(0);
-	 
+	 //printbold(s:"No profit? = ", d:noProfit);
 	p_monsterKilled(monsterClass, splat, noProfit, montype);
 	
 	}
