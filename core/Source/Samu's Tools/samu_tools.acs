@@ -2,16 +2,16 @@
 
 //#include "weapon_funs.acs"
 //#include "recycle_funs.acs"
-
+#include "constants.acs"
 #include "players_funs.acs"
 #include "cside_scripts.acs"
 #include "autouse_scripts.acs"
 
 function void setupTerminals(void){
-	Tech_Set(FP_TECH_GENLAB, 		FP_TECHF_DONE);
-	Tech_Set(FP_TECH_ARMORY, 		FP_TECHF_DONE);
-	Tech_Set(FP_TECH_ARMORY_ARMS1, 	FP_TECHF_DONE);
-	Tech_Set(FP_TECH_ARMORY_ARMS2, 	FP_TECHF_DONE);
+	Tech_Set(TECH_GENLAB, 		TECHF_DONE);
+	Tech_Set(TECH_ARMORY, 		TECHF_DONE);
+	Tech_Set(TECH_ARMORY_ARMS1, 	TECHF_DONE);
+	Tech_Set(TECH_ARMORY_ARMS2, 	TECHF_DONE);
 }
 
 function bool IsActivatingClient(void){

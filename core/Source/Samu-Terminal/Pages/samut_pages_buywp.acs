@@ -139,8 +139,8 @@ function void BuyWpnPage_UpdateBuyBut(int wp){
 }
 
 function void BuyWpnPage_UpdateCats(void){
-	StrButton_setShow(buywpn_vars[6], Tech_IsDoneC(FP_TECH_ARMORY_ARMS1));
-	StrButton_setShow(buywpn_vars[7], Tech_IsDoneC(FP_TECH_ARMORY_ARMS2));
+	StrButton_setShow(buywpn_vars[6], Tech_IsDoneC(TECH_ARMORY_ARMS1));
+	StrButton_setShow(buywpn_vars[7], Tech_IsDoneC(TECH_ARMORY_ARMS2));
 }
 
 function void BuyWpnPage_InitCats(int card1){

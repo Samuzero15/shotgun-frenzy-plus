@@ -646,7 +646,7 @@ ACTOR Inventory_Stimpack : Inventory_Item
 		STIM A 0 bright
 		goto Super::SpawnLoop.Frame1
 	Effect:
-		TNT1 A 1 A_GiveInventory("Stimpack",1)
+		TNT1 AA 0 A_GiveInventory("Stimpack",1)
 		TNT1 A 1 A_PlaySound("p/specialitem", CHAN_AUTO, 2.0)
         TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
 		stop

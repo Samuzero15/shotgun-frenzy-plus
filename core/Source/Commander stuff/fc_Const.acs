@@ -21,22 +21,22 @@ Script "SFPlus_BuildStructure" (int which){
 	// Lock the techs, as they're being builded right now.
 	switch(which){
 		case 1: 
-			Tech_Set(FP_TECH_GENLAB, FP_TECHF_LOCK); time = 5; 
+			Tech_Set(TECH_GENLAB, TECHF_LOCK); time = 5; 
 			build_progtip = FP_PTID_GENLAB;
 		break;
-		case 2: Tech_Set(FP_TECH_ARMORY, FP_TECHF_LOCK); time = 5; 
+		case 2: Tech_Set(TECH_ARMORY, TECHF_LOCK); time = 5; 
 			build_progtip = FP_PTID_ARMORY;
 		break;
-		case 3: Tech_Set(FP_TECH_MECHFA, FP_TECHF_LOCK); time = 10; 
+		case 3: Tech_Set(TECH_MECHFA, TECHF_LOCK); time = 10; 
 			build_progtip = FP_PTID_MECHFA;
 		break;
-		case 4: Tech_Set(FP_TECH_REFINE, FP_TECHF_LOCK); time = 10; 
+		case 4: Tech_Set(TECH_REFINE, TECHF_LOCK); time = 10; 
 			build_progtip = FP_PTID_REFINE;
 		break;
-		case 5: Tech_Set(FP_TECH_MARCOM, FP_TECHF_LOCK); time = 15; 
+		case 5: Tech_Set(TECH_MARCOM, TECHF_LOCK); time = 15; 
 			build_progtip = FP_PTID_MARCOM;
 		break;
-		case 6: Tech_Set(FP_TECH_NUKESY, FP_TECHF_LOCK); time = 30; 
+		case 6: Tech_Set(TECH_NUKESY, TECHF_LOCK); time = 30; 
 			build_progtip = FP_PTID_NUKESY;
 		break;
 		default: log(s:"(SFPlus_BuildStructure): Invalid Structure."); terminate; break;

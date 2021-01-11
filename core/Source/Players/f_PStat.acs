@@ -199,6 +199,14 @@ script 54 RESPAWN
     delay(15);
     //t3hdoom: Originally didn't give any ammo if there's no armory. Let's give them ammo on spawn regardless
     acs_execute(106, 0, 3, 1, 0);
+	
+	//[Samu] If you die, the teleport script will not activate the spawnshield effet.
+	// So to counter that, I should place it here.
+	if(CheckInventory("PlayUp_SpawnShield")){
+		TakeInventory("PlayUp_SpawnShield_Power", 1);
+		delay(1);
+		giveInventory("PlayUp_SpawnShield_Activate", 1);
+	}
 }
 
 script "SFPlus_NameUpdate" ENTER {
@@ -310,7 +318,7 @@ script 249 OPEN
 	// make sure it is not a commander gametype
 	if (f_UseScoreSystem == 1){
 		int l_CurrentLevel;
-		int acs_last = acs_level;
+		//int acs_last = acs_level;
 		while(1){
 			// display
 			setfont("CONFONT");

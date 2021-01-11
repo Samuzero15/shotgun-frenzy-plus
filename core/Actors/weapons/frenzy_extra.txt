@@ -38,7 +38,7 @@ ACTOR BoomerCannon : Weapon
 	States
 	{
 		Ready:
-			X3E1 A 1 A_WeaponReady
+			X3E1 A 1 A_WeaponReady(WRF_DISABLESWITCH)
 			loop
 		Deselect:
 			X3E1 A 1 A_Lower

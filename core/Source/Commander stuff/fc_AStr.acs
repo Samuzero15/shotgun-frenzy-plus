@@ -144,7 +144,7 @@ script "SFPlus_AirstrikeAttack" (void)
 		terminate;
 	}
 	
-	Tech_SetDone(FP_TECH_MARCOM_AIRSUP, FP_TECHF_LOCK);
+	Tech_SetDone(TECH_MARCOM_AIRSUP, TECHF_LOCK);
     
     // message
     Notify_Message("Airstrike", "Incoming! Take cover!", "CM76", 2);
@@ -173,7 +173,7 @@ script "SFPlus_AirstrikeAttack" (void)
 	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
     
     // enable air attacks
-	Tech_Set(FP_TECH_MARCOM_AIRSUP, FP_TECHF_DONE);
+	Tech_Set(TECH_MARCOM_AIRSUP, TECHF_DONE);
 }
 
 Script "SFPlus_AirstrikeWaveAttack" (void)

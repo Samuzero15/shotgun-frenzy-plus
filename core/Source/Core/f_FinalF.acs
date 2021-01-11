@@ -94,14 +94,8 @@ script 107 OPEN
     if (instant_guardian == 0)
     {
         // wait desired time minutes
-        if (f_GameLength > 10){
-        delay(35 * 60 * 10);
-        g_TenMinMark = 1;
-        delay(35 * 60 * f_GameLength - 10);
-        }
-        else{
+        
         delay(35 * 60 * f_GameLength);
-        }
         
         // five minute warning
 		Notify_Message("GUARDIAN WAVE", "2 minutes remaining!", "DEMONT", 0);

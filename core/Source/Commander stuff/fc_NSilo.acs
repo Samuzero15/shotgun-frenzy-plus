@@ -30,7 +30,7 @@ script 450 (void)
 		
     
     // set techflag
-	Tech_Set(FP_TECH_NUKESY, FP_TECHF_DONE);
+	Tech_Set(TECH_NUKESY, TECHF_DONE);
     
     // constructed message
     //f_TipShow ("BUTTON", "Nuclear Silo", "Construction Complete!", 1);

@@ -41,14 +41,14 @@ script 400 (void)
     spawnspot("TurretBase", 154, 0, 0);
     
     // set techflag
-	Tech_Set(FP_TECH_MARCOM, FP_TECHF_DONE);
+	Tech_Set(TECH_MARCOM, TECHF_DONE);
     
     // constructed message
     //f_TipShow ("BUTTON", "Marine Command", "Construction Complete!", 1);
     
     // check bridge
     delay(35 * 2);
-    if (Tech_isDone(FP_TECH_MARCOM) && Tech_isDone(FP_TECH_MECHFA) &&
+    if (Tech_isDone(TECH_MARCOM) && Tech_isDone(TECH_MECHFA) &&
 		c_BridgeStatus_4 == 0 && f_Gametype != 5)
     {
         c_BridgeStatus_4 = 1;
@@ -71,12 +71,12 @@ script "SFPlus_CoreRecharge" (int delay_time){
 	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, FP_PTID_CPULSE, delay_time, slot);
 	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
 	
-	Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
+	Tech_Set(TECH_MARCOM_CPULSE, TECHF_DONE);
 }
 
 script "SFPlus_CorePulse" (int pulse_cmd)
 {	// A Generalized script for all of the core pulses.
-	if(Tech_isLock(FP_TECH_MARCOM_CPULSE)){
+	if(Tech_isLock(TECH_MARCOM_CPULSE)){
 		Notify_Message("Core pulse failed",
 		"The core pulse is still charging!", "INFO", 3);
 		terminate;
@@ -85,7 +85,7 @@ script "SFPlus_CorePulse" (int pulse_cmd)
     ambientsound("cv/corepulse", 125);
     
     // disable use of core weapons
-	Tech_SetDone(FP_TECH_MARCOM_CPULSE, FP_TECHF_LOCK);
+	Tech_SetDone(TECH_MARCOM_CPULSE, TECHF_LOCK);
 	
 	str pulse_name;
 	int execute;

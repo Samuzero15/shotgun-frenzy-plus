@@ -1,0 +1,34 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_cons.acs
+// All constants goes here, because it's not right to hardcode.
+// It's an included file
+
+// Main consts
+#define CONST_MAXPLAYERS 		   32
+
+// Thing IDs
+#define CONST_TID_PLAYER  		  990
+#define CONST_TID_TURRET			15000
+#define CONST_TID_DRONES			14000
+#define CONST_TID_STICKYNADES		30000
+
+#define CONST_TID_SECN_MONSTER		99
+#define CONST_TID_SEC0_MONSTER		100
+#define CONST_TID_SEC1_BATTERY		101
+#define CONST_TID_SEC1_MONSTER		111
+#define CONST_TID_SEC2_BATTERY		102
+#define CONST_TID_SEC2_MONSTER		112
+#define CONST_TID_SEC3_BATTERY		103
+#define CONST_TID_SEC3_MONSTER		113
+#define CONST_TID_BASE_BATTERY		104
+#define CONST_TID_BASE_MONSTER		114
+
+#define CONST_TID_COM_SPAWNBLOCKER 	3568
+
+// Hud IDs
+//#libdefine
+
+// Getter Functions

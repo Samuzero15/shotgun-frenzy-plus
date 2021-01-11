@@ -136,6 +136,7 @@ Actor pr_mu_speed : Integer {}
 Actor pr_mu_self_destruct : Integer {}
 Actor pr_mu_auto_repair : Integer {}
 Actor pr_mu_life_save : Integer {}
+Actor pr_mu_efficiency : Integer {}
 
 //Player upgrade prices.
 Actor pr_pu_powupupgrade		: Integer {}

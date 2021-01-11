@@ -12,4 +12,9 @@ Turret Rail in the ammo terminal should be given after pursache once again.
 Prosesing phase 1 and 2 can boost up the enemy bounty for the players and commander together!
 Enemies killed with cripple pulse will not grant credits to the player. (However, the commander can gain credits for that)
 Auto-Researching's Script has been revamped too, now notifying the players the new researchs on CF and SD maps! (Also, stimpacks and adrenaline can be given with this revamp.)
+A new Mech Upgrade! Efficiency: Reduces the time on the repairings, rocket reloading and autorepair intervals.
+Mech Rocket Upgrade price rises to 5500.
+Slowed a bit the rocket reloading time for the Mech. You can restore it with the efficiency upgrade.
+Returning the mech back to the base will have a delay penalty depending on the health. Just to discourage the insta-healing of the mechs.
+The mech is a bit more faster in the base level, but it's upgrades does less effect, maxing it up will make the tank run like a normal marine.
 Other smoll fixes.

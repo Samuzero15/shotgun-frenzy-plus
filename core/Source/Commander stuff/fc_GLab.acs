@@ -46,7 +46,7 @@ script 200 (void)
     spawnspot("TurretPlasma", 151, 0, 0);
     
     // set techflag
-	Tech_Set(FP_TECH_GENLAB, FP_TECHF_DONE);
+	Tech_Set(TECH_GENLAB, TECHF_DONE);
     
     // constructed message
     //f_TipShow ("BUTTON", "Genetics Lab", "Construction Complete!", 1);
@@ -54,7 +54,7 @@ script 200 (void)
     // check bridge
     delay(35 * 2);
     //if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_GENLAB) && c_BridgeStatus_2 == 0 && f_Gametype != 5)
-	if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_GENLAB)
+	if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_GENLAB)
 		&& c_BridgeStatus_2 == 0 && f_Gametype != 5)
     {
         c_BridgeStatus_2 = 1;

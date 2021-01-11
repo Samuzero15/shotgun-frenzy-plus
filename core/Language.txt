@@ -79,37 +79,37 @@ FP_CBD_BUILD_NUKESY		=	"Let's you launch a powerful nuke which it hits"
 							"\nthe demon core directly, but it takes 5 minutes"
 							"\nto launch. If the launch works, you win.";
 							
-FP_TECHD_GENLAB_HEALTH1 	= "Increases default health to 120%.";
-FP_TECHD_GENLAB_HEALTH2 	= "Increases default health to 140%.";
-FP_TECHD_GENLAB_ARMOR 		= "Marines are stocked with a green armor.";
-FP_TECHD_GENLAB_SPEEDB 		= "Marines runs 30% more faster.";
-FP_TECHD_GENLAB_RESISB 		= "Marines can resist 30% more damage.";
-FP_TECHD_GENLAB_REGENB 		= "Marines can regenerate health.";
+TECHD_GENLAB_HEALTH1 	= "Increases default health to 120%.";
+TECHD_GENLAB_HEALTH2 	= "Increases default health to 140%.";
+TECHD_GENLAB_ARMOR 		= "Marines are stocked with a green armor.";
+TECHD_GENLAB_SPEEDB 		= "Marines runs 30% more faster.";
+TECHD_GENLAB_RESISB 		= "Marines can resist 30% more damage.";
+TECHD_GENLAB_REGENB 		= "Marines can regenerate health.";
 
-FP_TECHD_ARMORY_ARMS1		= "Advanced weapons are available for the marines"
+TECHD_ARMORY_ARMS1		= "Advanced weapons are available for the marines"
 							  "\nIncluding the explosives, plasma and commando packs.";
-FP_TECHD_ARMORY_ARMS2 		= "Overpowered weapons are available for the\n"
+TECHD_ARMORY_ARMS2 		= "Overpowered weapons are available for the\n"
 							  "marines. Including the mighty Flamethrower\n"
 							  "and the BFG 9000.";
-FP_TECHD_ARMORY_BOOMRN 		= "Marines deals 30% more damage.";
-FP_TECHD_ARMORY_AMMOBP		= "Marines can carry more ammo, two times more.";
-FP_TECHD_ARMORY_STIMPK		= "Marines are stocked with 10 stimpacks, healing 15 hp per item.";
+TECHD_ARMORY_BOOMRN 		= "Marines deals 30% more damage.";
+TECHD_ARMORY_AMMOBP		= "Marines can carry more ammo, two times more.";
+TECHD_ARMORY_STIMPK		= "Marines are stocked with 10 stimpacks, healing 15 hp per item.";
 
-FP_TECHD_REFINE_PUMP1		= "Increases the credit resource collection by\n"
+TECHD_REFINE_PUMP1		= "Increases the credit resource collection by\n"
 							  "enabling the pump #1 from the refinery.";
-FP_TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
+TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
 							  "enabling the pump #2 from the refinery.";
 
-FP_TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
+TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
 							  "\nbombs in the selected targets.";
 							  
-FP_TECHD_MARCOM_ADVSYS		= "Powerful turrets are avilable to be deployed on "
+TECHD_MARCOM_ADVSYS		= "Powerful turrets are avilable to be deployed on "
 							  "\nthe battlefield";	
 							  
-FP_TECHD_MARCOM_IONCAN		= "Allows you to fire the Mighty Ion Cannon.\n"
+TECHD_MARCOM_IONCAN		= "Allows you to fire the Mighty Ion Cannon.\n"
 							  "Powerful enough to wipe-out entire waves in a single swipe.";
 							  
-FP_TECHD_MARCOM_CPULSE		= "You core gains the capacity to create special effects\n"
+TECHD_MARCOM_CPULSE		= "You core gains the capacity to create special effects\n"
 							  "that affects in the battle field.";
 							 
 FP_SUPCD_AIRSTK_POINT		= "Marks a target point for your airstrike attack.";

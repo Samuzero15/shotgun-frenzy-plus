@@ -88,15 +88,15 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	/*
 	log(s:"Amount: ", d:l_Amount);
 	log(s:"Proc. Phase Bonus: ", d:((l_Amount_copy*0.25 + 1.0)>>16));
-	log(s:"Proc. Phase 1 Unlocked: ", d:Tech_isDone(FP_TECH_REFINE_PUMP1));
-	log(s:"Proc. Phase 2 Unlocked: ", d:Tech_isDone(FP_TECH_REFINE_PUMP2));
-	log(s:"Proc. Phase Total Bonus: ", d:(((l_Amount_copy*0.25 + 1.0)>>16)*(Tech_isDone(FP_TECH_REFINE_PUMP1) + Tech_isDone(FP_TECH_REFINE_PUMP2))));
+	log(s:"Proc. Phase 1 Unlocked: ", d:Tech_isDone(TECH_REFINE_PUMP1));
+	log(s:"Proc. Phase 2 Unlocked: ", d:Tech_isDone(TECH_REFINE_PUMP2));
+	log(s:"Proc. Phase Total Bonus: ", d:(((l_Amount_copy*0.25 + 1.0)>>16)*(Tech_isDone(TECH_REFINE_PUMP1) + Tech_isDone(TECH_REFINE_PUMP2))));
 	*/
 		// Give some extra coins for the players if processing phase is researched.
-	if (Tech_isDone(FP_TECH_REFINE_PUMP1))	{
+	if (Tech_isDone(TECH_REFINE_PUMP1))	{
 		l_amount += (l_Amount_copy*0.25 + 1.0)>>16;
 	}
-	if (Tech_isDone(FP_TECH_REFINE_PUMP2))	{
+	if (Tech_isDone(TECH_REFINE_PUMP2))	{
 		l_amount += (l_Amount_copy*0.25 + 1.0)>>16;
 	}
 	//log(s:"Total Amount: ", d:l_Amount);
@@ -120,12 +120,12 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	int extra_coins;
 	
 	// Processing Phase 1
-	if (Tech_isDone(FP_TECH_REFINE_PUMP1))	{
+	if (Tech_isDone(TECH_REFINE_PUMP1))	{
 		sf_AddTeamCredits((l_Amount_copy*0.25)>>16 + 1);
 	}
 	
 	// Processing Phase 2
-	if (Tech_isDone(FP_TECH_REFINE_PUMP2))	{
+	if (Tech_isDone(TECH_REFINE_PUMP2))	{
 		sf_AddTeamCredits((l_Amount_copy*0.25)>>16 + 1);
 	}
 	GiveInventory("PlayerKilledDemon",1);
