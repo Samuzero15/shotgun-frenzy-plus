@@ -182,7 +182,7 @@ script 166 (int l_Position, int l_TipQue_Selection, int l_ID)
 	do{ delay(1);}while (p_TipProcess[slot]);
     
     // re enable the ion cannon
-	Tech_Set(FP_TECH_MARCOM_IONCAN, FP_TECHF_DONE);
+	Tech_Set(TECH_MARCOM_IONCAN, TECHF_DONE);
 }
 
 // pulse rage charge
@@ -208,7 +208,7 @@ script 168 (int l_Position, int l_TipQue_Selection, int l_ID)
 	do{ delay(1);}while (p_TipProcess[slot]);
     
     // re enable the core stuff
-	Tech_Set(FP_TECH_MARCOM_CPULSE, FP_TECHF_DONE);
+	Tech_Set(TECH_MARCOM_CPULSE, TECHF_DONE);
 }
 
 // screen flash
@@ -436,12 +436,10 @@ function void Notify_CommMarker(str what, str img, str snd){
 }
 
 function void Notify_Reward(str what, str img){
-	//ambientsound("cv/researchcomplete", 125);
 	Notify_Message(what, "Ha been rewarded to your team!", img, TIP_NOTIFY_COLORSET_GOOD);
 }
 
 function void Notify_Research(str what, str img){
-	//ambientsound("cv/researchcomplete", 125);
 	Notify_Message(what, "Researched!", img, TIP_NOTIFY_COLORSET_GOOD);
 }
 

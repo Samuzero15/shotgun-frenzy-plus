@@ -49,14 +49,14 @@ script 250 (void)
     spawnspot("TurretBase", 152, 0, 0);
     
     // set techflag
-	Tech_Set(FP_TECH_ARMORY, FP_TECHF_DONE);
+	Tech_Set(TECH_ARMORY, TECHF_DONE);
     
     // constructed message
     //f_TipShow ("BUTTON", "Armory", "Construction Complete!", 1);
     
     // check bridge
     delay(35 * 2);
-    if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_GENLAB) 
+    if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_GENLAB) 
 		&& c_BridgeStatus_2 == 0)
     {
         c_BridgeStatus_2 = 1;
@@ -64,7 +64,7 @@ script 250 (void)
     }
     
     // check bridge
-    if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_REFINE) && c_BridgeStatus_3 == 0 
+    if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_REFINE) && c_BridgeStatus_3 == 0 
 		&& f_Gametype != 5)
     {
         c_BridgeStatus_3 = 1;

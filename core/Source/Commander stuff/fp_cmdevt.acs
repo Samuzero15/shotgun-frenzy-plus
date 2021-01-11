@@ -116,25 +116,25 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Marker(CMDEVT_MARKER_REGROUP, 	"Spawn_Regroup", 	"Regroup at marked position!", 			"OBJECT4", 146, "c/regroup");
 	CmdEvent_Add_Marker(CMDEVT_MARKER_CLEAR, 0, 0, 0, 0, 0); // Clear Markers
 	
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_HEALTH1,	FP_TECH_GENLAB_HEALTH1, "HUMAN ENG. (PHASE 1)", "CM12");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_HEALTH2,	FP_TECH_GENLAB_HEALTH2,	"HUMAN ENG. (PHASE 2)", "CM13");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_SPEEDB,	FP_TECH_GENLAB_SPEEDB,	"ADRENALINE", 			"CM15");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMOR,	FP_TECH_GENLAB_ARMOR,	"STEEL PLATING", 		"CM16");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_RESISB,	FP_TECH_GENLAB_RESISB,	"REISTER UNIT", 		"CM17");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_REGENB,	FP_TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMS1,	FP_TECH_ARMORY_ARMS1,	"ARMS (PHASE 1)", 		"CM26");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMS2,	FP_TECH_ARMORY_ARMS2,	"ARMS (PHASE 2)", 		"CM27");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_BOOMRN,	FP_TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_AMMOBP,	FP_TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_ADVSYS,	FP_TECH_MARCOM_ADVSYS,	"ADVANCED SYSTEMS", 	"CM44");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_HEALTH1,	TECH_GENLAB_HEALTH1, "HUMAN ENG. (PHASE 1)", "CM12");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_HEALTH2,	TECH_GENLAB_HEALTH2,	"HUMAN ENG. (PHASE 2)", "CM13");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_SPEEDB,	TECH_GENLAB_SPEEDB,	"ADRENALINE", 			"CM15");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMOR,	TECH_GENLAB_ARMOR,	"STEEL PLATING", 		"CM16");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_RESISB,	TECH_GENLAB_RESISB,	"REISTER UNIT", 		"CM17");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_REGENB,	TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMS1,	TECH_ARMORY_ARMS1,	"ARMS (PHASE 1)", 		"CM26");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ARMS2,	TECH_ARMORY_ARMS2,	"ARMS (PHASE 2)", 		"CM27");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_BOOMRN,	TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_AMMOBP,	TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ADVSYS,	TECH_MARCOM_ADVSYS,	"ADVANCED SYSTEMS", 	"CM44");
 	//[Samu] Looks like the drones we're meant to used by the commander too.
 	//Notify_Research("Drone tech", "CM48");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_IONCAN, FP_TECH_MARCOM_IONCAN,	"ION CANNON", 			"CM53");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_AIRSUP, FP_TECH_MARCOM_AIRSUP,	"AIR SUPPORT", 			"CM54");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP1,  FP_TECH_REFINE_PUMP1,		"PROCESSING PHASE 1", 	"CM56");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP2,  FP_TECH_REFINE_PUMP2,		"PROCESSING PHASE 2", 	"CM57");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_CPULSE, FP_TECH_MARCOM_CPULSE,	"CORE PULSES",  		"CM66");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_STIMPK, FP_TECH_ARMORY_STIMPK,	"STIMPACKS", 	 		"CM71");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_IONCAN, TECH_MARCOM_IONCAN,	"ION CANNON", 			"CM53");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_AIRSUP, TECH_MARCOM_AIRSUP,	"AIR SUPPORT", 			"CM54");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP1,  TECH_REFINE_PUMP1,		"PROCESSING PHASE 1", 	"CM56");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP2,  TECH_REFINE_PUMP2,		"PROCESSING PHASE 2", 	"CM57");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_CPULSE, TECH_MARCOM_CPULSE,	"CORE PULSES",  		"CM66");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_STIMPK, TECH_ARMORY_STIMPK,	"STIMPACKS", 	 		"CM71");
 	
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_POINT	 	,0);
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_LINE1	 	,1);
@@ -156,17 +156,17 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Build(CMDEVT_BUILD_MARCOM		,5);
 	CmdEvent_Add_Build(CMDEVT_BUILD_NUKESY		,6);
 	
-	CmdEvent_Add_Reward(CMDEVT_REWARD_HEALTH1,	FP_TECH_GENLAB_HEALTH1, "HUMAN ENG. (PHASE 1)", "CM12");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_HEALTH2,	FP_TECH_GENLAB_HEALTH2,	"HUMAN ENG. (PHASE 2)", "CM13");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_SPEEDB,	FP_TECH_GENLAB_SPEEDB,	"ADRENALINE", 			"CM15");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_ARMOR,	FP_TECH_GENLAB_ARMOR,	"STEEL PLATING", 		"CM16");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_RESISB,	FP_TECH_GENLAB_RESISB,	"REISTER UNIT", 		"CM17");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_REGENB,	FP_TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_BOOMRN,	FP_TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_AMMOBP,	FP_TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_STIMPK, 	FP_TECH_ARMORY_STIMPK,	"STIMPACKS", 	 	"CM71");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP1,  	FP_TECH_REFINE_PUMP1,	"PROCESSING PHASE 1", 	"CM56");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP2,  	FP_TECH_REFINE_PUMP2,	"PROCESSING PHASE 2", 	"CM57");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_HEALTH1,	TECH_GENLAB_HEALTH1, "HUMAN ENG. (PHASE 1)", "CM12");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_HEALTH2,	TECH_GENLAB_HEALTH2, "HUMAN ENG. (PHASE 2)", "CM13");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_SPEEDB,	TECH_GENLAB_SPEEDB,	"ADRENALINE", 			"CM15");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_ARMOR,	TECH_GENLAB_ARMOR,	"STEEL PLATING", 		"CM16");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_RESISB,	TECH_GENLAB_RESISB,	"REISTER UNIT", 		"CM17");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_REGENB,	TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_BOOMRN,	TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_AMMOBP,	TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_STIMPK, 	TECH_ARMORY_STIMPK,	"STIMPACKS", 	 		"CM71");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP1,  	TECH_REFINE_PUMP1,	"PROCESSING PHASE 1", 	"CM56");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP2,  	TECH_REFINE_PUMP2,	"PROCESSING PHASE 2", 	"CM57");
 
 }
 
@@ -220,16 +220,17 @@ function void CmdEvent_Execute(int index, int price){
 		break;
 		case CMDEVT_TYPE_SPAWN:
 			//print(s:"Spawn event.");
+			c_allow_turret = Timer();
 			setactorstate(130, arg1, 0);
 			if(!arg4) Notify_Deploy(arg2, arg3);
 		break;
 		case CMDEVT_TYPE_REWARD:
-			Tech_Set(arg1, FP_TECHF_DONE);
+			Tech_Set(arg1, TECHF_DONE);
 			Notify_Reward(arg2, arg3);
 		break;
 		case CMDEVT_TYPE_RESEARCH:
 			//print(s:"Research event.");
-			Tech_Set(arg1, FP_TECHF_DONE);
+			Tech_Set(arg1, TECHF_DONE);
 			Notify_Research(arg2, arg3);
 			localambientsound("cv/researchcomplete",128);
 		break;
@@ -295,7 +296,7 @@ function void CmdEvent_Announce(int cmd_event_index){
 			msg = "Collect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
 		break;
 		case CMDEVT_RESEARCH_STIMPK:
-			msg = "Collect at the Armory\n\nStimpacks\n10 Stimpacks on spawn!";
+			msg = "Collect at the Armory\n\nStimpacks\n\nMarines can start with 10 Stimpacks\nEach stimpack heals 20 hp.";
 		break;
 		case CMDEVT_RESEARCH_PUMP1:
 			msg = "Refinery Pump 1 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";
@@ -305,40 +306,40 @@ function void CmdEvent_Announce(int cmd_event_index){
 		break;
 		
 		case CMDEVT_REWARD_HEALTH1: 
-			msg = "Human Engineering Phase 1\nStandard health increased";
+			msg = "Human Eng. (Phase 1)\n\nMarines' default health roses up to 120";
 		break;
 		case CMDEVT_REWARD_HEALTH2: 
-			msg = "Human Engineering Phase 2\nStandard health increased";
+			msg = "Human Eng. (Phase 2)\n\nMarines' default health roses up to 140";
 		break;
 		
 		case CMDEVT_REWARD_SPEEDB: 
-			msg = "Adrenaline\nFaster run speed";
+			msg = "Adrenaline\n\nMarines moves faster.";
 		break;
 		
 		case CMDEVT_REWARD_RESISB:
-			msg = "Resister Unit\nDamage resistance against enemy fire";
+			msg = "Resister Unit\n\nMarines can resist more damage.";
 		break;
 		case CMDEVT_REWARD_REGENB:
-			msg = "Asorber Unit\nHealth regeneration";
+			msg = "Asorber Unit\n\nMarines can regenerate health.";
 		break;
 		case CMDEVT_REWARD_ARMOR:
-			msg = "Steel Plating\nArmor plating for marines";
+			msg = "Steel Plating\n\nMarines can use the green armor.";
 		break;
 		
 		case CMDEVT_REWARD_BOOMRN:
-			msg = "Collect at the Armory\n\nBoomshot Rounds\nIncreased weapon damage";
+			msg = "Boomshot Rounds\n\nMarines can deal more damage.";
 		break;
 		case CMDEVT_REWARD_AMMOBP:
-			msg = "Collect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
+			msg = "Ammo Backpack\n\nMarines can grab more ammo.";
 		break;
 		case CMDEVT_REWARD_STIMPK:
-			msg = "Collect at the Armory\n\nStimpacks\n10 Stimpacks on spawn!";
+			msg = "Stimpacks\n\nMarines can start with 10 Stimpacks\nEach stimpack heals 20 hp.";
 		break;
 		case CMDEVT_REWARD_PUMP1:
-			msg = "Extra credits for the players. Keep up the good work!";
+			msg = "Credit Processing (Phase 1)\n\nExtra credits for the players.";
 		break;
 		case CMDEVT_REWARD_PUMP2:
-			msg = "Extra credits for the players. Keep up the good work!";
+			msg = "Credit Processing (Phase 2)\n\nExtra credits for the players.";
 		break;
 	}
 	

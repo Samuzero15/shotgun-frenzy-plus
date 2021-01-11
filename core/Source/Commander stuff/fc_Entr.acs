@@ -40,7 +40,7 @@ script 230 OPEN
 {
 	while (1)
 	{
-		if(!Tech_isDone(FP_TECH_ARMORY))
+		if(!Tech_isDone(TECH_ARMORY))
 		{
 			DELAY(75);
 		}
@@ -61,7 +61,7 @@ script 236 OPEN
 {
 	while (1)
 	{
-		if(!Tech_isDone(FP_TECH_GENLAB))
+		if(!Tech_isDone(TECH_GENLAB))
 		{
 			DELAY(75);
 		}
@@ -82,7 +82,7 @@ script 232 OPEN
 {
 	while (1)
 	{
-		if(!Tech_isDone(FP_TECH_REFINE))
+		if(!Tech_isDone(TECH_REFINE))
 		{
 			DELAY(75);
 		}
@@ -103,7 +103,7 @@ script 233 OPEN
 {
 	while (1)
 	{
-		if(!Tech_isDone(FP_TECH_MARCOM))
+		if(!Tech_isDone(TECH_MARCOM))
 		{
 			DELAY(75);
 		}
@@ -124,7 +124,7 @@ script 234 OPEN
 {
 	while (1)
 	{
-		if(!Tech_isDone(FP_TECH_MECHFA))
+		if(!Tech_isDone(TECH_MECHFA))
 		{
 			DELAY(75);
 		}

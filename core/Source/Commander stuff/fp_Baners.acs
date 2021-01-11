@@ -22,12 +22,12 @@ script "SFPlus_BaseBanner" open{
 	while(1){
 		if(count == 0) 				next = 1;
 		if(count == 1)				next = 2;
-		if(count == 2) 				next = cond(tech_isDone(FP_TECH_GENLAB), 3, 0); 
-		if(count == 3 || next == 0) next = cond(tech_isDone(FP_TECH_ARMORY), 4, 0);
-		if(count == 4 || next == 0) next = cond(tech_isDone(FP_TECH_MECHFA), 5, 0);
-		if(count == 5 || next == 0) next = cond(tech_isDone(FP_TECH_REFINE), 6, 0);
-		if(count == 6 || next == 0) next = cond(tech_isDone(FP_TECH_MARCOM), 7, 0);
-		if(count == 7 || next == 0) next = cond(tech_isDone(FP_TECH_NUKESY), 8, 0);
+		if(count == 2) 				next = cond(tech_isDone(TECH_GENLAB), 3, 0); 
+		if(count == 3 || next == 0) next = cond(tech_isDone(TECH_ARMORY), 4, 0);
+		if(count == 4 || next == 0) next = cond(tech_isDone(TECH_MECHFA), 5, 0);
+		if(count == 5 || next == 0) next = cond(tech_isDone(TECH_REFINE), 6, 0);
+		if(count == 6 || next == 0) next = cond(tech_isDone(TECH_MARCOM), 7, 0);
+		if(count == 7 || next == 0) next = cond(tech_isDone(TECH_NUKESY), 8, 0);
 		if(count == 8 || next == 0) next = 0;
 		
 		switch(count){

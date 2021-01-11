@@ -6,7 +6,8 @@ actor MechUp_nails 				: Integer { Inventory.MaxAmount 5 }
 actor MechUp_rockets 			: Integer { Inventory.MaxAmount 5 }
 actor MechUp_LifeSave 			: Boolean {}
 actor MechUp_selfdestruct 		: Boolean {}
-actor MechUp_autorepair 		: Boolean {}
+actor MechUp_autorepair 		: Integer { Inventory.MaxAmount 5 }
+actor MechUp_efficiency			: Boolean {}
 
 // Unit upgrade tokens
 actor PlayUp_PowUpUpgrade 		: Boolean {}

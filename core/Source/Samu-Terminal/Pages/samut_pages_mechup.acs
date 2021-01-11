@@ -48,7 +48,7 @@ function void MechUpPage_Init(int pageTag){
 	Card_SetVerticalOri(true);
 	mechpage_vars[1] = Card_Generate();
 	
-	i = StrButton_AddMid(320.0, 240.0, " Pursache a War Mech ");
+	i = StrButton_AddMid(320.0, 240.0, " Pursache Mech ");
 	StrButton_setColor(i, CR_CYAN);
 	StrButton_setTag(i, pagetag);
 	StrButton_setExecute(i, STEXE_BUYMECHTANK);
@@ -61,7 +61,7 @@ function void MechUpPage_Init(int pageTag){
 	Label_setTag(i, pagetag);
 	mechpage_vars[3] = i;
 	
-	i = StrButton_AddMid(320.0, 380.0, " Enter the War Mech ");
+	i = StrButton_AddMid(160.0, 300.0, " Enter Mech ");
 	StrButton_setColor(i, CR_CYAN);
 	StrButton_setTag(i, pagetag);
 	StrButton_setExecute(i, STEXE_ENTERMECHTANK);
@@ -135,7 +135,8 @@ function void MechUpPage_UpdateComps(int upgrade){
 	Label_setColor(k, cond(isaffordable, CR_Green, CR_RED));
 	ImgButton_setImage(l, cond(isaffordable, "BTUP00", "BTNDEN"));
 	
-	Label_setText(i, cond(maxup != 1, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)), name));
+	if(maxup == 1)	Label_setText(i, strParam(s:name, s:" Upgrade"));
+	else			Label_setText(i, strparam(s:name, s:" Up. (\cfLv. ", d:(CheckInventory(actor)+1), s:"\c-)"));
 	Label_setText(j, strparam(d:price, s:" $"));
 	
 	Label_SetPosToCardOff(i, mechpage_vars[1], topping, 40.0, 2.0);
@@ -166,8 +167,9 @@ function void MechUpPage_AddComps(int upgrade,int cell){
 	MechUpPage_SaveToGroup(upgrade, 4, i);
 	
 	i = Label_AddCardOff(mechpage_vars[1], cell, 40.0, 2.0);
-	if(maxup == 1)	Label_setText(i, name);
-	else			Label_setText(i, strparam(s:name, s:" Lv.", d:(CheckInventory(actor)+1)));
+	
+	if(maxup == 1)	Label_setText(i, "Upgrade name");
+	else			Label_setText(i, "Upgrade price");
 	Label_setFont(i, "StatBigs");
 	Label_setTag(i, mechpage_vars[0]);
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);

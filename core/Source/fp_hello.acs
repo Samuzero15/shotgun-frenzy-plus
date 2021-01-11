@@ -38,48 +38,47 @@ Script "SFPlus_CCMDList" (void) NET
 	Hello_Log(strparam(
 		s:"Console Command list (START)\n",
 		s:"(*) -> Requires a map restart to take effect. \n\n",
-		s:"Game commands:\n",
-		s:Hello_CMD_R("sf_startcash", 			 		"int", 			"Specify how much money the players get on start"),
-		s:Hello_CMD_R("sf_teamcash", 			 		"int", 			"Specify how much money the team get on start"),
-		s:Hello_CMD_R("sf_gamelength", 			 		"int", 			"Defines the game length in minutes (without the 2 min guardian wave.)"),
-		s:Hello_CMD_R("sf_cacodemon", 			 		"0, 1", 		"Play with cacodemon waves?"),
-		s:Hello_CMD_R("sf_skillmult",  			 		"int", 			"Measures the difficulty, the more, the harder."),
-		s:Hello_CMD_R("sf_adaptivespawn",  		 		"0,1",	 		"Monster Spawning adapts to the sector, this might vary depending on the map."),
-		s:Hello_CMD_R("sf_percentfast",  	 			"1 - 100",  	"The chance to spawn a fast monster. Works if there is 3 or more players in game."),
-		s:Hello_CMD("sf_creditcorrection",  	 		"int", 			"Grants extra coins to the late players, -10 will stop this. < -10 will take, > -10 will give."),
-		s:Hello_CMD_R("sf_doorholdtime", 	 			"15 - 45",  	"Modifies the door delay time on changing sectors."),
-		s:Hello_CMD("sfp_allowdropcredits", 			"0, 1", 		"Allow the credit dropping on players."),
-		s:Hello_CMD("sfp_dropcredits_delay",  			"3 - 11", 		"Modifies the delay time between credit dropping."),
-		s:Hello_CMD("sfp_dropcredits_nostartcredits", 	"0, 1", 		"In money dropping, the starting cash is not used."),
-		s:Hello_CMD_R("sfp_recapmin",   	  			"0 - 10",		"Set the minimal monster number before activating the re-capturing script."),
-		s:Hello_CMD_R("sfp_maxmonsters", 				"50 - 500", 	"Set the maximum monster number to spawn in each game."),
-		s:Hello_CMD("sfp_playerdmgmult", 			 	"1.0 - 200.0",  "On games with 3 and more players, grants an extra damage multipler to the players."),
-		s:Hello_CMD("sfp_monsterhpmult", 				"1.0 - 200.0",  "On games with 3 and more players, grants an extra health multipler to all monsters."),
+		s:"Game commands:\n"));
+		Hello_Log(Hello_CMD_R("sf_startcash", 			 		"int", 			"Specify how much money the players get on start"));
+		Hello_Log(Hello_CMD_R("sf_teamcash", 			 		"int", 			"Specify how much money the team get on start"));
+		Hello_Log(Hello_CMD_R("sf_gamelength", 			 		"int", 			"Defines the game length in minutes (without the 2 min guardian wave.)"));
+		Hello_Log(Hello_CMD_R("sf_cacodemon", 			 		"0, 1", 		"Play with cacodemon waves?"));
+		Hello_Log(Hello_CMD_R("sf_skillmult",  			 		"int", 			"Measures the difficulty, the more, the harder."));
+		Hello_Log(Hello_CMD_R("sf_adaptivespawn",  		 		"0,1",	 		"Monster Spawning adapts to the sector, this might vary depending on the map."));
+		Hello_Log(Hello_CMD_R("sf_percentfast",  	 			"1 - 100",  	"The chance to spawn a fast monster. Works if there is 3 or more players in game."));
+		Hello_Log(Hello_CMD("sf_creditcorrection",  	 		"int", 			"Grants extra coins to the late players, -10 will stop this. < -10 will take, > -10 will give."));
+		Hello_Log(Hello_CMD_R("sf_doorholdtime", 	 			"15 - 45",  	"Modifies the door delay time on changing sectors."));
+		Hello_Log(Hello_CMD("sfp_allowdropcredits", 			"0, 1", 		"Allow the credit dropping on players."));
+		Hello_Log(Hello_CMD("sfp_dropcredits_delay",  			"3 - 11", 		"Modifies the delay time between credit dropping."));
+		Hello_Log(Hello_CMD("sfp_dropcredits_nostartcredits", 	"0, 1", 		"In money dropping, the starting cash is not used."));
+		Hello_Log(Hello_CMD_R("sfp_recapmin",   	  			"0 - 10",		"Set the minimal monster number before activating the re-capturing script."));
+		Hello_Log(Hello_CMD_R("sfp_maxmonsters", 				"50 - 500", 	"Set the maximum monster number to spawn in each game."));
+		Hello_Log(Hello_CMD("sfp_playerdmgmult", 			 	"1.0 - 200.0",  "On games with 3 and more players, grants an extra damage multipler to the players."));
+		Hello_Log(Hello_CMD("sfp_monsterhpmult", 				"1.0 - 200.0",  "On games with 3 and more players, grants an extra health multipler to all monsters."));
 		
-		s:"\nUser commands:\n",
-		s:Hello_CMD("sfp_autouse", 				 "0, 1", "Enable the autouse script for the healing items."),
-		s:Hello_CMD("sfp_stimpack_t", 			"1-100", "The minimum health treshold before auto-using stimpacks."),
-		s:Hello_CMD("sfp_soulsphere_t", 		"1-100", "The minimum health treshold before auto-using soulspheres."),
-		s:Hello_CMD("sfp_megasphere_t", 		"1-100", "The minimum health treshold before auto-using megaspheres."),
-		s:Hello_CMD("sfp_hitmarksnd", 			 "0, 1", "Hear the hitmark sound?"),
-		s:Hello_CMD("sfp_earningdisp", 	   "0, 1, 2, 3", "Show your current earnings?"),
-		s:Hello_CMD("sfp_dropcredits", 			  "int", "Drop any amount of credits on the floor."),
-		s:Hello_CMD("sfp_oldsoundtrack", 	   	 "0, 1", "Toggle between the new soundtrack and the old soundtrack"),
-		s:Hello_CMD("sfp_welcome", 			   	 "0, 1", "Keep the welcome message?."),
-		s:Hello_CMD("sfp_changelog", 			   	  0, "Show the main changes for this version."),
-		s:Hello_CMD("sfp_ccmdlist", 			   	  0, "Show this list again."),
-		s:"Console Command list (END)"
-	));
+		Hello_Log("\nUser commands:\n");
+		Hello_Log(Hello_CMD_R("sfp_autouse", 				 "0, 1", "Enable the autouse script for the healing items."));
+		Hello_Log(Hello_CMD("sfp_stimpack_t", 			"1-100", "The minimum health treshold before auto-using stimpacks."));
+		Hello_Log(Hello_CMD("sfp_soulsphere_t", 		"1-100", "The minimum health treshold before auto-using soulspheres."));
+		Hello_Log(Hello_CMD("sfp_megasphere_t", 		"1-100", "The minimum health treshold before auto-using megaspheres."));
+		Hello_Log(Hello_CMD("sfp_hitmarksnd", 			 "0, 1", "Hear the hitmark sound?"));
+		Hello_Log(Hello_CMD("sfp_earningdisp", 	   "0, 1, 2, 3", "Show your current earnings?"));
+		Hello_Log(Hello_CMD("sfp_dropcredits", 			  "int", "Drop any amount of credits on the floor."));
+		Hello_Log(Hello_CMD("sfp_oldsoundtrack", 	   	 "0, 1", "Toggle between the new soundtrack and the old soundtrack"));
+		Hello_Log(Hello_CMD("sfp_welcome", 			   	 "0, 1", "Keep the welcome message?."));
+		Hello_Log(Hello_CMD("sfp_changelog", 			   	  0, "Show the main changes for this version."));
+		Hello_Log(Hello_CMD("sfp_ccmdlist", 			   	  0, "Show this list again."));
+		Hello_Log("Console Command list (END)");
 	LocalAmbientSound("misc/chat2",127);
 }
 
 function str Hello_CMD(str cmd,str params, str desc){
-	if(params == 0) return strparam(s:"-) \cv", s:cmd, s:"\ci \n\t", s:desc, s:"\n\n\c-");
-	return strparam(s:"-) \cv", s:cmd, s:" \ck(", s:params,s:")\ci \n\t", s:desc, s:"\n\n\c-");
+	if(params == 0) return strparam(s:"-) \cv", s:cmd, s:"\ci \n\t", s:desc, s:"\c-");
+	return strparam(s:"-) \cv", s:cmd, s:" \ck(", s:params,s:")\ci \n\t", s:desc, s:"\c-");
 }
 function str Hello_CMD_R(str cmd,str params, str desc){
-	if(params == 0) return strparam(s:"*) \cv", s:cmd, s:"\ci \n\t", s:desc, s:"\n\n\c-");
-	return strparam(s:"*) \cv", s:cmd, s:" \ck(", s:params,s:")\ci \n\t", s:desc, s:"\n\n\c-");
+	if(params == 0) return strparam(s:"*) \cv", s:cmd, s:"\ci \n\t", s:desc, s:"\c-");
+	return strparam(s:"*) \cv", s:cmd, s:" \ck(", s:params,s:")\ci \n\t", s:desc, s:"\c-");
 }
 
 function str Hello_Version(void){

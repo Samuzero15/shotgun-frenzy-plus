@@ -30,6 +30,9 @@ int fp_WpUps[FP_WEAPONS][FP_WEPUPS][10];
 int fp_WpTrack[FP_WEP_PACKS];
 int fp_UpTrack;
 
+// Saved weapons per each player.
+int fp_WpnsPerPlayer[32][FP_WEAPONS];
+
 int fp_WeaponPackStack = 0;
 int fp_WeaponStack = 0;
 
@@ -61,6 +64,16 @@ function void SFPlus_DefineWeapons (void){
 	
 	fp_WeaponPackStack = 0;
 	fp_WeaponStack = 0;
+	
+	wep = Weapon_Add("Beretta", "5mm Beretta", -2, "",
+		"Your good-old trusty beretta."
+	);
+	WeaponUpgrade_Add("Beretta_Dual", "Dual Berettas", wep, 1, "",
+		"You get an extra beretta, rapid fire by primary, and simultaneous fire on secondary."
+	);
+	WeaponUpgrade_Add("Beretta_SMG", "SMG Beretta", wep, 2, "",
+		"Works like a single beretta, but primary fires fast, and secondary like your beretta fire ratio."
+	);
 	
 	wep = Weapon_Add("Boomstick", "Standard Boomstick", -1, "",
 		"Your shotgun."
@@ -340,6 +353,23 @@ function void SFPlus_DefineWeapons (void){
 	//int wep = 0;
 	
 	*/
+}
+
+function str Weapon_GetSameKind(int wid){
+	if (CheckInventory(Weapon_GetActor(wid))) return Weapon_GetActor(wid);
+	if (CheckInventory(WeaponUpgrade_getActor(wid, 0))) return WeaponUpgrade_getActor(wid, 0);
+	if (CheckInventory(WeaponUpgrade_getActor(wid, 1))) return WeaponUpgrade_getActor(wid, 1);
+	return 0;
+}
+
+script "SFPlus_WeaponSaveTest" (void){
+	Weapon_PlayerSave();
+}
+
+function void Weapon_PlayerSave(void) {
+	for (int i = 0; i < fp_WeaponStack; i++){
+		log(s:Weapon_GetSameKind(i));
+	}
 }
 
 function void Weapon_SwapWeapon(str this, str withThis){

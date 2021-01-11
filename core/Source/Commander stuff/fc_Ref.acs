@@ -44,13 +44,13 @@ script 350 (void)
     spawnspot("TurretBase", 153, 0, 0);
     
     // set techflag
-	Tech_Set(FP_TECH_REFINE, FP_TECHF_DONE);
+	Tech_Set(TECH_REFINE, TECHF_DONE);
     
     // constructed message
     //f_TipShow ("BUTTON", "Refinery", "Construction Complete!", 1);
     
     // check bridge
-    if (Tech_isDone(FP_TECH_ARMORY) && Tech_isDone(FP_TECH_REFINE) && c_BridgeStatus_3 == 0 && f_Gametype != 5)
+    if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_REFINE) && c_BridgeStatus_3 == 0 && f_Gametype != 5)
     {
         c_BridgeStatus_3 = 1;
         floor_raisetonearest(342, 125);
@@ -74,8 +74,8 @@ script 350 (void)
         delay(35*1);
         
         // increase credit count
-		pump1 = Tech_IsDone(FP_TECH_REFINE_PUMP1);
-		pump2 = Tech_IsDone(FP_TECH_REFINE_PUMP2);
+		pump1 = Tech_IsDone(TECH_REFINE_PUMP1);
+		pump2 = Tech_IsDone(TECH_REFINE_PUMP2);
         c_Credits += (2 + 4*pump1 + 4*pump2);
     }
 }

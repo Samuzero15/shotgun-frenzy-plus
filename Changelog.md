@@ -2,13 +2,25 @@
 
 ## v0 - Before the beginning...
 
+#### -) (6 to 11 / 01 / 2021) [Relase! v0-t13] [Mech nerfs and fixes]
+	+) A new Mech Upgrade! Efficiency: Reduces the time on the repairings, rocket reloading and autorepair intervals.
+	*) Mech Rocket Upgrade price rises to 5500.
+	*) Slowed a bit the rocket reloading time for the Mech. You can restore it with the efficiency upgrade.
+	*) Returning the mech back to the base will have a delay penalty depending on the health. Just to discourage the insta-healing of the mechs.
+	*) The mech moves a bit more faster in the base level, but it's upgrades does less effect, maxing it up will make the tank run like a normal marine.
+	*) The mech exit at the entrance no longer will be instant. If you need to hop off the mech, pass to the entrance and press use. (It's still insta-exit)
+	*) Fixed up the cmd list, now it should show to the players.
+	*) Pistol now it should'nt use the same clip that uses the spitter. That and with other tweaks to it. (thanks BathySalts!)
+	*) Stimpacks now heals 20 hp.
+	*) Upgrade reminders show behavior has been changed too. Now they appear and shine.
+
 #### -) (1 to 3 / 01 / 2021) [Starting with a good feet]
-	*)Rewritten the CMD event handling system, and optimized the cmd terminal.
-	*)Turret Rail in the ammo terminal should be given after pursache once again.
-	*)Prosesing phase 1 and 2 can boost up the enemy bounty for the players and commander together!
-	*)Enemies killed with cripple pulse will not grant credits to the player. (However, the commander can gain credits for that)
-	*)Auto-Researching's Script has been revamped too, now notifying the players the new researchs on CF and SD maps! (Also, stimpacks and adrenaline can be given with this revamp.)
-	*)Other smoll fixes.
+	*) Rewritten the CMD event handling system, and optimized the cmd terminal.
+	*) Turret Rail in the ammo terminal should be given after pursache once again.
+	*) Prosesing phase 1 and 2 can boost up the enemy bounty for the players and commander together!
+	*) Enemies killed with cripple pulse will not grant credits to the player. (However, the commander can gain credits for that)
+	*) Auto-Researching's Script has been revamped too, now notifying the players the new researchs on CF and SD maps! (Also, stimpacks and adrenaline can be given with this revamp.)
+	*) Other smoll fixes.
 	// 2020 was filled with updates, with more new mechanics, less bugs, and more. (with coronavirus and all ._.)
 	// So for a 2021 goal, I'll bring this mod up to the v1, the version where the maps can be added.
 	// I've still got some ideas left to add it in, so expect it to be updated =)

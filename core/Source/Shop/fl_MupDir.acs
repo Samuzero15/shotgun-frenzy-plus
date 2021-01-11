@@ -19,26 +19,29 @@ int mechup_list[FP_MECHUP_MAX][5];
 
 function void SFPlus_DefineMechUps(void){
 	MechUpTop = 0;
-	MechUp_Add ("Nail Upgrade","MechUp_Nails", "nails", 5,
+	MechUp_Add ("Nails","MechUp_Nails", "nails", 5,
 		"Make them harder, make them better...");
 	
-	MechUp_Add ("Rocket Upgrade", "MechUp_Rockets", "rockets", 5,  
+	MechUp_Add ("Rockets", "MechUp_Rockets", "rockets", 5,  
 		"Face it, explsions can save the day.");
 	
-	MechUp_Add ("Armor Upgrade", "MechUp_Armor", "armor", 5, 
+	MechUp_Add ("Armor", "MechUp_Armor", "armor", 5, 
 		"More resistance never done you harm.");
 	
-	MechUp_Add ("Manuvering Upgrade", "MechUp_Speed", "speed", 3,
+	MechUp_Add ("Manuvering", "MechUp_Speed", "speed", 3,
 		"Tanks are slow, but you're on a hurry.");
 	
-	MechUp_Add1Up("Lifesave Upgrade", "MechUp_LifeSave", "life_save",
+	MechUp_Add1Up("Lifesave", "MechUp_LifeSave", "life_save",
 		"On eject, you will return to the base.");
 		
-	MechUp_Add1Up("Self-Destruct Upgrade", "MechUp_SelfDestruct", "self_destruct",
+	MechUp_Add1Up("Self-Destruct", "MechUp_SelfDestruct", "self_destruct",
 		"If this is it, then finish it with style.");
 		
-	MechUp_Add1Up("Auto-Repair Upgrade", "MechUp_AutoRepair", "auto_repair",
+	MechUp_Add("Auto-Repair", "MechUp_AutoRepair", "auto_repair", 5,
 		"Hey, if it's not broken, don't fix it.");
+	
+	MechUp_Add1Up("Efficiency", "MechUp_Efficiency", "efficiency",
+		"Repair, fire and reload more effective!.");
 		
 }
 
@@ -80,8 +83,9 @@ function str MechUp_ReportUps(bool colored){
 	result = Strparam(s:result, s:MechUp_StrUpgrade("Rockets      ",		1, colored));
 	result = Strparam(s:result, s:MechUp_StrUpgrade("Manuvering   ", 		3, colored));
 	result = Strparam(s:result, s:MechUp_StrUpgrade("Life Saver   ", 		4, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Self Destruct", 	5, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Auto Repair  ",   	6, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Self Destruct", 		5, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Auto Repair  ",   		6, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade("Efficiency   ",   		7, colored));
 	
 	return result;
 }

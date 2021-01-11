@@ -43,7 +43,7 @@ function void UpdateListUpPage(int pageTag){
 		Label_setText(listup_vars[2], titlecat);
 		Label_setColor(listup_vars[2], color);
 		
-		listup_vars[7] = 1 + Tech_IsDoneC(FP_TECH_ARMORY_ARMS1) + Tech_IsDoneC(FP_TECH_ARMORY_ARMS2);
+		listup_vars[7] = 1 + Tech_IsDoneC(TECH_ARMORY_ARMS1) + Tech_IsDoneC(TECH_ARMORY_ARMS2);
 		
 		if(listup_vars[7] == 1) ListUpPage_ShowNavs(false);
 		else ListUpPage_ShowNavs(true);
