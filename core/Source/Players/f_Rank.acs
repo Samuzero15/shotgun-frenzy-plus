@@ -54,7 +54,7 @@ function void p_IncreaseRank (void)
             
             break;
         case 2:
-            f_TipShow("PLAYER", "", "Has been promoted to Lance Corporal!", 10);
+            f_TipShow("PLAYER", "", "Has been promoted to Specialist!", 10);
             setfont("CONFONT");
             hudmessage(s:"+400 Credits\n+1 Upgrade point"; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
             p_Credits[playernumber()] += 400;
@@ -72,13 +72,13 @@ function void p_IncreaseRank (void)
             p_Credits[playernumber()] += 1600;
             break;
         case 5:
-            f_TipShow("PLAYER", "", "Has been promoted to Staff Sergeant!", 10);
+            f_TipShow("PLAYER", "", "Has been promoted to Lieutenant!", 10);
             setfont("CONFONT");
             hudmessage(s:"+2500 Credits\n+1 Upgrade point"; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
             p_Credits[playernumber()] += 2500;
             break;
         case 6:
-            f_TipShow("PLAYER", "", "Has been promoted to Master Sergeant!", 10);
+            f_TipShow("PLAYER", "", "Has been promoted to Captain!", 10);
             setfont("CONFONT");
             hudmessage(s:"+3600 Credits\n+1 Upgrade point"; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
             p_Credits[playernumber()] += 3600;
@@ -90,13 +90,13 @@ function void p_IncreaseRank (void)
             p_Credits[playernumber()] += 4900;
             break;
         case 8:
-            f_TipShow("PLAYER", "", "Has been promoted to Commander!", 10);
+            f_TipShow("PLAYER", "", "Has been promoted to Colonel!", 10);
             setfont("CONFONT");
             hudmessage(s:"+6400 Credits\n+1 Upgrade point"; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
             p_Credits[playernumber()] += 6400;
             break;
         case 9:
-            f_TipShow("PLAYER", "", "Has been promoted to ULTIMATE COMMANDER!", 10);
+            f_TipShow("PLAYER", "", "Has been promoted to Commander!", 10);
             setfont("CONFONT");
             hudmessage(s:"+8100 Credits\n+1 Upgrade point"; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
             p_Credits[playernumber()] += 8100;
@@ -110,10 +110,12 @@ function void p_IncreaseRank_Grant (int l_Type)
     switch(l_Type)
     {
         case 1:
+			takeinventory("Beretta", 1);
             giveinventory("Beretta_Dual", 1);
             f_CenterTip("You have been awarded with\nDual Pistols!");
             break;
         case 2:
+			takeinventory("Beretta_Dual", 1);
             giveinventory("Beretta_SMG", 1);
             f_CenterTip("You have been awarded with\na SMG");
             break;

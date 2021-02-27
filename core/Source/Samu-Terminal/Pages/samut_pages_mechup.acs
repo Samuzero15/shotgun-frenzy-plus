@@ -48,7 +48,7 @@ function void MechUpPage_Init(int pageTag){
 	Card_SetVerticalOri(true);
 	mechpage_vars[1] = Card_Generate();
 	
-	i = StrButton_AddMid(320.0, 240.0, " Pursache Mech ");
+	i = StrButton_AddMid(320.0, 240.0, " Purchase Mech ");
 	StrButton_setColor(i, CR_CYAN);
 	StrButton_setTag(i, pagetag);
 	StrButton_setExecute(i, STEXE_BUYMECHTANK);

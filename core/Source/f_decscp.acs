@@ -10,9 +10,10 @@
 
 #library "f_decscp"
 
+
 #include "zcommon.acs"
 #include "acsutils.acs"
-
+#import "f_intdb.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -47,6 +48,7 @@ script "PriFireTrigger" ENTER
 }
 
 function void AddAmmoCapacity (str ammo, int amount){
+	//log(s:ammo, s:" cap: ", d:getAmmoCapacity(ammo), s:" + ", d:amount, s:" -> ", d:(getAmmoCapacity(ammo) + amount));
 	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
 }
 
@@ -65,7 +67,6 @@ script "PersonalBP_Expand" (void) {
 	AddAmmoCapacity("GLauncher_Ammo", 	25);
 	AddAmmoCapacity("Flinger_Ammo", 	50);
 	AddAmmoCapacity("Gasoline",			50);
-	AddAmmoCapacity("ClipPistol",		50);
 }
 
 script "PersonalBP_Reset" (void) {
@@ -79,6 +80,10 @@ script "PersonalBP_Reset" (void) {
 	SetAmmoCapacity("GLauncher_Ammo", 	15);
 	SetAmmoCapacity("Flinger_Ammo", 	50);
 	SetAmmoCapacity("Gasoline", 		200);
+}
+
+Script "Player_GetRank" (void){
+	SetResultValue(p_Rank[playernumber()] + 1);
 }
 
 script "Repeater_HeatDamage" (void)
@@ -159,10 +164,9 @@ script "InfAmmoCheck" (void)
 
 
 script "SF_Checc" (void){
-	/*
 	debugTidPointers(ActivatorTID());
 	debugTidPointersStrings(ActivatorTID());
-	*/
+	
 }
 
 function void debugTidPointers (int debug1){
@@ -173,6 +177,24 @@ log(s:GetActorClass(debug2),
  s:") TAR:", s:GetActorClass(GetActorProperty(debug2, APROP_TargetTID)),
  s:" MAS:", s:GetActorClass(GetActorProperty(debug2, APROP_MasterTID)),
  s: " TRA:", s:GetActorClass(GetActorProperty(debug2, APROP_TracerTID)) );
+}
+
+Script "DebugTID" (int arg, int value){
+	printbold(s:GetActorClass(ActivatorTID()), s:"\c-, ARG: \cd", d:arg, s:"\c-, VALUE: \cd", d:value);
+}
+
+Script "GetUniqueTID" (void){
+	SetResultValue(UniqueTID());
+}
+
+Script "Turret_LinkBase" (int basetid){
+	int oldtid = ActivatorTID();
+	int tmptid = UniqueTID();
+	Thing_ChangeTID(0,tmptid);
+	SetActivator(basetid);
+	SetPointer(AAPTR_Target, tmptid);
+	Thing_ChangeTID(basetid, 0);
+	Thing_ChangeTID(tmptid, oldtid);
 }
 
 script "Teleport_Effects" (void) {

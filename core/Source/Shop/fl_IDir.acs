@@ -61,13 +61,18 @@ function void SFPlus_DefineItems(void){
 	Item_Add_deploy("Inventory_TurretBullet", "Bullet Turret", "turret_bullet", 8, "CM40", 
 		"Basic and Cheap.");
 	Item_Add_deploy("Inventory_TurretRocket", "Rocket Turret", "turret_rocket", 8, "CM41", 
-		"Kinda slow but launches rockets.");
+		"Rock it with some rockets");
 	Item_Add_deploy("Inventory_TurretPlasma", "Plasma Turret", "turret_plasma", 8, "CM42", 
-		"Plasmatize those demons.");
+		"Plasmatize those demons");
 	Item_Add_deploy("Inventory_TurretRail", "Rail Turret", "turret_rail", 8, "CM43", 
-		"Rails for the enemy lines.");
+		"Rails for the enemy lines");
 	Item_Add_deploy("Inventory_TurretFlame", "Flame Turret", "turret_flame", 8, "CM47", 
-		"Ignites the nearest foes.");
+		"Ignites the nearest foes");
+	Item_Add_deploy("Inventory_TurretChaingun", "Chaingun Turret", "turret_chaingun", 8, "CC14", 
+		"No demon will outsmart these bullets.");
+	Item_Add_deploy("Inventory_TurretShotgun", "Shotgun Turret", "turret_shotgun", 8, "CC13", 
+		"Spready attack, fires twice.");
+	
 }
 
 

@@ -125,6 +125,7 @@ Script "SamuTerm_VariableSync" ENTER{
 		SetInventory("c_allow_turret", 		allow_turret_C());
 		SetInventory("c_timer_turret", 		c_allow_turret);
 		SetInventory("c_timer", 		Timer());
+		SetInventory("f_gametype", 		f_Gametype);
 		SetInventory("pr_cmd_airstrike", AirStrike_GetPrice());
 		SyncAllMechaPrices();
 		

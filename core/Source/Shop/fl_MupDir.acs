@@ -9,6 +9,7 @@
 // For the prices, take a look at fl_price.
 
 #library "fl_MupDir"
+#import "f_intdb.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
 

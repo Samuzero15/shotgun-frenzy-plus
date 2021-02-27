@@ -19,7 +19,8 @@ Script "SFPlus_PowerupList" Enter Clientside{
 	int pow_hexasphere;
 	int pow_godsphere;
 	int pow_spawnshield;
-	int pow_prometeo;
+	int pow_prometeo_x2dmg;
+	int pow_prometeo_invul;
 	int pow_wealth;
 	if(ConsolePlayerNumber() == Playernumber()){
 		while(PlayerInGame(PlayerNumber())){
@@ -27,13 +28,15 @@ Script "SFPlus_PowerupList" Enter Clientside{
 			pow_hexasphere   = GetActorPowerupTics(0, "PlayUp_PowUpUpgrade_6xDmg");
 			pow_godsphere    = GetActorPowerupTics(0, "PowerInvulnerable");
 			pow_spawnshield  = GetActorPowerupTics(0, "PlayUp_Spawnshield_Power");
-			pow_prometeo 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_2xDmg");
+			pow_prometeo_x2dmg 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_2xDmg");
+			pow_prometeo_invul 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_Invul");
 			pow_wealth 	 	 = GetActorPowerupTics(0, "Inv_Power_Wealth");
 			//log(s:"Quad: ", d:GetActorPowerupTics(0, "PowerQuadDamage"));
 			PowHud_Show("x4 Damage", 	pow_quadsphere);
 			PowHud_Show("x6 Damage", 	pow_hexasphere);
 			PowHud_Show("Invulnerable", pow_godsphere);
-			PowHud_Show("Prometeo", 	pow_prometeo);
+			PowHud_Show("Prometeo x2 DMG", 	pow_prometeo_x2dmg);
+			PowHud_Show("Prometeo Invul.", 	pow_prometeo_invul);
 			PowHud_Show("Spawn Shield", pow_spawnshield);
 			PowHud_Show("x2 Credits", 	pow_wealth);
 			/*

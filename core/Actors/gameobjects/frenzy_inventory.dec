@@ -439,6 +439,42 @@ ACTOR Inventory_TurretFlame : Inventory_Item
 	}
 }
 
+ACTOR Inventory_TurretShotgun : Inventory_Item
+{
+	inventory.pickupmessage "Shotgun Turret!"
+	inventory.icon "ITEMP2"
+	inventory.maxamount 8
+	
+	States
+	{
+	Spawn:
+		ITP2 A 0 bright
+		goto Super::SpawnLoop
+	Effect:
+		TNT1 A 0 A_SpawnItemEx("TurretShotgun", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	}
+}
+
+ACTOR Inventory_TurretChaingun : Inventory_Item
+{
+	inventory.pickupmessage "Chaingun Turret!"
+	inventory.icon "ITEMP1"
+	inventory.maxamount 8
+	
+	States
+	{
+	Spawn:
+		ITP1 A 0 bright
+		goto Super::SpawnLoop
+	Effect:
+		TNT1 A 0 A_SpawnItemEx("TurretChaingun", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	}
+}
+
 // item spawning from dead demons, increase the probability that it will NOT spawn
 ACTOR Rnd_Inventory_Soulsphere : CustomInventory
 {

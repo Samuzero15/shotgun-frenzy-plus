@@ -2,6 +2,20 @@
 
 ## v0 - Before the beginning...
 
+#### -) (23 - 26 / 02 / 2021)  [Tinkering and selling turrets, and some fixes]
+	+) Shotgun and Chaingun turrets can now be displayed in the standard HUD, added with some new custom item inventory :)
+	+) Ohoho! Shotgun and Chaingun turrets can now be porsachable on the ammo terminal!
+	*) Now the turrets will drop the smoke if they're low of its 50% of their health
+	*) The turret base now will be destroyed once the head is down.
+	*) Now the turret displays an explosion, with fires and stuff.
+	*) Prometeo protocol's invul effect has been nerfed to 5 seconds.
+	*) The extra effects for prometeo can be displayed on the game.
+	*) Ammo giving script is back to normal.
+	*) Fixed the Rank titles for the old an new hud.
+	*) Fixed a bug on pursaching weapons, after upgrading a weapon, the base weapons can be brought back but with no chances to upgrade it.
+	*) Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
+	*) Mech Sync upgrade will only appear in the shotgun frenzy maps.
+
 #### -) (6 to 11 / 01 / 2021) [Relase! v0-t13] [Mech nerfs and fixes]
 	+) A new Mech Upgrade! Efficiency: Reduces the time on the repairings, rocket reloading and autorepair intervals.
 	*) Mech Rocket Upgrade price rises to 5500.

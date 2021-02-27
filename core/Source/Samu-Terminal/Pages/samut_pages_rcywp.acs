@@ -16,7 +16,7 @@ function void RcyWpnPage_Update(int pageTag){
 	setPageTitle(pageTag, "Recycle Weapons", CR_RED);
 	if(isOnTheSamePage(pageTag)){
 		for(int i = 0; i < fp_WeaponStack; i++){
-			if(Weapon_getWepPack(i) != -1)
+			if(Weapon_getWepPack(i) != -1 && Weapon_getWepPack(i) != -2)
 				RcyWpnPage_updateOptions(i);
 		}
 		rcywpn_vars[1] = 0; // reset stack.
@@ -33,7 +33,7 @@ function void RcyWpnPage_Init(int pageTag){
 	rcywpn_vars[1] = 0; // Top.
 	
 	for(int i = 0; i < fp_WeaponStack; i++){
-		if(Weapon_getWepPack(i) != -1) // Excludes boomstick.
+		if(Weapon_getWepPack(i) != -1 && Weapon_getWepPack(i) != -2) // Excludes boomstick and beretta.
 			RcyWpnPage_AddOptions(pagetag, i);
 	}
 	

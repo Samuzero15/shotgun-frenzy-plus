@@ -203,47 +203,38 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	}
 	
 }  
-#Define STOCK_AMMOTYPES 14
-int stock_ammo_stack;
-int stock_ammo[STOCK_AMMOTYPES][2];
-
-function void Stock_DefineAmmo(str name, int disp_give){
-	stock_ammo[stock_ammo_stack][0] = name;
-	stock_ammo[stock_ammo_stack][1] = disp_give;
-	stock_ammo_stack++;
-}
 
 function void Stock_FillAmmo(bool full){
-	int i;
-	stock_ammo_stack = 0;
-	Stock_DefineAmmo("Clip", 				10);
-	Stock_DefineAmmo("ClipPistol",			10);
-	Stock_DefineAmmo("Shell",				2);
-	Stock_DefineAmmo("RocketAmmo",			2);
-	Stock_DefineAmmo("GLauncher_Ammo",		2);
-	Stock_DefineAmmo("Flinger_Ammo",		2); 
-	Stock_DefineAmmo("Cell",				20); 
-	Stock_DefineAmmo("Dualshot_Ammo",		15); 
-	Stock_DefineAmmo("HeavyBullets",		40); 
-	Stock_DefineAmmo("Gasoline",			20);
-	Stock_DefineAmmo("Supplies_Health",		0); 
-	Stock_DefineAmmo("Supplies_Ammo",		0); 
-	Stock_DefineAmmo("Supplies_Health_Big",	0); 
-	Stock_DefineAmmo("Supplies_Ammo_big",	0);
-	
+
 	if(full){
-		for(i = 0; i < STOCK_AMMOTYPES; i++){
-			GiveMaxInventory(stock_ammo[i][0]);
-		}
+		GiveMaxInventory("Clip");
+		GiveMaxInventory("ClipPistol");
+		GiveMaxInventory("Shell");
+		GiveMaxInventory("RocketAmmo");
+		GiveMaxInventory("GLauncher_Ammo");
+		GiveMaxInventory("Flinger_Ammo"); 
+		GiveMaxInventory("Cell"); 
+		GiveMaxInventory("Dualshot_Ammo"); 
+		GiveMaxInventory("HeavyBullets"); 
+		GiveMaxInventory("Gasoline");
+		GiveMaxInventory("Supplies_Health"); 
+		GiveMaxInventory("Supplies_Ammo"); 
+		GiveMaxInventory("Supplies_Health_Big"); 
+		GiveMaxInventory("Supplies_Ammo_big");
 	}
 	else{
 		// [Samu] Expansive re-stock upgrades for the players.
-		int extra_ammo = CheckInventory("PlayUp_ExpansiveRestock");
-		
-		for(i = 0; i < STOCK_AMMOTYPES; i++){
-			GiveInventory(stock_ammo[i][0], stock_ammo[i][1]*(1 + extra_ammo));
-			//print(d:(stock_ammo[i][1]));
-		}
+		int extra_ammo = (1 + CheckInventory("PlayUp_ExpansiveRestock"));
+		GiveInventory("Clip", 				10*extra_ammo);
+		GiveInventory("ClipPistol",			10*extra_ammo);
+		GiveInventory("Shell",				2*extra_ammo);
+		GiveInventory("RocketAmmo",			2*extra_ammo);
+		GiveInventory("GLauncher_Ammo",		2*extra_ammo);
+		GiveInventory("Flinger_Ammo",		2*extra_ammo); 
+		GiveInventory("Cell",				20*extra_ammo); 
+		GiveInventory("Dualshot_Ammo",		15*extra_ammo); 
+		GiveInventory("HeavyBullets",		40*extra_ammo); 
+		GiveInventory("Gasoline",			20*extra_ammo);
 	}
 }
 
@@ -332,6 +323,7 @@ script "SFPlus_PrometeoScript" (void)
 		delay(1);
 	} 
 	SetPlayerProperty(0, 0, PROP_BUDDHA);
+	setactorproperty(0, APROP_SpawnHealth, 50);
 	GiveInventory("PlayUp_Prometeo_Used", 1);
 	TakeInventory("PlayUp_Prometeo_Ready", 1);
 	giveinventory("PlayUp_Prometeo_Activate", 1);

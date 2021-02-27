@@ -436,7 +436,7 @@ function void Notify_CommMarker(str what, str img, str snd){
 }
 
 function void Notify_Reward(str what, str img){
-	Notify_Message(what, "Ha been rewarded to your team!", img, TIP_NOTIFY_COLORSET_GOOD);
+	Notify_Message(what, "Has been rewarded to your team!", img, TIP_NOTIFY_COLORSET_GOOD);
 }
 
 function void Notify_Research(str what, str img){

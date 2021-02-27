@@ -26,9 +26,8 @@ w) Work in progres
 	[d] Display 
 [d] Health Terminal's Player upgrades
 [ ] Implement the Bank tech.
-[ ] Flak-Bombs for the dual shot.
+[d] Flak-Bombs for the dual shot.
 [ ] Achievemets? just for the sake of it? Heck yes!.
-[ ] Make a Process Queue, a way to control the rushing researches.
 [w] About the Testing map
 	[d] Monster spawner
 	[ ] The set of items and turrets to spawn.

@@ -80,7 +80,7 @@ function void ProgTip_Init(void){
 	ProgTip_SetPostSound(ptid, "cv/mcom2");
 		
 	ptid = ProgTip_Def(FP_PTID_NUKESY);  // Nuclear Sylo
-	ProgTip_SetMsg		(ptid, "Nuclear Sylo is building....");
+	ProgTip_SetMsg		(ptid, "Nuclear Silo is building....");
 	ProgTip_SetImg		(ptid, "BUTTON");
 	ProgTip_SetEndMsg1	(ptid, "Nuclear Sylo Constructed!");
 	ProgTip_SetEndMsg2	(ptid, "The doomsday-clock is ready to be launched in the command chair.");

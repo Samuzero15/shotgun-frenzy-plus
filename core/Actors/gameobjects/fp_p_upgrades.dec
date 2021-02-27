@@ -54,7 +54,7 @@ Actor PlayUp_SpawnShield_Activate : PowerupGiver {
 ACTOR PlayUp_Prometeo_Power_Invul : PowerInvulnerable
 {
   Powerup.ColorMap 0.0,0.2,0.2, 1.0,1.0,1.0
-  Powerup.Duration -20
+  Powerup.Duration -8
   Inventory.PickupMessage "Prometeo protocol invul powerup!"
 }
 
@@ -62,7 +62,7 @@ Actor PlayUp_Prometeo_Activate_Invul : PowerupGiver {
   +INVENTORY.AUTOACTIVATE
   +INVENTORY.ALWAYSPICKUP
   Powerup.ColorMap 0.0,0.2,0.2, 1.0,1.0,1.0
-  Powerup.Duration -20
+  Powerup.Duration -8
   Inventory.PickupMessage "Prometeo protocol invul powerup!"
   Powerup.Type PlayUp_Prometeo_Power_Invul
   
@@ -104,7 +104,7 @@ Actor PlayUp_Prometeo_Activate : CustomInventory
 		TNT1 A 0 A_Giveinventory("PlayUp_Prometeo_Activate_Invul", 1)
 		TNT1 A 0 A_Giveinventory("PlayUp_Prometeo_Activate_x2DMG", 1)
 		TNT1 A 0 ACS_Execute(126, 0, 3, 0, 0)
-		TNT1 A 0 A_Giveinventory("Health", 9) // + 1 from buddha mode.
+		TNT1 A 0 A_Giveinventory("Health", 49) // + 1 from buddha mode.
 		TNT1 A 1 
 		Stop
     }

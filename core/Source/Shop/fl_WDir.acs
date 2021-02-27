@@ -428,6 +428,13 @@ function void Weapon_Recycle(int wid, int upg, int play){
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
 
+function bool Weapon_OwnedSameKind(int asThis){
+	return 
+		checkinventory(Weapon_GetActor(asThis)) ||
+		checkinventory(WeaponUpgrade_getActor(asThis, 0)) ||
+		checkinventory(WeaponUpgrade_getActor(asThis, 1));
+}
+
 function bool Weapon_IsHoldingSameKind(int asThis){
 	return 
 		checkweapon(Weapon_GetActor(asThis)) 			||
@@ -544,7 +551,7 @@ function bool WeaponPack_isOwned(int wid){
 		for (int i = 0; (i < fp_WeaponStack) && !res; i++){
 			if(Weapon_getWepPack(i) == wid){
 				
-				res = CheckInventory(Weapon_getActor(i));
+				res = Weapon_OwnedSameKind(i);
 			}
 		}
 	return res;

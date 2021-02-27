@@ -11,7 +11,7 @@ ACTOR explosionemitter_wall 23010
 	{
 		Spawn:
 			STRK C 1
-			loop
+			stop
 		Explode:
 			STRK C 1
 			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-128, 128), random(-128, 128), 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
@@ -114,7 +114,6 @@ ACTOR explosionemitter_t
 	{
 		Spawn:
 			STRK C 1
-			loop
 		Explode:
 			STRK C 1
 			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
@@ -151,6 +150,157 @@ ACTOR explosionemitter_t
 			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
 			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
 			STRK C 1 A_SpawnItemEx("explosion_particle", 0, random(-32, 32), random(-32, 32), random(-32, 32), 0, 3, 0, SXF_CLIENTSIDE, 0)
+		stop
+	}
+}
+
+ACTOR Explode_Turret
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	
+	var int user_times;
+	
+	States
+	{
+		Spawn:
+			STRK C 1
+			TNT1 A 0 A_SetUserVar("user_times", 0)
+		Explode:
+			TNT1 A 0 A_JumpIf(user_times > 5, "Sthap")
+			STRK C 4 A_PlaySound("Flinger/Grenade/Booms", CHAN_AUTO)
+			STRK C 4 A_PlaySound("vile/firecrkl",	CHAN_AUTO)
+			STRK CCCC 0 A_SpawnItemEx("ExplodeParticle_Turret1", random(-32, 32), random(-32, 32), random(0, 64), 0, 0, random(2,5), 0, SXF_CLIENTSIDE, 0)
+			STRK C 0 A_SpawnItemEx("ExplodeParticle_Turret2", random(-32, 32), random(-32, 32), random(0, 64), 0, 0, 1, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 0 A_SetUserVar("user_times", user_times+1)
+			loop
+		Sthap:
+			TNT1 A 0
+		stop
+	}
+}
+
+Actor ExplodeParticle {
+	+CLIENTSIDEONLY
+	+FLOAT
+	+NOGRAVITY
+	+NOINTERACTION
+	Speed 0
+	States
+	{
+		Yeet:
+			TNT1 A 1
+			stop
+	}
+}
+
+// particle actors
+actor ExplodeParticle_Turret1 : ExplodeParticle
+{
+	scale 0.6
+	alpha 0.7
+	renderstyle add
+	States
+	{
+		Spawn:
+			TNT1 A 1 A_CheckRange(512, "Yeet")
+			MISL B 1 A_CheckRange(512, "Yeet")
+			MISL BCD 3 bright A_CheckRange(512, "Yeet")
+			stop
+	}
+}
+
+actor Explosion_Small : ExplodeParticle
+{
+	scale 0.6
+	alpha 0.9
+	renderstyle add
+	States
+	{
+		Spawn:
+			EXP3 A 2 Bright A_CheckRange(512, "Yeet")
+			TNT1 A 0 A_SpawnItem("ExtraExplosion_Small")
+			TNT1 A 0 A_SpawnItem("Engulf_Small")
+			EXP3 BCDEFGHIJKLMNOPQRSTUVWXYZ 1 Bright A_CheckRange(512, "Yeet")
+			stop
+	}
+}
+
+
+Actor ExtraExplosion_Small : ExplodeParticle
+{
+	+NOCLIP
+	radius 6
+	height 8
+	mass 1
+	speed 35
+	RenderStyle Add
+	States
+	{
+		Spawn:
+			EXP2 A 2 Bright A_CheckRange(512, "Yeet")
+			EXP2 A 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 A 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 B 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 B 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 C 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 C 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 D 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 D 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 E 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 E 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 F 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 F 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 G 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 G 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 H 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 H 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 I 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 I 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 J 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 J 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 K 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 K 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 L 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 L 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 M 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 M 1 Bright A_SetTranslucent(1,1.0)
+			EXP2 N 1 Bright A_CheckRange(512, "Yeet")
+			EXP2 N 1 Bright A_SetTranslucent(1,1.0)
+		stop
+	}
+}
+
+Actor Engulf_Small : ExplodeParticle
+{
+	scale 7.0
+	radius 6
+	height 8
+	mass 1
+	speed 35
+	States
+	{
+		Spawn:
+		BLST A 1 A_CheckRange(512, "Yeet")
+		BLST A 1 A_FadeOut(0.3)
+		Goto Spawn
+	}
+}
+
+actor ExplodeParticle_Turret2 : ExplodeParticle
+{
+	scale 0.3
+	alpha 0.8
+	renderstyle add
+	States
+	{
+		Spawn:
+			TNT1 A 1 A_CheckRange(512, "Yeet")
+			FIRE ABCDEFGH 1 A_CheckRange(512, "Yeet")
+			stop
 	}
 }
 

@@ -124,7 +124,8 @@ Actor pr_d_turret_rocket : Integer {}
 Actor pr_d_turret_plasma : Integer {}
 Actor pr_d_turret_rail : Integer {}
 Actor pr_d_turret_flame : Integer {}
-Actor pr_d_turret_shells : Integer {}
+Actor pr_d_turret_shotgun : Integer {}
+Actor pr_d_turret_chaingun : Integer {}
 Actor pr_i_mines : Integer {}
 
 //Mech upgrade prices.

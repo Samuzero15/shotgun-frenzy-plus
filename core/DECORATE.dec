@@ -16,8 +16,6 @@ Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 #include "Actors/props/fp_trees.dec"
 
 
-#include "Actors/deploy/fp_turret_chaingun.dec"
-#include "Actors/deploy/fp_turret_shotgun.dec"
 #include "Actors/projectiles/frenzy_monsterproj.txt"
 #include "Actors/projectiles/fp_rails.dec"
 #include "Actors/projectiles/fp_flak.dec"

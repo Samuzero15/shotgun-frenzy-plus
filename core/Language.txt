@@ -11,10 +11,9 @@ FP_PUD_PowUpUpgrade 	=	"Your good old powerups gains stronger effects!\n\n"
 							"-) Quad-Damage -> +15 seconds, x6 instead of x4.\n\n"
 							"Finally those demonic experiments made something useful.";
 
-FP_PUD_MechSync 		=	"Godsphere and Quad-Damages can be used inside "
-							"the WAR-MECHS and MOUNTED TURRETS (wip)!\n\n"
-							"Sure, if the Mech upgrades were'nt that powerful already.\n\n"
-							"Quick reminder: if you're not in a commander gamemode, don't install this.";
+FP_PUD_MechSync 		=	"All your power-ups can be used inside of a mech!\n"
+							"Soulspheres heals 250 hp and Megaspheres heals 1000 hp.\n\n"
+							"An end-game upgrade that will definitley buff your mech!.";
 							
 FP_PUD_RuneSync			=	"Now you can buy and use runes on Foot, War-Mechs "
 							"and Mounted Turrets!\n\n"
@@ -49,11 +48,11 @@ FP_PUD_HealCoins  		=	"All picked-up coins from defeated or damaged demons "
 							
 FP_PUD_Prometeo  		=	"The prometeo protocol consists on a special system "
 							"that overcharges your blood, and thightens your body "
-							"when you're almost done-for. Upon reciving a fatal hit, "
-							"you're invulnerable, gain a x2 DMG multipler for 20 secs, "
-							"and leaves you with 10 HP left.\n\n"
-							"Stackable with your God, Quad spheres and with the "
-							"Powerup Upgrades. This effect works once per life.";
+							"when you're almost done-for. Upon reciving a fatal hit you gain:"
+							"\n\n-) Invulnerability for 10 seconds"
+							"\n-) x2 DMG multipler for 20 seconds"
+							"\n-) Max HP is set to 50 (restorable in health pads)."
+							"\n\nThis effect works only once per life. And it does'nt work in mechs.";
 
 // All weapon descriptions.
 

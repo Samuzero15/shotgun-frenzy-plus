@@ -484,28 +484,28 @@ statusbar normal// Standard Doom Status bar
 	//[Samu] Ranks
 	inInventory HUD_Rank{
 		inInventory HUD_Rank, 10 {
-			drawString Confont, ORANGE, "Ult. Commander",  400, 540, 0, alignment(Center);
+			drawString Confont, ORANGE, "Commander",  400, 540, 0, alignment(Center);
 		}
 		else{ inInventory HUD_Rank, 9 {
-			drawString Confont, ORANGE, "Commander",  400, 540, 0, alignment(Center);
+			drawString Confont, ORANGE, "Colonel",  400, 540, 0, alignment(Center);
 		}
 		else{ inInventory HUD_Rank, 8 {
 			drawString Confont, ORANGE, "Major",  400, 540, 0, alignment(Center);
 		}
 		else{ inInventory HUD_Rank, 7 {
-			drawString Confont, ORANGE, "Litenuant",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 6 {
 			drawString Confont, ORANGE, "Captain",  400, 540, 0, alignment(Center);
 		}
+		else{ inInventory HUD_Rank, 6 {
+			drawString Confont, ORANGE, "Lieutenant",  400, 540, 0, alignment(Center);
+		}
 		else{ inInventory HUD_Rank, 5 {
-			drawString Confont, ORANGE, "Sergant",  400, 540, 0, alignment(Center);
+			drawString Confont, ORANGE, "Sergeant",  400, 540, 0, alignment(Center);
 		}
 		else{ inInventory HUD_Rank, 4 {
 			drawString Confont, ORANGE, "Corporal",  400, 540, 0, alignment(Center);
 		}
 		else{ inInventory HUD_Rank, 3 {
-			drawString Confont, ORANGE, "Lance Corporal",  400, 540, 0, alignment(Center);
+			drawString Confont, ORANGE, "Specialist",  400, 540, 0, alignment(Center);
 		}
 		else{ inInventory HUD_Rank, 2 {
 			drawString Confont, ORANGE, "Private",  400, 540, 0, alignment(Center);
@@ -537,37 +537,44 @@ statusbar normal// Standard Doom Status bar
 	drawswitchableimage "Inventory_TurretBullet", "BULLTI_0", "BULLTI_1", 300, 585;
 	drawnumber 3, VerVibes, GOLD, "Inventory_TurretBullet", whennotzero, 316, 590;
 	
-	drawswitchableimage "Inventory_TurretRocket", "ROCKTI_0", "ROCKTI_1", 320, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretRocket", whennotzero, 336, 590;
+	drawswitchableimage "Inventory_TurretShotgun", "SHOTTI_0", "SHOTTI_1", 320, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TurretShotgun", whennotzero, 336, 590;
 	
-	drawswitchableimage "Inventory_TurretPlasma", "PLASTI_0", "PLASTI_1", 340, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretPlasma", whennotzero, 356, 590;
+	drawswitchableimage "Inventory_TurretChaingun", "CHAITI_0", "CHAITI_1", 340, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TurretChaingun", whennotzero, 356, 590;
 	
-	drawswitchableimage "Inventory_TurretFlame", "FLAMTI_0", "FLAMTI_1", 360, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretFlame", whennotzero, 376, 590;
+	drawswitchableimage "Inventory_TurretRocket", "ROCKTI_0", "ROCKTI_1", 360, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TurretRocket", whennotzero, 376, 590;
 	
-	drawswitchableimage "Inventory_TeslaCoil", "TESLTI_0", "TESLTI_1", 380, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TeslaCoil", whennotzero, 396, 590;
+	drawswitchableimage "Inventory_TurretPlasma", "PLASTI_0", "PLASTI_1", 380, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TurretPlasma", whennotzero, 396, 590;
 	
-	drawswitchableimage "Inventory_TurretRail", "RAILTI_0", "RAILTI_1", 400, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretRail", whennotzero, 416, 590;
+	drawswitchableimage "Inventory_TurretFlame", "FLAMTI_0", "FLAMTI_1", 400, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TurretFlame", whennotzero, 416, 590;
 	
-	drawswitchableimage "Inventory_HealthDispenser", "HPDISI_0", "HPDISI_1", 420, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_HealthDispenser", whennotzero, 436, 590;
+	drawswitchableimage "Inventory_TeslaCoil", "TESLTI_0", "TESLTI_1", 420, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TeslaCoil", whennotzero, 436, 590;
 	
-	drawswitchableimage "Inventory_AmmoDispenser", "AMDISI_0", "AMDISI_1", 440, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_AmmoDispenser", whennotzero, 456, 590;
+	drawswitchableimage "Inventory_TurretRail", "RAILTI_0", "RAILTI_1", 440, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_TurretRail", whennotzero, 456, 590;
 	
-	drawswitchableimage "Inventory_MarineMine", "MINESI_0", "MINESI_1", 460, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_MarineMine", whennotzero, 476, 590;
+	drawswitchableimage "Inventory_HealthDispenser", "HPDISI_0", "HPDISI_1", 460, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_HealthDispenser", whennotzero, 476, 590;
 	
-	drawswitchableimage "Inventory_SawDrone", "SAWDRI_0", "SAWDRI_1", 480, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_SawDrone", whennotzero, 496, 590;
+	drawswitchableimage "Inventory_AmmoDispenser", "AMDISI_0", "AMDISI_1", 480, 585;
+	drawnumber 3, VerVibes, GOLD,"Inventory_AmmoDispenser", whennotzero, 496, 590;
 	
-	drawswitchableimage "Inventory_MineDrone", "MINDRI_0", "MINDRI_1", 500, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_MineDrone", whennotzero, 516, 590;
+	drawswitchableimage "Inventory_MarineMine", "MINESI_0", "MINESI_1", 500, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_MarineMine", whennotzero, 516, 590;
 	
-	drawswitchableimage "Inventory_GreedSphere", "GREEDI_0", "GREEDI_1", 520, 585;
+	drawswitchableimage "Inventory_SawDrone", "SAWDRI_0", "SAWDRI_1", 520, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_SawDrone", whennotzero, 536, 590;
+	
+	drawswitchableimage "Inventory_MineDrone", "MINDRI_0", "MINDRI_1", 540, 585;
+	drawnumber 3, VerVibes, GOLD, "Inventory_MineDrone", whennotzero, 556, 590;
+	
+	drawswitchableimage "Inventory_GreedSphere", "GREEDI_0", "GREEDI_1", 560, 585;
+	
 	}// INVENTORY ITEMS list end
 	
 	}

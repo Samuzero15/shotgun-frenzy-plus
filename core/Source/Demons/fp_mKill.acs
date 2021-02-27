@@ -43,7 +43,9 @@ Script "SFPlus_MonsterKill" Kill{
 		//debugTidPointers (0);
 		//debugTidPointersStrings(0);
 	  // give credits and xp
+	 log(d:ActivatorTID());
 	 SetActivatorToTarget(0);
+	 print(d:ActivatorTID());
 	 //printbold(s:"No profit? = ", d:noProfit);
 	p_monsterKilled(monsterClass, splat, noProfit, montype);
 	

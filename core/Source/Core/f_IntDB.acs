@@ -291,15 +291,16 @@ function int InitDB_Clamp(int var, int min_v, int max_v, int def){
 
 bool g_Initialized = false;
 script "SFPlus_InitializeEverything" OPEN{
+	
 	Acs_NamedExecuteAlways("SfPlus_DefinePrices", 0);
 	SFPlus_DefineWeapons();
 	SFPlus_DefineItems();
-	SFPlus_DefineMechUps();
 	SFPlus_DefineTechs();
-	SFPlus_DefinePlayUps();
 	
 	ProgTip_Init();
 	delay(1); // give this tic to the map default variables.
+	SFPlus_DefineMechUps();
+	SFPlus_DefinePlayUps();
 	InitDB_ReadConsole(); // Read the console if the server needs customized variables.
 	g_Initialized = true;
 }

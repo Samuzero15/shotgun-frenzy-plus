@@ -18,6 +18,7 @@ Actor c_allow_turret : Integer {}
 Actor c_timer_turret : Integer {}
 Actor c_timer : Integer {}
 Actor c_allow_moneybag : Integer {}
+Actor f_gametype: Integer {}
 
 Actor g_TechFlags : Integer {}
 

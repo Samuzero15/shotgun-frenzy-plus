@@ -10,6 +10,7 @@
 // The prices are on UP points!
 
 #library "fl_PupDir"
+#import "f_intdb.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
 //#include "samu_tools.acs"
@@ -24,7 +25,8 @@ function void SFPlus_DefinePlayUps(void){
 	PlayUpTop = 0;
 	
 	PlayUp_Add ("Powerup Upgrade",		"PowUpUpgrade", 	"HBTN07");
-	PlayUp_Add ("Mech Syncronize",		"MechSync", 		"HBTN05");
+	if(checkinventory("f_gametype") == 1 || f_GameType == 1)
+		PlayUp_Add ("Mech Syncronize",		"MechSync", 		"HBTN05");
 	//PlayUp_Add ("Rune Syncronize",		"RuneSync", 		"HBTN08");
 	PlayUp_Add ("Expansive Restock",	"ExpansiveRestock",	"HBTN03");
 	PlayUp_Add ("Body Enhancement",		"BodyEnhancement",	"HBTN02");

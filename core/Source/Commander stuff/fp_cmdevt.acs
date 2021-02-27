@@ -270,17 +270,17 @@ function void CmdEvent_Announce(int cmd_event_index){
 		break;
 		
 		case CMDEVT_RESEARCH_SPEEDB: 
-			msg = "Collect at Genetics Lab\n\nAdrenaline\nFaster run speed";
+			msg = "Collect at Genetics Lab\n\nAdrenaline\nMarines can move faster.";
 		break;
 		
 		case CMDEVT_RESEARCH_RESISB:
-			msg = "Collect at Genetics Lab\n\nResister Unit\nDamage resistance against enemy fire";
+			msg = "Collect at Genetics Lab\n\nResister Unit\nMarines can resist more damage.";
 		break;
 		case CMDEVT_RESEARCH_REGENB:
-			msg = "Collect at Genetics Lab\n\nAsorber Unit\nHealth regeneration";
+			msg = "Collect at Genetics Lab\n\nAsorber Unit\nMarines can regenerate health.";
 		break;
 		case CMDEVT_RESEARCH_ARMOR:
-			msg = "Collect at Genetics Lab\n\nSteel Plating\nArmor plating for marines";
+			msg = "Collect at Genetics Lab\n\nSteel Plating\nMarines can now use the green armor.";
 		break;
 		
 		case CMDEVT_RESEARCH_ARMS1:
@@ -306,14 +306,14 @@ function void CmdEvent_Announce(int cmd_event_index){
 		break;
 		
 		case CMDEVT_REWARD_HEALTH1: 
-			msg = "Human Eng. (Phase 1)\n\nMarines' default health roses up to 120";
+			msg = "Human Eng. (Phase 1)\n\nMarines' default health rises up to 120";
 		break;
 		case CMDEVT_REWARD_HEALTH2: 
-			msg = "Human Eng. (Phase 2)\n\nMarines' default health roses up to 140";
+			msg = "Human Eng. (Phase 2)\n\nMarines' default health rises up to 140";
 		break;
 		
 		case CMDEVT_REWARD_SPEEDB: 
-			msg = "Adrenaline\n\nMarines moves faster.";
+			msg = "Adrenaline\n\nMarines can move faster.";
 		break;
 		
 		case CMDEVT_REWARD_RESISB:

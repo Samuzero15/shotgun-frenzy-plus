@@ -14,7 +14,7 @@ function int ArmItmPage_LoadGroup(int up, int id){
 function void ArmItmPage_Update(int pageTag){
 	setPageTitle(pageTag, "More items", CR_GOLD);
 	if(isOnTheSamePage(pageTag)){
-		for(int i = 4; i < 15; i++)
+		for(int i = 4; i < 16; i++)
 			ArmItmPage_UpdateItem(i);
 	}
 	else;
@@ -41,6 +41,8 @@ function void ArmItmPage_Init(int pageTag){
 	ArmItmPage_AddItemOption(8, 12);
 	ArmItmPage_AddItemOption(9, 13);
 	ArmItmPage_AddItemOption(10, 14);
+	ArmItmPage_AddItemOption(11, 15);
+	ArmItmPage_AddItemOption(12, 16);
 }
 
 function void ArmItmPage_AddItemOption(int pos, int itemId){

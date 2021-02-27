@@ -143,7 +143,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_d_turret_plasma", 	1700);
 	Prices_add("pr_d_turret_rail", 		1900);
 	Prices_add("pr_d_turret_flame", 	2300);
-	Prices_add("pr_d_turret_shells", 	1200);
+	Prices_add("pr_d_turret_shotgun", 	1850);
+	Prices_add("pr_d_turret_chaingun", 	3000);
 	
 	//Commander Prices
 	
@@ -209,7 +210,7 @@ script "SFPlus_DefinePrices" Open
 	
 	//Play Up. prices
 	Prices_add("pr_pu_powupupgrade",		4);
-	Prices_add("pr_pu_mechsync",			2);
+	Prices_add("pr_pu_mechsync",			10);
 	Prices_add("pr_pu_expansiverestock",	2);
 	Prices_add("pr_pu_bodyenhancement",		3);
 	Prices_add("pr_pu_armorrepair",			3);

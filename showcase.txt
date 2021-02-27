@@ -1,21 +1,2 @@
-Fixed a glitch which let's you create turrets, but without checking the credits.
-Now the commander should check the terrain, if the spawning of a turret or dispenser is being blocked, or placed in liquids (wip) the spawning will fail, but the team credits will be refunded.
-Hidden some spamming on the server log console.
-The turrets shall now delete themselves with the base included.
-Now the kill-streak flow will not be interrupted by the building of a deployable item.
-Spawnshield should work again (needs some testing though)
-Pressing F12 (Coop Spy) will force you to look at the commander screen.
-Small fix on the sf_doorholdtime cvar.
-Removed the useless rune sync from the player upgrades. But this is'nt the last time you see it.
-Rewritten the CMD event handling system, and optimized the cmd terminal.
-Turret Rail in the ammo terminal should be given after pursache once again.
-Prosesing phase 1 and 2 can boost up the enemy bounty for the players and commander together!
-Enemies killed with cripple pulse will not grant credits to the player. (However, the commander can gain credits for that)
-Auto-Researching's Script has been revamped too, now notifying the players the new researchs on CF and SD maps! (Also, stimpacks and adrenaline can be given with this revamp.)
-A new Mech Upgrade! Efficiency: Reduces the time on the repairings, rocket reloading and autorepair intervals.
-Mech Rocket Upgrade price rises to 5500.
-Slowed a bit the rocket reloading time for the Mech. You can restore it with the efficiency upgrade.
-Returning the mech back to the base will have a delay penalty depending on the health. Just to discourage the insta-healing of the mechs.
-The mech is a bit more faster in the base level, but it's upgrades does less effect, maxing it up will make the tank run like a normal marine.
-Stimpacks now they heal 20 hp!
-Other smoll fixes.
+Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
+Mech Sync upgrade will only appear in the shotgun frenzy maps.
