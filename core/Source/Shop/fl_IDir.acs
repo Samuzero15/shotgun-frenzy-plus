@@ -27,7 +27,9 @@
 #libdefine FP_ITEM_T_RUNE 4
 
 int fp_Items[FP_ITEM_NUM][9];
+int fp_sell_on_armory[FP_ITEM_NUM];
 int fp_LastItem = 0;
+int fp_LastArmoryItem = 0;
 
 // Item properties
 // 0) Item Actor
@@ -36,6 +38,7 @@ int fp_LastItem = 0;
 
 function void SFPlus_DefineItems(void){
 	fp_LastItem = 0;
+	fp_LastArmoryItem = 0;
 	Item_Add_Powerup("Inventory_Soulsphere", "Soulsphere", "soulsphere", 3, "ITM1A0", 
 		"Heals and overheals you 100 HP");
 	Item_Add_Powerup("Inventory_Megasphere", "Megasphere", "megasphere", 3, "ITM2A0", 
@@ -100,6 +103,13 @@ function void Item_Add_Inv(str actor, str name, str price, int max, str icon,str
 }
 
 function void Item_Add(int type, str actor, str name, str price, int max, str icon, str desc){
+	
+	if(type == FP_ITEM_T_DEPLOY || type == 0){
+		// Index the items to the more items page in armory.
+		fp_sell_on_armory[fp_LastArmoryItem] = fp_LastItem;
+		fp_LastArmoryItem++;
+	}
+	
 	fp_Items[fp_LastItem][0] = type;
 	fp_Items[fp_LastItem][1] = actor;
 	fp_Items[fp_LastItem][2] = name;

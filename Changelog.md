@@ -2,9 +2,13 @@
 
 ## v0 - Before the beginning...
 
+#### -) (4 - 7 / 03 / 2021) [Giving the touches]
+	*) De-hardcoded the extra item shop in the ammo terminal.
+	*) A bit of testing fixes for the turret.
+
 #### -) (23 - 26 / 02 / 2021)  [Tinkering and selling turrets, and some fixes]
 	+) Shotgun and Chaingun turrets can now be displayed in the standard HUD, added with some new custom item inventory :)
-	+) Ohoho! Shotgun and Chaingun turrets can now be porsachable on the ammo terminal!
+	+) Ohoho! Shotgun and Chaingun turrets can now be pursacheable on the ammo terminal!
 	*) Now the turrets will drop the smoke if they're low of its 50% of their health
 	*) The turret base now will be destroyed once the head is down.
 	*) Now the turret displays an explosion, with fires and stuff.

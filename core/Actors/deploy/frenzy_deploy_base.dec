@@ -513,8 +513,12 @@ ACTOR TurretStand
 	speed 0
 	health 999999
 	Monster
-        DamageFactor "BFGSplash", 0.0
-        DamageFactor "BFGSpray", 0.0
+    DamageFactor "BFGSplash", 0.0
+    DamageFactor "BFGSpray", 0.0
+	damagefactor "MarineFire", 0.0
+	damageFactor "MarineFire2", 0.0
+	DamageFactor "MarineFire3", 0.0
+	damagefactor "NoProfitKill", 0.0
 	+NOBLOOD
 	+NOBLOCKMAP
 	States
@@ -523,14 +527,15 @@ ACTOR TurretStand
 			TBAS A 1
 			goto Stay
 		Stay:
-			"####" "#" 5
+			"####" "#" 1
 			// Check if the turret is removed from game.
-			"####" "#" 0 A_JumpIfInventory("Turret_Died", 1, "Boom", AAPTR_Target) 
+			"####" "#" 1 A_JumpIfInventory("Turret_Died", 1, "Boom", AAPTR_Target) 
 			// Check if the turret was destroyed.
-			"####" "#" 0 A_CheckFlag("FRIENDLY", "Stay", AAPTR_Target) 
+			"####" "#" 1 A_CheckFlag("FRIENDLY", "Stay", AAPTR_Target) 
+			"####" "#" 1
 			goto Death
 		Death:
-			TNT1 A 1 a_log("Dead")
+			"####" "#" 1 
 			stop
 		Boom:
 			"####" "#" 50

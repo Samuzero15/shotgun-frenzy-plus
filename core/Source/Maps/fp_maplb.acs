@@ -5,7 +5,7 @@
 // fp_maplb.acs
 // All the stuff for the maps!
 
-#library "fp_maplb.acs"
+#library "fp_maplb"
 
 #import "f_PMen.acs" // The old menu, for launching the samu-terminal
 #import "f_PHUD.acs" // Player hud, your good old hud.

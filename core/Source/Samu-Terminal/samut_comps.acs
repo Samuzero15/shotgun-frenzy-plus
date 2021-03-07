@@ -174,6 +174,20 @@ function int Component_Allocate(int comptype, int x, int y, int w, int h){
 	return id;
 }
 
+function void Component_PrintCount(void){
+	str type_str;
+	log(s:"Component cap: \cg", d:ST_NCOMPS);
+	for (int i = 0; i < STVARS_COMPCOUNT; i++){
+		switch(i){
+			case 0: type_str = "IMG BUTTON"; break;
+			case 1: type_str = "LABELS"; break;
+			case 2: type_str = "IMAGES"; break;
+			case 3: type_str = "STR BUTTON"; break;
+		}
+		log(s:type_str, s:", \cd", d:comp_count[i]);
+	}
+}
+
 function void initTitle(void){
 
 	ptitle = Label_Add(320.0,40.0); 

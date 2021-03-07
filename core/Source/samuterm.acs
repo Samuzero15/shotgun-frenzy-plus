@@ -87,6 +87,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	
 
 	SamuTerm_InitComps();
+	//Component_PrintCount();
 	SamuTerm_Say(himsg);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
 	PlaySound(1000+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
@@ -97,7 +98,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 			SamuTerm_Display();
 			if(CheckInventory("SamuTInv_ForcedExit"))
 				STExecute_Shutdown();
-			debug();
+			//debug();
 			Delay(1);
 		}
 	CenterCursor();

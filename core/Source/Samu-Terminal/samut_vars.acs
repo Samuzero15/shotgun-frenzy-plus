@@ -22,7 +22,7 @@
 //	HID's (Hud ids), If the hud-id conflicts, 
 //	just add a 0 on the right side, and do it for everyone.
 
-#LibDefine ST_NCOMPS 200
+#LibDefine ST_NCOMPS 500
 #libDefine ST_HID_GLOBAL 2000
 
 #LibDefine ST_HID_BACK 			ST_HID_GLOBAL + 10000
