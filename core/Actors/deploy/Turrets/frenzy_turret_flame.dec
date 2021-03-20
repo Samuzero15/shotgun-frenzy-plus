@@ -13,7 +13,7 @@ ACTOR TurretFlame_Stand : TurretStand
 	States
 	{
 		Spawn:
-			TBAS C 100
+			TBAS C 1
 			goto Super::Stay
 	}
 }
@@ -32,7 +32,7 @@ ACTOR TurretFlame_Head : TurretHeadBase 24302
 	
 	states
 	{
-		Spawn:
+		Spawn.Head:
 			BTRT A 1 A_Look
 			BTRT A 0 A_SpawnItemEx("TurretFlame_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
 			BTRT A 1 ACS_NamedExecuteAlways("Turret_LinkBase", 0, args[0])

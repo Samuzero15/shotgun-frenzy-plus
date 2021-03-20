@@ -4,10 +4,9 @@ int powpage_vars[50];
 function void UpdatePowBuyPage(int pageTag){
 	setPageTitle(pageTag, "Buy a powerup", CR_CYAN);
 	if(isOnTheSamePage(pageTag)){
-		PowBuyPage_UpdateComps(0);
-		PowBuyPage_UpdateComps(1);
-		PowBuyPage_UpdateComps(2);
-		PowBuyPage_UpdateComps(3);
+		for(int i = 0; i < fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP]; i++){
+			PowBuyPage_UpdateComps(fp_itemshop[ITEMSHOP_HEALTH_POWERUP][i]);
+		}
 	}
 }
 
@@ -15,15 +14,14 @@ function void InitPowBuyPage(int pageTag){
 	int i;
 	powpage_vars[0] = pageTag;
 	Card_SetPosition(150.0,80.0);
-	Card_SetCells(4);
+	Card_SetCells(fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP]);
 	Card_SetStep(32.0);
 	Card_SetVerticalOri(true);
 	powpage_vars[1] = Card_Generate();
 	
-	PowBuyPage_AddComps(1, 0, CR_BLUE);
-	PowBuyPage_AddComps(2, 1, CR_CYAN);
-	PowBuyPage_AddComps(3, 2, CR_WHITE);
-	PowBuyPage_AddComps(4, 3, CR_RED);
+	for(i = 0; i < fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP]; i++){
+		PowBuyPage_AddComps(i+1, fp_itemshop[ITEMSHOP_HEALTH_POWERUP][i]);
+	}
 	
 	//0 = Pagetag
 	//1 = CardLayout
@@ -47,13 +45,14 @@ function void PowBuyPage_UpdateComps(int pow){
 	Label_setText(price, strparam(d:powprice, s:"$"));
 }
 
-function void PowBuyPage_AddComps(int cell, int powerup, int color){
+function void PowBuyPage_AddComps(int cell, int powerup){
 	int i;
 	
 	str powname = Item_getName(powerup);
 	int powprice = Item_getPrice(powerup);
 	str powdesc = Item_getDesc(powerup);
-	str powicon = Item_getIcon(powerup);
+	str powicon = Item_getSphere(powerup);
+	int color = Item_getIcon(powerup);
 	
 	i = StrButton_AddCard(powpage_vars[1], cell, "BUY");
 	StrButton_setColor(i, color);
@@ -90,7 +89,7 @@ function void PowBuyPage_AddComps(int cell, int powerup, int color){
 	Label_setText(i, StrParam(d:Checkinventory(Item_getActor(powerup)), s:"/",d:Item_getMax(powerup)));
 	PowBuyPage_SaveToGroup(powerup, 5, i);
 	
-	i = Image_AddCardOff(powpage_vars[1], cell, powicon, 85.0, 30.0);
+	i = Image_AddCardOff(powpage_vars[1], cell, powicon, 64.0, 0.0);
 	Image_setTag(i, powpage_vars[0]);
 	PowBuyPage_SaveToGroup(powerup, 6, i);
 	

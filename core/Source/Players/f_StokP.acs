@@ -20,7 +20,15 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 {//Healing and stocking pads
 	
 	if(l_type > 0) ACS_NamedExecute("SFPlus_ShowUpgrades", 0); // All the reminders wrapped up
-
+	
+	int hp = getActorProperty(0, APROP_Health);
+	bool bodyEnhance = CheckInventory("PlayUp_BodyEnhancement");
+	bool health1 = Tech_IsDone(TECH_GENLAB_HEALTH1);
+	bool health2 = Tech_IsDone(TECH_GENLAB_HEALTH2);
+	bool adrenaline = Tech_IsDone(TECH_GENLAB_SPEEDB);
+	bool resister = Tech_IsDone(TECH_GENLAB_RESISB);
+	bool armorTech = Tech_IsDone(TECH_GENLAB_ARMOR);
+	
     if ((l_Type == 1 && Tech_IsDone(TECH_GENLAB)) || (l_Type == 4))
     {
 		
@@ -30,14 +38,6 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			terminate;
 		}
 
-		int hp = getActorProperty(0, APROP_Health);
-		bool bodyEnhance = CheckInventory("PlayUp_BodyEnhancement");
-		bool health1 = Tech_IsDone(TECH_GENLAB_HEALTH1);
-		bool health2 = Tech_IsDone(TECH_GENLAB_HEALTH2);
-		bool adrenaline = Tech_IsDone(TECH_GENLAB_SPEEDB);
-		bool resister = Tech_IsDone(TECH_GENLAB_RESISB);
-		bool armorTech = Tech_IsDone(TECH_GENLAB_ARMOR);
-		
 		int healthboost = 20*health1 + 20*health2 + 60*bodyEnhance;
 		int speedboost = 0.3*adrenaline + 0.2*bodyEnhance;
 		int defenseboost = 0.3*resister + 0.2*bodyEnhance;
@@ -202,6 +202,24 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		if (l_DisableFlash == 0)	fadeto(0, 0, 255, 0.0, 0.1);
 	}
 	
+	// Ammosphere's Restock.
+	// Does not updates your techs.
+	if(l_type == -4){
+		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
+		{
+			Print(s:"You can't use these in a tank!");
+			terminate;
+		}
+		Stock_FillAmmo(1);
+			 
+		if (l_DisableFlash == 0){
+			 f_CenterTip("Ammo Restocked!");
+             fadeto(0, 255, 0, 0.3, 0.0);
+			 localambientsound("g/reloading", 64);
+			}
+		delay(2);
+		if (l_DisableFlash == 0)	fadeto(0, 255, 0, 0.0, 0.1);
+	}
 }  
 
 function void Stock_FillAmmo(bool full){

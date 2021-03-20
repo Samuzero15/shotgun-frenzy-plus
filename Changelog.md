@@ -2,6 +2,18 @@
 
 ## v0 - Before the beginning...
 
+#### -) (11, 16, 20 / 03 / 2021) [SBarinfo revamping, Ammosphere arises]
+	*) Now the full screen display has been updated with a better font and display.
+	-) Removed the old item list on the fullscreen hud.
+	+) Now you can see what are you holding up! The items you got will be shown in the lower HUD!
+	*) Some touches on the powerup and armory items on the terminals.
+	*) Created a new folder (Bars) to hold up the sbarinfo files in their separate places just if I need to edit something.
+	*) Armor-Repair dispenser's effect ha been patched up.
+	+) Now the ammosphere is now buyable on the health terminal!
+	+) Ammosphere with the powerup upgrade, there is a 50% chance of not being consumed upon use!
+	-) Ammosphere's max capacity drops down to 1.
+	+) Different messages will be displayed upon enter, death and disconnect events.
+	
 #### -) (4 - 7 / 03 / 2021) [Giving the touches]
 	*) De-hardcoded the extra item shop in the ammo terminal.
 	*) A bit of testing fixes for the turret.

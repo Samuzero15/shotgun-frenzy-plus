@@ -10,8 +10,7 @@
 
 #include "zcommon.acs"
 #include "acsutils.acs"
-#include "queue.acs"
-int puphud_list[10];
+
 int puphud_stack;
 
 Script "SFPlus_PowerupList" Enter Clientside{

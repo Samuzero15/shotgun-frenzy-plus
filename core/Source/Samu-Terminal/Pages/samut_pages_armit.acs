@@ -14,8 +14,8 @@ function int ArmItmPage_LoadGroup(int up, int id){
 function void ArmItmPage_Update(int pageTag){
 	setPageTitle(pageTag, "More items", CR_GOLD);
 	if(isOnTheSamePage(pageTag)){
-		for(int i = 0; i < fp_LastArmoryItem; i++){
-			ArmItmPage_UpdateItem(fp_sell_on_armory[i]);
+		for(int i = 0; i < fp_itemshop_last[ITEMSHOP_ARMORY]; i++){
+			ArmItmPage_UpdateItem(fp_itemshop[ITEMSHOP_ARMORY][i]);
 		}
 	}
 	else;
@@ -31,8 +31,8 @@ function void ArmItmPage_Init(int pageTag){
 	
 	armitm_vars[1] = pageTag;
 	
-	for(int i = 0; i < fp_LastArmoryItem; i++){
-		ArmItmPage_AddItemOption(i % 16, fp_sell_on_armory[i]);
+	for(int i = 0; i < fp_itemshop_last[ITEMSHOP_ARMORY]; i++){
+		ArmItmPage_AddItemOption(i % 16, fp_itemshop[ITEMSHOP_ARMORY][i]);
 	}
 }
 
@@ -49,6 +49,7 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	int color;
 	
 	int prop0, prop1, prop2, prop3, prop4;
+	
 	prop0 = Item_GetName(itemid);
 	prop1 = Item_GetIcon(itemid);
 	prop2 = Item_GetDesc(itemid);

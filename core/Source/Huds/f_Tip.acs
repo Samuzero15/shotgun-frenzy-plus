@@ -356,12 +356,47 @@ Script "SFPlus_TimerScript" (int pnid, int timehit, int pslot)
 // Common player notifiers...
 function void Notify_Player_Enter(void){
 	// Notify the entering of player
-	Notify_Player("Joined to the fray.", "PLAYER", TIP_NOTIFY_COLORSET_COMM);
+	str entermsg;
+	int dice = random(0, 9);
+	if(dice == 0){ // Rare-ish enter messages.
+		switch(random(0,3)){
+			case 0: entermsg = "Just popped outta nowhere!"; break;
+			case 1: entermsg = "Is here. MAGIC!"; break;
+			case 2: entermsg = "Is about to whip some ass!"; break;
+			case 3: entermsg = "Is gonna waste some time."; break;
+			}
+	}else {
+		switch(random(0,3)){
+			case 0: entermsg = "Has joined the fray."; break;
+			case 1: entermsg = "Is reporting for duty."; break;
+			case 2: entermsg = "Is ready to fight!"; break;
+			case 3: entermsg = "Has entered the game."; break;
+		}
+		
+	}
+	Notify_Player(entermsg, "PLAYER", TIP_NOTIFY_COLORSET_COMM);
 }
 
 function void Notify_Player_Death(void){
 	// Notify the death of player
-	Notify_Player("Has fallen!", "DEATH", TIP_NOTIFY_COLORSET_BAD);
+	str entermsg;
+	int dice = random(0, 19);
+	if(dice == 0){ // Rare-ish enter messages.
+		switch(random(0,3)){
+			case 0: entermsg = "OOF'ed"; break;
+			case 1: entermsg = "Was fucked up!"; break;
+			case 2: entermsg = "Became a pile of flesh, and guts."; break;
+			case 3: entermsg = "Was forced to commit die"; break;
+			}
+	}else {
+		switch(random(0,3)){
+			case 0: entermsg = "Has fallen!"; break;
+			case 1: entermsg = "Is pinned down!"; break;
+			case 2: entermsg = "Is dead!"; break;
+			case 3: entermsg = "Is a goner!"; break;
+		}
+	}
+	Notify_Player(entermsg, "DEATH", TIP_NOTIFY_COLORSET_BAD);
 }
 
 function void Notify_Player_Leave(str name){
@@ -375,8 +410,26 @@ function void Notify_Player_Leave(str name){
 	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
 	Notify_QueueAlloc(slot);
 	
+	str entermsg;
+	int dice = random(0, 9);
+	if(dice == 0){ // Rare-ish messages.
+		switch(random(0,3)){
+			case 0: entermsg = "Is outta here!"; break;
+			case 1: entermsg = "Got no time for this shit."; break;
+			case 2: entermsg = "Ragequitted."; break;
+			case 3: entermsg = "Hoes mad, Hoes mad."; break;
+			}
+	}else {
+		switch(random(0,3)){
+			case 0: entermsg = "Leaves from game."; break;
+			case 1: entermsg = "Retires from game."; break;
+			case 2: entermsg = "Rethreats from game."; break;
+			case 3: entermsg = "Is Gone from the game."; break;
+		}
+	}
+	
 	ambientsound("patch/newmessage", 56);
-	Notify_Show(name, "Leaves from game.", "PLAYER",id, pos, TIP_NOTIFY_COLORSET_COMM);
+	Notify_Show(name, entermsg, "PLAYER",id, pos, TIP_NOTIFY_COLORSET_COMM);
 }
 
 function void Notify_Player(str what, int img, int set) {

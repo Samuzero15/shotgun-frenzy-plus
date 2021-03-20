@@ -527,7 +527,7 @@ ACTOR TurretStand
 			TBAS A 1
 			goto Stay
 		Stay:
-			"####" "#" 1
+			"####" "#" 35
 			// Check if the turret is removed from game.
 			"####" "#" 1 A_JumpIfInventory("Turret_Died", 1, "Boom", AAPTR_Target) 
 			// Check if the turret was destroyed.

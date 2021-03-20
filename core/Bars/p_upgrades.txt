@@ -1,0 +1,160 @@
+
+createpopup status, 800, 150, SlideInBottom, 20;
+statusbar popupstatus, fullscreenoffsets
+{
+   inInventory Not SamuTInv_HideSBAR{
+   drawString STATBIGS, White, "Unit Upgrades", 20, -200, 0, alignment(left);
+   
+   InInventory HUD_T_HEALTH2{
+    DrawImage "CM13", 20,  -185;
+   }else{InInventory HUD_T_HEALTH1{
+	DrawImage "CM12", 20,  -185;
+   }}
+   
+   InInventory HUD_T_ARMS2{
+    DrawImage "CM27", 55, -185;
+   }else{InInventory HUD_T_ARMS1{
+	DrawImage "CM26", 55, -185;
+   }}
+  
+   
+   DrawImage "CM15", 90, -185;
+   DrawImage "CM16", 125, -185;
+   DrawImage "CM17", 160, -185;
+   DrawImage "CM18", 195, -185;
+   
+   DrawImage "CM28", 230, -185;
+   DrawImage "CM29", 265, -185;
+   }
+}
+
+statusbar fullscreen, fullscreenoffsets // ZDoom HUD
+{
+	drawimage "BAWX", 110, -22, centerbottom;
+	InInventory "Inventory_Soulsphere" {
+		drawimage "100HPSP1", 110, -24, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_Soulsphere", 118, -30;
+	}Else{
+		drawimage "100HPSP0", 110, -24, centerbottom;
+	}
+	
+	drawimage "BAWX", 130, -22, centerbottom;
+	InInventory "Inventory_Megasphere" {
+		drawimage "MEGHPSP1", 130, -24, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_Megasphere", 138, -30;
+	}Else{
+		drawimage "MEGHPSP0", 130, -24, centerbottom;
+	}
+	
+	drawimage "BAWX", 150, -22, centerbottom;
+	InInventory "Inventory_Berserk2" {
+		drawimage "4XDMGSP1", 150, -24, centerbottom;
+		//drawnumber 3, INDEXFONT, untranslated, "Inventory_Berserk2", 270, -30;
+	}Else{
+		drawimage "4XDMGSP0", 150, -24, centerbottom;
+	}
+	
+	drawimage "BAWX", 170, -22, centerbottom;
+	InInventory "Inventory_Godsphere" {
+		drawimage "INVULSP1", 170, -24, centerbottom;
+		//drawnumber 3, INDEXFONT, untranslated, "Inventory_Godsphere", 290, -30;
+	}Else{
+		drawimage "INVULSP0", 170, -24, centerbottom;
+	}
+	
+	drawimage "BAWX", 190, -22, centerbottom;
+	InInventory "Inventory_AmmoGiver" {
+		drawimage "AMMOFSP1", 190, -24, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_AmmoGiver", 198, -30;
+	}Else{
+		drawimage "AMMOFSP0", 190, -24, centerbottom;
+	}
+	
+	// Turret row...
+	drawimage "BAWX", 110, -2, centerbottom;
+	InInventory "Inventory_TurretBullet" {
+		drawimage "BULLTSP1", 110, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_TurretBullet", 118, -10;
+	}Else{
+		drawimage "BULLTSP0", 110, -4, centerbottom;
+	}
+	
+	drawimage "BAWX", 130, -2, centerbottom;
+	InInventory "Inventory_TurretRocket" {
+		drawimage "ROCKTSP1", 130, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_TurretRocket", 138, -10;
+	}Else{
+		drawimage "ROCKTSP0", 130, -4, centerbottom;
+	}
+	
+	drawimage "BAWX", 150, -2, centerbottom;
+	InInventory "Inventory_TurretPlasma" {
+		drawimage "PLASTSP1", 150, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_TurretPlasma", 158, -10;
+	}Else{
+		drawimage "PLASTSP0", 150, -4, centerbottom;
+	}
+	
+	drawimage "BAWX", 170, -2, centerbottom;
+	InInventory "Inventory_TurretFlame" {
+		drawimage "FLAMTSP1", 170, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_TurretFlame", 178, -10;
+	}Else{
+		drawimage "FLAMTSP0", 170, -4, centerbottom;
+	}
+	
+	drawimage "BAWX", 190, -2, centerbottom;
+	InInventory "Inventory_TeslaCoil" { 
+		drawimage "TESLTSP1", 190, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_TeslaCoil", 198, -10;
+	}Else{
+		drawimage "TESLTSP0", 190, -4, centerbottom;
+	}
+	
+	drawimage "BAWX", 210, -2, centerbottom;
+	InInventory "Inventory_TurretRail" {
+		drawimage "RAILTSP1", 210, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_TurretRail", 218, -10;
+	}Else{
+		drawimage "RAILTSP0", 210, -4, centerbottom;
+	}
+	
+	// More useful items...
+	drawimage "BAWX", 250, -2, centerbottom;
+	InInventory "Inventory_HealthDispenser" {
+		drawimage "HPDISP1", 250, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_HealthDispenser", 258, -10;
+	}Else{
+		drawimage "HPDISP0", 250, -4, centerbottom;
+	}
+	drawimage "BAWX", 250, -22, centerbottom;
+	InInventory "Inventory_AmmoDispenser" {
+		drawimage "AMDISP1", 250, -24, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_AmmoDispenser", 258, -30;
+	}Else{
+		drawimage "AMDISP0", 250, -24, centerbottom;
+	}
+	
+	drawimage "BAWX", 290, -22, centerbottom;
+	InInventory "Inventory_MarineMine" {
+		drawimage "MMINE1", 290, -24, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_MarineMine", 298, -30;
+	}Else{
+		drawimage "MMINE0", 290, -24, centerbottom;
+	}
+	
+	drawimage "BAWX", 290, -2, centerbottom;
+	InInventory "Inventory_SawDrone" {
+		drawimage "SAWDRSP1", 290, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_SawDrone", 298, -10;
+	}Else{
+		drawimage "SAWDRSP0", 290, -4, centerbottom;
+	}
+		drawimage "BAWX", 310, -2, centerbottom;
+	InInventory "Inventory_MineDrone" {
+		drawimage "MINDRSP1", 310, -4, centerbottom;
+		drawnumber 3, INDEXFONT, untranslated, "Inventory_MineDrone", 318, -10;
+	}Else{
+		drawimage "MINDRSP0", 310, -4, centerbottom;
+	}
+}

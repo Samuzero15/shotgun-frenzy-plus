@@ -1,0 +1,100 @@
+statusbar fullscreen, fullscreenoffsets // ZDoom HUD
+{
+	alpha 0.7 {
+		inInventory Not SamuTInv_HideSBAR{
+			//health
+			
+			drawimage "MEDIA0", 20, -2, centerbottom;
+			
+			inInventory HUD_DangerHealth, 1
+			{
+				drawnumber 3, STATBIGSNums, RED, health, drawshadow, alignment(left), 40, -26;
+			}else{ inInventory HUD_CriticHealth, 1 {
+				drawnumber 3, STATBIGSNums, ORANGE, health, drawshadow, alignment(left), 40, -26;
+			}else{ inInventory HUD_LowHealth, 1 {
+				drawnumber 3, STATBIGSNums, YELLOW, health, drawshadow, alignment(left), 40, -26;
+			}else{ inInventory HUD_OverHealth, 1 {
+				drawnumber 3, STATBIGSNums, CYAN, health, drawshadow, alignment(left), 40, -26;
+			}else{ // Normal health
+				drawnumber 3, STATBIGSNums, GREEN, health, drawshadow, alignment(left), 40, -26;
+			}}}}
+
+			//armor
+			drawimage armoricon, 20, -24, centerbottom;
+			drawnumber 3, STATBIGS, BLUE, armor, drawshadow, whennotzero, 80, -40;
+
+			//ammo
+			drawimage ammoicon1, -14, -4, centerbottom;
+			drawnumber 3, STATBIGSNums, untranslated, ammo1, drawshadow, -25, -26;
+			
+			isSelected "Repeater"{
+				drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  -110, -25;
+			}
+			isSelected "Repeater_DoubleSpeed"{
+				drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  -110, -25;
+			}
+			isSelected "Repeater_BlastShells"{
+				drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  -110, -25;
+			}
+			
+			isSelected "Buckshot"{
+				drawnumber 3, STATBIGS, white, "Buckshot_LoadedShells", drawshadow, -25, -40;
+			}else{ isSelected "Buckshot_Chamber"{
+				drawnumber 3, STATBIGS, white, "Buckshot_Chamber_LoadedShells", drawshadow, -25, -40;
+			}else{ isSelected "Buckshot_Explosive"{
+				drawnumber 3, STATBIGS, white, "Buckshot_LoadedShells", drawshadow, -25, -40;
+			}}}
+			
+			// [Samu] To show what powerups and stimpacks do you have.
+			// WIP
+
+			usesammo
+			{
+				//secondary ammo and inventory
+				usessecondaryammo
+				{
+					drawimage ammoicon2, -14, -22, centerbottom;
+					drawnumber 3, STATBIGS, untranslated, ammo2, drawshadow, -25, -40;
+					inventorybarnotvisible
+					{
+						drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -42, -26, -68, untranslated;
+					}
+				}
+				//no secondary ammo
+				usessecondaryammo not
+				{
+					inventorybarnotvisible
+					{
+						isSelected "Buckshot"{
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -44, -26, -68, untranslated;
+						}else{ isSelected "Buckshot_Chamber"{
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -44, -26, -68, untranslated;
+						}else{ isSelected "Buckshot_Explosive"{
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -44, -26, -68, untranslated;
+						}else{
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -20, -26, -48, untranslated;
+						}}}
+					}
+				}
+			}
+			
+			// no ammo but inventory
+			usesammo not
+			{
+				inventorybarnotvisible
+				{
+					drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -5, -26, -32, untranslated;
+				}
+			}
+
+			gamemode deathmatch
+			{
+				drawnumber 2, HUDFONT_DOOM, untranslated, frags, drawshadow, -3, 1;
+			}
+			gamemode singleplayer, cooperative, teamgame
+			{
+				drawkeybar 6, vertical, reverserows, auto, -10, 2, 0, 3, auto;
+			}
+		} // Statusbar hiding.
+	}
+}
