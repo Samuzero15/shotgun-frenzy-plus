@@ -2,6 +2,13 @@
 
 ## v0 - Before the beginning...
 
+#### -) (23 - 24 / 03 / 2021) [Autosave Player Stats & few touches]
+	+) Now the game autosaves your progress each 10 seconds in the game!
+	// Saves weapons, items, stats, and current upgrades (player and mech)
+	*) Mech upgrades now will be shown in the stocking pad.
+	*) Small touches in the kill streak hud, just to make it a bit cleaner.
+	*) Inventory, Player & Kill-Streak huds will clean itself once the player disconnects (or spectates).
+
 #### -) (11, 16, 20 / 03 / 2021) [SBarinfo revamping, Ammosphere arises]
 	*) Now the full screen display has been updated with a better font and display.
 	-) Removed the old item list on the fullscreen hud.

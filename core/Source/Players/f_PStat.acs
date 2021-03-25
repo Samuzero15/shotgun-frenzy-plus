@@ -158,6 +158,9 @@ script 53 ENTER
 	//Save the name for disconnect cases.
 	Stats_PlayerNames[playernumber()] = strparam(n:0);
 	
+	//Save/Load the stats if the player already entered in the game.
+	ACS_NamedExecuteAlways("SFPlus_StatsLoop", 0);
+	
     // perform respawn actions
     acs_executealways(54, 0, 0, 0, 0);
 }
@@ -200,7 +203,7 @@ script 54 RESPAWN
     //t3hdoom: Originally didn't give any ammo if there's no armory. Let's give them ammo on spawn regardless
     acs_execute(106, 0, 3, 1, 0);
 	
-	//[Samu] If you die, the teleport script will not activate the spawnshield effet.
+	//[Samu] If you die, the teleport script will not activate the spawnshield effect.
 	// So to counter that, I should place it here.
 	if(CheckInventory("PlayUp_SpawnShield")){
 		TakeInventory("PlayUp_SpawnShield_Power", 1);

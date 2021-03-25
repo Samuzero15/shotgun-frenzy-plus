@@ -12,6 +12,19 @@
 
 // ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
 
+script "PlayerHUd_ClearDisconnect" (int a) DISCONNECT{
+	// Clear the vision for the quitter
+	ClearHudMessage(80);
+	ClearHudMessage(88);
+	ClearHudMessage(89);
+	ClearHudMessage(90);
+	ClearHudMessage(91);
+	ClearHudMessage(87);
+	ClearHudMessage(86);
+	ClearHudMessage(180);
+	ClearHudMessage(178);
+}
+
 // display rank
 script 604 (int l_Rank) clientside
 {

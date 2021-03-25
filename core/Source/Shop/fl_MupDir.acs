@@ -42,7 +42,7 @@ function void SFPlus_DefineMechUps(void){
 		"Hey, if it's not broken, don't fix it.");
 	
 	MechUp_Add1Up("Efficiency", "MechUp_Efficiency", "efficiency",
-		"Repair, fire and reload more effective!.");
+		"Repair, fire and reload more effectively!.");
 		
 }
 
@@ -54,7 +54,7 @@ function void MechUp_Add (str name, str actor, str price, int maxupgs, str desc)
 	
 	if(MechUpTop >= FP_MECHUP_MAX)
 	{ 
-		log(s:"(fl_Mupdir): Too much mecha upgrades!");
+		log(s:"(fl_Mupdir): Too much mech upgrades!");
 		return;
 	}
 	

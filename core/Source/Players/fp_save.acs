@@ -1,0 +1,147 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// FP_save.acs
+// You have lag?, You got a big progress in the map? This will back you up!
+
+#library "fp_save"
+#include "zcommon.acs"
+#import "f_intdb.acs"
+#import "fl_mupdir.acs"
+#import "fl_pupdir.acs"
+#import "fl_idir.acs"
+#import "fl_wdir.acs"
+
+int save_player_count = 0;
+int save_player_dict[99]; // Hold's the name, which it should be unique.
+int save_player_stats[99][99]; 
+// After getting the index, the second parameter holds the variable that should be saved. 
+// This might be anything, like if this guy had an item, a weapon, the mech, the rune. 
+// You call it.
+
+Script "SaveLoad_Initialize" OPEN {
+// Reset the save slots per each map.
+	int i,j;
+	for (i = 0; i < save_player_count; i++){
+		save_player_dict[i] = "";
+		for (j = 0; j < 99; j++){
+			save_player_stats[i][j] = 0;
+		}
+	}
+	save_player_count = 0;
+	log(s:"Save-load slots initialized");
+}
+
+Script "SFPlus_StatsLoop" (void) {
+	// If this player did'nt joined in this map, then add it to the dictionary.
+	// Else, return the index returned by the dictionary.
+	// If you change the name in the game, and not spectating, the dictionary updates the key name.
+	// But not when you do it on spectator mode, so I suggest you to keep your name for the sake of your inventory.
+	int i = 0;
+	int id = -1;
+	str player_name = strparam(n:0);
+	for(i = 0; i < save_player_count; i++){
+		if (StrCmp(save_player_dict[i], player_name) == 0){
+			id = i;
+			break;
+		}
+	}
+	log(s:"Retrived id:", d:id);
+	if(id == -1){
+		id = save_player_count;
+		save_player_dict[id] = player_name;
+		save_player_count++;
+		//log(s:"Slot ", d:id, s:" allocated for ",s:player_name);
+		PlayStats_Update(id);
+	}else{
+		//log(s:"Loading Slot ", d:id, s:" for ", s:player_name);
+		PlayStats_Load(id);
+	}
+	
+	while (PlayerInGame(playernumber())){
+		delay(35*10); // Each 10 seconds, save the stats.
+		
+		PlayStats_Update(id);
+	}
+	
+}
+
+// So, what can be saved?
+// -) Stats (credits, ups, exp, rank, killstreak...)
+// -) Buyed Mech (not when using the mech)
+// -) Your Weapons (except the boomer cannon)
+// -) Your inventory (powerups, rune, deployables, stimpacks...)
+// -) Your Mech and Player Upgrades.
+
+// Anything else, can not be saved in the map.
+// And remember, this is only valid, on the CURRENT MAP.
+
+function void PlayStats_Load(int id){
+	int play = playernumber();
+	int i, j = 0;
+	p_Credits[play] = 		save_player_stats[id][0];
+	p_Rank[play] = 			save_player_stats[id][1];
+    p_Exp_Points[play] = 	save_player_stats[id][2];
+    p_Exp[play] = 			save_player_stats[id][3];
+    p_Streak[play] = 		save_player_stats[id][4];
+    p_StreakHi[play] = 		save_player_stats[id][5];
+    p_StreakLevel[play] = 	save_player_stats[id][6];
+	p_TankSlot[play] =		save_player_stats[id][7];
+	i = 8;
+	for (j = 0; j < fp_weaponStack; j++){ // Weapons & upgraded weapons.
+		GiveInventory(Weapon_GetActor(j), save_player_stats[id][i]); i++;
+		GiveInventory(WeaponUpgrade_GetActor(j, 0), save_player_stats[id][i]); i++;
+		GiveInventory(WeaponUpgrade_GetActor(j, 1), save_player_stats[id][i]); i++;
+	}
+	for (j = 0; j < fp_LastItem; j++){ // Items
+		GiveInventory(Item_GetActor(j), save_player_stats[id][i]);
+		i++;
+	}
+	for (j = 0; j < PlayUpTop; j++){ // Player Upgrades
+		GiveInventory(PlayUp_GetActor(j), save_player_stats[id][i]);
+		i++;
+	}
+	for (j = 0; j < MechUpTop; j++){ // Mech Upgrades
+		GiveInventory(MechUp_GetActor(j), save_player_stats[id][i]);
+		i++;
+	}
+	log(s:"States Loaded");
+}
+
+function void PlayStats_Update(int id){
+	int play = playernumber();
+	int i, j = 0;
+	PlayStats_Save(p_Credits[play], 	id, 0);
+	PlayStats_Save(p_Rank[play], 		id, 1);
+	PlayStats_Save(p_Exp_Points[play],  id, 2);
+	PlayStats_Save(p_Exp[play], 		id, 3);
+	PlayStats_Save(p_Streak[play], 		id, 4);
+	PlayStats_Save(p_StreakHi[play], 	id, 5);
+	PlayStats_Save(p_StreakLevel[play], id, 6);
+	PlayStats_Save(p_TankSlot[play],    id, 7);
+	i = 8;
+	for (j = 0; j < fp_weaponStack; j++){ // Weapons & upgraded weapons.
+		PlayStats_Save(CheckInventory(Weapon_GetActor(j)),  id, i); i++;
+		PlayStats_Save(CheckInventory(WeaponUpgrade_GetActor(j, 0)),  id, i); i++;
+		PlayStats_Save(CheckInventory(WeaponUpgrade_GetActor(j, 1)),  id, i); i++;
+	}
+	for (j = 0; j < fp_LastItem; j++){ // Items
+		PlayStats_Save(CheckInventory(Item_GetActor(j)),    id, i);
+		i++;
+	}
+	for (j = 0; j < PlayUpTop; j++){ // Player upgrades
+		PlayStats_Save(CheckInventory(PlayUp_GetActor(j)), 	id, i);
+		i++;
+	}
+	for (j = 0; j < MechUpTop; j++){ // Mech upgrades
+		PlayStats_Save(CheckInventory(MechUp_GetActor(j)), 	id, i);
+		i++;
+	}
+	log(s:"States Updated");
+}
+
+function void PlayStats_Save(int var, int id, int stat){
+	if(var != save_player_stats[id][stat]) // Saves only if updated.
+		save_player_stats[id][stat] = var;
+}

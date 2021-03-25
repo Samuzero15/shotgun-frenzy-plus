@@ -35,6 +35,13 @@ Script "SFPlus_InventoryList" ENTER Clientside{
 	}
 }
 
+Script "ItemHud_ClearDisconnect" (int play) DISCONNECT {
+	for (int i = 64; i >= 0; i--){
+		ClearHudMessage(ITEMHUD_ID_IMG+i); 
+		ClearHudMessage(ITEMHUD_ID_NUM+i); 
+	}
+}
+
 function void ItemHud_Clear(void){
 	for (int i = itemhud_stack; i >= 0; i--){
 		ClearHudMessage(ITEMHUD_ID_IMG+i); 

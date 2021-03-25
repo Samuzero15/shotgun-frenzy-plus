@@ -259,6 +259,7 @@ function void Stock_FillAmmo(bool full){
 script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	int s = 0;
 	int c = 0;
+	str uplvl;
 	
 	c = CR_CYAN;
 	if (Tech_IsDoneC(TECH_GENLAB_HEALTH2))
@@ -302,6 +303,23 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	s++;
 	s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_PUMP1), "+ Processing Phase 1");
 	s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_PUMP2), "+ Processing Phase 2");
+	
+	c = CR_WHITE;
+	s++;
+	uplvl = strparam(s:"+ (M.Up) Nails Lv. ", d:CheckInventory("MechUp_Nails"));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Nails"), uplvl);
+	uplvl = strparam(s:"+ (M.Up) Rockets Lv. ", d:CheckInventory("MechUp_Rockets"));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Rockets"), uplvl);
+	uplvl = strparam(s:"+ (M.Up) Armor Lv. ", d:CheckInventory("MechUp_Armor"));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Armor"), uplvl);
+	uplvl = strparam(s:"+ (M.Up) Manuver Lv. ", d:CheckInventory("MechUp_Speed"));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Speed"), uplvl);
+	uplvl = strparam(s:"+ (M.Up) Auto Repair Lv. ", d:CheckInventory("MechUp_AutoRepair"));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_AutoRepair"), uplvl);
+	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_LifeSave"), 		"+ (M.Up) Life Saver");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_SelfDestruct"), 	"+ (M.Up) Self Destruct");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_Efficiency"), 		"+ (M.Up) Efficiency");
+
 }
 
 function int Stock_RemindUpgrade(int show_stack, int show_color, bool condition, str string){

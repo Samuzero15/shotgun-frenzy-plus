@@ -41,7 +41,7 @@ function void PlayUp_Add (str name, str actor, str btnimg){
 	
 	if(PlayUpTop >= FP_PLAYUP_MAX)
 	{ 
-		log(s:"(fl_PUpDir): Too much unit upgrades!");
+		log(s:"(fl_PUpDir): Too much player upgrades!");
 		return;
 	}
 	// Look up language.txt
