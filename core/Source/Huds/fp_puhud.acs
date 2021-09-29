@@ -21,8 +21,10 @@ Script "SFPlus_PowerupList" Enter Clientside{
 	int pow_prometeo_x2dmg;
 	int pow_prometeo_invul;
 	int pow_wealth;
+	int pow_helltrigger;
 	if(ConsolePlayerNumber() == Playernumber()){
 		while(PlayerInGame(PlayerNumber())){
+			pow_helltrigger   = GetActorPowerupTics(0, "Inv_Power_Infinity");
 			pow_quadsphere   = GetActorPowerupTics(0, "PowerQuadDamage");
 			pow_hexasphere   = GetActorPowerupTics(0, "PlayUp_PowUpUpgrade_6xDmg");
 			pow_godsphere    = GetActorPowerupTics(0, "PowerInvulnerable");
@@ -38,6 +40,7 @@ Script "SFPlus_PowerupList" Enter Clientside{
 			PowHud_Show("Prometeo Invul.", 	pow_prometeo_invul);
 			PowHud_Show("Spawn Shield", pow_spawnshield);
 			PowHud_Show("x2 Credits", 	pow_wealth);
+			PowHud_Show("Fast Fire", 	pow_helltrigger);
 			/*
 			
 			PowHud_Show("x3 Credits", 		0); // Soon...

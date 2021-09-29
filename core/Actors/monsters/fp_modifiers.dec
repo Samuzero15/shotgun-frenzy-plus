@@ -1,0 +1,52 @@
+Actor MonsterModifier : CustomInventory {
+    Inventory.PickupMessage ""
+    Inventory.PickupSound ""
+    -CountItem
+    states{
+        Spawn:
+            TNT1 A -1
+        fail
+        Pickup:
+            TNT1 A 0
+        stop
+    }
+}
+
+Actor MonMod_Hard : MonsterModifier {
+    states {
+        Pickup:
+            TNT1 A 0 A_ChangeFlag("NOPAIN", true)
+	        TNT1 A 0 A_ChangeFlag("MISSILEMORE", true)
+	        TNT1 A 0 A_ChangeFlag("QUICKTORETALIATE", true)
+	        TNT1 A 0 ACS_NamedExecuteAlways("Monster_HPBar", 0, height)
+            TNT1 A 0 A_Log("Hard modifier applied.")
+        stop
+    }
+}
+
+Actor MonMod_Fast : MonsterModifier {
+    states {
+        Pickup:
+            TNT1 A 0 A_ChangeFlag("NOPAIN", true)
+            TNT1 A 0 A_Log("Fast modifier applied.")
+        stop
+    }
+}
+
+Actor MonMod_Strong : MonsterModifier {
+    states {
+        Pickup:
+            TNT1 A 0 A_ChangeFlag("NOPAIN", true)
+            TNT1 A 0 A_Log("Strong modifier applied.")
+        stop
+    }
+}
+
+Actor MonMod_Resistant : MonsterModifier {
+    states {
+        Pickup:
+            TNT1 A 0 A_ChangeFlag("NOPAIN", true)
+            TNT1 A 0 A_Log("Resistant modifier applied.")
+        stop
+    }
+}

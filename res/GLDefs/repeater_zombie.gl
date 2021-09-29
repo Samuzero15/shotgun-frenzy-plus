@@ -1,0 +1,45 @@
+PointLight RepeaterBlast1
+{
+Color 0.5 0.55 0.1
+Size 56
+}
+
+PointLight RepeaterBlast2
+{
+Color 0.5 0.55 0.1
+Size 48
+}
+
+PointLight RepeaterBlast3
+{
+Color 0.5 0.55 0.1
+Size 32
+}
+
+PointLight RepeaterBlast4
+{
+Color 0.5 0.55 0.1
+Size 24
+}
+
+PointLight RepeaterBlast5
+{
+Color 0.5 0.55 0.1
+Size 16
+}
+
+PointLight RepeaterBlast6
+{
+Color 0.5 0.55 0.1
+Size 8
+}
+
+Object RepeaterZombiePuff
+{
+Frame BLASA { Light RepeaterBlast1 }
+Frame BLASB { Light RepeaterBlast2 }
+Frame BLASC { Light RepeaterBlast3 }
+Frame BLASD { Light RepeaterBlast4 }
+Frame BLASE { Light RepeaterBlast5 }
+Frame BLASF { Light RepeaterBlast6 }
+}

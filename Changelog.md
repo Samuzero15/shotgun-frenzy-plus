@@ -2,6 +2,15 @@
 
 ## v0 - Before the beginning...
 
+#### -) (2 - 3 / 03 ,28 / 09 / 2021) [Added Powerup HellTrigger, Re-organized res part]
+	// 
+	!+) Added an new powerup, Hell-trigger!
+	// Allows you to fire fast, and with infinite ammo for a short time!
+	// For now it costs 5500 credits.
+	// In the powered-up version, this effect holds a bit longer.
+	*) The powerup upgrade for the players has been split in 2 upgrades, one upgrading the offensive powerups, and the other the deffensive powerups. It's all your choice if you want to go defensive or offensive.
+	*) Re-Organized the resource part, deleting all the wad containers, in order to keep it in a single pk3 mod. 
+
 #### -) (23 - 24 / 03 / 2021) [Autosave Player Stats & few touches]
 	+) Now the game autosaves your progress each 10 seconds in the game!
 	// Saves weapons, items, stats, and current upgrades (player and mech)

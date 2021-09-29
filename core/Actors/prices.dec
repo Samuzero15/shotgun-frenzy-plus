@@ -114,6 +114,7 @@ Actor pr_p_soulsphere : Integer {}
 Actor pr_p_megasphere : Integer {}
 Actor pr_p_godsphere : Integer {}
 Actor pr_p_berserk2 : Integer {}
+Actor pr_p_helltrigger : Integer {}
 Actor pr_i_backpack : Integer {}
 Actor pr_d_drone_saw : Integer {}
 Actor pr_d_drone_mine : Integer {}
@@ -140,7 +141,8 @@ Actor pr_mu_life_save : Integer {}
 Actor pr_mu_efficiency : Integer {}
 
 //Player upgrade prices.
-Actor pr_pu_powupupgrade		: Integer {}
+Actor pr_pu_powupupgrade_1		: Integer {}
+Actor pr_pu_powupupgrade_2		: Integer {}
 Actor pr_pu_mechsync 			: Integer {}
 Actor pr_pu_expansiverestock	: Integer {}
 Actor pr_pu_bodyenhancement		: Integer {}

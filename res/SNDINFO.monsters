@@ -1,0 +1,164 @@
+// All the extra monsters from frenzy_monsters2 and frenzy_monsters wads
+
+//// Aracnorb
+aracnorb/sight		dsaracst
+aracnorb/death		dsaracdt
+aracnorb/attack		dsaracfr
+aracnorb/melee		dsaracml
+
+//// Annihilitor
+monster/annsit dsannsit
+monster/anndth dsanndth
+monster/anhoof dsanhoof
+weapons/hrlexp dshrlexp
+weapons/hrlfir dshrlfir
+
+//// Afrit (?
+monster/ar2sit dsar2sit
+monster/ar2dth dsar2dth
+weapons/firbfi dsfirbfi
+weapons/hellex dshellex
+
+//// Cyberbaron
+cbaron/sight	cbarnsit
+cbaron/pain	cbarnpai
+cbaron/death	cbarndth
+cbaron/active	cbarnact
+cbaron/metal	cmetal
+
+//// Bruiser
+monster/brusit dsbrusit
+monster/brudth dsbrudth
+monster/bruwlk dsbruwlk
+monster/brufir dsbrufir
+weapons/hellex dshellex
+
+//// Fusion Spider
+fusionspid/die FUSPDIE
+fusionspid/see FUSPSEE
+
+//// Whaa
+monster/hlnsit                  dshlnsit
+monster/hlnact                  dshlnact
+monster/hlnpai                  dshlnpai
+monster/hlndth                  dshlndth
+monster/hlnatk                  dshlnatk
+monster/hlnexp                  dshlnexp
+
+//// Nailborg - Commando
+//Nail Sounds
+Weapons/NailFire	DSNLFIRE
+Weapons/Nailhit		DSNLIMPD
+Weapons/Nailhitbleed	DSNLIMPL
+Weapons/NailFlight	DSNLFLIT
+//Nail Bomb Sounds
+$random Weapons/NBBounce { Weapons/NBBounce1 Weapons/NBBounce2 }
+Weapons/NBBounce1	DSNBBNC1
+Weapons/NBBounce2	DSNBBNC2
+Weapons/NailBomb	DSNBMBLC
+Weapons/NailBombExp	DSNBBEXP
+//NailBorg Sounds
+$random Monsters/NBSight { Monsters/NBSit1 Monsters/NBSit2 Monsters/NBSit3 }
+Monsters/NBSit1		DSNBSIT1
+Monsters/NBSit2		DSNBSIT2
+Monsters/NBSit3		DSNBSIT3
+
+$random Monsters/NBDeath { Monsters/NBDth1 Monsters/NBDth2 Monsters/NBDth3 }
+Monsters/NBDth1		DSNBDTH1
+Monsters/NBDth1		DSNBDTH2
+Monsters/NBDth1		DSNBDTH3
+
+Monsters/NBPain		DSNBPAIN
+Monsters/NBAct		DSNBSACT
+Monsters/NBWalk		DSNBWALK
+
+//// SSG Zombie
+SSGUNER/sight	DSGPOSIT
+SSGUNER/SSG 	DSSGGATK
+SSGUNER/death	DSGPODTH
+SSGUNER/idle	DSGPOACT
+
+//// Slime imp
+impspid/see issee
+impspid/pain ispain
+impspid/death isdie
+impspid/atack isatak
+
+//// MMkay..
+monster/demsit dsdemsit
+spider/attack dscannon
+monster/demdth dsdemdth
+
+//// More
+dragonfam/attack dfattack
+comet/launch cometlnc
+comet/explosion cometexp
+dragonfam/attack dfattack
+
+//// Bat Familiar
+$RANDOM batfam/idle { batfam/idle1 batfam/idle2 }
+batfam/idle1 batidle1
+batfam/idle2 batidle2
+
+batfam/pain batpain
+batfam/death batdie
+batfam/crash batcrash
+
+//// Blood Demon
+blooddemon/sight DSBLDSIT
+blooddemon/pain DSBLDPAI
+blooddemon/death DSBLDDTH
+blooddemon/active DSBLDACT
+blooddemon/melee DSBLDATK
+blooddemon/walk DSBLDWAL
+
+//// Wuat
+monster/sg2sit dssg2sit
+monster/sg2atk dssg2atk
+weapons/bloodf dsbloodf
+weapons/bloodx dsbloodx
+
+//// Poot
+$RANDOM monster/dvlsit { monster/dvlsi1 monster/dvlsi2 }
+monster/dvlsi1 dsdvlsi1
+monster/dvlsi2 dsdvlsi2
+monster/dvlpai dsdvlpai
+$RANDOM monster/dvldth { monster/dvldt1 monster/dvldt2 }
+monster/dvldt1 dsdvldt1
+monster/dvldt2 dsdvldt2
+monster/dvlact dsdvlact
+
+//// Dogs
+monster/dogsit dsdogsit
+monster/dogatk dsdogatk
+monster/dogbit dsdogbit
+monster/dogpai dsdogpai
+$RANDOM monster/dogdth { monster/dogdt1 monster/dogdt2 }
+monster/dogdt1 dsdogdt1
+monster/dogdt2 dsdogdt2
+monster/dogact dsdogact
+
+weapons/bigbrn dsbigbrn
+monster/dogsht dsdogsht
+monster/doghit dsdoghit
+
+//// Repeater Zombie (unused.)
+RepeaterZombie/Fire	RPZMFIRE
+RepeaterZombie/Idle	RPZMIDLE
+RepeaterZombie/Steam	RPZMSTEM
+RepeaterZombie/Stop	RPZMSTOP
+
+//// Segway zombie?
+Segway/Go	DSSEGGO
+
+//// Stone Demon
+stone/death		dsstndth
+stone/sight		dsstnsit
+stone/bounce		dspunch
+
+//// Suicide Bomber
+suicide/scream dssuscrm
+suicide/sit dssusit
+
+//// Harvester
+harvester/scream shfbscrm

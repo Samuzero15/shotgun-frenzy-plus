@@ -1,0 +1,21 @@
+Name: Aracnorb
+Difficulty: Easy
+Connection: none
+Summon: Aracnorb
+Melee: Yes
+Distance: Homing Projectile
+Type: Alien
+Brightmaps: Yes
+
+Submitted: Jimmy91
+Decorate: Jimmy91
+GLDEFs: Jimmy91, Sandypaper (Brightmaps)
+Sounds: Jimmy91 (edits), id Software, 3DRealms
+Sprites: id Software, 3DRealms
+Sprite Edit: Jimmy91 Pain Edit Yuraofthehairfan
+Idea Base: Duke Nukem 3D Octabrain
+
+Description: A floating oversized brain with a powerful continuous psionic stream attack. The stream of psi spirals
+             erratically and homes in on its target, making it a chore to evade. Luckily, these guys aren't
+			 terribly strong, and will go down in a single point-blank SSG shot, providing you can get up close
+			 enough without it microwaving your brain, or mauling you to death with its teeth.

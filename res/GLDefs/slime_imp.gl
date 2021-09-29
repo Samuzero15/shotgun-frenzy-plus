@@ -1,0 +1,32 @@
+Pointlight SlimeBall1
+{
+Color 1.0 0.0 0.0
+Size 40
+}
+
+Pointlight SlimeBall2
+{
+Color 1.0 0.0 0.0
+Size 64
+}
+
+Pointlight SlimeBall3
+{
+Color 0.8 0.0 0.0
+Size 48
+}
+
+Pointlight SlimeBall5
+{
+Color 0.5 0.0 0.0
+Size 32
+}
+
+Object SlimeBall
+{
+Frame POOPA { Light SlimeBall1 }
+Frame POOPB { Light SlimeBall1 }
+Frame POOPC { Light SlimeBall2 }
+Frame POOPD { Light SlimeBall3 }
+Frame POOPE { Light SlimeBall4 }
+}

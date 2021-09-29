@@ -1,0 +1,79 @@
+Pointlight ArchonComet1
+{
+Color 0.0 0.6 0.1
+Size 64
+}
+
+Pointlight ArchonComet2
+{
+Color 0.0 0.8 0.2
+Size 128
+}
+
+Pointlight ArchonComet3
+{
+Color 0.0 0.75 0.15
+Size 112
+}
+
+Pointlight ArchonComet4
+{
+Color 0.0 0.5 0.05
+Size 104
+}
+
+Pointlight ArchonComet5
+{
+Color 0.0 0.5 0.05
+Size 96
+}
+
+Pointlight ArchonComet6
+{
+Color 0.0 0.5 0.05
+Size 64
+}
+
+Object ArchonComet
+{
+Frame ARCBA { Light ArchonComet1 }
+Frame ARCBB { Light ArchonComet1 }
+Frame ARCBC { Light ArchonComet1 }
+Frame ARCBJ { Light ArchonComet2 }
+Frame ARCBK { Light ArchonComet3 }
+Frame ARCBL { Light ArchonComet4 }
+Frame ARCBM { Light ArchonComet5 }
+Frame ARCBN { Light ArchonComet6 }
+}
+
+Pointlight ArchonSoul1
+{
+Color 0.0 1.0 0.3
+Size 64
+}
+
+Pointlight ArchonSoul2
+{
+Color 0.0 1.0 0.3
+Size 56
+}
+
+Pointlight ArchonSoul3
+{
+Color 0.0 1.0 0.3
+Size 48
+}
+
+Pointlight ArchonSoul4
+{
+Color 0.0 1.0 0.3
+Size 40
+}
+
+Object ArchonSoul
+{
+Frame BFX1A { Light ArchonSoul1 }
+Frame BFX1B { Light ArchonSoul2 }
+Frame BFX1C { Light ArchonSoul3 }
+Frame BFX1D { Light ArchonSoul4 }
+}

@@ -10,7 +10,8 @@ actor MechUp_autorepair 		: Integer { Inventory.MaxAmount 5 }
 actor MechUp_efficiency			: Boolean {}
 
 // Unit upgrade tokens
-actor PlayUp_PowUpUpgrade 		: Boolean {}
+actor PlayUp_PowUpUpgrade_1 		: Boolean {}
+actor PlayUp_PowUpUpgrade_2 		: Boolean {}
 actor PlayUp_MechSync 			: Boolean {}
 actor PlayUp_ExpansiveRestock 	: Boolean {}
 actor PlayUp_BodyEnhancement 	: Boolean {}

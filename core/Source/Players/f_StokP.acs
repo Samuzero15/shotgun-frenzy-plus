@@ -277,7 +277,8 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_BodyEnhancement"), 	"+ Body Enhancement");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_ExpansiveRestock"), "+ Expansive Restock");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_ArmorRepair"), 		"+ Armor Repair");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_PowUpUpgrade"), 	"+ Powerup Upgrade");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_PowUpUpgrade_1"), 	"+ Def. Powerup Upgrade");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_PowUpUpgrade_2"), 	"+ Atk. Powerup Upgrade");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_MechSync"), 		"+ Mech Syncronize");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_SpawnShield"), 		"+ Spawn Shield");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_HealCoins"), 		"+ Healing Coins");

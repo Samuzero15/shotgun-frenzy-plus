@@ -1,0 +1,49 @@
+Pointlight DarkBallSeeker1
+{
+Color 0.5 0.2 0.8
+Size 48
+}
+
+Pointlight DarkBallSeeker2
+{
+Color 0.4 0.2 0.8
+Size 64
+}
+
+Pointlight DarkBallSeeker3
+{
+Color 0.2 0.2 0.8
+Size 56
+}
+
+Pointlight DarkBallSeeker4
+{
+Color 0.0 0.0 0.5
+Size 32
+}
+
+
+Object DarkSeeker
+{
+Frame DKB1A { Light DarkBallSeeker1 }
+Frame DKB1B { Light DarkBallSeeker1 }
+Frame DKB1C { Light DarkBallSeeker2 }
+Frame DKB1D { Light DarkBallSeeker3 }
+Frame DKB1E { Light DarkBallSeeker4 }
+}
+
+Flickerlight2 NamiDarkImpFire
+{
+Color 0.5 0.2 0.8
+Size 48
+SecondarySize 56
+Interval 0.8
+Offset 0 28 0
+}
+
+Object NamiDarkImp
+{
+Frame DRKIE { Light NamiDarkImpFire }
+Frame DRKIF { Light NamiDarkImpFire }
+Frame DRKIG { Light NamiDarkImpFire }
+}

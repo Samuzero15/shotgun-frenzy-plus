@@ -4,13 +4,15 @@ BUILD_DATE = "XX/XX/XXXX";
 CHANGES = "_SHOWCASE_";
 // Player upgrade descriptions
 
-FP_PUD_PowUpUpgrade 	=	"Your good old powerups gains stronger effects!\n\n"
-							"-) Soulsphere -> +200 HP, up to 300 MaxHP.\n"
-							"-) Megasphere -> +300 HP and +300 AP for blue armor.\n"
-							"-) Godsphere -> +15 seconds, works up to 45 secs.\n"
-							"-) Quad-Damage -> +15 seconds, x6 instead of x4.\n"
+FP_PUD_PowUpUpgrade_1 	=	"Your powerups gains stronger effects!\n\n"
+							"-) Soulsphere -> +200 HP, up to 300 MaxHP.\n\n"
+							"-) Megasphere -> +300 HP and +300 AP for blue armor.\n\n"
+							"-) Godsphere -> +15 seconds, works up to 45 secs.";
+
+FP_PUD_PowUpUpgrade_2 	=	"More powerups with stronger effects!\n\n"
+							"-) Helltrigger -> +15 seconds, weapon insta-switch.\n\n"
 							"-) Ammosphere -> 50% chance to use, and keep the sphere.\n\n"
-							"Finally those demonic experiments made something useful.";
+							"-) Quad-Damage -> +15 seconds, x6 instead of x4.";
 
 FP_PUD_MechSync 		=	"All your power-ups can be used inside of a mech!\n"
 							"Soulspheres heals 250 hp and Megaspheres heals 1000 hp.\n\n"

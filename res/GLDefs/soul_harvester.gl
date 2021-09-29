@@ -1,0 +1,103 @@
+Pointlight SoulHarvesterBall1
+{
+Color 1.0 0.8 0.3
+Size 40
+}
+
+Pointlight SoulHarvesterBall2
+{
+Color 1.0 0.8 0.3
+Size 44
+}
+
+Pointlight SoulHarvesterBall3
+{
+Color 1.0 0.8 0.3
+Size 48
+}
+
+Pointlight SoulHarvesterBall4
+{
+Color 1.0 0.8 0.3
+Size 36
+}
+
+Pointlight SoulHarvesterBall5
+{
+Color 1.0 0.8 0.3
+Size 32
+}
+
+Pointlight SoulHarvesterBall6
+{
+Color 1.0 0.8 0.3
+Size 28
+}
+
+Pointlight SoulHarvesterBall7
+{
+Color 1.0 0.8 0.3
+Size 24
+}
+
+Pointlight SoulHarvesterBall8
+{
+Color 1.0 0.8 0.3
+Size 20
+}
+
+Pointlight SoulHarvesterBall9
+{
+Color 1.0 0.8 0.3
+Size 16
+}
+
+Object SoulHarvesterBall
+{
+Frame SHBAA { Light SoulHarvesterBall1 }
+Frame SHBAB { Light SoulHarvesterBall1 }
+Frame SHBAC { Light SoulHarvesterBall2 }
+Frame SHBAD { Light SoulHarvesterBall3 }
+Frame SHBAE { Light SoulHarvesterBall2 }
+Frame SHBAF { Light SoulHarvesterBall1 }
+Frame SHBAG { Light SoulHarvesterBall4 }
+Frame SHBAH { Light SoulHarvesterBall5 }
+Frame SHBAI { Light SoulHarvesterBall6 }
+Frame SHBAJ { Light SoulHarvesterBall7 }
+Frame SHBAK { Light SoulHarvesterBall8 }
+Frame SHBAL { Light SoulHarvesterBall9 }
+}
+
+Pointlight HellsFuryBall1
+{
+Color 0.8 0.0 0.00
+Size 48
+}
+
+Pointlight HellsFuryBall2
+{
+Color 1.0 0.0 0.00
+Size 64
+}
+
+Pointlight HellsFuryBall3
+{
+Color 0.8 0.0 0.00
+Size 56
+}
+
+Pointlight HellsFuryBall4
+{
+Color 0.4 0.0 0.00
+Size 32
+}
+
+
+Object HellsFuryBall
+{
+Frame HFBBA { Light HellsFuryBall1 }
+Frame HFBBB { Light HellsFuryBall1 }
+Frame HFBBC { Light HellsFuryBall2 }
+Frame HFBBD { Light HellsFuryBall3 }
+Frame HFBBE { Light HellsFuryBall4 }
+}

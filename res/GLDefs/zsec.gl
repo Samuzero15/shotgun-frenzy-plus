@@ -1,0 +1,10 @@
+PointLight ZSecAttack
+{
+Color 1.0 0.8 0.2
+Size 28
+}
+
+Object ZSec
+{
+Frame ZSECF { Light ZSecAttack }
+}

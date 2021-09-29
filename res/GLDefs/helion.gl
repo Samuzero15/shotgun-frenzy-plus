@@ -1,0 +1,213 @@
+//Hellion=====
+
+Flickerlight2 HellionG
+{
+ Color 0.5 0.5 0.0
+ Offset 0 40 0
+ Size 25
+ SecondarySize 30
+ Interval 0.005
+}
+
+Flickerlight2 HellionH
+{
+ Color 1.0 1.0 0.0
+ Offset 0 50 0
+ Size 32
+ SecondarySize 42
+ Interval 0.005
+}
+
+Flickerlight2 HellionI
+{
+ Color 1.0 1.0 0.0
+ Offset 0 45 0
+ Size 45
+ SecondarySize 50
+ Interval 0.005
+}
+
+Flickerlight2 HellionJ
+{
+ Color 0.9 0.9 0.0
+ Offset 0 35 -5
+ Size 55
+ SecondarySize 58
+ Interval 0.005
+}
+
+Flickerlight2 HellionK
+{
+ Color 0.7 0.7 0.0
+ Offset 0 32 -15
+ Size 60
+ SecondarySize 62
+ Interval 0.005
+}
+
+Flickerlight2 HellionL
+{
+ Color 0.2 0.2 0.0
+ Offset 0 32 -15
+ Size 62
+ SecondarySize 63
+ Interval 0.005
+}
+
+Object Hellion
+{
+ Frame HELNG { Light HellionG }
+ Frame HELNH { Light HellionH }
+ Frame HELNI { Light HellionI }
+ Frame HELNJ { Light HellionJ }
+ Frame HELNK { Light HellionK }
+ Frame HELNL { Light HellionL }
+}
+
+Flickerlight2 HellionballA
+{
+ Color 1.0 1.0 0.0
+ Offset 0 4 -8
+ Size 30
+ SecondarySize 40
+ Interval 0.005
+}
+
+Flickerlight2 HellionballB
+{
+ Color 1.0 1.0 0.0
+ Offset 0 4 -8
+ Size 35
+ SecondarySize 45
+ Interval 0.005
+}
+
+Flickerlight2 HellionballC
+{
+ Color 1.0 1.0 0.0
+ Offset 0 4 0
+ Size 35
+ SecondarySize 45
+ Interval 0.005
+}
+
+Flickerlight2 HellionballD
+{
+ Color 0.9 0.9 0.0
+ Offset 0 4 0
+ Size 32
+ SecondarySize 42
+ Interval 0.005
+}
+
+Flickerlight2 HellionballE
+{
+ Color 0.8 0.8 0.0
+ Offset 0 4 0
+ Size 29
+ SecondarySize 39
+ Interval 0.005
+}
+
+Flickerlight2 HellionballF
+{
+ Color 0.6 0.6 0.0
+ Offset 0 4 0
+ Size 26
+ SecondarySize 36
+ Interval 0.005
+}
+
+Flickerlight2 HellionballG
+{
+ Color 0.4 0.4 0.0
+ Offset 0 4 0
+ Size 20
+ SecondarySize 30
+ Interval 0.005
+}
+
+Flickerlight2 HellionballH
+{
+ Color 0.2 0.2 0.0
+ Offset 0 4 0
+ Size 10
+ SecondarySize 20
+ Interval 0.005
+}
+
+Flickerlight2 HellionballI
+{
+ Color 0.1 0.1 0.0
+ Offset 0 4 0
+ Size 5
+ SecondarySize 10
+ Interval 0.005
+}
+
+Flickerlight2 HellionballJ
+{
+ Color 0.8 0.8 0.0
+ Offset 0 4 0
+ Size 45
+ SecondarySize 55
+ Interval 0.005
+}
+
+Flickerlight2 HellionballK
+{
+ Color 0.6 0.6 0.0
+ Offset 0 4 0
+ Size 55
+ SecondarySize 60
+ Interval 0.005
+}
+
+Flickerlight2 HellionballL
+{
+ Color 0.4 0.4 0.0
+ Offset 0 4 0
+ Size 60
+ SecondarySize 65
+ Interval 0.005
+}
+
+Flickerlight2 HellionballM
+{
+ Color 0.2 0.2 0.0
+ Offset 0 4 0
+ Size 65
+ SecondarySize 68
+ Interval 0.005
+}
+
+Flickerlight2 HellionballN
+{
+ Color 0.1 0.1 0.0
+ Offset 0 4 0
+ Size 68
+ SecondarySize 72
+ Interval 0.005
+}
+
+Object Hellionball
+{
+ Frame HLBLA { Light HellionballA }
+ Frame HLBLB { Light HellionballB }
+ Frame HLBLJ { Light HellionballJ }
+ Frame HLBLK { Light HellionballK }
+ Frame HLBLL { Light HellionballL }
+ Frame HLBLM { Light HellionballM }
+ Frame HLBLN { Light HellionballN }
+}
+
+Object Hellionpuff
+{
+ Frame HLBLC { Light HellionballC }
+ Frame HLBLD { Light HellionballD }
+ Frame HLBLE { Light HellionballE }
+ Frame HLBLF { Light HellionballF }
+ Frame HLBLG { Light HellionballG }
+ Frame HLBLH { Light HellionballH }
+ Frame HLBLI { Light HellionballI }
+}

@@ -1,0 +1,73 @@
+Pointlight CyberBaronRocket1
+{
+Color 1.0 0.7 0.0
+Size 56
+}
+
+Flickerlight CyberBaronRocket2
+{
+Color 1.0 0.7 0.0
+Size 64
+SecondarySize 72
+Chance 0.3
+}
+
+Flickerlight CyberBaronRocket3
+{
+Color 0.5 0.1 0.0
+Size 80
+SecondarySize 88
+Chance 0.3
+}
+
+Flickerlight CyberBaronRocket4
+{
+Color 0.3 0.0 0.0
+Size 96
+SecondarySize 104
+Chance 0.3
+}
+
+Object CyberAttack2
+{
+Frame MISLA { Light CyberBaronRocket1 }
+Frame MISLB { Light CyberBaronRocket2 }
+Frame MISLC { Light CyberBaronRocket3 }
+Frame MISLD { Light CyberBaronRocket4 }
+}
+
+Pointlight CyberBaronExplode1
+{
+Color 0.7 0.0 0.0
+Size 32
+Offset 0 16 0
+}
+
+Pointlight CyberBaronExplode2
+{
+Color 1.0 0.0 0.0
+Size 96
+Offset 0 24 0
+}
+
+Pointlight CyberBaronExplode3
+{
+Color 0.8 0.0 0.0
+Size 64
+Offset 0 24 0
+}
+
+Pointlight CyberBaronExplode4
+{
+Color 0.3 0.0 0.0
+Size 32
+Offset 0 24 0
+}
+
+Object CyberBaron
+{
+Frame CBOSK { Light CyberBaronExplode1 }
+Frame CBOSL { Light CyberBaronExplode2 }
+Frame CBOSM { Light CyberBaronExplode3 }
+Frame CBOSN { Light CyberBaronExplode4 }
+}

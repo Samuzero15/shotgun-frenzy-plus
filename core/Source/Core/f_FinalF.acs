@@ -48,14 +48,14 @@ script 231 (void)
 		setactorproperty(0, APROP_DamageFactor, damage_factor);
 		setactorproperty(0, APROP_Alpha, 0.9);
 		
-		if (f_PercentFast > random(0,99)) {
+		if (f_PercentFast > random(0,99)) { // More like champion enemy.
 			setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 		}
 	}
-	ACS_NamedExecuteAlways("SFPlus_MonsterScript", 0);
+	ACS_NamedExecuteAlways("SFPlus_AutoBalanceDmg", 0);
 }
 
-Script "SFPlus_MonsterScript" (void){
+Script "SFPlus_AutoBalanceDmg" (void){
 	int hp = getActorProperty(0, APROP_Health);
 	int playercount_last = -1;
 	int damage_factor = 0.0;
@@ -74,6 +74,16 @@ Script "SFPlus_MonsterScript" (void){
 		playercount_last = PlayerCount();
 		delay(1);
 	}while(hp > 0);
+}
+
+Script "SFPlus_SpawnMonster" (void){
+	int x = GetActorX(0);
+	int y = GetActorY(0);
+	int z = GetActorZ(0);
+	int angle = GetActorAngle(0);
+	int tid = UniqueTid();
+	Spawn("Demon", x + fixedmul(32.0, cos(angle)), y + fixedmul(32.0,sin(angle)), z + 32.0, tid, angle);
+	GiveActorInventory(tid, "MonMod_Hard", 1);
 }
 
 // final fight

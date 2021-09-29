@@ -1,0 +1,32 @@
+Pointlight FusionShot
+{
+Color 1.0 0.0 1.0
+Size 30
+}
+
+Pointlight FusionShot2
+{
+Color 1.0 0.0 1.0
+Size 35
+}
+
+Pointlight FusionShot3
+{
+Color 0.7 0.0 0.7
+Size 30
+}
+
+Pointlight FusionShot4
+{
+Color 0.4 0.0 0.4
+Size 25
+}
+
+Object FusionShot
+{
+Frame FS03A { Light FusionShot }
+Frame FS03B { Light FusionShot }
+Frame FS03C { Light FusionShot2 }
+Frame FS03D { Light FusionShot3 }
+Frame FS03E { Light FusionShot4 }
+}

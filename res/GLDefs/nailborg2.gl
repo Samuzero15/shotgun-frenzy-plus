@@ -1,0 +1,76 @@
+PointLight NailBorgAttack
+{
+Color 1.0 0.8 0.2
+Size 35
+}
+
+Object NailBorgCommando
+{
+Frame NLBCF { Light NailBorgAttack }
+}
+
+PointLight BorgNail11
+{
+Color 0.6 0.4 0.0
+Size 5
+}
+
+PointLight BorgNail12
+{
+Color 0.8 0.6 0.0
+Size 8
+}
+
+PointLight BorgNail13
+{
+Color 1.0 0.8 0.2
+Size 11
+}
+
+PointLight BorgNail14
+{
+Color 1.0 0.8 0.2
+Size 15
+}
+
+PointLight BorgNail15
+{
+Color 0.8 0.6 0.0
+Size 11
+}
+
+PointLight BorgNail16
+{
+Color 0.6 0.4 0.0
+Size 11
+}
+
+Object BorgNail1
+{
+Frame DARTB { Light BorgNail11 }
+Frame DARTC { Light BorgNail12 }
+Frame DARTD { Light BorgNail13 }
+Frame DARTE { Light BorgNail14 }
+Frame DARTF { Light BorgNail15 }
+Frame DARTG { Light BorgNail16 }
+}
+
+Object BorgNail2
+{
+Frame DARTB { Light BorgNail11 }
+Frame DARTC { Light BorgNail12 }
+Frame DARTD { Light BorgNail13 }
+Frame DARTE { Light BorgNail14 }
+Frame DARTF { Light BorgNail15 }
+Frame DARTG { Light BorgNail16 }
+}
+
+Object BorgCenterNail
+{
+Frame DARTB { Light BorgNail11 }
+Frame DARTC { Light BorgNail12 }
+Frame DARTD { Light BorgNail13 }
+Frame DARTE { Light BorgNail14 }
+Frame DARTF { Light BorgNail15 }
+Frame DARTG { Light BorgNail16 }
+}

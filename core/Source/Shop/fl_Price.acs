@@ -132,6 +132,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_p_megasphere", 		300);
 	Prices_add("pr_p_godsphere", 		8000);
 	Prices_add("pr_p_berserk2", 		7000);
+	Prices_add("pr_p_helltrigger", 		5500);
 	Prices_add("pr_i_backpack", 		2850);
 	Prices_add("pr_i_mines", 			850);
 	Prices_add("pr_d_drone_saw", 		400);
@@ -209,7 +210,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_mu_efficiency", 		15000);
 	
 	//Play Up. prices
-	Prices_add("pr_pu_powupupgrade",		4);
+	Prices_add("pr_pu_powupupgrade_1",		3);
+	Prices_add("pr_pu_powupupgrade_2",		3);
 	Prices_add("pr_pu_mechsync",			10);
 	Prices_add("pr_pu_expansiverestock",	2);
 	Prices_add("pr_pu_bodyenhancement",		3);

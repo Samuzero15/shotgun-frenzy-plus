@@ -1,6 +1,154 @@
 ////////////////////////////////////
-//	NOT ALL SOUNDS ARE LOCATED HERE
-//	PLEASE LOOK IN OTHER .WAD FILES FOR MORE SNDINFO NODES
+//	All the sounds are exported out of their wads.
+
+/////////// frenzy_vehicle.wad /////////////
+
+veh/tankpain		DSZTANKP
+veh/tankdrive		DSZTANK2
+veh/tankshutdown	DSZTANKD
+veh/tankstartup		DSZTANK1
+
+DSQKLDTH DSQKLDTH
+SEEKLAUNCH SEEKLAUN
+RPGOPN RPGOPN
+RPGOCLS RPGOCLS
+RPGLAD RPGLAD
+
+NAILUP NAILUP
+Weapons/Nailfire	NAILFIR1
+NAILFIR2 NAILFIR2
+weapons/nailpuff nailpuff
+$RANDOM weapons/nailricochet { weapons/nailricochet1 weapons/nailricochet2 }
+weapons/nailricochet1 ric1
+weapons/nailricochet2 ric2
+
+/////////// patchcontent.wad //////////////
+
+patch/newmessage	NMSG
+
+////////////////////////////////////////////
+
+/////////// frenzy_weapons.wad /////////////
+
+$random weapons/rico	{weapons/rico1 weapons/rico2 weapons/rico3}
+weapons/rico1	DSRICO1
+weapons/rico2	DSRICO2
+weapons/rico3	DSRICO3
+
+$random weapons/spark	{weapons/spark1 weapons/spark2 weapons/spark3}
+weapons/spark1	DSSPK1
+weapons/spark2	DSSPK2
+weapons/spark3	DSSPK3
+
+/////// OLD SOUND SYSTEM
+// special weapon sounds
+
+// W0 - Chainsaw
+
+// W1 - Pistols
+
+// W2 - Boomstick
+w2/fire		W2_S1
+w2/load		W2_S2
+w2/fire2	W2_S3
+
+// W3 - SSG
+w3/fire1	W3_S1
+w3/fire2	W3_S2
+
+// W4 - Quadshot
+w4/load		W4_S1
+
+// W5 - Buckshot
+
+// W6 - Spitter
+w6/up		W6_S1
+w6/fire		W6_S2
+w6/load		W6_S3
+
+// W7 - Healer and Stocker
+
+// W8 - Launcher
+w8/load		W8_S1
+
+// W9 - Flinger
+w9/load		W9_S1
+w9/fire1	W9_S2
+w9/fire2	W9_S3
+w9/detonate	W9_S4
+
+// X1 - Railgun
+x1/fire1	X1_S1
+x1/fire2	X1_S2
+x1/taser	X1_S3
+
+// X2 - Flamer
+x2/flamer	X2_S1
+
+// X3 - Boomer Cannon
+x3/fire1	X3_S1
+
+// X5 - Repeater
+x5/fire1	X5_S1
+x5/powerdown	X5_S2
+x5/powerup	X5_S3
+x5/fire2	X5_S4
+x5/idle 	X5_S5
+x5/oldfire	X5_S6
+
+// predefined weapon loading sounds
+w/load1		W_L1
+w/load2		W_L2
+w/load3		W_L3
+w/load4		W_L4
+w/load5		W_L5
+w/load6		W_L6
+w/load7		W_L7
+
+////////////////////////////////////////////
+
+////////// frenzy_turrets.wad /////////////
+
+Tesla/Attack	DSTESATK
+Tesla/Loop		DSTESLOP
+
+/////////////////////////////////////////
+
+////////// frenzy_gore.wad  /////////////
+
+// SPLAT sounds
+splat/bloodsplat1	SPLAT01
+splat/bloodsplat2	SPLAT02
+splat/bloodsplat3	SPLAT03
+
+$random splatBlood	{splat/bloodsplat1 splat/bloodsplat2 splat/bloodsplat3}
+
+// shell sounds
+splat/shell1		SHELL01
+splat/shell2		SHELL02
+splat/shell3		SHELL03
+
+$random splatShell	{splat/shell1 splat/shell2 splat/shell3} 
+
+// bullet casing sounds
+splat/bulletcasing1		BCAS01
+splat/bulletcasing2		BCAS02
+splat/bulletcasing3		BCAS03
+
+$random splatBulletCasing	{splat/bulletcasing1 splat/bulletcasing2 splat/bulletcasing3} 
+
+c/build			BUILD
+//////////////////////////////////////////
+
+////////// frenzy_vehicle.wad  /////////////
+
+// Tank sounds
+veh/tankpain		DSZTANKP
+veh/tankdrive		DSZTANK2
+veh/tankshutdown	DSZTANKD
+veh/tankstartup		DSZTANK1
+
+////////////////////////////////////////////
 
 // 1.4 special
 p/specialitem	ITM2

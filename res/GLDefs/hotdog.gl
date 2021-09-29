@@ -1,0 +1,163 @@
+Pointlight DogFire1
+{
+Color 0.8 0.8 0.0
+Size 8
+}
+
+Pointlight DogFire2
+{
+Color 0.8 0.8 0.0
+Size 12
+}
+
+Pointlight DogFire3
+{
+Color 0.8 0.8 0.0
+Size 16
+}
+
+Pointlight DogFire4
+{
+Color 0.8 0.8 0.0
+Size 20
+}
+
+Pointlight DogFire5
+{
+Color 0.9 0.9 0.0
+Size 24
+}
+
+Pointlight DogFire6
+{
+Color 0.9 0.9 0.0
+Size 28
+}
+
+Pointlight DogFire7
+{
+Color 1.0 1.0 0.0
+Size 32
+}
+
+Pointlight DogFire8
+{
+Color 1.0 1.0 0.0
+Size 40
+}
+
+Pointlight DogFire9
+{
+Color 1.0 1.0 0.0
+Size 48
+}
+
+Pointlight DogFire10
+{
+Color 0.9 0.9 0.0
+Size 44
+}
+
+Pointlight DogFire11
+{
+Color 0.8 0.8 0.0
+Size 40
+}
+
+Pointlight DogFire12
+{
+Color 0.7 0.7 0.0
+Size 36
+}
+
+Pointlight DogFire13
+{
+Color 0.6 0.6 0.0
+Size 28
+}
+
+Pointlight DogFire14
+{
+Color 0.5 0.5 0.0
+Size 24
+}
+
+Pointlight DogFire15
+{
+Color 0.4 0.4 0.0
+Size 16
+}
+
+Pointlight DogFire16
+{
+Color 0.2 0.2 0.0
+Size 12
+}
+
+Object DogFire
+{
+Frame FRFXA { Light DogFire1 }
+Frame FRFXB { Light DogFire2 }
+Frame FRFXC { Light DogFire3 }
+Frame FRFXD { Light DogFire4 }
+Frame FRFXE { Light DogFire5 }
+Frame FRFXF { Light DogFire6 }
+Frame FRFXG { Light DogFire7 }
+Frame FRFXH { Light DogFire8 }
+Frame FRFXI { Light DogFire9 }
+Frame FRFXJ { Light DogFire10 }
+Frame FRFXK { Light DogFire11 }
+Frame FRFXL { Light DogFire12 }
+Frame FRFXM { Light DogFire13 }
+Frame FRFXN { Light DogFire14 }
+Frame FRFXO { Light DogFire15 }
+Frame FRFXP { Light DogFire16 }
+}
+
+Pointlight DogBall1
+{
+Color 0.5 0.5 0.0
+Size 32
+}
+
+Pointlight DogBall2
+{
+Color 0.8 0.8 0.0
+Size 40
+}
+
+Pointlight DogBall3
+{
+Color 1.0 1.0 0.0
+Size 48
+}
+
+Pointlight DogBall4
+{
+Color 0.8 0.8 0.0
+Size 56
+}
+
+Pointlight DogBall5
+{
+Color 0.5 0.5 0.0
+Size 48
+}
+
+Pointlight DogBall6
+{
+Color 0.3 0.3 0.0
+Size 32
+}
+
+Object DogShot
+{
+Frame HHFXA { Light DogBall1 }
+Frame HHFXB { Light DogBall1 }
+Frame HHFXC { Light DogBall1 }
+Frame HHFXD { Light DogBall2 }
+Frame HHFXE { Light DogBall3 }
+Frame HHFXF { Light DogBall4 }
+Frame HHFXG { Light DogBall5 }
+Frame HHFXH { Light DogBall6 }
+}

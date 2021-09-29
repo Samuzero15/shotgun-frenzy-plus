@@ -1,0 +1,45 @@
+Pointlight AnnihilatorRocket1
+{
+Color 1.0 0.7 0.0
+Size 56
+}
+
+Flickerlight AnnihilatorRocket2
+{
+Color 1.0 0.7 0.0
+Size 64
+SecondarySize 72
+Chance 0.3
+}
+
+Flickerlight AnnihilatorRocket3
+{
+Color 0.5 0.1 0.0
+Size 80
+SecondarySize 88
+Chance 0.3
+}
+
+Flickerlight AnnihilatorRocket4
+{
+Color 0.3 0.0 0.0
+Size 96
+SecondarySize 104
+Chance 0.3
+}
+
+Object Rocket2
+{
+Frame MISLA { Light AnnihilatorRocket1 }
+Frame MISLB { Light AnnihilatorRocket2 }
+Frame MISLC { Light AnnihilatorRocket3 }
+Frame MISLD { Light AnnihilatorRocket4 }
+}
+
+Object HomRocket1
+{
+Frame HMISA { Light AnnihilatorRocket1 }
+Frame BAL3C { Light AnnihilatorRocket2 }
+Frame BAL3D { Light AnnihilatorRocket3 }
+Frame BAL3E { Light AnnihilatorRocket4 }
+}

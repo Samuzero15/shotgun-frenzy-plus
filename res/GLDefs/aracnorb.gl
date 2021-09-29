@@ -1,0 +1,72 @@
+Pulselight AracnorbLight
+{
+Color 1.0 1.0 0.0
+Size 24
+SecondarySize 6
+Interval 3.0
+}
+
+Object AracnorbBall
+{
+Frame ACNF { Light AracnorbLight }
+}
+
+BrightMap Sprite ACNBB1
+{
+Map BMBLACK
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC2C8
+{
+Map BMBLACK
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC3C7
+{
+Map BMBLACK
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC4C6
+{
+Map BMBLACK
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC5
+{
+Map BMBLACK
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC1
+{
+Map BMACNBC1
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC2C8
+{
+Map BMACNBC2
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC3C7
+{
+Map BMACNBC3
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC4C6
+{
+Map BMACNBC4
+DisableFullBright
+}
+
+BrightMap Sprite ACNBC5
+{
+Map BMACNBC5
+DisableFullBright
+}
