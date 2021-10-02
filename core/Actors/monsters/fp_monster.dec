@@ -21,6 +21,7 @@ Actor FPlus_Monster {
 	DamageFactor "DemonFire", 0.0
 	MONSTER
 	+MTHRUSPECIES
+	+USEDAMAGEEVENTSCRIPT
 	
 	states{
 		

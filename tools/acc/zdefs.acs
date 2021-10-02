@@ -193,6 +193,10 @@
 #define CR_DARKGRAY				20
 #define CR_DARKGREY				20
 #define CR_CYAN					21
+#define CR_ICE					22
+#define CR_FIRE					23
+#define CR_SAPPHIRE				24
+#define CR_TEAL					25
 
 // HUD message types --------------------------------------------------------
 
@@ -766,6 +770,11 @@
 #DEFINE AAPTR_FRIENDPLAYER 0x4000
 #DEFINE AAPTR_GET_LINETARGET 0x8000
 
+// [AK] Actor pointers used exclusively for GAMEEVENT_ACTOR_DAMAGED
+#DEFINE AAPTR_DAMAGE_SOURCE 0x10000000
+#DEFINE AAPTR_DAMAGE_INFLICTOR 0x40000000
+#DEFINE AAPTR_DAMAGE_TARGET 0x80000000
+
 // Actor pointer operation flags
 
 #DEFINE PTROP_UNSAFETARGET 1
@@ -892,6 +901,20 @@
 // Zandronum database additions ---------------------------------------------
 #define DB_ORDER_ASC			0
 #define DB_ORDER_DESC			1
+
+// Zandronum EVENT script types ---------------------------------------------
+#define GAMEEVENT_PLAYERFRAGS		0
+#define GAMEEVENT_MEDALS		1
+#define GAMEEVENT_CAPTURES		2
+#define GAMEEVENT_TOUCHES		3
+#define GAMEEVENT_RETURNS		4
+#define GAMEEVENT_ROUND_STARTS		5
+#define GAMEEVENT_ROUND_ENDS		6
+#define GAMEEVENT_ROUND_ABORTED		7
+#define GAMEEVENT_CHAT			8
+#define GAMEEVENT_PLAYERCONNECT		9
+#define GAMEEVENT_ACTOR_SPAWNED		10
+#define GAMEEVENT_ACTOR_DAMAGED		11
 
 // Events when you have input grabbed
 
@@ -1118,3 +1141,62 @@
 #define CPXF_CLOSEST     (1 << 10)
 #define CPXF_SETONPTR    (1 << 11)
 #define CPXF_CHECKSIGHT  (1 << 12)
+
+#define SECPART_Floor 0
+#define SECPART_Ceiling 1
+#define SECPART_3D 2
+
+// For Line_SetAutomapFlags; These are or'd together
+#define AMLF_Secret		(1 << 0)
+#define AMLF_DontDraw		(1 << 1)
+#define AMLF_Mapped		(1 << 2)
+#define AMLF_Revealed		(1 << 3)
+
+// For Line_SetAutomapStyle
+#define AMLS_Default		0
+#define AMLS_OneSided		1
+#define AMLS_TwoSided		2
+#define AMLS_FloorDiff		3
+#define AMLS_CeilingDiff	4
+#define AMLS_ExtraFloor		5
+#define AMLS_Special		6
+#define AMLS_Secret		7
+#define AMLS_NotSeen		8
+#define AMLS_Locked		9
+#define AMLS_IntraTeleport	10
+#define AMLS_InterTeleport	11
+#define AMLS_UnexploredSecret	12
+#define AMLS_Portal		13
+
+// [TP] For GetTimeProperty
+#define TM_SECOND 0
+#define TM_MINUTE 1
+#define TM_HOUR 2
+#define TM_DAY 3
+#define TM_MONTH 4
+#define TM_YEAR 5
+#define TM_WEEKDAY 6
+
+// [AK] For SetGamemodeLimit
+#define GAMELIMIT_FRAGS 0
+#define GAMELIMIT_TIME 1
+#define GAMELIMIT_POINTS 2
+#define GAMELIMIT_DUELS 3
+#define GAMELIMIT_WINS 4
+#define GAMELIMIT_WAVES 5
+
+// [AK] For SetPlayerScore and GetPlayerScore
+#define SCORE_FRAGS 0
+#define SCORE_POINTS 1
+#define SCORE_WINS 2
+#define SCORE_DEATHS 3
+#define SCORE_KILLS 4
+#define SCORE_ITEMS 5
+#define SCORE_SECRETS 6
+
+// [AK] For GetMapRotationInfo
+#define MAPROTATION_Name 0
+#define MAPROTATION_LumpName 1
+#define MAPROTATION_Used 2
+#define MAPROTATION_MinPlayers 3
+#define MAPROTATION_MaxPlayers 4

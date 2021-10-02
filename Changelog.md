@@ -2,6 +2,11 @@
 
 ## v0 - Before the beginning...
 
+#### (zan3.1)-) (1 / 10 / 2021) [A... Damage tracker?]
+	// Just forked the whole sf+ repo to test it with the new build.
+	+) Now the monsters can call an evento script to tell the damage done by the player... huh?
+	// This... this, will change the xp system.
+
 #### -) (2 - 3 / 03 ,28 / 09 / 2021) [Added Powerup HellTrigger, Re-organized res part]
 	// 
 	!+) Added an new powerup, Hell-trigger!

@@ -19,6 +19,7 @@
 #import "fp_puhud.acs"
 #import "fp_ithud.acs"
 #import "fp_save.acs"
+#import "fp_event.acs" // Testing stuff..
 //#import "f_TMap.acs" <- intresting stuff...
 
 script "SFPlus_ClearSector" (int sector){
