@@ -1,0 +1,24 @@
+
+
+ACTOR DmgEvent_PowUp_Shield : PowerInvulnerable {}
+
+ACTOR DmgEvent_DefenseShield : PowerupGiver
+{
+	+INVENTORY.AUTOACTIVATE
+    +VisibilityPulse
+    powerup.type PowerInvulnerable
+	powerup.duration 15
+    Powerup.Color InverseMap
+    Powerup.Color "255 255 255" 0.3
+    Renderstyle Translucent
+}
+
+Actor KillEvent_RampageShield : PowerupGiver{
+    +INVENTORY.ADDITIVETIME
+    +INVENTORY.AUTOACTIVATE
+    +VisibilityPulse
+    powerup.type PowerInvulnerable
+	powerup.duration 8
+    Powerup.Color "255 255 255" 0.3
+    Renderstyle Translucent
+}

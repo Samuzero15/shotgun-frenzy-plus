@@ -13,6 +13,8 @@ Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 #include "Actors/gameobjects/fpatch_armor.dec"
 #include "Actors/gameobjects/fp_p_upgrades.dec"
 #include "Actors/gameobjects/fp_techitems.dec"
+#include "Actors/gameobjects/fp_ondmg_effects.dec"
+#include "Actors/gameobjects/fp_runes.dec"
 #include "Actors/props/fp_trees.dec"
 
 

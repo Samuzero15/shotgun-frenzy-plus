@@ -192,6 +192,7 @@ script 54 RESPAWN
 	delay(5);
 	ACS_Execute(56,0,p_LastWeap[playernumber()],0,0);
     delay(10);
+	
 	// Recharge prometeo protocol.
 	if(CheckInventory("PlayUp_Prometeo_Used"))
 		takeinventory("PlayUp_Prometeo_Used", 1);

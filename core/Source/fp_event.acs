@@ -1,20 +1,25 @@
 #library "fp_event"
 #include "zcommon.acs"
 
-script "DamageTracker" (int type, int arg1, int arg2) Event {
+script "SFP_Events" (int type, int arg1, int arg2) Event {
     switch(type){
         case GAMEEVENT_ACTOR_DAMAGED:
             int hpold = getActorProperty(0, APROP_HEALTH);
             int hpnow = hpold - arg1;
-            SetActivator(0, AAPTR_DAMAGE_SOURCE);
-            if(playernumber() != -1){
-                if(hpnow > 0){
-                    printbold(s:"You did me \cg", d:arg1, s:" dmg points! \c-Now I have: \cj", d:hpnow, s:" HP left");
-                }else{
-                    printbold(s:"I am dead by your fault! I got killed by : \cg ",
-                    d:hpold, s:"\c- dmg points.");
-                }
+            if(playernumber() >= 0){
+                ACS_NamedExecuteAlways("SFPlus_OnPlayerDamage", 0);
             }
         break;
     }    
+}
+
+script "SFPlus_OnPlayerDamage" (void){
+    if(checkinventory("RuneDefense")){
+        GiveInventory("DmgEvent_DefenseShield", 1);
+    }
+}
+script "SFPlus_OnMonsterKill" (void){
+    if(checkinventory("RuneRampage")){
+        GiveInventory("KillEvent_RampageShield", 1);
+    }
 }

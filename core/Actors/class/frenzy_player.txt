@@ -32,7 +32,7 @@ ACTOR FrenzyPlayer : PlayerPawn
 	
 	//+NOSKIN
 	+THRUSPECIES
-	
+	+USEDAMAGEEVENTSCRIPT
 	States
 	{
 	Spawn:

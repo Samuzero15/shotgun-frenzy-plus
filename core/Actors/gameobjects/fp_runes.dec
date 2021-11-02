@@ -1,0 +1,43 @@
+
+Actor RuneToken : PowerSpeed {
+    Speed 1.0
+}
+
+Actor RuneDefense : RuneToken {}
+Actor RuneRampage : RuneToken {}
+
+ACTOR DefenseRune : RuneGiver {
+    // 15 ticks of invulnerability, for each damage taken.
+    // Lookup fp_ondmg_effects.dec
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Defense
+	Inventory.PickupMessage "Defense!"
+	Inventory.PickupAnnouncerEntry "resistance"
+	States
+	{
+	Spawn:
+		RESR HGFEDCBA 6
+		Loop
+	}
+}
+
+ACTOR RampageRune : RuneGiver {
+    // 5 ticks of invulnerability, for each monster killed.
+    // Lookup fp_ondmg_effects.dec
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Rampage
+	Inventory.PickupMessage "Rampage!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}

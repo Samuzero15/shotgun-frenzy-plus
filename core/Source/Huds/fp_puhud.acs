@@ -22,6 +22,8 @@ Script "SFPlus_PowerupList" Enter Clientside{
 	int pow_prometeo_invul;
 	int pow_wealth;
 	int pow_helltrigger;
+	int rune_defense;
+	int rune_rampage;
 	if(ConsolePlayerNumber() == Playernumber()){
 		while(PlayerInGame(PlayerNumber())){
 			pow_helltrigger   = GetActorPowerupTics(0, "Inv_Power_Infinity");
@@ -32,6 +34,8 @@ Script "SFPlus_PowerupList" Enter Clientside{
 			pow_prometeo_x2dmg 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_2xDmg");
 			pow_prometeo_invul 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_Invul");
 			pow_wealth 	 	 = GetActorPowerupTics(0, "Inv_Power_Wealth");
+			rune_defense 		= GetActorPowerupTics(0, "RuneDefense");
+			rune_defense 		= GetActorPowerupTics(0, "RuneRampage");
 			//log(s:"Quad: ", d:GetActorPowerupTics(0, "PowerQuadDamage"));
 			PowHud_Show("x4 Damage", 	pow_quadsphere);
 			PowHud_Show("x6 Damage", 	pow_hexasphere);
@@ -41,6 +45,8 @@ Script "SFPlus_PowerupList" Enter Clientside{
 			PowHud_Show("Spawn Shield", pow_spawnshield);
 			PowHud_Show("x2 Credits", 	pow_wealth);
 			PowHud_Show("Fast Fire", 	pow_helltrigger);
+			PowHud_Show("Defense Rune", 	rune_defense);
+			PowHud_Show("Rampage Rune", 	rune_rampage);
 			/*
 			
 			PowHud_Show("x3 Credits", 		0); // Soon...
@@ -85,10 +91,21 @@ function void PowHud_Show(str effect, int powtime) {
 			y = (h*(0.68) - space) + 0.1;
 			
 		}
-		msg = Strparam(
+		int secs = (35 +powtime)/ 35;
+		if(secs > 86640 || secs < -86640) // More than one day (Infinite powerups)
+		{
+			msg = Strparam(
+				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cv"),
+				s:effect);
+		}
+		else{
+			msg = Strparam(
 				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cv"),
 				s:effect, s:" \c-",
-				d:((35 +powtime )/ 35));
+				d:(secs));
+		}
+		
+
 		SetHudSize(w, h, 1);
 		SetFont("STATBIGS");
 		HudMessage(s:msg; HUDMSG_PLAIN, 6100+index, CR_WHITE, x, y, 3.0);
