@@ -2,6 +2,17 @@
 
 ## v0 - Before the beginning...
 
+#### (zan3.1)-) (10 / 11 / 2021) [Smoll rune tweak]
+	*) Smoll fix on the Rampage Rune.
+	*) Forgot to add the last commit on the changelog.
+
+#### (zan3.1)-) (3 / 11 / 2021) [Runes on the works]
+	+) Added new runes, rampage and defense.
+	// Defense grants you 15 ticks (1/2 second) of invulnerability for each damage taken. Great against fast attacking demons.
+	// Rampage grants you a x1.5 damage multipler + Invulnerability per each enemy killed, for 8 ticks (almost a 1/4 of second) for each enemy killed. The time is stackable, the more you kill, the longer it lasts.
+	*) Powerup Hud will take care of the Runes display even for the infinite duration powerups.
+	+) New events for player damage and monster kill added, so much wacky stuff will happen there!
+
 #### (zan3.1)-) (1 / 10 / 2021) [A... Damage tracker?]
 	// Just forked the whole sf+ repo to test it with the new build.
 	+) Now the monsters can call an evento script to tell the damage done by the player... huh?
