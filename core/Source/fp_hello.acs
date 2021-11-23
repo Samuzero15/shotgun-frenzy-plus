@@ -7,6 +7,7 @@
 
 #library "FP_HELLO"
 #include "zcommon.acs"
+#include "acsutils.acs"
 #import "f_intdb.acs"
 #import "fp_credd.acs"
 
@@ -23,14 +24,29 @@ Script "SFPlus_Welcome" Enter CLIENTSIDE
 				s:"		\cvsfp_changelog\c- to see the main changes.\n",
 				s:"		\cvsfp_welcome 0\c- to hide this msg!"), 							3001, 0.50);
 				Hello_Print(strparam(s:"Version: \ci", s:Hello_Version()), 					3002, 0.6);
+				
+		}
+	}
+}
+
+Script "SFPlus_PrintClient" (void) CLIENTSIDE
+{
+	if(PlayerNumber() == ConsolePlayerNumber()){
+		if(GetUserCVar(playernumber(), "sfp_welcome") && StrIcmp("titlemap", strparam(n:-2))!= 0 ){
+			str full_text = StrReplace(strparam(l:"CHANGES"), "#", "\n");
+			str version = strparam(l:"PATCH_VERSION");
+			str cvar = "sfp_texttmp";
+			//SetUserCvarString(playernumber() ,	cvar, full_text);
+			Hello_Log(strparam(s:"\cfThe changes for this relase \c-(", s:version, s:")\cf are: \c-\n", s:full_text));
+			//SetUserCvarString(playernumber() ,	cvar, ""); // Clear it before something wrong happens
+			LocalAmbientSound("misc/chat2",127);
 		}
 	}
 }
 
 
 Script "SFPlus_Changelog" (void) NET {
-	Hello_Log(strparam(s:"\cfThe changes for this relase (", l:"PATCH_VERSION", s:") are: \c-\n", l:"CHANGES"));
-	LocalAmbientSound("misc/chat2",127);
+	ACS_NamedExecuteAlways("SFPlus_PrintClient", 0);
 }
 
 Script "SFPlus_CCMDList" (void) NET 

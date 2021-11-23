@@ -80,6 +80,7 @@ Script "SFPlus_StatsLoop" (void) {
 function void PlayStats_Load(int id){
 	int play = playernumber();
 	int i, j = 0;
+	GiveInventory("Hush_KillStreak", 1);
 	p_Credits[play] = 		save_player_stats[id][0];
 	p_Rank[play] = 			save_player_stats[id][1];
     p_Exp_Points[play] = 	save_player_stats[id][2];
@@ -106,6 +107,7 @@ function void PlayStats_Load(int id){
 		GiveInventory(MechUp_GetActor(j), save_player_stats[id][i]);
 		i++;
 	}
+	TakeInventory("Hush_KillStreak", 1);
 	log(s:"States Loaded");
 }
 

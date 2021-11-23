@@ -43,7 +43,7 @@ script "SFPlus_KillStreakHud" ENTER {
 	while(playeringame(play)){
 	KSNow = p_Streak[play];
 	KSHiScore = p_StreakHi[play];
-		if(KSLast != KSNow && KSNow > 1){
+		if(KSLast != KSNow && KSNow > 1 && !CheckInventory("Hush_Killstreak")){
 			ACS_NamedExecuteAlways("SFPlus_KSHud_Killstreak", 0,
 				KSNow, KSHiScore, GetNextStreakMilestone());
 			numscale = 1;

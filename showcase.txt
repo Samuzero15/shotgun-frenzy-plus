@@ -1,10 +1,33 @@
-Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
-Mech Sync upgrade will only appear in the shotgun frenzy maps.
-Ohoho! Shotgun and Chaingun turrets can now be pursacheable on the ammo terminal!
-Now the turrets will drop the smoke if they're low of its 50% of their health
-Now the turret displays an explosion, with fire and stuff.
-Prometeo protocol's invul effect has been nerfed to 5 seconds.
-The extra effects for prometeo can be displayed on the game.
-Fixed the Rank titles for the old and new hud.
-Fixed a bug on pursaching weapons, after upgrading a weapon, the base weapons can be brought back but with no chances to upgrade it.
-	
+
+[\cfAdded\c-]
+) Ammosphere now is buyable in the health terminal.
+) Now you can see what are you holding up! The items you got will be shown in the lower HUD!
+) Ammosphere with the powerup upgrade, there is a 50% chance of not being consumed upon use!
+) Different messages will be displayed upon enter, death and disconnect events.
+) Now the game autosaves your progress each 10 seconds in the game!
+) Added an new powerup, Hell-trigger!, Allows you to fire fast, and with infinite ammo for a short time!
+
+[\cfChanged / Fixed\c-]
+) Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
+) Mech Sync upgrade will only appear in the shotgun frenzy maps.
+) Ohoho! Shotgun and Chaingun turrets can now be pursacheable on the ammo terminal!
+) Now the turrets will drop the smoke if they're low of its 50% of their health
+) Now the turret displays an explosion, with fire and stuff.
+) Prometeo protocol's invul effect has been nerfed to 5 seconds.
+) The extra effects for prometeo can be displayed on the game.
+) Fixed the Rank titles for the old and new hud.
+) Fixed a bug on pursaching weapons, after upgrading a weapon, the base weapons can be brought back but with no chances to upgrade it.
+) Armor-Repair dispenser's effect ha been patched up.
+) Mech upgrades now will be shown in the stocking pad.
+) Inventory, Player & Kill-Streak huds will clean itself once the player disconnects (or spectates).
+
+[\cfRemoved\c-]
+
+
+
+
+
+
+
+
+
