@@ -35,7 +35,7 @@ Script "SFPlus_PowerupList" Enter Clientside{
 			pow_prometeo_invul 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_Invul");
 			pow_wealth 	 	 = GetActorPowerupTics(0, "Inv_Power_Wealth");
 			rune_defense 		= GetActorPowerupTics(0, "RuneDefense");
-			rune_defense 		= GetActorPowerupTics(0, "RuneRampage");
+			rune_rampage 		= GetActorPowerupTics(0, "RuneRampage");
 			//log(s:"Quad: ", d:GetActorPowerupTics(0, "PowerQuadDamage"));
 			PowHud_Show("x4 Damage", 	pow_quadsphere);
 			PowHud_Show("x6 Damage", 	pow_hexasphere);

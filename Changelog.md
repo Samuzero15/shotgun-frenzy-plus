@@ -2,9 +2,15 @@
 
 ## v0 - Before the beginning...
 
+<<<<<<< HEAD
 #### (zan3.1)-) (23 / 11 / 2021) [Fixin Bug]
 	*) sfp_Changelog fixed (needs testing tho), should do justice in showing the big changes.
 	*) Modified the Showcase text to show the big changes.
+=======
+#### (zan3.1)-) (10 / 11 / 2021) [Smoll rune tweak]
+	*) Smoll fix on the Rampage Rune.
+	*) Forgot to add the last commit on the changelog.
+>>>>>>> 2f9aacd86f1a5ddea395c52ae8d1149cbeae04d6
 
 #### (zan3.1)-) (3 / 11 / 2021) [Runes on the works]
 	+) Added new runes, rampage and defense.

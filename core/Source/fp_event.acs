@@ -20,6 +20,8 @@ script "SFPlus_OnPlayerDamage" (void){
 }
 script "SFPlus_OnMonsterKill" (void){
     if(checkinventory("RuneRampage")){
+        GiveInventory("KillEvent_RampageDmgUp", 1);
         GiveInventory("KillEvent_RampageShield", 1);
+        log(s:"Rampage rune effects!");
     }
 }
