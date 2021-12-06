@@ -30,7 +30,7 @@ Script "SaveLoad_Initialize" OPEN {
 		}
 	}
 	save_player_count = 0;
-	log(s:"Save-load slots initialized");
+	//log(s:"Save-load slots initialized");
 }
 
 Script "SFPlus_StatsLoop" (void) {
@@ -47,7 +47,7 @@ Script "SFPlus_StatsLoop" (void) {
 			break;
 		}
 	}
-	log(s:"Retrived id:", d:id);
+	//log(s:"Retrived id:", d:id);
 	if(id == -1){
 		id = save_player_count;
 		save_player_dict[id] = player_name;
@@ -58,7 +58,6 @@ Script "SFPlus_StatsLoop" (void) {
 		//log(s:"Loading Slot ", d:id, s:" for ", s:player_name);
 		PlayStats_Load(id);
 	}
-	
 	while (PlayerInGame(playernumber())){
 		delay(35*10); // Each 10 seconds, save the stats.
 		
@@ -80,7 +79,8 @@ Script "SFPlus_StatsLoop" (void) {
 function void PlayStats_Load(int id){
 	int play = playernumber();
 	int i, j = 0;
-	GiveInventory("Hush_KillStreak", 1);
+	
+
 	p_Credits[play] = 		save_player_stats[id][0];
 	p_Rank[play] = 			save_player_stats[id][1];
     p_Exp_Points[play] = 	save_player_stats[id][2];
@@ -107,8 +107,7 @@ function void PlayStats_Load(int id){
 		GiveInventory(MechUp_GetActor(j), save_player_stats[id][i]);
 		i++;
 	}
-	TakeInventory("Hush_KillStreak", 1);
-	log(s:"States Loaded");
+	//log(s:"States Loaded");
 }
 
 function void PlayStats_Update(int id){
@@ -140,7 +139,7 @@ function void PlayStats_Update(int id){
 		PlayStats_Save(CheckInventory(MechUp_GetActor(j)), 	id, i);
 		i++;
 	}
-	log(s:"States Updated");
+	//log(s:"States Updated");
 }
 
 function void PlayStats_Save(int var, int id, int stat){

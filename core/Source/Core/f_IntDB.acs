@@ -33,6 +33,8 @@
 #include "zcommon.acs"
 #include "acsutils.acs"
 
+#libdefine INTDB_MAXPLAYERS 32
+
 // game
 int g_Status;
 int g_SkillScore;
@@ -93,28 +95,30 @@ int f_AllowNuke;
 int f_AllowIon;
 
 // player
-int p_Credits[31];
-int p_Exp[31];
-int p_Exp_Points[31];
-int p_Rank[31];
-int p_MenuSelection[31];
-int p_MenuSelection_Active[31];
-int p_MenuSelection_Category[31];
-int p_MenuSelection_Limit[31];
-int p_Streak[31];
-int p_StreakHi[31];
-int p_StreakLevel[31];
+int p_Credits[INTDB_MAXPLAYERS];
+int p_Exp[INTDB_MAXPLAYERS];
+int p_Exp_Points[INTDB_MAXPLAYERS];
+int p_Rank[INTDB_MAXPLAYERS];
+int p_MenuSelection[INTDB_MAXPLAYERS];
+int p_MenuSelection_Active[INTDB_MAXPLAYERS];
+int p_MenuSelection_Category[INTDB_MAXPLAYERS];
+int p_MenuSelection_Limit[INTDB_MAXPLAYERS];
+int p_Streak[INTDB_MAXPLAYERS];
+int p_StreakHi[INTDB_MAXPLAYERS];
+int p_StreakLevel[INTDB_MAXPLAYERS];
+int p_EliteMode[INTDB_MAXPLAYERS];
+int p_KSHUD[INTDB_MAXPLAYERS];
 int p_TipQue[10];
 int p_TipProcess[10];// Timer signal (True if the tip is using a timed or process script)
 
 int p_TotalPlayerDeaths;
-int p_Combo[31];
-int p_SplatCombo[31];
-int p_UpgradeStack[31];         // soon to be redundant
-int p_TankSlot[31];             // player tank status
-int p_KickSlot[31];
-int p_LastWeap[31];//for the autowep switching feature
-int p_MechTimer[32];
+int p_Combo[INTDB_MAXPLAYERS];
+int p_SplatCombo[INTDB_MAXPLAYERS];
+int p_UpgradeStack[INTDB_MAXPLAYERS];         // soon to be redundant
+int p_TankSlot[INTDB_MAXPLAYERS];             // player tank status
+int p_KickSlot[INTDB_MAXPLAYERS];
+int p_LastWeap[INTDB_MAXPLAYERS];//for the autowep switching feature
+int p_MechTimer[INTDB_MAXPLAYERS];
 
 // commander
 int c_Commander = 99;
@@ -161,8 +165,31 @@ int s_ScreenSize[3] = {800, 600, 1};
 #libdefine SFHUD_HEIGHT 600
 
 // exp needed to get rank
-#libdefine NUM_RANKS 11 //[Samu] the Execute Always make the game more farmable! need to raise the ranks!
-int p_RankExp[NUM_RANKS] = { 0, 50, 125, 190, 230, 300, 500, 1000, 2000, 3000, 0 };
+#libdefine INTDB_NUM_RANKS 21 //[Samu] the Execute Always make the game more farmable! need to raise the ranks!
+#libdefine INTDB_ELITERANK 10
+int p_RankExp[INTDB_NUM_RANKS] = { 
+	0, // Rookie
+	50, 
+	125, 
+	190, 
+	230, 
+	300, 
+	500, 
+	1000, 
+	2000, 
+	3000, //Commander
+	// Elite ranks
+	4250, // 10th Elite Commander
+	5750, // 9th Elite Commander
+	6900, // 8th Elite Commander
+	8100, // 7th Elite Commander
+	9500, // 6th Elite Commander
+	11000, // 5th Elite Commander
+	12500, // 4th Elite Commander
+	13750, // 3rd Elite Commander
+	14900, // 2nd Elite Commander
+	16000, 0 // 1st Elite Commander // Dunno, im off ideas on the elite ranks xd
+};
 
 // amount of credits given for killing monster by class
 int p_MonsterCredits[7] = { 2, 10, 22, 27, 65, 90, 200 };       // { 2, 10, 20, 25, 60, 90, 200 };

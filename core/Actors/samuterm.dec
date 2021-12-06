@@ -25,6 +25,9 @@ Actor g_TechFlags : Integer {}
 Actor tech_doneflags : Integer {}
 Actor tech_lockflags : Integer {}
 Actor tech_loadflags : Integer {}
+Actor tech_doneflags2 : Integer {}
+Actor tech_lockflags2 : Integer {}
+Actor tech_loadflags2 : Integer {}
 
 Actor mech_buy : Integer {}
 Actor mech_state : Integer {}

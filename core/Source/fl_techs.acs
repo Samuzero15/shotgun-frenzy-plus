@@ -11,7 +11,7 @@
 #include "zcommon.acs"
 #include "acsutils.acs"
 
-#libdefine FP_NUMBTECH 25
+#libdefine FP_NUMBTECH 30
 #libdefine TECHF_DONE 	1<<0
 #libdefine TECHF_LOCK 	1<<1
 #libdefine TECHF_LOAD 	1<<2
@@ -39,10 +39,17 @@
 #libdefine TECH_MARCOM_CPULSE	20
 #libdefine TECH_MECHFA			21
 #libdefine TECH_NUKESY			22
+#libdefine TECH_MARCOM_REPDRN   23
+#libdefine TECH_MARCOM_GEARUP	24
+#libdefine TECH_MARCOM_SOLIDG	25
+#libdefine TECH_MARCOM_TARMOR	26
+#libdefine TECH_REFINE_BOUNTY	27
+#libdefine TECH_REFINE_DEEPER	28
+#libdefine TECH_REFINE_FASTER	29
 
 int fp_techstate[99];
-int fp_techflags[3];
-
+int fp_techflags[2][3];
+// 32 * 2 = 64 flags.
 function void SFPlus_DefineTechs(void){
 	for(int i = 0; i < FP_NUMBTECH; i++){
 		Tech_Set(i, 0);
@@ -51,16 +58,19 @@ function void SFPlus_DefineTechs(void){
 
 // Decorate call.
 Script "SFPlus_SetTech" (int which, int value){
-	if(which > 0 && which < 25)
+	if(which > 0 && which < FP_NUMBTECH)
 		Tech_Set(which, value);
-	else print(s:"Invalid tech");
+	else printbold(s:"Invalid tech");
 }
 
 Script "SFPlus_SyncTechs" ENTER{
 	while(1){
-		SetInventory("tech_doneflags", fp_techflags[0]);
-		SetInventory("tech_lockflags", fp_techflags[1]);
-		SetInventory("tech_loadflags", fp_techflags[2]);
+		SetInventory("tech_doneflags", 	fp_techflags[0][0]);
+		SetInventory("tech_lockflags", 	fp_techflags[0][1]);
+		SetInventory("tech_loadflags", 	fp_techflags[0][2]);
+		SetInventory("tech_doneflags2", fp_techflags[1][0]);
+		SetInventory("tech_lockflags2", fp_techflags[1][1]);
+		SetInventory("tech_loadflags2", fp_techflags[1][2]);
 		delay(1);
 	}
 }
@@ -70,25 +80,27 @@ function bool Tech_IsActivatedC(int flag){
 }
 
 function bool Tech_IsDoneC(int flag){
-	return (CheckInventory("tech_doneflags") & (1<<flag)) > 0;
+	return (CheckInventory("tech_doneflags") & (1<<flag)) > 0 || (CheckInventory("tech_doneflags2") & (1<<flag)) > 0;
 }
 
 function bool Tech_IsLockC(int flag){
-	return (CheckInventory("tech_lockflags") & (1<<flag)) > 0;
+	return (CheckInventory("tech_lockflags") & (1<<flag)) > 0 || (CheckInventory("tech_lockflags2") & (1<<flag)) > 0;
 }
 
 function bool Tech_IsLoadC(int flag){
-	return (CheckInventory("tech_loadflags") & (1<<flag)) > 0;
+	return (CheckInventory("tech_loadflags") & (1<<flag)) > 0 || (CheckInventory("tech_loadflags2") & (1<<flag)) > 0;
 }
 
 function void Tech_ChangeFlags(int id, int flag, int value)
 {
-  int flags = fp_techflags[id];
+  int flag_group = flag / 32;
+  int flags = fp_techflags[flag_group][id];
+  int bit = flag % 32;
   if (value)
-    flags |= 1<<flag; // set bit to 1
+    flags |= 1<<bit; // set bit to 1
   else
-    flags &= ~(1<<flag); // set bit to 0
-  fp_techflags[id] = flags;
+    flags &= ~(1<<bit); // set bit to 0
+  fp_techflags[flag_group][id] = flags;
 }
 
 function void Tech_ChangeDone(int flag, int value)
@@ -125,7 +137,7 @@ function void Tech_Set(int which, int flags){
 			Tech_ChangeLock(which, true);
 	else 	Tech_ChangeLock(which, false);
 	
-	if(flags & TECHF_Load)
+	if(flags & TECHF_LOAD)
 			Tech_ChangeLoad(which, true);
 	else 	Tech_ChangeLoad(which, false);
 	

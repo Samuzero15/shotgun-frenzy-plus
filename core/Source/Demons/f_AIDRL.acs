@@ -20,7 +20,7 @@ int AIDirector_Demonlimit = 250; // 250 = default
 // to change the flow of demons, use this
 
 #libdefine DIFF_EASY 0
-#libdefine DiFF_MED 1
+#libdefine DIFF_MED 1
 #libdefine DIFF_HARD 2
 
 

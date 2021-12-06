@@ -137,8 +137,10 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	
 	// increase exp and streak
 	Rank_GrantEXP(playernumber(), 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
-	if(GetActorProperty(0, APROP_HEALTH) > 1)
+	if(GetActorProperty(0, APROP_HEALTH) > 1){
 		p_Streak[playernumber()] ++;
+	}
+		
 		
     p_SplatCombo[playernumber()] += l_SplatCombo;
 	ACS_NamedExecuteAlways("SFPlus_StreakMilestone", 0);

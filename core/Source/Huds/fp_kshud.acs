@@ -41,9 +41,11 @@ script "SFPlus_KillStreakHud" ENTER {
 	int scaleTics = 5, tics, numscale;
 	
 	while(playeringame(play)){
-	KSNow = p_Streak[play];
-	KSHiScore = p_StreakHi[play];
-		if(KSLast != KSNow && KSNow > 1 && !CheckInventory("Hush_Killstreak")){
+		KSNow = p_Streak[play];
+		KSHiScore = p_StreakHi[play];
+		//log(s:"KillStreak HUD display?: ", d:p_KSHUD[play]);
+		if((KSLast != KSNow && KSNow > 1) && p_KSHUD[play]){
+			//log(s:"KILLSTREAK BEEP");
 			ACS_NamedExecuteAlways("SFPlus_KSHud_Killstreak", 0,
 				KSNow, KSHiScore, GetNextStreakMilestone());
 			numscale = 1;
@@ -80,6 +82,7 @@ script "SFPlus_KillStreakHud" ENTER {
 		}
 		KSLast = KSNow;
 		delay (1);
+		p_KSHUD[play] = 1;
 	}
 }
 

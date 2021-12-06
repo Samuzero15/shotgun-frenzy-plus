@@ -2,7 +2,7 @@
 Actor Integer : Inventory { Inventory.MaxAmount 0x7fffffff }
 Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 
-Actor Hush_Killstreak : Boolean {}
+Actor Hud_Killstreak : Boolean {}
 
 #include "Actors/sfrenzy14.dec"
 #include "Actors/acsutils.dec"

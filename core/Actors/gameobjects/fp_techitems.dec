@@ -38,3 +38,7 @@ goto Super::Pickup}}
 Actor FP_techitem_GENLAB_REGENB : FP_TechItem 
 {States{Pickup: CELL A 1 A_SetArg(0, 6)
 goto Super::Pickup}}
+
+Actor FP_techitem_REFINE_FASTER : FP_TechItem 
+{States{Pickup: CELL A 1 A_SetArg(0, 29)
+goto Super::Pickup}}

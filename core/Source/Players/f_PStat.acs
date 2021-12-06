@@ -261,6 +261,7 @@ script 57 (int num) DISCONNECT
 		 Notify_Player_Leave(Stats_PlayerNames[num]);
 	}
 	Stats_PlayerNames[num] = 0;
+	p_KSHUD[num] = 0;
 }
 
 script 599 (void)

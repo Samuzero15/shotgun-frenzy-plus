@@ -22,6 +22,34 @@ script "SFPlus_OnMonsterKill" (void){
     if(checkinventory("RuneRampage")){
         GiveInventory("KillEvent_RampageDmgUp", 1);
         GiveInventory("KillEvent_RampageShield", 1);
-        log(s:"Rampage rune effects!");
+    }
+}
+
+script "SFPlus_Dash" (void){
+    int DASH_SPD = 40; // Speed defined by monster.
+    int dashAngle = GetActorAngle(0);
+    int speed_cap = (DASH_SPD * 10.0) >> 16;
+    int factor_slide = 0.12;
+    str str_speed = "";
+    int a = "";
+    int slidertime = 35;
+    int i;
+    int min_speed;
+    for(i = 0; i < slidertime; i++)
+    {
+        if(GetActorZ(0) == GetActorFloorZ(0))
+        {
+            SetActorPosition(0, GetActorX(0), GetActorY(0), GetActorZ(0)+1.0, FALSE);
+            SetActorVelocity(0, cos(dashAngle) * DASH_SPD, sin(dashAngle) * DASH_SPD, 0.0, FALSE, FALSE);
+            //if(DASH_SPD < speed_cap) 
+            if((DASH_SPD * factor_slide) < 1.0) min_speed = 1;
+            else min_speed = (DASH_SPD * factor_slide >> 16);
+            DASH_SPD = DASH_SPD - min_speed;// slow it down
+            if(DASH_SPD < 0)SetActorVelocity(0, 0, 0, 0.0, FALSE, FALSE);
+            a = strparam(s:" dash_speed: ", d:DASH_SPD, s:" \n");
+            str_speed = strparam(s:str_speed, s:a);
+            print(s:str_speed);
+        }
+        delay(4);
     }
 }

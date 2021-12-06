@@ -10,8 +10,39 @@
 
 
 //////////////////////////////////////////////////////////
+#libdefine MLID_NULL      0
+#libdefine MLID_ANNHILATOR      MLID_NULL+1
+#libdefine MLID_ARCHOFHELL      MLID_ANNHILATOR+1
+#libdefine MLID_BLOODDEMON      MLID_ARCHOFHELL+1
+#libdefine MLID_BLOODFIEND      MLID_BLOODDEMON+1
+#libdefine MLID_CHAINGUNG2      MLID_BLOODFIEND+1
+#libdefine MLID_ZBCHAINSAW      MLID_CHAINGUNG2+1
+#libdefine MLID_CYBERBARON      MLID_ZBCHAINSAW+1
+#libdefine MLID_CYBERBRUIS      MLID_CYBERBARON+1
+#libdefine MLID_HELLION         MLID_CYBERBRUIS+1
+#libdefine MLID_NAILBORG        MLID_HELLION+1
+#libdefine MLID_NAILBORGCM      MLID_NAILBORG+1
+#libdefine MLID_DARKIMP1        MLID_NAILBORGCM+1
+#libdefine MLID_DARKIMP2        MLID_DARKIMP1+1
+#libdefine MLID_ARCHVILE        MLID_DARKIMP2+1
+#libdefine MLID_BABYSPIDER      MLID_ARCHVILE+1
+#libdefine MLID_BARONOHELL      MLID_BABYSPIDER+1
+#libdefine MLID_CHAINGUNG1      MLID_BARONOHELL+1
+#libdefine MLID_CYBERDEMON      MLID_CHAINGUNG1+1
+#libdefine MLID_DEMON           MLID_CYBERDEMON+1
+#libdefine MLID_DOOMIMP         MLID_DEMON+1
+#libdefine MLID_FASTZOMB        MLID_DOOMIMP+1
+#libdefine MLID_FATSO           MLID_FASTZOMB+1
+#libdefine MLID_HELLKNIGHT      MLID_FATSO+1
+#libdefine MLID_REVENANT        MLID_HELLKNIGHT+1
+#libdefine MLID_SHOTGUNGUY      MLID_REVENANT+1
+#libdefine MLID_ZOMBIEMAN       MLID_SHOTGUNGUY+1
+#libdefine MLID_SLIMEIMP        MLID_ZOMBIEMAN+1
+#libdefine MLID_SPIDERANHI      MLID_SLIMEIMP+1
+#libdefine MLID_SSGZOMBIE       MLID_SPIDERANHI+1
+#libdefine MLID_STONEDEMON      MLID_SSGZOMBIE+1
 
-int set_list[64] = {
+int set_list[32] = {
 "",
 /* 1  */"Annihilator",
 /* 2  */"ArchonOfHell",
@@ -43,36 +74,5 @@ int set_list[64] = {
 /* 28 */"SpiderAnnihilator",
 /* 29 */"SSGZombie",
 /* 30 */"StoneDemon",
-/* 31 */"VoidDarkImp",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"",
-"" };
+/* 31 */"VoidDarkImp"
+};
