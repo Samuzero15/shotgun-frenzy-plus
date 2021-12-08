@@ -384,7 +384,7 @@ function void Notify_Player_Death(void){
 	if(dice == 0){ // Rare-ish enter messages.
 		switch(random(0,3)){
 			case 0: entermsg = "OOF'ed"; break;
-			case 1: entermsg = "Was fucked up!"; break;
+			case 1: entermsg = "Was f*cked up!"; break;
 			case 2: entermsg = "Became a pile of flesh, and guts."; break;
 			case 3: entermsg = "Was forced to commit die"; break;
 			}

@@ -91,10 +91,16 @@ script 107 OPEN
 {
     // define a local container
     int l_RemainingMonsters;
+	
     
+	
     // wait until the game is active
     while(g_Status == 0)
         delay(35);
+	
+	log(d:35 * 60 * f_GameLength, s:" tics");
+	g_GameTimer = 35 * 60 * f_GameLength;
+	g_GuardianTimer = 35 * 60 * f_GuardianLength;
 	
 	//InitDB_Debug();
     
@@ -104,15 +110,20 @@ script 107 OPEN
     if (instant_guardian == 0)
     {
         // wait desired time minutes
+        log(d:g_GameTimer, s:" tics");
+		while(g_GameTimer > 0){ // [Samu] Here it is the game timer.
+			delay(1);
+			g_GameTimer--;
+		}
         
-        delay(35 * 60 * f_GameLength);
+        // guardian time warning
+		Notify_Message("GUARDIAN WAVE", strparam(s:"Incoming in ",d:f_GuardianLength, s:" minutes!"), "DEMONT", 0);
         
-        // five minute warning
-		Notify_Message("GUARDIAN WAVE", "2 minutes remaining!", "DEMONT", 0);
-        //f_TipShow ("DEMONT", "Guardian Appearence", "2 Minutes remaining...", 0);
-        
-        // wait 2 minutes
-        delay(35 * 60 * 2);
+        // wait guardian length minutes
+        while(g_GuardianTimer > 0){ // [Samu] Here it is the game timer.
+			delay(1);
+			g_GuardianTimer--;
+		}			// [Samu] Here it is the guardian timer.
     }
     
     acs_execute(108, 0, l_RemainingMonsters, 0, 0);
@@ -250,7 +261,7 @@ script 108 (int l_RemainingMonsters)
     delay(35);
     
     // display message
-	Notify_Message("GUARDIAN WAVE", "Arrived!", "DEMONT", 0);
+	Notify_Message("GUARDIAN WAVE", "Incoming!", "DEMONT", 0);
 	
 	g_GuardianWave = True;
 	g_Status = 4;
@@ -361,8 +372,7 @@ script 125 (int l_Condition)
 	if (l_Condition < 1 || l_condition > 4){
 		hudmessagebold(s:"No Count!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
 		delay(35*6);
-		str again = StrParam(s:"Changemap ", n:-2);
-		ConsoleCommand(again);
+		ResetMap();
 	}
     else if (l_Condition == 4)       {
 	hudmessagebold(s:"Defeat!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
@@ -407,7 +417,7 @@ script 125 (int l_Condition)
 	
 	//[Samu] you think you can get a good score by dying a lot!?
 	if(PlayerCount() == 0) g_FinalSkillScore = 0;
-	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 5;
+	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 3;
 	// Well not on my watch!
 	
 	// check limits

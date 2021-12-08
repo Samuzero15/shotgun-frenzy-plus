@@ -40,6 +40,7 @@ OptionMenu "SFPlusOptions"{
 	StaticText "All options that you need for your server.", 1
 	StaticText ""
 	Slider "Game Length (Mins) *", "sf_gamelength", 0, 30, 10, 0
+	Slider "Guardian Time Length (Mins) *", "sf_guardianlength", 0, 3, 2, 0
 	Slider "Starting Player Cash *", "sf_startcash", 0, 20000, 500, 0
 	Slider "Starting Team Cash *", "sf_teamcash", 0, 20000, 500, 0
 	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"
@@ -123,8 +124,10 @@ OptionMenu "SFPlusGameOptionHelp"{
 	Title "About the Game Options"
 	StaticText ""
 	StaticText "Game Length", 1
-	StaticText "This sets the duration of the game. This does'nt take account"
-	StaticText "with the 2 extra minutes for the guardian wave."
+	StaticText "This sets the duration of the game."
+	StaticText ""
+	StaticText "Guardian Time Length", 1
+	StaticText "Set the extra minutes before the guardian wave."
 	StaticText ""
 	StaticText "Player Cash", 1
 	StaticText "The amount of credits you get before starting the map."
@@ -174,7 +177,7 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "Re-Capture Minimal", 1
 	StaticText "On SF and CF maps, when re-capturing a sector,"
 	StaticText "the re-capture script can be executed when there is"
-	StaticText "less enemies than the minimal recapture specified here."
+	StaticText "less enemies than the minimal recapture amount specified here."
 	StaticText ""
 	StaticText "Monster Cap", 1
 	StaticText "Modifies the amount of monsters available to spawn."

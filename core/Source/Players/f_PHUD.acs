@@ -91,7 +91,25 @@ script 616 (void)
 	
 }
 
-script 999 ENTER
+Script "SFPlus_ShowForEveryone" OPEN
+{
+	while(!g_GameOver){
+		delay(1);
+		if (f_UseScoreSystem == 1)
+			Acs_NamedExecuteAlways("HUD_ShowTeamScore", 0, getlevelinfo(LEVELINFO_KILLED_MONSTERS));
+		
+		if(g_status != 0 && (g_GameTimer > 0 || g_GuardianTimer > 0)){
+			if(g_GameTimer > 0)
+				Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GameTimer);
+
+			else if(g_GuardianTimer >= 0)
+				Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+		}
+		Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+	}
+}
+
+script "SFPlus_PlayerFullScreenHUD" ENTER
 {
     // display loop
     while(1)
@@ -141,6 +159,7 @@ script 999 ENTER
         {
 			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0, 4, getactorproperty(104,APROP_Health));
 		}
+		
 	
         
         // team credits and mech status (if a commander based game)
@@ -212,6 +231,25 @@ function str PlayHUD_Timer(int tics){
 	return StrParam(s:min_s,s:" ",d:sec_i, s:" s");
 }
 
+function str PlayHUD_TimerEX(int tics){
+	int min_i = ((tics) / (35*60)) % 60;
+	int sec_i = ((tics) / 35)		% 60;
+	str min_s = cond(min_i > 0, strparam(d:min_i, s:" : "), "");
+	str tics_s = cond(min_i < 1, strparam(s:".", d:(tics % 35)), "");
+	str sec_s = cond(sec_i < 10 && min_i >= 1, strparam(s:"0", d:sec_i), strparam(d:sec_i));
+	str color = "\cj";
+	if(min_i < 1){
+		color = "\cf";
+		if(sec_i < 30 && sec_i >= 20) 		color = "\ck";
+		else if(sec_i < 20 && sec_i >= 10) 	color = "\ci";
+		else if(sec_i < 10) 				color = "\cg";
+	} 
+	
+	return StrParam(s:color, s:min_s, s:sec_s, s:tics_s);
+}
+
+
+
 function str PlayHUD_MechStatus(int mech_tics){
 	str mech_string = "\n\nMech Status:";
 	
@@ -227,6 +265,21 @@ function str PlayHUD_MechStatus(int mech_tics){
 	return mech_string;
 }
 
+script "HUD_ShowTeamScore" (int points) clientside
+{
+	setfont("CONFONT");
+	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+	hudmessage(s:"Team score: ",d:points; 1, 256, CR_TAN, 400.0, 18.1, 7.0);
+}
+
+script "HUD_ShowTimer" (int tics) clientside
+{
+	setfont("STATBIGS");
+	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+	hudmessage(s: PlayHUD_TimerEX(tics); 1, 255, CR_TAN, 400.0, 28.1, 7.0);
+	setfont("CONFONT");
+}
+
 script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_tics) clientside
 {	// Shows the team credits, and the current status about the mech.
 	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
@@ -238,8 +291,8 @@ script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("CONFONT");
 		hudmessage(s:"Team Credits: ", d:teamcredits, 
-            s:com,
-			s:PlayHUD_MechStatus(Mech_tics); 0, 86, CR_CREAM, 400.4, 10.1, 1.0);
+            s:com,s:"\n",
+			s:PlayHUD_MechStatus(Mech_tics); 0, 86, CR_CREAM, 400.4, 8.1, 1.0);
 	}else ClearHudMessage(86);
 } 
 

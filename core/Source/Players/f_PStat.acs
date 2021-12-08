@@ -105,6 +105,7 @@ script 53 ENTER
     setactorproperty(0, APROP_SPEED, 1.0);
     setactorproperty(0, APROP_Health, 100);
 	setactorproperty(0, APROP_DamageFactor, 1.0);
+	SetPlayerProperty(0, 0, PROP_BUDDHA);
     setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
     ACS_ExecuteAlways(106,0,3,1,1);
     p_MenuSelection_Active[playernumber()] = 0;
@@ -325,10 +326,6 @@ script 249 OPEN
 		int l_CurrentLevel;
 		//int acs_last = acs_level;
 		while(1){
-			// display
-			setfont("CONFONT");
-			sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-			hudmessage(s:"Team score: ",d:getlevelinfo(LEVELINFO_KILLED_MONSTERS); 1, 256, CR_TAN, 400.0, 20.1, 7.0);
 			/*
 			if(acs_level != acs_last){ // Debuggy
 				l_currentlevel = acs_level;

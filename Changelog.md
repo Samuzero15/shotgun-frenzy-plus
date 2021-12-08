@@ -2,6 +2,12 @@
 
 ## v0 - Before the beginning...
 
+#### (zan3.1)-) (8 / 12 / 2021) [Timer on SF and Cf maps]
+	*) Small fixes on the changelog.
+	+) Added the sf_guardianlength cvar, this will let you control the guardian wave warning time.
+	+) Added the duration timer, for the SF and CF maps! Now you will know when the game will finish.
+	*) Fixed the Prometeo Protocol bug, if it's active, it persists the budda state when traveling to the next map.
+
 #### (zan3.1)-) (5 / 12 / 2021) [Some extra stuff + fixes]
 	*) Recovered the missing sounds.
 	*) More Ranks implementing.
@@ -19,13 +25,13 @@
 #### (zan3.1)-) (3 / 11 / 2021) [Runes on the works]
 	+) Added new runes, rampage and defense.
 	// Defense grants you 15 ticks (1/2 second) of invulnerability for each damage taken. Great against fast attacking demons.
-	// Rampage grants you a x1.5 damage multipler + Invulnerability per each enemy killed, for 8 ticks (almost a 1/4 of second) for each enemy killed. The time is stackable, the more you kill, the longer it lasts.
+	// Rampage grants you a x1.5 damage multipler + Invulnerability per each enemy killed, for 8 ticks (almost a 1/4 of second). The time is stackable, the more you kill, the longer it lasts.
 	*) Powerup Hud will take care of the Runes display even for the infinite duration powerups.
 	+) New events for player damage and monster kill added, so much wacky stuff will happen there!
 
 #### (zan3.1)-) (1 / 10 / 2021) [A... Damage tracker?]
 	// Just forked the whole sf+ repo to test it with the new build.
-	+) Now the monsters can call an evento script to tell the damage done by the player... huh?
+	+) Now the monsters can call an event script to tell the damage done by the player... huh?
 	// This... this, will change the xp system.
 
 #### -) (2 - 3 / 03 ,28 / 09 / 2021) [Added Powerup HellTrigger, Re-organized res part]
