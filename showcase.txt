@@ -6,6 +6,7 @@
 ) Different messages will be displayed upon enter, death and disconnect events.
 ) Now the game autosaves your progress each 10 seconds in the game!
 ) Added an new powerup, Hell-trigger!, Allows you to fire fast, and with infinite ammo for a short time!
+) Runes (WIP)
 
 [\cfChanged / Fixed\c-]
 ) Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.

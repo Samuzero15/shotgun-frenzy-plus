@@ -4,7 +4,7 @@ A fork from Shotgun Frenzy (a Doom 2 mod) which adds more stuff for Zandronum.
 ## Shotgun Frenzy? Er... wut?
 That's a Doom mod with some Tower Defense game style, fusionated with some elements from the RTS (Real-Time Strategy), and of course, the First Person Shooter in a single place, mixed up with countless waves of demons Invading your base.
 
-The game loop is simple, buy some weapons, kill demons to rise your ranks to open new upgrades, protect the cores, until you survive (or not) long enough to face the guardian wave. Other endings are avilable up to the date.
+The game loop is simple, buy some weapons, kill demons to rise your ranks in order to open new upgrades, protect the cores, until you survive (or not) long enough to face the guardian wave. Other endings are avilable up to the date.
 
 The original mod was made by Wad'a'holic, but for unknown reasons he stopped the project and decided to move on Total Chaos.
 
@@ -16,12 +16,22 @@ Yet the development was'nt stopped at all, Greg339 (I think...) and T3h Player d
 
 One day, when we're playing the mod, Zanieon was pissed with some Cyber-Barons (a strong enemy on the mod) for the excess of damage output dealt against players, so he did some other balances more. And i've followed him, just to support the changes.
 
-And now the latest update for the patch was the unofficial v8f, it was intended to develop another patch, but for the unstability of the code, I've decided to make an entire fork to fix the problems from the roots. 
+And now the latest update for the patch was the unofficial v8f, it was intended to develop another patch, but for the unstability of the code, I've decided to make an entire fork to fix the problems from the roots.
+
+## So, What's new?
+* Commander's Airstrikes are more controlled, plan first, then bomb the field!
+* Mech Factory now brings a lot of upgrades for your mech! Making it the best offensive tool in the game!
+* Extra stuff, like Chaingun and Shotgun turrets.
+* New normal HUD and extra touches on the full-screen hud!
+* A brand new terminal fully clientsided!, Move the cursor with your mouse, and press the button!
+* Weapons are balanced and changed! Some of them have new alt-fires that actually makes them useful.
+* Player Upgrades! Use your U.P. Points to gain private perks for the marines!
+* A lot of Console Vars to customize your battles!
 
 ## Play setup
 
 To run this you need:
-* Zandronum 3.1 Alpha OR Zandronum 3.0
+* Zandronum 3.1
 * A copy of Doom 2 or Freedoom 2.
 * The Skulltag Content wad.
 

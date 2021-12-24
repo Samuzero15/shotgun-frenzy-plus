@@ -29,7 +29,7 @@ What is inside?
 	*) I'm NOT, the owner of Shotgun Frenzy, that credit goes to Wad'a'Holic.
 	
 	*) I have no permission to edit Shotgun Frenzy directly, yet taking the 
-	same action as T3h Player, I made this, as a paralel version for the same 
+	same action as T3h Player, I made this, as a paralel version of the same 
 	mod.
 	
 	*) This mod uses as base the latest relase of Shotun Frenzy. Version: 14.
@@ -42,7 +42,7 @@ What is inside?
 	*) YES. This thing uses a lot of stuff taken from Realm667, You got a 
 	problem with that? I mean, I know you'd hate to see the same resources seen
 	in each mod of doom, but for me, in this mod, they're the spot-light to this
-	wonderful tribute of Shotgun Frenzy. Also, I'm lazy to do each weapon from 
+	wonderful tribute of Shotgun Frenzy. Also, I'm too lazy to do each weapon from 
 	scratch.
 	
 	*) You're allowed to make mods based on this. Just don't modify this and 
@@ -121,7 +121,7 @@ What is inside?
 	
 	Myself (Samuzero15tlh):
 		Now i think i've took this WAY personal. 
-		Meh fuck it.
+		Meh f*ck it.
 		
 	My sis:
 		Moral help... What i can do without you? <3

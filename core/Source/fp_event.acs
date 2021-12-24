@@ -8,6 +8,19 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
             int hpnow = hpold - arg1;
             if(playernumber() >= 0){
                 ACS_NamedExecuteAlways("SFPlus_OnPlayerDamage", 0);
+
+                if(checkinventory("RuneTemperance")){
+                    if(checkinventory("BasicArmor") || checkinventory("MegasphereArmor")){
+                        // Your health is protected from damage, as long as you have any armor.
+                        SetResultValue(false);
+                    }
+                }
+            }
+        break;
+        case GAMEEVENT_ACTOR_ARMORDAMAGED:
+            if(checkinventory("RuneTemperance")){
+                // Your armor takes the damage.
+                SetResultValue(arg1);
             }
         break;
     }    

@@ -8,13 +8,12 @@ Actor KillCounter : Inventory{
 
 Actor PlayerKilledDemon : Killcounter{Inventory.Amount 1}
 
-//FUCK THAT 33% DAMAGE ABSORBTION BRO, THIS SHIT IS USELESS AGAINST HORDES WITH SUCH LOW PROTECTION!
 Actor SteelPlatingArmor : GreenArmor
 {
   Radius 20
   Height 48
   Inventory.Pickupmessage "Steel Plating Armor!"
-  Armor.Savepercent 90
+  Armor.Savepercent 65
   Armor.Saveamount 100
   +INVENTORY.QUIET
 }
@@ -24,7 +23,7 @@ Actor MegaSphereArmor : BlueArmor
   Radius 20
   Height 48
   Inventory.Pickupmessage "Megasphere Armor!"
-  Armor.Savepercent 90
+  Armor.Savepercent 85
   Armor.Saveamount 200
   +INVENTORY.QUIET
 }

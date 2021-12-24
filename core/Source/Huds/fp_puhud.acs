@@ -24,18 +24,22 @@ Script "SFPlus_PowerupList" Enter Clientside{
 	int pow_helltrigger;
 	int rune_defense;
 	int rune_rampage;
+	int rune_health;
+	int rune_ammo;
 	if(ConsolePlayerNumber() == Playernumber()){
 		while(PlayerInGame(PlayerNumber())){
-			pow_helltrigger   = GetActorPowerupTics(0, "Inv_Power_Infinity");
-			pow_quadsphere   = GetActorPowerupTics(0, "PowerQuadDamage");
-			pow_hexasphere   = GetActorPowerupTics(0, "PlayUp_PowUpUpgrade_6xDmg");
-			pow_godsphere    = GetActorPowerupTics(0, "PowerInvulnerable");
-			pow_spawnshield  = GetActorPowerupTics(0, "PlayUp_Spawnshield_Power");
+			pow_helltrigger  	 = GetActorPowerupTics(0, "Inv_Power_Infinity");
+			pow_quadsphere   	= GetActorPowerupTics(0, "PowerQuadDamage");
+			pow_hexasphere   	= GetActorPowerupTics(0, "PlayUp_PowUpUpgrade_6xDmg");
+			pow_godsphere    	= GetActorPowerupTics(0, "PowerInvulnerable");
+			pow_spawnshield  	= GetActorPowerupTics(0, "PlayUp_Spawnshield_Power");
 			pow_prometeo_x2dmg 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_2xDmg");
 			pow_prometeo_invul 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_Invul");
-			pow_wealth 	 	 = GetActorPowerupTics(0, "Inv_Power_Wealth");
+			pow_wealth 	 		 = GetActorPowerupTics(0, "Inv_Power_Wealth");
 			rune_defense 		= GetActorPowerupTics(0, "RuneDefense");
 			rune_rampage 		= GetActorPowerupTics(0, "RuneRampage");
+			rune_health 		= GetActorPowerupTics(0, "RuneHealth");
+			rune_ammo 			= GetActorPowerupTics(0, "RuneAmmunition");
 			//log(s:"Quad: ", d:GetActorPowerupTics(0, "PowerQuadDamage"));
 			PowHud_Show("x4 Damage", 	pow_quadsphere);
 			PowHud_Show("x6 Damage", 	pow_hexasphere);
@@ -47,6 +51,8 @@ Script "SFPlus_PowerupList" Enter Clientside{
 			PowHud_Show("Fast Fire", 	pow_helltrigger);
 			PowHud_Show("Defense Rune", 	rune_defense);
 			PowHud_Show("Rampage Rune", 	rune_rampage);
+			PowHud_Show("Health Rune", 	rune_health);
+			PowHud_Show("Ammunition Rune", 	rune_ammo);
 			/*
 			
 			PowHud_Show("x3 Credits", 		0); // Soon...

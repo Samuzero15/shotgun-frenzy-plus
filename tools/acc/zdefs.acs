@@ -915,6 +915,7 @@
 #define GAMEEVENT_PLAYERCONNECT		9
 #define GAMEEVENT_ACTOR_SPAWNED		10
 #define GAMEEVENT_ACTOR_DAMAGED		11
+#define GAMEEVENT_ACTOR_ARMORDAMAGED	12
 
 // Events when you have input grabbed
 
@@ -1193,6 +1194,8 @@
 #define SCORE_KILLS 4
 #define SCORE_ITEMS 5
 #define SCORE_SECRETS 6
+#define SCORE_SPREAD 7
+#define SCORE_RANK 8
 
 // [AK] For GetMapRotationInfo
 #define MAPROTATION_Name 0

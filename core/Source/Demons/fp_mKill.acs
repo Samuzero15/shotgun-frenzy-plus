@@ -10,6 +10,7 @@
 #import "f_IntDB.acs"
 #import "f_cred.acs"
 #import "fl_techs.acs"
+#import "fp_itemDr.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -35,15 +36,32 @@ Script "SFPlus_MonsterKill" Kill{
 	  if	(flag_boss) montype = 2;
 	  if	(flag_hard) montype = 1;
 
-	 // drop reward item
+	 // [Samu] Drop credits
+	 if(!flag_NoCount){
+		int i = 0;
+		int chance = 10;
+		if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")) 
+			chance = chance + 5; 
+		while((1 + flag_gibbed + flag_boss + flag_hard) > i){
+			if(random(0, 100) < chance)
+				Spawn("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
+			i++;
+		}
+	 }
+	 // Drop reward items.
+	 ItemDr_MonsterDrop(monsterClass);
+	 
+
+	 // Calculate the money gain by the player.
 	 int howMuch = p_MonsterCredits[monsterClass] + playercount();
 	 int splatbonus = howmuch/2;
 	 if(splat > 0)	howMuch += splatBonus;
-	 p_dropItem(monsterClass);
+	 
 		//debugTidPointers (0);
 		//debugTidPointersStrings(0);
 	  // give credits and xp
 	 //log(d:ActivatorTID());
+	 
 	 SetActivatorToTarget(0);
 	 //print(d:ActivatorTID());
 	 //printbold(s:"No profit? = ", d:noProfit);

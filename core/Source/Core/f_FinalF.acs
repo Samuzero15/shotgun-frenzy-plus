@@ -98,7 +98,7 @@ script 107 OPEN
     while(g_Status == 0)
         delay(35);
 	
-	log(d:35 * 60 * f_GameLength, s:" tics");
+	//log(d:35 * 60 * f_GameLength, s:" tics");
 	g_GameTimer = 35 * 60 * f_GameLength;
 	g_GuardianTimer = 35 * 60 * f_GuardianLength;
 	
@@ -110,7 +110,7 @@ script 107 OPEN
     if (instant_guardian == 0)
     {
         // wait desired time minutes
-        log(d:g_GameTimer, s:" tics");
+        //log(d:g_GameTimer, s:" tics");
 		while(g_GameTimer > 0){ // [Samu] Here it is the game timer.
 			delay(1);
 			g_GameTimer--;

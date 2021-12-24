@@ -1,0 +1,151 @@
+
+#library "fp_itemDr"
+#import "f_IntDB.acs"
+#include "zcommon.acs"
+//#include "samu_tools.acs"
+
+// monster item rewards for different classes
+#libdefine ITEMDROP_MAX 4
+#libdefine ITEMDROP_PROPS 2
+#libdefine ITEMDROP_ITEMS 4
+#libdefine ITEMDROP_CLASSES 6
+
+int ItemDr_stack;
+int ItemDr_rewards[ITEMDROP_CLASSES][ITEMDROP_PROPS][ITEMDROP_ITEMS];
+
+Script "ItemDr_InitRewards" open{
+    //Initialize real quick.
+    for (int i = 0; i < ITEMDROP_CLASSES; i++){
+        for (int j = 0; j < ITEMDROP_PROPS; j++){
+            for (int k = 0; k < ITEMDROP_ITEMS; k++){
+                ItemDr_rewards[i][j][k] = 0;
+                
+            }
+        }
+    }
+
+	int class = 0;
+	ItemDr_Add_R(class, "Rnd_Inventory_Soulsphere", 15);
+	ItemDr_Add(class, "Medikit", 25);
+	
+	class = 1;
+	ItemDr_Add_R(class, "Rnd_Inventory_Megasphere", 25);
+	
+	class = 2;
+	ItemDr_Add_R(class, "Rnd_Inventory_Soulsphere", 40);
+	ItemDr_Add(class, "Rnd_Inventory_Megasphere", 20);
+	
+	class = 3;
+	ItemDr_Add_R(class, "Rnd_Inventory_TurretBullet", 50);
+	ItemDr_Add(class, "Rnd_Inventory_Soulsphere", 30);
+	ItemDr_Add(class, "Rnd_Inventory_Berserk2", 10);
+	
+	class = 4;
+	ItemDr_Add_R(class, "Rnd_Inventory_TeslaCoil", 30);
+	ItemDr_Add(class, "Rnd_Inventory_TurretBullet", 20);
+	ItemDr_Add(class, "Rnd_Inventory_Berserk2", 15);
+	ItemDr_Add(class, "Rnd_Inventory_Godsphere", 10);
+	
+	class = 5;
+	ItemDr_Add_R(class, "Rnd_Inventory_Berserk2", 30);
+	ItemDr_Add(class, "Rnd_Inventory_Megasphere", 25);
+	ItemDr_Add(class, "Rnd_Inventory_Godsphere", 15);
+	ItemDr_Add(class, "Rnd_Inventory_Ammogiver", 15);
+	
+	class = 6;
+	ItemDr_Add_R(class, "Rnd_Inventory_Berserk2", 50);
+	ItemDr_Add(class, "Rnd_Inventory_Megasphere", 40);
+	ItemDr_Add(class, "Rnd_Inventory_Godsphere", 20);
+	ItemDr_Add(class, "Rnd_Inventory_Ammogiver", 20);
+}
+
+function void ItemDr_Add_R(int class, str item, int dropChance){
+    ItemDr_stack = 0;
+	ItemDr_Add(class,item,dropChance);
+}
+
+function void ItemDr_Add(int class, str item, int dropChance){
+	ItemDr_rewards[class][0][ItemDr_stack] = item;
+	ItemDr_rewards[class][1][ItemDr_stack] = dropChance;
+	ItemDr_stack++;
+}
+
+function int ItemDr_getItem(int class,int nitem){
+	return ItemDr_rewards[class][0][nitem];
+}
+
+function int ItemDr_getChance(int class,int nitem){
+	return ItemDr_rewards[class][1][nitem];
+}
+
+// mmm: drop reward item on monster death
+
+function void ItemDr_Spawn(str item){
+    if(item == 0) return;
+
+    Spawn("ItemFog",
+            GetActorX(0) + random(0, 10.0),
+            GetActorY(0) + random(0, 10.0),
+            GetActorFloorZ(0) + 10.0);
+    Spawn(item,
+            GetActorX(0) + random(0, 10.0),
+            GetActorY(0) + random(0, 10.0),
+            GetActorFloorZ(0) + 10.0);
+}
+
+function void ItemDr_MonsterDrop(int monsterClass)
+{
+// probability of dropping item
+	//[Samu] Alright, im doing this just for the sake of refactoring!
+	
+  // loop through rewards for this monster class (max 4 rewards)
+
+  
+  int chance = p_MonsterItem[monsterClass];
+
+  if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")){
+      chance = chance + 10;
+  }
+
+  int spawn_fx = false; 
+  if (!(random(0, 100) > chance)){
+    for (int i = 0; i < ITEMDROP_MAX; i++){
+        chance = ItemDr_getChance(monsterClass, i);
+        if (random(0, 100) > chance) continue;
+        ItemDr_Spawn(ItemDr_getItem(monsterClass, i));
+        spawn_fx = true;
+    }
+  }
+  
+    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneHealth")){
+        chance = 3 + monsterClass*2;
+        if(random(0, 100) < chance){
+            // Should be health wisps
+            ItemDr_Spawn("Stimpack");
+            ItemDr_Spawn("Stimpack");
+            ItemDr_Spawn("Stimpack");
+            ItemDr_Spawn("Stimpack");
+            spawn_fx = true;
+        }
+        
+    }
+    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneAmmunition")){
+        chance = 3 + monsterClass*2;
+        if(random(0, 100) < chance){
+            ItemDr_Spawn("Clip");
+            ItemDr_Spawn("Shell");
+            ItemDr_Spawn("RocketAmmo");
+            ItemDr_Spawn("Gasoline");
+            ItemDr_Spawn("Cell");
+            ItemDr_Spawn("Dualshot_Ammo");
+            ItemDr_Spawn("Flinger_Ammo");
+            spawn_fx = true;
+        }
+    }
+
+    if(spawn_fx){
+        
+        PlaySound(ActivatorTID(), "misc/spawn");
+    }
+    
+}

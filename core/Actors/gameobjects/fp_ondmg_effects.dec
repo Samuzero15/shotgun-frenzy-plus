@@ -6,6 +6,20 @@ Actor KillEvent_PowUp_DmgUp : PowerDamage {
     DamageFactor Normal, 1.5
 }
 
+Actor DmgEvent_Blast : CustomInventory {
+    Inventory.PickupMessage ""
+    Inventory.PickupSound ""
+    -CountItem
+    states{
+        Spawn:
+            TNT1 A -1
+        fail
+        Pickup:
+            TNT1 A 0
+        stop
+    }
+}
+
 ACTOR DmgEvent_DefenseShield : PowerupGiver
 {
 	+INVENTORY.AUTOACTIVATE

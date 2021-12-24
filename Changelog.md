@@ -2,6 +2,19 @@
 
 ## v0 - Before the beginning...
 
+#### (22 - 24 / 12 / 2021) [Runes on the works (2)]
+	+) Some few new runes are being added.
+	// Health: Stimpacks, Medikits, and Armors are more common, (wip) Any source of healing gives 50% more of health.
+	// Ammunition: Ammo satchels (Right now, small ammoes) are more common; (wip) Sometimes, firing will not consume ammunition.
+	// Fortune: Credits are more common, Monsters drop items more often.
+	// Temperance: The damage is deducted on the armor, causing it to deteriorate faster, however, as long as you have armor, your health is left unharmed.
+	// Blast: (wip) Any damage recived, will create a blast, pushing surrounding monsters.
+	*) The item drops are separated in a new module, fp_itemdr.acs.
+	*) Now, when an item is dropped by monsters, the item fog and sound will show in battlefield.
+	*) Now, the credit shower will be summoned more often depending of the type of kill and monster.
+	-) A little bit of a nerf in the armor damage absorbsion just to test the Temperance rune.
+	-) Removed the decorate spawning of credits, now this credit shower will be summoned on ACS.
+
 #### (zan3.1)-) (8 / 12 / 2021) [Timer on SF and Cf maps]
 	*) Small fixes on the changelog.
 	+) Added the sf_guardianlength cvar, this will let you control the guardian wave warning time.
@@ -25,7 +38,7 @@
 #### (zan3.1)-) (3 / 11 / 2021) [Runes on the works]
 	+) Added new runes, rampage and defense.
 	// Defense grants you 15 ticks (1/2 second) of invulnerability for each damage taken. Great against fast attacking demons.
-	// Rampage grants you a x1.5 damage multipler + Invulnerability per each enemy killed, for 8 ticks (almost a 1/4 of second). The time is stackable, the more you kill, the longer it lasts.
+	// Rampage grants you a x1.5 Damage multipler and Invulnerability per each enemy killed, for 8 ticks (almost a 1/4 of second). The time is stackable, the more you kill, the longer it lasts.
 	*) Powerup Hud will take care of the Runes display even for the infinite duration powerups.
 	+) New events for player damage and monster kill added, so much wacky stuff will happen there!
 

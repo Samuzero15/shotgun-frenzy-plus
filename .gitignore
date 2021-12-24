@@ -3,7 +3,7 @@
 *.bak
 *d.pk3
 dist/
-tools/zandronum/*.*
+tools/zandronum/
 tools/pwads/*.*
 *.dbs
 *.wad.backup*

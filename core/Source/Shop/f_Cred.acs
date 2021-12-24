@@ -205,34 +205,9 @@ script 855 (int l_Amount, int l_SplatCombo)
 script 500 (int monsterID, int splat, int noProfit)
 {
  // Duplicated
-	log(s:"It's duplicated on source/demons/fp_mkill.acs You can remove this script from the decorate, thank you.");
+	log(s:"It's duplicated on source/demons/fp_mkill.acs,  You can remove this script from the decorate, thank you.");
 
 }
 
-// mmm: drop reward item on monster death
 
-
-
-function void p_dropItem(int monsterClass)
-{
-
-// probability of dropping item
-	//[Samu] Alright, im doing this just for the sake of refactoring!
-	
-  // loop through rewards for this monster class (max 4 rewards)
-  int chance = p_MonsterItem[monsterClass];
-  if (random(0, 100) > chance)return; 
-  
-  str type = "";
-  for (int i = 0; i < NUM_MONSTER_REWARDS; i++)
-    {
-	 
-	 chance = getMonsterChanceToDrop(monsterClass, i);
-	 if (random(0, 100) > chance) continue;
-	 
-	 Spawn(getMonsterItem(monsterClass, i), GetActorX(0) + random(0, 10),
-        GetActorY(0) + random(0, 10),
-        GetActorFloorZ(0) + 10);
-	}
-}
   
