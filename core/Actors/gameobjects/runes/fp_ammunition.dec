@@ -1,0 +1,28 @@
+
+ACTOR AmmunitionRune : RuneGiver {
+    // Ammunition is more common.
+	// Chance of 1% per tic for 4 ticks of infinite ammo.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Ammunition
+	Inventory.PickupMessage "Ammunition!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}
+
+Actor AmmunitionRune_Activate : PowerupGiver{
+    +INVENTORY.AUTOACTIVATE
+    +VisibilityPulse
+    powerup.type InfiniteAmmo
+	powerup.duration 35
+    Powerup.Color InverseMap
+    Powerup.Color "0 0 0" 0.3
+    Renderstyle Translucent
+}

@@ -1,0 +1,36 @@
+
+ACTOR DefenseRune : RuneGiver {
+    // 15 ticks of invulnerability, for each damage taken.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Defense
+	Inventory.PickupMessage "Defense!"
+	Inventory.PickupAnnouncerEntry "resistance"
+	States
+	{
+	Spawn:
+		RESR HGFEDCBA 6
+		Loop
+	}
+}
+
+Actor DefenseRune_Activate : Rune_Activation {
+	States {
+		Pickup:
+			TNT1 A 0 A_GiveInventory("DefenseRune_Shield", 1)
+		Stop
+	}
+}
+
+ACTOR DefenseRune_ShieldInvul : PowerInvulnerable {}
+
+Actor DefenseRune_Shield : PowerupGiver{
+	+INVENTORY.AUTOACTIVATE
+    +VisibilityPulse
+    powerup.type DefenseRune_ShieldInvul
+	powerup.duration 15
+    Powerup.Color "255 255 255" 0.3
+    Renderstyle Translucent
+}

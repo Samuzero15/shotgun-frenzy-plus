@@ -1,0 +1,31 @@
+
+ACTOR ResurrectionRune : RuneGiver {
+	// Saves you from death, activating a free megasphere at the last moment.
+    // Once activated, it gets destroyed.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Resurrection
+	Inventory.PickupMessage "Resurrection!"
+	Inventory.PickupAnnouncerEntry "Prosperity"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}
+
+Actor ResurrectionRune_Activate : Rune_Activation {
+    states {
+        Pickup:
+            TNT1 A 0 A_TakeInventory("RuneResurrection", 1)
+			TNT1 A 0 A_GiveInventory("ResurrectionRune_Megasphere", 1)
+        stop
+    }
+}
+
+Actor ResurrectionRune_Megasphere : Inventory_Megasphere{
+    +INVENTORY.AUTOACTIVATE
+}

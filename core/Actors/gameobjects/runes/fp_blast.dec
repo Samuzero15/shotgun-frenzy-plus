@@ -1,0 +1,58 @@
+
+ACTOR BlastRune : RuneGiver {
+    // On damage, the user does a blast that pushes enemies.
+    // Takes 1 second cooldown after using it's effect.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Blast
+	Inventory.PickupMessage "Blast!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}
+
+Actor BlastRune_CooldownTime : PowerSpeed {
+	+PowerSpeed.NoTrail
+    Speed 1.0
+    powerup.duration 35
+}
+Actor BlastRune_Cooldown : PowerupGiver {
+    +INVENTORY.AUTOACTIVATE
+    +VisibilityPulse
+    powerup.type BlastRune_CooldownTime
+    Powerup.Color InverseMap
+    Powerup.Color "0 0 0" 0.3
+    Renderstyle Translucent
+}
+
+Actor BlastRune_Activate : Rune_Activation {
+	States {
+		Pickup:
+            TNT1 A 0 A_JumpIfInventory("BlastRune_CooldownTime", 1, "NoEffect")
+            TNT1 A 0 A_GiveInventory("BlastRune_Cooldown", 1)
+            TNT1 A 0 A_Blast(0, 255, 255, 20, "BlastRune_GFX", "pentacle/project")
+        stop
+        NoEffect:
+            TNT1 A 0 a_log("Blast used already")
+        fail
+	}
+}
+
+Actor BlastRune_GFX : CustomInventory {
+    +NOBLOCKMAP
+    +NOGRAVITY
+    +NOCLIP
+    +NOTELEPORT
+    RenderStyle Add
+    States{
+        Spawn:
+        PBLS ABCDEFGHI 4 Bright
+        Stop
+    }
+}

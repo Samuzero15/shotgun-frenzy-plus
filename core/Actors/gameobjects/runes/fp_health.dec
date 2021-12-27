@@ -1,0 +1,18 @@
+
+ACTOR HealthRune : RuneGiver {
+    // Health is more common.
+	// +50% health from any healing source.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Health
+	Inventory.PickupMessage "Health!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}

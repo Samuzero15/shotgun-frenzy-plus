@@ -11,58 +11,60 @@
 #include "zcommon.acs"
 #include "acsutils.acs"
 
+#libdefine PUPHUD_MAX 40
+#libdefine PUPHUD_PROP_LABEL 0
+#libdefine PUPHUD_PROP_ACTOR 1
+
 int puphud_stack;
+int puphud_amount;
+int powerup_list[PUPHUD_MAX][2];
 
 Script "SFPlus_PowerupList" Enter Clientside{
-	int pow_quadsphere;
-	int pow_hexasphere;
-	int pow_godsphere;
-	int pow_spawnshield;
-	int pow_prometeo_x2dmg;
-	int pow_prometeo_invul;
-	int pow_wealth;
-	int pow_helltrigger;
-	int rune_defense;
-	int rune_rampage;
-	int rune_health;
-	int rune_ammo;
 	if(ConsolePlayerNumber() == Playernumber()){
+		PowHud_Add("x4 Damage", 		"PowerQuadDamage");
+		PowHud_Add("x6 Damage", 		"PlayUp_PowUpUpgrade_6xDmg");
+		PowHud_Add("Fast Fire", 		"Inv_Power_Infinity");
+		PowHud_Add("x2 Credits", 		"Inv_Power_Wealth");
+		PowHud_Add("Invurnerable", 		"PowerInvulnerable");
+		PowHud_Add("Prometeo x2 DMG", 	"PlayUp_Prometeo_Power_2xDmg");
+		PowHud_Add("Prometeo Shield", 	"PlayUp_Prometeo_Power_Invul");
+		PowHud_Add("Spawn Shield", 		"PlayUp_Spawnshield_Power");
+		PowHud_Add("Defense", 			"RuneDefense");
+		PowHud_Add("Rampage", 			"RuneRampage");
+		PowHud_Add("Health", 			"RuneHealth");
+		PowHud_Add("Ammunition", 		"RuneAmmunition");
+		PowHud_Add("Fortune", 			"RuneFortune");
+		PowHud_Add("Soul", 				"RuneSoul");
+		PowHud_Add("Resurrection", 		"RuneResurrection");
+		PowHud_Add("Blast", 			"RuneBlast");
+		PowHud_Add("Blast Cooldown", 	"BlastRune_CooldownTime");
+		PowHud_Add("Temperance", 		"RuneTemperance");
 		while(PlayerInGame(PlayerNumber())){
-			pow_helltrigger  	 = GetActorPowerupTics(0, "Inv_Power_Infinity");
-			pow_quadsphere   	= GetActorPowerupTics(0, "PowerQuadDamage");
-			pow_hexasphere   	= GetActorPowerupTics(0, "PlayUp_PowUpUpgrade_6xDmg");
-			pow_godsphere    	= GetActorPowerupTics(0, "PowerInvulnerable");
-			pow_spawnshield  	= GetActorPowerupTics(0, "PlayUp_Spawnshield_Power");
-			pow_prometeo_x2dmg 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_2xDmg");
-			pow_prometeo_invul 	 = GetActorPowerupTics(0, "PlayUp_Prometeo_Power_Invul");
-			pow_wealth 	 		 = GetActorPowerupTics(0, "Inv_Power_Wealth");
-			rune_defense 		= GetActorPowerupTics(0, "RuneDefense");
-			rune_rampage 		= GetActorPowerupTics(0, "RuneRampage");
-			rune_health 		= GetActorPowerupTics(0, "RuneHealth");
-			rune_ammo 			= GetActorPowerupTics(0, "RuneAmmunition");
-			//log(s:"Quad: ", d:GetActorPowerupTics(0, "PowerQuadDamage"));
-			PowHud_Show("x4 Damage", 	pow_quadsphere);
-			PowHud_Show("x6 Damage", 	pow_hexasphere);
-			PowHud_Show("Invulnerable", pow_godsphere);
-			PowHud_Show("Prometeo x2 DMG", 	pow_prometeo_x2dmg);
-			PowHud_Show("Prometeo Invul.", 	pow_prometeo_invul);
-			PowHud_Show("Spawn Shield", pow_spawnshield);
-			PowHud_Show("x2 Credits", 	pow_wealth);
-			PowHud_Show("Fast Fire", 	pow_helltrigger);
-			PowHud_Show("Defense Rune", 	rune_defense);
-			PowHud_Show("Rampage Rune", 	rune_rampage);
-			PowHud_Show("Health Rune", 	rune_health);
-			PowHud_Show("Ammunition Rune", 	rune_ammo);
-			/*
-			
-			PowHud_Show("x3 Credits", 		0); // Soon...
-			PowHud_Show("Flight", 			0); // Soon...
-			PowHud_Show("Inf. Ammo", 		0); // Soon...
-			*/
+			for(int i = 0; i < puphud_amount; i++){
+				PowHud_Show(i);
+			}
 			delay(1);
 			PowHud_Clear();
 		}
 	}
+}
+
+function void PowHud_Add(str label, str actor){
+	if(puphud_amount >= PUPHUD_MAX){
+		log(s:"(fp_puhud.acs): Max number of powerup labels reached.");
+		return;
+	}
+	powerup_list[puphud_amount][PUPHUD_PROP_LABEL] = label;
+	powerup_list[puphud_amount][PUPHUD_PROP_ACTOR] = actor;
+	puphud_amount++;
+}
+
+function str PowHud_Get(int which, int prop){
+	if(which >= PUPHUD_MAX || which < 0){
+		log(s:"(fp_puhud.acs): Label ", d:which, s:" not found.");
+		return 0;
+	}
+	return powerup_list[which][prop];
 }
 
 function void PowHud_Clear(void){
@@ -71,17 +73,18 @@ function void PowHud_Clear(void){
 	puphud_stack = 0;
 }
 
-function void PowHud_Show(str effect, int powtime) {
-	int index = puphud_stack;
-	int w = 800, h = 640;
-	int wearoff = (powtime / 35 < 5);
-	int flicker = ((powtime / 12) % 2 == 0);
-	int x, y, space = index*16.0;
-	str msg;
+function void PowHud_Show(int which) {
+	str powtime = GetActorPowerupTics(0, PowHud_Get(which, PUPHUD_PROP_ACTOR));
 	
 	// Draw only if there is time for it.
-	
 	if(powtime != 0){
+		str effect = PowHud_Get(which, PUPHUD_PROP_LABEL);
+		int index = puphud_stack;
+		int w = 800, h = 640;
+		int wearoff = (powtime / 35 < 5);
+		int flicker = ((powtime / 12) % 2 == 0);
+		int x, y, space = index*16.0;
+		str msg;
 		// Set position
 		if(getCvar("screenblocks") == 11) {
 			x = w*(0.85) + 0.2; 
@@ -97,18 +100,17 @@ function void PowHud_Show(str effect, int powtime) {
 			y = (h*(0.68) - space) + 0.1;
 			
 		}
-		int secs = (35 +powtime)/ 35;
-		if(secs > 86640 || secs < -86640) // More than one day (Infinite powerups)
+		int secs = (powtime)/ 35;
+		if(secs > 86640 || secs < -86639) // More than one day (Infinite powerups)
 		{
 			msg = Strparam(
-				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cv"),
-				s:effect);
+				s:"\cv", s:effect);
 		}
 		else{
 			msg = Strparam(
-				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cv"),
+				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cp"),
 				s:effect, s:" \c-",
-				d:(secs));
+				s:cond(secs < 10, strparam(d:secs, s:".", d:(powtime % 35)), strparam(d:secs)));
 		}
 		
 

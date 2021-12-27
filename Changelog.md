@@ -2,6 +2,24 @@
 
 ## v0 - Before the beginning...
 
+#### (25 - 26 / 12 / 2021) [Runes on the works (3), Item Drop Overhaul]
+	*) Changes made for the runes.
+	// Health: Implemented the extra-health mechanic.
+	// Ammunition: Added the chance to get infinite ammo. Works properly.
+	+) 2 Runes runes added. (On code)
+	// Soul: 100 Kills = 1 Free Soulsphere.
+	// Resurrection: Activates a free Megasphere when you're almost done for. One-time use.
+	*) Some more organization in the runes decorate files.
+	*) Now, rune effects are activated by custom inventories, for the sake of order and simplicity.
+	*) Moved the Teleport effect script from fp_decsc.acs to the fp_event.acs
+	*) Re-added some missing sprites for the demonic wall, and other sprites.
+	+) Added some sprites for the blast effect.
+	*) Re-written the Prometeo Protocol script. Uses the power of the Event Scripts!
+	*) Modified the drop chances, converting the chance from integer to float
+	-) Removed the senseless random actors for dropping items.
+	*) For all monster classes, a Medikit has a chance to spawn with 25%
+	*) Now the Upgrade list will show each half second each time you step in a health or ammo pad.
+
 #### (22 - 24 / 12 / 2021) [Runes on the works (2)]
 	+) Some few new runes are being added.
 	// Health: Stimpacks, Medikits, and Armors are more common, (wip) Any source of healing gives 50% more of health.

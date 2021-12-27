@@ -7,11 +7,13 @@
 // monster item rewards for different classes
 #libdefine ITEMDROP_MAX 4
 #libdefine ITEMDROP_PROPS 2
-#libdefine ITEMDROP_ITEMS 4
+#libdefine ITEMDROP_ITEMS 5
 #libdefine ITEMDROP_CLASSES 6
 
 int ItemDr_stack;
+int ItemDr_champStack;
 int ItemDr_rewards[ITEMDROP_CLASSES][ITEMDROP_PROPS][ITEMDROP_ITEMS];
+int ItemDr_championRewards[ITEMDROP_PROPS][ITEMDROP_ITEMS];
 
 Script "ItemDr_InitRewards" open{
     //Initialize real quick.
@@ -25,38 +27,50 @@ Script "ItemDr_InitRewards" open{
     }
 
 	int class = 0;
-	ItemDr_Add_R(class, "Rnd_Inventory_Soulsphere", 15);
-	ItemDr_Add(class, "Medikit", 25);
+	ItemDr_Add_R(class, "Inventory_Soulsphere",     6.0);
+	ItemDr_Add(class,   "Medikit",                  25.0);
 	
 	class = 1;
-	ItemDr_Add_R(class, "Rnd_Inventory_Megasphere", 25);
+	ItemDr_Add_R(class, "Inventory_Megasphere",     10.0);
+    ItemDr_Add(class,   "Medikit",                  25.0);
 	
 	class = 2;
-	ItemDr_Add_R(class, "Rnd_Inventory_Soulsphere", 40);
-	ItemDr_Add(class, "Rnd_Inventory_Megasphere", 20);
+	ItemDr_Add_R(class, "Inventory_Soulsphere",     16.0);
+	ItemDr_Add(class,   "Inventory_Megasphere",     8.0);
+    ItemDr_Add(class,   "Medikit",                  25.0);
 	
 	class = 3;
-	ItemDr_Add_R(class, "Rnd_Inventory_TurretBullet", 50);
-	ItemDr_Add(class, "Rnd_Inventory_Soulsphere", 30);
-	ItemDr_Add(class, "Rnd_Inventory_Berserk2", 10);
+	ItemDr_Add_R(class, "Inventory_TurretBullet",   20.0);
+	ItemDr_Add(class,   "Inventory_Soulsphere",     12.0);
+	ItemDr_Add(class,   "Inventory_Berserk2",       10.0);
+    ItemDr_Add(class,   "Medikit",                  25.0);
 	
 	class = 4;
-	ItemDr_Add_R(class, "Rnd_Inventory_TeslaCoil", 30);
-	ItemDr_Add(class, "Rnd_Inventory_TurretBullet", 20);
-	ItemDr_Add(class, "Rnd_Inventory_Berserk2", 15);
-	ItemDr_Add(class, "Rnd_Inventory_Godsphere", 10);
+	ItemDr_Add_R(class, "Inventory_TeslaCoil",      12.0);
+	ItemDr_Add(class,   "Inventory_TurretBullet",   8.0);
+	ItemDr_Add(class,   "Inventory_Berserk2",       6.0);
+	ItemDr_Add(class,   "Inventory_Godsphere",      10.0);
+    ItemDr_Add(class,   "Medikit",                  25.0);
 	
 	class = 5;
-	ItemDr_Add_R(class, "Rnd_Inventory_Berserk2", 30);
-	ItemDr_Add(class, "Rnd_Inventory_Megasphere", 25);
-	ItemDr_Add(class, "Rnd_Inventory_Godsphere", 15);
-	ItemDr_Add(class, "Rnd_Inventory_Ammogiver", 15);
+	ItemDr_Add_R(class, "Inventory_Berserk2",       12.0);
+	ItemDr_Add(class,   "Inventory_Megasphere",     10.0);
+	ItemDr_Add(class,   "Inventory_Godsphere",      6.0);
+	ItemDr_Add(class,   "Inventory_Ammogiver",      6.0);
+    ItemDr_Add(class,   "Medikit",                  25.0);
 	
 	class = 6;
-	ItemDr_Add_R(class, "Rnd_Inventory_Berserk2", 50);
-	ItemDr_Add(class, "Rnd_Inventory_Megasphere", 40);
-	ItemDr_Add(class, "Rnd_Inventory_Godsphere", 20);
-	ItemDr_Add(class, "Rnd_Inventory_Ammogiver", 20);
+	ItemDr_Add_R(class, "Inventory_Berserk2",       20.0);
+	ItemDr_Add(class,   "Inventory_Megasphere",     16.0);
+	ItemDr_Add(class,   "Inventory_Godsphere",      8.0);
+	ItemDr_Add(class,   "Inventory_Ammogiver",      8.0);
+    ItemDr_Add(class,   "Medikit",                  25.0);
+}
+
+function void ItemDr_Add_Champion(str item, int dropChance){
+	ItemDr_championRewards[0][ItemDr_champStack] = item;
+	ItemDr_championRewards[1][ItemDr_champStack] = dropChance;
+	ItemDr_champStack++;
 }
 
 function void ItemDr_Add_R(int class, str item, int dropChance){
@@ -72,6 +86,15 @@ function void ItemDr_Add(int class, str item, int dropChance){
 
 function int ItemDr_getItem(int class,int nitem){
 	return ItemDr_rewards[class][0][nitem];
+}
+
+function int ItemDr_Dice(int chance){
+    bool fixed_d100 = random(0.0, 100.0);
+    bool res = (fixed_d100 < chance);
+    log(s:"(ItemDr) Dice Chance: ", f:chance);
+    log(s:"(ItemDr) Dice Random: ", f:fixed_d100);
+    log(s:"(ItemDr) Dice Result: ", d:res);
+    return res;
 }
 
 function int ItemDr_getChance(int class,int nitem){
@@ -93,6 +116,13 @@ function void ItemDr_Spawn(str item){
             GetActorFloorZ(0) + 10.0);
 }
 
+function void ItemDr_ChampionDrop(void){
+    int whichitem = random(0, ItemDr_champStack-1);
+    int chance = ItemDr_championRewards[1][whichitem];
+    if(ItemDr_Dice(chance))
+        ItemDr_Spawn(ItemDr_championRewards[0][whichitem]);
+}
+
 function void ItemDr_MonsterDrop(int monsterClass)
 {
 // probability of dropping item
@@ -104,22 +134,30 @@ function void ItemDr_MonsterDrop(int monsterClass)
   int chance = p_MonsterItem[monsterClass];
 
   if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")){
-      chance = chance + 10;
+      chance = chance + 10.0;
   }
 
   int spawn_fx = false; 
-  if (!(random(0, 100) > chance)){
+  if ((ItemDr_Dice(chance))){
+    log(s:"(ItemDr) Success, trying to drop stuff.");
     for (int i = 0; i < ITEMDROP_MAX; i++){
         chance = ItemDr_getChance(monsterClass, i);
-        if (random(0, 100) > chance) continue;
-        ItemDr_Spawn(ItemDr_getItem(monsterClass, i));
-        spawn_fx = true;
+        if(chance != 0.0){
+            if (ItemDr_Dice(chance)){
+                log(s:"(ItemDr) An item has been dropped!.");
+                ItemDr_Spawn(ItemDr_getItem(monsterClass, i));
+                spawn_fx = true;
+            }else{
+                log(s:"(ItemDr) No drop.");
+            }
+        }
+        
     }
   }
   
     if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneHealth")){
-        chance = 3 + monsterClass*2;
-        if(random(0, 100) < chance){
+        chance = (3 + monsterClass*2) * 1.0;
+        if(ItemDr_Dice(chance)){
             // Should be health wisps
             ItemDr_Spawn("Stimpack");
             ItemDr_Spawn("Stimpack");
@@ -130,8 +168,9 @@ function void ItemDr_MonsterDrop(int monsterClass)
         
     }
     if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneAmmunition")){
-        chance = 3 + monsterClass*2;
-        if(random(0, 100) < chance){
+        chance = (3 + monsterClass*2) * 1.0;
+        if(ItemDr_Dice(chance)){
+            // Should be an Ammo Satchel.
             ItemDr_Spawn("Clip");
             ItemDr_Spawn("Shell");
             ItemDr_Spawn("RocketAmmo");
@@ -143,9 +182,5 @@ function void ItemDr_MonsterDrop(int monsterClass)
         }
     }
 
-    if(spawn_fx){
-        
-        PlaySound(ActivatorTID(), "misc/spawn");
-    }
-    
+    if(spawn_fx)    PlaySound(ActivatorTID(), "misc/spawn");
 }

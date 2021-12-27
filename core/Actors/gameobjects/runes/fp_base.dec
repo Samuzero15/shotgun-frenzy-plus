@@ -1,0 +1,40 @@
+
+Actor RuneToken : PowerSpeed {
+	+PowerSpeed.NoTrail
+    Speed 1.0
+}
+
+Actor RuneDefense : RuneToken {}
+Actor RuneRampage : RuneToken {}
+Actor RuneHealth : RuneToken {}
+Actor RuneAmmunition : RuneToken {}
+Actor RuneFortune : RuneToken {}
+Actor RuneBlast : RuneToken {}
+Actor RuneTemperance : RuneToken {}
+Actor RuneSoul : RuneToken {}
+Actor RuneResurrection : RuneToken {}
+
+Actor Rune_Activation : CustomInventory {
+    Inventory.PickupMessage ""
+    Inventory.PickupSound ""
+    -CountItem
+    +Inventory.AlwaysPickup
+    states{
+        Spawn:
+            TNT1 A -1 A_log("Rune Activation Error: Spawn State from the base class was called.")
+        stop
+        Pickup:
+            TNT1 A 0 A_log("Rune Activation Error: No Pickup State detected.")
+        stop
+    }
+}
+
+#include "Actors/gameobjects/runes/fp_ammunition.dec"
+#include "Actors/gameobjects/runes/fp_blast.dec"
+#include "Actors/gameobjects/runes/fp_defense.dec"
+#include "Actors/gameobjects/runes/fp_fortune.dec"
+#include "Actors/gameobjects/runes/fp_health.dec"
+#include "Actors/gameobjects/runes/fp_rampage.dec"
+#include "Actors/gameobjects/runes/fp_resurrection.dec"
+#include "Actors/gameobjects/runes/fp_soul.dec"
+#include "Actors/gameobjects/runes/fp_temperance.dec"

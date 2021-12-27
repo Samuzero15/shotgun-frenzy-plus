@@ -1,0 +1,47 @@
+
+ACTOR RampageRune : RuneGiver {
+    // 5 ticks of invulnerability, for each monster killed.
+    // Lookup fp_ondmg_effects.dec
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Rampage
+	Inventory.PickupMessage "Rampage!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}
+
+Actor RampageRune_Activate : Rune_Activation {
+	States {
+		Pickup:
+            TNT1 A 0 A_GiveInventory("RampageRune_Shield", 1)
+			TNT1 A 0 A_GiveInventory("RampageRune_DmgUp", 1)
+        stop
+	}
+}
+
+Actor RampageRune_Damage : PowerDamage {
+    DamageFactor Normal, 1.5
+}
+
+Actor RampageRune_Powerup : PowerupGiver{
+    +INVENTORY.ADDITIVETIME
+    +INVENTORY.AUTOACTIVATE
+	powerup.duration 8
+    Powerup.Color "255 255 255" 0.3
+    Renderstyle Translucent
+}
+
+Actor RampageRune_Shield : RampageRune_Powerup{
+    powerup.type Invulnerable
+}
+
+Actor RampageRune_DmgUp : RampageRune_Powerup {
+    powerup.type RampageRune_Damage
+}

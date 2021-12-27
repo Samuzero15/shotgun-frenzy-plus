@@ -1,0 +1,17 @@
+
+ACTOR TemperanceRune : RuneGiver {
+    // Armor depletes first, before your health.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Temperance
+	Inventory.PickupMessage "Temperance!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}

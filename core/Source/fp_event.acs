@@ -7,34 +7,118 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
             int hpold = getActorProperty(0, APROP_HEALTH);
             int hpnow = hpold - arg1;
             if(playernumber() >= 0){
-                ACS_NamedExecuteAlways("SFPlus_OnPlayerDamage", 0);
-
-                if(checkinventory("RuneTemperance")){
-                    if(checkinventory("BasicArmor") || checkinventory("MegasphereArmor")){
-                        // Your health is protected from damage, as long as you have any armor.
-                        SetResultValue(false);
-                    }
-                }
+                SetResultValue(ACS_NamedExecuteWithResult("SFPlus_OnPlayerDamage", arg1, hpnow <= 0));
             }
         break;
         case GAMEEVENT_ACTOR_ARMORDAMAGED:
             if(checkinventory("RuneTemperance")){
-                // Your armor takes the damage.
-                SetResultValue(arg1);
+                // Your armor takes double damage.
+                SetResultValue(2 * ((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16));
             }
         break;
     }    
 }
 
-script "SFPlus_OnPlayerDamage" (void){
-    if(checkinventory("RuneDefense")){
-        GiveInventory("DmgEvent_DefenseShield", 1);
+script "SFPlus_ConstantEffects" (void) {
+    int last_health = GetActorProperty(ActivatorTID(), APROP_HEALTH);
+    int tics = 0;
+    while(GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0) {
+
+        if(checkinventory("RuneHealth")){
+            last_health = RuneEffect_ExtraHealth(last_health, 0.5); 
+        }
+
+        if(CheckInventory("RuneAmmunition")) {
+            if(tics == 1 && random(0, 100) < 20){
+                GiveInventory("AmmunitionRune_Activate", 1);
+                //log(s:"Infinite ammo.");
+            }
+        }
+
+        if(checkinventory("RuneSoul")){
+            GiveInventory("SoulRune_Activate", 1);
+        }else{
+            GiveInventory("SoulRune_Reset", 1);
+        }
+
+        tics = (tics % 35) + 1;
+        delay(1);
     }
+    GiveInventory("SoulRune_Reset", 1);
+}
+
+function int RuneEffect_ExtraHealth(int last_health, int health_mult)
+{
+	int health = GetActorProperty(0, APROP_Health);
+	int maxHealth = GetActorProperty(0, APROP_SpawnHealth);
+	if(maxHealth == 0){ maxHealth = 100; /* default max */ }
+	int left = maxHealth - health;
+	if(left > 0 && last_health != health){
+		int heal = health - last_health;
+		if(heal >= left) heal = left; // Only gains, not loss
+		// The difference between the health on the last tick and your current health is recived.
+		GiveInventory("Health", (heal * health_mult) >> 16);
+		//Print(s:"ExtraHealth: ", d:((heal * health_mult) >> 16));
+	}
+	last_health = GetActorProperty(0, APROP_Health);
+	return last_health;
+}
+
+script "SFPlus_OnTeleport" (void) {
+	// What happens to the teleported things?
+	SetActivatorToTarget(0);
+	delay(5);
+	if(CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
+		// If a player was teleported, check if he got the spawn protection upgrade.
+		if(CheckActorInventory(ActivatorTID(), "PlayUp_SpawnShield")){
+			TakeActorInventory(ActivatorTID(), "PlayUp_SpawnShield_Power", 1);
+			delay(1);
+			giveActorinventory(ActivatorTID(),"PlayUp_SpawnShield_Activate", 1);
+		}
+	}
+}
+
+script "SFPlus_OnPlayerDamage" (int dmg, int fatal){
+    int TotalDmg = dmg;
+    if(fatal){
+        if(checkinventory("RuneResurrection")){
+            GiveInventory("ResurrectionRune_Activate", 1);
+            TotalDmg = 0; // Deny effective damage.
+        }
+        
+        if(CheckInventory("PlayUp_Prometeo") && !CheckInventory("PlayUp_Prometeo_Used")){
+            // Activate Prometeo Protocol effect.
+            setactorproperty(0, APROP_SpawnHealth, 50);
+            setactorproperty(0, APROP_Health, 51);
+            giveinventory("PlayUp_Prometeo_Activate", 1);
+            TotalDmg = 1; // Just to call the pain state.
+        }
+    }
+    else{
+        if(checkinventory("RuneDefense")){
+            GiveInventory("DefenseRune_Activate", 1);
+        }
+
+        if(checkinventory("RuneBlast")){
+            GiveInventory("BlastRune_Activate", 1);
+        }
+
+        if(checkinventory("RuneTemperance")){
+            if(checkinventory("BasicArmor") || checkinventory("MegasphereArmor")){
+                // Your health is protected from damage, as long as you have any armor.
+                TotalDmg = 0; // Deny effective damage.
+            }
+        }
+    }
+    SetResultValue(TotalDmg);
 }
 script "SFPlus_OnMonsterKill" (void){
     if(checkinventory("RuneRampage")){
-        GiveInventory("KillEvent_RampageDmgUp", 1);
-        GiveInventory("KillEvent_RampageShield", 1);
+        GiveInventory("RampageRune_Activate", 1);
+    }
+
+    if(checkinventory("RuneSoul")){
+        GiveInventory("SoulRune_Counter", 1);
     }
 }
 

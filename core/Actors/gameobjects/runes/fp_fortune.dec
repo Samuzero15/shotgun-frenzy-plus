@@ -1,0 +1,18 @@
+
+ACTOR FortuneRune : RuneGiver {
+    // Adds a 10% chance for the monsters to drop items on death.
+	// Credits are more common.
+	+NOGRAVITY
+	+INVENTORY.AUTOACTIVATE
+	Inventory.Icon RESRA0
+	Inventory.MaxAmount 0
+	Rune.Type Fortune
+	Inventory.PickupMessage "Fortune!"
+	Inventory.PickupAnnouncerEntry "Strength"
+	States
+	{
+	Spawn:
+		STRR DCBA 6
+		Loop
+	}
+}

@@ -15,6 +15,7 @@
 #import "fl_wdir.acs"
 #import "fp_credd.acs"
 #import "fp_cmdevt.acs"
+#import "f_StokP.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -177,6 +178,7 @@ script 54 RESPAWN
 	setactorproperty(0, APROP_SpawnHealth, getActorProperty(0, AProp_Health));
 	
 	ACS_NamedExecute("Auto-Use Items", 0);
+	ACS_NamedExecute("SFPlus_ConstantEffects", 0);
     p_Streak[playernumber()] = 0; // Reset the kill-streak.
     
     // take boomer cannon incase it glitched
@@ -197,13 +199,14 @@ script 54 RESPAWN
 	// Recharge prometeo protocol.
 	if(CheckInventory("PlayUp_Prometeo_Used"))
 		takeinventory("PlayUp_Prometeo_Used", 1);
+		
 	if(CheckInventory("PlayUp_SpawnShield")) 
 		giveinventory("PlayUp_SpawnShield_Activate", 1);
 		
-    acs_execute(106, 0, 1, 1, 0);
+    acs_execute(106, 0, RESTOCK_HEALTHPAD, 1, 0);
     delay(15);
     //t3hdoom: Originally didn't give any ammo if there's no armory. Let's give them ammo on spawn regardless
-    acs_execute(106, 0, 3, 1, 0);
+    acs_execute(106, 0, RESTOCK_AMMO, 1, 0);
 	
 	//[Samu] If you die, the teleport script will not activate the spawnshield effect.
 	// So to counter that, I should place it here.

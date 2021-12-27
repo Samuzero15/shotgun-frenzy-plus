@@ -15,6 +15,15 @@
 #include "acsutils.acs"
 #include "samu_tools.acs"
 
+#libdefine RESTOCK_HEALTHPAD 1
+#libdefine RESTOCK_AMMOPAD 2
+#libdefine RESTOCK_HEALTH 4
+#libdefine RESTOCK_AMMO 3
+#libdefine RESTOCK_HEALTHDISP -3
+#libdefine RESTOCK_AMMODISP -2
+#libdefine RESTOCK_REFRESH -1
+#libdefine RESTOCK_AMMOSPHERE -4
+
 // a player walks onto a stock pad
 script 106 (int l_Type, int l_Give, int l_DisableFlash)
 {//Healing and stocking pads
@@ -29,7 +38,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	bool resister = Tech_IsDone(TECH_GENLAB_RESISB);
 	bool armorTech = Tech_IsDone(TECH_GENLAB_ARMOR);
 	
-    if ((l_Type == 1 && Tech_IsDone(TECH_GENLAB)) || (l_Type == 4))
+    if ((l_Type == RESTOCK_HEALTHPAD && Tech_IsDone(TECH_GENLAB)) || (l_Type == RESTOCK_HEALTH))
     {
 		
 		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
@@ -62,8 +71,6 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			}
 			//if (Tech_IsDone(TECH_GENLAB_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
 			if (Tech_IsDone(TECH_GENLAB_REGENB))        giveinventory("Upgrade_Asorber", 1);  // asorber unit
-			if (CheckInventory("PlayUp_Prometeo")) 
-				ACS_NamedExecuteAlways("SFPlus_PrometeoScript", 0);
 			
 			
 			/*
@@ -90,7 +97,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
     }
     
     // ammo stock pad
-    if ((l_Type == 2 && Tech_IsDone(TECH_ARMORY)) || (l_Type == 3))
+    if ((l_Type == RESTOCK_AMMOPAD && Tech_IsDone(TECH_ARMORY)) || (l_Type == RESTOCK_AMMO))
     {
 		
 		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
@@ -128,7 +135,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
     }
 	
 	//[Samu] A customized refresh-me-up.
-	if(l_Type == -1){
+	if(l_Type == RESTOCK_REFRESH){
 		// Do Heal and Stock the player, but do not give the latest techs.
 		
 		giveinventory("Health", 100 + healthboost);
@@ -148,7 +155,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	//Ammo dispenser's stocker.
 	// A nerfed version of the dispenser, 
 	// just to prevent the full stocking on anywhere of the map.
-	if(l_type == -2){
+	if(l_type == RESTOCK_AMMODISP){
 		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
 		{
 			Print(s:"You can't use these in a tank!");
@@ -167,7 +174,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	// Health dispenser's stocker.
 	// A nerfed version of the dispenser, 
 	// just to prevent the full healing on anywhere of the map.
-	if(l_type == -3){
+	if(l_type == RESTOCK_HEALTHDISP){
 		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
 		{
 			Print(s:"You can't use these in a tank!");
@@ -204,7 +211,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	
 	// Ammosphere's Restock.
 	// Does not updates your techs.
-	if(l_type == -4){
+	if(l_type == RESTOCK_AMMOSPHERE){
 		if(p_TankSlot[playernumber()] == 2) //Preventing exploding tanks
 		{
 			Print(s:"You can't use these in a tank!");
@@ -320,7 +327,7 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_LifeSave"), 		"+ (M.Up) Life Saver");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_SelfDestruct"), 	"+ (M.Up) Self Destruct");
 	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_Efficiency"), 		"+ (M.Up) Efficiency");
-
+	delay(17);
 }
 
 function int Stock_RemindUpgrade(int show_stack, int show_color, bool condition, str string){

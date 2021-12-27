@@ -191,14 +191,14 @@ int p_RankExp[INTDB_NUM_RANKS] = {
 	12500, // 4th Elite Commander
 	13750, // 3rd Elite Commander
 	14900, // 2nd Elite Commander
-	16000, 0 // 1st Elite Commander // Dunno, im off ideas on the elite ranks xd
+	16000, 0 // 1st Elite Commander // Dunno, im out of ideas on the elite ranks xd
 };
 
 // amount of credits given for killing monster by class
 int p_MonsterCredits[7] = { 2, 10, 22, 27, 65, 90, 200 };       // { 2, 10, 20, 25, 60, 90, 200 };
 
 // chance of dropping item on monster death
-int p_MonsterItem[7] = { 2, 6, 8, 10, 13, 20, 25 };//{ 5, 10, 15, 25, 50, 75, 99 };
+int p_MonsterItem[7] = { 2.0, 6.0, 8.0, 10.0, 13.0, 20.0, 25.0};//{ 5, 10, 15, 25, 50, 75, 99 };
 
 
 function int getNextStreakMilestone(void){

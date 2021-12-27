@@ -197,21 +197,6 @@ Script "Turret_LinkBase" (int basetid){
 	Thing_ChangeTID(tmptid, oldtid);
 }
 
-script "Teleport_Effects" (void) {
-	// What happens to the teleported things?
-	SetActivatorToTarget(0);
-	delay(5);
-	if(CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
-		// If a player was teleported, check if he got the spawn protection upgrade.
-		if(CheckActorInventory(ActivatorTID(), "PlayUp_SpawnShield")){
-			TakeActorInventory(ActivatorTID(), "PlayUp_SpawnShield_Power", 1);
-			delay(1);
-			giveActorinventory(ActivatorTID(),"PlayUp_SpawnShield_Activate", 1);
-		}
-	}
-	
-}
-
 Script "Deploy_TID" (int tid, int type) { 
 	// Assuming the players are the only ones spawning turrets.
 	int play = tid - 990;
