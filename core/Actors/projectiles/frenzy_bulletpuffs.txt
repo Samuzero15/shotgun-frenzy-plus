@@ -43,6 +43,8 @@ ACTOR BulletPuff_Standard
 			PUFF A 4 bright
 			PUFF AAA 0 bright A_SpawnItemEx("BulletDebris", random(-2, 2), random(-2, 2), random(-2, 2), random(-5, 5), random(-5, 5), random(-5, 5))
 			PUFF B 4 A_PlaySound("weapons/rico", CHAN_AUTO)//, 0.6, 0, 2)
+			TNT1 A 1 A_Jump(256, "Melee")
+			goto Melee
 		Melee:
 			PUFF CD 4
 			stop
@@ -51,13 +53,69 @@ ACTOR BulletPuff_Standard
 
 ACTOR BulletPuff_Blast : BulletPuff_Standard
 {
+	+PUFFONACTORS
 	states
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_Radiusthrust(200,12,0)//,RTF_NOIMPACTDAMAGE)
+		//TNT1 A 0 A_Blast(0, 100, 8, 1.0)
+		//TNT1 A 0 A_Radiusthrust(200,12,0) //,RTF_NOIMPACTDAMAGE)
 		
+		TNT1 A 0 A_SetArg(0, 30.0 + frandom(-90.0,30.0))
+		TNT1 A 0 A_SetArg(1, 30.0 + frandom(-90.0,30.0))
+		TNT1 A 0 A_SetArg(2, cos(angle) * (frandom(0.0,60.0)) * (2*random(0,1) - 1))
+		TNT1 A 0 A_SpawnitemEx("Blast_BouncyPellet", 0, 0, 0, args[0],args[1],args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0
 		Goto Super::Spawn+1
+	}
+}
+
+Actor BulletPuff_Tracer
+{
+	Radius 0
+	Height 0
+	Renderstyle Add
+	+FORCEXYBILLBOARD
+  	+NOBLOCKMAP
+	+FloorClip
+	+SPECIALFLOORCLIP
+	+NOGRAVITY
+	+NOTELEPORT
+	+ClientsideOnly
+	States
+	{
+	Melee:
+	Spawn:
+		PUFF AA 1
+		stop
+	}
+}
+
+Actor Blast_BouncyPellet {
+	Radius				8
+	Height				8
+	Speed				30
+	Damage				0
+	DamageType			MarineFire
+	RenderStyle			Add
+	Projectile
+	+MTHRUSPECIES
+	+THRUACTORS
+	+NoBlood
+	DeathSound "weapons/rico"
+	Obituary			"%o ate some of %k's lead."
+	BounceType HEXEN
+	BounceFactor 1.5
+	BounceCount 3
+	States
+	{
+		Spawn:
+			PUFF A 1 A_SpawnItem("BulletPuff_Tracer")
+			TNT1 A 0 A_Explode(17, 16, 0, 16)
+			Loop
+		Death:
+			PUFF A 1 A_SpawnItem("Bulletpuff_Standard") 
+			stop
 	}
 }
 

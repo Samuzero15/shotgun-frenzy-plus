@@ -2,6 +2,11 @@
 
 ## v0 - Before the beginning...
 
+#### (27 / 12 / 2021) [Autoload SSG' bouncy pellets]
+	-) The Autoload SSG, loses it's ability to cause knockback on monsters.
+	+) Instead, now their pellets can bounce arround the room, "ripping" the monster who gets hit by the bounce.
+	// Use the walls to spew those peelets across the room!
+
 #### (25 - 26 / 12 / 2021) [Runes on the works (3), Item Drop Overhaul]
 	*) Changes made for the runes.
 	// Health: Implemented the extra-health mechanic.

@@ -38,10 +38,11 @@
 #include "Actors/decoration/frenzy_sheenmister.txt"
 
 // projectiles
+#include "Actors/projectiles/frenzy_grenades.txt"
 #include "Actors/projectiles/frenzy_bulletpuffs.txt"
 #include "Actors/projectiles/frenzy_flame.txt"
 #include "Actors/projectiles/frenzy_dual.txt"
-#include "Actors/projectiles/frenzy_grenades.txt"
+
 #include "Actors/projectiles/frenzy_plasma.txt"
 #include "Actors/projectiles/frenzy_rockets.txt"
 #include "Actors/projectiles/frenzy_saw.txt"

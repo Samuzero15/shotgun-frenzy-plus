@@ -224,7 +224,7 @@ Actor NerveGas_GFX
 }
 
 //[Samu] Taken from alphahiatus dm!
-// Thank you Himaura!
+// Thank you Hiimaura!
 ACTOR NerveGas_Fog // Hm...
 {
 	Alpha 0.8

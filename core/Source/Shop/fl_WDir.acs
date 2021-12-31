@@ -102,7 +102,7 @@ function void SFPlus_DefineWeapons (void){
 	wep = Weapon_Add("SSG", "Super Shotgun", pack, "ssg", string);
 				
 	WeaponUpgrade_Add("SSG_Autoload", "Autoloadable Super Shotgun", wep, 1, "",
-		"Allows you to fire faster, and your peelets can push demons back."
+		"Allows you to fire faster, and your peelets can ricochet on floors and walls."
 		);
 		
 	WeaponUpgrade_Add("SSG_Explosive", "Explosive Super Shotgun", wep, 2, "",
