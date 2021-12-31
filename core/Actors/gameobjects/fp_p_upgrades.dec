@@ -10,16 +10,16 @@ actor MechUp_autorepair 		: Integer { Inventory.MaxAmount 5 }
 actor MechUp_efficiency			: Boolean {}
 
 // Unit upgrade tokens
-actor PlayUp_PowUpUpgrade_1 		: Boolean {}
-actor PlayUp_PowUpUpgrade_2 		: Boolean {}
-actor PlayUp_MechSync 			: Boolean {}
-actor PlayUp_ExpansiveRestock 	: Boolean {}
-actor PlayUp_BodyEnhancement 	: Boolean {}
-actor PlayUp_ArmorRepair		: Boolean {}
-actor PlayUp_SpawnShield		: Boolean {}
-actor PlayUp_HealCoins			: Boolean {}
-actor PlayUp_Prometeo			: Boolean {}
-actor PlayUp_RuneSync 			: Boolean {}
+actor PlayUp_PowUpUpgrade_Defense 		: Boolean {}
+actor PlayUp_PowUpUpgrade_Attack 		  : Boolean {}
+actor PlayUp_MechSync 			          : Boolean {}
+actor PlayUp_ExpansiveRestock 	      : Boolean {}
+actor PlayUp_BodyEnhancement 	        : Boolean {}
+actor PlayUp_ArmorRepair		          : Boolean {}
+actor PlayUp_SpawnShield		          : Boolean {}
+actor PlayUp_HealCoins			          : Boolean {}
+actor PlayUp_Prometeo			            : Boolean {}
+actor PlayUp_RuneSync 			          : Boolean {}
 
 Actor SpecialTeleportFog : TeleportFog replaces TeleportFog {
 	States{
@@ -127,7 +127,7 @@ Actor SuperMegasphere_Health : Soulsphere
 Actor SuperMegasphere_Armor : BlueArmor
 {
 	Armor.SaveAmount 300
-	Armor.Savepercent 90
+	Armor.Savepercent 80
 }
 
 ACTOR PlayUp_PowUpUpgrade_6xDmg : PowerDamage

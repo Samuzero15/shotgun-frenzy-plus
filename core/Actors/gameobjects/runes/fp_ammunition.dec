@@ -8,7 +8,7 @@ ACTOR AmmunitionRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Ammunition
 	Inventory.PickupMessage "Ammunition!"
-	Inventory.PickupAnnouncerEntry "Strength"
+	Inventory.PickupSound "runes/ammunition"
 	States
 	{
 	Spawn:

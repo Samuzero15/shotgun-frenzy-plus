@@ -6,7 +6,7 @@ ACTOR SoulRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Soul
 	Inventory.PickupMessage "Soul!"
-	Inventory.PickupAnnouncerEntry "Prosperity"
+    Inventory.PickupSound "runes/soul"
 	States
 	{
 	Spawn:

@@ -17,6 +17,15 @@ Actor Inventory_Item : CustomInventory
 		ITM1 A 0
 		ITM1 A 0
 		goto SpawnLoop
+	
+	SpawnLoop.Stay:
+		"####" ABCDEFGH 2 bright
+		loop
+
+	SpawnLoop.Stay.Frame1:
+		"####" A 2 bright
+		loop
+
 	SpawnLoop:
 		"####" Z 0 A_JumpIf(user_counter >= 15, "Spawnloop.Disappear")
 		"####" ABCDEFGH 2 bright
@@ -46,16 +55,10 @@ Actor Inventory_Item : CustomInventory
 		Stop
 	Use:
 		TNT1 A 0 A_TakeInventory("Inventory_item", 1)
-		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
-		
-		TNT1 A 1 A_Jump(256, "PowUpUpgrade_Cond")
-		goto PowUpUpgrade_Cond
+		TNT1 A 1 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+		TNT1 A 0 A_Jump(256, "Effect")
+		stop
 
-	PowUpUpgrade_Cond:
-		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_1" , 1,"PowUpUpgrade_1")
-		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_2" , 1,"PowUpUpgrade_2")
-		TNT1 A 1 A_Jump(256, "Effect")
-		goto Effect
 	IAmOnTank:
 		TNT1 A 1 A_JumpIfInventory("PlayUp_MechSync", 1, "MechSync")
 		TNT1 A 0 A_print("You can't use items inside a tank!")
@@ -63,21 +66,42 @@ Actor Inventory_Item : CustomInventory
 	MechSync:
 		TNT1 A 1 A_print("This item can't be used in a mech!.")
 		fail
-
-	PowUpUpgrade_1:
-		TNT1 A 0 
-		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_2" , 1,"PowUpUpgrade_2")
-		TNT1 A 1 A_Jump(256, "Effect")
-		goto Effect
-	PowUpUpgrade_2:
-		TNT1 A 0 
-		TNT1 A 1 A_Jump(256, "Effect")
-		goto Effect
 	Effect:
 		TNT1 A 1
 		stop
 	}
-	
+}
+
+Actor Inventory_Powerup : Inventory_Item {
+	States {
+		Use:
+			TNT1 A 0 A_TakeInventory("Inventory_Item", 1)
+			TNT1 A 0 A_TakeInventory("Inventory_Powerup", 1)
+			TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"IAmOnTank")
+			
+			TNT1 A 1 A_Jump(256, "PowUpUpgrade_Cond")
+			goto PowUpUpgrade_Cond
+
+		PowUpUpgrade_Cond:
+			TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
+			TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
+			TNT1 A 1 A_Jump(256, "Effect")
+			goto Effect
+
+		PowUpUpgrade.Defense:
+			TNT1 A 0 
+			TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
+			TNT1 A 1 A_Jump(256, "Effect")
+			goto Effect
+		PowUpUpgrade.Attack:
+			TNT1 A 0 
+			TNT1 A 1 A_Jump(256, "Effect")
+			goto Effect
+		
+		Effect.Flash:
+			TNT1 A 0 ACS_NamedExecute("SFPlus_ScreenFlash", 0, 1, 10)
+			Stop
+	}
 }
 
 #include "Actors/gameobjects/fp_items_powerups.dec"

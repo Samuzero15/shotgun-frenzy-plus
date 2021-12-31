@@ -244,6 +244,24 @@ attack			ATTACK
 
 runes/temperance/hit temp_hit
 runes/temperance/break temp_brk
+runes/temperance        r_temp
+runes/blast             r_blast
+runes/defense           r_def
+runes/rampage           r_ramp
+runes/resurrection      r_resur
+runes/soul              r_soul
+runes/ammunition        r_ammo
+runes/health            r_heal
+runes/fortune           r_fortu
+runes/spread            r_spred
+runes/strength          r_stren
+runes/resistance        r_resis
+runes/rage              r_rage
+runes/prosperity        r_prosp
+runes/reflection        r_reflec
+runes/airjump           r_jump
+runes/drain             r_drain
+//runes/haste             r_haste // Not added yet.
 
 endboss			BOSS
 endboss/fire		BOSSF

@@ -11,6 +11,8 @@
 
 #import "f_intdb.acs"
 
+#libdefine FLASH_HUDID -3
+
 #include "zcommon.acs"
 
 script "SFPlus_ScreenFlash" (int style, int time, int all)
@@ -32,7 +34,6 @@ script "SFPlus_ScreenFlash" (int style, int time, int all)
 		break;
 	}
 
-    if(all) hudmessagebold  (s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, time);
-    else    hudmessage      (s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, time);
-    
+    if(all) hudmessagebold  (s:"a"; HUDMSG_FADEOUT, FLASH_HUDID, 0, 32.4, 64.4, time);
+    else    hudmessage      (s:"a"; HUDMSG_FADEOUT, FLASH_HUDID, 0, 32.4, 64.4, time);
 }

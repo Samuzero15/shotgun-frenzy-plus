@@ -2,6 +2,10 @@
 
 ## v0 - Before the beginning...
 
+#### (31 / 12 / 2021) [Sounds, announcer sounds on runes.]
+	+) Added some template sounds for the rune pickup
+	*) Factorizing powerups, and items.
+
 #### (30 / 12 / 2021) [Sprites, and gfx for Temp. Rune]
 	+) The map markers are re-added again.
 	+) Added some sounds for the temperance rune.
