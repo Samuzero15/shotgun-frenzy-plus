@@ -215,22 +215,23 @@ script 168 (int l_Position, int l_TipQue_Selection, int l_ID)
 script 126 (int l_Colour)
 {
     sethudsize(64, 128, 0);
-    
-    if (l_Colour == 1)
-    {
-        setfont("FBLUE");
-    }
-    else if (l_Colour == 2)
-    {
-        setfont("FWHITE");
-    }
-    else
-    {
-        setfont("FBLUE");
-        hudmessage(s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, 0.5);
-        terminate;
-    }
-    
+
+	switch(l_Colour){
+		case 1: 
+			setfont("FBLUE");
+		break;
+		case 2: 
+			setfont("FWHITE");
+		break;
+		case 4: 
+			setfont("FWHITE2");
+		break;
+		default: 
+			setfont("FBLUE");
+			hudmessage(s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, 0.5);
+			terminate;
+		break;
+	}
     hudmessagebold(s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, 0.5);
     
 }

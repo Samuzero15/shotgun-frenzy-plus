@@ -1,0 +1,38 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_flash.acs
+// Hud Flash scripts.
+
+// Cool flashy effects :3
+
+#library "FP_FLASH"
+
+#import "f_intdb.acs"
+
+#include "zcommon.acs"
+
+script "SFPlus_ScreenFlash" (int style, int time, int all)
+{
+    sethudsize(64, 128, 0);
+
+	switch(style){
+		case 1: 
+			setfont("FBLUE");
+		break;
+		case 2: 
+			setfont("FWHITE");
+		break;
+		case 4: 
+			setfont("FWHITE2");
+		break;
+		default: 
+			setfont("FBLUE");
+		break;
+	}
+
+    if(all) hudmessagebold  (s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, time);
+    else    hudmessage      (s:"a"; HUDMSG_FADEOUT, 0, 0, 32.4, 64.4, time);
+    
+}

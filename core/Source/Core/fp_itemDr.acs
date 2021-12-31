@@ -91,9 +91,9 @@ function int ItemDr_getItem(int class,int nitem){
 function int ItemDr_Dice(int chance){
     bool fixed_d100 = random(0.0, 100.0);
     bool res = (fixed_d100 < chance);
-    log(s:"(ItemDr) Dice Chance: ", f:chance);
-    log(s:"(ItemDr) Dice Random: ", f:fixed_d100);
-    log(s:"(ItemDr) Dice Result: ", d:res);
+    //log(s:"(ItemDr) Dice Chance: ", f:chance);
+    //log(s:"(ItemDr) Dice Random: ", f:fixed_d100);
+    //log(s:"(ItemDr) Dice Result: ", d:res);
     return res;
 }
 
@@ -139,17 +139,17 @@ function void ItemDr_MonsterDrop(int monsterClass)
 
   int spawn_fx = false; 
   if ((ItemDr_Dice(chance))){
-    log(s:"(ItemDr) Success, trying to drop stuff.");
+    //log(s:"(ItemDr) Success, trying to drop stuff.");
     for (int i = 0; i < ITEMDROP_MAX; i++){
         chance = ItemDr_getChance(monsterClass, i);
         if(chance != 0.0){
             if (ItemDr_Dice(chance)){
-                log(s:"(ItemDr) An item has been dropped!.");
+                //log(s:"(ItemDr) An item has been dropped!.");
                 ItemDr_Spawn(ItemDr_getItem(monsterClass, i));
                 spawn_fx = true;
-            }else{
-                log(s:"(ItemDr) No drop.");
-            }
+            }/*else{
+                //log(s:"(ItemDr) No drop.");
+            }*/
         }
         
     }

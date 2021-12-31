@@ -12,8 +12,20 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
         break;
         case GAMEEVENT_ACTOR_ARMORDAMAGED:
             if(checkinventory("RuneTemperance")){
+                //SetActivatorToTarget(0);
                 // Your armor takes double damage.
-                SetResultValue(2 * ((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16));
+                if(GetArmorInfo(ARMORINFO_SAVEAMOUNT) > 0){
+                    int dmg = 2 * ((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16);
+                    //log(s:"(fp_event) Save percent: ", f:GetArmorInfo(ARMORINFO_SAVEPERCENT));
+                    //log(s:"(fp_event) Current Armor: ", d:armor);
+                    //log(s:"(fp_event) Damage Took: ", d:arg1);
+                    //log(s:"(fp_event) Damage Absorbed: ", d:((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16));
+                    
+                    if(CheckInventory("BasicArmor") < dmg){
+                        GiveInventory("TemperanceRune_BreakToken", 1);
+                    }
+                    SetResultValue(dmg);
+                }
             }
         break;
     }    
@@ -105,8 +117,12 @@ script "SFPlus_OnPlayerDamage" (int dmg, int fatal){
 
         if(checkinventory("RuneTemperance")){
             if(checkinventory("BasicArmor") || checkinventory("MegasphereArmor")){
-                // Your health is protected from damage, as long as you have any armor.
+                LocalAmbientSound("runes/temperance/hit", 127);
                 TotalDmg = 0; // Deny effective damage.
+            }
+            else if (CheckInventory("TemperanceRune_BreakToken")) {
+                LocalAmbientSound("runes/temperance/break", 127);
+                GiveInventory("TemperanceRune_GuardBreak", 1);
             }
         }
     }

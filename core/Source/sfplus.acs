@@ -13,6 +13,7 @@
 #import "f_decscp.acs" // Decorate only scripts!
 #import "fp_mkill.acs" // Monster kill script
 #import "fp_dmhud.acs" // The Damage HUD
+#import "fp_flash.acs" // The Damage HUD
 #import "FP_SBINF.acs"  // SBarInfo Manipulation
 #import "fp_credd.acs" // The credit dropper command.
 #import "fp_music.acs" // Music changing

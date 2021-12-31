@@ -2,6 +2,12 @@
 
 ## v0 - Before the beginning...
 
+#### (30 / 12 / 2021) [Sprites, and gfx for Temp. Rune]
+	+) The map markers are re-added again.
+	+) Added some sounds for the temperance rune.
+	*) Modified the original script, in order to play the proper sounds.
+	+) Added some effects for the armor breaking in the temperance rune.
+
 #### (27 / 12 / 2021) [Autoload SSG' bouncy pellets]
 	-) The Autoload SSG, loses it's ability to cause knockback on monsters.
 	+) Instead, now their pellets can bounce arround the room, "ripping" the monster who gets hit by the bounce.

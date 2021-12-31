@@ -241,6 +241,10 @@ attack			ATTACK
 ///////////////////////////////////
 //	Shotgun Frenzy Plus Soundinfo//
 ///////////////////////////////////
+
+runes/temperance/hit temp_hit
+runes/temperance/break temp_brk
+
 endboss			BOSS
 endboss/fire		BOSSF
 endboss/explode		BOSSE

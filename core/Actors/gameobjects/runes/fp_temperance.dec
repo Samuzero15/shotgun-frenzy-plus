@@ -15,3 +15,15 @@ ACTOR TemperanceRune : RuneGiver {
 		Loop
 	}
 }
+
+Actor TemperanceRune_BreakToken : Boolean {}
+
+Actor TemperanceRune_GuardBreak : Rune_Activation {
+    states{
+        Pickup:
+            TNT1 A 0 A_Quake(3, 8, 0, 32, "")
+			TNT1 A 0 A_TakeInventory("TemperanceRune_BreakToken", 1)
+			TNT1 A 0 ACS_NamedExecute("SFPlus_ScreenFlash", 0, 4, 2)
+		stop
+    }
+}
