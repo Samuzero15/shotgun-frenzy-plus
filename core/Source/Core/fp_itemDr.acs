@@ -156,28 +156,22 @@ function void ItemDr_MonsterDrop(int monsterClass)
   }
   
     if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneHealth")){
-        chance = (3 + monsterClass*2) * 1.0;
+        chance = (5 + monsterClass*2) * 1.0;
         if(ItemDr_Dice(chance)){
-            // Should be health wisps
-            ItemDr_Spawn("Stimpack");
-            ItemDr_Spawn("Stimpack");
-            ItemDr_Spawn("Stimpack");
-            ItemDr_Spawn("Stimpack");
+            for(int bd = 0; bd < random(2,5); bd++){
+                ItemDr_Spawn("HealthRune_BloodDrip");
+            }
             spawn_fx = true;
         }
         
     }
     if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneAmmunition")){
-        chance = (3 + monsterClass*2) * 1.0;
+        chance = (5 + monsterClass*2) * 1.0;
         if(ItemDr_Dice(chance)){
             // Should be an Ammo Satchel.
-            ItemDr_Spawn("Clip");
-            ItemDr_Spawn("Shell");
-            ItemDr_Spawn("RocketAmmo");
-            ItemDr_Spawn("Gasoline");
-            ItemDr_Spawn("Cell");
-            ItemDr_Spawn("Dualshot_Ammo");
-            ItemDr_Spawn("Flinger_Ammo");
+            for(int as = 0; as < random(1,3); as++){
+                ItemDr_Spawn("AmmunitionRune_Satchel");
+            }
             spawn_fx = true;
         }
     }

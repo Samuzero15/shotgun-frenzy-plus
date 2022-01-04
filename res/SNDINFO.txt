@@ -244,9 +244,9 @@ attack			ATTACK
 
 runes/temperance/hit temp_hit
 runes/temperance/break temp_brk
-runes/temperance        r_temp
+runes/temperance        r_temper
 runes/blast             r_blast
-runes/defense           r_def
+runes/defense           r_defen
 runes/rampage           r_ramp
 runes/resurrection      r_resur
 runes/soul              r_soul
@@ -259,7 +259,7 @@ runes/resistance        r_resis
 runes/rage              r_rage
 runes/prosperity        r_prosp
 runes/reflection        r_reflec
-runes/airjump           r_jump
+runes/airjump           r_ajump
 runes/drain             r_drain
 //runes/haste             r_haste // Not added yet.
 

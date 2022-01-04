@@ -1,28 +1,45 @@
 
 ACTOR AmmunitionRune : RuneGiver {
     // Ammunition is more common.
-	// Chance of 1% per tic for 4 ticks of infinite ammo.
+	// Chance to get infinite ammo.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RAMOA0
 	Inventory.MaxAmount 0
 	Rune.Type Ammunition
 	Inventory.PickupMessage "Ammunition!"
 	Inventory.PickupSound "runes/ammunition"
+	scale 0.5
 	States
 	{
 	Spawn:
-		STRR DCBA 6
+		RAMO ABCDEF 5
 		Loop
+	}
+}
+
+Actor AmmunitionRune_Satchel : Rune_Activation {
+	Inventory.PickupSound "g/reloading"
+	States {
+		Spawn:
+			ADDU A -1
+		stop
+		Pickup:
+            TNT1 A 0 A_GiveInventory("Clip", 50)
+			TNT1 A 0 A_GiveInventory("Shell", 4)
+			TNT1 A 0 A_GiveInventory("RocketAmmo", 50)
+			TNT1 A 0 A_GiveInventory("Cell", 100)
+			TNT1 A 0 A_GiveInventory("Gasoline", 50)
+			TNT1 A 0 A_GiveInventory("Flinger_Ammo", 50)
+			TNT1 A 0 A_GiveInventory("Dualshot_Ammo", 50)
+        stop
 	}
 }
 
 Actor AmmunitionRune_Activate : PowerupGiver{
     +INVENTORY.AUTOACTIVATE
-    +VisibilityPulse
     powerup.type InfiniteAmmo
 	powerup.duration 35
-    Powerup.Color InverseMap
-    Powerup.Color "0 0 0" 0.3
+    Powerup.Color None
     Renderstyle Translucent
 }

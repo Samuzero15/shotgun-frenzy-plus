@@ -48,13 +48,15 @@ script "PriFireTrigger" ENTER
 }
 
 function void AddAmmoCapacity (str ammo, int amount){
-	//log(s:ammo, s:" cap: ", d:getAmmoCapacity(ammo), s:" + ", d:amount, s:" -> ", d:(getAmmoCapacity(ammo) + amount));
 	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
 }
 
 script "PersonalBP_Expand" (void) {
-	if(getAmmoCapacity("Clip") == 300 || getAmmoCapacity("Clip") == 500){
-			terminate; // Dont expand if already expanded.
+	if(	getAmmoCapacity("Ammo_2BackpacksToken") == 3 ||
+	 	getAmmoCapacity("Ammo_PersonalBPToken") == 2 ||
+	  	!CheckInventory("P_Backpack")){
+			// Dont expand if already expanded (having the backpack or not) or if we don't have the item.
+			terminate; 
 		}
 	
 	AddAmmoCapacity("Clip", 			100);
@@ -67,9 +69,18 @@ script "PersonalBP_Expand" (void) {
 	AddAmmoCapacity("GLauncher_Ammo", 	25);
 	AddAmmoCapacity("Flinger_Ammo", 	50);
 	AddAmmoCapacity("Gasoline",			50);
+
+	AddAmmoCapacity("Ammo_PersonalBPToken", 1); // Set token.
+
+	if(GetAmmoCapacity("Ammo_BackpackToken") == 2){
+		AddAmmoCapacity("Ammo_2BackpacksToken", 1); // Set token.
+	}
 }
 
 script "PersonalBP_Reset" (void) {
+	SetAmmoCapacity("Ammo_PersonalBPToken", 1); // Reset token.
+	SetAmmoCapacity("Ammo_2BackpacksToken", 1); // Reset token.
+
 	SetAmmoCapacity("Clip", 			200);
 	SetAmmoCapacity("ClipPistol",		50);
 	SetAmmoCapacity("Shell", 			60);

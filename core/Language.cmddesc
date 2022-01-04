@@ -1,0 +1,89 @@
+[Enu default]
+
+// All button descriptions for the commander terminal.
+FP_CBD_BUILD_GENLAB 	=	"Allows advancement on armor and health"
+							"\nProvides healing pads for marines";
+					  
+FP_CBD_BUILD_ARMORY		=	"Allows to buy and upgrade advanced weapons."
+							"\nProvides ammo pads for marines, and some "
+							"\nuseful items.";
+					  
+FP_CBD_BUILD_MECHFA 	=	"Allows marines to purchase and upgrade mechs"
+							"\nHeavy machines for the heavy duty.";	
+							
+FP_CBD_BUILD_REFINE		=	"Allows additional credits to be collected"
+							"\nAlso increases credit count by 2 a second.";
+							
+FP_CBD_BUILD_MARCOM		=	"Allows you to construct turrets and use"
+							"\ncore pulses. Here you can command the airstrikes"
+							"\nand the mighty Ion Cannon for some extra help.";
+							
+FP_CBD_BUILD_NUKESY		=	"Let's you launch a powerful nuke which it hits"
+							"\nthe demon core directly, but it takes 5 minutes"
+							"\nto launch. If this works, you win.";
+							 
+FP_SUPCD_AIRSTK_POINT		= "Marks a target point for your airstrike attack.";
+FP_SUPCD_AIRSTK_LINE_1		= "Marks the first target point for a line of tagets.";
+FP_SUPCD_AIRSTK_LINE_2		= "Marks the second target point for a line of tagets.";
+FP_SUPCD_AIRSTK_EXE			= "Attacks all the selected target points!." 
+							  "\nPrice depends on the amount of targets placed before the assault.";
+FP_SUPCD_AIRSTK_CANCEL		= "Clears all airstrike markers.";
+FP_SUPCD_AIRSTK_WAVES 		= "This will change the number of attacks made in a single target"
+							  "\n more waves implies more delay on cool down"
+							  "\n and more expensive costs, but also causes more chaos.";
+
+FP_SUPCD_CPULSE				= "Activate a core pulse.";
+FP_SUPCD_CPULSE_HEAL		= "Repairs all turrets and dispensers deployed.";
+FP_SUPCD_CPULSE_CRIPPLE		= "Damages all monsters in the battlefield.";
+FP_SUPCD_CPULSE_SMITE		= "Greatly damages the monsters inside of the risked sector.";
+FP_SUPCD_CPULSE_REVIVE		= "Fully heals the current risked sector's core.";
+FP_SUPCD_CPULSE_HALT		= "Holds up the monster spawning for 60 seconds.";
+
+FP_SUPCD_MARK_ATTACK		= "Notify your allies to attack a specific point.";
+FP_SUPCD_MARK_DEFEND		= "Notify your allies to defend a specific point.";
+FP_SUPCD_MARK_DEPLOY		= "Notify your allies to deploy something in a "
+							  "\nspecific point.";
+FP_SUPCD_MARK_REGROUP		= "Notify your allies to meet in the rendezvous point\n"
+							  "at a specific point.";
+							  
+FP_SUPCD_MARK_CLEAR			= "Clears all markers.";
+FP_SUPCD_IONCAN				= "Fires the mighty Ion Cannon in a specific location.";
+FP_SUPCD_DROPMONEY			= "Drops a Money bag with 3000 credits inside.\n"
+							  "It's discounted from the team credits.";
+							  
+							  
+FP_DEPCD_MINEFIElD			= "Spawns some mines in the area and sets them up\n"
+							  "in case of any demon, prepared to blow them away.";
+FP_DEPCD_DISP_HEALTH		= "Spawns a health dispenser, nifty for restoring health.";
+FP_DEPCD_DISP_AMMO			= "Deploys an ammo dispenser, for marine re-stocking.";
+FP_DEPCD_BARRIER			= "Deploys a resistent barrier which it works as\n"
+							  "a distraction, as long as it makes time to let the\n"
+							  "marines fight back.";
+FP_DEPCD_TURRET				= "Access to the turret menu.";
+
+FP_DEPCD_TURRET_BULLET		= "Deploys a basic, weak, but cheap and fast-building bullet turret.";
+
+FP_DEPCD_TURRET_ROCKET		= "Deploys an explosive rocket turret. Fires rockets.";
+
+FP_DEPCD_TURRET_PLASMA		= "Deploys an advanced plasma turret. Fires plasma balls\n"
+							  "quickly to 1 enemy, excelent for dealing damage when\n"
+							  "deployed in numbers.";
+
+FP_DEPCD_TURRET_TESCOL		= "Deploys a tesla coil which it damages nearby enemies\n"
+							  "hiting them without even noticing.";
+
+FP_DEPCD_TURRET_FLAMER		= "Deploys a powerful flame turret which it spews fire\n"
+							  "to the nearby demons.";
+
+FP_DEPCD_TURRET_CHAINGUN	= "Deploys a chaingun turret, better than a bullet turret.\n"
+							  "Makes more damage, seeks for new targets, \n"
+							  "fires constantly and resists more.";			
+
+FP_DEPCD_TURRET_SHOTGUN		= "Deploys a shotgun turret. Fires twice, and deals\n"
+							  "damage in a spreadier way. \n\n"
+							  "Not the fastest, but it's better than a bullet turret.";		
+
+FP_DEPCD_TURRET_BFG			= "Deploys a BFG turret. Never seen one of these?\n\n"
+							  "Fires 2 Powerful BFG Balls againt the demons!\n"
+							  "Takes a while to fire, but it truly does a big\n"
+							  "damage to the hordes!";

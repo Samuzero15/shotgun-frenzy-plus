@@ -9,10 +9,28 @@ ACTOR HealthRune : RuneGiver {
 	Rune.Type Health
 	Inventory.PickupMessage "Health!"
 	Inventory.PickupSound "runes/health"
+	scale 0.5
 	States
 	{
 	Spawn:
-		STRR DCBA 6
+		RHLT ABCD 4
 		Loop
+	}
+}
+
+Actor HealthRune_BloodDrip : Health {
+	Inventory.MaxAmount 200
+	Inventory.Amount 10 // 
+	Inventory.PickupMessage ""
+	Inventory.PickupSound "g/healing"
+	+FLOATBOB
+	+NOGRAVITY
+	-COUNTITEM
+	scale 1.2
+	States
+	{
+		Spawn:
+			BLDB ABCDCB 4 
+		loop
 	}
 }

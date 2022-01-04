@@ -1,0 +1,34 @@
+[Enu default]
+
+TECHD_GENLAB_HEALTH1 	= "Increases default health to 120%.";
+TECHD_GENLAB_HEALTH2 	 = "Increases default health to 140%.";
+TECHD_GENLAB_ARMOR 		= "Marines are stocked with a green armor.";
+TECHD_GENLAB_SPEEDB 		= "Marines runs 30% more faster.";
+TECHD_GENLAB_RESISB 		= "Marines can resist 30% more damage.";
+TECHD_GENLAB_REGENB 		= "Marines can regenerate health.";
+
+TECHD_ARMORY_ARMS1		= "Advanced weapons are available for the marines"
+							  "\nIncluding the explosives, plasma and commando packs.";
+TECHD_ARMORY_ARMS2 		= "Overpowered weapons are available for the\n"
+							  "marines. Including the mighty Flamethrower\n"
+							  "and the BFG 9000.";
+TECHD_ARMORY_BOOMRN 		= "Marines deals 30% more damage.";
+TECHD_ARMORY_AMMOBP		= "Marines can carry more ammo, two times more.";
+TECHD_ARMORY_STIMPK		= "Marines are stocked with 10 stimpacks, healing 15 hp per item.";
+
+TECHD_REFINE_PUMP1		= "Increases the credit resource collection by\n"
+							  "enabling the pump #1 from the refinery.";
+TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
+							  "enabling the pump #2 from the refinery.";
+
+TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
+							  "\nbombs in the selected targets.";
+							  
+TECHD_MARCOM_ADVSYS		= "Powerful turrets are avilable to be deployed on "
+							  "\nthe battlefield";	
+							  
+TECHD_MARCOM_IONCAN		= "Allows you to fire the Mighty Ion Cannon.\n"
+							  "Powerful enough to wipe-out entire waves in a single swipe.";
+							  
+TECHD_MARCOM_CPULSE		= "You core gains the capacity to create special effects\n"
+							  "that affects in the battle field.";

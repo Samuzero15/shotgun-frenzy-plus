@@ -3,15 +3,17 @@ ACTOR DefenseRune : RuneGiver {
     // 15 ticks of invulnerability, for each damage taken.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RDEFA0
 	Inventory.MaxAmount 0
 	Rune.Type Defense
 	Inventory.PickupMessage "Defense!"
 	Inventory.PickupSound "runes/defense"
+	scale 0.5
 	States
 	{
 	Spawn:
-		RESR HGFEDCBA 6
+		RDEF A 6
+		RDEF A 6 Bright
 		Loop
 	}
 }
@@ -31,6 +33,6 @@ Actor DefenseRune_Shield : PowerupGiver{
     +VisibilityPulse
     powerup.type DefenseRune_ShieldInvul
 	powerup.duration 15
-    Powerup.Color "255 255 255" 0.3
+    Powerup.Color None
     Renderstyle Translucent
 }

@@ -4,15 +4,16 @@ ACTOR RampageRune : RuneGiver {
     // Lookup fp_ondmg_effects.dec
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RRMPA0
 	Inventory.MaxAmount 0
 	Rune.Type Rampage
 	Inventory.PickupMessage "Rampage!"
 	Inventory.PickupSound "runes/rampage"
+	scale 0.5
 	States
 	{
 	Spawn:
-		STRR DCBA 6
+		RRMP ABCB 6
 		Loop
 	}
 }

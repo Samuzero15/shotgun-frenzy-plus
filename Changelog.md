@@ -2,7 +2,19 @@
 
 ## v0 - Before the beginning...
 
-#### (31 / 12 / 2021) [Sounds, announcer sounds on runes.]
+#### (1 - 3 / 12 / 2022) [Runes on the works (4), Sorting stuff]
+	*) Created new language separated files, for runes, techs and command descriptions.
+	-) Reduced the speed of players to 1.0
+	*) Changing inheritance from PlayerPawn to DoomPlayer, for testing the skins.
+	+) New sprites for Health, Ammunition, Blast, Defense, Rampage and Resurrection runes!
+	// I'm not the best graphic designer, but these sprites will do the job. Until I get better ones.
+	+) More voices. With echo and demonic sounds on the runes.
+	+) Health rune will now drop blood drips, overheals 10 hp (15 for the rune wielder).
+	*) Now, health rune blood drips will appear more often, and between 2 and 5 drips.
+	+) Ammunition rune will now drop satchels, they re-stock a little your ammo.
+	*) Now, ammunition rune's satchels will appear more often, between 1 and 3 packs.
+
+#### (31 / 12 / 2021) [Sounds, announcer sounds on runes]
 	+) Added some template sounds for the rune pickup
 	*) Factorizing powerups, and items.
 

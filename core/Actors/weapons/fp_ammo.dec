@@ -1,4 +1,52 @@
 
+ACTOR Ammo_2BackpacksToken : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 1
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 2
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+ACTOR Ammo_PersonalBPToken : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 1
+	
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 1
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
+ACTOR Ammo_BackpackToken : Ammo
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 1
+	
+	Ammo.BackpackAmount 2
+	Ammo.BackpackMaxAmount 2
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}
+
 ACTOR Supplies_Health_Big : Ammo
 {
 	Inventory.Icon "MEDIA0"
@@ -32,6 +80,8 @@ ACTOR Supplies_Ammo_Big : Ammo
 			stop
 	}
 }
+
+
 
 ACTOR Supplies_Health : Ammo
 {

@@ -4,16 +4,41 @@ ACTOR ResurrectionRune : RuneGiver {
     // Once activated, it gets destroyed.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	//+FLOATBOB
+	Inventory.Icon RRESA0
 	Inventory.MaxAmount 0
 	Rune.Type Resurrection
 	Inventory.PickupMessage "Resurrection!"
 	Inventory.PickupSound "runes/resurrection"
+	scale 0.9
+	FloatSpeed 2
 	States
 	{
 	Spawn:
-		STRR DCBA 6
+
+		RRES A 1 Bright A_SpawnItem("ResurrectionRune_GFX")
+		RRES A 5 Bright A_fadein(0.5)
+		RRES A 6 A_fadeout(0.5)
 		Loop
+	}
+}
+
+Actor ResurrectionRune_GFX {
+	States{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 8 A_SpawnItem("ResurrectionRune_Part1")
+			stop
+	}
+}
+
+Actor ResurrectionRune_Part1 : BrightBlur{
+	scale 1.1
+	+NOGRAVITY
+	states{
+		Spawn:
+			RRES A 0
+		goto Super::Spawn
 	}
 }
 
