@@ -1,8 +1,29 @@
 # Shotgun Frenzy Plus Changelog
 
+	Legend:
+	*) Changed / Fixed
+	+) Added
+	-) Removed
+	// Comments
+	!) Pretty important stuff.
+
 ## v0 - Before the beginning...
 
-#### (1 - 3 / 12 / 2022) [Runes on the works (4), Sorting stuff]
+#### (4 - 16 / 1 / 2022) [New turret sprites, Patcher gun! and stuff]
+	*) Now the tracing of the Plasma Rifle advanced, will now stop chasing, after 5 seconds of flight.
+	*) Now the Hell-trigger powerup is added on the shop.
+	*) Re-factorized the weapon names and descriptions, creating the Language.weapons file.
+	!+) Finally a new we-TOOL, yes tool! The Patcher Gun!
+	// Fix turrets/dispensers/drones paying 10 credits per valid shot!
+	// Shows the buildings health at the aim of this tool!
+	// Also is cappable of stunning enemies!
+	// 5% chance for Experience Point for each turret fix!
+	+) New sprites for the bullet, plasma, rocket and shotgun turrets!
+	// Im fixing the dissaperance of the turret bases and other bugs with these sprites, Im tired.
+	+) New sprites for the Temperance rune!
+	
+
+#### (1 - 3 / 1 / 2022) [Runes on the works (4), Sorting stuff]
 	*) Created new language separated files, for runes, techs and command descriptions.
 	-) Reduced the speed of players to 1.0
 	*) Changing inheritance from PlayerPawn to DoomPlayer, for testing the skins.

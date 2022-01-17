@@ -27,6 +27,7 @@ Actor Hud_Killstreak : Boolean {}
 #include "Actors/weapons/frenzy_healnstock.txt"
 #include "Actors/weapons/fp_ammo.dec"
 #include "Actors/weapons/fp_tankguns.dec"
+#include "Actors/weapons/fp_patcher.dec"
 
 
 

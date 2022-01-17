@@ -14,6 +14,7 @@
 #include "zcommon.acs"
 #include "acsutils.acs"
 #import "f_intdb.acs"
+#import "f_Rank.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -142,6 +143,194 @@ script "RepGauss_AimY" (void)
 script "PlayerId" (void){
 	SetActivatorToTarget(0);
 	SetResultValue(ActivatorTID());
+}
+
+function bool IsATurret(int tid){
+	str turrets[6] ={
+		"TurretBullet_HEAD",
+		"TurretShotgun_Head",
+		"TurretChaingun_Head",
+		"TurretRocket_Head",
+		"TurretPlasma_Head",
+		"TurretBase_Head"
+	};
+
+	for(int i = 0; i < 6; i ++){
+		if(CheckActorClass(tid, turrets[i])) return true;
+	}
+		
+	return false;
+}
+
+#libdefine PATCHER_HID_HEALTH 2700
+#libdefine PATCHER_HID_COST	  2701
+#libdefine PATCHER_HID_MSG 	  2702
+#libdefine PATCHER_FIXINMULT 0.10
+#libdefine PATCHER_PRICEMULT 0.07
+#libdefine PATCHER_BUFFMULT 0.20
+
+function void Patcher_Display(int tid, int playnum){
+	int hp = GetActorProperty(tid, APROP_HEALTH);
+	int maxhp = GetActorProperty(tid, APROP_SPAWNHEALTH);
+	int price = (maxhp * PATCHER_PRICEMULT) >> 16;
+	int buff_price = (maxhp * PATCHER_BUFFMULT) >> 16;
+
+	int fix = (maxhp * PATCHER_FIXINMULT) >> 16;
+	int color = CR_WHITE;
+	str msg = 0;
+	int cost = strparam(s:"Repair Cost: ", d:price, s:" credits\nBuffing Cost: ", d:buff_price, s:" credits");
+	if(CheckInventory("PowerPatcher_BuffDamage")) {
+		color = CR_GOLD;
+		msg = strparam(s:"DMG & RES UP (",d:(GetActorPowerupTics(0, "PowerPatcher_BuffDamage") / 35),s:")");
+	}
+	
+	SetActivator(990+playnum);
+	if(CheckWeapon("Patcher_Advanced")) price = price/2;
+	if(CheckInventory("Patcher_HudHeal")){
+		color = CR_GREEN;
+		msg = strparam(s:"Repaired \cd", d:fix,s:"\c- HP" );
+	} else if(CheckInventory("Patcher_HudMaxHp")){
+		color = CR_CYAN;
+		msg = strparam(s:"Fully Repaired");
+	} else if(CheckInventory("Patcher_HudNoMoney")){
+		color = CR_ORANGE;
+		msg = strparam(s:"Not enough credits!");
+	} else if (CheckInventory("Patcher_HudBuff")){
+		color = CR_GOLD;
+		msg = strparam(s:"Buffed!");
+	} else if (CheckInventory("Patcher_HudBuffed")){
+		color = CR_GOLD;
+		msg = strparam(s:"Already buffed!");
+	}
+	 										  
+	SetHudSize(320, 240, 0);
+	Setfont("confont");
+	HudMessage(d:hp, s:"/", d:maxhp; HUDMSG_FADEOUT, PATCHER_HID_HEALTH, color, 320*0.5, 240*0.65, 0.2, 1.0);
+	SetHudSize(0, 0, 0);
+	SetHudSize(640, 480, 0);
+	Setfont("confont");
+	HudMessage(s:msg; HUDMSG_FADEOUT, PATCHER_HID_MSG, CR_WHITE, 640*0.5, 480*0.55, 0.2, 1.0);
+	HudMessage(s:cost; HUDMSG_FADEOUT, PATCHER_HID_COST, CR_WHITE, 640*0.5, 480*0.70, 0.2, 1.0);
+	SetHudSize(0, 0, 0);
+}
+
+script "Patcher_TurretScouter" (void){
+	if(CheckInventory("Patcher_Script")) terminate;
+	else GiveInventory("Patcher_Script", 1);
+
+	int framecount = 0;
+	While(CheckWeapon("Patcher") || CheckWeapon("Patcher_Advanced")){
+		GiveInventory("Patcher_Libra", 1);
+		if(framecount >= 7){
+			TakeInventory("Patcher_HudHeal", 1);
+			TakeInventory("Patcher_HudMaxHp", 1);
+			TakeInventory("Patcher_HudNoMoney", 1);
+			TakeInventory("Patcher_HudBuff", 1);
+			TakeInventory("Patcher_HudBuffed", 1);
+			framecount = 0;
+		}
+		delay(5);
+		framecount++;
+	}
+	TakeInventory("Patcher_HudHeal", 1);
+	TakeInventory("Patcher_HudMaxHp", 1);
+	TakeInventory("Patcher_HudNoMoney", 1);
+	TakeInventory("Patcher_HudBuff", 1);
+	TakeInventory("Patcher_HudBuffed", 1);
+	TakeInventory("Patcher_Script", 1);
+}
+script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
+	int atid, playnum;
+    switch(type){
+        case GAMEEVENT_ACTOR_DAMAGED:
+		
+			if(strcmp(arg2, "PriPatcherDmg") == 0){
+				atid = ActivatorTID();
+				if(IsATurret(atid)){
+					SetActivator(0, AAPTR_Damage_Source);
+						playnum = PlayerNumber();
+
+						if(playnum == -1) break;
+						SetActivator(0, AAPTR_Damage_Target);
+					If(GetActorProperty(atid, APROP_HEALTH) < GetActorProperty(atid, APROP_SPAWNHEALTH)){
+						int price = (GetActorProperty(atid, APROP_SPAWNHEALTH)*PATCHER_PRICEMULT) >> 16;
+						int fix = (GetActorProperty(atid, APROP_SPAWNHEALTH)*PATCHER_FIXINMULT) >> 16;
+						SetActivator(0, AAPTR_Damage_Source);
+						if(CheckWeapon("Patcher_Advanced")) price = price/2;
+						SetActivator(0, AAPTR_Damage_Target);
+
+						if(p_Credits[playnum] < price){
+							SetActivator(990+playnum);
+							GiveInventory("Patcher_HudNoMoney", 1);
+						}else{
+							if(random(0, 100) < 15) Rank_GrantEXP(playnum, 1);
+							p_Credits[playnum] -= price;
+							if(CheckWeapon("Patcher_Advanced")) price = price/2;
+							GiveInventory("Health", fix);
+							SetActivator(990+playnum);
+							GiveInventory("Patcher_HudHeal", 1);
+						}
+					} else {
+						SetActivator(990+playnum);
+						GiveInventory("Patcher_HudMaxHP", 1);
+					}
+				}
+				setResultValue(0);
+			}
+			if(strcmp(arg2, "AltPatcherDmg") == 0){
+				atid = ActivatorTID();
+				if(IsATurret(atid)){
+					SetActivator(0, AAPTR_Damage_Source);
+						playnum = PlayerNumber();
+						if(playnum == -1) break;
+					SetActivator(0, AAPTR_Damage_Target);
+					
+
+					If(!CheckInventory("PowerPatcher_BuffDamage")){
+						int price_buff = (GetActorProperty(atid, APROP_SPAWNHEALTH)*PATCHER_BUFFMULT) >> 16;
+						if(p_Credits[playnum] < price_buff){
+							SetActivator(990+playnum);
+							GiveInventory("Patcher_HudNoMoney", 1);
+						}else{
+							if(random(0, 100) < 15) Rank_GrantEXP(playnum, 1);
+							p_Credits[playnum] -= price_buff;
+							GiveInventory("Patcher_Buffer", 1);
+							
+							SetActivator(990+playnum);
+							if(CheckWeapon("Patcher_Advanced")){
+								SetActivator(0, AAPTR_Damage_Target);
+								GiveInventory("Patcher_AdvBuffer", 1);
+								SetActivator(990+playnum);
+							}
+							GiveInventory("Patcher_HudBuff", 1);
+						}
+					} else {
+						
+						SetActivator(990+playnum);
+						GiveInventory("Patcher_HudBuffed", 1);
+					}
+				}
+				setResultValue(0);
+			}
+            if(strcmp(arg2, "IdlePatcherDmg") == 0){
+				atid = ActivatorTID();
+				if(IsATurret(atid)){
+					SetActivator(0, AAPTR_Damage_Source);
+						playnum = PlayerNumber();
+						if(playnum == -1) break;
+					SetActivator(0, AAPTR_Damage_Target);
+					Patcher_Display(atid, playnum);
+				}
+				setResultValue(0);
+			}
+			
+        break;
+    }    
+}
+
+function str cond_str (int c){
+	if(c) return strparam(s:"yes");
+	return strparam(s:"no");
 }
 
 script "MinesGoBoom" (int tid) {

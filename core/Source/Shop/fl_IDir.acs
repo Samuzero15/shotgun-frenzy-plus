@@ -61,6 +61,10 @@ function void SFPlus_DefineItems(void){
 		"Your weapons harms 4 times more!");
 	Item_Add_Powerup("Inventory_AmmoGiver", "Ammo Sphere", "berserk2", 1, CR_GREEN,"ITEM09",
 		"Restock your ammo by yourself!");
+	Item_Add_Powerup("Inventory_Helltrigger", "Hell Trigger", "helltrigger", 1, CR_ORANGE,"ITEMP4",
+		"Fire faster, and free ammo!");
+	/*Item_Add_Powerup("Inventory_Necrosphere", "Hell Trigger", "helltrigger", 1, CR_ORANGE,"ITEM09",
+		"Damages every enemy arround you!");*/
 		
 	Item_Add_Inv("p_backpack", "Personal Backpack", "backpack", 1, "CM29", 0,
 		"Carry more ammo with you!");

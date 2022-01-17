@@ -4,7 +4,7 @@ ACTOR HealthRune : RuneGiver {
 	// +50% health from any healing source.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RHLTA0
 	Inventory.MaxAmount 0
 	Rune.Type Health
 	Inventory.PickupMessage "Health!"

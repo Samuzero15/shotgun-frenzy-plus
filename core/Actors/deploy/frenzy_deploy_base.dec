@@ -600,6 +600,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	+THRUSPECIES
 	+MISSILEMORE
 	+MISSILEEVENMORE
+	+USEDAMAGEEVENTSCRIPT
 	DeathSound "turret/death"
 	scale 0.5
 	damagefactor "MarineFire", 0.0

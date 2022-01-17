@@ -30,6 +30,7 @@ Actor pr_wu_buckshot_up2 : Integer {}
 Actor pr_wu_supplier_up0 : Integer {}
 Actor pr_wu_supplier_up1 : Integer {}
 Actor pr_wu_supplier_up2 : Integer {}
+Actor pr_wu_patcher_up0 : Integer {}
 Actor pr_wu_repeater_up0 : Integer {}
 Actor pr_wu_repeater_up1 : Integer {}
 Actor pr_wu_repeater_up2 : Integer {}
@@ -76,6 +77,8 @@ Actor pr_wr_supplier : Integer {}
 Actor pr_wr_supplier_up0 : Integer {}
 Actor pr_wr_supplier_up1 : Integer {}
 Actor pr_wr_supplier_up2 : Integer {}
+Actor pr_wr_patcher : Integer {}
+Actor pr_wr_patcher_up0 : Integer {}
 Actor pr_wr_repeater : Integer {}
 Actor pr_wr_repeater_up0 : Integer {}
 Actor pr_wr_repeater_up1 : Integer {}

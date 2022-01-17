@@ -2,7 +2,7 @@ clearplayerclasses
 addplayerclass FrenzyPlayer
 
 weaponsection Resource
-setslot 0 Supplier Supplier_Big
+setslot 0 Supplier Supplier_Big Patcher Patcher_Advanced
 setslot 1 Beretta Beretta_Dual Beretta_SMG
 setslot 2 Boomstick Boomstick_Full
 setslot 3 SSG SSG_Autoload SSG_Explosive Quadshot Quadshot_Full

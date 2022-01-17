@@ -1,0 +1,191 @@
+[Enu default]
+
+// Basic pack
+
+WEPS_BASIC_BRTT_NAME = "5mm Beretta";
+WEPS_BASIC_BRTT_DESC = "Your good-old trusty beretta.";
+WEPS_BASIC_BRTT_UP1_NAME = "Double Berettas";
+WEPS_BASIC_BRTT_UP1_DESC = "You get an extra beretta, rapid fire by primary, and simultaneous fire on secondary.";
+WEPS_BASIC_BRTT_UP2_NAME = "SMG Beretta";
+WEPS_BASIC_BRTT_UP2_DESC = "Works like a single beretta, but primary fires fast, and secondary like your beretta fire ratio.";
+
+WEPS_BASIC_BSTK_NAME = "Boomstick";
+WEPS_BASIC_BSTK_DESC = "Your own shotgun";
+WEPS_BASIC_BSTK_UP0_NAME = "Combat Boomstick";
+WEPS_BASIC_BSTK_UP0_DESC = "Pellets can drop fire to burn stronger enemies, also you have a chainsaw bayonetta.";
+
+// Shotgunner pack
+
+WEPS_SHOTGUN_NAME =        "Shotgun";
+WEPS_SHOTGUN_DESC =        "Shell based weapons to cause damage. Great for the newcomers.";
+
+WEPS_SHOTGUN_SSG_NAME =    "SSG";
+WEPS_SHOTGUN_SSG_DESC =    "Your mighty double barreled shotgun."
+                            "The weapon contains the sawed off functionality "
+                            "letting you to fire 1 barrel at the time for a "
+                            "more controlled attack.\n\n"
+	                        "Pri. fire: 2 Barrel Fire (2 Shells)\n"
+                            "Sec. Fire: 1 Barrel Fire (1 Shells)";
+
+WEPS_SHOTGUN_SSG_UP1_NAME = "Flame Super Shotgun";
+WEPS_SHOTGUN_SSG_UP1_DESC = "Your shells will explode and create fire to damage the hordes constantly.";
+WEPS_SHOTGUN_SSG_UP2_NAME = "Ricochet Super Shotgun";
+WEPS_SHOTGUN_SSG_UP2_DESC = "Allows you to fire faster, your pellets can bounce on floors and walls.";
+
+WEPS_SHOTGUN_QUAD_NAME =    "Quadshot";
+WEPS_SHOTGUN_QUAD_DESC =    " This heavy machine can fire a powerful shell burst "
+                            "with the use of 4 shells, powerful enough "
+                            "to grant you easy kills. Thanks for its high acurracy. "
+                            "The only drawback is in its firing speed.\n\n"
+                            "Pri. fire: 4 Shell Burst "
+                            "\nSec. Fire: 1 Shell Shot ";
+WEPS_SHOTGUN_QUAD_UP0_NAME = "Explosive Quadshot";
+WEPS_SHOTGUN_QUAD_UP0_DESC = "Your peelets can explode, also you can fire twice as faster.";
+
+// Assault pack
+
+WEPS_ASSAULT_NAME = "Assault";
+WEPS_ASSAULT_DESC = "Weapon set for quick assault operations.";
+
+WEPS_ASSAULT_SPIT_NAME =    "Spitter";
+WEPS_ASSAULT_SPIT_DESC =    "Nifty machine to attack weaker demons, thanks for it's firing speed.\n"
+	                        "It's perfect to deal with the rushing waves at the start.";
+
+WEPS_ASSAULT_SPIT_UP1_NAME = "Spread Spitter + Shell Grenades";
+WEPS_ASSAULT_SPIT_UP1_DESC = "You gain more spread for this gun, and also you can launch shell grenades.";
+WEPS_ASSAULT_SPIT_UP2_NAME = "Auto Spitter + Gas Grenades";
+WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster. Allows you to throw Gas grenades, they cause stun and poison to the horde.";
+
+WEPS_ASSAULT_BUCK_NAME =    "Buckshot";
+WEPS_ASSAULT_BUCK_DESC =    "Powerful shotgun that packes 10 shells in the chamber,  "
+	                        "Shoots fast, but needs to be recharged manually."
+	                        "Just use this if the spitter does'nt deal enough damage.\n\n"
+                            "Sec. Fire: Reload chamber (2 Shells)";
+
+WEPS_ASSAULT_BUCK_UP1_NAME = "Big Ricochet Buckshot";
+WEPS_ASSAULT_BUCK_UP1_DESC = "Chamber up to 20 shells, 4 shells per pump. Bullets bounce on floors and walls.";
+WEPS_ASSAULT_BUCK_UP2_NAME = "Flame Buckshot";
+WEPS_ASSAULT_BUCK_UP2_DESC = "Your shells will explode and create fire to damage the hordes constantly.";
+
+// Support pack
+
+WEPS_SUPPORT_NAME = "Support";
+WEPS_SUPPORT_DESC = "Set of tools for an aid in the battlefield";
+
+WEPS_SUPPORT_SUPP_NAME =    "Supplier Mach.";
+WEPS_SUPPORT_SUPP_DESC =    "Tool that drops ammo and health supplies for the marines.\n"
+                            "This tool can't be restocked by dispensers, so your best refill "
+	                        "is on your base, in the ammunition pad.\n\n"
+	                        "Pri. Fire: Drop Ammo (1 Ammo Supplies)\n"
+                            "Sec. Fire: Drop Health (1 Health Supplies)";
+
+WEPS_SUPPORT_SUPP_UP0_NAME = "Resourceful Supplier Machine";
+WEPS_SUPPORT_SUPP_UP0_DESC = "Supply more resources, and in a wider range.";
+
+WEPS_SUPPORT_PTCH_NAME =    "Patcher Gun";
+WEPS_SUPPORT_PTCH_DESC =    "Repairs Turrets, Dispensers and Drones. Is Harmless against monsters.\n"
+	                        "Has a 10% chance of gaining an experience point per each hit.\n "
+                            "Uses credits as repair material.\n\n"
+                            "Pri-Fire: Fixes buildings by 10% of its max health. (Costs 7% from max health)\n"
+                            "Alt-fire: x2 damage up and 50% resistance up for 30 seconds. (Costs 25% from the max health)";
+
+WEPS_SUPPORT_PTCH_UP0_NAME = "Advanced Patcher Gun";
+WEPS_SUPPORT_PTCH_UP0_DESC = "Repairs faster and with a 50% price discount. Buffing adds Regeneration.";
+
+
+// Commando
+
+WEPS_COMMANDO_NAME =        "Commando";
+WEPS_COMMANDO_DESC =        "Heavy repeater guns, they rip and tear a lot of demons.";
+
+WEPS_COMMANDO_REPE_NAME =    "Repeater";
+WEPS_COMMANDO_REPE_DESC =    "This chaingun fires a lot of heavy bullets.\n"
+	                         "The more you fire it, the inacurrate but powerful becomes.\n"
+	                         "Just dont waste ammo and you will be fine.\n\n"
+	                         "Sec. Fire: Toggle Spinning.";
+
+WEPS_COMMANDO_REPE_UP1_NAME = "Speed Drift Repeater";
+WEPS_COMMANDO_REPE_UP1_DESC = "Spins quicker meaning you can fire faster and presicer. Also you fire more bullets than the usual.";
+WEPS_COMMANDO_REPE_UP2_NAME = "Gauss J. Repeater";
+WEPS_COMMANDO_REPE_UP2_DESC = "Fires gauss bullets. Allowing you to rip enemies with your bullets, as long you have some energy cells.";
+
+WEPS_COMMANDO_NAIL_NAME =    "Nail Dualshot";
+WEPS_COMMANDO_NAIL_DESC =    "This gun can rip through enemies with the use of nails.\n"
+	                         "Slower than bullets, but they rip more from up close.";
+
+WEPS_COMMANDO_NAIL_UP1_NAME = "Razor Saw Dualshot";
+WEPS_COMMANDO_NAIL_UP1_DESC = "Fires Saw-bolts. They're heavier and the gravity affects them, but they cause more damage.";
+WEPS_COMMANDO_NAIL_UP2_NAME = "Flak Cannon Dualshot";
+WEPS_COMMANDO_NAIL_UP2_DESC = "Each nail shatters in Flak Shards. They're bouncy and spreadier, but they deal less damage.";
+
+// Explosive
+
+WEPS_EXPLOSIVE_NAME =        "Explosive";
+WEPS_EXPLOSIVE_DESC =        "Dynamate weapons with explosive projectiles, excelent for crowd control.";
+
+WEPS_EXPLOSIVE_ROKT_NAME =    "R. Launcher";
+WEPS_EXPLOSIVE_ROKT_DESC =    "Shoots fast and explosive rockets straight into the waves.\n"
+	                          "Aim to their feets for the best experience.";
+
+WEPS_EXPLOSIVE_ROKT_UP1_NAME = "Explosive R. Launcher";
+WEPS_EXPLOSIVE_ROKT_UP1_DESC = "Your rockets explode more, and they leave a fire trail for the nearby demons.";
+WEPS_EXPLOSIVE_ROKT_UP2_NAME = "Multiple R. Launcher";
+WEPS_EXPLOSIVE_ROKT_UP2_DESC = "Launches 3 rockets per shot. In a spreadier way. Use secondary to fire in a trangular set.";
+
+WEPS_EXPLOSIVE_FLIN_NAME =    "G. Flinger";
+WEPS_EXPLOSIVE_FLIN_DESC =    "With this, you can launch bouncing grenades.\n"
+	                          "Use the bouncing capacity from each projectile"
+                              "to damage demons in a safe place.";
+
+WEPS_EXPLOSIVE_FLIN_UP1_NAME = "Expansive G. Flinger";
+WEPS_EXPLOSIVE_FLIN_UP1_DESC = "Fires a grenade, that spawns smaller grenades in a wider range.";
+WEPS_EXPLOSIVE_FLIN_UP2_NAME = "Sticky G. Flinger";
+WEPS_EXPLOSIVE_FLIN_UP2_DESC = "Launches sticky grenades, which you can spam them up, but they must be manually activated with altfire. Try sticking a grenade against a demon!.";
+
+// Plasmatic
+
+WEPS_PLASMA_NAME =          "Plasmatic";
+WEPS_PLASMA_DESC =          "Plasma based weapon pack. \nTechnology at it's full glory.";
+
+WEPS_PLASMA_PLSG_NAME =    "Plasma Rifle";
+WEPS_PLASMA_PLSG_DESC =    "Fires plasma balls, fast and hard projectiles "
+                           "in a high fire rate.\n\n"
+                           "Secondary fire can do a charged attack for a "
+                           "more explosive projectile.";
+
+WEPS_PLASMA_PLSG_UP1_NAME = "Spread Chip Plasma Rifle";
+WEPS_PLASMA_PLSG_UP1_DESC = "Your plasma can spread. Control it with Primary and Secondary fire.";
+WEPS_PLASMA_PLSG_UP2_NAME = "Advanced Plasma Rifle";
+WEPS_PLASMA_PLSG_UP2_DESC = "The plasma projectiles can seek enemies now. Can cause explosive damage too.";
+
+
+WEPS_PLASMA_RAIL_NAME =    "Laser Railgun";
+WEPS_PLASMA_RAIL_DESC =    "This gun can create laser rails which "
+                            "they damage everything in its way."
+                            "Takes some time to fire each rail.";
+
+WEPS_PLASMA_RAIL_UP1_NAME = "Lancer type Railgun";
+WEPS_PLASMA_RAIL_UP1_DESC = "Shoots a wider, and powerful Laser which it harms nearby demons.";
+WEPS_PLASMA_RAIL_UP2_NAME = "Slug Railgun";
+WEPS_PLASMA_RAIL_UP2_DESC = "Deals more damage, and fires 2 rails per shot, Use Secondary to fire 1 per time.";
+
+// Pyromaniac
+
+WEPS_PYRO_NAME = "Pyromaniac";
+WEPS_PYRO_DESC = "Weapons specialized in burning, grilling, and set on fire every living demon.";
+
+WEPS_PYRO_FLAM_NAME =    "Flamer";
+WEPS_PYRO_FLAM_DESC =    "Spews fire wherever you fire it, burning everything on its way.\n";
+WEPS_PYRO_FLAM_UP0_NAME = "Super Flamer";
+WEPS_PYRO_FLAM_UP0_DESC = "Bigger flames, more fire, more crisp and ashes.";
+
+// BFG Pack
+
+WEPS_BFGL_NAME = "B.F.G. Love";
+WEPS_BFGL_DESC = "Big problems require Big Friggin Guns.";
+
+WEPS_BFGL_BFG_NAME =    "B.F.G. 9000";
+WEPS_BFGL_BFG_DESC =    "Creates a big charged energy ball which it will explode at the first impact.\n\n"
+                        "But you know that already, so, why are you reading this again?";
+WEPS_BFGL_BFG_UP0_NAME = "Super BFG";
+WEPS_BFGL_BFG_UP0_DESC = "Rips through the horde, and blasts everything on its way.";

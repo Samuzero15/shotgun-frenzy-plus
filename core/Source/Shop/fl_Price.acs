@@ -58,7 +58,7 @@ script "SFPlus_DefinePrices" Open
 	// Price on weapon packs
 	Prices_add("pr_wb_shotgun",			2300);
 	Prices_add("pr_wb_assault",			2500);
-	Prices_add("pr_wb_support",			350);
+	Prices_add("pr_wb_support",			1200);
 	Prices_add("pr_wb_commando",		4500);
 	Prices_add("pr_wb_heavy",			5000);
 	Prices_add("pr_wb_plasma",			6000);
@@ -75,6 +75,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wu_buckshot_up1", 	1);
 	Prices_add("pr_wu_buckshot_up2", 	2);
 	Prices_add("pr_wu_supplier_up0", 	1);
+	Prices_add("pr_wu_patcher_up0", 	2);
 	Prices_add("pr_wu_repeater_up1", 	2);
 	Prices_add("pr_wu_repeater_up2", 	2);
 	Prices_add("pr_wu_dualshot_up1", 	2);
@@ -104,6 +105,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wr_buckshot_up2", 	1800);
 	Prices_add("pr_wr_supplier", 		500);
 	Prices_add("pr_wr_supplier_up0", 	1200);
+	Prices_add("pr_wr_patcher", 		700);
+	Prices_add("pr_wr_patcher_up0", 	1400);
 	Prices_add("pr_wr_repeater", 		2600);
 	Prices_add("pr_wr_repeater_up1", 	3200);
 	Prices_add("pr_wr_repeater_up2", 	3200);

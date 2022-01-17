@@ -18,8 +18,8 @@ ACTOR FrenzyPlayer : DoomPlayer
 	Player.ViewHeight 46
 	Player.StartItem "Beretta"
 	Player.StartItem "Clip", 50
-	Player.WeaponSlot 0, "Supplier", 		"Supplier_Big"
-	Player.WeaponSlot 1, "Beretta", 		"Beretta_Dual", 		"Beretta_SMG"
+	Player.WeaponSlot 0, "Supplier", 		"Supplier_Big", 		"Patcher"
+	Player.WeaponSlot 1, "Beretta", 		"Beretta_Dual", 		"Beretta_SMG"		
 	Player.WeaponSlot 2, "Boomstick", 		"Boomstick_Full"
 	Player.WeaponSlot 3, "SSG", 			"SSG_Autoload", 		"SSG_Explosive", 		"Quadshot", 				"Quadshot_Full", 			"Quadshot_Explosive"
 	Player.WeaponSlot 4, "Buckshot", 		"Buckshot_Chamber", 	"Buckshot_Explosive", 	"Spitter", 					"Spitter_SSG", 				"Spitter_GLauncher"

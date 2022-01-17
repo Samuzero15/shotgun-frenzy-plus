@@ -65,294 +65,88 @@ function void SFPlus_DefineWeapons (void){
 	fp_WeaponPackStack = 0;
 	fp_WeaponStack = 0;
 	
-	wep = Weapon_Add("Beretta", "5mm Beretta", -2, "",
-		"Your good-old trusty beretta."
-	);
-	WeaponUpgrade_Add("Beretta_Dual", "Dual Berettas", wep, 1, "",
-		"You get an extra beretta, rapid fire by primary, and simultaneous fire on secondary."
-	);
-	WeaponUpgrade_Add("Beretta_SMG", "SMG Beretta", wep, 2, "",
-		"Works like a single beretta, but primary fires fast, and secondary like your beretta fire ratio."
-	);
-	
-	wep = Weapon_Add("Boomstick", "Standard Boomstick", -1, "",
-		"Your shotgun."
-	);
-				
-	WeaponUpgrade_Add("Boomstick_Full", "Combat Boomstick", wep, 0, "boomstick",
-		"Pellets can drop fire to burn stronger enemies, also you have a chainsaw bayonetta."
-	);
-	
-	
-	
-	
+	//Basic pack
+	wep = Weapon_AddLang("Beretta", -2, "", "BASIC_BRTT");
+	WeaponUpgrade_AddLangP("Beretta_Dual",		wep, 1, "", "BASIC_BRTT_UP1");
+	WeaponUpgrade_AddLangP("Beretta_SMG",		wep, 2, "", "BASIC_BRTT_UP2");
+
+	wep = Weapon_AddLang("Boomstick", -1, "", "BASIC_BSTK");
+	WeaponUpgrade_AddLangP("Boomstick_Full",		wep, 0, "boomstick", "BASIC_BSTK_UP0");
+
 	//Shotgun pack
-	pack = WeaponPack_Add("Shotguns", FP_BAS, "shotgun", 2,
-		"Shell based weapons to cause damage. Great for the newcomers.",
-	);
-	
-	string = strparam(
-	s:"  Your mighty double barreled shotgun. ",
-	s:"The weapon contains the sawed off functionality ",
-	s:"letting you to fire 1 barrel at the time for a ", 
-	s:"more controlled attack.\n\n",
-	s:"Pri. fire: 2 Barrel Fire (2 Shells) \nSec. Fire: 1 Barrel Fire (1 Shells)"
-	);
-	
-	wep = Weapon_Add("SSG", "Super Shotgun", pack, "ssg", string);
-				
-	WeaponUpgrade_Add("SSG_Autoload", "Autoloadable Super Shotgun", wep, 1, "",
-		"Allows you to fire faster, and your peelets can ricochet on floors and walls."
-		);
+	pack = WeaponPack_AddLang(FP_BAS, "shotgun", 2, "SHOTGUN");
+
+	wep = Weapon_AddLang("SSG", pack, "ssg", "SHOTGUN_SSG");
+	WeaponUpgrade_AddLang("SSG_Autoload",		wep, 1, "SHOTGUN_SSG_UP1");
+	WeaponUpgrade_AddLang("SSG_Explosive",		wep, 2, "SHOTGUN_SSG_UP2");
 		
-	WeaponUpgrade_Add("SSG_Explosive", "Explosive Super Shotgun", wep, 2, "",
-		"Your shells will explode and cause fire to damage the hordes constantly.",
-	);
-	
-	string = strparam(
-	s:"This powerful machine can fire a powerful shell burst ",
-	s:"with the use of 4 shells, powerful enough ",
-	s:"to grant you easy kills. Thanks for its high acurracy. ", 
-	s:"The only drawback is in its firing speed.\n\n",
-	
-	s:"Pri. fire: 4 Shell Burst \nSec. Fire: 1 Shell Shot"
-	);
-		
-	wep = Weapon_Add("Quadshot", "Quadshot", pack, "quadshot", string);
-				
-	WeaponUpgrade_Add("Quadshot_Full", "Explosive Quadashot", wep, 0, "",
-		"Your peelets can explode, also you can fire twice as faster."
-		);
-		
-		
-		
+	wep = Weapon_AddLang("Quadshot", pack, "quadshot", "SHOTGUN_QUAD");
+	WeaponUpgrade_AddLang("Quadshot_Full",		wep, 0, "SHOTGUN_QUAD_UP0");
 		
 	//Assault pack
-	pack = WeaponPack_Add("Assault", FP_BAS, "assault", 2,
-		"Set of weapons for quick assault operations."
-		);
-	
-	string = strparam(
-	s:"Nifty machine to attack, weaker demons thanks for it's firing speed ",
-	s:"It's perfect to deal with the rushing waves at the start."
-	);
-	
-	wep = Weapon_Add("Spitter", "Spitter", pack, "spitter", string);
-				
-	WeaponUpgrade_Add("Spitter_SSG", "Spread Spitter + Shell Grenades", wep, 1, "",
-		"You gain more spread for this gun, and also you can launch shell grenades."
-		);
-		
-	WeaponUpgrade_Add("Spitter_GLauncher", "Fast Spitter + N. Gas Launcher", wep, 2, "",
-		"Fires faster. Allows you to throw N. Gass grenades, they cause stun and poison to the horde.",
-		);
-		
-	string = strparam(
-	s:"Powerful shotgun that packes 10 shells in the chamber ",
-	s:"Shoots fast, but needs to be recharged manually.",
-	s:"Just use this if the spitter does'nt deal enough damage.\n\n", 
-	
-	s:"Sec. Fire: Reload chamber (2 Shells)"
-	);
-		
-	wep = Weapon_Add("Buckshot", "Buckshot", pack, "buckshot", string);
-				
-	WeaponUpgrade_Add("Buckshot_Chamber", "Big Chamber Buckshot", wep, 1, "",
-		"You can reload up to 20 shells, reloads faster adding 4 shells for each pump."
-		);
-		
-	WeaponUpgrade_Add("Buckshot_Explosive", "Explosive Buckshot", wep, 2, "",
-		"Your shells causes more damage, and spreads fire."
-		);
-		
-		
+	pack = WeaponPack_AddLang(FP_BAS, "assault", 2, "ASSAULT");
+
+	wep = Weapon_AddLang("Spitter", pack, "spitter", "ASSAULT_SPIT");
+	WeaponUpgrade_AddLang("Spitter_SSG",		wep, 1, "ASSAULT_SPIT_UP1");
+	WeaponUpgrade_AddLang("Spitter_GLauncher",	wep, 2, "ASSAULT_SPIT_UP2");
+
+	wep = Weapon_AddLang("Buckshot", pack, "buckshot", "ASSAULT_BUCK");
+	WeaponUpgrade_AddLang("Buckshot_Chamber",	wep, 1, "ASSAULT_BUCK_UP1");
+	WeaponUpgrade_AddLang("Buckshot_Explosive",	wep, 2, "ASSAULT_BUCK_UP2");
 		
 	//Support pack
-	pack = WeaponPack_Add("Support", FP_BAS, "support", 0,
-		"Useful tools to aid in the battle."
-		);
-		
-	string = strparam(
-	s:"Patch your allies with this, it drops supplies for the marines.",
-	s:"This tool can't be restocked by dispensers, so your best refill ",
-	s:"is on your base, right at the starting point.\n\n",
-	
-	s:"Pri. Fire: Drop Ammo (1 Ammo Supplies)\n Sec. Fire: Drop Health (1 Health Supplies)"
-	);
-	
-	wep = Weapon_Add("Supplier", "Supplier Machine.", pack, "supplier", string);
-	
-	WeaponUpgrade_Add("Supplier_Big", "Resourceful Supplier", wep, 0, "",
-		"Supply more resources, and in a wider range."
-		);
-		
-		
-		
+	pack = WeaponPack_AddLang(FP_BAS, "support", 0, "SUPPORT");
+
+	wep = Weapon_AddLang("Supplier", pack, "supplier", "SUPPORT_SUPP");
+	WeaponUpgrade_AddLang("Supplier_Big",		wep, 0, "SUPPORT_SUPP_UP0");
+
+	wep = Weapon_AddLang("Patcher", pack, "patcher", "SUPPORT_PTCH");
+	WeaponUpgrade_AddLang("Patcher_Advanced",	wep, 0, "SUPPORT_PTCH_UP0");
 		
 	//Commando pack
-	pack = WeaponPack_Add("Commando", FP_ADV, "commando", 5, 
-		"Heavier repeating guns, they Rip and Tear a lot.");
-	
-	string = strparam(
-	s:"This chaingun fires a lot of heavy bullets.\n",
-	s:"The more you fire it, the inacurrate but powerful becomes.\n",
-	s:"Just dont waste ammo and you will be fine.\n\n",
-	s:"Pri. Fire: Fires the gun.\n",
-	s:"Sec. Fire: Toggle Spinning.");
-	
-	wep = Weapon_Add("Repeater", "Bullet Repeater", pack, "repeater", string);
-				
-	WeaponUpgrade_Add("Repeater_DoubleSpeed", "Speed Drift Repeater", wep, 1, "", 
-		"Spins quicker meaning you can fire faster and presicer. Also you fire more bullets than the usual.",
-		);
-		
-	WeaponUpgrade_Add("Repeater_BlastShells", "Gauss J. Repeater", wep, 2, "",
-		"Fires gauss bullets. Allowing you to rip enemies with your bullets, as long you have some energy cells."
-		);
-	string = strparam(
-	s:"This gun can rip through enemies with the use of nails. ",
-	s:"Slower than bullets, but they rip more from up close."
-	);
-	
-	wep = Weapon_Add("Dualshot", "Nail Dualshot", pack, "dualshot", string);
-				
-	WeaponUpgrade_Add("Dualshot_Razor", "Razor Saw Dualshot", wep, 1, "",
-		"Launches Razor Saw-bolts. They're heavier and the gravity affects them, but it rips a lot."
-		);
-		
-	WeaponUpgrade_Add("Dualshot_FlakShells", "Flak Cannon Dualshot", wep, 2, "",
-		"Launches Flak Shards. They're bouncy and spreadier than the Saw-Bolts, but they deal less damage. Still they can rip through."
-		);
-		
-		
-		
+	pack = WeaponPack_AddLang(FP_ADV, "commando", 5, "COMMANDO");
+
+	wep = Weapon_AddLang("Repeater", pack, "repeater", "COMMANDO_REPE");
+	WeaponUpgrade_AddLang("Repeater_DoubleSpeed",	wep, 1, "COMMANDO_REPE_UP1");
+	WeaponUpgrade_AddLang("Repeater_BlastShells",	wep, 2, "COMMANDO_REPE_UP2");
+
+	wep = Weapon_AddLang("Dualshot", pack, "dualshot", "COMMANDO_NAIL");
+	WeaponUpgrade_AddLang("Dualshot_Razor",			wep, 1, "COMMANDO_NAIL_UP1");
+	WeaponUpgrade_AddLang("Dualshot_FlakShells",	wep, 2, "COMMANDO_NAIL_UP2");
 		
 	//Explosive pack
-	pack = WeaponPack_Add("Explosive", FP_ADV, "heavy", 8,
-		"Heavy weapons with explosive projectiles, excelent for crowd control."
-		);
-	string = strparam(
-	s:"Shoots fast and explosive rockets straight into the waves.",
-	s:"Aim to their feets for the best experience.");
-	
-	wep = Weapon_Add("Launcher", "Rocket Launcher", pack, "launcher", string);
-				
-	WeaponUpgrade_Add("Launcher_Exploder", "Explosive R. Launcher", wep, 1, "",
-		"Your rockets explode more, and they leave a fire trail for the nearby demons."
-		);
-	WeaponUpgrade_Add("Launcher_Multi", "Multiple R. Launcher", wep, 2, "",
-		"Launches 3 rockets per shot. In a spreadier way. Use secondary to fire in a trangular set."
-		);
-		
-	string = strparam(
-	s:"With this, you can launch bouncing grenades.",
-	s:"Use the bouncing capacity from each projectile to damage demons in a safe place."
-	);
-		
-	wep = Weapon_Add("Flinger", "G. Flinger", pack, "flinger", string);
-				
-	WeaponUpgrade_Add("Flinger_Expander", "Expansive G. Flinger", wep, 1, "",
-		"Fires a grenade, that spawns smaller grenades in a wider range. "
-		);
-		
-	WeaponUpgrade_Add("Flinger_MinePlacer", "Sticky G. Flinger", wep, 2, "",
-		"Launches sticky grenades, which you can spam them up, but they must be manually activated with altfire. Try sticking a grenade against a demon!."
-		);
-		
-		
-		
-		
+	pack = WeaponPack_AddLang(FP_ADV, "heavy", 8, "EXPLOSIVE");
+
+	wep = Weapon_AddLang("Launcher", pack, "launcher", "EXPLOSIVE_ROKT");
+	WeaponUpgrade_AddLang("Launcher_Exploder",	wep, 1, "EXPLOSIVE_ROKT_UP1");
+	WeaponUpgrade_AddLang("Launcher_Multi",		wep, 2, "EXPLOSIVE_ROKT_UP2");
+
+	wep = Weapon_AddLang("Flinger", pack, "flinger", "EXPLOSIVE_FLIN");
+	WeaponUpgrade_AddLang("Flinger_Expander",	wep, 1, "EXPLOSIVE_FLIN_UP1");
+	WeaponUpgrade_AddLang("Flinger_MinePlacer",	wep, 2, "EXPLOSIVE_FLIN_UP2");
 		
 	//Plasmatic pack
-	pack = WeaponPack_Add("Plasmatic", FP_ADV, "plasma", 8,
-		"Plasma based pack which it deals damage at the advanced style."
-		);
-	
-	string = strparam(
-	s:"This weapon can fire plasma projectiles, and that's it.");
-	
-	wep = Weapon_Add("Plasmagun", "Plasma Rifle", pack, "plasmagun", string);
-				
-	WeaponUpgrade_Add("Plasmagun_Spread", "Spread Chip Plasma Rifle", wep, 1, "",
-		"Your plasma can spread. Control it with Primary and Secondary fire."
-		);
-		
-	WeaponUpgrade_Add("Plasmagun_Advanced", "Advanced Plasma Rifle", wep, 2, "",
-		"The plasma projectiles can seek enemies now. Can cause explosive damage too."
-		);
-	
-	string = strparam(
-	s:"This gun can create rails in a line of demons.",
-	s:"Takes some time to fire each rail, but its great for sniping.");
-		
-	wep = Weapon_Add("SF_Railgun", "Laser Railgun", pack, "railgun", string);
-				
-	WeaponUpgrade_Add("Railgun_Taser", "Lancer type Railgun", wep, 1, "",
-		"Shoots a wider, and powerful Laser which it harms nearby demons."
-		);
-		
-	WeaponUpgrade_Add("Railgun_Slug", "Slug Railgun", wep, 2, "",
-		"Deals more damage, and fires 2 rails per shot, Use Secondary to fire 1 per time."
-		);
-		
-		
+	pack = WeaponPack_AddLang(FP_ADV, "heavy", 8, "PLASMA");
+
+	wep = Weapon_AddLang("Plasmagun", pack, "plasmagun", "PLASMA_PLSG");
+	WeaponUpgrade_AddLang("Plasmagun_Spread",	wep, 1, "PLASMA_PLSG_UP1");
+	WeaponUpgrade_AddLang("Plasmagun_Advanced",	wep, 2, "PLASMA_PLSG_UP2");
+
+	wep = Weapon_AddLang("SF_Railgun", pack, "railgun", "PLASMA_RAIL");
+	WeaponUpgrade_AddLang("Railgun_Taser",		wep, 1, "PLASMA_RAIL_UP1");
+	WeaponUpgrade_AddLang("Railgun_Slug",		wep, 2, "PLASMA_RAIL_UP2");
 		
 	//Flamer pack
-	pack = WeaponPack_Add("Pyromancer", FP_OP, "flamer", 12,  "Fire is the spotlight. So let them burn.");
-	
-	wep = Weapon_Add("Flamer", "Flamer", pack, "",
-			"It spews fire like a dragon, powerful as hell.");
-				
-	WeaponUpgrade_Add("FlamerS", "Super Flamer", wep, 0, "",
-		"Your fire is unstoppable, ripping the waves with ease.",
-		);
+	pack = WeaponPack_AddLang(FP_OP, "flamer", 12, "PYRO");
+
+	wep = Weapon_AddLang("Flamer", pack, "flamer", "PYRO_FLAM");
+	WeaponUpgrade_AddLang("FlamerS",		wep, 0, "PYRO_FLAM_UP0");
 		
 	//BFG pack
-	pack = WeaponPack_Add("B.F.G Like", FP_OP, "bfg", 15,
-		"Bigger problems needs Big Friggin Guns."
-		);
-	
-	wep = Weapon_Add("BFG", "Bio Force Gun 9000", pack, "",
-		"Oh come on, you know what does this bad boy.");
-				
-	WeaponUpgrade_Add("BFGS", "Ripper BFG9000", wep, 0, "",
-		"Same as the BFG, execpt it rips and explode through waves.",
-		);
-	/*
-	log(s:Weapon_GetName(wep));
-	log(s:Weapon_GetActor(wep));
-	log(d:Weapon_GetWepPack(wep));
-	log(d:Weapon_GetPrice(wep));
-	log(s:Weapon_GetDesc(wep));
-	
-	/*
-	log(s:WeaponPack_GetName(pack));
-	log(d:WeaponPack_GetCat(pack));
-	log(s:WeaponPack_GetDesc(pack));
-	log(d:WeaponPack_GetPrice(pack));
-	
-	log(s:WeaponUpgrade_GetActor(0, 1));
-	log(s:WeaponUpgrade_GetName(0, 1));
-	log(s:WeaponUpgrade_GetDesc(0, 1));
-	log(d:WeaponUpgrade_GetUpgPrice(0, 1));
-	log(d:WeaponUpgrade_GetRcyPrice(0, 1));
-	
-	log(s:WeaponUpgrade_GetActor(0, 1));
-	log(s:WeaponUpgrade_GetName(0, 1));
-	log(s:WeaponUpgrade_GetDesc(0, 1));
-	log(d:WeaponUpgrade_GetUpgPrice(0, 1));
-	log(d:WeaponUpgrade_GetRcyPrice(0, 1));
-	
-	/*
-	pack = WeaponPack_Add("My weapon Pack", FP_BAS, "This weapon pack is cool, lol.", "null");
-	
-	
-	
-	/*
-	wep = Weapon_Add("Beretta", "Beretta", -1, "Your trusty old beretta.",  "null");
-	//int wep = 0;
-	
-	*/
+	pack = WeaponPack_AddLang(FP_OP, "bfg", 15, "BFGL");
+
+	wep = Weapon_AddLang("BFG", pack, "bfg", "BFGL_BFG");
+	WeaponUpgrade_AddLang("BFGS",		wep, 0, "BFGL_BFG_UP0");
 }
 
 function str Weapon_GetSameKind(int wid){
@@ -428,6 +222,29 @@ function void Weapon_Recycle(int wid, int upg, int play){
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
 
+function int Weapon_AddLang(str actor, str pack, str price, str lang){
+	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
+	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
+	return Weapon_Add(actor, strparam(l:name), pack, price, strparam(l:desc));
+}
+
+function int WeaponUpgrade_AddLangP(str actor, str wep, int upnum, str price, str lang){
+	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
+	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
+	return WeaponUpgrade_Add(actor, strparam(l:name), wep, upnum, price, strparam(l:desc));
+}
+
+function int WeaponUpgrade_AddLang(str actor, str wep, int upnum, str lang){
+	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
+	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
+	return WeaponUpgrade_Add(actor, strparam(l:name), wep, upnum, "", strparam(l:desc));
+}
+
+function int WeaponPack_AddLang(int class, str price, int game_gain, str lang){
+	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
+	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
+	return WeaponPack_Add(strparam(l:name), class, price, game_gain,strparam(l:desc));
+}
 function bool Weapon_OwnedSameKind(int asThis){
 	return 
 		checkinventory(Weapon_GetActor(asThis)) ||

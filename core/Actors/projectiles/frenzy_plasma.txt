@@ -132,11 +132,17 @@ ACTOR PlasmaProjectile_Adv2 : FastProjectile
 	//DeathSound		"weapons/rocklx"
 	Obituary			"%o could'nt escape from %k's plasma balls"
 	
+	var int user_countdown;
 	States
 	{
 		Spawn:
 			PLSS AB 1 bright A_SeekerMissile(5, 30, SMF_LOOK)
+			TNT1 A 0 A_SetUserVar("user_countdown", user_countdown + 1)
+			TNT1 A 0 A_JumpIf(user_countdown > 88, "Spawn.Unchase") // Nearly 5 seconds.
 			Loop
+		Spawn.Unchase:
+			PLSS AB 1
+			loop
 		Death:
 			PLSE C 8 bright a_Explode(16,64, 0, true, 32)
 			PLSE D 6 bright
