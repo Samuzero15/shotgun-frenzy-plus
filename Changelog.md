@@ -9,6 +9,11 @@
 
 ## v0 - Before the beginning...
 
+#### (17 / 1 / 2022) [Little Touch]
+	*) Modified the code for the bullet, shotgun, rocket and plasma turrets.
+	-) Deleted the old sprites for the turrets. 
+	*) Deleted the setslot part from the keyconf, already defined on the player class.
+
 #### (4 - 16 / 1 / 2022) [New turret sprites, Patcher gun! and stuff]
 	*) Now the tracing of the Plasma Rifle advanced, will now stop chasing, after 5 seconds of flight.
 	*) Now the Hell-trigger powerup is added on the shop.

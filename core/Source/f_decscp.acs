@@ -321,7 +321,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 					SetActivator(0, AAPTR_Damage_Target);
 					Patcher_Display(atid, playnum);
 				}
-				setResultValue(0);
+				SetResultValue(0);
 			}
 			
         break;

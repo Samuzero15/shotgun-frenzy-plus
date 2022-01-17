@@ -41,8 +41,6 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24306
 	{
 		Spawn.Head:
 			STRT A 1 A_Look
-			STRT A 0 A_SpawnItemEx("TurretBullet2_Base", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
-			STRT A 1 ACS_NamedExecuteAlways("Turret_LinkBase", 0, args[0])
 		goto See
 
 		See:
