@@ -549,12 +549,9 @@ Actor Grenade_ShellBlast {
 			TNT1 A 0 a_setScale(1.5, 1.5)
 			PUFF B 1 A_SetArg(3, 0)
 		RelaseThePeels:
-			TNT1 A 0 A_Jumpif(args[3] >= 30, "ChangeTheWorld_MyFinalMessage_Goodbye")
-			TNT1 A 0 A_SetArg(0, cos(frandom(0.0,360.0)) * (80) *  (2*random(0,1) - 1))
-			TNT1 A 0 A_SetArg(1, sin(frandom(0.0,360.0)) * (80) *  (2*random(0,1) - 1))
-			TNT1 A 0 A_SetArg(2, cos(frandom(0.0,360.0)) * (80) *  (2*random(0,1) - 1))
+			TNT1 A 0 A_Jumpif(args[3] >= 25, "ChangeTheWorld_MyFinalMessage_Goodbye")
 			TNT1 A 0 A_SetArg(3, args[3] + 1)
-			TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet",0,0,0,args[0],args[1],args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
 			loop
 		ChangeTheWorld_MyFinalMessage_Goodbye:
 			PUFF B 6 bright 
@@ -562,52 +559,77 @@ Actor Grenade_ShellBlast {
 			PUFF D 4 bright
 			stop
 	}
+}
 
+ACTOR ShellBlast_PelletSpawner : BulletPuff_Standard
+{
+	+PUFFONACTORS
+	states
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SetArg(0, (frandom(29.0,60.0)) * (2*random(0,1) - 1))
+		TNT1 A 0 A_SetArg(1, (frandom(29.0,60.0)) * (2*random(0,1) - 1))
+		TNT1 A 0 A_SetArg(2, cos(angle) * (frandom(0.0,60.0)) * (2*random(0,1) - 1))
+		TNT1 A 1 A_JumpIf((args[0] == 29.0) && (args[1] == 29.0), "Spawn.NorXY")
+		goto Spawn.Pellet
+	Spawn.NorXY:
+		TNT1 A 1 A_Jump(128, 2)
+		TNT1 A 0 A_SetArg(0, args[0]*0)
+		goto Spawn.Pellet
+		TNT1 A 0 A_SetArg(0, args[1]*0)
+		goto Spawn.Pellet
+
+	Spawn.Pellet:
+		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, args[0],args[1],args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0
+		Goto Super::Spawn+1
+	}
 }
 
 
 Actor ShellBlast_PelletTracer
 {
-  Radius 0
-  Height 0
-  //Gravity 100
-  Renderstyle Add
-  +FORCEXYBILLBOARD
+	Radius 0
+	Height 0
+	Renderstyle Add
+	+FORCEXYBILLBOARD
   	+NOBLOCKMAP
 	+FloorClip
 	+SPECIALFLOORCLIP
 	+NOGRAVITY
 	+NOTELEPORT
-    +DoomBounce
 	+ClientsideOnly
-  States
-  {
-   Melee:
-   Spawn:
+	States
+	{
+	Melee:
+	Spawn:
 		PUFF AA 1
 		stop
-  }
+	}
 }
 
-Actor ShellBlast_Pellet	: FastProjectile {
-	Radius				11
+Actor ShellBlast_Pellet {
+	Radius				8
 	Height				8
-	Speed				5
-	Damage				7
+	Speed				30
+	Damage				(2)
 	DamageType			MarineFire
 	RenderStyle			Add
 	Projectile
 	+MTHRUSPECIES
+	+NoBlood
+	+Ripper
+	+BLOODLESSIMPACT
 	DeathSound "weapons/rico"
-	MissileType "ShellBlast_PelletTracer"
-	MissileHeight 8
-	//DeathSound		"weapons/rocklx"
 	Obituary			"%o ate some of %k's lead."
-	
+	BounceType HEXEN
+	BounceFactor 1.5
+	BounceCount 2
 	States
 	{
 		Spawn:
-			PUFF A 1 
+			PUFF A 1 A_SpawnItem("ShellBlast_PelletTracer")
 			Loop
 		Death:
 			PUFF A 1 A_SpawnItem("Bulletpuff_Standard") 

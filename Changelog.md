@@ -9,6 +9,11 @@
 
 ## v0 - Before the beginning...
 
+#### (24 - 25 / 1 / 2022) [Tweaking projectiles and some guns]
+	*) Modified the shell blast code, giving it ripper to each pellet. And factorizing it in the process.
+	*) Now the spread plasma gun primary attack will now make splitable plasmaballs on impact!
+	*) Now the advanced plasma gun secondary attack will now make a big plasma ball that causes a lotta damage on impact, spreading 8 advanced plasmaballs that chases enemies arround. Launching this attack will cost 10 cells from now on.
+
 #### (17 / 1 / 2022) [Little Touch]
 	*) Modified the code for the bullet, shotgun, rocket and plasma turrets.
 	-) Deleted the old sprites for the turrets. 
