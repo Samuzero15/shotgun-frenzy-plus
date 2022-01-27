@@ -9,6 +9,11 @@
 
 ## v0 - Before the beginning...
 
+#### (27 / 1 / 2022) [Repeater's fix]
+	*) Refactorized the heat calculation code for all repeaters.
+	*) Repeaters will insta-lower if the player dies.
+	*) Now the heat factor of the repeater can grant a greater damage bonus.
+
 #### (26 / 1 / 2022) [Flinger's Alt fires]
 	+) Now the flinger can do a new alt-fire, throws a grenade that explodes on contact.
 	+) Now the Expanding G. Flinger can do a new alt-fire, throws a cluster grenade that explodes quickly, and drops the mini grenades, this can give you the capacity of throwing multiple mini grenades in a wide range.

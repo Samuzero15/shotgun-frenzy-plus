@@ -98,46 +98,29 @@ Script "Player_GetRank" (void){
 	SetResultValue(p_Rank[playernumber()] + 1);
 }
 
-script "Repeater_HeatDamage" (void)
-{
-	int bonusDmg = (CheckInventory("Rep_Heat") / 20);
-	SetResultValue(bonusDmg);
+Script "Player_IsDed" (void) {
+	setResultValue(GetActorProperty(0, APROP_HEALTH) < 1);
 }
 
-script "Repeater_AimX" (void)
-{
-	int spread = (CheckInventory("Rep_Heat") / 25);
-	SetResultValue(spread + 7);
-}
 
-script "Repeater_AimY" (void)
-{
-	int spread = (CheckInventory("Rep_Heat") / 25);
-	SetResultValue(spread + 3);
-}
+#libdefine REPEATER_HEATAIM 0
+#libdefine REPEATER_BONUSDMG  1
+#libdefine REPEATER_FIRECHANCE 2
 
-script "RepeaterX2_AimX" (void)
-{
-	int spread = (CheckInventory("Rep_Heat") / 25);
-	SetResultValue(spread + 5);
-}
-
-script "RepeaterX2_AimY" (void)
-{
-	int spread = (CheckInventory("Rep_Heat") / 25);
-	SetResultValue(spread + 1);
-}
-
-script "RepGauss_AimX" (void)
-{
-	int spread = (CheckInventory("Rep_Heat") / 25);
-	SetResultValue(spread + 5);
-}
-
-script "RepGauss_AimY" (void)
-{
-	int spread = (CheckInventory("Rep_Heat") / 25);
-	SetResultValue(spread + 1);
+script "Repeater_HeatProp" (int prop, int base){
+	int heat = CheckInventory("Rep_Heat");
+	switch(prop){
+		case REPEATER_HEATAIM:
+			setResultValue(heat/25 + base);
+		break;
+		case REPEATER_BONUSDMG:
+			if (base <= 5) base = 5; 
+			setResultValue((heat/20)*2 + base);
+		break;
+		case REPEATER_FIRECHANCE:
+			setResultValue(heat/40 + base);
+		break;
+	}
 }
 
 script "PlayerId" (void){
@@ -452,7 +435,7 @@ Script "Turret_HPBar" (int height){
 		
 		setactorposition(id, getactorx(0), getactory(0), getactorz(0) + z, 0);
 		Bar_State(id, hp, max_hp);
-		//Bar_Color(id, hp, max_hp); // Damn you zandronum!
+		Bar_Color(id, hp, max_hp); 
 		delay(1);
 	}
 	setActorState(id, "HP_0");

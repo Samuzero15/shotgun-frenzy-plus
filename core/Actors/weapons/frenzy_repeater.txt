@@ -1,8 +1,10 @@
+const int REPEATER_HEATAIM = 0;
+const int REPEATER_BONUSDMG = 1;
+const int REPEATER_FIRECHANCE = 2;
 
 Actor Rep_Heat : Inventory {inventory.MaxAmount 200}
-Actor Rep_IdleSpin : Inventory {inventory.MaxAmount 1}
+Actor Rep_IdleSpin : Boolean {}
 Actor Rep_GetOut : Boolean {}
-Actor Rep_Spin : Boolean {}
 
 ACTOR Repeater : Weapon
 {
@@ -44,7 +46,7 @@ ACTOR Repeater : Weapon
 			TNT1 A 0 A_StopSound(CHAN_7)
 			X5E1 ABABAB 3 
 			X5E1 ABAB 4 
-			TNT1 A 0 A_TakeInventory("Rep_Spin", 1)
+			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_JumpIfInventory("Rep_GetOut", 1, "Deselect.Loop")
 			goto Ready
@@ -53,9 +55,12 @@ ACTOR Repeater : Weapon
 			TNT1 A 0 A_StopSound(CHAN_7)
 			TNT1 A 0 A_GiveInventory("Rep_GetOut", 1)
 		Deselect.Loop:
-			TNT1 A 0 A_JumpIfInventory("Rep_Spin", 1, "NoSpin")
-			X5E1 A 1 A_Lower
+			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 1)
+			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
+			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
+			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_TakeInventory("Rep_GetOut", 1)
+			X5E1 A 1 A_Lower
 			X5E1 A 0 A_Lower
 			loop
 		Select:
@@ -66,7 +71,6 @@ ACTOR Repeater : Weapon
 			goto Ready
 		Fire:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "FireSpinning")
-			TNT1 A 0 A_GiveInventory("Rep_Spin", 1)
 			TNT1 A 0 A_PlaySound("x5/powerup")
 			X5E1 ABAB 4
 			X5E1 ABABAB 3 
@@ -76,13 +80,13 @@ ACTOR Repeater : Weapon
 			goto Hold
 		Altfire:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
-			TNT1 A 0 A_GiveInventory("Rep_Spin", 1)
+			TNT1 A 0 A_GiveInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 A_PlaySound("x5/powerup")
 			X5E1 ABAB 4 
 			X5E1 ABABAB 3 
 			TNT1 A 0 A_PlaySound("x5/idle", CHAN_7, 1.0, true)
 			X5E1 ABABABAB 2 
-			TNT1 A 0 A_GiveInventory("Rep_IdleSpin", 1)
+			
 			goto Ready
 		NoSpin:
 			
@@ -91,7 +95,6 @@ ACTOR Repeater : Weapon
 			X5E1 ABABABAB 2 
 			X5E1 ABABAB 3 
 			X5E1 ABAB 4 
-			TNT1 A 0 A_TakeInventory("Rep_Spin", 1)
 			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_JumpIfInventory("Rep_GetOut", 1, "Deselect.Loop")
@@ -101,9 +104,9 @@ ACTOR Repeater : Weapon
 			// The more time you hold the fire, the more damage you make!
 			TNT1 A 0 A_JumpIfInventory("HeavyBullets", 1, 1)
 			goto HoldNoAmmo
-			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("Repeater_AimX"))
-			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("Repeater_AimY"))
-			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
+			TNT1 A 0 A_SetArg(1, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 6))
+			TNT1 A 0 A_SetArg(2, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 3))
+			TNT1 A 0 A_SetArg(0, CallACS("Repeater_HeatProp", REPEATER_BONUSDMG))
 			TNT1 A 0 A_ZoomFactor(0.95)
 			TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("InfAmmoCheck"),2)
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
@@ -150,7 +153,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 		Ready:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "ReadyAlt")
 		goto ReadyNormal
-			ReadyAlt:
+		ReadyAlt:
 			TNT1 A 0 A_StopSound(CHAN_6)
 			TNT1 A 0 A_ZoomFactor(1.0)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 5)
@@ -158,7 +161,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 5)
 			X5E1 B 1 A_WeaponReady
 			goto Ready
-			ReadyNormal:
+		ReadyNormal:
 			TNT1 A 0 A_StopSound(CHAN_7)
 			X5E1 A 1 A_WeaponReady
 			goto Ready
@@ -172,7 +175,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			X5E1 ABABAB 2 
 			X5E1 ABAB 3 
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
-			TNT1 A 0 A_TakeInventory("Rep_Spin", 1)
+			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 A_JumpIfInventory("Rep_GetOut", 1, "Deselect.Loop")
 			goto Ready
 		Deselect:
@@ -180,9 +183,12 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			TNT1 A 0 A_StopSound(CHAN_7)
 			TNT1 A 0 A_GiveInventory("Rep_GetOut", 1)
 		Deselect.Loop:
-			TNT1 A 0 A_JumpIfInventory("Rep_Spin", 1, "NoSpin")
-			X5E1 A 1 A_Lower
+			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 2)
+			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
+			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
+			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_TakeInventory("Rep_GetOut", 1)
+			X5E1 A 1 A_Lower
 			X5E1 A 0 A_Lower
 			loop
 		Select:
@@ -191,7 +197,6 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			goto Ready
 		Fire:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "FireSpinning")
-			TNT1 A 0 A_GiveInventory("Rep_Spin", 1)
 			TNT1 A 0 A_PlaySound("x5/powerup")
 			X5E1 ABAB 3
 			X5E1 ABABAB 2
@@ -202,7 +207,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			goto Hold
 		Altfire:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
-			TNT1 A 0 A_GiveInventory("Rep_Spin", 1)
+			TNT1 A 0 A_GiveInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 A_PlaySound("x5/powerup")
 			X5E1 ABAB 3 
 			X5E1 ABABAB 2 
@@ -216,7 +221,6 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			X5E1 ABABABAB 1 
 			X5E1 ABABAB 2 
 			X5E1 ABAB 3 
-			TNT1 A 0 A_TakeInventory("Rep_Spin", 1)
 			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_JumpIfInventory("Rep_GetOut", 1, "Deselect.Loop")
@@ -227,17 +231,17 @@ ACTOR Repeater_DoubleSpeed : Weapon
 			TNT1 A 0 A_JumpIfInventory("HeavyBullets", 1, 1)
 			goto HoldNoAmmo
 			TNT1 A 0 A_PlaySound("x5/fire1", CHAN_6, 1.0, true)
-			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("RepeaterX2_AimX"))
-			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("RepeaterX2_AimY"))
-			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
+			TNT1 A 0 A_SetArg(1, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 5))
+			TNT1 A 0 A_SetArg(2, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 1))
+			TNT1 A 0 A_SetArg(0, CallACS("Repeater_HeatProp", REPEATER_BONUSDMG, 10))
 			
 			TNT1 A 0 A_ZoomFactor(0.95)
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
-			X5E1 C 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
-			X5E1 D 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
+			X5E1 C 1 bright A_FireBullets(args[1], args[2], -1, args[0], "BulletPuff_Standard")
+			X5E1 D 1 bright A_FireBullets(args[1], args[2], -1, args[0], "BulletPuff_Standard")
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
-			X5E1 C 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
-			X5E1 D 1 bright A_FireBullets(args[1], args[2], -1, 7 + args[0], "BulletPuff_Standard")
+			X5E1 C 1 bright A_FireBullets(args[1], args[2], -1, args[0], "BulletPuff_Standard")
+			X5E1 D 1 bright A_FireBullets(args[1], args[2], -1, args[0], "BulletPuff_Standard")
 			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
 			X5E1 A 1 A_ReFire
 			TNT1 A 0 A_StopSound(CHAN_6)
@@ -298,7 +302,7 @@ ACTOR Repeater_BlastShells : Weapon
 			TNT1 A 0 A_StopSound(CHAN_6)
 			X5E2 ABABAB 3 
 			X5E2 ABAB 4 
-			TNT1 A 0 A_TakeInventory("Rep_Spin", 1)
+			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_JumpIfInventory("Rep_GetOut", 1, "Deselect.Loop")
 			goto Ready
@@ -307,10 +311,13 @@ ACTOR Repeater_BlastShells : Weapon
 			TNT1 A 0 A_StopSound(CHAN_7)
 			TNT1 A 0 A_GiveInventory("Rep_GetOut", 1)
 		Deselect.Loop:
-			TNT1 A 0 A_JumpIfInventory("Rep_Spin", 1, "NoSpin")
-			X5E1 A 1 A_Lower
+			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 1)
+			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
+			X5E2 A 1 A_Lower
+			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
+			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_TakeInventory("Rep_GetOut", 1)
-			X5E1 A 0 A_Lower
+			X5E2 A 0 A_Lower
 			loop
 		Select:
 			TNT1 A 0 A_StopSound(CHAN_6)
@@ -320,17 +327,15 @@ ACTOR Repeater_BlastShells : Weapon
 			goto Ready
 		Fire:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "FireSpinning")
-			TNT1 A 0 A_GiveInventory("Rep_Spin", 1)
+			TNT1 A 0 a_Giveinventory("Rep_Heat", 100)
 			TNT1 A 0 A_PlaySound("x5/powerup")
 			X5E2 ABAB 4
 			X5E2 ABABAB 3 
-			TNT1 A 0 a_Giveinventory("Rep_Heat", 100)
 			TNT1 A 0 A_PlaySound("x5/idle", CHAN_7, 1.0, true)
 			X5E2 ABABABAB 2 
 			goto Hold
 		Altfire:
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
-			TNT1 A 0 A_GiveInventory("Rep_Spin", 1)
 			TNT1 A 0 A_PlaySound("x5/powerup")
 			X5E2 ABAB 4 
 			X5E2 ABABAB 3 
@@ -344,7 +349,6 @@ ACTOR Repeater_BlastShells : Weapon
 			X5E2 ABABABAB 2 
 			X5E2 ABABAB 3 
 			X5E2 ABAB 4 
-			TNT1 A 0 A_TakeInventory("Rep_Spin", 1)
 			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
 			TNT1 A 0 A_JumpIfInventory("Rep_GetOut", 1, "Deselect.Loop")
@@ -356,31 +360,31 @@ ACTOR Repeater_BlastShells : Weapon
 			goto HoldNoAmmo
 			TNT1 A 0 A_Jumpifinventory("Cell", 4, "HoldNormal")
 			TNT1 A 0 A_ZoomFactor(0.95)
-			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("RepGauss_AimX"))
-			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("RepGauss_AimY"))
-			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
+			TNT1 A 0 A_SetArg(1, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 5))
+			TNT1 A 0 A_SetArg(2, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 1))
+			TNT1 A 0 A_SetArg(0, CallACS("Repeater_HeatProp", REPEATER_BONUSDMG, 15))
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
-			TNT1 A 0 bright A_RailAttack(20 + args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
-			X5E2 C 2 bright A_RailAttack(20 + args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			TNT1 A 0 bright A_RailAttack(args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			X5E2 C 2 bright A_RailAttack(args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
-			TNT1 A 0 bright A_RailAttack(20 + args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
-			X5E2 D 2 bright A_RailAttack(20 + args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			TNT1 A 0 bright A_RailAttack(args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			X5E2 D 2 bright A_RailAttack(args[0], 0, false, None, "blue", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
 			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
 			X5E1 A 1 A_ReFire
 			goto FinishFire
 			
-			HoldNormal:
+		HoldNormal:
 			TNT1 A 0 A_ZoomFactor(0.95)
-			TNT1 A 0 A_SetArg(1, ACS_NamedExecuteWithResult("RepGauss_AimX"))
-			TNT1 A 0 A_SetArg(2, ACS_NamedExecuteWithResult("RepGauss_AimY"))
-			TNT1 A 0 A_SetArg(0, ACS_NamedExecuteWithResult("Repeater_HeatDamage"))
+			TNT1 A 0 A_SetArg(1, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 5))
+			TNT1 A 0 A_SetArg(2, CallACS("Repeater_HeatProp", REPEATER_HEATAIM, 1))
+			TNT1 A 0 A_SetArg(0, CallACS("Repeater_HeatProp", REPEATER_BONUSDMG, 20))
 			TNT1 A 0 A_TakeInventory("Cell", 4)
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
-			TNT1 A 0 bright A_RailAttack(20 + args[0], 0, false, None, "Cyan", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
-			X5E2 C 2 bright A_RailAttack(20 + args[0], 0, false, None, "cyan", RGF_FullBright, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			TNT1 A 0 bright A_RailAttack(args[0], 0, false, None, "Cyan", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			X5E2 C 2 bright A_RailAttack(args[0], 0, false, None, "cyan", RGF_FullBright, 				   0, "Gauss_Puff", args[1], args[2], 0, 15)
 			TNT1 A 0 A_TakeInventory("HeavyBullets", 1)
-			TNT1 A 0 bright A_RailAttack(20 + args[0], 0, false, None, "Cyan", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
-			X5E2 D 2 bright A_RailAttack(20 + args[0], 0, false, None, "cyan", RGF_FullBright, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			TNT1 A 0 bright A_RailAttack(args[0], 0, false, None, "Cyan", RGF_FullBright | RGF_NOPIERCING, 0, "Gauss_Puff", args[1], args[2], 0, 15)
+			X5E2 D 2 bright A_RailAttack(args[0], 0, false, None, "cyan", RGF_FullBright, 				   0, "Gauss_Puff", args[1], args[2], 0, 15)
 			TNT1 A 0 a_Giveinventory("Rep_Heat", 1)
 			X5E1 A 1 A_ReFire
 			goto FinishFire
@@ -396,36 +400,4 @@ ACTOR Repeater_BlastShells : Weapon
 			TNT1 A 1
 		goto lightdone
 	}
-	/*
-	States
-	{
-		Ready:
-			X5E2 A 1 A_WeaponReady
-			goto Ready
-			X5E2 AB 1 A_PlaySound("x5/powerdown")
-			X5E2 AB 2
-			X5E2 AB 3
-			goto Ready
-		Deselect:
-			X5E2 A 1 A_Lower
-			X5E2 A 0 A_Lower
-			goto Deselect
-		Select:
-			X5E2 A 1 A_Raise
-			X5E2 A 0 A_Raise
-			goto Ready
-		Fire:
-			X5E2 AB 3 A_PlaySound("x5/powerup")
-			X5E2 AB 2
-			X5E2 AB 1
-			goto Hold
-		Hold:
-			X5E2 CD 3 bright  A_FireBullets(5, 5, 1, 19, "BulletPuff_Explosive", FBF_USEAMMO)
-			X5E2 A 1 A_ReFire
-			goto Ready+2
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
-	}*/
 }
