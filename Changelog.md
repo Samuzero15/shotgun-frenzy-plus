@@ -9,6 +9,14 @@
 
 ## v0 - Before the beginning...
 
+#### (26 / 1 / 2022) [Flinger's Alt fires]
+	+) Now the flinger can do a new alt-fire, throws a grenade that explodes on contact.
+	+) Now the Expanding G. Flinger can do a new alt-fire, throws a cluster grenade that explodes quickly, and drops the mini grenades, this can give you the capacity of throwing multiple mini grenades in a wide range.
+	*) Balanced the spread plasma's primary fire more, buffing it in the process.
+	*) Nullified the knockback caused by the last set of projectiles on split for the spread plasma's primary fire.
+	!*) Mini-grenades, spawned by the cluster grenades from the Expanding G. Flinger now they explode on contact, no more lame waiting! It's way more satisfactory.
+	*) Expanding G. Flinger will use 2 grenades per shot, in both fire modes.
+
 #### (24 - 25 / 1 / 2022) [Tweaking projectiles and some guns]
 	*) Modified the shell blast code, giving it ripper to each pellet. And factorizing it in the process.
 	*) Now the spread plasma gun primary attack will now make splitable plasmaballs on impact!

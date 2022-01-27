@@ -115,18 +115,18 @@ ACTOR sf_MineDrone : sf_Drone
 			goto See
 		Death:
 			MISL B 1 bright A_Explode(50,128,0,0,64)
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
-			MISL B 1 bright A_SpawnDebris("Grenade_Flinger_Exploder_Debris")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
+			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
 			MISL C 6 bright
 			MISL D 4 bright
 			stop

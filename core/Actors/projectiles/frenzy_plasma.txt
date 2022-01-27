@@ -239,8 +239,8 @@ ACTOR PlasmaProjectile_Spread_Split : PlasmaProjectile_Spread
 	scale 0.7
 	speed 30
 	radius 8
-	damage 5
-	+StrifeDamage // random (1,4)
+	damage (5 * random (1,6))
+	SeeSound ""
 	States
 	{
 		Spawn:
@@ -260,9 +260,11 @@ ACTOR PlasmaProjectile_Spread_Split : PlasmaProjectile_Spread
 ACTOR PlasmaProjectile_Spread_Split2 : PlasmaProjectile_Spread
 {
 	scale 0.5
-	damage (4 * random(1,3))
+	damage (4 * random(1,5))
 	radius 6
 	speed 20
+	SeeSound ""
+	+NODAMAGETHRUST
 	States
 	{
 		Spawn:
@@ -282,9 +284,11 @@ ACTOR PlasmaProjectile_Spread_Split2 : PlasmaProjectile_Spread
 ACTOR PlasmaProjectile_Spread_Split3 : PlasmaProjectile_Spread
 {
 	scale 0.3
-	damage (3 * random(1,2))
+	damage (3 * random(1,4))
 	radius 4
 	speed 10
+	SeeSound ""
+	+NODAMAGETHRUST
 	States
 	{
 		Spawn:
@@ -349,10 +353,12 @@ ACTOR PlasmaProjectile_Spread_Expand
 
 ACTOR PlasmaProjectile_Spread_Explode : PlasmaProjectile_Spread_Expand
 {
-	Damage 4
+	Damage (3)
 	scale 0.3
 	Speed 25
 	+StrifeDamage
+	+NODAMAGETHRUST
+	+ripper
       states
       {
 		Spawn:
