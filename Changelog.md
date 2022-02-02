@@ -21,6 +21,11 @@
 	// This Resistant bastard fires 2 BFG Balls at the hordes.
 	// The slowest turret in the game in building and firing speed. But, the most brutally harmful one! 
 	// This turret should be built by the commander only, for 20000 credits.
+	
+#### (27 / 1 / 2022) [Repeater's fix]
+	*) Refactorized the heat calculation code for all repeaters.
+	*) Repeaters will insta-lower if the player dies.
+	*) Now the heat factor of the repeater can grant a greater damage bonus.
 
 #### (26 / 1 / 2022) [Flinger's Alt fires]
 	+) Now the flinger can do a new alt-fire, throws a grenade that explodes on contact.
