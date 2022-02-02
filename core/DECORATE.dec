@@ -2,7 +2,20 @@
 Actor Integer : Inventory { Inventory.MaxAmount 0x7fffffff }
 Actor Boolean : Inventory { Inventory.MaxAmount 1 }
 
+Actor PlayerNumber : Integer {Inventory.MAxAmount 33}
+
 Actor Hud_Killstreak : Boolean {}
+
+const int DEPLOY_TURRET_BULLET = 0;
+const int DEPLOY_TURRET_SHOTGUN = 1;
+const int DEPLOY_TURRET_CHAINGUN = 2;
+const int DEPLOY_TURRET_ROCKET = 3;
+const int DEPLOY_TURRET_PLASMA = 4;
+const int DEPLOY_TURRET_FLAME = 5;
+const int DEPLOY_TURRET_TESLA = 6;
+const int DEPLOY_TURRET_BFG = 7;
+const int DEPLOY_DISPENSER_AMMO = 8;
+const int DEPLOY_DISPENSER_HEALTH = 9;
 
 #include "Actors/sfrenzy14.dec"
 #include "Actors/acsutils.dec"

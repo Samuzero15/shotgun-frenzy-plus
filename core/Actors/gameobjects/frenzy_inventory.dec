@@ -167,7 +167,7 @@ ACTOR Inventory_TeslaCoil : Inventory_Item
 		ITM7 A 0 BRIGHT
 		goto Super::SpawnLoop
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretTesla", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_TESLA)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}
@@ -187,7 +187,8 @@ ACTOR Inventory_TurretBullet : Inventory_Item
 		goto Super::SpawnLoop
 
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretBullet", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 //A_SpawnItemEx("TurretBullet", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_BULLET)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}
@@ -207,7 +208,7 @@ ACTOR Inventory_TurretRocket : Inventory_Item
 		goto Super::SpawnLoop.Frame1
 	
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretRocket", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_ROCKET)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}
@@ -225,7 +226,7 @@ ACTOR Inventory_TurretPlasma : Inventory_Item
 		ITMC A 0
 		goto Super::SpawnLoop.Frame1
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretPlasma", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_PLASMA)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}
@@ -261,7 +262,7 @@ ACTOR Inventory_TurretFlame : Inventory_Item
 		ITME A 0 bright
 		goto Super::SpawnLoop.Frame1
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretFlame", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_FLAME)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}
@@ -279,7 +280,7 @@ ACTOR Inventory_TurretShotgun : Inventory_Item
 		ITP2 A 0 bright
 		goto Super::SpawnLoop
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretShotgun", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_SHOTGUN)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}
@@ -297,7 +298,7 @@ ACTOR Inventory_TurretChaingun : Inventory_Item
 		ITP1 A 0 bright
 		goto Super::SpawnLoop
 	Effect:
-		TNT1 A 0 A_SpawnItemEx("TurretChaingun", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
+		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_CHAINGUN)
 		TNT1 A 1 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
 		stop
 	}

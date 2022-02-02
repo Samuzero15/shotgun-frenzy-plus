@@ -23,6 +23,7 @@ ACTOR BoomerShot : fastprojectile
   }
 }
 
+Actor IAmUsingATurretTower : Boolean {}
 
 ACTOR BoomerCannon : Weapon
 {
@@ -39,6 +40,10 @@ ACTOR BoomerCannon : Weapon
 	{
 		Ready:
 			X3E1 A 1 A_WeaponReady(WRF_DISABLESWITCH)
+			TNT1 A 0 A_JumpIfInventory("IAmUsingATurretTower", 1, "Ready")
+			goto OhNoYoudont
+		OhNoYouDont:
+			TNT1 A 1 A_TakeInventory("BoomerCannon", 1) // If for casualty, you get this weapon by cheats, you will not use it, unless you get in a turret tower
 			loop
 		Deselect:
 			X3E1 A 1 A_Lower
@@ -52,7 +57,7 @@ ACTOR BoomerCannon : Weapon
 			X3E1 A 1 A_Refire
 			goto Ready
 		AltFire:
-			X3E1 A 1
+			X3E1 A 1 A_TakeInventory("IAmUsingATurretTower", 1)
 			X3E1 A 1 ACS_Execute(95, 0, 0, 0, 0)
 			goto Ready
 		Flash:

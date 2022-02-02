@@ -121,6 +121,7 @@ script 95 (void)
     {
         takeinventory("BoomerCannon", 1);
 		takeinventory("Boomer_Resister", 1);
+        takeinventory("IAmUsingATurretTower", 1);
 		teleport(p_MapTurret_Return[playernumber()]);
         SetPlayerProperty(0, 0, PROP_FROZEN);
 		
@@ -141,6 +142,7 @@ script 61 (int l_TurretSpawn, int l_TurretReturn)
 	
 	teleport(l_TurretSpawn);
     SetPlayerProperty(0, 1, PROP_FROZEN);
+    giveinventory("IAmUsingATurretTower", 1);
     giveinventory("BoomerCannon", 1);
     
 	while(p_MapTurret_Return[playernumber()] == l_TurretReturn)

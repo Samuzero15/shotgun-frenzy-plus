@@ -67,10 +67,15 @@ actor sfBFGBall
     loop
   Death:
     BFE1 AB 8 bright A_Explode(300,256,0,0,64)
-    BFE1 C 8 bright A_BFGSpray
+    BFE1 C 8 bright A_BFGSpray("BFGExtra_Marines")
     BFE1 DEF 8 bright
     stop
   }
+}
+
+ACTOR BFGExtra_Marines : BFGExtra
+{
+  DamageType "MarineFire"
 }
 
 actor sfBFGBallS_tw : sfBFGBall

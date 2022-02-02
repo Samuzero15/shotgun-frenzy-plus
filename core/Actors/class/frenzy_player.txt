@@ -52,39 +52,52 @@ ACTOR FrenzyPlayer : DoomPlayer
 		PLAY G 4 A_Pain
 		Goto Spawn
 	Death:
-		PLAY H 10 A_PlayerSkinCheck("AltSkinDeath")
-		PLAY I 10 A_PlayerScream
-		PLAY J 10 A_NoBlocking
-		PLAY K 10
-		PLAY LM 10
-		PLAY N -1
-                	Stop
+		TNT1 A 0 A_NoBlocking
+		PLAY H 6 A_PlayerSkinCheck("AltSkinDeath")
+		PLAY I 6 A_PlayerScream
+		PLAY JK 6 
+		PLAY L 6 A_NoBlocking
+		PLAY M 6
+		PLAY N 300
+		PLAY N 5 A_FADEOUT(0.1)
+        Wait
 	XDeath:
-		PLAY H 0 A_PlayerSkinCheck("AltSkinXDeath")
-		PLAY H 0 A_XScream
-		PLAY H 0 A_NoBlocking
-		PLAY H 5 A_PlayerSkinCheck("AltSkinXDeath")
-    		PLAY H 0 A_SpawnDebris("splatBlood_Eye")
-    		PLAY H 0 A_SpawnDebris("splatBlood_Spray")
-   		PLAY H 0 A_SpawnDebris("splatBlood_Rib")
-   		PLAY H 0 A_SpawnDebris("splatBlood_Spine")
-   		NULL A -1
-            		Stop
+		TNT1 A 0 A_PlayerSkinCheck("AltSkinXDeath")
+		TNT1 A 0 A_NoBlocking
+		PLAY O 5 
+		TNT1 A 0 A_SpawnDebris("splatBlood_Eye")
+    	TNT1 A 0 A_SpawnDebris("splatBlood_Spray")
+   		TNT1 A 0 A_SpawnDebris("splatBlood_Rib")
+   		TNT1 A 0 A_SpawnDebris("splatBlood_Spine")
+		PLAY P 5 A_XScream
+		PLAY Q 5 A_SkullPop
+		PLAY RSTUV 5
+		PLAY W 300
+		PLAY W 5 A_FADEOUT(0.1)
+        Wait
 	AltSkinDeath:
+		TNT1 A 0 A_NoBlocking
 		PLAY H 6
 		PLAY I 6 A_PlayerScream
 		PLAY JK 6
-		PLAY L 6 A_NoBlocking
-		PLAY MNO 6
-		PLAY P -1
-		Stop
+		PLAY L 6
+		PLAY M 6
+		PLAY N 300
+		PLAY N 5 A_FADEOUT(0.1)
+        Wait
 	AltSkinXDeath:
-		PLAY Q 5 A_PlayerScream
-		PLAY R 0 A_NoBlocking
-		PLAY R 5 A_SkullPop
-		PLAY STUVWX 5
-		PLAY Y -1
-		Stop
+		TNT1 A 0 A_NoBlocking
+		PLAY O 5 
+		TNT1 A 0 A_SpawnDebris("splatBlood_Eye")
+    	TNT1 A 0 A_SpawnDebris("splatBlood_Spray")
+   		TNT1 A 0 A_SpawnDebris("splatBlood_Rib")
+   		TNT1 A 0 A_SpawnDebris("splatBlood_Spine")
+		PLAY P 5 A_XScream
+		PLAY Q 5 A_SkullPop
+		PLAY RSTUV 5
+		PLAY W 300
+		PLAY W 5 A_FADEOUT(0.1)
+        Wait
 	}
 }
 
@@ -119,7 +132,7 @@ actor DeploySpot : MapSpot{
 actor DeployBlocker
 {
 	mass 999999999
-	radius 16
+	radius 40
 	height 48
 	
 	

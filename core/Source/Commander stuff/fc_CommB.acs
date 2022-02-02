@@ -31,14 +31,93 @@ function bool CMD_FloorCheck(int tid){
 	);
 }
 
+#libdefine DEPLOY_TURRET_BULLET 		0
+#libdefine DEPLOY_TURRET_SHOTGUN 		1
+#libdefine DEPLOY_TURRET_CHAINGUN 		2
+#libdefine DEPLOY_TURRET_ROCKET 		3
+#libdefine DEPLOY_TURRET_PLASMA 		4
+#libdefine DEPLOY_TURRET_FLAME 			5
+#libdefine DEPLOY_TURRET_TESLA 			6
+#libdefine DEPLOY_TURRET_BFG 			7
+#libdefine DEPLOY_DISPENSER_AMMO 		8
+#libdefine DEPLOY_DISPENSER_HEALTH 		9
+#libdefine DEPLOY_TYPE_TURRET 			1
+#libdefine DEPLOY_TYPE_DISPENSER 		2
+
+script "SFPlus_DeployPlayerBuilding" (int which){
+	int ptid = ActivatorTID();
+	int btid = ptid;
+	printbold(s:"PlayerTID: ", d:ptid, s:" / SummonTID: ", d:btid);
+	switch(which){
+		case DEPLOY_TURRET_BULLET:
+			Player_SpawnBuilding("TurretBullet", "Inventory_TurretBullet", btid);
+		break;
+		case DEPLOY_TURRET_SHOTGUN:
+			Player_SpawnBuilding("TurretShotgun", "Inventory_TurretShotgun", btid);
+		break;
+		case DEPLOY_TURRET_CHAINGUN:
+			Player_SpawnBuilding("TurretChaingun", "Inventory_TurretChaingun", btid);
+		break;
+		case DEPLOY_TURRET_ROCKET:
+			Player_SpawnBuilding("TurretRocket", "Inventory_TurretRocket", btid);
+		break;
+		case DEPLOY_TURRET_PLASMA:
+			Player_SpawnBuilding("TurretPlasma", "Inventory_TurretPlasma", btid);
+		break;
+		case DEPLOY_TURRET_FLAME:
+			Player_SpawnBuilding("TurretFlame", "Inventory_TurretFlame", btid);
+		break;
+		case DEPLOY_TURRET_TESLA:
+			Player_SpawnBuilding("TurretTesla", "Inventory_TurretTesla", btid);
+		break;
+		case DEPLOY_TURRET_BFG:
+			//Player_SpawnBuilding("TurretBullet_Head", "Inventory_TurretBullet", btid);
+		break;
+	}
+		
+	
+	
+}
+
 // Spawn something in the indicated position, minding the area
+function bool Player_SpawnBuilding(str this, str or_deez, int sid){
+	int ptid = ActivatorTID();
+	int r = 64.0;
+	if(CMD_SpawnEX(this, sid, ptid, r, 0)){
+		//log(s:"Spawned the ", s:this);
+		return true;
+	}
+	//log(s:"Spawn failed, giving a ", s:or_deez);
+	GiveInventory(or_deez, 1);
+	return false;
+}
+
 function bool CMD_Spawn(str something, int tid){
-	int angle = GetActorAngle(130);
+	int comtid = 130;
 	int r = 512.0;
 	
-	int x = GetActorX(130) + FixedMul(r,cos(angle));
-	int y = GetActorY(130) + FixedMul(r,sin(angle));
+	return CMD_SpawnEX(something, tid, comtid, r, 1);
+}
+// Spawn something in the indicated position, minding the area
+function bool CMD_SpawnEX(str something, int tid, int owner_tid, int radius, int sector_check){
+	/**
+		str something 		-> The actor to spawn.
+		int tid 			-> The thing id for the actor to be spawned.
+		int owner_tid 		-> The thing id for the actor who spawns it.
+		int radius 	  		-> The distance between the spawner and the owner.
+		int sector_check 	-> Check if this is inside of the game sector. 
+	*/
+	int r = radius;
+
+	int angle = GetActorAngle(owner_tid);
+	
+	//log(s:"Owner tid: ",d:owner_tid);
+
+	//log(s:"Owner position:  X=",f:GetActorX(owner_tid), s:", Y=", f:GetActorY(owner_tid));
+	int x = GetActorX(owner_tid) + FixedMul(r,cos(angle));
+	int y = GetActorY(owner_tid) + FixedMul(r,sin(angle));
 	int z = GetSectorFloorZ(0,x>>16, y>>16);
+	//log(s:"Spawn position:  X=",f:x, s:", Y=", f:y);
 	
 	SpawnForced("DeploySpot", x , y, z, 500);
 	int floorz = GetActorZ(500);
@@ -46,20 +125,24 @@ function bool CMD_Spawn(str something, int tid){
 	int zoff = 0.0;
 	for (int i = 0; i < 5 && !free; i++){ // Try spawning it. Give up after 5 attempts if you can't spawn it.
 		free = Spawn("DeployBlocker", x, y, floorz + zoff, 500);
-		zoff += 8.0;
+		//log(s:"Spawning attempt: ",d:i, s:" with zoff=", f:zoff, s:", now Z is: ", f:(floorz+zoff));
+		zoff += 12.0;
 	}
+	thing_Remove(500);
 	int sucess = False;
 	bool valid_area = CMD_AreaCheck(y);
 	bool valid_floor = CMD_FloorCheck(500);
-	if (free && valid_area && valid_floor){
+	if ((!sector_check && (free && valid_floor)) || (free && valid_area && valid_floor)){
 		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), tid);
 	}
 	if(sucess == false){
-		if		(!valid_area) 	print (s:"Can't build in a lost sector!");
-		else if (!valid_floor)  print (s:"Can't build over the liquids or void!");
+		if		(sector_check && !valid_area) 	print (s:"Can't build in a lost sector!");
+		else if (!valid_floor)  
+								print (s:"Can't build over the liquids or void!");
 		else if (!free) 		print (s:"The area is blocked or unstable for building!");
+		else print(s:"Ah crap, something went wrong goddamit.");
 	}
-	thing_Remove(500);
+	
 	return sucess;
 }
 

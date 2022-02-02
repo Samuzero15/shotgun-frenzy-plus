@@ -17,6 +17,7 @@ ACTOR TurretBullet : Deploy_Building // The item to be deployed.
 			goto Super::Delay
 	
 		Deploy:
+			TNT1 A 0 
 			NULL A 1 A_SpawnItemEx("TurretBullet_Head", 0, 0, 0, 0, 0, 0, 0, 0, 0, args[2])
 			stop
 	}

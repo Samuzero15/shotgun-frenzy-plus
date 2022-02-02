@@ -9,6 +9,19 @@
 
 ## v0 - Before the beginning...
 
+#### (28 - 31 / 1 - 1 / 2 / 2022) [Refundable Turrets + Sprites + BFG Turret!]
+	!*) All the spawned turrets by players can now be refundable.
+	// If you place a turret in a blocked area (obstructed by something), or placed in liquids. The turret will simply not spawn, and instead you get the deployer back to your inventory, to try it again.
+	*) Boomer cannon will no longer lock you up if cheating with idfa or idkfa cheats. (And if it does, altfire should take it from you)
+	+) New sprites replacers for the Chaingun, Tesla and for the BFG Turret!
+	*) Players can now die with their good ol' gibs.
+	*) War-mech sprites renamed in order to avoid confusions.
+	*) Fixed the patcher and prettyfied the patcher's ACS code.
+	!+) Yes, The BFG turret is here :3 (In code, not accesible yet.)
+	// This Resistant bastard fires 2 BFG Balls at the hordes.
+	// The slowest turret in the game in building and firing speed. But, the most brutally harmful one! 
+	// This turret should be built by the commander only, for 20000 credits.
+
 #### (26 / 1 / 2022) [Flinger's Alt fires]
 	+) Now the flinger can do a new alt-fire, throws a grenade that explodes on contact.
 	+) Now the Expanding G. Flinger can do a new alt-fire, throws a cluster grenade that explodes quickly, and drops the mini grenades, this can give you the capacity of throwing multiple mini grenades in a wide range.

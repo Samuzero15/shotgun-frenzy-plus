@@ -146,16 +146,17 @@ script "PlayerId" (void){
 }
 
 function bool IsATurret(int tid){
-	str turrets[6] ={
+	str turrets[7] ={
 		"TurretBullet_HEAD",
 		"TurretShotgun_Head",
 		"TurretChaingun_Head",
 		"TurretRocket_Head",
 		"TurretPlasma_Head",
-		"TurretBase_Head"
+		"TurretBase_Head",
+		"TurretBFG_Head"
 	};
 
-	for(int i = 0; i < 6; i ++){
+	for(int i = 0; i < 7; i ++){
 		if(CheckActorClass(tid, turrets[i])) return true;
 	}
 		
@@ -169,9 +170,9 @@ function bool IsATurret(int tid){
 #libdefine PATCHER_PRICEMULT 0.07
 #libdefine PATCHER_BUFFMULT 0.20
 
-function void Patcher_Display(int tid, int playnum){
-	int hp = GetActorProperty(tid, APROP_HEALTH);
-	int maxhp = GetActorProperty(tid, APROP_SPAWNHEALTH);
+function void Patcher_Display(int playnum){
+	int hp = GetActorProperty(0, APROP_HEALTH);
+	int maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
 	int price = (maxhp * PATCHER_PRICEMULT) >> 16;
 	int buff_price = (maxhp * PATCHER_BUFFMULT) >> 16;
 
@@ -240,92 +241,73 @@ script "Patcher_TurretScouter" (void){
 	TakeInventory("Patcher_Script", 1);
 }
 script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
+	
+    if(type != GAMEEVENT_ACTOR_DAMAGED || !IsATurret(ActivatorTID())) terminate;
 	int atid, playnum;
-    switch(type){
-        case GAMEEVENT_ACTOR_DAMAGED:
+	SetActivator(0, AAPTR_Damage_Source);
+		playnum = PlayerNumber();
+	if(playnum == -1) terminate;
+	
+	
+	if(strcmp(arg2, "PriPatcherDmg") == 0){
+		SetActivator(0, AAPTR_Damage_Target);
+		If(GetActorProperty(0, APROP_HEALTH) < GetActorProperty(0, APROP_SPAWNHEALTH)){
+			int price = (GetActorProperty(0, APROP_SPAWNHEALTH)*PATCHER_PRICEMULT) >> 16;
+			int fix = (GetActorProperty(0, APROP_SPAWNHEALTH)*PATCHER_FIXINMULT) >> 16;
+			SetActivator(0, AAPTR_Damage_Source); // Back to the player
+			if(CheckWeapon("Patcher_Advanced")) price = price/2;
+			SetActivator(0, AAPTR_Damage_Target); // Back to the turret.
+
+			if(p_Credits[playnum] < price){
+				SetActivator(990+playnum);
+				GiveInventory("Patcher_HudNoMoney", 1);
+			}else{
+				if(random(0, 100) < 15) Rank_GrantEXP(playnum, 1);
+				p_Credits[playnum] -= price;
+				if(CheckWeapon("Patcher_Advanced")) price = price/2;
+				GiveInventory("Health", fix);
+				SetActivator(990+playnum);
+				GiveInventory("Patcher_HudHeal", 1);
+			}
+		} else {
+			SetActivator(990+playnum);
+			GiveInventory("Patcher_HudMaxHP", 1);
+		}
 		
-			if(strcmp(arg2, "PriPatcherDmg") == 0){
-				atid = ActivatorTID();
-				if(IsATurret(atid)){
-					SetActivator(0, AAPTR_Damage_Source);
-						playnum = PlayerNumber();
+	}
+	if(strcmp(arg2, "AltPatcherDmg") == 0){
+		SetActivator(0, AAPTR_Damage_Target);
 
-						if(playnum == -1) break;
-						SetActivator(0, AAPTR_Damage_Target);
-					If(GetActorProperty(atid, APROP_HEALTH) < GetActorProperty(atid, APROP_SPAWNHEALTH)){
-						int price = (GetActorProperty(atid, APROP_SPAWNHEALTH)*PATCHER_PRICEMULT) >> 16;
-						int fix = (GetActorProperty(atid, APROP_SPAWNHEALTH)*PATCHER_FIXINMULT) >> 16;
-						SetActivator(0, AAPTR_Damage_Source);
-						if(CheckWeapon("Patcher_Advanced")) price = price/2;
-						SetActivator(0, AAPTR_Damage_Target);
-
-						if(p_Credits[playnum] < price){
-							SetActivator(990+playnum);
-							GiveInventory("Patcher_HudNoMoney", 1);
-						}else{
-							if(random(0, 100) < 15) Rank_GrantEXP(playnum, 1);
-							p_Credits[playnum] -= price;
-							if(CheckWeapon("Patcher_Advanced")) price = price/2;
-							GiveInventory("Health", fix);
-							SetActivator(990+playnum);
-							GiveInventory("Patcher_HudHeal", 1);
-						}
-					} else {
-						SetActivator(990+playnum);
-						GiveInventory("Patcher_HudMaxHP", 1);
-					}
-				}
-				setResultValue(0);
-			}
-			if(strcmp(arg2, "AltPatcherDmg") == 0){
-				atid = ActivatorTID();
-				if(IsATurret(atid)){
-					SetActivator(0, AAPTR_Damage_Source);
-						playnum = PlayerNumber();
-						if(playnum == -1) break;
+		If(!CheckInventory("PowerPatcher_BuffDamage")){
+			int price_buff = (GetActorProperty(0, APROP_SPAWNHEALTH)*PATCHER_BUFFMULT) >> 16;
+			if(p_Credits[playnum] < price_buff){
+				SetActivator(990+playnum);
+				GiveInventory("Patcher_HudNoMoney", 1);
+			}else{
+				if(random(0, 100) < 15) Rank_GrantEXP(playnum, 1);
+				p_Credits[playnum] -= price_buff;
+				GiveInventory("Patcher_Buffer", 1);
+				
+				SetActivator(990+playnum);
+				if(CheckWeapon("Patcher_Advanced")){
 					SetActivator(0, AAPTR_Damage_Target);
-					
-
-					If(!CheckInventory("PowerPatcher_BuffDamage")){
-						int price_buff = (GetActorProperty(atid, APROP_SPAWNHEALTH)*PATCHER_BUFFMULT) >> 16;
-						if(p_Credits[playnum] < price_buff){
-							SetActivator(990+playnum);
-							GiveInventory("Patcher_HudNoMoney", 1);
-						}else{
-							if(random(0, 100) < 15) Rank_GrantEXP(playnum, 1);
-							p_Credits[playnum] -= price_buff;
-							GiveInventory("Patcher_Buffer", 1);
-							
-							SetActivator(990+playnum);
-							if(CheckWeapon("Patcher_Advanced")){
-								SetActivator(0, AAPTR_Damage_Target);
-								GiveInventory("Patcher_AdvBuffer", 1);
-								SetActivator(990+playnum);
-							}
-							GiveInventory("Patcher_HudBuff", 1);
-						}
-					} else {
-						
-						SetActivator(990+playnum);
-						GiveInventory("Patcher_HudBuffed", 1);
-					}
+					GiveInventory("Patcher_AdvBuffer", 1);
+					SetActivator(990+playnum);
 				}
-				setResultValue(0);
+				GiveInventory("Patcher_HudBuff", 1);
 			}
-            if(strcmp(arg2, "IdlePatcherDmg") == 0){
-				atid = ActivatorTID();
-				if(IsATurret(atid)){
-					SetActivator(0, AAPTR_Damage_Source);
-						playnum = PlayerNumber();
-						if(playnum == -1) break;
-					SetActivator(0, AAPTR_Damage_Target);
-					Patcher_Display(atid, playnum);
-				}
-				SetResultValue(0);
-			}
+		} else {
 			
-        break;
-    }    
+			SetActivator(990+playnum);
+			GiveInventory("Patcher_HudBuffed", 1);
+		}
+	}
+	if(strcmp(arg2, "IdlePatcherDmg") == 0){
+		SetActivator(0, AAPTR_Damage_Target);
+		Patcher_Display(playnum);
+	}
+	setResultValue(0);
+
 }
 
 function str cond_str (int c){

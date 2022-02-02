@@ -69,6 +69,7 @@
 #include "Actors/deploy/frenzy_deploy_base.dec"
 #include "Actors/deploy/frenzy_drone.txt"
 #include "Actors/deploy/frenzy_turrets.txt"
+#include "Actors/deploy/Turrets/fp_turret_bfg.dec"
 #include "Actors/deploy/Turrets/fp_turret_chaingun.dec"
 #include "Actors/deploy/Turrets/fp_turret_shotgun.dec"
 #include "Actors/deploy/Turrets/frenzy_turret_bullet.dec"
