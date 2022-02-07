@@ -20,7 +20,7 @@ Actor Blur
    }
 }
 
-Actor BrightBlur     
+Actor BrightBlur : Blur
 {
    States
    {

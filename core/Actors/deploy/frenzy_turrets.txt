@@ -548,37 +548,4 @@ ACTOR BuildableMarker : MapMarker
 	}
 }
 
-// MOVE TO RIGHT ONE IF ITS WROONG
-
-ACTOR Smoke
-{
-  RenderStyle Translucent
-  Alpha 0.5
-  VSpeed 1
-  +NOINTERACTION
-  +CLIENTSIDEONLY
-  States
-  {
-  Spawn:
-    RSMK A 0 A_Jump(32,"A")
-	RSMK A 0 A_Jump(32,"B")
-	RSMK A 0 A_Jump(32,"C")
-	RSMK A 0 A_Jump(32,"D")
-	RSMK A 1
-	loop
-    A:
-    RSMK A 1 A_FadeOut(0.01)
-	loop
-	B:
-    RSMK B 1 A_FadeOut(0.01)
-	loop
-	C:
-    RSMK C 1 A_FadeOut(0.01)
-	loop
-	D:
-    RSMK D 1 A_FadeOut(0.01)
-	loop
-	
-  }
-}
 

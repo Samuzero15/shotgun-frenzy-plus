@@ -9,6 +9,20 @@
 
 ## v0 - Before the beginning...
 
+#### (3 - 6 / 2 / 2022) [Upgradeable Toorets!]
+	!+) Now Turrets can now be upgraded with the patcher's altfire!
+	// Max turret level is 5
+	// Turret's got an upgradeable regeneration of 3 points, x0.2 Damage up and x0.1 Resistance up per level.
+	// In level 5, that's x1.5 resistance, and 2.0 damage multiplers and 15 points on regeneration!
+	// Also they gain extra effects that enhances their overall performance!
+	// There is a lot'sa them, that I'm too lazy to document that up :p
+	// For now, works on bullet, shotgun, chaingun, rocket, plasma and bfg turrets.
+	!*) Turrets can now attract the aggresion of the monsters! Now the turrets are exposed from monster attacks!
+	*) Patcher's price for reparing or upgrading are not health dependent.
+	*) Repairing turrets can now grant 1 point of experience, no dices.
+	*) Upgrading turrets can now grant 5 points of experience.
+	*) Generalizing the code for the turrets.
+
 #### (28 - 31 / 1 - 1 / 2 / 2022) [Refundable Turrets + Sprites + BFG Turret!]
 	!*) All the spawned turrets by players can now be refundable.
 	// If you place a turret in a blocked area (obstructed by something), or placed in liquids. The turret will simply not spawn, and instead you get the deployer back to your inventory, to try it again.

@@ -24,6 +24,7 @@ const int DEPLOY_DISPENSER_HEALTH = 9;
 #include "Actors/prices.dec"
 #include "Actors/huditems.dec"
 
+#include "Actors/particles/fp_smoke.dec"
 #include "Actors/particles/fp_junk.dec"
 #include "Actors/particles/fp_blur.dec"
 

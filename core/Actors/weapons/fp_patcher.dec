@@ -5,36 +5,36 @@ Actor Patcher : Weapon
   obituary "%o was shocked by %k's Patcher Gun, which it should'nt happen, because this gun is for cooperative, so, wtf just happened?"
   states
   {
-  Spawn:
-    PLSP A -1
-    loop
-  Ready:
-	TNT1 A 0 ACS_NamedExecuteAlways ("Patcher_TurretScouter", 0)
-  Ready.Loop:
-    PLPI A 1 A_WeaponReady
-    loop
-  Deselect:
-    PLPI A 1 A_Lower
-    loop
-  Select:
-    PLPI A 1 A_Raise
-    loop
-  Fire:
-    PLPI A 0
-  Hold:
-   	PLPI B 3
-    PLPI C 4 A_FireCustomMissile("Patcher_BeamShot")
-	BLAG B 0 A_ReFire
-    PLPI A 8
-    goto Ready
- Altfire:
-	PLPI A 0
- AltHold:
-   	PLPI B 3
-    PLPI C 4 A_FireCustomMissile("Patcher_AltBeamShot", 1)
-	BLAG B 0 A_ReFire
-    PLPI A 8 
-    goto Ready
+	Spawn:
+		PLSP A -1
+		loop
+	Ready:
+		TNT1 A 0 ACS_NamedExecuteAlways ("Patcher_TurretScouter", 0)
+	Ready.Loop:
+		PLPI A 1 A_WeaponReady
+		loop
+	Deselect:
+		PLPI A 1 A_Lower
+		loop
+	Select:
+		PLPI A 1 A_Raise
+		loop
+	Fire:
+		PLPI A 0
+	Hold:
+		PLPI B 3
+		PLPI C 4 A_FireCustomMissile("Patcher_BeamShot")
+		BLAG B 0 A_ReFire
+		PLPI A 8
+		goto Ready
+	Altfire:
+		PLPI A 0
+	AltHold:
+		PLPI B 6
+		PLPI C 8 A_FireCustomMissile("Patcher_AltBeamShot", 1)
+		BLAG B 0 A_ReFire
+		PLPI A 8 
+		goto Ready
   }
 }
 
@@ -45,10 +45,17 @@ Actor Patcher_Advanced : Patcher
 			PLPI A 0
 		Hold:
 			PLPI B 2
-			PLPI C 4 A_FireCustomMissile("Patcher_BeamShot", 1)
+			PLPI C 2 A_FireCustomMissile("PatcherAdv_BeamShot")
 			BLAG B 0 A_ReFire
 			PLPI A 8
+			goto Ready
+		Altfire:
+			PLPI A 0 
+		AltHold:
+			PLPI B 3
+			PLPI C 4 A_FireCustomMissile("PatcherAdv_AltBeamShot", 1)
 			BLAG B 0 A_ReFire
+			PLPI A 8 
 			goto Ready
 	}
 }
@@ -69,12 +76,26 @@ Actor Patcher_BeamShot {
 		stop
 	}
 }
+Actor PatcherAdv_BeamShot : Patcher_BeamShot{
+	States{
+		Spawn:
+			PLSS ABABABABABABABABABABABABABABABAB 1 BRIGHT
+		stop
+	}
+}
 
 Actor Patcher_AltBeamShot : Patcher_BeamShot{
 	DamageType "AltPatcherDmg"
 	States{
 		Spawn:
 			PLSS ABABABAB 1 BRIGHT
+		stop
+	}
+}
+Actor PatcherAdv_AltBeamShot : Patcher_AltBeamShot{
+	States{
+		Spawn:
+			PLSS ABABABABABABABABABABABABABABABAB 1 BRIGHT
 		stop
 	}
 }
@@ -105,7 +126,7 @@ Actor Patcher_Libra : CustomInventory {
 			TNT1 A 1
 		stop
 		Pickup:
-			TNT1 A 0 A_FireBullets(0, 0, 1, 1, "Patcher_LibraPuff", 0, 256)
+			TNT1 A 0 A_FireBullets(0, 0, 1, 1, "Patcher_LibraPuff", FBF_NOFLASH, 256)
 		stop
 	}
 }
@@ -117,42 +138,85 @@ Actor Patcher_Script : Boolean {}
 Actor Patcher_HudBuff : Boolean {}
 Actor Patcher_HudBuffed : Boolean {}
 
-Actor PowerPatcher_BuffDamage : PowerDamage {
+Actor PowerPatcher_DMGUpLv5 : PowerDamage {
 	DamageFactor normal, 2.0
-	powerup.Duration -60
+	Powerup.Duration 0xFFFFFFFF
 }
+Actor PowerPatcher_DMGUpLv4 : PowerPatcher_DMGUpLv5{DamageFactor normal, 1.8}
+Actor PowerPatcher_DMGUpLv3 : PowerPatcher_DMGUpLv5{DamageFactor normal, 1.6}
+Actor PowerPatcher_DMGUpLv2 : PowerPatcher_DMGUpLv5{DamageFactor normal, 1.4}
+Actor PowerPatcher_DMGUpLv1 : PowerPatcher_DMGUpLv5{DamageFactor normal, 1.2}
 
-Actor PowerPatcher_BuffResistance : PowerProtection {
+Actor PowerPatcher_RESUpLv5 : PowerProtection {
 	DamageFactor normal, 0.5
-	powerup.Duration -60
+	Powerup.Duration 0xFFFFFFFF
 }
+Actor PowerPatcher_RESUpLv4 : PowerPatcher_RESUpLv5 {DamageFactor normal, 0.6}
+Actor PowerPatcher_RESUpLv3 : PowerPatcher_RESUpLv5 {DamageFactor normal, 0.7}
+Actor PowerPatcher_RESUpLv2 : PowerPatcher_RESUpLv5 {DamageFactor normal, 0.8}
+Actor PowerPatcher_RESUpLv1 : PowerPatcher_RESUpLv5 {DamageFactor normal, 0.9}
 
-Actor PowerPatcher_BuffRegenerate : PowerRegeneration {
-	Powerup.Strength 30
-	Powerup.Duration -60
+Actor PowerPatcher_RegenLv1 : PowerRegeneration {
+	Powerup.Strength 3
+	Powerup.Duration 0xFFFFFFFF
 }
+Actor PowerPatcher_RegenLv2 : PowerPatcher_RegenLv1 {Powerup.Strength 6}
+Actor PowerPatcher_RegenLv3 : PowerPatcher_RegenLv1 {Powerup.Strength 9}
+Actor PowerPatcher_RegenLv4 : PowerPatcher_RegenLv1 {Powerup.Strength 12}
+Actor PowerPatcher_RegenLv5 : PowerPatcher_RegenLv1 {Powerup.Strength 15}
 
-Actor Patcher_AdvBuffer : CustomInventory {
+Actor Patcher_UpgradeGiver : CustomInventory {
 	+Inventory.AlwaysPickup
 	States{
 		Spawn:
 			TNT1 A 1
 		stop
 		Pickup:
-			TNT1 A 0 A_GiveInventory("PowerPatcher_BuffRegenerate")
+			TNT1 A 1 A_Log("Dude, wtf.")
 		stop
 	}
 }
 
-Actor Patcher_Buffer : CustomInventory {
-	+Inventory.AlwaysPickup
-	States{
-		Spawn:
-			TNT1 A 1
-		stop
-		Pickup:
-			TNT1 A 0 A_GiveInventory("PowerPatcher_BuffResistance")
-			TNT1 A 0 A_GiveInventory("PowerPatcher_BuffDamage")
-		stop
-	}
-}
+Actor Patcher_Upgrade_RESET : Patcher_UpgradeGiver {States{Pickup:
+			TNT1 A 1 A_TakeInventory("PowerPatcher_DMGUpLv1", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RESUpLv1", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_DMGUpLv2", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RESUpLv2", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_DMGUpLv3", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RESUpLv3", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_DMGUpLv4", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RESUpLv4", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_DMGUpLv5", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RESUpLv5", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RegenLv1", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RegenLv2", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RegenLv3", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RegenLv4", 1)
+			TNT1 A 1 A_TakeInventory("PowerPatcher_RegenLv5", 1)
+stop}}
+
+Actor Patcher_Upgrade_Lv1 : Patcher_UpgradeGiver {States{Pickup:
+			TNT1 A 1 A_GiveInventory("PowerPatcher_DMGUpLv1", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RESUpLv1", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RegenLv1", 1)
+stop}}
+Actor Patcher_Upgrade_Lv2 : Patcher_UpgradeGiver {States{Pickup:
+			TNT1 A 1 A_GiveInventory("PowerPatcher_DMGUpLv2", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RESUpLv2", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RegenLv2", 1)
+stop}}
+Actor Patcher_Upgrade_Lv3 : Patcher_UpgradeGiver {States{Pickup:
+			TNT1 A 1 A_GiveInventory("PowerPatcher_DMGUpLv3", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RESUpLv3", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RegenLv3", 1)
+stop}}
+Actor Patcher_Upgrade_Lv4 : Patcher_UpgradeGiver {States{Pickup:
+			TNT1 A 1 A_GiveInventory("PowerPatcher_DMGUpLv4", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RESUpLv4", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RegenLv4", 1)
+stop}}
+Actor Patcher_Upgrade_Lv5 : Patcher_UpgradeGiver{States{Pickup:
+			TNT1 A 1 A_GiveInventory("PowerPatcher_DMGUpLv5", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RESUpLv5", 1)
+			TNT1 A 1 A_GiveInventory("PowerPatcher_RegenLv5", 1)
+stop}}

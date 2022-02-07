@@ -83,14 +83,14 @@ WEPS_SUPPORT_SUPP_UP0_NAME = "Resourceful Supplier Machine";
 WEPS_SUPPORT_SUPP_UP0_DESC = "Supply more resources, and in a wider range.";
 
 WEPS_SUPPORT_PTCH_NAME =    "Patcher Gun";
-WEPS_SUPPORT_PTCH_DESC =    "Repairs Turrets, Dispensers and Drones. Is Harmless against monsters.\n"
-	                        "Has a 10% chance of gaining an experience point per each hit.\n "
-                            "Uses credits as repair material.\n\n"
-                            "Pri-Fire: Fixes buildings by 10% of its max health. (Costs 7% from max health)\n"
-                            "Alt-fire: x2 damage up and 50% resistance up for 30 seconds. (Costs 25% from the max health)";
+WEPS_SUPPORT_PTCH_DESC =    "Repairs and Upgrades Turrets and Dispensers. \n"
+	                        "Harmless against monsters, limited to 5 Levels per building.\n "
+                            "Uses credits as repair material. Aim to a building to show it's stats.\n\n"
+                            "Pri-Fire: Repairs buildings (10% chance for Exp Point)\n"
+                            "Alt-fire: Upgrades buildings ((25% + 5%*Lv) chance for 1 Exp Point)";
 
 WEPS_SUPPORT_PTCH_UP0_NAME = "Advanced Patcher Gun";
-WEPS_SUPPORT_PTCH_UP0_DESC = "Repairs faster and with a 50% price discount. Buffing adds Regeneration.";
+WEPS_SUPPORT_PTCH_UP0_DESC = "Fire faster, and in a larger range. Prices are 50% off discounted";
 
 
 // Commando

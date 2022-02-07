@@ -3,7 +3,7 @@ ACTOR TurretBase : Deploy_Building
 	states
 	{
 		Deploy:
-			NULL A 1 A_SpawnItemEx("TurretBase_Head", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, args[2])
+			NULL A 1 A_SpawnItemEx("TurretBase_Head", 0, 0, 0, 0, 0, 0, 0, 0, args[2])
 			stop
 	}
 }
@@ -32,8 +32,8 @@ ACTOR TurretBase_Head : TurretHeadBase 24300
 	{
 		Spawn:
 			BTRT A 1 A_Look
-			TNT1 A 0 A_SpawnItemEx("TurretBase_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
-			BTRT A 1 ACS_NamedExecuteAlways("Turret_LinkBase", 0, args[0])
+			TNT1 A 0 //A_SpawnItemEx("TurretBase_Stand", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0, args[0])
+			BTRT A 1 //ACS_NamedExecuteAlways("Turret_LinkBase", 0, args[0])
 			goto See
 
 		See:

@@ -178,9 +178,9 @@ actor BP_Explosive_FireRemainSpawner : RandomSpawner
 {
   //DropItem "FireRemainBig", 64
   //DropItem "FireRemainSmall", 128
-  DropItem "FireRemainLong", 255, 3
-  DropItem "FireRemainStandard", 255, 5
-  DropItem "FireRemainShort", 255, 10
+  DropItem "FireRemainLong", 255, 1
+  DropItem "FireRemainStandard", 255, 1
+  DropItem "FireRemainShort", 255, 1
 }
 
 Actor FireRemainBase 

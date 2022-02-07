@@ -56,6 +56,68 @@ ACTOR PlasmaProjectile_Turret : FastProjectile
 	}
 }
 
+Actor PlasmaProjectile_TurretLv1 : PlasmaProjectile_Turret {
+	Speed	62
+}
+
+Actor PlasmaProjectile_TurretLv2 : PlasmaProjectile_Turret {
+	Speed	64
+	Damage	12
+}
+
+Actor PlasmaProjectile_TurretLv3 : PlasmaProjectile_Turret {
+	Speed	66
+	Damage	15
+	States
+	{
+		Death:
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split", 0, 0, 45, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split", 0, 0, 135, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split", 0, 0, -45, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split", 0, 0, -135, 2,AAPTR_TARGET)
+			PLSE C 8 bright
+			PLSE D 6 bright
+			PLSE E 4 bright
+			stop
+	}
+}
+
+Actor PlasmaProjectile_TurretLv4 : PlasmaProjectile_Turret {
+	Speed	68
+	Damage	18
+	States
+	{
+		Death:
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, 30, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, 60, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, 120, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, 160, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, -30, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, -60, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, -120, 2,AAPTR_TARGET)
+			TNT1 A 0 A_CustomMissile("PlasmaProjectile_Spread_Split2", 0, 0, -160, 2,AAPTR_TARGET)
+			PLSE C 8 bright
+			PLSE D 6 bright
+			PLSE E 4 bright
+			stop
+	}
+}
+
+Actor PlasmaProjectile_TurretLv5 : PlasmaProjectile_TurretLv4 {
+	Speed	70
+	Damage	20
+	+SEEKERMISSILE
+	States
+	{
+		Spawn:
+			PLSS A 1 bright A_SpawnItem ("PlasmaTrail_Turret" , 0, 0, 0, 0)
+			TNT1 A 0 A_SeekerMissile(0, 5, SMF_Look, 256,5)
+			PLSS B 1 bright A_SpawnItem ("PlasmaTrail_Turret" , 0, 0, 0, 0)
+			TNT1 A 0 A_SeekerMissile(0, 5, SMF_Look, 256,5)
+			loop
+	}
+}
+
 
 actor PlasmaTrail{
   Radius 0
