@@ -62,6 +62,158 @@ ACTOR Rail_Taser
 	}
 }
 
+Actor Rail_TaserPuff 
+{
+	Radius				2
+	Height				2
+	DamageType			MarineFire
+	+AlwaysPuff
+	+PUFFONACTORS
+	+NOINTERACTION
+	+NODAMAGETHRUST
+	
+	states	
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_Explode(5,96,0,0,96)
+		PLSE CDE 2 BRIGHT
+		stop
+	}
+}
+
+ACTOR Rail_Taser_Tracer : RandomSpawner
+{
+	DropItem "Rail_Taser_Tracer1", 255, 1
+	DropItem "Rail_Taser_Tracer2", 255, 1
+	DropItem "Rail_Taser_Tracer3", 255, 1
+	DropItem "Rail_Taser_Tracer4", 255, 1
+}
+
+ACTOR Rail_Taser_Tracer1
+{
+	Radius				11
+	Height				8
+	
+	RenderStyle			Add
+	Scale				0.3
+	
+	DamageType			MarineFire
+	
+	//+NOINTERACTION
+	+NODAMAGETHRUST
+	+NoGRAVITY
+	
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			PLSE B 1 BRIGHT A_Explode(1,16,0,0,16)
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE B 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE C 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE D 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE C 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			loop
+	}
+}
+ACTOR Rail_Taser_Tracer2 : Rail_Taser_Tracer1
+{
+	scale 0.3
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			PLSE D 1 BRIGHT A_Explode(1,16,0,0,16)
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE D 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE C 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE B 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			PLSE C 1 bright 
+			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
+			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			TNT1 A 0 a_Fadeout(0.05)
+			loop
+	}
+}
+
+ACTOR Rail_Taser_Tracer3 : Rail_Taser_Tracer1
+{
+	scale 0.4
+}
+
+ACTOR Rail_Taser_Tracer4 : Rail_Taser_Tracer2
+{
+	scale 0.4
+}
+
+ACTOR Rail_Laser_Tracer : RandomSpawner
+{
+	DropItem "Rail_Laser_Tracer1", 255, 1
+	DropItem "Rail_Laser_Tracer2", 255, 1
+}
+
+ACTOR Rail_Laser_Tracer1
+{
+	Radius				11
+	Height				8
+	
+	RenderStyle			Add
+	Scale				0.7
+	Alpha				0.5
+	
+	DamageType			MarineFire
+	
+	+NOINTERACTION
+	+NODAMAGETHRUST
+	
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			PLSS A 1 BRIGHT A_Explode(1,16,0,0,16)
+			PLSS BABABA 1 bright a_Fadeout(0.05)
+			loop
+	}
+}
+
+ACTOR Rail_Laser_Tracer2 : Rail_Laser_Tracer1
+{
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			PLSS B 1 BRIGHT A_Explode(1,16,0,0,16)
+			PLSS ABABAB 1 bright a_Fadeout(0.05)
+			loop
+	}
+}
+
 Actor Rail_Puff 
 {
 	Radius				2
@@ -79,7 +231,7 @@ Actor Rail_Puff
 		TNT1 A 0 A_CheckFloor("Death")
 		TNT1 A 0 A_CheckCeiling("Death")
 		TNT1 A 0 A_Explode(50,96,0,0,16)
-		PLSE CDE 2
+		PLSE CDE 2 BRIGHT
 		stop
 	Death:
 		TNT1 A 1

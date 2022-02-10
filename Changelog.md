@@ -9,10 +9,23 @@
 
 ## v0 - Before the beginning...
 
+#### (7 - 10 / 2 / 2022) [Supplier's extra goodies~~ + Railgun tests]
+	*) Now the supplier can spawn all types of ammo, including the gasoline, nails, heavy bullets, grenades, 2 pistol clips, and 3 medikits on the health mode.
+	*) The Mega Supplier can now spawn the adobe mentioned ammo but twice as much!
+	*) Mega Supplier can spawn 2 armors when spawning the 5 medikits.
+	*) The supplies spawned by the Mega Supplier or the Supplier shall stand in the floor for 1 minute. If they take too long they will disappear from the map.
+	*) Using both suppliers will grant a 30% chance to earn 1 exp point.
+	*) The Spear-Taser Railgun can now, do a proper tasing and laser attack!
+	// (WIP) Taser stuns enemies with low damage.
+	// The laser attack Pierces through the enemies.
+	*) Now the Double Slug Railgun can fire a second laser for the primary fire.
+	*) The Laser Railgun's laser (redundant i know) can now pierce through 20 weak enemies. And overall deals more damage. Slug's Laser pierces though 40 enemies.
+	// Although this is still WIP.
+
 #### (3 - 6 / 2 / 2022) [Upgradeable Toorets!]
 	!+) Now Turrets can now be upgraded with the patcher's altfire!
 	// Max turret level is 5
-	// Turret's got an upgradeable regeneration of 3 points, x0.2 Damage up and x0.1 Resistance up per level.
+	// Turrets gain an upgradeable regeneration of 3 points, x0.2 Damage up and x0.1 Resistance up per level.
 	// In level 5, that's x1.5 resistance, and 2.0 damage multiplers and 15 points on regeneration!
 	// Also they gain extra effects that enhances their overall performance!
 	// There is a lot'sa them, that I'm too lazy to document that up :p

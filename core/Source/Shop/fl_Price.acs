@@ -75,7 +75,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wu_buckshot_up1", 	1);
 	Prices_add("pr_wu_buckshot_up2", 	2);
 	Prices_add("pr_wu_supplier_up0", 	1);
-	Prices_add("pr_wu_patcher_up0", 	2);
+	Prices_add("pr_wu_patcher_up0", 	3);
 	Prices_add("pr_wu_repeater_up1", 	2);
 	Prices_add("pr_wu_repeater_up2", 	2);
 	Prices_add("pr_wu_dualshot_up1", 	2);
@@ -224,7 +224,6 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_pu_prometeo",			4);
 	Prices_add("pr_pu_runesync",			2);
 	
-	//Prices_add("pr_mu_auto_repair", 	3500); // Heh. Another future thing.
 	//ACS_NamedExecute("SFPlus_UpdatePrices", 0);
 }
 

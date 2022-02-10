@@ -1,19 +1,4 @@
-ACTOR ClipPistol : Ammo
-{
-	Inventory.Icon "CLIPZ0"
-	Inventory.PickupMessage "$GOTCLIP"
-	Inventory.Amount 10
-	Inventory.MaxAmount 50
-	Ammo.BackpackAmount 10
-	Ammo.BackpackMaxAmount 150
-	
-	States
-	{
-		Spawn:
-			CLIP A -1
-			stop
-	}
-}
+
 
 Actor Beretta_DamageRiser : Integer {}
 

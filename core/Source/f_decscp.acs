@@ -102,6 +102,12 @@ Script "Player_IsDed" (void) {
 	setResultValue(GetActorProperty(0, APROP_HEALTH) < 1);
 }
 
+Script "Supplier_GrantExp" (void)
+{
+	// 30 % of gaining 1 exp point after each drop.
+	// Because I know they will exploit this.
+	if(Random(0,10) < 3) Rank_GrantEXP(PlayerNumber(), 1);
+}
 
 #libdefine REPEATER_HEATAIM 0
 #libdefine REPEATER_BONUSDMG  1

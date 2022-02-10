@@ -164,7 +164,7 @@ ACTOR Dualshot_Ammo : Ammo
 	States
 	{
 		Spawn:
-			GRNS A -1
+			DDAM A -1
 			stop
 	}
 }
@@ -183,6 +183,23 @@ ACTOR Flinger_Ammo : Ammo
 	{
 		Spawn:
 			GRNS A -1
+			stop
+	}
+}
+
+ACTOR ClipPistol : Ammo
+{
+	Inventory.Icon "CLIPZ0"
+	Inventory.PickupMessage "$GOTCLIP"
+	Inventory.Amount 25
+	Inventory.MaxAmount 50
+	Ammo.BackpackAmount 10
+	Ammo.BackpackMaxAmount 150
+	
+	States
+	{
+		Spawn:
+			CLIP A -1
 			stop
 	}
 }

@@ -11,7 +11,7 @@ ACTOR Supplier : Weapon
 	Weapon.AmmoType2			"Supplies_Health"
 	Inventory.PickupMessage		"You got the Stocker!"
 	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
-	Tag "Supplier Machine (Pri. Ammo / Sec. Health)"
+	Tag "Supply Restocker"
 	
 	Weapon.UpSound			"w/load4"
 	Weapon.selectionorder 3100
@@ -19,45 +19,59 @@ ACTOR Supplier : Weapon
 	States
 	{
 		Ready:
-			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"ReadyHealth")
-		ReadyAmmo:
+			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"Ready.Health")
+		Ready.Ammo:
 			W7E1 A 1 A_WeaponReady
 			loop
-		ReadyHealth:
+		Ready.Health:
 			W7E2 A 1 A_WeaponReady
 			loop
 		Deselect:
-			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,3)
+			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"Deselect.HealthMode")
+		Deselect.AmmoMode:
 			W7E1 A 1 A_Lower
-			W7E1 A 0 A_Lower
-			goto Deselect
+			W7E2 A 0 A_Lower
+			loop
+		Deselect.HealthMode:
 			W7E2 A 1 A_Lower
 			W7E2 A 0 A_Lower
-			goto Deselect + 4
+			loop
 		Select:
-			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,3)
-			W7E1 A 1 A_Raise
-			W7E1 A 0 A_Raise
-			goto Select
-			W7E2 A 1 A_Raise
-			W7E2 A 0 A_Raise
-			goto Select + 4
+			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"Select.HealthMode")
+		Select.AmmoMode:
+			W7E1 A 1 A_Lower
+			W7E2 A 0 A_Lower
+			loop
+		Select.HealthMode:
+			W7E2 A 1 A_Lower
+			W7E2 A 0 A_Lower
+			loop
 		Fire:
 			TNT1 A 0 A_TakeInventory("Sup_HealMode", 1)
 			W7E1 A 0 A_PlaySound("w6/up")
-			W7E1 A 3 A_SpawnItem ("ClipBox" , 60, 0, 0, 0)
-			W7E1 A 0 A_SpawnItem ("ShellBox" , 70, 0, 0, 0)
-			W7E1 A 0 A_SpawnItem ("RocketBox" , 80, 0, 0, 0)
-			W7E1 A 0 A_SpawnItem ("CellPack" , 90, 0, 0, 0)
-			W7E1 A 3 A_TakeInventory("Supplies_Ammo", 1)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipBox",		random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol",	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ShellBox", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_RocketBox", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_Gasoline", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_HeavyBullets", random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_DualshotAmmo", random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_FlingerAmmo", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_CellPack", 	random(-16,16), random(-16,16), 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
+			W7E1 A 6 A_TakeInventory("Supplies_Ammo", 1)
 			W7E1 BCDE 5
 			W7E1 A 5 A_Refire
 			goto Ready
 		Altfire:
 			TNT1 A 0 A_GiveInventory("Sup_HealMode", 1)
 			W7E2 A 0 A_PlaySound("w6/up")
-			W7E2 A 3 A_SpawnItem ("Medikit" , 20, 0, 0, 0)
-			W7E2 A 3 A_TakeInventory("Supplies_Health", 1)
+			W7E2 A 0 A_SpawnItemEX ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
+			W7E2 A 6 A_TakeInventory("Supplies_Health", 1)
 			W7E2 BCDE 5
 			W7E2 A 5 A_Refire
 			goto Ready
@@ -68,7 +82,7 @@ ACTOR Supplier : Weapon
 	}
 }
 
-ACTOR Supplier_Big : Weapon
+ACTOR Supplier_Big : Supplier
 {
 	Weapon.AmmoUse1			1
 	Weapon.AmmoGive1 		8
@@ -78,58 +92,51 @@ ACTOR Supplier_Big : Weapon
 	Weapon.AmmoType2			"Supplies_Health_Big"
 	Inventory.PickupMessage		"You got the BEEG Supplier!"
 	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
-	Tag "Big Supplier Machine (Pri. Ammo / Sec. Health)"
+	Tag "Mega Supply Restocker"
 	
 	Weapon.UpSound			"w/load4"
 	Weapon.selectionorder 3100
-	States
-	{
-		Ready:
-			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"ReadyHealth")
-		ReadyAmmo:
-			W7E1 A 1 A_WeaponReady
-			loop
-		ReadyHealth:
-			W7E2 A 1 A_WeaponReady
-			loop
-		Deselect:
-			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,3)
-			W7E1 A 1 A_Lower
-			W7E1 A 0 A_Lower
-			goto Deselect
-			W7E2 A 1 A_Lower
-			W7E2 A 0 A_Lower
-			goto Deselect + 4
-		Select:
-			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,3)
-			W7E1 A 1 A_Raise
-			W7E1 A 0 A_Raise
-			goto Select
-			W7E2 A 1 A_Raise
-			W7E2 A 0 A_Raise
-			goto Select + 4
+	States{
 		Fire:
 			TNT1 A 0 A_TakeInventory("Sup_HealMode", 1)
 			W7E1 A 0 A_PlaySound("w6/up")
-			W7E1 A 3 A_SpawnItemEx ("ClipBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("ClipBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("ShellBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("ShellBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("RocketBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("RocketBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("CellPack" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("CellPack" , random(-32,32), random(-32,32), 0)
-			W7E1 A 3 A_TakeInventory("Supplies_Ammo_Big", 1)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ClipBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ShellBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_ShellBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_RocketBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_RocketBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_CellPack" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_CellPack" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_Gasoline", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_Gasoline", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_HeavyBullets", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_HeavyBullets", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_DualshotAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_DualshotAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_FlingerAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Sup_FlingerAmmo", random(-32,32), random(-32,32), 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
+			W7E1 A 5 A_TakeInventory("Supplies_Ammo_Big", 1)
 			W7E1 BCDE 5
 			W7E1 A 5 A_Refire
 			goto Ready
 		Altfire:
 			TNT1 A 0 A_GiveInventory("Sup_HealMode", 1)
 			W7E2 A 0 A_PlaySound("w6/up")
-			W7E2 A 3 A_SpawnItemEX ("Medikit" , random(-32,32),random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Medikit" , random(-32,32), random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Medikit" , random(-32,32),random(-32,32), 0)
-			W7E2 A 3 A_TakeInventory("Supplies_Health_Big", 1)
+			W7E2 A 0 A_SpawnItemEX ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_SteelPlatingArmor" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Sup_SteelPlatingArmor" , random(-32,32), random(-32,32), 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
+			W7E2 A 6 A_TakeInventory("Supplies_Health_Big", 1)
 			W7E2 BCDE 5
 			W7E2 A 5 A_Refire
 			goto Ready
@@ -139,3 +146,215 @@ ACTOR Supplier_Big : Weapon
 		goto lightdone
 	}
 }
+
+// The supplied resources.
+// They will stand on the floor, up to 45 seconds.
+// If not picked up, they disappear.
+
+Actor Sup_Pickup : CustomInventory {
+	// A fading pickup that must be took between the time limit before it disappears.
+	Inventory.PickupSound "misc/p_pkup"
+
+	var int user_counter;
+	var int user_ticlimit;
+	var int user_frametic;
+	var int user_fadetic;
+	var int user_fade;
+	var int user_frame;
+	var int user_framelimit;
+	var int user_stayseconds;
+	States{
+		Spawn:
+			"####" "#" 0 A_SetUserVar("user_framelimit", 0)
+			"####" "#" 0 A_SetUserVar("user_frametic", 1)
+		Spawn.Timer:
+			"####" "#" 0 A_SetUserVar("user_stayseconds", 45)
+			"####" "#" 0 A_SetUserVar("user_ticlimit", 35*user_stayseconds)
+			"####" "#" 1 A_SetUserVar("user_fadetic", 4)
+		Spawn.Wait:
+			"####" "#" 0 A_JumpIf(user_counter >= (user_ticlimit - 105), "Spawn.Fade")
+			"####" "#" 1
+			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
+			"####" "#" 0 A_JumpIf(user_counter % user_frametic == 0, "Spawn.SetFrame")
+			loop
+		Spawn.Fade:
+			"####" "#" 0 A_JumpIf(user_counter >= user_ticlimit, "Disappear")
+			"####" "#" 1
+			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
+			"####" "#" 0 A_JumpIf(user_counter % user_fadetic == 0, "Spawn.SetFade")
+			loop
+		Spawn.SetFade:
+			"####" "#" 0 A_SetUserVar("user_fade", !user_fade) // Vary between 0 and 1
+			"####" "#" 0 A_JumpIf(user_fade == 0, "Spawn.Fade.In")
+			goto Spawn.Fade.Out
+		Spawn.Fade.Out:
+			"####" "#" 0 A_FadeOut(0.7)
+			goto Spawn.SetFrame
+		Spawn.Fade.In:
+			"####" "#" 0 A_FadeIn(0.7)
+			goto Spawn.SetFrame
+		
+		Spawn.SetFrame:
+			"####" "#" 0 A_JumpIf(user_framelimit == 0 || (user_counter % user_frametic != 0), "Spawn.Wait")
+			"####" "#" 0 A_JumpIf(user_frame >= user_framelimit, "Spawn.ResetFrame")
+			"####" "#" 0 A_JumpIf(user_frame == 7, "Spawn.FrameH")
+			"####" "#" 0 A_JumpIf(user_frame == 6, "Spawn.FrameG")
+			"####" "#" 0 A_JumpIf(user_frame == 5, "Spawn.FrameF")
+			"####" "#" 0 A_JumpIf(user_frame == 4, "Spawn.FrameE")
+			"####" "#" 0 A_JumpIf(user_frame == 3, "Spawn.FrameD")
+			"####" "#" 0 A_JumpIf(user_frame == 2, "Spawn.FrameC")
+			"####" "#" 0 A_JumpIf(user_frame == 1, "Spawn.FrameB")
+			goto Spawn.FrameA
+
+		Spawn.NextFrame:
+			"####" "#" 0 A_SetUserVar("user_frame", user_frame+1)
+			goto Spawn.Wait
+
+		Spawn.ResetFrame:
+			"####" "#" 0 A_SetUserVar("user_frame", 0)
+			goto Spawn.FrameA
+
+		Spawn.FrameA:
+			"####" A 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameB:
+			"####" B 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameC:
+			"####" C 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameD:
+			"####" D 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameE:
+			"####" E 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameF:
+			"####" F 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameG:
+			"####" G 0
+			goto Spawn.NextFrame
+		
+		Spawn.FrameH:
+			"####" H 0
+			goto Spawn.NextFrame
+
+		Disappear:
+			TNT1 A 0
+			stop
+		stop
+
+		Pickup:
+			TNT1 A 0
+		stop
+	}
+}
+
+Actor Sup_ClipBox : Sup_Pickup { States {
+		Spawn:
+			AMMO A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("Clip", 100)
+		stop
+}}
+
+Actor Sup_ClipPistol : Sup_Pickup { States {
+		Spawn:
+			CLIP A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ClipPistol", 15)
+		stop
+}}
+
+Actor Sup_ShellBox : Sup_Pickup { States {
+		Spawn:
+			SBOX A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("Shell", 20)
+		stop
+}}
+
+Actor Sup_RocketBox : Sup_Pickup { States {
+		Spawn:
+			BROK A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("RocketBox", 5)
+		stop
+}}
+
+Actor Sup_CellPack : Sup_Pickup { States {
+		Spawn:
+			CELP A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("CellPack", 100)
+		stop
+}}
+
+Actor Sup_FlingerAmmo : Sup_Pickup { States {
+		Spawn:
+			GRNS A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("Flinger_Ammo", 10)
+		stop
+}}
+
+Actor Sup_DualshotAmmo : Sup_Pickup { States {
+		Spawn:
+			DDAM A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("Dualshot_Ammo", 50)
+		stop
+}}
+
+Actor Sup_Gasoline : Sup_Pickup { States {
+		Spawn:
+			AGAS A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("Gasoline", 100)
+		stop
+}}
+
+Actor Sup_HeavyBullets : Sup_Pickup { States {
+		Spawn:
+			RAMM A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("HeavyBullets", 50)
+		stop
+}}
+
+Actor Sup_Medikit : Sup_Pickup { States {
+		Spawn:
+			MEDI A 0
+		goto Super::Spawn
+		Pickup:
+			TNT1 A 0 A_GiveInventory("Medikit", 25)
+		stop
+}}
+
+Actor Sup_SteelPlatingArmor : Sup_Pickup { States {
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			ARM1 A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("SteelPlatingArmor", 1)
+		stop
+}}

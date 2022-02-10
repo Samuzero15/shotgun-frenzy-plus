@@ -33,7 +33,7 @@ WEPS_SHOTGUN_SSG_UP2_NAME = "Ricochet Super Shotgun";
 WEPS_SHOTGUN_SSG_UP2_DESC = "Allows you to fire faster, your pellets can bounce on floors and walls.";
 
 WEPS_SHOTGUN_QUAD_NAME =    "Quadshot";
-WEPS_SHOTGUN_QUAD_DESC =    " This heavy machine can fire a powerful shell burst "
+WEPS_SHOTGUN_QUAD_DESC =    "This heavy machine can fire a powerful shell burst "
                             "with the use of 4 shells, powerful enough "
                             "to grant you easy kills. Thanks for its high acurracy. "
                             "The only drawback is in its firing speed.\n\n"
@@ -72,25 +72,25 @@ WEPS_ASSAULT_BUCK_UP2_DESC = "Your shells will explode and create fire to damage
 WEPS_SUPPORT_NAME = "Support";
 WEPS_SUPPORT_DESC = "Set of tools for an aid in the battlefield";
 
-WEPS_SUPPORT_SUPP_NAME =    "Supplier Mach.";
+WEPS_SUPPORT_SUPP_NAME =    "Supply Restocker";
 WEPS_SUPPORT_SUPP_DESC =    "Tool that drops ammo and health supplies for the marines.\n"
                             "This tool can't be restocked by dispensers, so your best refill "
 	                        "is on your base, in the ammunition pad.\n\n"
 	                        "Pri. Fire: Drop Ammo (1 Ammo Supplies)\n"
                             "Sec. Fire: Drop Health (1 Health Supplies)";
 
-WEPS_SUPPORT_SUPP_UP0_NAME = "Resourceful Supplier Machine";
-WEPS_SUPPORT_SUPP_UP0_DESC = "Supply more resources, and in a wider range.";
+WEPS_SUPPORT_SUPP_UP0_NAME = "Mega Supplier Restocker";
+WEPS_SUPPORT_SUPP_UP0_DESC = "Supply more resources, and in a wider range. Supplying health can create 2 steel plating armors.";
 
 WEPS_SUPPORT_PTCH_NAME =    "Patcher Gun";
 WEPS_SUPPORT_PTCH_DESC =    "Repairs and Upgrades Turrets and Dispensers. \n"
 	                        "Harmless against monsters, limited to 5 Levels per building.\n "
                             "Uses credits as repair material. Aim to a building to show it's stats.\n\n"
-                            "Pri-Fire: Repairs buildings (10% chance for Exp Point)\n"
-                            "Alt-fire: Upgrades buildings ((25% + 5%*Lv) chance for 1 Exp Point)";
+                            "Pri-Fire: Repairs buildings (Gains 1 Exp Point)\n"
+                            "Alt-fire: Upgrades buildings (Gains 5 Exp Points)";
 
 WEPS_SUPPORT_PTCH_UP0_NAME = "Advanced Patcher Gun";
-WEPS_SUPPORT_PTCH_UP0_DESC = "Fire faster, and in a larger range. Prices are 50% off discounted";
+WEPS_SUPPORT_PTCH_UP0_DESC = "Fire faster, and in a larger range. Prices are 50% off discounted.";
 
 
 // Commando
@@ -138,9 +138,9 @@ WEPS_EXPLOSIVE_FLIN_DESC =    "With this, you can launch bouncing grenades.\n"
                               "to damage demons in a safe place.";
 
 WEPS_EXPLOSIVE_FLIN_UP1_NAME = "Expansive G. Flinger";
-WEPS_EXPLOSIVE_FLIN_UP1_DESC = "Fires a grenade, that spawns smaller grenades in a wider range.";
+WEPS_EXPLOSIVE_FLIN_UP1_DESC = "Fires a grenade, that spawns smaller grenades in a wider range. Costs 2 grenades.";
 WEPS_EXPLOSIVE_FLIN_UP2_NAME = "Sticky G. Flinger";
-WEPS_EXPLOSIVE_FLIN_UP2_DESC = "Launches sticky grenades, which you can spam them up, but they must be manually activated with altfire. Try sticking a grenade against a demon!.";
+WEPS_EXPLOSIVE_FLIN_UP2_DESC = "Launches sticky grenades, which you can spam them up, but they must be manually activated with alt-fire. Try sticking a grenade to a demon!.";
 
 // Plasmatic
 
@@ -154,7 +154,7 @@ WEPS_PLASMA_PLSG_DESC =    "Fires plasma balls, fast and hard projectiles "
                            "more explosive projectile.";
 
 WEPS_PLASMA_PLSG_UP1_NAME = "Spread Chip Plasma Rifle";
-WEPS_PLASMA_PLSG_UP1_DESC = "Your plasma can spread. Control it with Primary and Secondary fire.";
+WEPS_PLASMA_PLSG_UP1_DESC = "Your plasma can spread-shot. Control it with Primary and Secondary fire.";
 WEPS_PLASMA_PLSG_UP2_NAME = "Advanced Plasma Rifle";
 WEPS_PLASMA_PLSG_UP2_DESC = "The plasma projectiles can seek enemies now. Can cause explosive damage too.";
 
@@ -164,10 +164,10 @@ WEPS_PLASMA_RAIL_DESC =    "This gun can create laser rails which "
                             "they damage everything in its way."
                             "Takes some time to fire each rail.";
 
-WEPS_PLASMA_RAIL_UP1_NAME = "Lancer type Railgun";
-WEPS_PLASMA_RAIL_UP1_DESC = "Shoots a wider, and powerful Laser which it harms nearby demons.";
-WEPS_PLASMA_RAIL_UP2_NAME = "Slug Railgun";
-WEPS_PLASMA_RAIL_UP2_DESC = "Deals more damage, and fires 2 rails per shot, Use Secondary to fire 1 per time.";
+WEPS_PLASMA_RAIL_UP1_NAME = "Spear-Taser Railgun";
+WEPS_PLASMA_RAIL_UP1_DESC = "Reduced range, but incredibly fast and piercing. Alt-fire stuns the first enemy with the Taser.";
+WEPS_PLASMA_RAIL_UP2_NAME = "Double-Slug Railgun";
+WEPS_PLASMA_RAIL_UP2_DESC = "Laser lasts longer, and fires 2 lasers per shot. Use Secondary to fire 2 Slug Rails.";
 
 // Pyromaniac
 
