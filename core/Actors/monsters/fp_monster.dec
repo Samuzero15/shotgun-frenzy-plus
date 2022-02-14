@@ -113,3 +113,4 @@ Actor FPlus_Monster {
 #include "Actors/monsters/Defines/fp_defines.dec"
 #include "Actors/monsters/fp_aidspawn.dec"
 #include "Actors/monsters/fp_modifiers.dec"
+#include "Actors/monsters/fp_altstates.dec"

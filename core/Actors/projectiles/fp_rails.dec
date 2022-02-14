@@ -45,6 +45,7 @@ ACTOR Rail_Taser
 	Projectile
 	+RANDOMIZE
 	+MTHRUSPECIES
+	+BLOODLESSIMPACT
 	Obituary			"%o smells %k's rails... oh wait, thats $o's melted insides"
 	
 	SeeSound 			"x1/taser"
@@ -71,13 +72,29 @@ Actor Rail_TaserPuff
 	+PUFFONACTORS
 	+NOINTERACTION
 	+NODAMAGETHRUST
+	+BLOODLESSIMPACT
 	
 	states	
 	{
 	Spawn:
 		TNT1 A 1 
 		TNT1 A 0 A_Explode(5,96,0,0,96)
-		PLSE CDE 2 BRIGHT
+		PLSE CDE 2 BRIGHT A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
+		stop
+	}
+}
+
+Actor Rail_SpearPuff : Rail_TaserPuff
+{
+	scale 0.3
+	Translation "112:127=192:207", "228:230=168:169"
+	SeeSound 			"x1/taser"
+	states	
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 0 A_Explode(20,128,0,0,128)
+		BFE1 CDE 1 BRIGHT
 		stop
 	}
 }
@@ -103,31 +120,38 @@ ACTOR Rail_Taser_Tracer1
 	//+NOINTERACTION
 	+NODAMAGETHRUST
 	+NoGRAVITY
+	+BLOODLESSIMPACT
 	
 	States
 	{
 		Spawn:
 			TNT1 A 0
+			
 			PLSE B 1 BRIGHT A_Explode(1,16,0,0,16)
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE B 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE C 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE D 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE C 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			loop
 	}
 }
@@ -142,22 +166,27 @@ ACTOR Rail_Taser_Tracer2 : Rail_Taser_Tracer1
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE D 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE C 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE B 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE C 1 bright 
 			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
 			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
+			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			loop
 	}
 }
@@ -191,11 +220,13 @@ ACTOR Rail_Laser_Tracer1
 	
 	+NOINTERACTION
 	+NODAMAGETHRUST
+	+BLOODLESSIMPACT
 	
 	States
 	{
 		Spawn:
 			TNT1 A 0
+			TNT1 A 0 A_Jump(128, 2)
 			PLSS A 1 BRIGHT A_Explode(1,16,0,0,16)
 			PLSS BABABA 1 bright a_Fadeout(0.05)
 			loop
@@ -208,6 +239,7 @@ ACTOR Rail_Laser_Tracer2 : Rail_Laser_Tracer1
 	{
 		Spawn:
 			TNT1 A 0
+			TNT1 A 0 A_Jump(128, 2)
 			PLSS B 1 BRIGHT A_Explode(1,16,0,0,16)
 			PLSS ABABAB 1 bright a_Fadeout(0.05)
 			loop
@@ -223,6 +255,7 @@ Actor Rail_Puff
 	+PUFFONACTORS
 	+NOINTERACTION
 	+NODAMAGETHRUST
+	+BLOODLESSIMPACT
 	
 	states	
 	{
@@ -252,6 +285,7 @@ ACTOR Rail_Standard_Tracer
 	
 	+NOINTERACTION
 	+NODAMAGETHRUST
+	+BLOODLESSIMPACT
 	
 	States
 	{

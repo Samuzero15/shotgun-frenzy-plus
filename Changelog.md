@@ -9,6 +9,15 @@
 
 ## v0 - Before the beginning...
 
+#### (11 - 13 / 2 / 2022) [Spear-Taser Railgun and Buckshot's touch]
+	*) Spear-Taser Railgun's attacks are modified with proper sounds and with ammo checks.
+	*) If the buckshot's chamber is empty, and you have some ammo for it, reloads once.
+	// For 2xclick mouse problemtic users, potentially a time-saver.
+	// You can hold fire (or alt-fire) to fully reload.
+	*) Spear-Taser Railgun's alt-fire can now properly stun enemies for 3 seconds!
+	*) Now laser's from railgun will no longer spew blood on impacting enemies.
+	*) Modified a bit the spear-taser railgun's pri-fire attack. :)
+
 #### (7 - 10 / 2 / 2022) [Supplier's extra goodies~~ + Railgun tests]
 	*) Now the supplier can spawn all types of ammo, including the gasoline, nails, heavy bullets, grenades, 2 pistol clips, and 3 medikits on the health mode.
 	*) The Mega Supplier can now spawn the adobe mentioned ammo but twice as much!

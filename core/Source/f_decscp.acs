@@ -109,6 +109,21 @@ Script "Supplier_GrantExp" (void)
 	if(Random(0,10) < 3) Rank_GrantEXP(PlayerNumber(), 1);
 }
 
+script "AltState_Stun" (void)
+{
+	If(CheckInventory("AltState_Stunned") || CheckFlag(0, "Friendly")){terminate;}
+	GiveInventory("AltState_Stunned", 1);
+	int ori_speed = GetActorProperty(0, APROP_SPEED);
+	SetActorProperty(0, APROP_SPEED, 0);
+	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
+		SetActorState (0, "Pain");
+		delay(6);
+	}
+	SetActorProperty(0, APROP_SPEED, ori_speed);
+	delay(35*3);
+	TakeInventory("AltState_Stunned", 1);
+}
+
 #libdefine REPEATER_HEATAIM 0
 #libdefine REPEATER_BONUSDMG  1
 #libdefine REPEATER_FIRECHANCE 2

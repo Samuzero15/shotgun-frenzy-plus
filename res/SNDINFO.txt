@@ -242,6 +242,10 @@ attack			ATTACK
 //	Shotgun Frenzy Plus Soundinfo//
 ///////////////////////////////////
 
+Railgun_Taser/Stop       lrtstop
+Railgun_Taser/LoopLaser  lrtloop
+Railgun_Taser/StartLaser lrtstart
+
 runes/temperance/hit temp_hit
 runes/temperance/break temp_brk
 runes/temperance        r_temper

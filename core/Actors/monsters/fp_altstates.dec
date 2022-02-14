@@ -1,0 +1,36 @@
+Actor AltState_TokenPower : PowerSpeed{
+    Speed 1.0
+    +PowerSpeed.NoTrail
+}
+
+Actor AltState_Stun : AltState_TokenPower {}
+
+Actor AltState_Stunned : Boolean {}
+Actor AltState_Stun_Time : Integer { Inventory.MAxAmount 3500 }
+
+Actor AltState_StunTimer : AltState_TokenPower
+{
+    Powerup.Duration 105
+}
+
+Actor AltStateGiver : CustomInventory {
+    +Inventory.AlwaysPickup 
+    states{
+        Spawn:
+            TNT1 A 0 
+        stop
+        Pickup:
+            TNT1 A 0
+        stop
+    }
+}
+
+Actor AltState_StunGiver : AltStateGiver
+{
+    states{
+        Pickup:
+            TNT1 A 0 A_GiveInventory("AltState_StunTimer", 1)
+            TNT1 A 0 ACS_NamedExecuteAlways("AltState_Stun", 0)
+        stop
+    }
+}
