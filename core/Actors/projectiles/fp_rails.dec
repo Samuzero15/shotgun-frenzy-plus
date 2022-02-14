@@ -93,8 +93,7 @@ Actor Rail_SpearPuff : Rail_TaserPuff
 	{
 	Spawn:
 		TNT1 A 1 
-		TNT1 A 0 A_Explode(20,128,0,0,128)
-		BFE1 CDE 1 BRIGHT
+		BFE1 CDE 1 BRIGHT A_Explode(12,128,0,0,128)
 		stop
 	}
 }

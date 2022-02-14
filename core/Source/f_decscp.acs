@@ -111,7 +111,7 @@ Script "Supplier_GrantExp" (void)
 
 script "AltState_Stun" (void)
 {
-	If(CheckInventory("AltState_Stunned") || CheckFlag(0, "Friendly")){terminate;}
+	If(CheckInventory("AltState_Stunned") || CheckFlag(0, "Friendly") || CheckFlag(0, "DORMANT")){terminate;}
 	GiveInventory("AltState_Stunned", 1);
 	int ori_speed = GetActorProperty(0, APROP_SPEED);
 	SetActorProperty(0, APROP_SPEED, 0);
@@ -120,7 +120,7 @@ script "AltState_Stun" (void)
 		delay(6);
 	}
 	SetActorProperty(0, APROP_SPEED, ori_speed);
-	delay(35*3);
+	delay(35);
 	TakeInventory("AltState_Stunned", 1);
 }
 

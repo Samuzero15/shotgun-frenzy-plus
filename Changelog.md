@@ -9,6 +9,13 @@
 
 ## v0 - Before the beginning...
 
+#### (14 / 2 / 2022) [Spear-Taser Railgun's little lover touch]
+	*) Buffed the damage of the spear-taser railgun.
+	*) This weapon costs 2 cells to fire, and consumes faster when it's fully winded up.
+	*) Stun effect will not take effect on dormant actors.
+	*) Taser's attack will pierce thorugh, meaning this weapon can now stun whole hordes.
+	*) Taser's attack will now cost 8 cells.
+	
 #### (11 - 13 / 2 / 2022) [Spear-Taser Railgun and Buckshot's touch]
 	*) Spear-Taser Railgun's attacks are modified with proper sounds and with ammo checks.
 	*) If the buckshot's chamber is empty, and you have some ammo for it, reloads once.
