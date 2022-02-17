@@ -9,6 +9,17 @@
 
 ## v0 - Before the beginning...
 
+#### (17 / 2 / 2022) [Burning Flamers & Demon Build's raise.]
+	!*) Demon buildings (like the flesh wall and demon turret) can now regenerate back to action.
+	// In consecuence, in order to advance to the demon core, you will be in constant attack by these structures, even if you destroyed one of them!
+	*) Buffed the flesh wall to 6000 hp.
+	!*) Flamer guns are now modified!, now they can actually burn the enemies arround them!
+	// A burning enemy spawns a flame under it's feet to take damage for a short time.
+	// If the enemy is killed and it's still burning, it will ignite the surrounding enemies to take the burning effect again. A flaming-satisfying chain reaction!
+	*) Flamer can now rip though the horde, but with fixed damage.
+	*) Super Flamer can fire more flames, resulting in a spreadier attack. Still, with fixed damage.
+	*) Player's corpse can now properly disappear without affecting the Acs code.
+
 #### (14 / 2 / 2022) [Spear-Taser Railgun's little lover touch]
 	*) Buffed the damage of the spear-taser railgun.
 	*) This weapon costs 2 cells to fire, and consumes faster when it's fully winded up.

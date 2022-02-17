@@ -59,8 +59,12 @@ ACTOR FrenzyPlayer : DoomPlayer
 		PLAY L 6 A_NoBlocking
 		PLAY M 6
 		PLAY N 300
-		PLAY N 5 A_FADEOUT(0.1)
-        Wait
+		PLAY N 5 A_FADEOUT(0.2)
+		PLAY N 5 A_FADEOUT(0.2)
+		PLAY N 5 A_FADEOUT(0.2)
+		PLAY N 5 
+		TNT1 A -1 //A_CheckPlayerDone
+        stop
 	XDeath:
 		TNT1 A 0 A_PlayerSkinCheck("AltSkinXDeath")
 		TNT1 A 0 A_NoBlocking
@@ -70,11 +74,15 @@ ACTOR FrenzyPlayer : DoomPlayer
    		TNT1 A 0 A_SpawnDebris("splatBlood_Rib")
    		TNT1 A 0 A_SpawnDebris("splatBlood_Spine")
 		PLAY P 5 A_XScream
-		PLAY Q 5 A_SkullPop
+		PLAY Q 5 //A_SkullPop
 		PLAY RSTUV 5
 		PLAY W 300
-		PLAY W 5 A_FADEOUT(0.1)
-        Wait
+		PLAY W 5 A_FADEOUT(0.2)
+		PLAY W 5 A_FADEOUT(0.2)
+		PLAY W 5 A_FADEOUT(0.2)
+		PLAY w 5 
+		TNT1 A -1 //A_CheckPlayerDone
+        stop
 	AltSkinDeath:
 		TNT1 A 0 A_NoBlocking
 		PLAY H 6
@@ -83,8 +91,12 @@ ACTOR FrenzyPlayer : DoomPlayer
 		PLAY L 6
 		PLAY M 6
 		PLAY N 300
-		PLAY N 5 A_FADEOUT(0.1)
-        Wait
+		PLAY N 5 A_FADEOUT(0.2)
+		PLAY N 5 A_FADEOUT(0.2)
+		PLAY N 5 A_FADEOUT(0.2)
+		PLAY N 5 
+		TNT1 A -1 //A_CheckPlayerDone
+        stop
 	AltSkinXDeath:
 		TNT1 A 0 A_NoBlocking
 		PLAY O 5 
@@ -93,11 +105,15 @@ ACTOR FrenzyPlayer : DoomPlayer
    		TNT1 A 0 A_SpawnDebris("splatBlood_Rib")
    		TNT1 A 0 A_SpawnDebris("splatBlood_Spine")
 		PLAY P 5 A_XScream
-		PLAY Q 5 A_SkullPop
+		PLAY Q 5 //A_SkullPop
 		PLAY RSTUV 5
 		PLAY W 300
-		PLAY W 5 A_FADEOUT(0.1)
-        Wait
+		PLAY W 5 A_FADEOUT(0.2)
+		PLAY W 5 A_FADEOUT(0.2)
+		PLAY W 5 A_FADEOUT(0.2)
+		PLAY W 5 
+		TNT1 A -1 //A_CheckPlayerDone
+        stop
 	}
 }
 

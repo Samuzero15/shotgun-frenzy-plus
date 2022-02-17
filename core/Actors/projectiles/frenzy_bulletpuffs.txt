@@ -137,14 +137,14 @@ ACTOR BulletPuff_Explosive
 		Crash:
 			TNT1 A 0 A_SpawnItemEx("BulletDebris", random(-2, 2), random(-2, 2), random(-2, 2), random(-5, 5), random(-5, 5), random(-5, 5))
 			SPKO E 2 bright A_Explode(5,8,0,1)
-			TNT1 A 0 A_Jump(64, "NoFireSpawn")
+			TNT1 A 0 A_Jump(32, "NoFireSpawn")
 			SPKO E 2 bright A_SpawnItemEx("BulletPuff_ExplosiveRemains", 0,0,0,0,0,0,0,SXF_TRANSFERPOINTERS)
 			SPKO E 2 bright A_SetScale(0.2,0.2)
 			goto ImOuttaHere
 		XDeath:
 			TNT1 A 0 A_SpawnItemEx("BulletDebris", random(-2, 2), random(-2, 2), random(-2, 2), random(-5, 5), random(-5, 5), random(-5, 5))
 			SPKO E 2 bright A_Explode(5,8,0,1)
-			TNT1 A 0 bright A_Jump(64, "NoFireSpawn")
+			TNT1 A 0 bright A_Jump(32, "NoFireSpawn")
 			SPKO E 2 bright A_SpawnItemEx("BulletPuff_ExplosiveRemains", 0,0,0,0,0,0,0,SXF_TRANSFERPOINTERS)
 			SPKO E 2 bright A_SetScale(0.2,0.2)
 			goto ImOuttaHere

@@ -69,9 +69,9 @@ ACTOR DemonCore 10002
 			DCRE A 1 A_Scream
 			DCRE A 1 A_NoBlocking
 			MISL BCD 5
-                     	//MISL A 0 ACS_Execute(125, 0, 3, 0, 0)
-						MISL A 0 ACS_NamedExecute("SFPlus_KillnEnd", 0, 3)
-						// That will show em.
+			//MISL A 0 ACS_Execute(125, 0, 3, 0, 0)
+			MISL A 0 ACS_NamedExecute("SFPlus_KillnEnd", 0, 3)
+			// That will show em.
 			MISL BCD 5
 		Stop
 	}
@@ -90,52 +90,81 @@ ACTOR DemonTurret 10003
 	States
 	{
 		Spawn:
-		DTRT A 1 A_Look
+			DTRT A 1 A_Look
 		goto Spawn
 		See:
-		DTRT A 1 A_Chase
+			DTRT A 1 A_Chase
 		goto See
 		Missile:
-		DTRT A 1 A_FaceTarget
-		DTRT A 3 A_CustomMissile("RevenantTracer",32,0,0,0)
-		DTRT A 3 A_FaceTarget
-		DTRT A 3 A_CustomMissile("RevenantTracer",32,0,0,0)
-		DTRT A 3 A_FaceTarget
-		DTRT A 3 A_CustomMissile("RevenantTracer",32,0,0,0)
-		DTRT A 32
-		DTRT A 0 A_CPosRefire
+			DTRT A 1 A_FaceTarget
+			DTRT A 3 A_CustomMissile("RevenantTracer",32,0,0,0)
+			DTRT A 3 A_FaceTarget
+			DTRT A 3 A_CustomMissile("RevenantTracer",32,0,0,0)
+			DTRT A 3 A_FaceTarget
+			DTRT A 3 A_CustomMissile("RevenantTracer",32,0,0,0)
+			DTRT A 32
+			DTRT A 0 A_CPosRefire
 		Goto See
 		Pain:
-		DTRT A 3
+			DTRT A 3
 		goto See
 		Death:
-		DTRT A 2
-		TNT1 A 2 A_Scream
-		MISL BCD 5
-		Stop
+			DTRT A 2
+			TNT1 A 2 A_Scream
+			MISL BCD 5
+			DTRT B 2100 // 1 minute to re-appear >:) 
+			DTRT B 1 A_SpawnItem("DemonBuilding_ClearSpace")
+			DTRT B 10 
+			DTRT B -1 Thing_Raise(0)
+			Stop
+		Raise:
+			DTRT ABABABAB 5
+			goto Spawn
 	}
 }
 
 ACTOR DemonWall 10004
 {
-	Health 5000
+	Health 6000
 	Height 64
 	Radius 32
 	Mass 0x7FFFFFFF
 	+SOLID
 	+SHOOTABLE
 	Species "DemonSide"
+	DamageType "DemonFire"
+	DamageFactor "DemonFire", 0.0
+	Obituary "%o was gulped by the flesh wall."
 	States
 	{
 		Spawn:
 			DWLL A 1
-			goto Spawn
+			loop
 		Death:
 			DWLL A 2
 			DWLL B 2 A_PlaySound("d/demonwall", CHAN_AUTO)
 			DWLL B 1 A_SpawnItem ("splatEmitter_Lite" , 0, 0, 0, 0)
-			DWLL B 1
-			DWLL B -1
-			Stop
+			DWLL B random(350, 700) // Bewteen 10 and 20 seconds
+			DWLL B 1 A_SpawnItem("DemonBuilding_ClearSpace")
+			DWLL B 10 
+			DWLL B -1 Thing_Raise(0)
+			stop
+		Raise:
+			DWLL ABABABAB 5
+			goto Spawn
 	}
+}
+
+Actor DemonBuilding_ClearSpace{
+  Radius 8
+  Height 8
+  DamageType "DemonFire"
+  +NOBLOCKMAP
+  Projectile
+  states{
+    Spawn:
+      TNT1 A 0
+      TNT1 A 1 A_Explode(9999, 120, 0, 0, 120)
+      Stop
+  }
 }

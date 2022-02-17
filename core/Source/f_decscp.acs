@@ -109,6 +109,38 @@ Script "Supplier_GrantExp" (void)
 	if(Random(0,10) < 3) Rank_GrantEXP(PlayerNumber(), 1);
 }
 
+script "AltState_Burn" (void)
+{
+	If(CheckInventory("AltState_Burning") || 
+		CheckFlag(0, "Friendly") ||
+	 	CheckFlag(0, "DORMANT")){terminate;}
+
+	GiveInventory("AltState_Burning", 1);
+	int x = GetActorX(0);
+	int y = GetActorY(0);
+	int z = GetActorZ(0) + 16.0;
+	int r = 32.0;
+	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_BurnTimer")){
+		//SetActorState (0, "Pain");
+		// Spawn a fire to harm itself.
+		x = GetActorX(0);
+	 	y = GetActorY(0);
+	 	z = GetActorZ(0) + 16.0;
+		Spawn("FlamerRemains", x, y, z, 0, 0);
+		delay(17);
+	}
+
+	if(GetActorProperty(0, APROP_HEALTH) <= 0){
+		// Spread fire to burn adjacent monsters.
+		x = GetActorX(0);
+	 	y = GetActorY(0);
+	 	z = GetActorZ(0) + 16.0;
+		Spawn("FlamerRemainsSpawner", x, y, z, 0, 0);
+	}
+	delay(35);
+	TakeInventory("AltState_Burning", 1);
+}
+
 script "AltState_Stun" (void)
 {
 	If(CheckInventory("AltState_Stunned") || CheckFlag(0, "Friendly") || CheckFlag(0, "DORMANT")){terminate;}
@@ -117,6 +149,7 @@ script "AltState_Stun" (void)
 	SetActorProperty(0, APROP_SPEED, 0);
 	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
 		SetActorState (0, "Pain");
+		log(s:"I can't move! bzzzt!");
 		delay(6);
 	}
 	SetActorProperty(0, APROP_SPEED, ori_speed);

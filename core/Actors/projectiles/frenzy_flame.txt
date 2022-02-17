@@ -5,7 +5,7 @@ actor FlamerShot
   Radius 13
   Height 8
   Speed 25
-  Damage 13
+  Damage (6)
   Projectile
   +RANDOMIZE
   RenderStyle Add
@@ -18,22 +18,50 @@ actor FlamerShot
   +NODAMAGETHRUST
   +FORCERADIUSDMG
   +MTHRUSPECIES
+  +RIPPER
+  +BLOODLESSIMPACT
   States
   {
   Spawn:
-    NKXP ACEGIKMOPQRSTUV 2 bright
+    NKXP ACEGIKMOPQRSTUV 2 bright A_RadiusGive("AltState_BurnGiver", 96, RGF_MONSTERS)
     stop
   Death:
-  FIRE A 0 A_ChangeFlag("NOGRAVITY", 0)
-    FIRE ABCDEDCDEDEFGH 3 A_Explode(6,40,0,0,16)
+    FIRE A 0 A_ChangeFlag("NOGRAVITY", 0)
+    FIRE ABCDEDCDEDEFGH 3 A_RadiusGive("AltState_BurnGiver", 96, RGF_MONSTERS) //A_Explode(6,40,0,0,16)
     stop
   }
 }
 
 actor FlamerShotS_tw : FlamerShot
 {
-  Damage 5
-  +RIPPER
+  Damage (10)
+  Speed 30
+  States
+  {
+  Spawn:
+    NKXP ACEGIKMOPQRSTUV 2 bright A_RadiusGive("AltState_BurnGiver", 128, RGF_MONSTERS)
+    stop
+  }
+}
+
+Actor FlamerRemainsSpawner{
+  Radius 8
+  Height 8
+  +NOBLOCKMAP
+  states{
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, -2, -2 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 2, 2 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, -2, 2 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 2, -2 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 4, 0 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, -4, 0 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 0, 4 ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 0, -4 ,0)
+      TNT1 A 0 A_RadiusGive("AltState_BurnGiver", 128, RGF_MONSTERS)
+      Stop
+  }
 }
 
 actor FlamerRemains
@@ -54,10 +82,11 @@ actor FlamerRemains
   -NOGRAVITY
   +NODAMAGETHRUST
   +MTHRUSPECIES
+  +PAINLESS
   States
   {
   Spawn:
-    FIRE ABCDEDCDEDCEDC 3 A_Explode(10,64,0,0,16)
+    FIRE ABCDEDCDEDCEDC 1 BRIGHT A_Explode(3,64,0,0,64)
     stop
   }
 }

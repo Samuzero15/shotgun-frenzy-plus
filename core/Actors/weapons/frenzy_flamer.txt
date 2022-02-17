@@ -24,8 +24,9 @@ ACTOR Flamer : Weapon
 			goto Select
 		Fire:
 			BLST B 5 A_FireCustomMissile("FlamerShot", 0)
-			BLST B 2 A_FireCustomMissile("FlamerShot", 5)
-			BLST B 2 A_FireCustomMissile("FlamerShot", -5)
+			TNT1 A 0 A_FireCustomMissile("FlamerShot", 5)
+			TNT1 A 0 A_FireCustomMissile("FlamerShot", -5)
+			BLST B 4 
 			BLST C 20 A_Refire
 			goto Ready
 		Flash:
@@ -58,8 +59,11 @@ actor FlamerS : Flamer
                         goto Select
                 Fire:
                         BLST B 5 A_FireCustomMissile("FlamerShotS_tw", 0)
-                        BLST B 2 A_FireCustomMissile("FlamerShotS_tw", 5)
-                        BLST B 2 A_FireCustomMissile("FlamerShotS_tw", -5)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", 5)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -5)
+						BLST B 2 A_FireCustomMissile("FlamerShotS_tw", 10, 0)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -10, 0)
+						BLST B 2 
                         BLST C 20 A_Refire
                         goto Ready
                 Flash:
