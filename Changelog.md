@@ -9,6 +9,13 @@
 
 ## v0 - Before the beginning...
 
+#### (22 / 2 / 2022) [Champions in Progress]
+	+) Now the monsters can be spawn in their champion forms!
+	// No rewards on death for now.
+	// 3 champion types implemented, Strong, Meaty and Fast champions.
+	*) Moved the monster modification code to fp_Mspwn.acs
+	*) Wrote some ideas of a new weapon pack, the Cryomancer pack. (You're free to take a look in the language.weapons file :3)
+
 #### (17 / 2 / 2022) [Burning Flamers & Demon Build's raise.]
 	!*) Demon buildings (like the flesh wall and demon turret) can now regenerate back to action.
 	// In consecuence, in order to advance to the demon core, you will be in constant attack by these structures, even if you destroyed one of them!

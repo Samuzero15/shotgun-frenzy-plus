@@ -12,6 +12,34 @@ Actor MonsterModifier : CustomInventory {
     }
 }
 
+Actor ChampBuff_Strong : PowerDamage{
+    Powerup.Duration 0x7FFFFFFF
+    DamageFactor Normal, 4.0
+}
+
+Actor ChampBuff_NormalAtk : PowerDamage {
+    Powerup.Duration 0x7FFFFFFF
+    DamageFactor Normal, 2.0
+}
+
+Actor ChampBuff_NormalDef : PowerProtection {
+    Powerup.Duration 0x7FFFFFFF
+    DamageFactor Normal, 0.7
+}
+
+ACTOR ChampBuff_Normal : CustomInventory
+{
+	+INVENTORY.AUTOACTIVATE
+	states
+	{
+	Use:
+		TNT1 A 0 A_GiveInventory("ChampBuff_NormalAtk",1)
+        TNT1 A 0 A_GiveInventory("ChampBuff_NormalDef",1)
+		Stop
+	}
+}
+
+
 Actor MonMod_Hard : MonsterModifier {
     states {
         Pickup:

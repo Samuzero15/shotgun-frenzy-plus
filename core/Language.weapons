@@ -179,6 +179,33 @@ WEPS_PYRO_FLAM_DESC =    "Spews fire wherever you fire it, burning everything on
 WEPS_PYRO_FLAM_UP0_NAME = "Super Flamer";
 WEPS_PYRO_FLAM_UP0_DESC = "Bigger flames, more fire, more crisp and ashes.";
 
+// Not added yet, just thowing out some ideas.
+// Blue flames anyone?
+WEPS_PYRO_FLAM_UP1_NAME = "Cold Flamer";
+WEPS_PYRO_FLAM_UP1_DESC = "Blue flames. Cools enemies on impact. More Damage.";
+
+// Cryomancer Pack (?)
+
+WEPS_CRYO_NAME = "Cryomancer";
+WEPS_CRYO_DESC = "Ice-Cold weapons, made for slowing down enemies.";
+
+WEPS_CRYO_IBOW_NAME =    "Icicle Bow";
+WEPS_CRYO_IBOW_DESC =    "Launches an explosive ice-shard bolt that does heavy damage."
+                         "\nSlow firing, but cools enemies on impact, can froze them to death." 
+                         "\nfrozen enemies halves defense and can shatter and spread icicles.";
+WEPS_CRYO_IBOW_UP0_NAME = "Multi-Bolt Icicle Bow";
+WEPS_CRYO_IBOW_UP0_DESC = "2 Bolts more per fire, more Fire Ratio.";
+WEPS_CRYO_IBOW_UP1_NAME = "Heavy Icicle Bow";
+WEPS_CRYO_IBOW_UP1_DESC = "Heavy bolt that does a bigger AOE, and damage. Takes more ammo to be shot.";
+
+WEPS_CRYO_SNOW_NAME =    "Snowstorm";
+WEPS_CRYO_SNOW_DESC =    "Creates a mist, that cools enemies arround, can froze them to death."
+                         "\nThe Flamer's cool counsin.";
+WEPS_CRYO_SNOW_UP0_NAME = "Super Snowstorm";
+WEPS_CRYO_SNOW_UP0_DESC = "Bigger mist, more snow, more ice and shards.";
+WEPS_CRYO_SNOW_UP1_NAME = "Gas Snowstorm";
+WEPS_CRYO_SNOW_UP1_DESC = "Spreads a mist of inflamable gas, if a fire is lit, it will set the enemies on fire.";
+
 // BFG Pack
 
 WEPS_BFGL_NAME = "B.F.G. Love";

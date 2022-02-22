@@ -1,0 +1,103 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_mSpwn.acs
+// The main spawn script! (Thank you GAME EVENTS! YEEEE)
+
+#library "fp_mSpwn"
+
+#import "f_IntDB.acs"
+#import "f_Tip.acs"
+#import "f_AIDir.acs"
+#import "fl_techs.acs"
+#include "zcommon.acs"
+#include "acsutils.acs"
+#include "samu_tools.acs"
+
+// Took from TDRR's Rainbow monsters, sorry not sorry :p
+#define SF_CHAMP_MEATY 0 //3x health
+#define SF_CHAMP_QUICK 1 //2x faster movement
+#define SF_CHAMP_STRONG 2 //3x damage
+#define SF_CHAMP_SPLIT 3 // Spaws 2 enemies of the same type, with less health.
+#define SF_CHAMP_EXPLOSIVE 4 //Explodes on death
+#define SF_CHAMP_TELEPORT 5 //teleports around
+#define SF_CHAMP_GOLDEN 6 //Steals coins per each hit!, Drops coins!
+#define SF_CHAMP_STEALTH 7 //Hardly visible!
+#define SF_CHAMP_HEALING 8 //Heals monsters arround.
+
+
+script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
+{
+    if(type != GAMEEVENT_ACTOR_SPAWNED ||
+	 (type == GAMEEVENT_ACTOR_SPAWNED && CheckFlag(0, "DORMANT"))) 
+	 terminate; // Make sure the event is Spawned and not anything else.
+	delay(1); // Just in case bro.
+
+	// get current attributes
+	int health = getactorproperty(0, APROP_Health);
+	int alpha = getactorproperty(0, APROP_Alpha);
+	int damage_factor = 1.0;
+	//int adjustedCount = PlayerCount()/2;
+	int extrahealth = 0;
+	
+	// auto adjust monsters based on player count
+	if (alpha != 0.9 && PlayerCount() > 2){
+		//log(s:"Adjusting health");
+		extrahealth = (health*((PlayerCount() - 2)*(fixedDiv(m_hpmult, 100.0))))>>16;
+		damage_factor = 1.0 + (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
+
+		setactorproperty(0, APROP_Health, health + extrahealth);
+		setactorproperty(0, APROP_DamageFactor, damage_factor);
+		setactorproperty(0, APROP_Alpha, 0.9);
+		
+		
+		//log(s:"Health adjusted.");
+	}
+	ACS_NamedExecuteAlways("SFPlus_AutoBalanceDmg", 0);
+	int make_champion = /*f_PercentFast > random(0,99)*/ True;
+
+	if (make_champion) { // Make a champion enemy!
+		GiveInventory("ChampBuff_Normal", 1); 
+		// Normally a champion deals double damage, and resists 70% of player's damage.
+		health = getactorproperty(0, APROP_Health); // Get current health.
+		setactorproperty(0, APROP_Health, health*2); // By default duply the health.
+		switch(random(0, 2)){
+			case SF_CHAMP_MEATY: // X3 health
+				log(s:"I am a meaty champion");
+				setactorproperty(0, APROP_Health, health*3);
+			break;
+			case SF_CHAMP_QUICK: // Aggresive and fast!
+				log(s:"I am a quick champion");
+				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
+			break;
+			case SF_CHAMP_STRONG: // Really hurtful with x4 Damage!
+				log(s:"I am a strong champion");
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				GiveInventory("ChampBuff_Strong", 1);
+			break;
+		}
+	}
+}
+
+Script "SFPlus_AutoBalanceDmg" (void){
+	//Low or raise the damage factor took by players.
+	int hp = getActorProperty(0, APROP_Health);
+	int playercount_last = -1;
+	int damage_factor = 0.0;
+	int pdmg_mult = a_GetCvarFixed("sfp_playerdmgmult");
+	do{
+		hp = getActorProperty(0, APROP_Health);
+			if(playercount_last != PlayerCount()){
+				damage_factor = (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
+				if(damage_factor > 0)
+					setactorproperty(0, APROP_DamageFactor, 1.0 + damage_factor);
+				else 
+					setactorproperty(0, APROP_DamageFactor, 1.0);
+				/*log(s:"Player Count (debug-var): ", d:debug_var,
+				s:"\nCurrent DMG Factor: ", f:getActorProperty(0, APROP_DamageFactor));*/
+			}
+		playercount_last = PlayerCount();
+		delay(1);
+	}while(hp > 0);
+}

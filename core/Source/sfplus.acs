@@ -12,6 +12,7 @@
 #import "samuterm.acs" // The main core for the terminals!
 #import "f_decscp.acs" // Decorate only scripts!
 #import "fp_mkill.acs" // Monster kill script
+#import "fp_mSpwn.acs" // Monster spawn script
 #import "fp_dmhud.acs" // The Damage HUD
 #import "fp_flash.acs" // The Damage HUD
 #import "FP_SBINF.acs"  // SBarInfo Manipulation
