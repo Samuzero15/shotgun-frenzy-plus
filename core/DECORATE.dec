@@ -27,6 +27,7 @@ const int DEPLOY_DISPENSER_HEALTH = 9;
 #include "Actors/particles/fp_smoke.dec"
 #include "Actors/particles/fp_junk.dec"
 #include "Actors/particles/fp_blur.dec"
+#include "Actors/particles/fp_particles.dec"
 
 #include "Actors/monsters/fp_monster.dec"
 #include "Actors/gameobjects/fpatch_armor.dec"

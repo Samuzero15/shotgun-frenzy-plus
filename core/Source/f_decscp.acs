@@ -109,6 +109,26 @@ Script "Supplier_GrantExp" (void)
 	if(Random(0,10) < 3) Rank_GrantEXP(PlayerNumber(), 1);
 }
 
+Script "AltState_Particle_Stop" (void) {
+	SetActivatorToTarget(0);
+	SetResultValue(GetActorProperty(0, APROP_HEALTH) < 1);
+}
+
+Script "Particle_Get" (int which) {
+	SetActivatorToTarget(0);
+	int res;
+	switch(which){
+		case 1: res = GetActorProperty(0, APROP_RADIUS)>>16; break;
+		case 2: res = GetActorProperty(0, APROP_HEIGHT)>>16; break;
+		default: res = 0;
+	}
+	setResultValue(res);
+}
+
+Script "AltState_Particle_Activate" (void) {
+	Thing_Activate(0);
+}
+
 script "AltState_Burn" (void)
 {
 	If(CheckInventory("AltState_Burning") || 

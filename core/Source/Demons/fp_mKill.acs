@@ -16,6 +16,7 @@
 #include "samu_tools.acs"
 
 Script "SFPlus_MonsterKill" Kill{
+	ACS_NamedExecuteAlways("SFPlus_ChampionDeath", 0);
 	delay(1); // Let the monsters set their flags in the decorate.
 	
 	if(CheckFlag(0, "ISMONSTER") && !CheckFlag(0, "FRIENDLY")){

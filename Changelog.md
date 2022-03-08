@@ -9,6 +9,11 @@
 
 ## v0 - Before the beginning...
 
+#### (25 / 2 - 8 / 3 / 2022) [Champions in Progress (WIP)]
+	+) Implementing new champions borrowing some translations from mikk's gzdoom champions and tddr's rainbow monsters!
+	// More detailed info about them later.
+	+) Playing with the in built particles in order to make new graphical effects.
+
 #### (22 / 2 / 2022) [Champions in Progress]
 	+) Now the monsters can be spawn in their champion forms!
 	// No rewards on death for now.
