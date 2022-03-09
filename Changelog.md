@@ -9,6 +9,40 @@
 
 ## v0 - Before the beginning...
 
+#### (9 / 3 / 2022) [Champions still in Progress + Some docing]
+	*) Some balance changes on the champions.
+	// Alright, here they are, Champions!
+	// Champions are stronger enemies which they will appear depending on the fast monster factor (which should be renamed to champion factor).
+	// (WIP) Champions will drop unique stuff. Including Runes!
+	// Here you go the list of them.
+	// Meaty (Red): HP x5 
+	// Quick (Yellow): Speed x2
+	// Strong (Dark-Red): Damage x4
+	// Stealth: Nearly invisible
+	// Poison (Dark-Green): (WIP) Poisoning aura, leaves a poison smoke on death.
+	// Explosive (Bronze): Explodes on death.
+	// Golden (well, gold): (WIP) Credit thieft, Drops credits on death.
+	// Split (Blue): 2 copies of the same monster will appear after death. 50% hp each one.
+	// Teleport (Green): Wanders arround by teleporting, dodges frecuently.
+	// Healing (Pinky): Heals 3% of HP each second for all monsters in it's AoE. (256 M.U.)
+	// Emperor (Black): x3 Dmg + 50% Def, Buffs (x2 Dmg + 30% Def) all monsters in it's AoE. (256 M.U.)
+	// Pusher (Cyan): Pushes all enemies arround it.
+	// Puller (Silver): Pulls all enemies arround it.
+	// Hybrid (2 Colors): 2 Champions in 1. (Banned Combos for now:
+	2 Skills from the same champion, Pusher + Puller, Emperor + Strong or Meaty, Prideful)
+	// Zombie (Brown): Revives after death. 3 Lives. Each revival is less likely to succeed depending on how many lives it used. (30 % on the third life, 60 % on the second, 100 % first life)
+	// Prideful (Rainbow): Strong, Fast, Meaty (x3 Hp), Zombie (1 Life), Healing, Puller, Explosive & Golden in a single champion. Lucky this arsehole is rare to find. (WIP) Drops lotta stuff on death.
+
+#define SF_CHAMP_TELEPORT 	9 //Teleports around
+#define SF_CHAMP_HEALING 	10 //Heals monsters arround.
+#define SF_CHAMP_PUSHER 	11 //Pushes anyone near this monster.
+#define SF_CHAMP_PULLER 	12 //Pulls anyone near this monster.
+#define SF_CHAMP_HYBRID 	13 //2 Champion skills in a single monster.
+#define SF_CHAMP_EMPEROR 	14 //x3 Hp + x3 Damage, Buffs 50% speed and x2 damage for the monsters arround, as long they are in the AoE.
+#define SF_CHAMP_ZOMBIE 	15 //He will come back, rises from its grave after being killed.
+#define SF_CHAMP_PRIDEFUL 	16 //5 champion skills in a single monster. Drops lotta goodies on death.
+
+
 #### (25 / 2 - 8 / 3 / 2022) [Champions in Progress (WIP)]
 	+) Implementing new champions borrowing some translations from mikk's gzdoom champions and tddr's rainbow monsters!
 	// More detailed info about them later.

@@ -57,6 +57,7 @@ Script "SFPlus_InitChampColors" OPEN {
 	CreateTranslation(SF_CHAMPCOLOR_BLUE, 		0:255=%[0.00,0.00,0.00]:[0.00,0.00,2.00]); // Blue
 	CreateTranslation(SF_CHAMPCOLOR_DARKGREEN, 	0:255=%[0.00,0.00,0.00]:[0.00,1.50,0.50]); // Dark Green
 	CreateTranslation(SF_CHAMPCOLOR_BRONZE, 	0:255=%[0.00,0.00,0.00]:[1.22,0.78,0.49]); // Bronze
+	CreateTranslation(SF_CHAMPCOLOR_BROWN, 		0:255=%[0.00,0.00,0.00]:[1.00,0.70,0.15]); // Brown
 	CreateTranslation(SF_CHAMPCOLOR_SILVER, 	0:255=%[0.00,0.00,0.00]:[1.62,2.00,2.00]); // Silver
 	CreateTranslation(SF_CHAMPCOLOR_GOLDEN, 	0:255=%[0.27,0.00,0.00]:[2.00,1.86,0.00]); // Golden
 	CreateTranslation(SF_CHAMPCOLOR_ORANGE, 	0:255=%[0.50,0.00,0.00]:[2.00,1.22,0.43]); // Orange
@@ -106,25 +107,21 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 		// Normally a champion deals double damage, retaliates, and resists 70% of player's damage.
 		health = getactorproperty(0, APROP_Health); // Get current health, after health calculations.
 		setactorproperty(0, APROP_Health, health*2); // By default duply the health.
-		int champ = SF_CHAMP_PRIDEFUL;//Champ_Dice();
+		int champ = SF_CHAMP_HEALING;//Champ_Dice();
 		Champ_SetType(champ);
 		log(s:"Champion type: ", d:champ);
 		switch(champ){
 			case SF_CHAMP_MEATY: // X5 health
 				setactorproperty(0, APROP_Health, health*5);
-			break;
-			case SF_CHAMP_QUICK: // Aggresive and fast!
+			break; case SF_CHAMP_QUICK: // Aggresive and fast!
 				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 				GiveInventory("ChampBuff_Fast", 1);
-			break;
-			case SF_CHAMP_STRONG: // Really hurtful with x3 Damage!
+			break; case SF_CHAMP_STRONG: // Really hurtful with x3 Damage!
 				TakeInventory("ChampBuff_NormalAtk", 1);
 				GiveInventory("ChampBuff_Strong", 1);
-			break;
-			case SF_CHAMP_STEALTH: // Nearly invisible.
+			break; case SF_CHAMP_STEALTH: // Nearly invisible.
 				GiveInventory("ChampBuff_Stealth", 1);
-			break;
-			case SF_CHAMP_PRIDEFUL: // A literal pain in the saas.
+			break; case SF_CHAMP_PRIDEFUL: // A literal pain in the saas.
 				setactorproperty(0, APROP_Health, health*3);
 				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 				GiveInventory("ChampBuff_Fast", 1);
@@ -132,8 +129,14 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 				GiveInventory("ChampBuff_Strong", 1);
 				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, SF_CHAMP_PULLER);
 				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, SF_CHAMP_HEALING);
-			break;
-
+			break; case SF_CHAMP_ZOMBIE:
+				GiveInventory("ChampZombie_LivesLeft", 3);
+			break; case SF_CHAMP_EMPEROR: // Buffs nearby allies.
+				setactorproperty(0, APROP_Health, health*3);
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				TakeInventory("ChampBuff_NormalDef", 1);
+				GiveInventory("ChampBuff_Emperor", 1);
+			case SF_CHAMP_POISON:
 			case SF_CHAMP_HEALING: // Heals all nearby monsters!
 			case SF_CHAMP_TELEPORT: // Teleports arround
 			case SF_CHAMP_PUSHER: // Pushes allies and enemies
@@ -149,9 +152,12 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 					champ2 = Champ_Dice();
 					if(!(champ1 == champ2 || 
 					(champ1 == SF_CHAMP_PUSHER && champ2 == SF_CHAMP_PULLER) ||
+					(champ1 == SF_CHAMP_PULLER && champ2 == SF_CHAMP_PUSHER) ||
 					(champ1 == SF_CHAMP_HYBRID || champ2 == SF_CHAMP_HYBRID) ||
-					(champ1 == SF_CHAMP_PRIDEFUL || champ2 == SF_CHAMP_PRIDEFUL))
-					) valid = true;
+					(champ1 == SF_CHAMP_PRIDEFUL || champ2 == SF_CHAMP_PRIDEFUL) ||
+					(champ1 == SF_CHAMP_EMPEROR && (champ2 == SF_CHAMP_STRONG || champ2 == SF_CHAMP_MEATY)) ||
+					(champ2 == SF_CHAMP_EMPEROR && (champ1 == SF_CHAMP_STRONG || champ1 == SF_CHAMP_MEATY))
+					)) valid = true;
 					else {
 						if(try >= 3){ // For runaway prevention
 							champ1 = SF_CHAMP_QUICK;
@@ -181,27 +187,32 @@ function int Champ_Dice(void){
 }
 
 function void Champ_SetHybridPower(str actor){
-	int champ_type = CheckInventory("ChampHybrid_Type1") - 1;
+	int champ_type = CheckInventory(actor) - 1;
 	switch(champ_type){
 		case SF_CHAMP_MEATY: // X5 health
 			setactorproperty(0, APROP_Health, GetActorProperty(0, APROP_HEALTH)*5);
-		break;
-		case SF_CHAMP_QUICK: // Aggresive and fast!
+		break; case SF_CHAMP_QUICK: // Aggresive and fast!
 			setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 			GiveInventory("ChampBuff_Fast", 1);
-		break;
-		case SF_CHAMP_STRONG: // Really hurtful with x3 Damage!
+		break; case SF_CHAMP_STRONG: // Really hurtful with x3 Damage!
 			TakeInventory("ChampBuff_NormalAtk", 1);
 			GiveInventory("ChampBuff_Strong", 1);
-		break;
-		case SF_CHAMP_STEALTH: // Nearly invisible.
+		break; case SF_CHAMP_STEALTH: // Nearly invisible.
 			GiveInventory("ChampBuff_Stealth", 1);
+		break; case SF_CHAMP_ZOMBIE:
+			GiveInventory("ChampZombie_LivesLeft", 3);
 		break;
+
+		case SF_CHAMP_EMPEROR: // Buffs nearby allies.
+				setactorproperty(0, APROP_Health, GetActorProperty(0, APROP_HEALTH)*3);
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				TakeInventory("ChampBuff_NormalDef", 1);
+				GiveInventory("ChampBuff_Emperor", 1);
 
 		case SF_CHAMP_HEALING: // Heals all nearby monsters!
 		case SF_CHAMP_TELEPORT: // Teleports arround
-		case SF_CHAMP_PUSHER: // Pushes allies and enemies
-		case SF_CHAMP_PULLER: // Pulls allies and enemies
+		case SF_CHAMP_PUSHER: // Pushes enemies
+		case SF_CHAMP_PULLER: // Pulls enemies
 			ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, champ_type);
 		break;
 	}
@@ -276,6 +287,22 @@ function bool Champ_IsType(int which){
 
 Script "SFPlus_ChampionDeath" (void){
 	if(CheckInventory("Champ_Type") >= 1){
+		if(CheckInventory("ChampZombie_SkipDeathScript") && CheckInventory("ChampZombie_LivesLeft")){
+			// Resurrect it again, with less chance
+			int dice = random(0,99);
+			int lives = CheckInventory("ChampZombie_LivesLeft");
+			
+			if(dice < 60*lives){
+				delay(random(35*2, 35*10));
+				TakeInventory("ChampZombie_LivesLeft", 1);
+				while(GetActorProperty(0, APROP_HEALTH) <= 0){
+					delay(1);
+					Thing_Raise(0, 1);
+				}
+				SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+			}
+			else terminate;
+		}
 		if(CheckInventory("ChampZombie_SkipDeathScript")) terminate;
 		int x = GetActorX(0);
 		int y = GetActorY(0);
@@ -292,9 +319,13 @@ Script "SFPlus_ChampionDeath" (void){
 			SpawnForced("ChampGolden_MoneySplash", x, y, z, 0, angle);
 		}
 		if(Champ_IsType(SF_CHAMP_ZOMBIE) || Champ_IsType(SF_CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
-			delay(random(35*2, 35*5));
-			Thing_Raise(0);	
+			delay(random(35*2, 35*10));
 			GiveInventory("ChampZombie_SkipDeathScript", 1);
+			while(GetActorProperty(0, APROP_HEALTH) <= 0){
+				delay(1);
+				Thing_Raise(0, 1);
+			}
+			TakeInventory("ChampZombie_LivesLeft", 1);
 			SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
 		}
 		if(Champ_IsType(SF_CHAMP_SPLIT)){ // Spawns 2 copies of the same monster!
@@ -320,6 +351,11 @@ Script "SFPlus_ChampionDeath" (void){
 
 Script "SFPlus_ChampConstEffects" (int which) {
 	switch(which){
+		case SF_CHAMP_EMPEROR:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Emperor", 1);
+				delay(35);
+			}
 		case SF_CHAMP_HEALING:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Healing", 1);
@@ -349,16 +385,35 @@ Script "SFPlus_ChampConstEffects" (int which) {
 }
 
 Script "SFPlus_ChampHealing_Heal" (void){
-	int SpawnHealth = CheckInventory("Monster_Health");
+	int SpawnHealth = CheckInventory("Monster_MaxHealth");
 	int Health = GetActorProperty(0, APROP_HEALTH);
 	
-	if(Health == SpawnHealth)
+	if(Health == SpawnHealth || Champ_IsType(SF_CHAMP_HEALING))
+	// Healings can't heal themselves.
 	{	SetResultValue(0);
 		terminate;}
 	
 	SetResultValue(1);
 	// 3% of hp restored.
-	HealThing(FixedMul(SpawnHealth<<16, 0.03)>>16);
+	int new_health = Health + (FixedMul(SpawnHealth<<16, 0.03)>>16);
+	
+	if(new_health >= SpawnHealth)	SetActorProperty(0, APROP_HEALTH, SpawnHealth);
+	else 							SetActorProperty(0, APROP_HEALTH, new_health);
+}
+Script "SFPlus_ChampEmperor_Buff" (void){
+	//Buffs monsters temporally, like champions but with 50% of speed more for the monsters arround
+	if(CheckInventory("ChampEmperor_DmgUp") || Champ_IsType(SF_CHAMP_EMPEROR))
+	// Emperors can't buff themselves.
+	// Only 1 instance of buff can be allowed.
+	{	SetResultValue(0);
+		terminate;}
+	
+	SetResultValue(1);
+	int ori_speed = getactorproperty(0,APROP_Speed);
+	setactorproperty(0, APROP_Speed, ori_speed*1.5>>16);
+	GiveInventory("ChampBuff_Normal", 1);
+	delay(35);
+	setactorproperty(0, APROP_Speed, ori_speed);
 }
 
 
