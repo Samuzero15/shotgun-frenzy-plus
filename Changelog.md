@@ -32,16 +32,11 @@
 	2 Skills from the same champion, Pusher + Puller, Emperor + Strong or Meaty, Prideful)
 	// Zombie (Brown): Revives after death. 3 Lives. Each revival is less likely to succeed depending on how many lives it used. (30 % on the third life, 60 % on the second, 100 % first life)
 	// Prideful (Rainbow): Strong, Fast, Meaty (x3 Hp), Zombie (1 Life), Healing, Puller, Explosive & Golden in a single champion. Lucky this arsehole is rare to find. (WIP) Drops lotta stuff on death.
-
-#define SF_CHAMP_TELEPORT 	9 //Teleports around
-#define SF_CHAMP_HEALING 	10 //Heals monsters arround.
-#define SF_CHAMP_PUSHER 	11 //Pushes anyone near this monster.
-#define SF_CHAMP_PULLER 	12 //Pulls anyone near this monster.
-#define SF_CHAMP_HYBRID 	13 //2 Champion skills in a single monster.
-#define SF_CHAMP_EMPEROR 	14 //x3 Hp + x3 Damage, Buffs 50% speed and x2 damage for the monsters arround, as long they are in the AoE.
-#define SF_CHAMP_ZOMBIE 	15 //He will come back, rises from its grave after being killed.
-#define SF_CHAMP_PRIDEFUL 	16 //5 champion skills in a single monster. Drops lotta goodies on death.
-
+	*) Adding the yellow and purple streaks to visualize the monster who get's affected by the champion aura buffs.
+	*) Prideful will do now the emperor's effect.
+	*) Pridefuls are not target for the healing and emperor champions effects.
+	*) Fixed up the temporal speed for the emperor improving.
+	*) Set a better black for the emeperor, instead of being, literally a black siluoette.
 
 #### (25 / 2 - 8 / 3 / 2022) [Champions in Progress (WIP)]
 	+) Implementing new champions borrowing some translations from mikk's gzdoom champions and tddr's rainbow monsters!

@@ -82,14 +82,8 @@ actor streak_red
 	}
 }
 
-actor streak_green
+actor streak_green : streak_red
 {
-	renderstyle add
-	
-	+FORCEYBILLBOARD
-	+CLIENTSIDEONLY
-	+NOINTERACTION
-	
 	States
 	{
 		Spawn:
@@ -98,19 +92,82 @@ actor streak_green
 	}
 }
 
-actor streak_blue
+actor streak_blue : streak_red
 {
-	renderstyle add
+	States
+	{
+		Spawn:
+			STRK C 1 bright A_FadeOut(0.02) 
+			goto Spawn
+	}
+}
+
+actor streak_yellow : streak_red
+{
+	States
+	{
+		Spawn:
+			STRK D 1 bright A_FadeOut(0.02) 
+			goto Spawn
+	}
+}
+
+actor streak_violet : streak_red
+{
+	States
+	{
+		Spawn:
+			STRK E 1 bright A_FadeOut(0.02) 
+			goto Spawn
+	}
+}
+
+
+ACTOR streakQuickEmitter_Yellow 
+{
+	renderstyle none
 	
-	+FORCEYBILLBOARD
-	+CLIENTSIDEONLY
-	+NOINTERACTION
+	+NOCLIP
+	+NOGRAVITY
+	var int user_parts;
 	
 	States
 	{
 		Spawn:
-			STRK C 1 bright A_FadeOut(0.02) //shortened because it was hitting ceiling and doing odd effect
-			goto Spawn
+			TNT1 A 1
+			TNT1 A 1 A_SetUserVar("user_parts", 10)
+		Loopme:
+			TNT1 A 1 A_SpawnItemEx("streak_yellow", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 0 A_SetUserVar("user_parts", user_parts-1)
+			TNT1 A 0 A_JumpIf(user_parts <= 0, "Death")
+			goto Loopme
+		Death:
+			TNT1 A 1
+			stop
+	}
+}
+
+ACTOR streakQuickEmitter_Purple
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	var int user_parts;
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 1 A_SetUserVar("user_parts", 10)
+		Loopme:
+			TNT1 A 1 A_SpawnItemEx("streak_purple", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 0 A_SetUserVar("user_parts", user_parts-1)
+			TNT1 A 0 A_JumpIf(user_parts <= 0, "Death")
+			goto Loopme
+		Death:
+			TNT1 A 1
+			stop
 	}
 }
 
