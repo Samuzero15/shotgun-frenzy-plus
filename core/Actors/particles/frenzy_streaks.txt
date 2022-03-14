@@ -139,7 +139,7 @@ ACTOR streakQuickEmitter_Yellow
 		Loopme:
 			TNT1 A 1 A_SpawnItemEx("streak_yellow", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
 			TNT1 A 0 A_SetUserVar("user_parts", user_parts-1)
-			TNT1 A 0 A_JumpIf(user_parts <= 0, "Death")
+			TNT1 A 1 A_JumpIf(user_parts <= 0, "Death")
 			goto Loopme
 		Death:
 			TNT1 A 1
@@ -161,7 +161,7 @@ ACTOR streakQuickEmitter_Purple
 			TNT1 A 1
 			TNT1 A 1 A_SetUserVar("user_parts", 10)
 		Loopme:
-			TNT1 A 1 A_SpawnItemEx("streak_purple", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 1 A_SpawnItemEx("streak_violet", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
 			TNT1 A 0 A_SetUserVar("user_parts", user_parts-1)
 			TNT1 A 0 A_JumpIf(user_parts <= 0, "Death")
 			goto Loopme

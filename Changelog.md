@@ -9,6 +9,18 @@
 
 ## v0 - Before the beginning...
 
+#### (11 - 14 / 3 / 2022) [Champion ban-list, MenuDef refactoring & Fixes]
+	*) The menu for the SF+ settings has been revamped, and now shows 4 submenus for each option.
+	// Game Options, User Options, Item Hotkeys and the Champion Ban-List.
+	+) The Champion Ban-List is now added to your menu for your server.
+	// This menu is cappable to prevent the spawning the champions you don't want to see anymore.
+	// And instead of spawning it, might do 1 of the 2 things, spawn a normal monster OR a not-banned champion.
+	*) Some variable renaming in the mSpawn.acs
+	*) Allied monsters can't be spawned as champion variants now.
+	*) The healing effect from the healing champ, will not insta-kill monsters.
+	+) Added the credit stealing effect from the golden champion. (needs some sfx tho)
+	*) Demon buildings can't be spawned as champion variants now.
+
 #### (9 / 3 / 2022) [Champions still in Progress + Some docing]
 	*) Some balance changes on the champions.
 	// Alright, here they are, Champions!
@@ -39,7 +51,7 @@
 	*) Set a better black for the emeperor, instead of being, literally a black siluoette.
 
 #### (25 / 2 - 8 / 3 / 2022) [Champions in Progress (WIP)]
-	+) Implementing new champions borrowing some translations from mikk's gzdoom champions and tddr's rainbow monsters!
+	!+) Implementing new champions borrowing some translations from mikk's gzdoom champions and tddr's rainbow monsters!
 	// More detailed info about them later.
 	+) Playing with the in built particles in order to make new graphical effects.
 

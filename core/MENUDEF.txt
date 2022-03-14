@@ -33,10 +33,19 @@ ListMenu "EpisodeMenu"
 
 OptionMenu "SFPlusOptions"{
 	Title "Shotgun Frenzy Plus Settings"
+	SubMenu "Game Options", "SFPlus_GameOptions"
+	SubMenu "Mod Hotkeys", "SFPlus_ItemHotkeys"
+	SubMenu "User Options", "SFPlus_UserOptions"
+	SubMenu "Champion Banlist", "SFPlus_ChampionBanlist"
+	StaticText ""
+	Command "To the Testing Map!", "map TEST"
+}
+
+OptionMenu SFPlus_GameOptions{
+	Title "Game Options"
 	StaticText "*) Requires a map restart to take effect",1
 	StaticText "0 means use the map default varable.", 1
 	StaticText ""
-	StaticText "Game Options", 1
 	StaticText "All options that you need for your server.", 1
 	StaticText ""
 	Slider "Game Length (Mins) *", "sf_gamelength", 0, 30, 10, 0
@@ -44,7 +53,7 @@ OptionMenu "SFPlusOptions"{
 	Slider "Starting Player Cash *", "sf_startcash", 0, 20000, 500, 0
 	Slider "Starting Team Cash *", "sf_teamcash", 0, 20000, 500, 0
 	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"
-	Slider "Fast Percent (+ 3P) *", "sf_percentfast", 0, 50, 5, 0
+	Slider "Champion Spawn Chance *", "sf_percentfast", 0, 50, 5, 0
 	Option "Adaptive Spawning *", "sf_adaptivespawn", "MapBoolean"
 	Slider "Door Hold-Time Seconds", "sf_doorholdtime", 15, 45, 1, 0
 	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
@@ -57,10 +66,10 @@ OptionMenu "SFPlusOptions"{
 	Slider "Monster's Extra HP % *", "sfp_monsterhpmult", 0.0, 200.0, 5.0, 0
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
-	StaticText ""
-	StaticText ""
-	StaticText ""
-	StaticText "Item Hotkeys", 1
+}
+
+OptionMenu SFPlus_ItemHotkeys{
+	Title "Item Hotkeys"
 	StaticText "Samu encourages to use the hotkeys. They're good stuff.",1
 	StaticText ""
 	Control "Soulsphere", "usesoulsphere"
@@ -71,10 +80,10 @@ OptionMenu "SFPlusOptions"{
 	Control "Stimpack", "usestimpack"
 	StaticTextSwitchable "Backspace -> Clear, Enter -> Bind a key", "Press a key. (ESC to cancel)", "ControlMessage", 1
 	//SafeCommand "Clear Hotkeys", "sfp_fuckMyBinds"
-	StaticText ""
-	StaticText ""
-	StaticText ""
-	StaticText "User Options", 1
+}
+
+OptionMenu SFPlus_UserOptions{
+	Title "User Options"
 	StaticText "Not needed at all, but hey, you should take a look.",1
 	StaticText ""
 	Option "Enable Auto-Healing?", "sfp_Autouse", "Boolean"
@@ -88,8 +97,32 @@ OptionMenu "SFPlusOptions"{
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
+}
+
+OptionMenu SFPlus_ChampionBanlist{
+	Title "Champion Banlist"
+	StaticText "Requires a map restart before taking effect"
 	StaticText ""
-	Command "To the Testing Map!", "map TEST"
+	StaticText "Limit your champions here", 1
+	StaticText ""
+	Option "Meaty", 		"sfp_champ_1", 		"BanBoolean"
+	Option "Quick", 		"sfp_champ_2", 		"BanBoolean"
+	Option "Strong", 		"sfp_champ_3", 		"BanBoolean"
+	Option "Stealth", 		"sfp_champ_4", 		"BanBoolean"
+	Option "Poison", 		"sfp_champ_5", 		"BanBoolean"
+	Option "Explosive", 	"sfp_champ_6", 		"BanBoolean"
+	Option "Golden", 		"sfp_champ_7", 		"BanBoolean"
+	Option "Split", 		"sfp_champ_8", 		"BanBoolean"
+	Option "Teleport", 		"sfp_champ_9", 		"BanBoolean"
+	Option "Healing", 		"sfp_champ_10", 	"BanBoolean"
+	Option "Pusher", 		"sfp_champ_11", 	"BanBoolean"
+	Option "Puller", 		"sfp_champ_12", 	"BanBoolean"
+	Option "Hybrid", 		"sfp_champ_13", 	"BanBoolean"
+	Option "Emperor", 		"sfp_champ_14", 	"BanBoolean"
+	Option "Zombie", 		"sfp_champ_15", 	"BanBoolean"
+	Option "Prideful", 		"sfp_champ_16", 	"BanBoolean"
+	StaticText ""
+	Option "On Banned Champion", 		"sfp_champ_onbanned", 	"OnBanBoolean"
 }
 
 OptionMenu "SFPlusUserOptionHelp"{
@@ -139,9 +172,9 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "Do you see that smiling tomato over there?, yeah that's a caco."
 	StaticText "This will ask you if you want to play with cacodemon waves."
 	StaticText ""
-	StaticText "Fast Percent", 1
-	StaticText "The chance to spawn a fast demon."
-	StaticText "Luckly it only triggers when there is at least 3 players in game"
+	StaticText "Champion Spawn Chance", 1
+	StaticText "The chance to spawn a championized demon."
+	StaticText "Stronger monsters, with unique skills, and unique loot."
 	StaticText ""
 	StaticText "Door hold-time", 1
 	StaticText "Remember the timer before opening / closing a sector?"
@@ -238,4 +271,16 @@ OptionValue "CacoBoolean"
 	-1, "No thanks"
 	0, "Depending on the map"
 	1, "Ye we like cacos!"
+}
+
+OptionValue "BanBoolean"
+{
+	1, "Banned"
+	0, "Allowed"
+}
+
+OptionValue "OnBanBoolean"
+{
+	1, "Reroll to a valid Champion"
+	0, "Spawn a normal monster"
 }

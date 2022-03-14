@@ -35,3 +35,22 @@ user bool sfp_welcome = true;
 user bool sfp_hitmarksnd = true;
 user int sfp_earningdisp = 3;
 user int sfp_killstreakhud = 1;
+
+// Champion cvars
+server int  sfp_champ_onbanned = 0;
+server bool sfp_champ_1 = false;
+server bool sfp_champ_2 = false;
+server bool sfp_champ_3 = false;
+server bool sfp_champ_4 = false;
+server bool sfp_champ_5 = false;
+server bool sfp_champ_6 = false;
+server bool sfp_champ_7 = false;
+server bool sfp_champ_8 = false;
+server bool sfp_champ_9 = false;
+server bool sfp_champ_10 = false;
+server bool sfp_champ_11 = false;
+server bool sfp_champ_12 = false;
+server bool sfp_champ_13 = false;
+server bool sfp_champ_14 = false;
+server bool sfp_champ_15 = false;
+server bool sfp_champ_16 = false;
