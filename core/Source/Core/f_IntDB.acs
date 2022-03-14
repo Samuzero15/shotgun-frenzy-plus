@@ -295,9 +295,9 @@ Function void InitDB_Debug(void){
 	InitDB_Log("m_AIDCap",m_AIDCap);
 	InitDB_Log("f_AllowIon",f_AllowIon);
 	InitDB_Log("f_AllowNuke",f_AllowNuke);
-	*/
 	InitDB_Log("p_dmgmult", p_dmgmult);
 	InitDB_Log("m_hpmult", m_hpmult);
+	*/
 	log(s:"====== Debug ======");	
 }
 

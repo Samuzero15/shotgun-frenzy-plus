@@ -16,65 +16,99 @@
 #include "samu_tools.acs"
 
 // Took from TDRR's Rainbow monsters and from Mikk's color champions, sorry not sorry :p
-#define SF_CHAMP_MEATY 		1 //5x health
-#define SF_CHAMP_QUICK 		2 //2x faster movement + aggresive.
-#define SF_CHAMP_STRONG 	3 //4x damage
-#define SF_CHAMP_STEALTH 	4 //Hardly visible!
-#define SF_CHAMP_POISON 	5 //Players arround it will get poisoned, leaves a poison dust that poisons players.
-#define SF_CHAMP_EXPLOSIVE 	6 //Explodes on death.
-#define SF_CHAMP_GOLDEN 	7 //Steals coins per each hit!, Drops coins!
-#define SF_CHAMP_SPLIT 		8 //Spanws 2 enemies of the same type, with less health.
-#define SF_CHAMP_TELEPORT 	9 //Teleports around
-#define SF_CHAMP_HEALING 	10 //Heals monsters arround.
-#define SF_CHAMP_PUSHER 	11 //Pushes anyone near this monster.
-#define SF_CHAMP_PULLER 	12 //Pulls anyone near this monster.
-#define SF_CHAMP_HYBRID 	13 //2 Champion skills in a single monster.
-#define SF_CHAMP_EMPEROR 	14 //x3 Hp + x3 Damage, Buffs 50% speed and x2 damage for the monsters arround, as long they are in the AoE.
-#define SF_CHAMP_ZOMBIE 	15 //He will come back, rises from its grave after being killed.
-#define SF_CHAMP_PRIDEFUL 	16 //5 champion skills in a single monster. Drops lotta goodies on death.
+#define CHAMP_MEATY 		1 //5x health
+#define CHAMP_QUICK 		2 //2x faster movement + aggresive.
+#define CHAMP_STRONG 	3 //4x damage
+#define CHAMP_STEALTH 	4 //Hardly visible!
+#define CHAMP_POISON 	5 //Players arround it will get poisoned, leaves a poison dust that poisons players.
+#define CHAMP_EXPLOSIVE 	6 //Explodes on death.
+#define CHAMP_GOLDEN 	7 //Steals coins per each hit!, Drops coins!
+#define CHAMP_SPLIT 		8 //Spanws 2 enemies of the same type, with less health.
+#define CHAMP_TELEPORT 	9 //Teleports around
+#define CHAMP_HEALING 	10 //Heals monsters arround.
+#define CHAMP_PUSHER 	11 //Pushes anyone near this monster.
+#define CHAMP_PULLER 	12 //Pulls anyone near this monster.
+#define CHAMP_HYBRID 	13 //2 Champion skills in a single monster.
+#define CHAMP_EMPEROR 	14 //x3 Hp + x3 Damage, Buffs 50% speed and x2 damage for the monsters arround, as long they are in the AoE.
+#define CHAMP_ZOMBIE 	15 //He will come back, rises from its grave after being killed.
+#define CHAMP_PRIDEFUL 	16 //5 champion skills in a single monster. Drops lotta goodies on death.
 
-#define SF_CHAMPCOLOR_RED 1
-#define SF_CHAMPCOLOR_DARKRED 2
-#define SF_CHAMPCOLOR_GREEN 3
-#define SF_CHAMPCOLOR_DARKGREEN 4
-#define SF_CHAMPCOLOR_BLUE 5
-#define SF_CHAMPCOLOR_YELLOW 6
-#define SF_CHAMPCOLOR_ORANGE 7
-#define SF_CHAMPCOLOR_PINK 8
-#define SF_CHAMPCOLOR_PURPLE 9
-#define SF_CHAMPCOLOR_BROWN 10
-#define SF_CHAMPCOLOR_CYAN 11
-#define SF_CHAMPCOLOR_BRONZE 12
-#define SF_CHAMPCOLOR_SILVER 13
-#define SF_CHAMPCOLOR_GOLDEN 14
-#define SF_CHAMPCOLOR_BLACK 15
-#define SF_CHAMPCOLOR_WHITE 16
+#define CHAMPCOLOR_RED 			1
+#define CHAMPCOLOR_DARKRED 		2
+#define CHAMPCOLOR_GREEN 		3
+#define CHAMPCOLOR_DARKGREEN 	4
+#define CHAMPCOLOR_BLUE 		5
+#define CHAMPCOLOR_YELLOW 		6
+#define CHAMPCOLOR_ORANGE 		7
+#define CHAMPCOLOR_PINK 		8
+#define CHAMPCOLOR_PURPLE 		9
+#define CHAMPCOLOR_BROWN 		10
+#define CHAMPCOLOR_CYAN 		12
+#define CHAMPCOLOR_BRONZE 		13
+#define CHAMPCOLOR_SILVER 		14
+#define CHAMPCOLOR_GOLDEN 		15
+#define CHAMPCOLOR_BLACK 		16
+#define CHAMPCOLOR_WHITE 		17
+
+#define CHAMP_AMOUNT 16
+
+int champion_forcespawn;
+int champion_nospawn;
+int champion_typeSpawn;
+int champion_allowlist[CHAMP_AMOUNT];
+int champion_validlist[CHAMP_AMOUNT];
+int champion_validstack;
+int champion_onbanned;
 
 Script "SFPlus_InitChampColors" OPEN {
-	CreateTranslation(SF_CHAMPCOLOR_RED, 		0:255=%[0.00,0.00,0.00]:[2.00,0.00,0.00]); // Red
-	CreateTranslation(SF_CHAMPCOLOR_DARKRED, 	0:255=%[0.00,0.00,0.00]:[1.00,0.00,0.00]); // Dark Red
-	CreateTranslation(SF_CHAMPCOLOR_YELLOW, 	0:255=%[0.00,0.00,0.00]:[2.00,1.76,0.00]); // Yellow
-	CreateTranslation(SF_CHAMPCOLOR_BLUE, 		0:255=%[0.00,0.00,0.00]:[0.00,0.00,2.00]); // Blue
-	CreateTranslation(SF_CHAMPCOLOR_DARKGREEN, 	0:255=%[0.00,0.00,0.00]:[0.00,1.50,0.50]); // Dark Green
-	CreateTranslation(SF_CHAMPCOLOR_BRONZE, 	0:255=%[0.00,0.00,0.00]:[1.22,0.78,0.49]); // Bronze
-	CreateTranslation(SF_CHAMPCOLOR_BROWN, 		0:255=%[0.00,0.00,0.00]:[1.00,0.70,0.15]); // Brown
-	CreateTranslation(SF_CHAMPCOLOR_SILVER, 	0:255=%[0.00,0.00,0.00]:[1.62,2.00,2.00]); // Silver
-	CreateTranslation(SF_CHAMPCOLOR_GOLDEN, 	0:255=%[0.27,0.00,0.00]:[2.00,1.86,0.00]); // Golden
-	CreateTranslation(SF_CHAMPCOLOR_ORANGE, 	0:255=%[0.50,0.00,0.00]:[2.00,1.22,0.43]); // Orange
-	CreateTranslation(SF_CHAMPCOLOR_GREEN, 		0:255=%[0.00,0.00,0.00]:[0.00,2.00,0.00]); // Green
-	CreateTranslation(SF_CHAMPCOLOR_PINK, 		0:255=%[0.22,0.00,0.00]:[2.00,1.02,1.12]); // Pink
-	CreateTranslation(SF_CHAMPCOLOR_PURPLE, 	0:255=%[0.22,0.00,0.00]:[2.00,0.52,0.62]); // Purple
-	CreateTranslation(SF_CHAMPCOLOR_CYAN, 		0:255=%[0.00,0.00,1.01]:[1.47,2.00,2.00]); // Cyan
-	CreateTranslation(SF_CHAMPCOLOR_BLACK, 		0:255=%[0.00,0.00,0.00]:[0.50,0.50,0.50]); // Black
-	CreateTranslation(SF_CHAMPCOLOR_WHITE, 		0:255=%[0.00,0.00,0.00]:[2.00,2.00,2.00]); // White
+	CreateTranslation(CHAMPCOLOR_RED, 		0:255=%[0.00,0.00,0.00]:[2.00,0.00,0.00]); // Red
+	CreateTranslation(CHAMPCOLOR_DARKRED, 	0:255=%[0.00,0.00,0.00]:[1.00,0.00,0.00]); // Dark Red
+	CreateTranslation(CHAMPCOLOR_YELLOW, 	0:255=%[0.00,0.00,0.00]:[2.00,1.76,0.00]); // Yellow
+	CreateTranslation(CHAMPCOLOR_BLUE, 		0:255=%[0.00,0.00,0.00]:[0.00,0.00,2.00]); // Blue
+	CreateTranslation(CHAMPCOLOR_DARKGREEN, 0:255=%[0.00,0.00,0.00]:[0.00,1.50,0.50]); // Dark Green
+	CreateTranslation(CHAMPCOLOR_BRONZE, 	0:255=%[0.00,0.00,0.00]:[1.22,0.78,0.49]); // Bronze
+	CreateTranslation(CHAMPCOLOR_BROWN, 	0:255=%[0.00,0.00,0.00]:[1.00,0.70,0.15]); // Brown
+	CreateTranslation(CHAMPCOLOR_SILVER, 	0:255=%[0.00,0.00,0.00]:[1.62,2.00,2.00]); // Silver
+	CreateTranslation(CHAMPCOLOR_GOLDEN, 	0:255=%[0.27,0.00,0.00]:[2.00,1.86,0.00]); // Golden
+	CreateTranslation(CHAMPCOLOR_ORANGE, 	0:255=%[0.50,0.00,0.00]:[2.00,1.22,0.43]); // Orange
+	CreateTranslation(CHAMPCOLOR_GREEN, 	0:255=%[0.00,0.00,0.00]:[0.00,2.00,0.00]); // Green
+	CreateTranslation(CHAMPCOLOR_PINK, 		0:255=%[0.22,0.00,0.00]:[2.00,1.02,1.12]); // Pink
+	CreateTranslation(CHAMPCOLOR_PURPLE, 	0:255=%[0.22,0.00,0.00]:[2.00,0.52,0.62]); // Purple
+	CreateTranslation(CHAMPCOLOR_CYAN, 		0:255=%[0.00,0.00,1.01]:[1.47,2.00,2.00]); // Cyan
+	CreateTranslation(CHAMPCOLOR_BLACK, 	0:255=%[0.00,0.00,0.00]:[0.50,0.50,0.50]); // Black
+	CreateTranslation(CHAMPCOLOR_WHITE, 	0:255=%[0.00,0.00,0.00]:[2.00,2.00,2.00]); // White
+	champion_nospawn = false;
+	champion_forcespawn = false;
+	champion_typeSpawn = -1;
+	champion_onbanned = GetCvar("sfp_champ_onbanned");
+	Champ_InitBanlist();
 }
 
+function bool MonsterSpawn_IsExcluded(void) {
+	str actor = GetActorClass(0);
+	str exclude[4] = {
+		"DemonTurret",
+		"DemonWall",
+		"DemonCore",
+		"DemonVein"
+	};
+	for(int i = 0; i < 4; i++){
+		if(StrCmp(actor, exclude[i]) == 0) return true;
+	}
+	return false;
+}
 
 script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 {
     if(type != GAMEEVENT_ACTOR_SPAWNED ||
-	 (type == GAMEEVENT_ACTOR_SPAWNED && CheckFlag(0, "DORMANT"))) 
-	 terminate; // Make sure the event is Spawned and not anything else.
+	 (type == GAMEEVENT_ACTOR_SPAWNED && CheckFlag(0, "DORMANT")) || 
+	 (type == GAMEEVENT_ACTOR_SPAWNED && CheckFlag(0, "FRIENDLY")) ||
+	 MonsterSpawn_IsExcluded() ){
+		 terminate; 
+	 }
+	 // Make sure the event is Spawned and not anything else
+	 // Also, make sure we are not modifying dormant actors, and if
+	 // It's not an actor we want to championize or hp modify ever
 	delay(1); // Just in case bro.
 
 	if(CheckInventory("ChampSplit_SkipSpawnScript")) terminate;
@@ -100,51 +134,64 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 		//log(s:"Health adjusted.");
 	}
 	ACS_NamedExecuteAlways("SFPlus_AutoBalanceDmg", 0);
-	int make_champion = f_PercentFast > random(0,99) /*True*/;
-
-	if (make_champion) { // Make a champion enemy!
+	int make_champion = !champion_nospawn && (/*f_PercentFast > random(0,99)*/ true || champion_forcespawn > 0);
+	int champ = Champ_Dice();
+	if(Champ_IsBanned(champ)){
+		if(champion_onbanned == 1){
+			champ = Champ_RerollToValid();
+			if(champ == -1) make_champion = false;
+		}
+		
+	}
+	if (make_champion && !Champ_IsBanned(champ)) { 
+		// Make a champion enemy! (Only if he is not banned of course!)
 		GiveInventory("ChampBuff_Normal", 1); 
 		// Normally a champion deals double damage, retaliates, and resists 70% of player's damage.
 		health = getactorproperty(0, APROP_Health); // Get current health, after health calculations.
 		setactorproperty(0, APROP_Health, health*2); // By default duply the health.
-		int champ = SF_CHAMP_EMPEROR;//Champ_Dice();
+		
+		// If you need to spawn a specific champion, simply, set the type number you want to spawn.
+		if(champion_typeSpawn >= CHAMP_MEATY && champion_typeSpawn <= CHAMP_PRIDEFUL){
+			champ = champion_typeSpawn;
+		}
 		Champ_SetType(champ);
-		log(s:"Champion type: ", d:champ);
+		champion_typeSpawn = -1; // Clear the selected champion.
+		//log(s:"Champion type: ", d:champ);
 		switch(champ){
-			case SF_CHAMP_MEATY: // X5 health
+			case CHAMP_MEATY: // X5 health
 				setactorproperty(0, APROP_Health, health*5);
-			break; case SF_CHAMP_QUICK: // Aggresive and fast!
+			break; case CHAMP_QUICK: // Aggresive and fast!
 				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 				GiveInventory("ChampBuff_Fast", 1);
-			break; case SF_CHAMP_STRONG: // Really hurtful with x3 Damage!
+			break; case CHAMP_STRONG: // Really hurtful with x3 Damage!
 				TakeInventory("ChampBuff_NormalAtk", 1);
 				GiveInventory("ChampBuff_Strong", 1);
-			break; case SF_CHAMP_STEALTH: // Nearly invisible.
+			break; case CHAMP_STEALTH: // Nearly invisible.
 				GiveInventory("ChampBuff_Stealth", 1);
-			break; case SF_CHAMP_PRIDEFUL: // A literal pain in the saas.
+			break; case CHAMP_PRIDEFUL: // A literal pain in the saas.
 				setactorproperty(0, APROP_Health, health*3);
 				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 				GiveInventory("ChampBuff_Fast", 1);
 				TakeInventory("ChampBuff_NormalAtk", 1);
 				GiveInventory("ChampBuff_Strong", 1);
-				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, SF_CHAMP_PULLER);
-				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, SF_CHAMP_HEALING);
-				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, SF_CHAMP_EMPEROR);
-			break; case SF_CHAMP_ZOMBIE:
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_PULLER);
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_HEALING);
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_EMPEROR);
+			break; case CHAMP_ZOMBIE:
 				GiveInventory("ChampZombie_LivesLeft", 3);
-			break; case SF_CHAMP_EMPEROR: // Buffs nearby allies.
+			break; case CHAMP_EMPEROR: // Buffs nearby allies.
 				setactorproperty(0, APROP_Health, health*3);
 				TakeInventory("ChampBuff_NormalAtk", 1);
 				TakeInventory("ChampBuff_NormalDef", 1);
 				GiveInventory("ChampBuff_Emperor", 1);
-			case SF_CHAMP_POISON:
-			case SF_CHAMP_HEALING: // Heals all nearby monsters!
-			case SF_CHAMP_TELEPORT: // Teleports arround
-			case SF_CHAMP_PUSHER: // Pushes enemies
-			case SF_CHAMP_PULLER: // Pulls enemies
+			case CHAMP_POISON:
+			case CHAMP_HEALING: // Heals all nearby monsters!
+			case CHAMP_TELEPORT: // Teleports arround
+			case CHAMP_PUSHER: // Pushes enemies
+			case CHAMP_PULLER: // Pulls enemies
 				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, champ);
 			break;
-			case SF_CHAMP_HYBRID:
+			case CHAMP_HYBRID:
 				bool valid = false;
 				int try;
 				int champ1 = 0, champ2 = 0;
@@ -152,17 +199,17 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 					champ1 = Champ_Dice();
 					champ2 = Champ_Dice();
 					if(!(champ1 == champ2 || 
-					(champ1 == SF_CHAMP_PUSHER && champ2 == SF_CHAMP_PULLER) ||
-					(champ1 == SF_CHAMP_PULLER && champ2 == SF_CHAMP_PUSHER) ||
-					(champ1 == SF_CHAMP_HYBRID || champ2 == SF_CHAMP_HYBRID) ||
-					(champ1 == SF_CHAMP_PRIDEFUL || champ2 == SF_CHAMP_PRIDEFUL) ||
-					(champ1 == SF_CHAMP_EMPEROR && (champ2 == SF_CHAMP_STRONG || champ2 == SF_CHAMP_MEATY)) ||
-					(champ2 == SF_CHAMP_EMPEROR && (champ1 == SF_CHAMP_STRONG || champ1 == SF_CHAMP_MEATY))
+					(champ1 == CHAMP_PUSHER && champ2 == CHAMP_PULLER) ||
+					(champ1 == CHAMP_PULLER && champ2 == CHAMP_PUSHER) ||
+					(champ1 == CHAMP_HYBRID || champ2 == CHAMP_HYBRID) ||
+					(champ1 == CHAMP_PRIDEFUL || champ2 == CHAMP_PRIDEFUL) ||
+					(champ1 == CHAMP_EMPEROR && (champ2 == CHAMP_STRONG || champ2 == CHAMP_MEATY)) ||
+					(champ2 == CHAMP_EMPEROR && (champ1 == CHAMP_STRONG || champ1 == CHAMP_MEATY))
 					)) valid = true;
 					else {
 						if(try >= 3){ // For runaway prevention
-							champ1 = SF_CHAMP_QUICK;
-							champ2 = SF_CHAMP_STRONG;
+							champ1 = CHAMP_QUICK;
+							champ2 = CHAMP_STRONG;
 							valid = true;
 						}
 						try++;
@@ -180,40 +227,62 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 	GiveInventory("Monster_MaxHealth", getactorproperty(0, APROP_Health));
 }
 
+function void Champ_InitBanlist(void){
+	champion_validstack = 0;
+	for (int i = 0; i < CHAMP_AMOUNT; i++){
+		champion_allowlist[i] = GetCvar(strparam(s:"sfp_champ_", d:(i+1)));
+		if(!champion_allowlist[i]){
+			champion_validlist[champion_validstack] = i+1;
+			champion_validstack++;
+		}
+	}
+}
+
+function bool Champ_IsBanned(int champ){
+	return champion_allowlist[champ-1];
+}
+
 function int Champ_Dice(void){
-	int res = random(SF_CHAMP_MEATY, SF_CHAMP_PRIDEFUL);
+	int res = random(CHAMP_MEATY, CHAMP_PRIDEFUL);
 	// So the chances of getting a pride champ are small considering it's pretty powerful.
-	if(	(res == SF_CHAMP_PRIDEFUL)) res = random(SF_CHAMP_MEATY, SF_CHAMP_PRIDEFUL);
+	if(	(res == CHAMP_PRIDEFUL)) res = random(CHAMP_MEATY, CHAMP_PRIDEFUL);
 	return res;
+}
+
+function int Champ_RerollToValid(void){
+	if(champion_validstack <= 0) return -1;
+	int res = random(0, champion_validstack-1);
+	// If the last champion monster is a banned one, reroll to another one.
+	return champion_validlist[res];
 }
 
 function void Champ_SetHybridPower(str actor){
 	int champ_type = CheckInventory(actor) - 1;
 	switch(champ_type){
-		case SF_CHAMP_MEATY: // X5 health
+		case CHAMP_MEATY: // X5 health
 			setactorproperty(0, APROP_Health, GetActorProperty(0, APROP_HEALTH)*5);
-		break; case SF_CHAMP_QUICK: // Aggresive and fast!
+		break; case CHAMP_QUICK: // Aggresive and fast!
 			setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
 			GiveInventory("ChampBuff_Fast", 1);
-		break; case SF_CHAMP_STRONG: // Really hurtful with x3 Damage!
+		break; case CHAMP_STRONG: // Really hurtful with x3 Damage!
 			TakeInventory("ChampBuff_NormalAtk", 1);
 			GiveInventory("ChampBuff_Strong", 1);
-		break; case SF_CHAMP_STEALTH: // Nearly invisible.
+		break; case CHAMP_STEALTH: // Nearly invisible.
 			GiveInventory("ChampBuff_Stealth", 1);
-		break; case SF_CHAMP_ZOMBIE:
+		break; case CHAMP_ZOMBIE:
 			GiveInventory("ChampZombie_LivesLeft", 3);
 		break;
 
-		case SF_CHAMP_EMPEROR: // Buffs nearby allies.
+		case CHAMP_EMPEROR: // Buffs nearby allies.
 				setactorproperty(0, APROP_Health, GetActorProperty(0, APROP_HEALTH)*3);
 				TakeInventory("ChampBuff_NormalAtk", 1);
 				TakeInventory("ChampBuff_NormalDef", 1);
 				GiveInventory("ChampBuff_Emperor", 1);
-
-		case SF_CHAMP_HEALING: // Heals all nearby monsters!
-		case SF_CHAMP_TELEPORT: // Teleports arround
-		case SF_CHAMP_PUSHER: // Pushes enemies
-		case SF_CHAMP_PULLER: // Pulls enemies
+		case CHAMP_POISON:
+		case CHAMP_HEALING: // Heals all nearby monsters!
+		case CHAMP_TELEPORT: // Teleports arround
+		case CHAMP_PUSHER: // Pushes enemies
+		case CHAMP_PULLER: // Pulls enemies
 			ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, champ_type);
 		break;
 	}
@@ -229,53 +298,73 @@ script "SFPlus_2Translations" (int a, int b){
 }
 
 script "SFPlus_RainbowTranslation" (void){
+	int delay_tics = 4;
 	while(GetActorProperty(0, APROP_Health) > 0){
-		Thing_setTranslation(0, SF_CHAMPCOLOR_RED);
-		delay(6);
-		Thing_setTranslation(0, SF_CHAMPCOLOR_YELLOW);
-		delay(6);
-		Thing_setTranslation(0, SF_CHAMPCOLOR_GREEN);
-		delay(6);
-		Thing_setTranslation(0, SF_CHAMPCOLOR_BLUE);
-		delay(6);
-		Thing_setTranslation(0, SF_CHAMPCOLOR_PURPLE);
-		delay(6);
+		//log(s:"red");
+		Thing_setTranslation(0, CHAMPCOLOR_RED);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
+		//log(s:"orange");
+		Thing_setTranslation(0, CHAMPCOLOR_ORANGE);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
+		//log(s:"yellow");
+		Thing_setTranslation(0, CHAMPCOLOR_YELLOW);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
+		//og(s:"green");
+		Thing_setTranslation(0, CHAMPCOLOR_GREEN);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
+		//log(s:"cyan");
+		Thing_setTranslation(0, CHAMPCOLOR_CYAN);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
+		//log(s:"blue");
+		Thing_setTranslation(0, CHAMPCOLOR_BLUE);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
+		//log(s:"purple");
+		Thing_setTranslation(0, CHAMPCOLOR_PURPLE);
+		if(GetActorProperty(0, APROP_Health) <= 0) break;
+		delay(delay_tics);
 	}
+	Thing_setTranslation(0, 0);
 }
 
 function void Champ_SetType(int which){
 	int champcolors[16] = {
-		SF_CHAMPCOLOR_RED,
-		SF_CHAMPCOLOR_YELLOW,
-		SF_CHAMPCOLOR_DARKRED,
+		CHAMPCOLOR_RED,
+		CHAMPCOLOR_YELLOW,
+		CHAMPCOLOR_DARKRED,
 		0,
-		SF_CHAMPCOLOR_DARKGREEN,
-		SF_CHAMPCOLOR_BRONZE,
-		SF_CHAMPCOLOR_GOLDEN,
-		SF_CHAMPCOLOR_BLUE,
-		SF_CHAMPCOLOR_GREEN,
-		SF_CHAMPCOLOR_PINK,
-		SF_CHAMPCOLOR_CYAN,
-		SF_CHAMPCOLOR_SILVER,
+		CHAMPCOLOR_DARKGREEN,
+		CHAMPCOLOR_BRONZE,
+		CHAMPCOLOR_GOLDEN,
+		CHAMPCOLOR_BLUE,
+		CHAMPCOLOR_GREEN,
+		CHAMPCOLOR_PINK,
+		CHAMPCOLOR_CYAN,
+		CHAMPCOLOR_SILVER,
 		0,
-		SF_CHAMPCOLOR_BLACK,
-		SF_CHAMPCOLOR_BROWN,
+		CHAMPCOLOR_BLACK,
+		CHAMPCOLOR_BROWN,
 		0
 	};
 	TakeInventory("Champ_Type", 0xFFFFFFFF);
 	GiveInventory("Champ_Type", which+1);
 	Thing_setTranslation(0, champcolors[which-1]);
-	if(which == SF_CHAMP_PRIDEFUL) {
+	if(which == CHAMP_PRIDEFUL) {
 		ACS_NamedExecuteAlways("SFPlus_RainbowTranslation", 0);
 	}
-	if(which == SF_CHAMP_HYBRID && CheckInventory("ChampHybrid_Type1") > 0){
+	if(which == CHAMP_HYBRID && CheckInventory("ChampHybrid_Type1") > 0){
 		ACS_NamedExecuteAlways("SFPlus_2Translations", 0, 
 		champcolors[CheckInventory("ChampHybrid_Type1")-2], 
 		champcolors[CheckInventory("ChampHybrid_Type2")-2]);
 	}
 }
 
-function int Champ_GetType(int which){
+function int Champ_GetType(void){
 	return (CheckInventory("Champ_Type")-1);
 }
 
@@ -286,13 +375,45 @@ function bool Champ_IsType(int which){
 		((CheckInventory("ChampHybrid_Type2")-1) == which));
 }
 
+Script "SFPlus_ChampionHit" (int type, int arg1, int arg2) Event
+{
+	if(type != GAMEEVENT_ACTOR_DAMAGED) terminate;
+	SetActivator(0, AAPTR_Damage_Source);
+ 	if(Champ_GetType() <= 0) terminate;
+	int mon_class = sf_GetMonsterClass_Health();
+	switch(Champ_GetType()){
+		case CHAMP_GOLDEN: // The player will lose money for the lost health, done by this champion
+		SetActivator(0, AAPTR_Damage_Target);
+		int play = PlayerNumber();
+		if(play != -1 && p_Credits[play] >  0){
+			int hp_old = GetActorProperty(0, APROP_HEALTH);
+			int hp_now = hp_old - arg1;
+			if(hp_now < 0) hp_now = 0; 
+			int hp_loss = hp_old - hp_now;
+			int dmg_cost = (hp_loss)*(9+mon_class);
+			int money_old = p_Credits[play];
+			int money_now = money_old - dmg_cost;
+			if(money_now < 0) money_now = 0;
+			int diff = money_old - money_now;
+			p_Credits[play] = money_now;
+
+			ACS_NamedExecuteAlways("SF_CreditRemoveDisplaySmall", 0, diff);
+		}
+		break;
+		case CHAMP_EXPLOSIVE:
+		SetActivator(0, AAPTR_Damage_Target);
+		break;
+	}
+	
+	
+}
+
 Script "SFPlus_ChampionDeath" (void){
 	if(CheckInventory("Champ_Type") >= 1){
 		if(CheckInventory("ChampZombie_SkipDeathScript") && CheckInventory("ChampZombie_LivesLeft")){
 			// Resurrect it again, with less chance
 			int dice = random(0,99);
 			int lives = CheckInventory("ChampZombie_LivesLeft");
-			
 			if(dice < 60*lives){
 				delay(random(35*2, 35*10));
 				TakeInventory("ChampZombie_LivesLeft", 1);
@@ -312,15 +433,15 @@ Script "SFPlus_ChampionDeath" (void){
 		int angle = GetActorAngle(0);
 		int tid = ActivatorTID();
 
-		if(Champ_IsType(SF_CHAMP_EXPLOSIVE) || Champ_IsType(SF_CHAMP_PRIDEFUL)){ // In matter of a second, explodes!
+		if(Champ_IsType(CHAMP_EXPLOSIVE) || Champ_IsType(CHAMP_PRIDEFUL)){ // In matter of a second, explodes!
 			delay(5);
 			SpawnForced("ChampExplosive_Kaboom", x, y, z, 0,  angle);
 			SpawnForced("ChampExplosive_Kaboom", x, y, z + getActorProperty(0, APROP_HEIGHT), 0,  angle);
 		}
-		if(Champ_IsType(SF_CHAMP_GOLDEN) || Champ_IsType(SF_CHAMP_PRIDEFUL)){ // Spawn some extra money on death!
+		if(Champ_IsType(CHAMP_GOLDEN) || Champ_IsType(CHAMP_PRIDEFUL)){ // Spawn some extra money on death!
 			SpawnForced("ChampGolden_MoneySplash", x, y, z, 0, angle);
 		}
-		if(Champ_IsType(SF_CHAMP_ZOMBIE) || Champ_IsType(SF_CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
+		if(Champ_IsType(CHAMP_ZOMBIE) || Champ_IsType(CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
 			delay(random(35*2, 35*10));
 			GiveInventory("ChampZombie_SkipDeathScript", 1);
 			while(GetActorProperty(0, APROP_HEALTH) <= 0){
@@ -331,7 +452,7 @@ Script "SFPlus_ChampionDeath" (void){
 			TakeInventory("ChampZombie_LivesLeft", 1);
 			SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
 		}
-		if(Champ_IsType(SF_CHAMP_SPLIT)){ // Spawns 2 copies of the same monster!
+		if(Champ_IsType(CHAMP_SPLIT)){ // Spawns 2 copies of the same monster!
 			int who = GetActorClass(0);
 			int r = GetActorProperty(0, APROP_RADIUS) + 5.0;
 			int temptid = UniqueTID();
@@ -354,37 +475,37 @@ Script "SFPlus_ChampionDeath" (void){
 
 Script "SFPlus_ChampConstEffects" (int which) {
 	switch(which){
-		case SF_CHAMP_POISON:
+		case CHAMP_POISON:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Poison", 1);
 				delay(35);
 			}
 		break;
-		case SF_CHAMP_EMPEROR:
+		case CHAMP_EMPEROR:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Emperor", 1);
 				delay(35);
 			}
 		break;
-		case SF_CHAMP_HEALING:
+		case CHAMP_HEALING:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Healing", 1);
 				delay(35);
 			}
 		break;
-		case SF_CHAMP_PULLER:
+		case CHAMP_PULLER:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Puller", 1);
 				delay(6);
 			}
 		break;
-		case SF_CHAMP_PUSHER:
+		case CHAMP_PUSHER:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Pusher", 1);
 				delay(6);
 			}
 		break;
-		case SF_CHAMP_TELEPORT:
+		case CHAMP_TELEPORT:
 			while(getActorProperty(0, APROP_Health) > 0){
 				GiveInventory("ChampEffect_Teleporter", 1);
 				delay(35*2);
@@ -397,10 +518,11 @@ Script "SFPlus_ChampConstEffects" (int which) {
 Script "SFPlus_ChampHealing_Heal" (void){
 	int SpawnHealth = CheckInventory("Monster_MaxHealth");
 	int Health = GetActorProperty(0, APROP_HEALTH);
-	
-	if(Health == SpawnHealth || Champ_IsType(SF_CHAMP_HEALING) || Champ_IsType(SF_CHAMP_PRIDEFUL))
+	if(Health == SpawnHealth || Champ_IsType(CHAMP_HEALING) || Champ_IsType(CHAMP_PRIDEFUL) || SpawnHealth == 0)
 	// Healings can't heal themselves. Pridefuls are not allowed too.
-	{	SetResultValue(0);
+	{	
+		if(!SpawnHealth) {GiveInventory("Monster_MaxHealth", health);}
+		SetResultValue(0);
 		terminate;}
 	
 	SetResultValue(1);
@@ -412,7 +534,7 @@ Script "SFPlus_ChampHealing_Heal" (void){
 }
 Script "SFPlus_ChampEmperor_Buff" (void){
 	//Buffs monsters temporally, like champions but with 50% of speed more for the monsters arround
-	if(CheckInventory("ChampBuff_NormalAtk") || Champ_IsType(SF_CHAMP_EMPEROR) || Champ_IsType(SF_CHAMP_PRIDEFUL))
+	if(CheckInventory("ChampBuff_NormalAtk") || Champ_IsType(CHAMP_EMPEROR) || Champ_IsType(CHAMP_PRIDEFUL))
 	// Emperors can't buff themselves. Pridefuls are not allowed too.
 	// Only 1 instance of buff can be allowed.
 	{	SetResultValue(0);

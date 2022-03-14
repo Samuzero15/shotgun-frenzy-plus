@@ -19,6 +19,11 @@ script "SF_CreditAddDisplaySmall" (int howMuch, int color) clientside
 	//ShowNumbersSmall("+", howmuch, color);
 }
 
+Script "SF_CreditRemoveDisplaySmall" (int howmuch) clientside {
+	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
+	ShowNumbers("-", howmuch, "!", CR_RED, "BIGFONT", cvar);
+}
+
 
 script "SF_CreditRemoveDisplay" (int howMuch, int color, int crit) clientside
 {

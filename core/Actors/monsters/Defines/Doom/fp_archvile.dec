@@ -32,7 +32,7 @@ ACTOR sfArchvile : FPlus_Monster replaces Archvile
 			VILE G 10 BRIGHT A_FaceTarget
 			VILE H 8 BRIGHT A_VileTarget
 			VILE IJKLMN 8 BRIGHT A_FaceTarget
-			VILE O 8 BRIGHT A_VileAttack
+			VILE O 8 BRIGHT A_VileAttack("vile/stop", 20, 70, 70, 0.0)
 			VILE P 20 BRIGHT
 			goto See
 		Heal:
