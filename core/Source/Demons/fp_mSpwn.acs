@@ -33,22 +33,22 @@
 #define CHAMP_ZOMBIE 	15 //He will come back, rises from its grave after being killed.
 #define CHAMP_PRIDEFUL 	16 //5 champion skills in a single monster. Drops lotta goodies on death.
 
-#define CHAMPCOLOR_RED 			1
-#define CHAMPCOLOR_DARKRED 		2
-#define CHAMPCOLOR_GREEN 		3
-#define CHAMPCOLOR_DARKGREEN 	4
-#define CHAMPCOLOR_BLUE 		5
-#define CHAMPCOLOR_YELLOW 		6
-#define CHAMPCOLOR_ORANGE 		7
-#define CHAMPCOLOR_PINK 		8
-#define CHAMPCOLOR_PURPLE 		9
-#define CHAMPCOLOR_BROWN 		10
-#define CHAMPCOLOR_CYAN 		12
-#define CHAMPCOLOR_BRONZE 		13
-#define CHAMPCOLOR_SILVER 		14
-#define CHAMPCOLOR_GOLDEN 		15
-#define CHAMPCOLOR_BLACK 		16
-#define CHAMPCOLOR_WHITE 		17
+#define CHAMPCOLOR_RED 1
+#define CHAMPCOLOR_DARKRED 2
+#define CHAMPCOLOR_GREEN 3
+#define CHAMPCOLOR_DARKGREEN 4
+#define CHAMPCOLOR_BLUE 5
+#define CHAMPCOLOR_YELLOW 6
+#define CHAMPCOLOR_ORANGE 7
+#define CHAMPCOLOR_PINK 8
+#define CHAMPCOLOR_PURPLE 9
+#define CHAMPCOLOR_BROWN 10
+#define CHAMPCOLOR_CYAN 11
+#define CHAMPCOLOR_BRONZE 12
+#define CHAMPCOLOR_SILVER 13
+#define CHAMPCOLOR_GOLDEN 14
+#define CHAMPCOLOR_BLACK 15
+#define CHAMPCOLOR_WHITE 16
 
 #define CHAMP_AMOUNT 16
 
@@ -104,6 +104,7 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 	 (type == GAMEEVENT_ACTOR_SPAWNED && CheckFlag(0, "DORMANT")) || 
 	 (type == GAMEEVENT_ACTOR_SPAWNED && CheckFlag(0, "FRIENDLY")) ||
 	 MonsterSpawn_IsExcluded() ){
+		 GiveInventory("Monster_MaxHealth", getactorproperty(0, APROP_Health));
 		 terminate; 
 	 }
 	 // Make sure the event is Spawned and not anything else
@@ -518,7 +519,11 @@ Script "SFPlus_ChampConstEffects" (int which) {
 Script "SFPlus_ChampHealing_Heal" (void){
 	int SpawnHealth = CheckInventory("Monster_MaxHealth");
 	int Health = GetActorProperty(0, APROP_HEALTH);
-	if(Health == SpawnHealth || Champ_IsType(CHAMP_HEALING) || Champ_IsType(CHAMP_PRIDEFUL) || SpawnHealth == 0)
+	if(!SpawnHealth){ 
+		GiveInventory("Monster_MaxHealth", health);
+		SpawnHealth = CheckInventory("Monster_MaxHealth");
+	}
+	if(Health == SpawnHealth || Champ_IsType(CHAMP_HEALING) || Champ_IsType(CHAMP_PRIDEFUL))
 	// Healings can't heal themselves. Pridefuls are not allowed too.
 	{	
 		if(!SpawnHealth) {GiveInventory("Monster_MaxHealth", health);}
