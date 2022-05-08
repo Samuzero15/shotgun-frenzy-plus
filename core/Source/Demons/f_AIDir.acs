@@ -28,11 +28,14 @@ function int f_AIDir_Check (void)
     l_Score += playercount() * 2;
     //l_Score += playercountReplicate * 2;
     
+    // [Samu] mind the players and the extra gap between levels
+    int extra_gap = AIDir_ExtraLevelGap();
+
     // phase 3 - check current sector
-    if (g_Status == 1)      l_Score += 15;
-    if (g_Status == 2)      l_Score += 0;
-    if (g_Status == 3)      l_Score -= 5;
-    if (g_Status == 4)      l_Score -= 25;
+    if (g_Status == 1)      l_Score += 15 + extra_gap;
+    if (g_Status == 2)      l_Score += 0 + extra_gap;
+    if (g_Status == 3)      l_Score -= 5 + extra_gap;
+    if (g_Status == 4)      l_Score -= 25 + extra_gap;
     
     // phase 4 - if a commander based game, then count credits too
     if (f_Gametype == 1)
@@ -41,15 +44,11 @@ function int f_AIDir_Check (void)
         else if (c_Credits < 500)       l_Score -= 10;
         else if (c_Credits >= 1000)
         {
-            for (int a = 0; a < 50; a ++)
-            {
-                if (c_Credits > a * 2000)    l_Score += 1;
-            }
+            // [Samu] one less loop out of the way
+            if(c_Credits < 100000)
+                l_Score += (c_Credits / 2000) * extra_gap;
         }
     }
-    
-    // phase 5 - use  f_AISkillMultiplier to add to the skill *REMOVED* found a new purpose for this, see above
-    //l_Score +=  f_AISkillMultiplier;
     
     // phase 6 *NEW* - track powerful weapon purchase
 	// [Samu] fl_WDir Has a pair of variable trackers, so lets use them to crank up difficulty too!
@@ -79,20 +78,31 @@ function int f_AIDir_Check (void)
    	return m_SurvivalWave * 15 + 1;
 }
 
+function int AIDir_ExtraLevelGap(void){
+    // Adds some extra gap, allowing the lower monsters fight a bit longer.
+    if(playercount() > 2) return (PlayerCount()/2)*5;
+    return 0;
+} 
+
+function int AIDir_CurrentLevel(void){
+    // The short of f_AIDir_Check() / 10
+    // Determines the monster levelset to spawn.
+    return (f_AIDir_Check() / 10 + AIDir_ExtraLevelGap());
+}
+
 // the ai director debugger
-script 269 (void)
+script 269 OPEN
 {
 	str msg;
     while(1)
     {
-		
 		msg = strParam(
 		s:"Players in game: ", d:PlayerCount(),
 		s:"\nWDir Packs Score: ", d:WPTrack_GetScore(),
 		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore(),
 		s:"\nPupDir Upgrades Score: ", d:PUTrack_GetScore(),
 		s:"\nAI Director status: ", d:f_AIDir_Check(),
-		s:"\nAI Spawn Level: ", d:((f_AIDir_Check() / 10) + 1));
+		s:"\nAI Spawn Level: ", d:(AIDir_CurrentLevel() + 1));
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
         delay(1);
 		

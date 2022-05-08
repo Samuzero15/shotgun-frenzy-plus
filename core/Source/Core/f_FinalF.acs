@@ -301,7 +301,7 @@ script 125 (int l_Condition)
     
     // collect final score
     if(l_Condition != 2)g_SkillScore = f_AIDir_Check();
-    g_FinalSkillScore = g_SkillScore / 2;
+    g_FinalSkillScore = g_SkillScore / (2+(PlayerCount()/2));
 	
 	// Cheaty fucks.
 	//if(!alarmsUsed) g_finalSkillScore = -1;
@@ -340,10 +340,10 @@ script 125 (int l_Condition)
     hudmessagebold(s:"a"; 0, 160, 0, 0.1, 0.1, 900.0);
     
     // add or subtract bonus points
-    if (l_Condition == 1)       g_FinalSkillScore += 20;
-    if (l_Condition == 2)       g_FinalSkillScore += 15;
-    if (l_Condition == 3)       g_FinalSkillScore += 10;
-    if (l_Condition == 4)       g_FinalSkillScore -= 20;
+    if (l_Condition == 1)       g_FinalSkillScore += 20 + AIDir_ExtraLevelGap()*2;
+    if (l_Condition == 2)       g_FinalSkillScore += 15 + AIDir_ExtraLevelGap()*2;
+    if (l_Condition == 3)       g_FinalSkillScore += 10 + AIDir_ExtraLevelGap()*2;
+    if (l_Condition == 4)       g_FinalSkillScore -= 20 + AIDir_ExtraLevelGap()*2;
     
 	str msg;
 	switch(l_Condition){
@@ -358,6 +358,8 @@ script 125 (int l_Condition)
 	else g_FinalSkillScore -= (p_TotalPlayerDeaths / PlayerCount())/ 3;
 	// Well not on my watch!
 	
+	g_FinalSkillScore = g_FinalSkillScore /  (1 + (playercount()/2));
+
 	// check limits
     if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
     if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
@@ -372,34 +374,29 @@ script 125 (int l_Condition)
 	hudmessagebold(s:msg; 0, 150, CR_WHITE, s_ScreenSize[0] * 0.5 + 10.0, s_ScreenSize[1] * 0.5 + 35.0, 0.0);
 
 	int LevelKilledMonsters = getlevelinfo(LEVELINFO_KILLED_MONSTERS);
-    while(l_MonstersKilled < LevelKilledMonsters)
+
+    while(l_PlayerDeaths < p_TotalPlayerDeaths || l_MonstersKilled < LevelKilledMonsters)
     {
         setfont("STATBIGS");
         ambientsound("weapons/pistol", 20);
 		hudmessagebold(s:"You killed"; 0, 151, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 55.0, 0.0);
-		
-		if(l_MonstersKilled < LevelKilledMonsters - 100)
-			l_MonstersKilled += 25;
-        l_MonstersKilled ++;
-		setfont("BIGFONT");
-        hudmessagebold(d:l_MonstersKilled, s:" Demons"; 0, 154, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 55.0, 0.0);
-        
-        delay(2);
-    }
-    
-    delay(35*1);
-    // display total deaths
-    setfont("STATBIGS");
-    
-    while(l_PlayerDeaths < p_TotalPlayerDeaths)
-    {
-        setfont("STATBIGS");
-        ambientsound("weapons/pistol", 20);
 		hudmessagebold(s:"Players died"; 0, 152, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 70.0, 0.0);
-        l_PlayerDeaths ++;
+		if(l_PlayerDeaths < p_TotalPlayerDeaths) l_PlayerDeaths ++;
+
+		if(l_MonstersKilled < LevelKilledMonsters - 10000)
+			l_MonstersKilled += 100;
+		if(l_MonstersKilled < LevelKilledMonsters - 1000)
+			l_MonstersKilled += 50;
+		else if(l_MonstersKilled < LevelKilledMonsters - 100)
+			l_MonstersKilled += 25;
+        else l_MonstersKilled ++;
+
+		if(l_MonstersKilled >= LevelKilledMonsters) l_MonstersKilled = LevelKilledMonsters;
+
 		setfont("BIGFONT");
-        hudmessagebold(d:l_PlayerDeaths, s:" times"; 0, 155, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 70.0, 0.0);
-        
+		hudmessagebold(d:l_MonstersKilled, s:" \cgdemons"; 0, 154, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 55.0, 0.0);
+        hudmessagebold(d:l_PlayerDeaths, s:" \cgtimes"; 0, 155, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 70.0, 0.0);
+
         delay(2);
     }
     
@@ -413,7 +410,6 @@ script 125 (int l_Condition)
         l_SkillLevel ++;
 		setfont("BIGFONT");
         hudmessagebold(d:l_SkillLevel, s:" %"; 0, 156, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 85.0, 0.0);
-
         delay(2);
     }
     

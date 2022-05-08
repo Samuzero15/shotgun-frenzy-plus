@@ -9,6 +9,12 @@
 
 ## v0 - Before the beginning...
 
+#### (9 / 5 / 2022) [Playing around with the scores]
+	*) Weaker waves are more durable depending on the player count.
+	*) The counter for killed monsters and the player deaths now show simultaneously.
+	*) Now the monster counter can count faster on higher numbers if the kills are higher than 1000 or 10000
+	*) Splitted the champion code in separate files for readability sake.
+
 #### (11 - 14 / 3 / 2022) [Champion ban-list, MenuDef refactoring & Fixes]
 	*) The menu for the SF+ settings has been revamped, and now shows 4 submenus for each option.
 	// Game Options, User Options, Item Hotkeys and the Champion Ban-List.

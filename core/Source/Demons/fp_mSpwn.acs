@@ -62,17 +62,14 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 	int damage_factor = 1.0;
 	//int adjustedCount = PlayerCount()/2;
 	int extrahealth = 0;
-	int extra_gap
 	
 	// auto adjust monsters based on player count
 	if (alpha != 0.9 && PlayerCount() > 2){
 		//log(s:"Adjusting health");
-		extra_gap = (PlayerCount()/2)*10;
-		int l_Level = f_AIDir_Check() / (10 + extra_gap);
+		int l_Level = AIDir_CurrentLevel();
 
 		extrahealth = (health*((PlayerCount() - 2)*(fixedDiv(m_hpmult, 100.0))))>>16;
-		if(l_Level >= 20) extrahp_level20 = (health*(l_Level - 20)*(fixedDiv(m_hpolv20, 100.0))))>>16;
-		if(f_AIDir_Check() / 10)
+		if(l_Level >= 20) extrahealth += (health*(l_Level - 19)*(fixedDiv(m_hpolv20, 100.0)))>>16;
 
 		damage_factor = 1.0 + (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
 
