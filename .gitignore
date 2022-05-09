@@ -9,6 +9,7 @@ tools/pwads/*.*
 *.wad.backup*
 *bak.acs
 *bak.acs*
+*.o
 
 skulltag_content-3.0-beta01.pk3
 console.bat

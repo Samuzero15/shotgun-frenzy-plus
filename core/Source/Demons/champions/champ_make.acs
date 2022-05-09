@@ -1,0 +1,91 @@
+
+function void Champ_Make(void) {
+	int health;
+    int make_champion = !champion_nospawn && (/*f_PercentFast > random(0,99)*/ true || champion_forcespawn > 0);
+	int champ = Champ_Dice();
+	if(Champ_IsBanned(champ)){
+		if(champion_onbanned == 1){
+			champ = Champ_RerollToValid();
+		}
+	}
+	if (make_champion && !Champ_IsBanned(champ)) { 
+		// Make a champion enemy! (Only if he is not banned of course!)
+		GiveInventory("ChampBuff_Normal", 1); 
+		// Normally a champion deals double damage, retaliates, and resists 70% of player's damage.
+		health = getactorproperty(0, APROP_Health); // Get current health, after health calculations.
+		setactorproperty(0, APROP_Health, health*2); // By default duply the health.
+		
+		// If you need to spawn a specific champion, simply, set the type number you want to spawn.
+		if(champion_typeSpawn >= CHAMP_MEATY && champion_typeSpawn <= CHAMP_PRIDEFUL){
+			champ = champion_typeSpawn;
+		}
+		Champ_SetType(champ);
+		champion_typeSpawn = -1; // Clear the selected champion.
+		//log(s:"Champion type: ", d:champ);
+		switch(champ){
+			case CHAMP_MEATY: // X5 health
+				setactorproperty(0, APROP_Health, health*5);
+			break; case CHAMP_QUICK: // Aggresive and fast!
+				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
+				GiveInventory("ChampBuff_Fast", 1);
+			break; case CHAMP_STRONG: // Really hurtful with x3 Damage!
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				GiveInventory("ChampBuff_Strong", 1);
+			break; case CHAMP_STEALTH: // Nearly invisible.
+				GiveInventory("ChampBuff_Stealth", 1);
+			break; case CHAMP_PRIDEFUL: // A literal pain in the saas.
+				setactorproperty(0, APROP_Health, health*3);
+				setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
+				GiveInventory("ChampBuff_Fast", 1);
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				GiveInventory("ChampBuff_Strong", 1);
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_PULLER);
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_HEALING);
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_EMPEROR);
+			break; case CHAMP_ZOMBIE:
+				GiveInventory("ChampZombie_LivesLeft", 3);
+			break; case CHAMP_EMPEROR: // Buffs nearby allies.
+				setactorproperty(0, APROP_Health, health*3);
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				TakeInventory("ChampBuff_NormalDef", 1);
+				GiveInventory("ChampBuff_Emperor", 1);
+			case CHAMP_POISON:
+			case CHAMP_HEALING: // Heals all nearby monsters!
+			case CHAMP_TELEPORT: // Teleports arround
+			case CHAMP_PUSHER: // Pushes enemies
+			case CHAMP_PULLER: // Pulls enemies
+				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, champ);
+			break;
+			case CHAMP_HYBRID:
+				bool valid = false;
+				int try;
+				int champ1 = 0, champ2 = 0;
+				while(!valid){
+					champ1 = Champ_Dice();
+					champ2 = Champ_Dice();
+					if(!(champ1 == champ2 || 
+					(champ1 == CHAMP_PUSHER && champ2 == CHAMP_PULLER) ||
+					(champ1 == CHAMP_PULLER && champ2 == CHAMP_PUSHER) ||
+					(champ1 == CHAMP_HYBRID || champ2 == CHAMP_HYBRID) ||
+					(champ1 == CHAMP_PRIDEFUL || champ2 == CHAMP_PRIDEFUL) ||
+					(champ1 == CHAMP_EMPEROR && (champ2 == CHAMP_STRONG || champ2 == CHAMP_MEATY)) ||
+					(champ2 == CHAMP_EMPEROR && (champ1 == CHAMP_STRONG || champ1 == CHAMP_MEATY))
+					)) valid = true;
+					else {
+						if(try >= 3){ // For runaway prevention
+							champ1 = CHAMP_QUICK;
+							champ2 = CHAMP_STRONG;
+							valid = true;
+						}
+						try++;
+					}
+				}
+				GiveInventory("ChampHybrid_Type1", champ1+1);
+				GiveInventory("ChampHybrid_Type2", champ2+1);
+				Champ_SetType(champ);// Do it again to apply the 2 translations
+				Champ_SetHybridPower("ChampHybrid_Type1");
+				Champ_SetHybridPower("ChampHybrid_Type2");
+			break;
+		}
+	}
+}

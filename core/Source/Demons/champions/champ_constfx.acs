@@ -1,0 +1,79 @@
+
+Script "SFPlus_ChampConstEffects" (int which) {
+	switch(which){
+		case CHAMP_POISON:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Poison", 1);
+				delay(35);
+			}
+		break;
+		case CHAMP_EMPEROR:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Emperor", 1);
+				delay(35);
+			}
+		break;
+		case CHAMP_HEALING:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Healing", 1);
+				delay(35);
+			}
+		break;
+		case CHAMP_PULLER:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Puller", 1);
+				delay(6);
+			}
+		break;
+		case CHAMP_PUSHER:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Pusher", 1);
+				delay(6);
+			}
+		break;
+		case CHAMP_TELEPORT:
+			while(getActorProperty(0, APROP_Health) > 0){
+				GiveInventory("ChampEffect_Teleporter", 1);
+				delay(35*2);
+			}
+		break;
+	}
+	
+}
+
+Script "SFPlus_ChampHealing_Heal" (void){
+	int SpawnHealth = CheckInventory("Monster_MaxHealth");
+	int Health = GetActorProperty(0, APROP_HEALTH);
+	if(!SpawnHealth){ 
+		GiveInventory("Monster_MaxHealth", health);
+		SpawnHealth = CheckInventory("Monster_MaxHealth");
+	}
+	if(Health == SpawnHealth || Champ_IsType(CHAMP_HEALING) || Champ_IsType(CHAMP_PRIDEFUL))
+	// Healings can't heal themselves. Pridefuls are not allowed too.
+	{	SetResultValue(0);
+		terminate;}
+	
+	SetResultValue(1);
+	// 3% of hp restored.
+	int new_health = Health + (FixedMul(SpawnHealth<<16, 0.03)>>16);
+	
+	if(new_health >= SpawnHealth)	SetActorProperty(0, APROP_HEALTH, SpawnHealth);
+	else 							SetActorProperty(0, APROP_HEALTH, new_health);
+}
+Script "SFPlus_ChampEmperor_Buff" (void){
+	//Buffs monsters temporally, like champions but with 50% of speed more for the monsters arround
+	if(CheckInventory("ChampBuff_NormalAtk") || Champ_IsType(CHAMP_EMPEROR) || Champ_IsType(CHAMP_PRIDEFUL))
+	// Emperors can't buff themselves. Pridefuls are not allowed too.
+	// Only 1 instance of buff can be allowed.
+	{	SetResultValue(0);
+		terminate;}
+	
+	SetResultValue(1);
+	int ori_speed = getactorproperty(0,APROP_Speed);
+	setactorproperty(0, APROP_Speed, FixedMul(ori_speed,1.5));
+	GiveInventory("ChampBuff_Normal", 1);
+	GiveInventory("ChampBuff_Fast", 1);
+	delay(35*3);
+	GiveInventory("ChampBuff_Reset", 1);
+	setactorproperty(0, APROP_Speed, ori_speed);
+}

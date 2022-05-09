@@ -161,6 +161,7 @@ int m_AIDCap = 250; // The maximum monster count.
 
 int p_dmgmult = 0.0;
 int m_hpmult = 0.0;
+int m_hpolv20 = 0.0;
 
 // settings
 int s_ScreenSize[3] = {800, 600, 1};
@@ -234,6 +235,7 @@ function void InitDB_ReadConsole(void)
 	int sfp_maxmonsters = GetCvar("sfp_maxmonsters");
 	int sfp_playerdmgmult = GetCvar("sfp_playerdmgmult");
 	int sfp_monsterhpmult = GetCvar("sfp_monsterhpmult");
+	int sfp_monsolv20hpmult = GetCvar("sfp_monsolv20hpmult");
 
 	if (sf_startcash)  f_Startcash 	  = InitDB_Clamp(sf_startcash, 1000,  20000, 2500);
 	if (sf_teamcash)   c_Startcash 	  = InitDB_Clamp(sf_teamcash, 	500,  20000, 5000);
@@ -249,6 +251,7 @@ function void InitDB_ReadConsole(void)
 	if(sfp_maxmonsters) 	m_AIDCap 	  	= InitDB_Clamp(sfp_maxmonsters, 50, 500, 250);
 	if(sfp_playerdmgmult)	p_dmgmult		= InitDB_Clamp(sfp_playerdmgmult, 1.00, 200.0, 0.0);
 	if(sfp_monsterhpmult)	m_hpmult		= InitDB_Clamp(sfp_monsterhpmult, 1.00, 200.0, 0.0);
+	if(sfp_monsolv20hpmult)	m_hpolv20		= InitDB_Clamp(sfp_monsolv20hpmult, 1.00, 200.0, 0.0);
 	//log(d:35 * 60 * f_GameLength, s:" tics");
 }
 

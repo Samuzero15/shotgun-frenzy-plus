@@ -1,0 +1,66 @@
+
+Script "SFPlus_ChampionDeath" (void){
+	if(CheckInventory("Champ_Type") >= 1){
+		if(CheckInventory("ChampZombie_SkipDeathScript") && CheckInventory("ChampZombie_LivesLeft")){
+			// Resurrect it again, with less chance
+			int dice = random(0,99);
+			int lives = CheckInventory("ChampZombie_LivesLeft");
+			
+			if(dice < 60*lives){
+				delay(random(35*2, 35*10));
+				TakeInventory("ChampZombie_LivesLeft", 1);
+				while(GetActorProperty(0, APROP_HEALTH) <= 0){
+					// Try raising.
+					delay(1);
+					Thing_Raise(0, 1);
+				}
+				SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+			}
+			else terminate;
+		}
+		if(CheckInventory("ChampZombie_SkipDeathScript")) terminate;
+		int x = GetActorX(0);
+		int y = GetActorY(0);
+		int z = GetActorFloorZ(0);
+		int angle = GetActorAngle(0);
+		int tid = ActivatorTID();
+
+		if(Champ_IsType(CHAMP_EXPLOSIVE) || Champ_IsType(CHAMP_PRIDEFUL)){ // In matter of a second, explodes!
+			delay(5);
+			SpawnForced("ChampExplosive_Kaboom", x, y, z, 0,  angle);
+			SpawnForced("ChampExplosive_Kaboom", x, y, z + getActorProperty(0, APROP_HEIGHT), 0,  angle);
+		}
+		if(Champ_IsType(CHAMP_GOLDEN) || Champ_IsType(CHAMP_PRIDEFUL)){ // Spawn some extra money on death!
+			SpawnForced("ChampGolden_MoneySplash", x, y, z, 0, angle);
+		}
+		if(Champ_IsType(CHAMP_ZOMBIE) || Champ_IsType(CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
+			delay(random(35*2, 35*10));
+			GiveInventory("ChampZombie_SkipDeathScript", 1);
+			while(GetActorProperty(0, APROP_HEALTH) <= 0){
+				// Try raising.
+				delay(1);
+				Thing_Raise(0, 1);
+			}
+			TakeInventory("ChampZombie_LivesLeft", 1);
+			SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+		}
+		if(Champ_IsType(CHAMP_SPLIT)){ // Spawns 2 copies of the same monster!
+			int who = GetActorClass(0);
+			int r = GetActorProperty(0, APROP_RADIUS) + 5.0;
+			int temptid = UniqueTID();
+			delay(15);
+			Spawn("TeleportFog", x+FixedMul(r, (cos(angle + 0.25))), y+FixedMul(r, (sin(angle + 0.25))), z, temptid, angle >> 8);
+			Spawn("TeleportFog", x+FixedMul(r, (cos(angle + 0.75))), y+FixedMul(r, (sin(angle + 0.75))), z, temptid, angle >> 8);
+			SpawnForced(who, x+FixedMul(r, (cos(angle + 0.25))), y+FixedMul(r, (sin(angle + 0.25))), z, temptid, angle >> 8);
+			SpawnForced(who, x+FixedMul(r, (cos(angle + 0.75))), y+FixedMul(r, (sin(angle + 0.75))), z, temptid, angle >> 8);
+			GiveActorInventory(temptid, "ChampSplit_SkipSpawnScript", 1); 
+			// Splited enemies are not champions, and not hp recalculated.
+			int splittedHealth = FixedMul(CheckInventory("Monster_MaxHealth")<<16, 0.5)>>16;
+			// The max health of the dead monster, will be split in 2 (50% each monster.)
+			Thing_Remove(0); // Remove the splitter monster.
+			SetActorProperty(temptid, APROP_Health, splittedHealth);
+			Thing_ChangeTID(temptid, tid);
+			// Give it back the TID of the dead monster, 
+		}
+	}
+}

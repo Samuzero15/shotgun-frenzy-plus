@@ -1,0 +1,197 @@
+
+// Took from TDRR's Rainbow monsters and from Mikk's color champions, sorry not sorry :p
+#define CHAMP_MEATY 		1 //5x health
+#define CHAMP_QUICK 		2 //2x faster movement + aggresive.
+#define CHAMP_STRONG 	3 //4x damage
+#define CHAMP_STEALTH 	4 //Hardly visible!
+#define CHAMP_POISON 	5 //Players arround it will get poisoned, leaves a poison dust that poisons players.
+#define CHAMP_EXPLOSIVE 	6 //Explodes on death.
+#define CHAMP_GOLDEN 	7 //Steals coins per each hit!, Drops coins!
+#define CHAMP_SPLIT 		8 //Spanws 2 enemies of the same type, with less health.
+#define CHAMP_TELEPORT 	9 //Teleports around
+#define CHAMP_HEALING 	10 //Heals monsters arround.
+#define CHAMP_PUSHER 	11 //Pushes anyone near this monster.
+#define CHAMP_PULLER 	12 //Pulls anyone near this monster.
+#define CHAMP_HYBRID 	13 //2 Champion skills in a single monster.
+#define CHAMP_EMPEROR 	14 //x3 Hp + x3 Damage, Buffs 50% speed and x2 damage for the monsters arround, as long they are in the AoE.
+#define CHAMP_ZOMBIE 	15 //He will come back, rises from its grave after being killed.
+#define CHAMP_PRIDEFUL 	16 //5 champion skills in a single monster. Drops lotta goodies on death.
+
+#define CHAMPCOLOR_RED 1
+#define CHAMPCOLOR_DARKRED 2
+#define CHAMPCOLOR_GREEN 3
+#define CHAMPCOLOR_DARKGREEN 4
+#define CHAMPCOLOR_BLUE 5
+#define CHAMPCOLOR_YELLOW 6
+#define CHAMPCOLOR_ORANGE 7
+#define CHAMPCOLOR_PINK 8
+#define CHAMPCOLOR_PURPLE 9
+#define CHAMPCOLOR_BROWN 10
+#define CHAMPCOLOR_CYAN 17
+#define CHAMPCOLOR_BRONZE 12
+#define CHAMPCOLOR_SILVER 13
+#define CHAMPCOLOR_GOLDEN 14
+#define CHAMPCOLOR_BLACK 15
+#define CHAMPCOLOR_WHITE 16
+
+#define CHAMP_AMOUNT 16
+
+int champion_forcespawn;
+int champion_nospawn;
+int champion_typeSpawn;
+int champion_allowlist[CHAMP_AMOUNT];
+int champion_validlist[CHAMP_AMOUNT];
+int champion_validstack;
+int champion_onbanned;
+
+Script "SFPlus_InitChampColors" OPEN {
+	CreateTranslation(CHAMPCOLOR_RED, 		0:255=%[0.00,0.00,0.00]:[2.00,0.00,0.00]); // Red
+	CreateTranslation(CHAMPCOLOR_DARKRED, 	0:255=%[0.00,0.00,0.00]:[1.00,0.00,0.00]); // Dark Red
+	CreateTranslation(CHAMPCOLOR_YELLOW, 	0:255=%[0.00,0.00,0.00]:[2.00,1.76,0.00]); // Yellow
+	CreateTranslation(CHAMPCOLOR_BLUE, 		0:255=%[0.00,0.00,0.00]:[0.00,0.00,2.00]); // Blue
+	CreateTranslation(CHAMPCOLOR_DARKGREEN, 0:255=%[0.00,0.00,0.00]:[0.00,1.50,0.50]); // Dark Green
+	CreateTranslation(CHAMPCOLOR_BRONZE, 	0:255=%[0.00,0.00,0.00]:[1.22,0.78,0.49]); // Bronze
+	CreateTranslation(CHAMPCOLOR_BROWN, 	0:255=%[0.00,0.00,0.00]:[1.00,0.70,0.15]); // Brown
+	CreateTranslation(CHAMPCOLOR_SILVER, 	0:255=%[0.00,0.00,0.00]:[1.62,2.00,2.00]); // Silver
+	CreateTranslation(CHAMPCOLOR_GOLDEN, 	0:255=%[0.27,0.00,0.00]:[2.00,1.86,0.00]); // Golden
+	CreateTranslation(CHAMPCOLOR_ORANGE, 	0:255=%[0.50,0.00,0.00]:[2.00,1.22,0.43]); // Orange
+	CreateTranslation(CHAMPCOLOR_GREEN, 	0:255=%[0.00,0.00,0.00]:[0.00,2.00,0.00]); // Green
+	CreateTranslation(CHAMPCOLOR_PINK, 		0:255=%[0.22,0.00,0.00]:[2.00,1.02,1.12]); // Pink
+	CreateTranslation(CHAMPCOLOR_PURPLE, 	0:255=%[0.22,0.00,0.00]:[2.00,0.52,0.62]); // Purple
+	CreateTranslation(CHAMPCOLOR_CYAN, 		0:255=%[0.00,0.00,1.01]:[1.47,2.00,2.00]); // Cyan
+	CreateTranslation(CHAMPCOLOR_BLACK, 	0:255=%[0.00,0.00,0.00]:[0.50,0.50,0.50]); // Black
+	CreateTranslation(CHAMPCOLOR_WHITE, 	0:255=%[0.00,0.00,0.00]:[2.00,2.00,2.00]); // White
+	champion_nospawn = false;
+	champion_forcespawn = false;
+	champion_typeSpawn = -1;
+	champion_onbanned = GetCvar("sfp_champ_onbanned");
+	Champ_InitBanlist();
+}
+
+function void Champ_InitBanlist(void){
+	champion_validstack = 0;
+	for (int i = 0; i < CHAMP_AMOUNT; i++){
+		champion_allowlist[i] = GetCvar(strparam(s:"sfp_champ_", d:(i+1)));
+		if(!champion_allowlist[i]){
+			champion_validlist[champion_validstack] = i+1;
+			champion_validstack++;
+		}
+	}
+}
+
+function bool Champ_IsBanned(int champ){
+	return champion_allowlist[champ-1];
+}
+
+function int Champ_Dice(void){
+	int res = random(CHAMP_MEATY, CHAMP_PRIDEFUL);
+	// So the chances of getting a pride champ are small considering it's pretty powerful.
+	if(	(res == CHAMP_PRIDEFUL)) res = random(CHAMP_MEATY, CHAMP_PRIDEFUL);
+	return res;
+}
+
+function int Champ_RerollToValid(void){
+	int res = random(0, champion_validstack-1);
+	// If the last champion monster is a banned one, reroll to another one.
+	return champion_validlist[res];
+}
+
+function void Champ_SetHybridPower(str actor){
+	int champ_type = CheckInventory(actor) - 1;
+	switch(champ_type){
+		case CHAMP_MEATY: // X5 health
+			setactorproperty(0, APROP_Health, GetActorProperty(0, APROP_HEALTH)*5);
+		break; case CHAMP_QUICK: // Aggresive and fast!
+			setactorproperty(0, APROP_Speed, getactorproperty(0,APROP_Speed)*2);
+			GiveInventory("ChampBuff_Fast", 1);
+		break; case CHAMP_STRONG: // Really hurtful with x3 Damage!
+			TakeInventory("ChampBuff_NormalAtk", 1);
+			GiveInventory("ChampBuff_Strong", 1);
+		break; case CHAMP_STEALTH: // Nearly invisible.
+			GiveInventory("ChampBuff_Stealth", 1);
+		break; case CHAMP_ZOMBIE:
+			GiveInventory("ChampZombie_LivesLeft", 3);
+		break;
+
+		case CHAMP_EMPEROR: // Buffs nearby allies.
+				setactorproperty(0, APROP_Health, GetActorProperty(0, APROP_HEALTH)*3);
+				TakeInventory("ChampBuff_NormalAtk", 1);
+				TakeInventory("ChampBuff_NormalDef", 1);
+				GiveInventory("ChampBuff_Emperor", 1);
+		case CHAMP_POISON:
+		case CHAMP_HEALING: // Heals all nearby monsters!
+		case CHAMP_TELEPORT: // Teleports arround
+		case CHAMP_PUSHER: // Pushes enemies
+		case CHAMP_PULLER: // Pulls enemies
+			ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, champ_type);
+		break;
+	}
+}
+
+
+script "SFPlus_2Translations" (int a, int b){
+	while(GetActorProperty(0, APROP_Health) > 0){
+		Thing_setTranslation(0, a);
+		delay(15);
+		Thing_setTranslation(0, b);
+		delay(15);
+	}
+}
+
+script "SFPlus_RainbowTranslation" (void){
+	while(GetActorProperty(0, APROP_Health) > 0){
+		Thing_setTranslation(0, CHAMPCOLOR_RED);
+		delay(6);
+		Thing_setTranslation(0, CHAMPCOLOR_YELLOW);
+		delay(6);
+		Thing_setTranslation(0, CHAMPCOLOR_GREEN);
+		delay(6);
+		Thing_setTranslation(0, CHAMPCOLOR_BLUE);
+		delay(6);
+		Thing_setTranslation(0, CHAMPCOLOR_PURPLE);
+		delay(6);
+	}
+}
+
+function void Champ_SetType(int which){
+	int champcolors[16] = {
+		CHAMPCOLOR_RED,
+		CHAMPCOLOR_YELLOW,
+		CHAMPCOLOR_DARKRED,
+		0,
+		CHAMPCOLOR_DARKGREEN,
+		CHAMPCOLOR_BRONZE,
+		CHAMPCOLOR_GOLDEN,
+		CHAMPCOLOR_BLUE,
+		CHAMPCOLOR_GREEN,
+		CHAMPCOLOR_PINK,
+		CHAMPCOLOR_CYAN,
+		CHAMPCOLOR_SILVER,
+		0,
+		CHAMPCOLOR_BLACK,
+		CHAMPCOLOR_BROWN,
+		0
+	};
+	TakeInventory("Champ_Type", 0xFFFFFFFF);
+	GiveInventory("Champ_Type", which+1);
+	Thing_setTranslation(0, champcolors[which-1]);
+	if(which == CHAMP_PRIDEFUL) {
+		ACS_NamedExecuteAlways("SFPlus_RainbowTranslation", 0);
+	}
+	if(which == CHAMP_HYBRID && CheckInventory("ChampHybrid_Type1") > 0){
+		ACS_NamedExecuteAlways("SFPlus_2Translations", 0, 
+		champcolors[CheckInventory("ChampHybrid_Type1")-2], 
+		champcolors[CheckInventory("ChampHybrid_Type2")-2]);
+	}
+}
+
+function int Champ_GetType(void){
+	return (CheckInventory("Champ_Type")-1);
+}
+
+function bool Champ_IsType(int which){
+	return (
+		((CheckInventory("Champ_Type")-1) == which) || 
+		((CheckInventory("ChampHybrid_Type1")-1) == which) ||
+		((CheckInventory("ChampHybrid_Type2")-1) == which));
+}

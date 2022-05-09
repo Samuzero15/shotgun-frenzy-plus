@@ -1,0 +1,31 @@
+
+Script "SFPlus_ChampionHit" (int type, int arg1, int arg2) Event
+{
+	if(type != GAMEEVENT_ACTOR_DAMAGED) terminate;
+	SetActivator(0, AAPTR_Damage_Source);
+ 	if(Champ_GetType() <= 0) terminate;
+	int mon_class = sf_GetMonsterClass_Health();
+	switch(Champ_GetType()){
+		case CHAMP_GOLDEN: // The player will lose money for the lost health, done by this champion
+		SetActivator(0, AAPTR_Damage_Target);
+		int play = PlayerNumber();
+		if(play != -1 && p_Credits[play] >  0){
+			int hp_old = GetActorProperty(0, APROP_HEALTH);
+			int hp_now = hp_old - arg1;
+			if(hp_now < 0) hp_now = 0; 
+			int hp_loss = hp_old - hp_now;
+			int dmg_cost = (hp_loss)*(9+mon_class);
+			int money_old = p_Credits[play];
+			int money_now = money_old - dmg_cost;
+			if(money_now < 0) money_now = 0;
+			int diff = money_old - money_now;
+			p_Credits[play] = money_now;
+
+			ACS_NamedExecuteAlways("SF_CreditRemoveDisplaySmall", 0, diff);
+		}
+		break;
+		case CHAMP_EXPLOSIVE:
+		SetActivator(0, AAPTR_Damage_Target);
+		break;
+	}
+}

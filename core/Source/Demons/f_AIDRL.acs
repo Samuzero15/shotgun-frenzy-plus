@@ -23,6 +23,8 @@ int AIDirector_Demonlimit = 250; // 250 = default
 #libdefine DIFF_MED 1
 #libdefine DIFF_HARD 2
 
+#libdefine AIDRL_REPEATLASTLEVELS 5
+
 
 // *NEW* boss level
 int g_BossLevel = 0;
@@ -341,6 +343,8 @@ script 120 OPEN
 	bool l_BossRespawn;
 	int btid = 3000;
 	int bhealth;
+    int extra_gap;
+    int levelrepeater = AIDRL_REPEATLASTLEVELS;
 
 	//Check if the server wants modified waves
     //readwaves();
@@ -352,7 +356,8 @@ script 120 OPEN
 	AIDirector_Demonlimit = m_AIDCap; // Check the user's defined cap amount.
     while(l_GameStopped == 0)
     {
-	l_Level = f_AIDir_Check() / 10;
+    if(PlayerCount() > 2) extra_gap = (PlayerCount()/2)*10;
+	l_Level = f_AIDir_Check() / (10 + extra_gap);
 	l_CacoCond = f_Cacodemons == 1 && l_Level >= 4;
 	l_BossCond = l_Level >= boss_starting_level && g_BossLevel <= l_Level;
 	
@@ -360,7 +365,11 @@ script 120 OPEN
 	//print (d:l_MonDiff);
 		if (c_HaltSpawning == 0)
 		{
-			if(l_Level > 20) l_Level = 19;
+			if(l_Level > 20){
+                if(levelrepeater == 0) levelrepeater = AIDRL_REPEATLASTLEVELS;
+                l_Level = 19 - levelrepeater;
+                levelrepeater--;
+            }
 			if(l_Level < 0) l_Level = 0;
 			
 			if(l_Mondiff < AIDirector_Demonlimit)

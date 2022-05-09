@@ -56,7 +56,7 @@
 	+) Playing with the in built particles in order to make new graphical effects.
 
 #### (22 / 2 / 2022) [Champions in Progress]
-	+) Now the monsters can be spawn in their champion forms!
+	+) Now the monsters can be spawned in their champion forms!
 	// No rewards on death for now.
 	// 3 champion types implemented, Strong, Meaty and Fast champions.
 	*) Moved the monster modification code to fp_Mspwn.acs
