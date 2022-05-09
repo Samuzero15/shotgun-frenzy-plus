@@ -20,6 +20,12 @@
 	*) The healing effect from the healing champ, will not insta-kill monsters.
 	+) Added the credit stealing effect from the golden champion. (needs some sfx tho)
 	*) Demon buildings can't be spawned as champion variants now.
+	*) Now the rainbow translations will be lost after the death of the champion.
+	*) Switched the puller to pusher and viceversa in the MenuDef.
+	-) Player's heavy mass has been disabled for now. BUT
+	*) Archviles will no longer push upon making the fire attack
+	*) For this reason, now puller and pusher champions can now move the player!
+	*) Some more fixes.
 
 #### (9 / 3 / 2022) [Champions still in Progress + Some docing]
 	*) Some balance changes on the champions.
