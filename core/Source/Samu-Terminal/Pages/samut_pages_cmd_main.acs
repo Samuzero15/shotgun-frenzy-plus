@@ -126,6 +126,7 @@ function void CMDPage_Init(void){
 		CMDPage_MakeButton(p, 1, 2, FP_CB_UPGRADE_MARCOM_AIRSUP);
 		CMDPage_MakeButton(p, 1, 3, FP_CB_UPGRADE_MARCOM_IONCAN);
 		CMDPage_MakeButton(p, 1, 4, FP_CB_UPGRADE_MARCOM_CPULSE);
+		CMDPage_MakeButton(p, 2, 1, FP_CB_UPGRADE_MARCOM_VETMER);
 		CMDPage_MakeReturnButton(p, i);
 	CMDPage_MakeReturnButton(i, m);
 	

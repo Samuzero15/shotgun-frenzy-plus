@@ -323,6 +323,7 @@ script 249 OPEN
 	AutoResearch_Add(CMDEVT_REWARD_RESISB, 	3800);
 	AutoResearch_Add(CMDEVT_REWARD_REGENB, 	4700);
 	AutoResearch_Add(CMDEVT_REWARD_PUMP2, 	5600);
+	AutoResearch_Add(CMDEVT_REWARD_VETMER, 	6900);
 			
 	// make sure it is not a commander gametype
 	if (f_UseScoreSystem == 1){

@@ -64,6 +64,7 @@ OptionMenu SFPlus_GameOptions{
 	NumberField "Monster Cap *", "sfp_maxmonsters", 0, 500, 50, 0
 	Slider "Player's Extra DMG %", "sfp_playerdmgmult", 0.0, 200.0, 5.0, 0
 	Slider "Monster's Extra HP % *", "sfp_monsterhpmult", 0.0, 200.0, 5.0, 0
+	Slider "Monster's Extra HP over Lv20", "sfp_monsolv20hpmult", 0.0, 200.0, 5.0, 0
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
 }

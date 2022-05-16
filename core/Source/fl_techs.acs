@@ -34,18 +34,19 @@
 #libdefine TECH_REFINE_PUMP2	15
 #libdefine TECH_MARCOM			16
 #libdefine TECH_MARCOM_AIRSUP	17
-#libdefine TECH_MARCOM_ADVSYS	18
-#libdefine TECH_MARCOM_IONCAN	19
-#libdefine TECH_MARCOM_CPULSE	20
-#libdefine TECH_MECHFA			21
-#libdefine TECH_NUKESY			22
-#libdefine TECH_MARCOM_REPDRN   23
-#libdefine TECH_MARCOM_GEARUP	24
-#libdefine TECH_MARCOM_SOLIDG	25
-#libdefine TECH_MARCOM_TARMOR	26
-#libdefine TECH_REFINE_BOUNTY	27
-#libdefine TECH_REFINE_DEEPER	28
-#libdefine TECH_REFINE_FASTER	29
+#libdefine TECH_MARCOM_VETMER	18
+#libdefine TECH_MARCOM_ADVSYS	19
+#libdefine TECH_MARCOM_IONCAN	20
+#libdefine TECH_MARCOM_CPULSE	21
+#libdefine TECH_MECHFA			22
+#libdefine TECH_NUKESY			23
+#libdefine TECH_MARCOM_REPDRN   24
+#libdefine TECH_MARCOM_GEARUP	25
+#libdefine TECH_MARCOM_SOLIDG	26
+#libdefine TECH_MARCOM_TARMOR	27
+#libdefine TECH_REFINE_BOUNTY	28
+#libdefine TECH_REFINE_DEEPER	29
+#libdefine TECH_REFINE_FASTER	30
 
 int fp_techstate[99];
 int fp_techflags[2][3];

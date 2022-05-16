@@ -9,6 +9,13 @@
 
 ## v0 - Before the beginning...
 
+#### (15 / 5 / 2022) [Adding Ranks and a new Tech]
+	*) Refactorized and prettified the standard hud code.
+	+) New extra ranks, the elite ranks! (10 lvls more to grind!)
+	+) A new tech, Veteran Mercenaries! Get it on the Marine Command! (Needs the button graphic tho)
+	// Extra experience for the new players, x3 if under Sergant rank and x2 under Major rank!
+	// Also rewarded upon 6900 kills on CF and SD maps.
+
 #### (9 / 5 / 2022) [Playing around with the scores]
 	*) Weaker waves are more durable depending on the player count.
 	*) The counter for killed monsters and the player deaths now show simultaneously.

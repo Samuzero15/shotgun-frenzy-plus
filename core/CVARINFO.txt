@@ -23,6 +23,7 @@ server int sfp_recapmin = 0;						// Minimum monsters before sector re-capturing
 server int sfp_maxmonsters = 250;					// The total monster limit.
 server float sfp_playerdmgmult = 50.0;				// Player's extra oomph
 server float sfp_monsterhpmult = 50.0;				// Monster's extra meat
+server float sfp_monsolv20hpmult = 10.0;            // Monster's extra hp over the lv 20
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;

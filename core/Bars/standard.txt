@@ -25,33 +25,30 @@ statusbar normal// Standard Doom Status bar
 	
 		alpha 0.5{DrawImage "MEDIA0",  50,  520;}
 		drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
-	
-		inInventory HUD_DangerHealth, 1
-		{
-			drawnumber 3, StatBigsNums, RED, health, alignment(center), 55, 520;
-		}else{ inInventory HUD_CriticHealth, 1 {  // Over health
-			drawnumber 3, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
-		}else{ inInventory HUD_LowHealth, 1 {  // Low health
-			drawnumber 3, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
-		}else{ inInventory HUD_OverHealth, 1 {  // Critic health
-			drawnumber 3, StatBigsNums, CYAN, health, alignment(center), 55, 520;
-		}else{ // Normal health
-			drawnumber 3, StatBigsNums, GREEN, health, alignment(center), 55, 520;
-		}}}}
+		// Danger health
+		inInventory HUD_DangerHealth, 1 drawnumber 3, StatBigsNums, RED, health, alignment(center), 55, 520;
+		// Critic health
+		else inInventory HUD_CriticHealth, 1  drawnumber 3, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
+		// Low health
+		else inInventory HUD_LowHealth, 1 drawnumber 3, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
+		// Over health
+		else inInventory HUD_OverHealth, 1 drawnumber 3, StatBigsNums, CYAN, health, alignment(center), 55, 520;
+		// Normal health
+		else drawnumber 3, StatBigsNums, GREEN, health, alignment(center), 55, 520;
+		
 	}else {
 		drawString STATBIGS, White, "Mech Armor",  85, 550, 0, alignment(center);
-		inInventory HUD_DangerHealth, 1
-		{
-			drawnumber 4, StatBigsNums, RED, health, alignment(center), 80, 520;
-		}else{ inInventory HUD_CriticHealth, 1 {  // Over health
-			drawnumber 4, StatBigsNums, ORANGE, health, alignment(center), 80, 520;
-		}else{ inInventory HUD_LowHealth, 1 {  // Low health
-			drawnumber 4, StatBigsNums, YELLOW, health, alignment(center), 80, 520;
-		}else{ inInventory HUD_OverHealth, 1 {  // Critic health
-			drawnumber 4, StatBigsNums, CYAN, health, alignment(center), 80, 520;
-		}else{ // Normal health
-			drawnumber 4, StatBigsNums, GREEN, health, alignment(center), 80, 520;
-		}}}}
+		// Danger Health
+		inInventory HUD_DangerHealth, 1 drawnumber 4, StatBigsNums, RED, health, alignment(center), 80, 520;
+		// Critic health
+		else inInventory HUD_CriticHealth, 1 drawnumber 4, StatBigsNums, ORANGE, health, alignment(center), 80, 520;
+		// Low health
+		else inInventory HUD_LowHealth, 1 drawnumber 4, StatBigsNums, YELLOW, health, alignment(center), 80, 520;
+		// Over health
+		else inInventory HUD_OverHealth, 1 drawnumber 4, StatBigsNums, CYAN, health, alignment(center), 80, 520;
+		// Normal health
+		else drawnumber 4, StatBigsNums, GREEN, health, alignment(center), 80, 520;
+		
 	}
 	
 	inInventory not HUD_OnMech{
@@ -243,36 +240,28 @@ statusbar normal// Standard Doom Status bar
 	
 	//[Samu] Ranks
 	inInventory HUD_Rank{
-		inInventory HUD_Rank, 10 {
-			drawString Confont, ORANGE, "Commander",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 9 {
-			drawString Confont, ORANGE, "Colonel",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 8 {
-			drawString Confont, ORANGE, "Major",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 7 {
-			drawString Confont, ORANGE, "Captain",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 6 {
-			drawString Confont, ORANGE, "Lieutenant",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 5 {
-			drawString Confont, ORANGE, "Sergeant",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 4 {
-			drawString Confont, ORANGE, "Corporal",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 3 {
-			drawString Confont, ORANGE, "Specialist",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 2 {
-			drawString Confont, ORANGE, "Private",  400, 540, 0, alignment(Center);
-		}
-		else{ inInventory HUD_Rank, 1 {
-			drawString Confont, ORANGE, "Rookie",  400, 540, 0, alignment(Center);
-		}}}}}}}}}}
+		inInventory HUD_Rank, 20 drawString Confont, ORANGE, "Ult. Commander",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 19 drawString Confont, ORANGE, "Commander",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 18 drawString Confont, ORANGE, "Colonel Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 17 drawString Confont, ORANGE, "Major Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 16 drawString Confont, ORANGE, "Captain Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 15 drawString Confont, ORANGE, "Lieutenant Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 14 drawString Confont, ORANGE, "Sergeant Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 13 drawString Confont, ORANGE, "Corporal Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 12 drawString Confont, ORANGE, "Specialist Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 11 drawString Confont, ORANGE, "Private Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 10 drawString Confont, ORANGE, "Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 9 drawString Confont, ORANGE, "Colonel",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 8 drawString Confont, ORANGE, "Major",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 7 drawString Confont, ORANGE, "Captain",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 6 drawString Confont, ORANGE, "Lieutenant",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 5 drawString Confont, ORANGE, "Sergeant",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 4 drawString Confont, ORANGE, "Corporal",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 3 drawString Confont, ORANGE, "Specialist",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 2 drawString Confont, ORANGE, "Private",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 1 drawString Confont, ORANGE, "Rookie",  400, 540, 0, alignment(Center);
+
+		
 	}
 	
 	

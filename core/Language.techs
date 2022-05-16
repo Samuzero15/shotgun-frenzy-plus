@@ -23,6 +23,10 @@ TECHD_REFINE_PUMP2		= "Increases the credit resource collection by\n"
 
 TECHD_MARCOM_AIRSTK		= "Allows you to launch aerial strikes, by dropping"
 							  "\nbombs in the selected targets.";
+
+TECHD_MARCOM_VETMER		= "Speeds up the Exp. gaining for all new players"
+							"\nunder Sergeant Rank by x3 Exp points, "
+							"\nand under Major Rank by x2 Exp points.";
 							  
 TECHD_MARCOM_ADVSYS		= "Powerful turrets are avilable to be deployed on "
 							  "\nthe battlefield";	
