@@ -1,0 +1,40 @@
+[Enu default]
+
+SAMUT_HEALTERM_HI1 = "Health Terminal online, Welcome %p";
+SAMUT_HEALTERM_HI2 = "Health Terminal online, Did you got hurt %p?";
+SAMUT_HEALTERM_HI3 = "Health Terminal online, Need a powerup %p?";
+SAMUT_HEALTERM_BYE1 = "Watch yourself, %p";
+SAMUT_HEALTERM_BYE2 = "Stay healthy %p, don't get shot";
+SAMUT_HEALTERM_BYE3 = "Go get them, %p";
+
+SAMUT_AMMOTERM_HI1 = "Ammo Terminal online, Make it quick, %p";
+SAMUT_AMMOTERM_HI2 = "Ammo Terminal online, Pick your weapons, %p";
+SAMUT_AMMOTERM_HI3 = "Ammo Terminal online, Pack your heat %p";
+SAMUT_AMMOTERM_BYE1 = "Remember %p, shoot to kill";
+SAMUT_AMMOTERM_BYE2 = "Don't you die on me %p";
+SAMUT_AMMOTERM_BYE3 = "No survivors %p";
+
+SAMUT_MECHTERM_NOMECH_HI = "Mech Terminal online, Buy your ride %p";
+SAMUT_MECHTERM_NOMECH_BYE = "Trust me, that's money well spent, %p!";
+SAMUT_MECHTERM_HI1 = "Mech Terminal online, Your vehicle is ready %p";
+SAMUT_MECHTERM_HI2 = "Mech Terminal online, Ready to roll %p?";
+SAMUT_MECHTERM_HI3 = "Mech Terminal online, Need a ride %p?";
+SAMUT_MECHTERM_BYE1 = "Come back if you need a ride, %p!";
+SAMUT_MECHTERM_BYE2 = "Gears over legs %p!";
+SAMUT_MECHTERM_BYE3 = "It's ready when you are %p!";
+SAMUT_MECHTERM_REPAIR_HI1 = "Mech Terminal online, I'm not done yet, %p.";
+SAMUT_MECHTERM_REPAIR_HI2 = "Mech Terminal online, Hold up, %p";
+SAMUT_MECHTERM_REPAIR_HI3 = "Mech Terminal online, Give me some time %p.";
+SAMUT_MECHTERM_REPAIR_BYE1 = "I'll call you when it's done %p.";
+SAMUT_MECHTERM_REPAIR_BYE2 = "Yeah %p, go kill something. I'm busy";
+SAMUT_MECHTERM_REPAIR_BYE3 = "Please wait for a while %p.";
+SAMUT_MECHTERM_MECH_BYE1 = "All set, now crush some skulls %p!";
+SAMUT_MECHTERM_MECH_BYE2 = "Treat her like a woman, %p!";
+SAMUT_MECHTERM_MECH_BYE3 = "You're up %p, go nuts!";
+
+
+SAMUT_COMMTERM_HI = "Comm. Terminal online, at your orders %p";
+SAMUT_COMMTERM_BYE = "Stay safe %p";
+
+SAMUT_DEFAULT_HI = "Welcome %p to the terminal";
+SAMUT_DEFAULT_BYE = "See you soon %p";

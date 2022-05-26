@@ -85,7 +85,8 @@
 #libdefine FP_CB_DEPLOY_TURRET_FLAMER		FP_CB_DEPLOY_TURRET_TESCOL+1
 #libdefine FP_CB_DEPLOY_TURRET_CHAINGUN		FP_CB_DEPLOY_TURRET_FLAMER+1
 #libdefine FP_CB_DEPLOY_TURRET_SHOTGUN		FP_CB_DEPLOY_TURRET_CHAINGUN+1
-#libdefine FP_CB_NUKE						FP_CB_DEPLOY_TURRET_SHOTGUN+1
+#libdefine FP_CB_DEPLOY_TURRET_BFG			FP_CB_DEPLOY_TURRET_SHOTGUN+1
+#libdefine FP_CB_NUKE						FP_CB_DEPLOY_TURRET_BFG+1
 #libdefine FP_CB_NUKE_IT_NOW				FP_CB_NUKE+1
 
 #libdefine FP_COM_BUTTONS FP_CB_NUKE_IT_NOW+1// As the last one, add 1 to get numerated total of this!
@@ -180,7 +181,8 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_DEPLOY_TURRET_FLAMER,		"Deploy a Flame Turret",		"CM47", "FP_DEPCD_TURRET_FLAMER");
 	CMDBut_Add(FP_CB_DEPLOY_TURRET_CHAINGUN,	"Deploy a Chaingun Turret",		"CC14", "FP_DEPCD_TURRET_CHAINGUN");
 	CMDBut_Add(FP_CB_DEPLOY_TURRET_SHOTGUN,		"Deploy a Shotgun Turret",		"CC13", "FP_DEPCD_TURRET_SHOTGUN");
-	
+	CMDBut_Add(FP_CB_DEPLOY_TURRET_BFG,			"Deploy a BFG Turret", 			"CC17", "FP_DEPCD_TURRET_BFG");
+
 	CMDBut_Add(FP_CB_NUKE,			"Activate nuke",			"CM75", "Activate the silo, to nuke the map.");
 	CMDBut_Add(FP_CB_NUKE_IT_NOW,	"Launch the nuke, now!",		"CM75", "Click it only if you're sure to nuke this map\njust remember, hold up for 5 minutes and you win.\n\n This action cannot be undone, are you sure?");
 
@@ -439,62 +441,37 @@ function void CMDBut_UpdateConds(void){
 	
 	btn = FP_CB_DEPLOY_TURRET;
 	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Build the marine command to unlock this.");
-	
-	btn = FP_CB_DEPLOY_TURRET_BULLET;
-	CMDBut_SetPrice		 (btn, "turret_bullet");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_BULLET);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_TURRET_SHOTGUN;
-	CMDBut_SetPrice		 (btn, "turret_shotgun");
-	CMDBut_SetShowCond	 (btn, allow_turret_c());
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_SHOTGUN);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_TURRET_ROCKET;
-	CMDBut_SetPrice		 (btn, "turret_rocket");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_ROCKET);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_TURRET_PLASMA;
-	CMDBut_SetPrice		 (btn, "turret_plasma");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_ADVSYS),
-								"Requires Advanced Systems...");
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_PLASMA);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_TURRET_TESCOL;
-	CMDBut_SetPrice		 (btn, "turret_tesla");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_ADVSYS),
-								"Requires Advanced Systems...");
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_TESLA);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_TURRET_FLAMER;
-	CMDBut_SetPrice		 (btn, "turret_flame");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_ADVSYS),
-								"Requires Advanced Systems...");
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_FLAME);
-	//CMDBut_SetIgnorePrice(btn, true);
-								
-	btn = FP_CB_DEPLOY_TURRET_CHAINGUN;
-	CMDBut_SetPrice		 (btn, "turret_chaingun");
-	CMDBut_SetShowCond	 (btn, allow_turret_c());
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_ADVSYS),
-								"Requires Advanced Systems...");
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_TURRET_CHAINGUN);
-	//CMDBut_SetIgnorePrice(btn, true);
+
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_BULLET, 	CMDEVT_DEPLOY_TURRET_BULLET, 	"turret_bullet", false);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_SHOTGUN, 	CMDEVT_DEPLOY_TURRET_SHOTGUN, 	"turret_shotgun", false);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_ROCKET, 	CMDEVT_DEPLOY_TURRET_ROCKET, 	"turret_rocket", false);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_PLASMA, 	CMDEVT_DEPLOY_TURRET_PLASMA, 	"turret_plasma", true);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_TESCOL, 	CMDEVT_DEPLOY_TURRET_TESLA, 	"turret_tesla", true);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_FLAMER, 	CMDEVT_DEPLOY_TURRET_FLAME, 	"turret_flame", true);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_CHAINGUN, 	CMDEVT_DEPLOY_TURRET_CHAINGUN, 	"turret_chaingun", true);
+	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_BFG, 		CMDEVT_DEPLOY_TURRET_BFG, 		"turret_bfg", true);
 								
 	CMDBut_SetShowCond		(FP_CB_NUKE, !CheckInventory("c_NukeLaunched") && CheckInventory("f_allownuke"));
 	CMDBut_SetShowCond		(FP_CB_NUKE_IT_NOW, !CheckInventory("c_NukeLaunched") && CheckInventory("f_allownuke"));
 	CMDBut_SetEvent			(FP_CB_NUKE_IT_NOW,  CMDEVT_SCRIPT_NUKE);
 	CMDBut_SetAccessCond 	(FP_CB_NUKE, Tech_IsDoneC(TECH_NUKESY) && Tech_IsDoneC(TECH_ARMORY_ARMS2),
 								"Requires Arms 2 and the Nuke Sylo...");
+}
+
+function void CMDBut_Conds_Deploy(int btn, int evt, int price, int require_advsys){
+	if(require_advsys == true)
+		CMDBut_Conditions(btn, evt, price, allow_turret_c(),
+		 Tech_IsDoneC(TECH_MARCOM_ADVSYS), "Requires Advanced Systems...");
+	else 
+		CMDBut_Conditions(btn, evt, price, allow_turret_c(), true, "");
+}
+
+function void CMDBut_Conditions(int btn, int evt, int price, int show_cond, int access, int no_access_msg){
+	CMDBut_SetPrice		 (btn, price);
+	CMDBut_SetShowCond	(btn, show_cond);
+	CMDBut_SetAccessCond (btn, access,
+								no_access_msg);
+	CMDBut_SetEvent		(btn, evt);
 }
 
 function void CMDBut_InitConds(void) {

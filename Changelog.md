@@ -9,6 +9,12 @@
 
 ## v0 - Before the beginning...
 
+#### (24 / 5 / 2022) [BFG Turret Button, login/logout msg in terminals]
+	*) Now the SamuTerminal's login and logout can be customized anytime.
+	+) Added some messages when login or logout in any terminal
+	+) Added the sprite for the BFG Turret button.
+	+) The BFG Turret button is now ready on the commander terminal (20000 credits per deploy)
+
 #### (15 / 5 / 2022) [Adding Ranks and a new Tech]
 	*) Refactorized and prettified the standard hud code.
 	+) New extra ranks, the elite ranks! (10 lvls more to grind!)

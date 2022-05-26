@@ -25,7 +25,6 @@ w) Work in progres
 [d] Kill-streak system.
 	[d] Display 
 [d] Health Terminal's Player upgrades
-[ ] Implement the Bank tech.
 [d] Flak-Bombs for the dual shot.
 [ ] Achievemets? just for the sake of it? Heck yes!.
 [w] About the Testing map
@@ -42,14 +41,15 @@ w) Work in progres
 [w] Replace the sprites for...
 	[d] Quadshot
 	[ ] Railgun
-	[ ] Spitter
-[ ] Edit a bit the slug rail attack.
+[w] Edit a bit the slug rail attack.
 [ ] Ammo and Health indicators, to let the players know when to rethreat.
-[ ] Inventory/Weapon/Stats saving for the current game. 
+[d] Inventory/Weapon/Stats saving for the current game. 
 	(As long you're on the same map, you could recover your stuff.)
 	Useful if you're suffering for high ping and therefore, desynching enough 
 	to be kicked out of the game. Resulting in a total loss of your progress.
 [ ] Slove that issue un the spectatic freezing on commanding.
-[ ] Add the BFG and Shotgun turrets.
-[ ] Add the icons for the Chaingun, BFG and Shotgun Turrets.
+[d] Add the BFG, Chaingun and Shotgun turrets.
+[d] Add the icons for the Chaingun, BFG and Shotgun Turrets.
 [ ] Make the Rune page terminal.
+[ ] Finish up champions
+[ ] Implement the Elite Weapons
