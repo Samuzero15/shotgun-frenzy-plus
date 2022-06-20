@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fp_aquse.acs
+// Auto use items!
+
+#library "fp_aquse"
+
+#include "zcommon.acs"
 
 script "Auto-Use Items" (void){
 	// Let's autouse the stimpack if they're low on hp.
@@ -51,4 +61,16 @@ script "Auto-Use Items" (void){
 		
 		delay(1);
 	}
+}
+
+script "SFPlus_ItemCooldown" (int delayme){
+	if(!CheckInventory("InventoryCooldown"))GiveInventory("InventoryCooldown", delayme);
+	while(CheckInventory("InventoryCooldown")){
+		TakeInventory("InventoryCooldown", 1);
+		delay(1);
+	}
+}
+
+script "PlayerOnFullHP" (void){
+	SetResultValue(PlayerHealth() == GetActorProperty(0, APROP_SPAWNHEALTH));
 }

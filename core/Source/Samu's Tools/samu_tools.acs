@@ -5,7 +5,6 @@
 #include "constants.acs"
 #include "players_funs.acs"
 #include "cside_scripts.acs"
-#include "autouse_scripts.acs"
 
 function void setupTerminals(void){
 	Tech_Set(TECH_GENLAB, 		TECHF_DONE);

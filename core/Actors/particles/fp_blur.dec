@@ -31,6 +31,34 @@ Actor BrightBlur : Blur
       Loop
    }
 }
+// Armor Shard Blur
+Actor Blur_ArmorShardA : BrightBlur {scale 1.0 States{Spawn:
+		ARSD A 1 
+		goto Super::Spawn}}
+Actor Blur_ArmorShardB : BrightBlur {scale 1.0 States{Spawn:
+		ARSD B 1 
+		goto Super::Spawn}}
+Actor Blur_ArmorShardC : BrightBlur {scale 1.0 States{Spawn:
+		ARSD C 1 
+		goto Super::Spawn}}
+Actor Blur_ArmorShardD : BrightBlur {scale 1.0 States{Spawn:
+		ARSD D 1 
+		goto Super::Spawn}}
+
+// Health Bonus Blur
+Actor Blur_HealthBonusA : BrightBlur {scale 1.0 States{Spawn:
+		BON1 A 1 
+		goto Super::Spawn}}
+Actor Blur_HealthBonusB : BrightBlur {scale 1.0 States{Spawn:
+		BON1 B 1 
+		goto Super::Spawn}}
+Actor Blur_HealthBonusC : BrightBlur {scale 1.0 States{Spawn:
+		BON1 C 1 
+		goto Super::Spawn}}
+Actor Blur_HealthBonusD : BrightBlur {scale 1.0 States{Spawn:
+		BON1 D 1 
+		goto Super::Spawn}}
+
 // Razor Saw blur
 Actor Blur_SawA : Blur
 {States{Spawn:

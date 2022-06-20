@@ -37,10 +37,11 @@ Script "SFPlus_MonsterKill" Kill{
 	  if	(flag_boss) montype = 2;
 	  if	(flag_hard) montype = 1;
 
+	  int i = 0;
+	  int chance = 10;
+
 	 // [Samu] Drop credits
 	 if(!flag_NoCount){
-		int i = 0;
-		int chance = 10;
 		if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")) 
 			chance = chance + 5; 
 		while((1 + flag_gibbed + flag_boss + flag_hard) > i){
@@ -49,6 +50,16 @@ Script "SFPlus_MonsterKill" Kill{
 			i++;
 		}
 	 }
+	 // Drop Health-Armor Bonuses
+	  i = 0;
+	  while((1 + flag_gibbed + flag_boss + flag_hard) > i){
+		if(random(0, 100) < chance)
+			ItemDr_Spawn("HealthArmorBonusSplash");
+	  i++;
+	  }
+  	  
+	 
+
 	 // Drop reward items.
 	 ItemDr_MonsterDrop(monsterClass);
 	 

@@ -91,7 +91,7 @@ function int AIDir_CurrentLevel(void){
 }
 
 // the ai director debugger
-script 269 OPEN
+script 269 (void)//OPEN
 {
 	str msg;
     while(1)

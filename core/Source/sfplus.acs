@@ -18,9 +18,10 @@
 #import "FP_SBINF.acs"  // SBarInfo Manipulation
 #import "fp_credd.acs" // The credit dropper command.
 #import "fp_music.acs" // Music changing
-#import "fp_puhud.acs"
-#import "fp_ithud.acs"
-#import "fp_save.acs"
+#import "fp_puhud.acs" // Powerup Hud
+#import "fp_ithud.acs" // The item hud
+#import "fp_save.acs" // Saving data from maps
+#import "fp_aquse.acs" // Auto use and quick use scripts
 #import "fp_event.acs" // Testing stuff..
 //#import "f_TMap.acs" <- intresting stuff...
 

@@ -9,6 +9,21 @@
 
 ## v0 - Before the beginning...
 
+#### (5 - 20 / 6 / 2022) [Armor revamps, (WIP) Hand-Grenades and you]
+	// It's been a while huh?
+	*) Health bonuses are buffed, +5 HP, up to 300 MaxHP 
+	+) Armor shards are added, +5 AP up to 300 MaxAP, 33% protection like vanilla armor.
+	+) Now enemies can drop a splash of Health Bonuses and Armor Shards! (And they can chase you, like coins!)
+	*) Armors can now protect your health from any harm with 100%.
+	*) Armors when getting damaged, can absorb a piece of damage, Steel-Plating Armor (a.k.a The green armor) can absorb the 17.5% of the damage while the Megasphere armor can absorb 25% of damage.
+	// It looks like a nerf, but when you think about it, armors are like a second health bar, but they can absorb damage.
+	*) Temperance behavior has been changed, now temperance adds extra absorb percent on armors, and spawns extra Armor Shards.
+	*) When having a lot of shards, the armor you pickup will replace the shard's protection percent and take the same amount of shards you got if the duration is greater than base armor. (If you have 150 Armor Shards, and you pickup a Steel-Plating Armor, the armor will have the duraton of 150 AP)
+	*) Steel-Plating Armor is now added into the drops of monsters with a chance of 17.5% of spawning.
+	+) Grenades are now added as an item. Launches a Shell grenade (WIP) (Needs an item sprite for it)
+	*) Added the HellTrigger and Hand Grenade hotkey control in item hotkeys
+	// But wait!, there's more -Jarl 'Balling' Balgruff-
+
 #### (15 / 5 / 2022) [Adding Ranks and a new Tech]
 	*) Refactorized and prettified the standard hud code.
 	+) New extra ranks, the elite ranks! (10 lvls more to grind!)

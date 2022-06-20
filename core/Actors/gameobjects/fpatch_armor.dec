@@ -12,10 +12,29 @@ Actor SteelPlatingArmor : GreenArmor
 {
   Radius 20
   Height 48
-  Inventory.Pickupmessage "Steel Plating Armor!"
-  Armor.Savepercent 65
+ 
+  Armor.Savepercent 100
   Armor.Saveamount 100
-  +INVENTORY.QUIET
+  //+INVENTORY.QUIET
+}
+
+Actor SteelPlatingArmor_Pickup : CustomInventory {
+	Radius 20
+  	Height 48
+	Inventory.Pickupmessage "Steel Plating Armor!"
+	states
+	  {
+		Spawn:
+			ARM1 AB 6
+			loop
+		Pickup:
+			TNT1 A 0 A_JumpIf(CallACS("Armor_ArmorShardsOnly") != 1, "JustGiveArmor")
+			TNT1 A 0 ACS_NamedExecute("Armor_ReplaceShardsWithArmor", 0)
+			stop
+		JustGiveArmor:
+			TNT1 A 0 A_GiveInventory("SteelPlatingArmor", 1)
+			stop
+	  }
 }
 
 Actor MegaSphereArmor : BlueArmor
@@ -23,7 +42,206 @@ Actor MegaSphereArmor : BlueArmor
   Radius 20
   Height 48
   Inventory.Pickupmessage "Megasphere Armor!"
-  Armor.Savepercent 85
+  Armor.Savepercent 100
   Armor.Saveamount 200
-  +INVENTORY.QUIET
+  //+INVENTORY.QUIET
+}
+
+actor ArmorShard : ArmorBonus
+{ // + 5 AP. (Up to 300 AP) If picked up alone. Acts like vanilla green armor 
+	//(33% dmg absorb, 66% dmg taken)
+	Inventory.Pickupmessage "Armor Shard. (+5 Armor)"
+	Inventory.Icon "ARSDA0"
+	Inventory.PickupSound "pickup/armorshard"
+	Armor.Saveamount 5
+	Armor.MaxSaveAmount 300
+	States
+	{
+	Spawn:
+		ARSD ABCDCB 6
+		loop
+	}
+}
+
+Actor ArmorShard_One : ArmorShard {Armor.Saveamount 1}
+
+actor SF_HealthBonus : HealthBonus
+{ // The good ol' health vial, but this time, overheals +5 HP (up to 300 HP)
+	Inventory.Amount 5
+	Inventory.MaxAmount 300
+}
+
+ACTOR MagneticPickup : CustomInventory 
+{
+	+INVENTORY.QUIET //[Samu] Shadap!
+	//+SOLID
+	+COUNTITEM
+	+INVENTORY.NEVERRESPAWN
+	+INVENTORY.ALWAYSPICKUP
+	+NOTIMEFREEZE
+	+AMBUSH
+	+LOOKALLAROUND
+	+NOBLOCKMONST
+	+NOTELEPORT
+	+NOFEAR
+	+NOPAIN
+	+NODAMAGE
+	+QUICKTORETALIATE
+	+LOOKALLAROUND
+	
+	var int user_countdown;
+	var int user_frame;
+	var int user_mode;
+	var int user_gottafade;
+	var int user_fadetics;
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1
+	SpawnLoop:
+		TNT1 A 0 A_JumpIf(user_countdown >= 1200, "Disappear")
+		TNT1 A 0 A_SetUserVar("user_mode", 1)
+		TNT1 A 0 A_Look
+		
+		goto Frame
+	Disappear:
+		TNT1 A 0 A_JumpIf(user_countdown >= 1280, "Begone")
+		TNT1 A 0 A_SetUserVar("user_gottafade", 1)
+		TNT1 A 0 A_SetUserVar("user_mode", 1)
+		TNT1 A 0 A_Look
+		goto Frame
+	Begone:
+		TNT1 A 0
+		stop
+	See:
+		TNT1 A 0 A_SetUserVar("user_mode", 2)
+		TNT1 A 0 A_SetUserVar("user_countdown", user_countdown+1)
+		TNT1 A 0 A_CheckFlag("ISMONSTER", "SpawnLoop", AAPTR_TARGET)
+		TNT1 A 0 A_JumpIfTargetInlos("Chase",0,JLOSF_DEADNOJUMP, 186)
+		TNT1 A 0 A_ClearTarget
+		Goto Frame
+	Chase:
+		TNT1 A 0 A_SetUserVar("user_mode", 3)
+		TNT1 A 0 A_FaceTarget
+		TNT1 A 0 A_Recoil(-5)
+		goto Frame
+
+	Frame.Reset:
+		TNT1 A 0 A_SetUserVar("user_frame", -1)
+		TNT1 A 1 A_Jump(256,"Frame.A")
+		goto Frame.A
+
+	Frame:
+		TNT1 A 0 A_SetUserVar("user_frame", user_frame+1)
+		TNT1 A 0 A_JumpIf(user_gottafade == 1, "FadeTic")
+		TNT1 A 0 A_JumpIf(user_frame / 3 >= 6, "Frame.Reset")
+		TNT1 A 1 A_Jump(256, "Frame.Animate")
+	Frame.Animate:
+		TNT1 A 0 A_JumpIf(user_fadetics >= 5 && user_fadetics <= 7, "Frame.Tilt")
+		TNT1 A 0 A_JumpIf(user_frame / 3 == 5, "Frame.B")
+		TNT1 A 0 A_JumpIf(user_frame / 3 == 4, "Frame.C")
+		TNT1 A 0 A_JumpIf(user_frame / 3 == 3, "Frame.D")
+		TNT1 A 0 A_JumpIf(user_frame / 3 == 2, "Frame.C")
+		TNT1 A 0 A_JumpIf(user_frame / 3 == 1, "Frame.B")
+		TNT1 A 0 A_JumpIf(user_frame / 3 == 0, "Frame.A")
+		TNT1 A 1 A_Jump(256,"Frame.A")
+		goto Frame.A
+
+	FadeTic:
+		TNT1 A 0 A_SetUserVar("user_fadetics", user_fadetics+1)
+		goto Frame.Animate
+	
+	Frame.Tilt:
+		TNT1 A 1 
+		TNT1 A 0 A_JumpIf(user_fadetics == 7, "Frame.TiltReset")
+		goto Frame.Action
+	Frame.TiltReset:
+		TNT1 A 0 A_SetUserVar("user_fadetics", 0)
+		goto Frame.Action
+
+	Frame.Action:
+		//TNT1 A 0 A_LogInt(user_gottafade)
+		TNT1 A 0 A_JumpIf(user_mode == 1, "Tic")
+		TNT1 A 0 A_JumpIf(user_mode == 2, "Spawnloop")
+		TNT1 A 0 A_JumpIf(user_mode == 3, "See")
+		goto See
+	Tic:
+		TNT1 A 0 A_SetUserVar("user_countdown", user_countdown+1)
+		goto SpawnLoop
+    }
+}
+
+
+ACTOR ArmorShard_Pickup : MagneticPickup {
+	states{
+		Frame.A:
+			ARSD A 1 A_SpawnItemEx("Blur_ArmorShardA")
+			goto Super::Frame.Action
+		Frame.B:
+			ARSD B 1 A_SpawnItemEx("Blur_ArmorShardB")
+			goto Super::Frame.Action
+		Frame.C:
+			ARSD C 1 A_SpawnItemEx("Blur_ArmorShardC")
+			goto Super::Frame.Action
+		Frame.D:
+			ARSD D 1 A_SpawnItemEx("Blur_ArmorShardD")
+			goto Super::Frame.Action
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ArmorShard", 5)
+		stop
+	}
+}
+
+
+ACTOR HealthBonus_Pickup : MagneticPickup {
+	states{
+		Frame.A:
+			BON1 A 1 A_SpawnItemEx("Blur_HealthBonusA")
+			goto Frame.Action
+		Frame.B:
+			BON1 B 1 A_SpawnItemEx("Blur_HealthBonusB")
+			goto Frame.Action
+		Frame.C:
+			BON1 C 1 A_SpawnItemEx("Blur_HealthBonusC")
+			goto Frame.Action
+		Frame.D:
+			BON1 D 1 A_SpawnItemEx("Blur_HealthBonusD")
+			goto Frame.Action
+		
+		Pickup:
+			TNT1 A 0 A_GiveInventory("SF_HealthBonus", 1)
+		stop
+	}
+}
+
+Actor HealthArmorBonusSpawner : RandomSpawner{
+	DropItem "HealthBonus_Pickup" "128", 1
+	DropItem "ArmorShard_Pickup" "128", 1
+}
+
+ACTOR HealthArmorBonusSplash
+{
+	radius 32
+	height 32
+	
+	var int user_amount;
+	var int user_counter;
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_counter", 0)
+			TNT1 A 1 A_SetUserVar("user_amount", random(5,20))
+			//TNT1 A 0 A_LogInt(user_amount)
+		LoopMe:
+			TNT1 A 0 A_SpawnItemEx("HealthArmorBonusSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(0, 20))
+			TNT1 A 0 A_SetUserVar("user_counter", user_counter+1)
+			//TNT1 A 0 A_LogInt(user_counter)
+			TNT1 A 0 A_JumpIf(user_counter >= user_amount, "Done")
+			loop
+		Done:
+			TNT1 A 1
+			stop
+	}
 }

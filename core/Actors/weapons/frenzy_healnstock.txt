@@ -338,7 +338,9 @@ Actor Sup_HeavyBullets : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_Medikit : Sup_Pickup { States {
+Actor Sup_Medikit : Sup_Pickup {
+	Inventory.PickupMessage "Picked up a Medikit"
+	States {
 		Spawn:
 			MEDI A 0
 		goto Super::Spawn
@@ -347,7 +349,9 @@ Actor Sup_Medikit : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_SteelPlatingArmor : Sup_Pickup { States {
+Actor Sup_SteelPlatingArmor : Sup_Pickup {
+	Inventory.PickupMessage "Steel Plating Armor!"
+	States {
 		Spawn:
 			TNT1 A 0
 			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
@@ -355,6 +359,6 @@ Actor Sup_SteelPlatingArmor : Sup_Pickup { States {
 			ARM1 A 0
 		goto Super::Spawn.Timer
 		Pickup:
-			TNT1 A 0 A_GiveInventory("SteelPlatingArmor", 1)
+			TNT1 A 0 A_GiveInventory("SteelPlatingArmor_Pickup", 1)
 		stop
 }}

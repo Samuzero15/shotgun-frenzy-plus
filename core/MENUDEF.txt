@@ -72,13 +72,17 @@ OptionMenu SFPlus_GameOptions{
 OptionMenu SFPlus_ItemHotkeys{
 	Title "Item Hotkeys"
 	StaticText "Samu encourages to use the hotkeys. They're good stuff.",1
+	StaticText "Customize your hot keys and items here.",1
 	StaticText ""
 	Control "Soulsphere", "usesoulsphere"
 	Control "Megasphere", "usemegasphere"
-	Control "Berserk 2.0", "useberserk2"
 	Control "Godsphere", "usegodsphere"
+	Control "Quad Damage", "useberserk2"
 	Control "Ammosphere", "usebackpack"
+	Control "Hell Trigger", "usehelltrigger"
 	Control "Stimpack", "usestimpack"
+	Control "Hand Grenade", "usegrenade"
+	StaticText ""
 	StaticTextSwitchable "Backspace -> Clear, Enter -> Bind a key", "Press a key. (ESC to cancel)", "ControlMessage", 1
 	//SafeCommand "Clear Hotkeys", "sfp_fuckMyBinds"
 }

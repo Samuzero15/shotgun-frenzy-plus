@@ -14,6 +14,10 @@ addmenukey "Use Stimpack" usestimpack
 alias usestimpack "use Inventory_Stimpack"
 addmenukey "Use Ammosphere" usebackpack
 alias usebackpack "use Inventory_AmmoGiver"
+addmenukey "Use Hand Grenade" usegrenade
+alias usegrenade "use Inventory_HandGrenade"
+addmenukey "Use Hell Trigger" usehelltrigger
+alias usehelltrigger "use Inventory_HellTrigger"
 
 alias sfp_dropcredits "pukename SFPlus_DropCredits %1"
 alias sfp_ccmdlist "pukename SFPlus_CCmdList"

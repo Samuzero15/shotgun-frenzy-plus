@@ -102,6 +102,26 @@ Script "Player_IsDed" (void) {
 	setResultValue(GetActorProperty(0, APROP_HEALTH) < 1);
 }
 
+Script "Armor_ArmorShardsOnly" (void){
+	SetResultValue(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0);
+}
+
+Script "Armor_ReplaceShardsWithArmor" (int armortype){
+	// When picked a lot of armor shards, and pick any type of armor. 
+	// Replace the shards with the armor you picked up.
+	// The leftovers will be also added to your armor.
+	if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0){
+		int armor_points = CheckInventory("BasicArmor");
+		TakeInventory("BasicArmor", 9999999);
+		GiveInventory("SteelPlatingArmor", 1);
+		int armor_points_now = CheckInventory("BasicArmor");
+		if(armor_points > armor_points_now){
+			int diff = armor_points - armor_points_now;
+			GiveInventory("ArmorShard_One", diff);
+		}
+	}
+}
+
 Script "Supplier_GrantExp" (void)
 {
 	// 30 % of gaining 1 exp point after each drop.

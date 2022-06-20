@@ -11,8 +11,41 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
             }
         break;
         case GAMEEVENT_ACTOR_ARMORDAMAGED:
-            if(checkinventory("RuneTemperance")){
+        //if(GetArmorInfo(ARMORINFO_CLASSNAME))log(s:GetArmorInfo(ARMORINFO_CLASSNAME));
+            // Temperance will now add extra percentages to the saving amount
+            int dmg = arg1;
+            int percent;
+
+            
+             
+            if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "SteelPlatingArmor") == 0){
+                percent = 0.175 + 0.16 * checkinventory("RuneTemperance");
+                dmg = (arg1 * (1.0 - percent)) >> 16;
+
+                ArmorHitSFX(dmg);
+                SetResultValue(dmg);
+            }
+
+            if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "MegasphereArmor") == 0 ||
+                stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "SuperMegasphere_Armor") == 0){
+                percent = 0.40 + 0.25 * checkinventory("RuneTemperance");
+                dmg = (arg1 * (1.0 - percent)) >> 16;
+
+                
+                ArmorHitSFX(dmg);
+                SetResultValue(dmg);
+            }
+
+            
+
+            //if(checkinventory("RuneTemperance")){
+                
                 //SetActivatorToTarget(0);
+                //log(s:"(fp_event) Save percent: ", f:GetArmorInfo(ARMORINFO_SAVEPERCENT));
+                //log(s:"(fp_event) Current Armor: ", d:armor);
+                //log(s:"(fp_event) Damage Took: ", d:arg1);
+                  
+                /*
                 // Your armor takes double damage.
                 if(GetArmorInfo(ARMORINFO_SAVEAMOUNT) > 0){
                     int dmg = 2 * ((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16);
@@ -25,10 +58,20 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
                         GiveInventory("TemperanceRune_BreakToken", 1);
                     }
                     SetResultValue(dmg);
-                }
-            }
+                }*/
+            //}
         break;
     }    
+}
+
+function void ArmorHitSFX(int dmg){
+    if(CheckInventory("BasicArmor") <= dmg){
+        LocalAmbientSound("runes/temperance/break", 127);
+        GiveInventory("TemperanceRune_GuardBreak", 1);
+    }else {
+        GiveInventory("TemperanceRune_GuardHit", 1);
+        LocalAmbientSound("runes/temperance/hit", 127);
+    }
 }
 
 script "SFPlus_ConstantEffects" (void) {
@@ -113,17 +156,6 @@ script "SFPlus_OnPlayerDamage" (int dmg, int fatal){
 
         if(checkinventory("RuneBlast")){
             GiveInventory("BlastRune_Activate", 1);
-        }
-
-        if(checkinventory("RuneTemperance")){
-            if(checkinventory("BasicArmor") || checkinventory("MegasphereArmor")){
-                LocalAmbientSound("runes/temperance/hit", 127);
-                TotalDmg = 0; // Deny effective damage.
-            }
-            else if (CheckInventory("TemperanceRune_BreakToken")) {
-                LocalAmbientSound("runes/temperance/break", 127);
-                GiveInventory("TemperanceRune_GuardBreak", 1);
-            }
         }
     }
     SetResultValue(TotalDmg);

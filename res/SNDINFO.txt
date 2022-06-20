@@ -334,6 +334,8 @@ Quadshot/Reload QuadReld
 Quadshot/Fire1  Quad_1Bf
 Quadshot/Fire4	Quad_4BF
 
+pickup/armorshard	AMRSHRD
+
 STRT_S1 STRT_S1 
 STRT_S2 STRT_S2 
 STRT_S3 STRT_S3 
