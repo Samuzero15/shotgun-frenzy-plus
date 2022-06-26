@@ -181,6 +181,11 @@ actor splatBlood_Spine
 	}
 }
 
+actor splatBlood_SpineGiant : splatBlood_Spine
+{
+	scale 5.0
+}
+
 actor splatBlood_Rib
 {
 	health 3

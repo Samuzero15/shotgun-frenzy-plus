@@ -243,8 +243,18 @@ int exitResult = 0;
 bool onceHover = false;
 int callexit = 0;
 
+
+
+#LibDefine STMSGS_LOGIN 0
+#LibDefine STMSGS_LOGOUT 1
+int msgs[2];
+
 //Temporal Variables
 //int w=0,h=0; 
+
+function void Vars_SetMessage(int id, int msg){
+	msgs[id] = msg;
+}
 
 function int Vars_Mid_Wid(void){
 	return fixedDiv(STSET_WIDTH, 2.0);
@@ -269,6 +279,15 @@ function void Vars_ClearCompCounts(void){
 
 function void Vars_PrintVersion(void){
 	print(s:"You're using the v", s:ST_VER, s:" of Samu Terminal.");
+}
+
+function str langstring(str lang, int randme){
+	int string;
+	if(randme <= 1) string = StrParam(l:lang);
+	else string = StrParam(l:StrParam(s:lang, d:random(1, randme)));
+
+	string = StrReplace(string, "%p", StrParam(n:Playername(playerNumber())));
+	return string;
 }
 
 #include "samut_sfstoof.acs"

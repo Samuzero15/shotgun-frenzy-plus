@@ -192,6 +192,7 @@ Actor pr_cmd_turret_tesla : Integer {}
 Actor pr_cmd_turret_chaingun : Integer {}
 Actor pr_cmd_turret_shotgun : Integer {}
 Actor pr_cmd_turret_rail : Integer {}
+Actor pr_cmd_turret_bfg : Integer {}
 Actor pr_cmd_airstrike : Integer {}
 Actor pr_cmd_moneybag : Integer {}
 Actor pr_cmd_minefield : Integer {}

@@ -26,7 +26,7 @@ Actor TurretShotgun_FireToken : Inventory {
 	Inventory.MaxAmount 2
 }
 
-ACTOR TurretShotgun_Head : TurretHeadBase 24306
+ACTOR TurretShotgun_Head : TurretHeadBase 24307
 {
 	obituary "%o got blasted by a shotgun turret."
 	health 1000

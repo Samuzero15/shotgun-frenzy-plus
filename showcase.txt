@@ -18,7 +18,7 @@
 ) The extra effects for prometeo can be displayed on the game.
 ) Fixed the Rank titles for the old and new hud.
 ) Fixed a bug on pursaching weapons, after upgrading a weapon, the base weapons can be brought back but with no chances to upgrade it.
-) Armor-Repair dispenser's effect ha been patched up.
+) Armor-Repair dispenser's effect has been patched up.
 ) Mech upgrades now will be shown in the stocking pad.
 ) Inventory, Player & Kill-Streak huds will clean itself once the player disconnects (or spectates).
 

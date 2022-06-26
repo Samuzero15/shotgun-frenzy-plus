@@ -33,7 +33,7 @@ ACTOR TurretChaingun_Stand : TurretStand
 }
 
 
-ACTOR TurretChaingun_Head : TurretHeadBase 24306
+ACTOR TurretChaingun_Head : TurretHeadBase 24308
 {
 	obituary "%o got some new holes by a chaingun turret."
 	health 700

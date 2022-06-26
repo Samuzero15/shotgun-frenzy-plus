@@ -15,6 +15,7 @@
 #include "acsutils.acs"
 #import "f_intdb.acs"
 #import "f_Rank.acs"
+#import "f_tip.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -281,22 +282,25 @@ function void Patcher_Display(int playnum){
 		buff_price = buff_price/2;
 	} 
 	int cost = strparam(s:"Repair Cost: ", d:price, s:" credits\nUpgrade Cost: ", d:buff_price, s:" credits");
+	msg = -1;
 	if(CheckInventory("Patcher_HudHeal")){
-		color = CR_GREEN;
-		msg = strparam(s:"Repaired \cd", d:fix,s:"\c- HP" );
+		
+		//color = CR_GREEN;
+		msg = strparam(s:"Repaired \cd", d:fix,s:"\c- HP!" );
 	} else if(CheckInventory("Patcher_HudMaxHp")){
-		color = CR_CYAN;
-		msg = strparam(s:"Fully Repaired");
+		//color = CR_CYAN;
+		msg = strparam(s:"\cvFully Repaired");
 	} else if(CheckInventory("Patcher_HudNoMoney")){
-		color = CR_ORANGE;
-		msg = strparam(s:"Not enough credits!");
+		//color = CR_ORANGE;
+		msg = strparam(s:"\cgNot enough credits!");
 	} else if (CheckInventory("Patcher_HudBuff")){
-		color = CR_GOLD;
-		msg = strparam(s:"Upgraded to LV!", d:lvl);
+		//color = CR_GOLD;
+		msg = strparam(s:"Upgraded to \cfLevel ", d:lvl, s:"!");
 	} else if (CheckInventory("Patcher_HudBuffed")){
-		color = CR_GOLD;
+		//color = CR_GOLD;
 		msg = strparam(s:"Max Level!");
 	}
+	if(msg != -1) f_CenterTipPatcher(msg);
 	 										  
 	SetHudSize(320, 240, 0);
 	Setfont("confont");
@@ -304,7 +308,6 @@ function void Patcher_Display(int playnum){
 	SetHudSize(0, 0, 0);
 	SetHudSize(640, 480, 0);
 	Setfont("confont");
-	HudMessage(s:msg; HUDMSG_FADEOUT, PATCHER_HID_MSG, CR_WHITE, 640*0.5, 480*0.55, 0.2, 1.0);
 	HudMessage(s:cost; HUDMSG_FADEOUT, PATCHER_HID_COST, CR_WHITE, 640*0.5, 480*0.70, 0.2, 1.0);
 	SetHudSize(0, 0, 0);
 }
@@ -335,11 +338,17 @@ script "Patcher_TurretScouter" (void){
 	TakeInventory("Patcher_Script", 1);
 }
 script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
-    if(type != GAMEEVENT_ACTOR_DAMAGED || !IsATurret(ActivatorTID()) || !(
+    if(type != GAMEEVENT_ACTOR_DAMAGED || !(
 		strcmp(arg2, "PriPatcherDmg") == 0 ||
 		strcmp(arg2, "AltPatcherDmg") == 0 ||
 		strcmp(arg2, "IdlePatcherDmg") == 0 
 	)) terminate;
+
+	if(!IsATurret(ActivatorTID())){
+		SetResultValue(0);
+		terminate;
+	}
+		
 	int atid, playnum;
 	SetActivator(0, AAPTR_Damage_Source);
 		playnum = PlayerNumber();
@@ -411,8 +420,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 		SetActivator(0, AAPTR_Damage_Target);
 		Patcher_Display(playnum);
 	}
-	setResultValue(0);
-
+	SetResultValue(0);
 }
 
 function str cond_str (int c){

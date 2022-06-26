@@ -58,41 +58,55 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	SFPlus_DefineMechUps();
 	
 		
-	str himsg;
-	str byemsg;
+	
 	
 	pagetags[STTAGS_ALPHA] = alphatag;
-	
+	log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);
 	switch(pagetags[STTAGS_ALPHA]){
 		case 20:
-			himsg = strparam(s:"Health terminal initiated, any powerup you need ", s:Playername(play), s:"?");
-			byemsg = strparam(s:"Stay healthy ", s:Playername(play), s:". Don't get shot.");
+			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_HEALTERM_HI", 3));
+			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_HEALTERM_BYE", 3));
 			SamuTerm_SetBack("BGR");
+		break;
+
+		case 30:
+			if(CheckInventory("Mech_State") == 99){
+				Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_MECHTERM_REPAIR_HI", 3));
+				Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_MECHTERM_REPAIR_BYE", 3));
+			}else if(!CheckInventory("Mech_State")){
+				Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_MECHTERM_NOMECH_HI", 0));
+				Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_MECHTERM_NOMECH_BYE", 0));
+			} else {
+				Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_MECHTERM_HI", 3));
+				Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_MECHTERM_BYE", 3));
+			}
 		break;
 	
 		case 10:
-			himsg = strparam(s:"Commander ", s:Playername(play), s:", we're awaiting your orders.");
-			byemsg = strparam(s:"Stay safe, Commander ", s:Playername(play), s:".");
+			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_COMMTERM_HI", 0));
+			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_COMMTERM_BYE", 0));
 			SamuTerm_SetBack("");
 			//Toast_SetPosition(320.0, 380.0);
 		break;
+
 		case 0:
-			himsg = strparam(s:"Ammo terminal initiated, need something ", s:Playername(play), s:"?");
-			byemsg = strparam(s:"Remember, shoot to kill ", s:Playername(play), s:".");
+			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_AMMOTERM_HI", 3));
+			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_AMMOTERM_BYE", 3));
 		break;
 		default:
-			himsg = strparam(s:"Welcome ", s:Playername(play),s:" to the terminal.");
-			byemsg = strparam(s:"See you soon ", s:Playername(play),s:".");
+			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_DEFAULT_HI", 0));
+			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_DEFAULT_BYE", 0));
 	}
+	int chasecam_state = GetPlayerChasecam(play);
 	
-
 	SamuTerm_InitComps();
 	//Component_PrintCount();
-	SamuTerm_Say(himsg);
+	SamuTerm_Say(msgs[STMSGS_LOGIN]);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
 	PlaySound(1000+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
 		while(TerminalInUse())
 		{
+			if(GetPlayerChasecam(play) == true) SetPlayerChasecam(play, 0);// I must keep you from abusing the chasecam.
 			SamuTerm_Update();
 			SamuTerm_Input(play);
 			SamuTerm_Display();
@@ -101,10 +115,11 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 			//debug();
 			Delay(1);
 		}
+	SetPlayerChasecam(play, chasecam_state);
 	CenterCursor();
 	SamuTerm_ResetBack();
 	if(exitResult != -1){
-		SamuTerm_Say(byemsg);
+		SamuTerm_Say(msgs[STMSGS_LOGOUT]);
 		LocalAmbientSound("SamuTerm/Back", 127);
 	}
 	StopSound(0,CHAN_BODY); 

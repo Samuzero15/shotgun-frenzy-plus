@@ -167,7 +167,7 @@ ACTOR TurretRail
 	}
 }
 
-ACTOR TurretShotgun
+ACTOR TurretShotgun_old
 {
 	obituary "%o was splattered by a Shotgun Turret."
 	health 750

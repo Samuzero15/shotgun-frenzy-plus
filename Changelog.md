@@ -9,6 +9,11 @@
 
 ## v0 - Before the beginning...
 
+#### (26 / 6 / 2022) [Less warnings and a Patcher Bugfix]
+	*) Removed the warning messages from the startup (most of them)
+	*) Better display on the messages when upgrading with the patcher.
+	*) Patcher will now deal no damage to the monsters.
+
 #### (5 - 20 / 6 / 2022) [Armor revamps, (WIP) Hand-Grenades and you]
 	// It's been a while huh?
 	*) Health bonuses are buffed, +5 HP, up to 300 MaxHP 
@@ -23,6 +28,12 @@
 	+) Grenades are now added as an item. Launches a Shell grenade (WIP) (Needs an item sprite for it)
 	*) Added the HellTrigger and Hand Grenade hotkey control in item hotkeys
 	// But wait!, there's more -Jarl 'Balling' Balgruff-
+
+#### (24 / 5 / 2022) [BFG Turret Button, login/logout msg in terminals]
+	*) Now the SamuTerminal's login and logout can be customized anytime.
+	+) Added some messages when login or logout in any terminal
+	+) Added the sprite for the BFG Turret button.
+	+) The BFG Turret button is now ready on the commander terminal (20000 credits per deploy)
 
 #### (15 / 5 / 2022) [Adding Ranks and a new Tech]
 	*) Refactorized and prettified the standard hud code.

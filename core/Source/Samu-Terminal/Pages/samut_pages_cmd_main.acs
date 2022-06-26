@@ -171,6 +171,7 @@ function void CMDPage_Init(void){
 		CMDPage_MakeButton(p, 2, 1, FP_CB_DEPLOY_TURRET_CHAINGUN);
 		CMDPage_MakeButton(p, 2, 2, FP_CB_DEPLOY_TURRET_TESCOL);
 		CMDPage_MakeButton(p, 2, 3, FP_CB_DEPLOY_TURRET_FLAMER);
+		CMDPage_MakeButton(p, 2, 4, FP_CB_DEPLOY_TURRET_BFG);
 		
 		CMDPage_MakeReturnButton(p, i);
 	CMDPage_MakeReturnButton(i, m);
