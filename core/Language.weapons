@@ -40,7 +40,7 @@ WEPS_SHOTGUN_QUAD_DESC =    "This heavy machine can fire a powerful shell burst 
                             "Pri. fire: 4 Shell Burst "
                             "\nSec. Fire: 1 Shell Shot ";
 WEPS_SHOTGUN_QUAD_UP0_NAME = "Explosive Quadshot";
-WEPS_SHOTGUN_QUAD_UP0_DESC = "Your peelets can explode, also you can fire twice as faster.";
+WEPS_SHOTGUN_QUAD_UP0_DESC = "Your peelets can explode, also you can fire slightly faster.";
 
 // Assault pack
 
@@ -54,7 +54,7 @@ WEPS_ASSAULT_SPIT_DESC =    "Nifty machine to attack weaker demons, thanks for i
 WEPS_ASSAULT_SPIT_UP1_NAME = "Spread Spitter + Shell Grenades";
 WEPS_ASSAULT_SPIT_UP1_DESC = "You gain more spread for this gun, and also you can launch shell grenades.";
 WEPS_ASSAULT_SPIT_UP2_NAME = "Auto Spitter + Gas Grenades";
-WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster. Allows you to throw Gas grenades, they cause stun and poison to the horde.";
+WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster, no breaks. Throws N.Gas grenades, they cause stun and poison to the horde.";
 
 WEPS_ASSAULT_BUCK_NAME =    "Buckshot";
 WEPS_ASSAULT_BUCK_DESC =    "Powerful shotgun that packes 10 shells in the chamber,  "
@@ -62,7 +62,7 @@ WEPS_ASSAULT_BUCK_DESC =    "Powerful shotgun that packes 10 shells in the chamb
 	                        "Just use this if the spitter does'nt deal enough damage.\n\n"
                             "Sec. Fire: Reload chamber (2 Shells)";
 
-WEPS_ASSAULT_BUCK_UP1_NAME = "Big Ricochet Buckshot";
+WEPS_ASSAULT_BUCK_UP1_NAME = "Ricochet Buckshot";
 WEPS_ASSAULT_BUCK_UP1_DESC = "Chamber up to 20 shells, 4 shells per pump. Bullets bounce on floors and walls.";
 WEPS_ASSAULT_BUCK_UP2_NAME = "Flame Buckshot";
 WEPS_ASSAULT_BUCK_UP2_DESC = "Your shells will explode and create fire to damage the hordes constantly.";
@@ -90,7 +90,7 @@ WEPS_SUPPORT_PTCH_DESC =    "Repairs and Upgrades Turrets and Dispensers. \n"
                             "Alt-fire: Upgrades buildings (Gains 5 Exp Points)";
 
 WEPS_SUPPORT_PTCH_UP0_NAME = "Advanced Patcher Gun";
-WEPS_SUPPORT_PTCH_UP0_DESC = "Fire faster, and in a larger range. Prices are 50% off discounted.";
+WEPS_SUPPORT_PTCH_UP0_DESC = "Fire faster, and in a larger range. Repair Prices are 50% off discounted.";
 
 
 // Commando
@@ -149,14 +149,14 @@ WEPS_PLASMA_DESC =          "Plasma based weapon pack. \nTechnology at it's full
 
 WEPS_PLASMA_PLSG_NAME =    "Plasma Rifle";
 WEPS_PLASMA_PLSG_DESC =    "Fires plasma balls, fast and hard projectiles "
-                           "in a high fire rate.\n\n"
+                           "in a high fire rate. With a slight AoE for middle-sized crowds. \n\n"
                            "Secondary fire can do a charged attack for a "
-                           "more explosive projectile.";
+                           "more piercing projectile. (up to 3 hits, AoE each one)";
 
 WEPS_PLASMA_PLSG_UP1_NAME = "Spread Chip Plasma Rifle";
 WEPS_PLASMA_PLSG_UP1_DESC = "Your plasma can spread-shot. Control it with Primary and Secondary fire.";
 WEPS_PLASMA_PLSG_UP2_NAME = "Advanced Plasma Rifle";
-WEPS_PLASMA_PLSG_UP2_DESC = "The plasma projectiles can seek enemies now. Can cause explosive damage too.";
+WEPS_PLASMA_PLSG_UP2_DESC = "The plasma projectiles can seek enemies now. Alt fire no longer penetrates, but spawns extra projectiles.";
 
 
 WEPS_PLASMA_RAIL_NAME =    "Laser Railgun";
@@ -165,7 +165,7 @@ WEPS_PLASMA_RAIL_DESC =    "This gun can create laser rails which "
                             "Takes some time to fire each rail.";
 
 WEPS_PLASMA_RAIL_UP1_NAME = "Spear-Taser Railgun";
-WEPS_PLASMA_RAIL_UP1_DESC = "Reduced range, but incredibly fast and piercing. Alt-fire stuns the first enemy with the Taser.";
+WEPS_PLASMA_RAIL_UP1_DESC = "Reduced range, but incredibly fast and sharp. Alt-fire stuns the first enemy with the Taser.";
 WEPS_PLASMA_RAIL_UP2_NAME = "Double-Slug Railgun";
 WEPS_PLASMA_RAIL_UP2_DESC = "Laser lasts longer, and fires 2 lasers per shot. Use Secondary to fire 2 Slug Rails.";
 

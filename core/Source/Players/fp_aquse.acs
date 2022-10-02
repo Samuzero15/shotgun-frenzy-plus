@@ -72,5 +72,5 @@ script "SFPlus_ItemCooldown" (int delayme){
 }
 
 script "PlayerOnFullHP" (void){
-	SetResultValue(PlayerHealth() == GetActorProperty(0, APROP_SPAWNHEALTH));
+	SetResultValue(PlayerHealth() >= GetActorProperty(0, APROP_SPAWNHEALTH));
 }

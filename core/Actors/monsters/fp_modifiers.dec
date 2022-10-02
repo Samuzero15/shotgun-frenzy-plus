@@ -177,7 +177,7 @@ Actor ChampEffectOnMonster_Healing : MonsterModifier{
     States{
         Use:
             TNT1 A 0 A_JumpIf(!CallACS("SFPlus_ChampHealing_Heal"), "End") //returns 0 if couldn't heal
-		    TNT1 AA 0 A_SpawnItemEx("streakquickemitter_purple", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 0)
+		    TNT1 AA 0 A_SpawnItemEx("streakquickemitter_purple", random(-32, 32), random(-32, 32), 0)
 		Stop
     }
 }
@@ -187,7 +187,7 @@ Actor ChampEffect_Healing : MonsterModifier {
         Use:
             //TNT1 A 0 A_CheckSight("End") //only heal when seen by the player
             TNT1 A 0 A_RadiusGive("ChampEffectOnMonster_Healing", 256, RGF_MONSTERS)
-            TNT1 AAAAAAAAAAAA 1 A_SpawnItemEx("ChampQuickAura_Healing")
+            TNT1 AAAAA 0 A_SpawnItemEx("ChampEffect_Healing_ParticleEmmit")
             stop
     }
 }
@@ -196,8 +196,8 @@ Actor ChampEffectOnMonster_Emperor : MonsterModifier{
     States{
         Use:
             TNT1 A 0 A_JumpIf(!CallACS("SFPlus_ChampEmperor_Buff"), "End") //returns 0 if couldn't heal
-		    TNT1 AA 0 A_SpawnItemEx("streakquickemitter_yellow", random(-32, 32), random(-32, 32), 0, 0, 0, 3, 0, SXF_CLIENTSIDE | SXF_NOCHECKPOSITION, 0)
-		Stop
+		    TNT1 AA 0 A_SpawnItemEx("streakQuickEmitter_Yellow", random(-32, 32), random(-32, 32), 0)
+        Stop
     }
 }
 
@@ -205,9 +205,58 @@ Actor ChampEffect_Emperor : MonsterModifier {
     states{
         Use:
             TNT1 A 0 A_RadiusGive("ChampEffectOnMonster_Emperor", 256, RGF_MONSTERS)
-            TNT1 AAAAAAAAAAAA 1 A_SpawnItemEx("ChampQuickAura_Emperor")
+            TNT1 AAAAA 0 A_SpawnItemEx("ChampEffect_Emperor_ParticleEmmit")
             stop
     }
+}
+ACTOR ChampEffect_Emperor_ParticleEmmit
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	var int user_parts;
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 1 A_SetUserVar("user_parts", 10)
+		Loopme:
+			TNT1 A 0 A_SpawnItemEx("ChampQuickAura_Emperor", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 0 A_Warp(AAPTR_Target, 0,0,0,0,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+			TNT1 A 2 A_SetUserVar("user_parts", user_parts-1)
+			TNT1 A 1 A_JumpIf(user_parts <= 0, "Death")
+			goto Loopme
+		Death:
+			TNT1 A 1
+			stop
+	}
+}
+
+ACTOR ChampEffect_Healing_ParticleEmmit
+{
+	renderstyle none
+	
+	+NOCLIP
+	+NOGRAVITY
+	var int user_parts;
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1
+			TNT1 A 1 A_SetUserVar("user_parts", 10)
+		Loopme:
+			TNT1 A 0 A_SpawnItemEx("ChampQuickAura_Healing", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 0 A_Warp(AAPTR_Target, 0,0,0,0,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
+			TNT1 A 2 A_SetUserVar("user_parts", user_parts-1)
+			TNT1 A 1 A_JumpIf(user_parts <= 0, "Death")
+			goto Loopme
+		Death:
+			TNT1 A 1
+			stop
+	}
 }
 
 Actor ChampQuickAura_Healing : ParticleQuick_Purple{

@@ -9,6 +9,15 @@
 
 ## v0 - Before the beginning...
 
+#### (2 / 10 / 2022) [Rewrites, and some weapon tweaks, and icons, yeah]
+	*) Rewritten the commander terminal, a bit more optimized now.
+	*) Now the strings related to the CMD terminal are separated in their language files (just to add a quick translation patch).
+	*) Now Healing and Emperor champions spawns their particles better.
+	+) Added some more icons! for the CMD Terminal!
+	*) Big Chamber Buckshot is now renamed to Ricochet Buckshot, due to it's added capability to throw bouncing bullets, which they pass-through enemies.
+	*) Little visual tweaks on the Quadshot. Quadshot fire ratio was reduced slightly, in order to make it teorically slower than the Explosive SSG.
+	*) Plasma gun can do an alt-fire, which it charges bigger balls that does multiple hits in one target, exploding on each impact. Also, the normal plasmaballs can do some small and weak Area of Damage upon hit.
+
 #### (26 / 6 / 2022) [Less warnings and a Patcher Bugfix]
 	*) Removed the warning messages from the startup (most of them)
 	*) Better display on the messages when upgrading with the patcher.

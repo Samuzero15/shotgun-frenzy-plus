@@ -33,6 +33,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_CMDEXIT: StExecute_CMDExit(); break;
 		case STEXE_CMDBTNDESC: StExecute_CMDBtnDesc(arg1, arg2, arg3); break;
 		case STEXE_CMDCAT: STExecute_CMDGotToCat(arg1, arg2); break;
+		case STEXE_CMDCAT2: STExecute_CMDGotToCat2(arg1, arg2); break;
 		
 		case STEXE_BUYMECHTANK: StExecute_BuyMechTank(); break;
 		case STEXE_GETMECHTANK: StExecute_GetMechTank(); break;

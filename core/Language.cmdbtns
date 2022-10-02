@@ -1,0 +1,382 @@
+[Enu default]
+
+// All button descriptions for the commander terminal.
+/*
+CBDATA_I_* = ""; // Icon of button
+CBDATA_N_* = ""; // Name of the button
+CBDATA_D_* = ""; // Description of the button
+**/
+
+CBDATA_I_EXIT = "CG01";
+CBDATA_N_EXIT = "Exit";
+CBDATA_D_EXIT = "Eject from the commander's chair."; 
+
+CBDATA_I_RETURN = "CG01"; 
+CBDATA_N_RETURN = "Return";
+CBDATA_D_RETURN = "To the last category.";
+
+
+CBDATA_I_BUILD = "CG02";
+CBDATA_N_BUILD = "Build Structure";
+CBDATA_D_BUILD = "Expand your base by building an additional structure."; 
+
+
+CBDATA_I_UPGRADE = "CG03"; 
+CBDATA_N_UPGRADE = "Research New Techs";
+CBDATA_D_UPGRADE = "Upgrade and research to powerup your allies.";
+
+CBDATA_I_UPGRADE = "CG03"; 
+CBDATA_N_UPGRADE = "Research New Techs"; 
+CBDATA_D_UPGRADE = "Upgrade and research to powerup your allies."; 
+
+CBDATA_I_SUPPORT = "CG04"; 
+CBDATA_N_SUPPORT = "Support Allies"; 
+CBDATA_D_SUPPORT = "Launch aerial strikes, mark objectives, activate\n"
+				   "core pulses and fire the ion cannon to support\n"
+				   "your allies."; 
+
+CBDATA_I_DEPLOY = "CG05"; 
+CBDATA_N_DEPLOY = "Deploy Structures"; 
+CBDATA_D_DEPLOY = "Deploy turrets, dispensers, walls and mines\n"
+				  "to aid in the battlefield."; 
+
+CBDATA_I_BUILD_GENLAB = "CM01";
+CBDATA_N_BUILD_GENLAB = "Build Genetics Lab";
+CBDATA_D_BUILD_GENLAB = "Allows advancement on armor and health\n"
+						"Provides healing pads for marines";
+
+CBDATA_I_BUILD_ARMORY = "CM02";
+CBDATA_N_BUILD_ARMORY = "Build Armory";
+CBDATA_D_BUILD_ARMORY = "Allows to buy and upgrade advanced weapons.\n"
+						"Provides ammo pads for marines, and some \n"
+						"useful items.";
+
+CBDATA_I_BUILD_MECHFA = "CM03";
+CBDATA_N_BUILD_MECHFA = "Build Mechanic Factory";
+CBDATA_D_BUILD_MECHFA = "Allows marines to purchase and upgrade mechs.\n"
+						"Heavy machines for the heavy duty.";	
+
+CBDATA_I_BUILD_REFINE = "CM04";
+CBDATA_N_BUILD_REFINE = "Build Refinery";
+CBDATA_D_BUILD_REFINE = "Allows additional credits to be collected.\n"
+						"Also increases credit count by 2 a second\n"
+						"and improves the credit earning on marines.";
+
+CBDATA_I_BUILD_MARCOM = "CM05";
+CBDATA_N_BUILD_MARCOM = "Build Marine Command";
+CBDATA_D_BUILD_MARCOM = "Allows you to construct turrets and use\n"
+						"core pulses. Also lets you command the airstrikes\n"
+						"and the mighty Ion Cannon for some extra help.";
+
+CBDATA_I_BUILD_NUKESY = "CM06";
+CBDATA_N_BUILD_NUKESY = "Build Nuke Silo";
+CBDATA_D_BUILD_NUKESY = "Let's you launch a powerful nuke which it hits"
+						"\nthe demon core directly, but it takes 5 minutes"
+						"\nto launch. If this works, you win.";
+
+CBDATA_I_UPG_GENLAB = "CC01";
+CBDATA_N_UPG_GENLAB = "Upgrade Genetics Lab...";
+CBDATA_D_UPG_GENLAB = "Research new techs in the Genetics lab.";
+
+CBDATA_I_UPG_ARMORY = "CC02";
+CBDATA_N_UPG_ARMORY = "Upgrade Armory...";
+CBDATA_D_UPG_ARMORY = "Research new techs in the Armory.";
+
+CBDATA_I_UPG_REFINE = "CC04";
+CBDATA_N_UPG_REFINE = "Upgrade Refinery...";
+CBDATA_D_UPG_REFINE = "Research new techs in the Refinery.";
+
+CBDATA_I_UPG_MARCOM = "CC05";
+CBDATA_N_UPG_MARCOM = "Upgrade Marine Command...";
+CBDATA_D_UPG_MARCOM = "Research new techs in the Marine command";
+
+CBDATA_I_UPG_GENLAB_HEALTH1 = "CM12";
+CBDATA_N_UPG_GENLAB_HEALTH1 = "Human Eng. Phase 1";
+CBDATA_D_UPG_GENLAB_HEALTH1 = "Increases default health to 120%.\n"
+						  "Also unlocks Steel plating and Stimpacks\n"
+						  "Techs for researching.";
+
+CBDATA_I_UPG_GENLAB_HEALTH2 = "CM13";
+CBDATA_N_UPG_GENLAB_HEALTH2 = "Human Eng. Phase 2";
+CBDATA_D_UPG_GENLAB_HEALTH2 = "Increases default health to 140%.\n"
+						  "Also unlocks Resister and Absorber units\n"
+						  "techs for researching.";
+
+CBDATA_I_UPG_GENLAB_ARMOR = "CM16";
+CBDATA_N_UPG_GENLAB_ARMOR = "Steel Plating";
+CBDATA_D_UPG_GENLAB_ARMOR = "Marines are stocked with a green armor."
+						"\nProtects the user's health.";
+
+CBDATA_I_UPG_GENLAB_SPEEDB = "CM15";
+CBDATA_N_UPG_GENLAB_SPEEDB = "Adrenaline"; 
+CBDATA_D_UPG_GENLAB_SPEEDB = "Marines move 30% more faster.";
+
+CBDATA_I_UPG_GENLAB_RESISB = "CM17";
+CBDATA_N_UPG_GENLAB_RESISB = "Resister unit"; 
+CBDATA_D_UPG_GENLAB_RESISB = "Marines can resist 30% more damage.";
+
+CBDATA_I_UPG_GENLAB_REGENB = "CM18";
+CBDATA_N_UPG_GENLAB_REGENB = "Absorber unit"; 
+CBDATA_D_UPG_GENLAB_REGENB = "Marines can regenerate health.\n+10 HP per 5 tics.";
+
+CBDATA_I_UPG_GENLAB_STIMPK = "CC30";
+CBDATA_N_UPG_GENLAB_STIMPK = "Stimpacks"; 
+CBDATA_D_UPG_GENLAB_STIMPK = "Marines start with 10 stimpacks."
+						 "\n+20 HP on use.";
+
+
+CBDATA_I_UPG_ARMORY_ARMS1 = "CM26";
+CBDATA_N_UPG_ARMORY_ARMS1 = "Arms Phase 1"; 
+CBDATA_D_UPG_ARMORY_ARMS1 = "Advanced weapons are available for the marines"
+						"\nIncluding the explosives, plasma and commando packs."; 
+
+CBDATA_I_UPG_ARMORY_ARMS2 = "CM27";
+CBDATA_N_UPG_ARMORY_ARMS2 = "Arms Phase 2"; 
+CBDATA_D_UPG_ARMORY_ARMS2 = "Overpowered weapons are available for the\n"
+						"marines. Including the mighty Flamethrower\n"
+						"and the BFG 9000.";
+
+CBDATA_I_UPG_ARMORY_BOOMRN = "CM28";
+CBDATA_N_UPG_ARMORY_BOOMRN = "Boomshot Rounds"; 
+CBDATA_D_UPG_ARMORY_BOOMRN = "Marines deals 30% more damage.";
+
+CBDATA_I_UPG_ARMORY_AMMOBP = "CM29";
+CBDATA_N_UPG_ARMORY_AMMOBP = "Ammo Backpack"; 
+CBDATA_D_UPG_ARMORY_AMMOBP = "Marines can carry more ammo, two times more.";
+
+CBDATA_I_UPG_ARMORY_GNADES = "CC31";
+CBDATA_N_UPG_ARMORY_GNADES = "Hand Grenades"; 
+CBDATA_D_UPG_ARMORY_GNADES = "Marines start with 5 hand grenades.\n"
+			 			 "Throws an explosive on use.";
+
+CBDATA_I_UPG_REFINE_PUMP1 = "CM57";
+CBDATA_N_UPG_REFINE_PUMP1 = "Processing Pump 1"; 
+CBDATA_D_UPG_REFINE_PUMP1 = "Increases the credit resource collection by 4\n"
+			 			"enabling the pump #1 from the refinery.";
+
+CBDATA_I_UPG_REFINE_PUMP2 = "CM56";
+CBDATA_N_UPG_REFINE_PUMP2 = "Processing Pump 2"; 
+CBDATA_D_UPG_REFINE_PUMP2 = "Increases the credit resource collection by\n"
+						"enabling the pump #2 from the refinery.";
+
+CBDATA_I_UPG_REFINE_ENGINE = "CC22";
+CBDATA_N_UPG_REFINE_ENGINE = "Engine Boost"; 
+CBDATA_D_UPG_REFINE_ENGINE = "Pumps now works faster, allowing to get\n"
+						 "credits in less time";
+
+CBDATA_I_UPG_REFINE_COINX5 = "CC23";
+CBDATA_N_UPG_REFINE_COINX5 = "Compensation"; 
+CBDATA_D_UPG_REFINE_COINX5 = "All dropped coins worths 5 times more.\n";
+
+CBDATA_I_UPG_MARCOM_AIRSUP = "CM54";
+CBDATA_N_UPG_MARCOM_AIRSUP = "Air Strike"; 
+CBDATA_D_UPG_MARCOM_AIRSUP = "Allows you to launch aerial strikes, by dropping"
+			 			 "\nbombs in the selected targets.";
+
+CBDATA_I_UPG_MARCOM_ADVSYS = "CM44";
+CBDATA_N_UPG_MARCOM_ADVSYS = "Advanced Systems"; 
+CBDATA_D_UPG_MARCOM_ADVSYS = "Powerful turrets are avilable to be deployed on\n"
+						 "the battlefield. Also unlocks new core pulses\n"
+						 "to be used.";	 
+
+CBDATA_I_UPG_MARCOM_VETMER = "CC32";
+CBDATA_N_UPG_MARCOM_VETMER = "Veteran Mercenaries"; 
+CBDATA_D_UPG_MARCOM_VETMER = "Speeds up the Exp. gain for all new players\n"
+						 "under Sergeant Rank by x3 Exp points,\n"
+						 "and under Major Rank by x2 Exp points."; 
+
+CBDATA_I_UPG_MARCOM_IONCAN = "CM53";
+CBDATA_N_UPG_MARCOM_IONCAN = "Ion Cannon"; 
+CBDATA_D_UPG_MARCOM_IONCAN = "Allows you to fire the Mighty Ion Cannon.\n"
+						 "Powerful enough to wipe-out entire waves \n"
+						 "in a single swipe."; 
+
+CBDATA_I_UPG_MARCOM_CPULSE = "CM66";
+CBDATA_N_UPG_MARCOM_CPULSE = "Core Pulse"; 
+CBDATA_D_UPG_MARCOM_CPULSE = "Your core gains the capacity to create special effects\n"
+						 "that affects in the battle field.";
+
+CBDATA_I_UPG_MARCOM_POPTIM = "CC21";
+CBDATA_N_UPG_MARCOM_POPTIM = "Pulse Optimizer"; 
+CBDATA_D_UPG_MARCOM_POPTIM = "Less recharge and startup delay on pulses.\n"
+						 "-25% secs on recharge. -2 secs on startup.";
+
+CBDATA_I_UPG_MARCOM_PFUSER = "CC20";
+CBDATA_N_UPG_MARCOM_PFUSER = "Pulse Fuser"; 
+CBDATA_D_UPG_MARCOM_PFUSER = "Improves the effects of your core pulses.";	
+
+CBDATA_I_SUP_AIRSTK = "CM76";
+CBDATA_N_SUP_AIRSTK = "Airstrike attack..."; 
+CBDATA_D_SUP_AIRSTK = "Start planning an aerial attack."; 
+
+CBDATA_I_SUP_AIRSTK_POINT = "CC07";
+CBDATA_N_SUP_AIRSTK_POINT = "Mark a point for target"; 
+CBDATA_D_SUP_AIRSTK_POINT = "Marks a target point for your airstrike attack."; 
+
+CBDATA_I_SUP_AIRSTK_LINE1 = "CC08";
+CBDATA_N_SUP_AIRSTK_LINE1 = "Mark a target line's Point 1"; 
+CBDATA_D_SUP_AIRSTK_LINE1 = "Marks the first target point for a line of tagets.";
+
+CBDATA_I_SUP_AIRSTK_LINE2 = "CC09";
+CBDATA_N_SUP_AIRSTK_LINE2 = "Mark a target line's Point 2"; 
+CBDATA_D_SUP_AIRSTK_LINE2 = "Marks the second target point for a line of tagets.";
+
+CBDATA_I_SUP_AIRSTK_WAVES1 = "CC10";
+CBDATA_N_SUP_AIRSTK_WAVES1 = "Toggle Airstrike Waves (1 wave)"; 
+CBDATA_D_SUP_AIRSTK_WAVES1 = "This will change the number of attacks made in a single target"
+							  "\n more waves implies more delay on cool down"
+							  "\n and more expensive costs, but also causes more chaos.";
+
+CBDATA_I_SUP_AIRSTK_WAVES3 = "CC11";
+CBDATA_N_SUP_AIRSTK_WAVES3 = "Toggle Airstrike Waves (3 waves)"; 
+CBDATA_D_SUP_AIRSTK_WAVES3 = "This will change the number of attacks made in a single target"
+							  "\n more waves implies more delay on cool down"
+							  "\n and more expensive costs, but also causes more chaos.";
+
+CBDATA_I_SUP_AIRSTK_WAVES5 = "CC12";
+CBDATA_N_SUP_AIRSTK_WAVES5 = "Toggle Airstrike Waves (5 waves)"; 
+CBDATA_D_SUP_AIRSTK_WAVES5 = "This will change the number of attacks made in a single target"
+							  "\n more waves implies more delay on cool down"
+							  "\n and more expensive costs, but also causes more chaos.";
+
+CBDATA_I_SUP_AIRSTK_EXE = "CM76";
+CBDATA_N_SUP_AIRSTK_EXE = "Launch the airstrike!"; 
+CBDATA_D_SUP_AIRSTK_EXE = "Attacks all the selected target points!.\n" 
+						  "Price depends on the amount of targets\n"
+						  "placed before the assault.";
+
+CBDATA_I_SUP_AIRSTK_CANCEL = "CM85";
+CBDATA_N_SUP_AIRSTK_CANCEL = "Clear all targets"; 
+CBDATA_D_SUP_AIRSTK_CANCEL = "Clears all airstrike markers.";
+
+
+CBDATA_I_SUP_CPULSE = "CM78";
+CBDATA_N_SUP_CPULSE = "Core pulse..."; 
+CBDATA_D_SUP_CPULSE = "Activate a core pulse"; 
+
+CBDATA_I_SUP_CPULSE_HEAL = "CM69";
+CBDATA_N_SUP_CPULSE_HEAL = "Heal pulse"; 
+CBDATA_D_SUP_CPULSE_HEAL = "Fully heals the current risked sector's core."; 
+
+CBDATA_I_SUP_CPULSE_CRIPPLE = "CM68";
+CBDATA_N_SUP_CPULSE_CRIPPLE = "Cripple pulse"; 
+CBDATA_D_SUP_CPULSE_CRIPPLE = "Damages all monsters in the battlefield."; 
+
+CBDATA_I_SUP_CPULSE_HALT = "CM67";
+CBDATA_N_SUP_CPULSE_HALT = "Halt Pulse"; 
+CBDATA_D_SUP_CPULSE_HALT = "Holds up the monster spawning for 60 seconds."; 
+
+CBDATA_I_SUP_CPULSE_WAR = "CM67";
+CBDATA_N_SUP_CPULSE_WAR = "War Pulse"; 
+CBDATA_D_SUP_CPULSE_WAR = "Powerups all marines with x2 Damage and Fast Fire"; 
+
+CBDATA_I_SUP_CPULSE_SMITE = "CM67";
+CBDATA_N_SUP_CPULSE_SMITE = "Smite Pulse"; 
+CBDATA_D_SUP_CPULSE_SMITE = "Greatly damages the monsters inside of the risked sector."; 
+
+CBDATA_I_SUP_MARK_ATTACK = "CM81";
+CBDATA_N_SUP_MARK_ATTACK = "Attack Marker"; 
+CBDATA_D_SUP_MARK_ATTACK = "Notify your allies to attack a specific point."; 
+
+CBDATA_I_SUP_MARK_DEFEND = "CM82";
+CBDATA_N_SUP_MARK_DEFEND = "Defend Marker"; 
+CBDATA_D_SUP_MARK_DEFEND = "Notify your allies to defend a specific point."; 
+
+CBDATA_I_SUP_MARK_DEPLOY = "CM83";
+CBDATA_N_SUP_MARK_DEPLOY = "Deploy Marker"; 
+CBDATA_D_SUP_MARK_DEPLOY = "Notify your allies to deploy something in a\n"
+						   "specific point.";
+
+CBDATA_I_SUP_MARK_REGROUP = "CM84";
+CBDATA_N_SUP_MARK_REGROUP = "Regroup Marker"; 
+CBDATA_D_SUP_MARK_REGROUP = "Notify your allies to meet in the rendezvous point\n"
+							"at a specific position.";
+
+CBDATA_I_SUP_MARK_CLEAR = "CM85";
+CBDATA_N_SUP_MARK_CLEAR = "Clear Markers"; 
+CBDATA_D_SUP_MARK_CLEAR = "Clear all markers."; 
+
+CBDATA_I_SUP_IONCAN = "CM79";
+CBDATA_N_SUP_IONCAN = "Fire Ion Cannon"; 
+CBDATA_D_SUP_IONCAN = "Fires the mighty Ion Cannon in a specific location."; 
+
+CBDATA_I_SUP_MONEYBAG = "CM80";
+CBDATA_N_SUP_MONEYBAG = "Drop Money bag"; 
+CBDATA_D_SUP_MONEYBAG = "Drops a Money bag with 3000 credits inside.\n"
+						"It's discounted from the team credits."; 
+
+CBDATA_I_DEP_MINEFIELD = "CM31";
+CBDATA_N_DEP_MINEFIELD = "Deploy some mines"; 
+CBDATA_D_DEP_MINEFIELD = "Spawns some mines in the area and sets them up\n"
+						  "in case of any demon, prepared to blow them away."; 
+
+CBDATA_I_DEP_DISP_HEALTH = "CM33";
+CBDATA_N_DEP_DISP_HEALTH = "Deploy a Health Dispenser"; 
+CBDATA_D_DEP_DISP_HEALTH = "Spawns a health dispenser, nifty for restoring health.";
+
+CBDATA_I_DEP_DISP_AMMO = "CM32";
+CBDATA_N_DEP_DISP_AMMO = "Deploy an Ammo Dispenser"; 
+CBDATA_D_DEP_DISP_AMMO = "Deploys an ammo dispenser, for marine re-stocking.";
+
+CBDATA_I_DEP_BARRIER = "CM30";
+CBDATA_N_DEP_BARRIER = "Deploy a Barrier"; 
+CBDATA_D_DEP_BARRIER = "Deploys a resistent barrier which it works as\n"
+					   "a distraction, as long as it makes time to let the\n"
+					   "marines fight back.";
+
+CBDATA_I_DEP_TURRET = "CG05";
+CBDATA_N_DEP_TURRET = "Deploy a turret...";
+CBDATA_D_DEP_TURRET = "Access to the turret menu.";
+
+CBDATA_I_DEP_TURRET_BULLET = "CM40";
+CBDATA_N_DEP_TURRET_BULLET = "Deploy a turret...";
+CBDATA_D_DEP_TURRET_BULLET = "Access to the turret menu.";
+
+CBDATA_I_DEP_TURRET_ROCKET = "CM41";
+CBDATA_N_DEP_TURRET_ROCKET = "Deploy a Rocket Turret"; 
+CBDATA_D_DEP_TURRET_ROCKET = "Deploys an explosive rocket turret. Fires rockets."; 
+
+CBDATA_I_DEP_TURRET_PLASMA = "CM42";
+CBDATA_N_DEP_TURRET_PLASMA = "Deploy a Plasma Turret"; 
+CBDATA_D_DEP_TURRET_PLASMA = "Deploys an advanced plasma turret. Fires plasma balls\n"
+							 "quickly to 1 enemy, excelent for dealing damage when\n"
+							 "deployed in numbers."; 
+
+CBDATA_I_DEP_TURRET_TESCOL = "CM43";
+CBDATA_N_DEP_TURRET_TESCOL = "Deploy a Tesla coil"; 
+CBDATA_D_DEP_TURRET_TESCOL = "Deploys a tesla coil which it damages nearby enemies\n"
+							  "hiting them without even noticing."; 
+
+CBDATA_I_DEP_TURRET_FLAMER = "CM47";
+CBDATA_N_DEP_TURRET_FLAMER = "Deploy a Flame Turret"; 
+CBDATA_D_DEP_TURRET_FLAMER = "Deploys a powerful flame turret which it spews fire\n"
+							  "to the nearby demons."; 
+
+CBDATA_I_DEP_TURRET_CHAINGUN = "CC14";
+CBDATA_N_DEP_TURRET_CHAINGUN = "Deploy a Chaingun Turret"; 
+CBDATA_D_DEP_TURRET_CHAINGUN = "Deploys a chaingun turret, better than a bullet turret.\n"
+							  "Makes more damage, seeks for new targets, \n"
+							  "fires constantly and resists more.";		 
+
+CBDATA_I_DEP_TURRET_SHOTGUN = "CC13";
+CBDATA_N_DEP_TURRET_SHOTGUN = "Deploy a Shotgun Turret"; 
+CBDATA_D_DEP_TURRET_SHOTGUN = "Deploys a shotgun turret. Fires twice, and deals\n"
+							  "damage in a spreadier way. \n\n"
+							  "Not the fastest, but it's better than a bullet turret.";	
+
+CBDATA_I_DEP_TURRET_BFG = "CC17";
+CBDATA_N_DEP_TURRET_BFG = "Deploy a BFG Turret"; 
+CBDATA_D_DEP_TURRET_BFG = "Deploys a BFG turret. Never seen one of these?\n\n"
+						  "Fires 2 Powerful BFG Balls againt demons!\n"
+						  "Takes a while to fire, but it truly does a big\n"
+						  "damage to the hordes!";
+
+CBDATA_I_NUKE = "CM75";
+CBDATA_N_NUKE = "Activate nuke"; 
+CBDATA_D_NUKE = "Activate the silo, to nuke the map.";
+
+CBDATA_I_NUKE_NOW = "CM75";
+CBDATA_N_NUKE_NOW = "Launch the nuke, now!"; 
+CBDATA_D_NUKE_NOW = "Click it only if you're sure to nuke this map\n"
+					"just remember, hold up for 5 minutes and you win.\n\n"
+					"This action cannot be undone, are you sure?"; 

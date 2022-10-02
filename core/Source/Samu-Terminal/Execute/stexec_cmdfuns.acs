@@ -1,16 +1,20 @@
 
 function void StExecute_CMDBtnDesc(int lbl_title, int lbl_desc, int btndata){
+	
+	if(btndata == -1) return;
+
 	str name = CMDBut_getName(btndata);
 	str desc = CMDBut_getDesc(btndata);
 	int price = CMDBut_getPrice(btndata);
 	bool acess = CMDBut_getAccessCond(btndata);
 	//log(s:name);
-	
+	str reason_noacess = CMDBut_getNoAccessReason(btndata);
+
 	if(!acess) name = strParam(s:name, s:" - Locked.");
 	else if (price > 0) name = strParam(s:name, s:" - ", d:price, s:" $.");
 	
-	if(!CMDBut_getAccessCond(btndata)){
-		Label_SetText(lbl_desc, CMDBut_getNoAccessReason(btndata));
+	if(!acess){
+		Label_SetText(lbl_desc, reason_noacess);
 		Label_setColor(lbl_title, CR_BRICK);
 	}else{
 		Label_SetText(lbl_desc, desc);
@@ -77,6 +81,16 @@ function void STExecute_CMDExecuteF(int command, int arg){
 }
 */
 
+
+function void STExecute_CMDGotToCat2(int dest, int btndata){
+
+	if(!CMDBut_GetAccessCond(btndata))
+		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
+	else{
+		Toaster_ShowToast(strparam(s:"Going to category.", d:dest), CR_RED);
+		CMDPage_SetButtonLayout(dest);
+	}
+}
 
 function void STExecute_CMDGotToCat(int tagdest, int btndata){
 

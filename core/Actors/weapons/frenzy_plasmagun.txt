@@ -2,6 +2,8 @@ ACTOR PlasmaGun : Weapon
 {
 	Weapon.AmmoUse			1
 	Weapon.AmmoGive 		50
+	Weapon.AmmoUse2			5 
+	Weapon.AmmoType2		"Cell"
 	Weapon.AmmoType			"Cell"
 	Inventory.PickupMessage		"You got the Plasma Gun!"
 	Obituary			"%o got melted by %k's plasma balls of steel"
@@ -27,10 +29,25 @@ ACTOR PlasmaGun : Weapon
 			PLSG A 3 A_FirePlasma
 			X2E1 A 20 A_Refire
 			goto Ready
+		AltFire:
+			PLSG A 0 A_PlayWeaponSound("weapons/plasmaf")
+			PLSG A 10 A_Gunflash
+			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Alt")
+			X2E1 A 20 A_Refire
+			goto Ready
 		Flash:
 			PLSF A 4 Bright A_Light1
 			goto LightDone
 			PLSF B 4 Bright A_Light1
+			goto LightDone
+		AltFlash:
+			TNT1 A 1 A_Light0
+			PLSF A 1 Bright A_Light1
+			TNT1 A 1 A_Light0
+			PLSF A 1 Bright A_Light1
+			PLSF B 2 Bright A_Light1
+			PLSF A 1 Bright A_Light1
+			PLSF B 2 Bright A_Light1
 			goto LightDone
 			
 		FireRockets:
@@ -80,7 +97,7 @@ ACTOR PlasmaGun_Advanced : Weapon
 			
 		
 		AltFire:
-			X2E3 BBCCBCBC 1 
+			X2E3 BBCCBCBC 1 BRIGHT
 			X2E3 C 1 A_PlayWeaponSound("weapons/plasmaf")
 			X2E3 A 3
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Adv2Alt", 0)

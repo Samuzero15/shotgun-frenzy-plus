@@ -101,6 +101,7 @@
 #libdefine STEXE_CMDEVENT_CHECK 	50
 #libdefine STEXE_CMDBTNDESC 		25
 #libdefine STEXE_CMDCAT 			26
+#libdefine STEXE_CMDCAT2 			27
 
 #libdefine STEXE_BUYMECHTANK 19
 #libdefine STEXE_GETMECHTANK -9

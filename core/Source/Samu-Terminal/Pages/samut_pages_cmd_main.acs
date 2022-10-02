@@ -1,8 +1,30 @@
 
 int cmdpage_vars[500];
-#define CMDPAGE_NCOMPGROUP 2
+#define CMDPAGE_NCOMPGROUP 3
 #define CMDPAGE_NPRIVARS 5
 //Inner page index = 0
+
+#define CMDPAGE_VAR_ID 		1
+#define CMDPAGE_VAR_BTNDATA 2
+#define CMDPAGE_VAR_BTNDARG 3
+
+#define CMDPAGE_VAR_BASESLOT 5
+
+#define CMDPAGE_LAYOUT_MAIN 1
+#define CMDPAGE_LAYOUT_BUILD 2
+#define CMDPAGE_LAYOUT_UPGRADE 3
+#define CMDPAGE_LAYOUT_UPGRADE_GENLAB 4
+#define CMDPAGE_LAYOUT_UPGRADE_ARMORY 5
+#define CMDPAGE_LAYOUT_UPGRADE_REFINE 6
+#define CMDPAGE_LAYOUT_UPGRADE_MARCOM 7
+#define CMDPAGE_LAYOUT_SUPPORT 8
+#define CMDPAGE_LAYOUT_DEPLOY 9
+#define CMDPAGE_LAYOUT_CPULSE 10
+#define CMDPAGE_LAYOUT_AIRSTK 11
+#define CMDPAGE_LAYOUT_DEPLOY_TURRET 12
+#define CMDPAGE_LAYOUT_SUPPORT_AIRSTK 14
+#define CMDPAGE_LAYOUT_SUPPORT_CPULSE 15
+
 
 function void CMDPage_Update(void){
 	setPageTitle_Alpha("Commander mode", CR_CYAN);
@@ -22,11 +44,14 @@ function void CMDPage_Update(void){
 		s:"\nSector 3 : ", d:thingcount(0, 113), 
 		s:"\nMain base: ", d:thingcount(0, 114)));
 	
+	for(int i = 0; i < 12; i++){
+		CMDPage_UpdateButton2(i);
+	}
+	/*
 	CMDBut_UpdateConds();
 	
-	for(int i = 0; i < FP_COM_BUTTONS; i++){
-		CMDPage_UpdateButton(i);
-	}
+	
+	*/
 }
 
 //This will initialize the page components.
@@ -71,7 +96,24 @@ function void CMDPage_Init(void){
 	Label_setFont(i, "CONFONT");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	cmdpage_vars[4] = i;
+
+	int baseid = 5;
+	CMDPage_MakeButtonSlot(0, 1, 1);
+	CMDPage_MakeButtonSlot(1, 1, 2);
+	CMDPage_MakeButtonSlot(2, 1, 3);
+	CMDPage_MakeButtonSlot(3, 1, 4);
+	CMDPage_MakeButtonSlot(4, 2, 1);
+	CMDPage_MakeButtonSlot(5, 2, 2);
+	CMDPage_MakeButtonSlot(6, 2, 3);
+	CMDPage_MakeButtonSlot(7, 2, 4);
+	CMDPage_MakeButtonSlot(8, 3, 1);
+	CMDPage_MakeButtonSlot(9, 3, 2);
+	CMDPage_MakeButtonSlot(10, 3, 3);
+	CMDPage_MakeButtonSlot(11, 3, 4);
+
+	CMDPage_SetButtonLayout(CMDPAGE_LAYOUT_MAIN);
 	
+	/*
 	i = 11;
 	int m = 11;
 	int p = 0;
@@ -175,8 +217,221 @@ function void CMDPage_Init(void){
 		
 		CMDPage_MakeReturnButton(p, i);
 	CMDPage_MakeReturnButton(i, m);
+	*/
 }
 
+
+
+function int CMDPage_MakeButtonSlot(int id, int row, int col)
+{
+	//Check on cmdbut_list.acs on Samu-Tools to see the respective properties.
+	int i = ImgButton_AddGrid(cmdpage_vars[0], row, col, 31.0, 31.0);
+	ImgButton_setImage		(i, "");
+	ImgButton_setHoverImage	(i, "BUTTONS");
+	ImgButton_setExeHover	(i, STEXE_CMDBTNDESC);
+	ImgButton_setArgsHover	(i, cmdpage_vars[1],cmdpage_vars[2],-1);
+	ImgButton_setShow		(i, true);
+
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + id, CMDPAGE_VAR_ID, i);
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + id, CMDPAGE_VAR_BTNDATA, -1);
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + id, CMDPAGE_VAR_BTNDARG, 0);
+
+	return i;
+}
+
+function void CMDPage_UpdateButton2(int slot){
+	int comp 	= CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_ID);
+	int btndata = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA);
+	int btnarg = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDARG);
+	if(btndata == -1) ImgButton_setShow	(comp, false);
+	else {
+		int up_btndata = CMDBut_UpdateConds(btndata);
+		
+		if(up_btndata != btndata){
+			CMDPage_SetButtonInSlot(slot, up_btndata);
+			CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, up_btndata);
+			btndata = up_btndata;
+		}
+		
+		str icon = CMDBut_getIcon(btndata);
+		ImgButton_setImage(comp, cond(CMDBut_GetAccessCond(btndata), icon, "CG00"));
+		if(btnarg > 0){
+			ImgButton_setExecute	(comp, STEXE_CMDCAT2);
+			ImgButton_setArgs		(comp, btnarg, btndata, 0);
+		}else{
+			if(btnarg == -1)	ImgButton_setExecute	(comp, STEXE_CMDEXIT);
+			else 				ImgButton_setExecute	(comp, STEXE_CMDEVENT_CHECK);
+			ImgButton_setArgs		(comp, 0, btndata, 0);
+		}
+		ImgButton_setArgsHover	(comp, cmdpage_vars[1],cmdpage_vars[2],btndata);
+		ImgButton_setShow	(comp, CMDBut_GetShowCond(btndata));
+	}
+}
+
+function void CMDPage_SetButtonLayout(int layout){
+	int id;
+	for(int i = 0; i < 12; i ++){// Clear last layout.
+		if(CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + i, CMDPAGE_VAR_BTNDATA) == -1) continue;
+		id = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + i, 1);
+		ImgButton_setExecute	(id, 0);
+		ImgButton_setArgs		(id, 0, 0, 0);
+		CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + i, CMDPAGE_VAR_BTNDATA, -1);
+		CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + i, CMDPAGE_VAR_BTNDARG, 0);
+	}
+
+	switch(layout){
+		case CMDPAGE_LAYOUT_MAIN:
+			CMDPage_SetButtonInSlot_Link(0, FP_CB_BUILD, CMDPAGE_LAYOUT_BUILD);
+			CMDPage_SetButtonInSlot_Link(1, FP_CB_UPGRADE, CMDPAGE_LAYOUT_UPGRADE);
+			CMDPage_SetButtonInSlot_Link(2, FP_CB_SUPPORT, CMDPAGE_LAYOUT_SUPPORT);
+			CMDPage_SetButtonInSlot_Link(3, FP_CB_DEPLOY, CMDPAGE_LAYOUT_DEPLOY);
+			CMDPage_SetButtonInSlot(8, FP_CB_NUKE);
+			CMDPage_SetButtonInSlot_Exit(11, FP_CB_EXIT);
+		break;
+
+		case CMDPAGE_LAYOUT_BUILD:
+			CMDPage_SetButtonInSlot(0, FP_CB_BUILD_GENLAB);
+			CMDPage_SetButtonInSlot(1, FP_CB_BUILD_ARMORY);
+			CMDPage_SetButtonInSlot(2, FP_CB_BUILD_REFINE);
+			CMDPage_SetButtonInSlot(3, FP_CB_BUILD_MECHFA);
+			CMDPage_SetButtonInSlot(4, FP_CB_BUILD_MARCOM);
+			CMDPage_SetButtonInSlot(5, FP_CB_BUILD_NUKESY);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_MAIN);
+		break;
+		
+
+		case CMDPAGE_LAYOUT_UPGRADE:
+			CMDPage_SetButtonInSlot_Link(0, FP_CB_UPGRADE_GENLAB, CMDPAGE_LAYOUT_UPGRADE_GENLAB);
+			CMDPage_SetButtonInSlot_Link(1, FP_CB_UPGRADE_ARMORY, CMDPAGE_LAYOUT_UPGRADE_ARMORY);
+			CMDPage_SetButtonInSlot_Link(2, FP_CB_UPGRADE_REFINE, CMDPAGE_LAYOUT_UPGRADE_REFINE);
+			CMDPage_SetButtonInSlot_Link(3, FP_CB_UPGRADE_MARCOM, CMDPAGE_LAYOUT_UPGRADE_MARCOM);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_MAIN);
+		break;
+
+		case CMDPAGE_LAYOUT_UPGRADE_GENLAB:
+			CMDPage_SetButtonInSlot(0, FP_CB_UPGRADE_GENLAB_HEALTH1);
+			CMDPage_SetButtonInSlot(1, FP_CB_UPGRADE_GENLAB_SPEEDB);
+			CMDPage_SetButtonInSlot(2, FP_CB_UPGRADE_GENLAB_ARMOR);
+			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_GENLAB_RESISB);
+			CMDPage_SetButtonInSlot(4, FP_CB_UPGRADE_GENLAB_REGENB);
+			CMDPage_SetButtonInSlot(5, FP_CB_UPGRADE_GENLAB_STIMPK);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
+		break;
+
+		case CMDPAGE_LAYOUT_UPGRADE_ARMORY:
+			CMDPage_SetButtonInSlot(0, FP_CB_UPGRADE_ARMORY_ARMS1);
+			CMDPage_SetButtonInSlot(1, FP_CB_UPGRADE_ARMORY_AMMOBP);
+			CMDPage_SetButtonInSlot(2, FP_CB_UPGRADE_ARMORY_BOOMRN);
+			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_ARMORY_GNADES);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
+		break;
+
+		case CMDPAGE_LAYOUT_UPGRADE_REFINE:
+			CMDPage_SetButtonInSlot(0, FP_CB_UPGRADE_REFINE_PUMP1);
+			CMDPage_SetButtonInSlot(1, FP_CB_UPGRADE_REFINE_PUMP2);
+			CMDPage_SetButtonInSlot(2, FP_CB_UPGRADE_REFINE_ENGINE);
+			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_REFINE_COINX5);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
+		break;
+
+		case CMDPAGE_LAYOUT_UPGRADE_MARCOM:
+			CMDPage_SetButtonInSlot(0, FP_CB_UPGRADE_MARCOM_ADVSYS);
+			CMDPage_SetButtonInSlot(1, FP_CB_UPGRADE_MARCOM_AIRSUP);
+			CMDPage_SetButtonInSlot(2, FP_CB_UPGRADE_MARCOM_IONCAN);
+			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_MARCOM_CPULSE);
+			CMDPage_SetButtonInSlot(4, FP_CB_UPGRADE_MARCOM_VETMER);
+			CMDPage_SetButtonInSlot(5, FP_CB_UPGRADE_MARCOM_PFUSER);
+			CMDPage_SetButtonInSlot(6, FP_CB_UPGRADE_MARCOM_POPTIM);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
+		break;
+
+		case CMDPAGE_LAYOUT_SUPPORT:
+			CMDPage_SetButtonInSlot_Link(0, FP_CB_SUPPORT_AIRSTK, CMDPAGE_LAYOUT_SUPPORT_AIRSTK);
+			CMDPage_SetButtonInSlot_Link(1, FP_CB_SUPPORT_CPULSE, CMDPAGE_LAYOUT_SUPPORT_CPULSE);
+			CMDPage_SetButtonInSlot(2, FP_CB_SUPPORT_IONCAN);
+			CMDPage_SetButtonInSlot(3, FP_CB_SUPPORT_DROPMONEY);
+			CMDPage_SetButtonInSlot(4, FP_CB_SUPPORT_MARK_ATTACK);
+			CMDPage_SetButtonInSlot(5, FP_CB_SUPPORT_MARK_DEFEND);
+			CMDPage_SetButtonInSlot(6, FP_CB_SUPPORT_MARK_DEPLOY);
+			CMDPage_SetButtonInSlot(7, FP_CB_SUPPORT_MARK_REGROUP);
+			CMDPage_SetButtonInSlot(8, FP_CB_SUPPORT_MARK_CLEAR);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_MAIN);
+		break;
+
+		case CMDPAGE_LAYOUT_SUPPORT_AIRSTK:
+			CMDPage_SetButtonInSlot(0, FP_CB_SUPPORT_AIRSTK_POINT);
+			CMDPage_SetButtonInSlot(1, FP_CB_SUPPORT_AIRSTK_LINE_1);
+			CMDPage_SetButtonInSlot(2, FP_CB_SUPPORT_AIRSTK_LINE_2);
+			CMDPage_SetButtonInSlot(3, FP_CB_SUPPORT_AIRSTK_WAVES_1);
+			CMDPage_SetButtonInSlot(8, FP_CB_SUPPORT_AIRSTK_EXE);
+			CMDPage_SetButtonInSlot(9, FP_CB_SUPPORT_AIRSTK_CLEAR);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_SUPPORT);
+		break;
+
+		case CMDPAGE_LAYOUT_SUPPORT_CPULSE:
+			CMDPage_SetButtonInSlot(0, FP_CB_SUPPORT_CPULSE_HEAL);
+			CMDPage_SetButtonInSlot(1, FP_CB_SUPPORT_CPULSE_CRIPPLE);
+			CMDPage_SetButtonInSlot(2, FP_CB_SUPPORT_CPULSE_HALT);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_SUPPORT);
+		break;
+
+		case CMDPAGE_LAYOUT_DEPLOY:
+			CMDPage_SetButtonInSlot(0, FP_CB_DEPLOY_MINEFIELD);
+			CMDPage_SetButtonInSlot(1, FP_CB_DEPLOY_DISP_HEALTH);
+			CMDPage_SetButtonInSlot(2, FP_CB_DEPLOY_DISP_AMMO);
+			CMDPage_SetButtonInSlot(3, FP_CB_DEPLOY_BARRIER);
+			CMDPage_SetButtonInSlot_Link(8, FP_CB_DEPLOY_TURRET, CMDPAGE_LAYOUT_DEPLOY_TURRET);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_MAIN);
+		break;
+
+		case CMDPAGE_LAYOUT_DEPLOY_TURRET:
+			CMDPage_SetButtonInSlot(0, FP_CB_DEPLOY_TURRET_BULLET);
+			CMDPage_SetButtonInSlot(1, FP_CB_DEPLOY_TURRET_SHOTGUN);
+			CMDPage_SetButtonInSlot(2, FP_CB_DEPLOY_TURRET_ROCKET);
+			CMDPage_SetButtonInSlot(3, FP_CB_DEPLOY_TURRET_PLASMA);
+			CMDPage_SetButtonInSlot(4, FP_CB_DEPLOY_TURRET_CHAINGUN);
+			CMDPage_SetButtonInSlot(5, FP_CB_DEPLOY_TURRET_TESCOL);
+			CMDPage_SetButtonInSlot(6, FP_CB_DEPLOY_TURRET_FLAMER);
+			CMDPage_SetButtonInSlot(7, FP_CB_DEPLOY_TURRET_BFG);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_DEPLOY);
+		break;
+	}
+}
+
+function void CMDPage_SetButtonInSlot_Exit(int slot, int btndata){
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, btndata);
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDARG, -1);
+}
+
+function void CMDPage_SetButtonInSlot_Link(int slot, int btndata, int layout){
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, btndata);
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDARG, layout);
+}
+
+function void CMDPage_SetButtonInSlot(int slot, int btndata){
+	CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, btndata);
+}
+
+function void CMDPage_SaveGroup(int up, int id, int comp){
+	cmdpage_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)] = comp;
+}
+
+function int CMDPage_LoadGroup(int up, int id){
+	return cmdpage_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)];
+}
+
+/*
 function void CMDPage_MakeLinkButton(int tag, int row, int col, int btndata, int destTag){
 	CMDPage_MakeButtonEX(tag, row, col, btndata, STEXE_CMDCAT, destTag);
 }
@@ -217,14 +472,6 @@ function void CMDPage_MakeButtonEX(int tag, int row, int col, int btndata, int e
 	CMDPage_SaveGroup(btndata, 2, tag);
 }
 
-function void CMDPage_SaveGroup(int up, int id, int comp){
-	cmdpage_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)] = comp;
-}
-
-function int CMDPage_LoadGroup(int up, int id){
-	return cmdpage_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)];
-}
-
 function void CMDPage_UpdateButton(int btndata){
 	int comp = CMDPage_LoadGroup(btndata, 1);
 	int tag = CMDPage_LoadGroup(btndata, 2);
@@ -237,3 +484,4 @@ function void CMDPage_UpdateButton(int btndata){
 	
 	ImgButton_setImage(comp, cond(CMDBut_GetAccessCond(btndata), CMDBut_getIcon(btndata), "CG00"));
 }
+*/
