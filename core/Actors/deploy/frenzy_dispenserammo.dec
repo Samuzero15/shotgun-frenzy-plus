@@ -13,18 +13,20 @@ ACTOR AmmoDispenser_Base
 {
 	health 250
 	radius 16
-	height 32
+	height 64
 	mass 10000
 	speed 0
 	
 	MONSTER
-	-ISMONSTER //Makes it spawnable everywhere
-	
+	//-ISMONSTER //Makes it spawnable everywhere
+	-CountKill
+
 	+FLOORCLIP
 	+FRIENDLY
 	+NOBLOOD
-	-SOLID
 	+NEVERRESPAWN
+	+THRUSPECIES
+	+USEDAMAGEEVENTSCRIPT
 	
 	// protect from marine damage
 	damagefactor "MarineFire", 0.0
@@ -33,25 +35,36 @@ ACTOR AmmoDispenser_Base
 	DamageFactor "NoProfitKill", 0.0
         DamageFactor "BFGSplash", 0.0
         DamageFactor "BFGSpray", 0.0
+	Species Marines
 	
-	var int user_rd;
+	var int user_fixcost;
+	var int user_upgcost;
+	var int user_range;
+	var int user_rangeup;
+	var int user_rangestart;
 	
 	states
 	{
 		Spawn:
 			TNT1 A 0
-			TNT1 A 1 A_setUserVar("user_rd", 32)
+			TNT1 A 1 
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 60)
+			TNT1 A 0 A_SetUserVar("user_fixcost", 300)
+			TNT1 A 0 A_SetUserVar("user_upgcost", 1500)
+			TNT1 A 0 A_SetUserVar("user_rangeup", 16)
+			TNT1 A 0 A_SetUserVar("user_rangestart", 32)
+			TNT1 A 0 A_SetUserVar("user_range", user_rangestart)
+			TNT1 A 1 ACS_NamedExecuteAlways("Building_AggroLoop", 0)
 		Loopy:
 			DEAM A 3 
-			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_rd,user_rd), random(-user_rd,user_rd), 0, 0, 0, 3)
-			DEAM B 3 A_RadiusGive("AmmoDispenser_Pickup",user_rd*2, RGF_PLAYERS, 1)
-			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_rd,user_rd), random(-user_rd,user_rd), 0, 0, 0, 3)
+			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_range,user_range), random(-user_range,user_range), 0, 0, 0, 3)
+			DEAM B 3 A_RadiusGive("AmmoDispenser_Pickup",user_range*2, RGF_PLAYERS, 1)
+			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_range,user_range), random(-user_range,user_range), 0, 0, 0, 3)
 			DEAM C 3 
-			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_rd,user_rd), random(-user_rd,user_rd), 0, 0, 0, 3)
-			DEAM D 3 A_RadiusGive("AmmoDispenser_Pickup",user_rd*2, RGF_PLAYERS, 1)
-			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_rd,user_rd), random(-user_rd,user_rd), 0, 0, 0, 3)
-			DEAM E 3  A_SpawnItemEx("streak_cfx", random(-user_rd,user_rd), random(-user_rd,user_rd), 0, 0, 0, 1, 0, SXF_CLIENTSIDE, 0)
+			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_range,user_range), random(-user_range,user_range), 0, 0, 0, 3)
+			DEAM D 3 A_RadiusGive("AmmoDispenser_Pickup",user_range*2, RGF_PLAYERS, 1)
+			TNT1 A 0 A_SpawnItemEx ("AmmoDispenser_Streak", random(-user_range,user_range), random(-user_range,user_range), 0, 0, 0, 3)
+			DEAM E 3  A_SpawnItemEx("streak_cfx", random(-user_range,user_range), random(-user_range,user_range), 0, 0, 0, 1, 0, SXF_CLIENTSIDE, 0)
 			loop
 		Death:
 			TRT2 A 1 bright A_SpawnItemEx ("Boom", 0, 0, 60, 0, 0, 0, 0, 160)

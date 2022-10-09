@@ -9,6 +9,9 @@
 
 ## v0 - Before the beginning...
 
+#### (10 / 10 / 2022) [Aggro on dispensers]
+	*) Now health and ammo dispensers are more prone on attacks compared to the rest of buildings.
+
 #### (9 / 10 / 2022) [Spitter buffs, stimpacks and hand-grenades (wip)]
 	*) Now the auto spitter can fire a perfectly aimed bullet on the first shot, reduced the ammo consumption and takes no breaks for each shot round.
 	*) Now the spread spitter can fire a perfectly aimed bullet on the first shot and uses less ammo (2 clips per shot).

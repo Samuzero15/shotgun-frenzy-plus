@@ -224,25 +224,30 @@ script "PlayerId" (void){
 }
 
 function bool IsATurret(int tid){
-	str turrets[7] ={
+	str turrets[9] ={
 		"TurretBullet_HEAD",
 		"TurretShotgun_Head",
 		"TurretChaingun_Head",
 		"TurretRocket_Head",
 		"TurretPlasma_Head",
 		"TurretBase_Head",
-		"TurretBFG_Head"
+		"TurretBFG_Head",
+		"HealthDispenser_Base",
+		"AmmoDispenser_Base"
 	};
 
-	for(int i = 0; i < 7; i ++){
-		if(CheckActorClass(tid, turrets[i])) return true;
+		//log(s:GetActorClass(tid));
+	for(int i = 0; i < 9; i ++){
+		if(CheckActorClass(tid, turrets[i])){
+			 return true;
+		}
 	}
 		
 	return false;
 }
 
 script "IAmATurret" (void){
-	SetResultValue(IsATurret(0));
+	SetResultValue(IsATurret(ActivatorTID()));
 }
 
 #libdefine PATCHER_HID_HEALTH 2700
@@ -338,6 +343,7 @@ script "Patcher_TurretScouter" (void){
 	TakeInventory("Patcher_Script", 1);
 }
 script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
+	//log(s:"arg2: ", s:arg2);
     if(type != GAMEEVENT_ACTOR_DAMAGED || !(
 		strcmp(arg2, "PriPatcherDmg") == 0 ||
 		strcmp(arg2, "AltPatcherDmg") == 0 ||
@@ -572,11 +578,19 @@ Script "Turret_States" (int height){
 Script "Building_AggroLoop" (int tid) {
 	delay(5);
 	while(GetActorProperty(0, APROP_HEALTH) >= 1){
+		//log(s:"Aggroing")
 		TakeInventory("Building_GetRange", 0xFFFFFFFF);
-		GiveInventory("Building_GetRange", GetUserVariable(0, "user_range"));
-		//Log(s:"Give the HateRadius, radius:", d:GetUserVariable(0, "user_range"));
+		//
+		if(CheckActorClass(0, "AmmoDispenser_Base") || CheckActorClass(0, "HealthDispenser_Base"))
+			GiveInventory("Building_GetRange", 1024*3);
+			
+			// Dispensers are more prone to be attacked!
+		else{
+			GiveInventory("Building_GetRange", GetUserVariable(0, "user_range"));
+		}
 		GiveInventory("Building_HateRadius", 1);
-		delay(35*3);
+		Log(s:"Give the HateRadius, radius:", d:CheckInventory("Building_GetRange"));
+		delay(35*5);
 	}
 }
 

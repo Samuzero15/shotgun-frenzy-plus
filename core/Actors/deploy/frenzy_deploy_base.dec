@@ -638,6 +638,16 @@ Actor Building_HateTarget{
 	}
 }
 
+Actor Building_HateTarget_First : Building_HateTarget{
+	states {
+		Spawn:
+			TNT1 A 0 Nodelay Thing_ChangeTID(0, 667)
+			TNT1 A 115 bright
+			TNT1 A 0 //A_Log("Poof")
+		Stop
+	}
+}
+
 Actor Building_HateRadius : CustomInventory {
 	 +Inventory.AlwaysPickup
 	 var int user_range;
@@ -646,9 +656,14 @@ Actor Building_HateRadius : CustomInventory {
 		Pickup: // User_Radius should be defined by the turret.
 			//TNT1 A 0 A_RadiusGive("Building_AggroTid",user_range,RGF_MONSTERS, tid)
 			TNT1 A 0
+			TNT1 A 0 A_JumpIf(CheckClass("AmmoDispenser_Base") || CheckClass("HealthDispenser_Base"),"DispensersFirst")
 			TNT1 A 0 A_SpawnItem("Building_HateTarget")
 			TNT1 A 0 A_RadiusGive("Building_Aggro",CallACS("Building_GetRange"), RGF_MONSTERS | RGF_CUBE)
 			Stop
+		DispensersFirst:
+			TNT1 A 0 A_SpawnItem("Building_HateTarget_First")
+			TNT1 A 0 A_RadiusGive("Building_AggroDispensers",CallACS("Building_GetRange"), RGF_MONSTERS | RGF_CUBE)
+			stop
 	}
 }
 
@@ -661,9 +676,27 @@ Actor Building_Aggro : CustomInventory {
 			TNT1 A 0 A_JumpIf(CheckClass("FrenzyPlayer"),"End")
 			TNT1 A 0 A_JumpIf(CheckClass("Building_HateTarget"),"End")
 			TNT1 A 0 A_JumpIf(CallACS("IAmATurret") == true,"End")
+			TNT1 A 0 A_JumpIf(tidtohate==667,"End")
 			TNT1 A 0 A_JumpIf(tidtohate==666,"End")
 			TNT1 A 0 Thing_Hate(tid,666,3)
-			TNT1 A 0 //ACS_NamedExecuteAlways("WhatClassIAM", 0)
+			Stop
+		End:
+			TNT1 A 0 
+			Stop
+	}
+}
+
+Actor Building_AggroDispensers : CustomInventory {
+	+Inventory.ALWAYSPICKUP
+	States
+	{
+		Pickup:
+			TNT1 A 0
+			TNT1 A 0 A_JumpIf(CheckClass("FrenzyPlayer"),"End")
+			TNT1 A 0 A_JumpIf(CheckClass("Building_HateTarget"),"End")
+			TNT1 A 0 A_JumpIf(CallACS("IAmATurret") == true,"End")
+			TNT1 A 0 Thing_Hate(tid,667,3)
+			Stop
 		End:
 			TNT1 A 0 
 			Stop
