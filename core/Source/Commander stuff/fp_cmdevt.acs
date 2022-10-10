@@ -60,7 +60,8 @@
 #libdefine CMDEVT_RESEARCH_PUMP2			CMDEVT_RESEARCH_PUMP1+1
 #libdefine CMDEVT_RESEARCH_CPULSE			CMDEVT_RESEARCH_PUMP2+1
 #libdefine CMDEVT_RESEARCH_STIMPK			CMDEVT_RESEARCH_CPULSE+1
-#libdefine CMDEVT_AIRSTK_POINT				CMDEVT_RESEARCH_STIMPK+1
+#libdefine CMDEVT_RESEARCH_GNADES			CMDEVT_RESEARCH_STIMPK+1
+#libdefine CMDEVT_AIRSTK_POINT				CMDEVT_RESEARCH_GNADES+1
 #libdefine CMDEVT_AIRSTK_LINE1				CMDEVT_AIRSTK_POINT+1
 #libdefine CMDEVT_AIRSTK_LINE2				CMDEVT_AIRSTK_LINE1+1
 #libdefine CMDEVT_AIRSTK_WAVES				CMDEVT_AIRSTK_LINE2+1
@@ -139,7 +140,8 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP1,  TECH_REFINE_PUMP1,		"PROCESSING PHASE 1", 	"CM56");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP2,  TECH_REFINE_PUMP2,		"PROCESSING PHASE 2", 	"CM57");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_CPULSE, TECH_MARCOM_CPULSE,	"CORE PULSES",  		"CM66");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_STIMPK, TECH_ARMORY_STIMPK,	"STIMPACKS", 	 		"CM71");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_STIMPK, TECH_GENLAB_STIMPK,	"STIMPACKS", 	 		"CC30");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_GNADES, TECH_ARMORY_GNADES,	"HAND GRENADES", 	 	"CC31");
 	
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_POINT	 	,0);
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_LINE1	 	,1);
@@ -169,7 +171,7 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Reward(CMDEVT_REWARD_REGENB,	TECH_GENLAB_REGENB,	"ABSORBER UNIT", 		"CM18");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_BOOMRN,	TECH_ARMORY_BOOMRN,	"BOOMSHOT ROUNDS", 		"CM28");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_AMMOBP,	TECH_ARMORY_AMMOBP,	"AMMO BACKPACK", 		"CM29");
-	CmdEvent_Add_Reward(CMDEVT_REWARD_STIMPK, 	TECH_ARMORY_STIMPK,	"STIMPACKS", 	 		"CM71");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_STIMPK, 	TECH_GENLAB_STIMPK,	"STIMPACKS", 	 		"CC30");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP1,  	TECH_REFINE_PUMP1,	"PROCESSING PHASE 1", 	"CM56");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP2,  	TECH_REFINE_PUMP2,	"PROCESSING PHASE 2", 	"CM57");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_VETMER,  	TECH_MARCOM_VETMER, "VETERAN MERCENARIES", 	"CM44");
@@ -303,6 +305,9 @@ function void CmdEvent_Announce(int cmd_event_index){
 		break;
 		case CMDEVT_RESEARCH_STIMPK:
 			msg = "Collect at the Armory\n\nStimpacks\n\nMarines can start with 10 Stimpacks\nEach stimpack heals 20 hp.";
+		break;
+		case CMDEVT_RESEARCH_GNADES:
+			msg = "Collect at the Armory\n\nHand Grenades\n\nNow Marines can launch 5 grenades.";
 		break;
 		case CMDEVT_RESEARCH_PUMP1:
 			msg = "Refinery Pump 1 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";

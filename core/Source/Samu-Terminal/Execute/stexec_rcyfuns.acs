@@ -15,3 +15,15 @@ function void STExecute_RecycleAccepted(int which, int uptype){
 function void STExecute_RecycleWeapon(int weapon, int uptype, int play){	
 	Weapon_Recycle(weapon, uptype, play);
 }
+
+function void STExecute_RecycleMove(int dir, int cap){	
+	 // Remember, all properties are ranged in 0-255!
+	if(dir == 255) dir = -1;
+	rcywpn_vars[3] = rcywpn_vars[3] + dir;
+	if (rcywpn_vars[3] > cap){
+		rcywpn_vars[3] = 0;
+	} 
+	else if (rcywpn_vars[3] < 0){
+		rcywpn_vars[3] = cap;
+	} 
+}

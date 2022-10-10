@@ -167,13 +167,14 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_cmd_gl_resisb",  		2000);
 	Prices_add("pr_cmd_gl_speedb", 		1500);
 	Prices_add("pr_cmd_gl_regenb", 		2000);
+	Prices_add("pr_cmd_gl_stimpk",	  	1200);
 	
 	//Armory researches
 	Prices_add("pr_cmd_ar_arms1", 		1500);
 	Prices_add("pr_cmd_ar_arms2", 		2000);
 	Prices_add("pr_cmd_ar_boomrn",		2000);
 	Prices_add("pr_cmd_ar_ammobp",	 	1500);
-	Prices_add("pr_cmd_ar_stimpk",	  	1200);
+	Prices_add("pr_cmd_ar_gnades",	  	2400);
 	
 	//Refinery researches
 	Prices_add("pr_cmd_rf_pump1", 		4500);

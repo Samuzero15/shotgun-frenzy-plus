@@ -54,7 +54,7 @@ WEPS_ASSAULT_SPIT_DESC =    "Nifty machine to attack weaker demons, thanks for i
 WEPS_ASSAULT_SPIT_UP1_NAME = "Spread Spitter + Shell Grenades";
 WEPS_ASSAULT_SPIT_UP1_DESC = "You gain more spread for this gun, and also you can launch shell grenades.";
 WEPS_ASSAULT_SPIT_UP2_NAME = "Auto Spitter + Gas Grenades";
-WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster, no breaks. Throws N.Gas grenades, they cause stun and poison to the horde.";
+WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster, no breaks. Throws N.Gas grenades, they cause stun and poison to the horde. Uses less ammo.";
 
 WEPS_ASSAULT_BUCK_NAME =    "Buckshot";
 WEPS_ASSAULT_BUCK_DESC =    "Powerful shotgun that packes 10 shells in the chamber,  "
@@ -106,7 +106,7 @@ WEPS_COMMANDO_REPE_DESC =    "This chaingun fires a lot of heavy bullets.\n"
 
 WEPS_COMMANDO_REPE_UP1_NAME = "Speed Drift Repeater";
 WEPS_COMMANDO_REPE_UP1_DESC = "Spins quicker meaning you can fire faster and presicer. Also you fire more bullets than the usual.";
-WEPS_COMMANDO_REPE_UP2_NAME = "Gauss J. Repeater";
+WEPS_COMMANDO_REPE_UP2_NAME = "Gauss Repeater";
 WEPS_COMMANDO_REPE_UP2_DESC = "Fires gauss bullets. Allowing you to rip enemies with your bullets, as long you have some energy cells.";
 
 WEPS_COMMANDO_NAIL_NAME =    "Nail Dualshot";
@@ -123,23 +123,23 @@ WEPS_COMMANDO_NAIL_UP2_DESC = "Each nail shatters in Flak Shards. They're bouncy
 WEPS_EXPLOSIVE_NAME =        "Explosive";
 WEPS_EXPLOSIVE_DESC =        "Dynamate weapons with explosive projectiles, excelent for crowd control.";
 
-WEPS_EXPLOSIVE_ROKT_NAME =    "R. Launcher";
+WEPS_EXPLOSIVE_ROKT_NAME =    "Rocket Launcher";
 WEPS_EXPLOSIVE_ROKT_DESC =    "Shoots fast and explosive rockets straight into the waves.\n"
 	                          "Aim to their feets for the best experience.";
 
-WEPS_EXPLOSIVE_ROKT_UP1_NAME = "Explosive R. Launcher";
+WEPS_EXPLOSIVE_ROKT_UP1_NAME = "Explosive Rocket Launcher";
 WEPS_EXPLOSIVE_ROKT_UP1_DESC = "Your rockets explode more, and they leave a fire trail for the nearby demons.";
-WEPS_EXPLOSIVE_ROKT_UP2_NAME = "Multiple R. Launcher";
+WEPS_EXPLOSIVE_ROKT_UP2_NAME = "Multiple Rocket Launcher";
 WEPS_EXPLOSIVE_ROKT_UP2_DESC = "Launches 3 rockets per shot. In a spreadier way. Use secondary to fire in a trangular set.";
 
-WEPS_EXPLOSIVE_FLIN_NAME =    "G. Flinger";
+WEPS_EXPLOSIVE_FLIN_NAME =    "Grenade Flinger";
 WEPS_EXPLOSIVE_FLIN_DESC =    "With this, you can launch bouncing grenades.\n"
 	                          "Use the bouncing capacity from each projectile"
                               "to damage demons in a safe place.";
 
-WEPS_EXPLOSIVE_FLIN_UP1_NAME = "Expansive G. Flinger";
+WEPS_EXPLOSIVE_FLIN_UP1_NAME = "Expansive Grenade Flinger";
 WEPS_EXPLOSIVE_FLIN_UP1_DESC = "Fires a grenade, that spawns smaller grenades in a wider range. Costs 2 grenades.";
-WEPS_EXPLOSIVE_FLIN_UP2_NAME = "Sticky G. Flinger";
+WEPS_EXPLOSIVE_FLIN_UP2_NAME = "Sticky Grenade Flinger";
 WEPS_EXPLOSIVE_FLIN_UP2_DESC = "Launches sticky grenades, which you can spam them up, but they must be manually activated with alt-fire. Try sticking a grenade to a demon!.";
 
 // Plasmatic

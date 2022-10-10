@@ -109,7 +109,9 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		//[Samu] *sigh* It's time to refactor deez sheet.
 			//Bullets
 			if(l_Give > 0){
-			 if (Tech_IsDone(TECH_ARMORY_STIMPK))
+			 if (Tech_IsDone(TECH_ARMORY_GNADES))
+				GiveInventory("Inventory_HandGrenade", 5);
+			 if (Tech_IsDone(TECH_GENLAB_STIMPK))
 				GiveInventory("Inventory_Stimpack", 10);
 			 if (Tech_IsDone(TECH_ARMORY_BOOMRN)) 
 				giveinventory("Upgrade_Boomshot", 1);   // boomshot rounds
@@ -303,7 +305,7 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_ARMORY_BOOMRN), "+ Boomshot Rounds");
 	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_ARMORY_AMMOBP), "+ Ammo Backpack");
 	c = CR_DARKGREEN;
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_ARMORY_STIMPK), "+ 10 Stimpacks");
+	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_STIMPK), "+ 10 Stimpacks");
 	s = Stock_RemindUpgrade(s, c,
 		CheckInventory("P_Backpack"), "+ Personal Backpack");
 	

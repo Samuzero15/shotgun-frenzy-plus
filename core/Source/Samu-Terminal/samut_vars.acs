@@ -118,6 +118,7 @@
 #libDefine STEXE_ITEMBUY 17
 
 #libDefine STEXE_WEPRC -7
+#libDefine STEXE_MOVERC 36
 #libDefine STEXE_MSGRC 16
 #libDefine STEXE_ASKRC 15
 

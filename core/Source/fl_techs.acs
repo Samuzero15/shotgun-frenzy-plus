@@ -28,25 +28,26 @@
 #libdefine TECH_ARMORY_ARMS2	9
 #libdefine TECH_ARMORY_BOOMRN	10
 #libdefine TECH_ARMORY_AMMOBP	11
-#libdefine TECH_ARMORY_STIMPK	12
-#libdefine TECH_REFINE			13
-#libdefine TECH_REFINE_PUMP1	14
-#libdefine TECH_REFINE_PUMP2	15
-#libdefine TECH_MARCOM			16
-#libdefine TECH_MARCOM_AIRSUP	17
-#libdefine TECH_MARCOM_VETMER	18
-#libdefine TECH_MARCOM_ADVSYS	19
-#libdefine TECH_MARCOM_IONCAN	20
-#libdefine TECH_MARCOM_CPULSE	21
-#libdefine TECH_MECHFA			22
-#libdefine TECH_NUKESY			23
-#libdefine TECH_MARCOM_REPDRN   24
-#libdefine TECH_MARCOM_GEARUP	25
-#libdefine TECH_MARCOM_SOLIDG	26
-#libdefine TECH_MARCOM_TARMOR	27
-#libdefine TECH_REFINE_BOUNTY	28
-#libdefine TECH_REFINE_DEEPER	29
-#libdefine TECH_REFINE_FASTER	30
+#libdefine TECH_ARMORY_GNADES	12
+#libdefine TECH_GENLAB_STIMPK	13
+#libdefine TECH_REFINE			14
+#libdefine TECH_REFINE_PUMP1	15
+#libdefine TECH_REFINE_PUMP2	16
+#libdefine TECH_MARCOM			17
+#libdefine TECH_MARCOM_AIRSUP	18
+#libdefine TECH_MARCOM_VETMER	19
+#libdefine TECH_MARCOM_ADVSYS	20
+#libdefine TECH_MARCOM_IONCAN	21
+#libdefine TECH_MARCOM_CPULSE	22
+#libdefine TECH_MECHFA			23
+#libdefine TECH_NUKESY			24
+#libdefine TECH_MARCOM_REPDRN   25
+#libdefine TECH_MARCOM_GEARUP	26
+#libdefine TECH_MARCOM_SOLIDG	27
+#libdefine TECH_MARCOM_TARMOR	28
+#libdefine TECH_REFINE_BOUNTY	29
+#libdefine TECH_REFINE_DEEPER	30
+#libdefine TECH_REFINE_FASTER	31
 
 int fp_techstate[99];
 int fp_techflags[2][3];
@@ -73,6 +74,7 @@ Script "SFPlus_SyncTechs" ENTER{
 		SetInventory("tech_lockflags2", fp_techflags[1][1]);
 		SetInventory("tech_loadflags2", fp_techflags[1][2]);
 		delay(1);
+		printbold(s:"tech_doneflags: ", d:checkinventory("tech_doneflags"));
 	}
 }
 

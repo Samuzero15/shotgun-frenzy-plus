@@ -28,6 +28,7 @@ ACTOR Quadshot : Weapon
 		Fire:
 			W4X1 A 3
 			W4X1 H 2 Offset(0,34)
+			TNT1 A 0 A_Quake(4,4,0,32)
 			W4X1 I 3 Offset(0,37) bright A_FireBullets(4, 3, 28, 11, "BulletPuff_Standard")	// damage switched from 11 to 9
 			TNT1 A 0 A_PlayWeaponSound("Quadshot/Fire4")
 			W4X1 D 1 Offset(0,42)

@@ -9,6 +9,14 @@
 
 ## v0 - Before the beginning...
 
+#### (9 / 10 / 2022) [Spitter buffs, stimpacks and hand-grenades (wip)]
+	*) Now the auto spitter can fire a perfectly aimed bullet on the first shot, reduced the ammo consumption and takes no breaks for each shot round.
+	*) Now the spread spitter can fire a perfectly aimed bullet on the first shot and uses less ammo (2 clips per shot).
+	*) Base Quadshot primary fire now quakes as intended upon fire.
+	*) Revamped the weapon recycle page, now features a rough scrollbar and shows only 10 weapons, use the up and down buttons to navigate through the list.
+	*) Now the stimpacks can be researched in the CMD terminal and auto given in CF-SD maps.
+	*) Hand grenades can be researched in the CMD terminal. Hand grenades can be used as a throwable projectile, deals damage depending on the user's rank (WIP)
+
 #### (2 / 10 / 2022) [Rewrites, and some weapon tweaks, and icons, yeah]
 	*) Rewritten the commander terminal, a bit more optimized now.
 	*) Now the strings related to the CMD terminal are separated in their language files (just to add a quick translation patch).

@@ -172,7 +172,8 @@ Actor pr_cmd_ar_arms1 : Integer {}
 Actor pr_cmd_ar_arms2 : Integer {}
 Actor pr_cmd_ar_boomrn : Integer {}
 Actor pr_cmd_ar_ammobp : Integer {}
-Actor pr_cmd_ar_stimpk : Integer {}
+Actor pr_cmd_gl_stimpk : Integer {}
+Actor pr_cmd_ar_gnades : Integer {}
 Actor pr_cmd_rf_pump1 : Integer {}
 Actor pr_cmd_rf_pump2 : Integer {}
 Actor pr_cmd_mc_advsys : Integer {}

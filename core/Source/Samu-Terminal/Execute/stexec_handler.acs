@@ -47,6 +47,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_ITEMGET: StExecute_GetItem(arg1); break;
 		
 		case STEXE_WEPRC: StExecute_RecycleWeapon(arg1, arg2, arg3); break;
+		case STEXE_MOVERC: STExecute_RecycleMove(arg1, arg2); break;
 		case STEXE_MSGRC: StExecute_RecycleAccepted(arg1, arg2); break;
 		case STEXE_ASKRC: StExecute_AskForRecycle(arg1, arg2); break;
 		
