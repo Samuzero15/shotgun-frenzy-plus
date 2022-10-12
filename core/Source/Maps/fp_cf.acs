@@ -24,7 +24,7 @@
 // setup techflags
 function void SFPlus_DefaultVars(void){
 	// setup gametype value
-	f_Gametype = 0;
+	f_Gametype =    INTDB_GAMETYPE_COMBATFRENZY;
 	f_UseScoreSystem = 1;
 	// game settings
 	f_Startcash =   2500;                   // player starting cash, 2500 is the default

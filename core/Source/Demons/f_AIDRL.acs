@@ -429,7 +429,7 @@ script 120 OPEN
         thing_hate(110, g_Status + 100, 4);
 	
 		// Hope this fixes the infinite wave's bug.
-		if(g_GuardianWave) break;
+		if(g_GuardianState == INTDB_GUARDIANSTATE_PREPARED) break;
         delay(35 * 3);
     }
 }  

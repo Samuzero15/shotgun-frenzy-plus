@@ -9,8 +9,13 @@
 
 ## v0 - Before the beginning...
 
+#### (11 / 10 / 2022) [Map markers on the last enemies]
+	+) Now, on the last enemies before starting a guardian wave or before ending the map, a red dot will be marked on your automap, so you will know what enemies are remaining in the map.
+	
 #### (10 / 10 / 2022) [Aggro on dispensers]
 	*) Now health and ammo dispensers are more prone on attacks compared to the rest of buildings.
+	*) Shortened the duration of the shell pellets to 5 seconds, and now they deal more damage.
+	*) The timer will disappear on any gamemodes that are not specified.
 
 #### (9 / 10 / 2022) [Spitter buffs, stimpacks and hand-grenades (wip)]
 	*) Now the auto spitter can fire a perfectly aimed bullet on the first shot, reduced the ammo consumption and takes no breaks for each shot round.

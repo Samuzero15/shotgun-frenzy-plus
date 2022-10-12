@@ -39,7 +39,7 @@ function void SFPlus_DefaultVars(void){
 	f_AllowNuke =   0;
 	f_AllowIon =	0;
 	// setup gametype value
-	f_Gametype =	5;
+	f_Gametype =    INTDB_GAMETYPE_SURVIVALDEFENDER;
 	// setup techflags
 	setupTerminals();
 }

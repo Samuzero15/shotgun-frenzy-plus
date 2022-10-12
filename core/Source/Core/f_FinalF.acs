@@ -39,6 +39,8 @@ script 107 OPEN
 	//log(d:35 * 60 * f_GameLength, s:" tics");
 	g_GameTimer = 35 * 60 * f_GameLength;
 	g_GuardianTimer = 35 * 60 * f_GuardianLength;
+
+	
 	
 	//InitDB_Debug();
     
@@ -56,6 +58,8 @@ script 107 OPEN
         
         // guardian time warning
 		Notify_Message("GUARDIAN WAVE", strparam(s:"Incoming in ",d:f_GuardianLength, s:" minutes!"), "DEMONT", 0);
+		g_GuardianState = INTDB_GUARDIANSTATE_STANDBY;
+		
         
         // wait guardian length minutes
         while(g_GuardianTimer > 0){ // [Samu] Here it is the game timer.
@@ -63,9 +67,20 @@ script 107 OPEN
 			g_GuardianTimer--;
 		}			// [Samu] Here it is the guardian timer.
     }
+	g_GuardianState = INTDB_GUARDIANSTATE_PREPARED;
     
     acs_execute(108, 0, l_RemainingMonsters, 0, 0);
     
+}
+
+script "SFPlus_TestMeUp" (void){
+	int dx = fixedMul(128.0, cos(GetActorAngle(0)));
+	int dy = fixedMul(128.0, sin(GetActorAngle(0)));
+	int testid = 9999;
+	Spawn("ZombieFodder", GetActorX(0) + dx, GetActorY(0) + dy, GetActorFloorZ(0), testid);
+	SetActivator(testid);
+	log(s:"MyTID: ", d:testid);
+	
 }
 
 script 108 (int l_RemainingMonsters)
@@ -73,7 +88,6 @@ script 108 (int l_RemainingMonsters)
 	if(c_NukeLaunched) Terminate; // Don't execute this if we're nuking the map.
 
 	int bonusPoints;
-    guardianActive = 1;
     // collect AI director information and turn it off
     g_SkillScore = f_AIDir_Check();
 	//log(s:"Score catched: ", d:g_SkillScore);
@@ -112,14 +126,13 @@ script 108 (int l_RemainingMonsters)
 	acs_terminate(129, 0);
 	
     g_Status = 4;
-    g_GuardianMode = 1;
     thing_remove(101);
     thing_remove(102);
     thing_remove(103);
 	
-    
     //f_TipShow ("DEMONT", "Guardian Appearence", "Kill the remaining demons!", 0);
     Notify_Message("GUARDIAN WAVE", "Kill the remaining demons!", "DEMONT", 0);
+	
 	
     // open doors/gates
     if (f_Doortype == 0)
@@ -172,6 +185,12 @@ script 108 (int l_RemainingMonsters)
     // wait until most of the demons are dead
     while(1)
     {
+		GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
+
 		//[Samu] I've always hated zandronum for these broken fuctions.
 		mtotal = GetLevelInfo (LEVELINFO_TOTAL_MONSTERS),
         mkilled = GetLevelInfo (LEVELINFO_KILLED_MONSTERS);
@@ -180,14 +199,14 @@ script 108 (int l_RemainingMonsters)
 		
         // recount
 		f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
-        l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114);
-        
+        l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) + thingcount(0, 110);
+
+        g_MonstersLeft = l_RemainingMonsters;
 		
         if (l_RemainingMonsters < 5 || mKilled >= mTotal)     break;
 		// And maybe, analize this quickly, to evade missupdates.
         delay(5);
     }
-	//log(s:"Guardian wave started.");
 
     // kill off the remaining demons
     thing_destroy(110, 0);
@@ -200,8 +219,8 @@ script 108 (int l_RemainingMonsters)
     
     // display message
 	Notify_Message("GUARDIAN WAVE", "Incoming!", "DEMONT", 0);
+	g_GuardianState = INTDB_GUARDIANSTATE_ATTACK;
 	
-	g_GuardianWave = True;
 	g_Status = 4;
 	
     // spawn boss script
@@ -238,13 +257,20 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		
 	int mkilled, mTotal; 
 	int timeout = 300; // 5 Minutes (in secs) before moving to next map.
-	int remains;
+	g_GuardianState = INTDB_GUARDIANSTATE_DEFEAT;
+
     while(GuardianWave_LoopCond(surv) && timeout > 0){
+		GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(118, "MarkOnMap_ThisAsshole", 1);
        //[Samu] Zandronum is dumb counting monsters.
 		
-		remains = thingcount(0, 118) + thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
-		
-		f_BigCenterTipBold(strparam(s:"Monsters remaining: ", d:remains), CR_BRICK);
+		g_MonstersLeft = thingcount(0, 118) + thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
+
+		f_BigCenterTipBold(strparam(s:"Monsters remaining: ", d:g_MonstersLeft), CR_BRICK);
 		if(g_GameOver) Terminate;
 		// Keep hatin'
 		thing_hate(118, 104, 4);
@@ -255,6 +281,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		thing_hate(114, 104, 4);
 		delay(35 * 1);
 		timeout--;
+		thing_remove(7777);
 	}
 	if(timeout == 0) 
 		Notify_Message("Demon Re-threat!","They're leaving where they came!","DEMONT", 0);

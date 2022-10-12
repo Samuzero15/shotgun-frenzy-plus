@@ -14,6 +14,22 @@ Actor MonsterModifier : CustomInventory {
     }
 }
 
+ACTOR MarkOnMap_ThisAsshole : CustomInventory
+{
+	+INVENTORY.AUTOACTIVATE
+	states
+	{
+	Use:
+        TNT1 A 0 A_JumpIfInventory("MarkToken_IAmDead", 1, "NotNeeded")
+        TNT1 A 0 A_JumpIfInventory("MarkToken_Marked", 1, "NotNeeded")
+        TNT1 A 0 A_SpawnItemEx("marker_enemy", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION)
+		Stop
+    NotNeeded:
+        TNT1 A 0
+        stop
+	}
+}
+
 Actor Champ_Type : Integer {}
 Actor ChampHybrid_Type1 : Integer {}
 Actor ChampHybrid_Type2 : Integer {}

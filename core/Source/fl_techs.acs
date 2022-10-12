@@ -11,7 +11,7 @@
 #include "zcommon.acs"
 #include "acsutils.acs"
 
-#libdefine FP_NUMBTECH 30
+#libdefine FP_NUMBTECH 33
 #libdefine TECHF_DONE 	1<<0
 #libdefine TECHF_LOCK 	1<<1
 #libdefine TECHF_LOAD 	1<<2
@@ -48,6 +48,7 @@
 #libdefine TECH_REFINE_BOUNTY	29
 #libdefine TECH_REFINE_DEEPER	30
 #libdefine TECH_REFINE_FASTER	31
+#libdefine TECH_TEST	32
 
 int fp_techstate[99];
 int fp_techflags[2][3];
@@ -74,7 +75,8 @@ Script "SFPlus_SyncTechs" ENTER{
 		SetInventory("tech_lockflags2", fp_techflags[1][1]);
 		SetInventory("tech_loadflags2", fp_techflags[1][2]);
 		delay(1);
-		printbold(s:"tech_doneflags: ", d:checkinventory("tech_doneflags"));
+		/*printbold(s:"tech_doneflags: ", d:checkinventory("tech_doneflags"), s:"\n",
+		          s:"tech_doneflags2: ", d:checkinventory("tech_doneflags2"));*/
 	}
 }
 
@@ -83,15 +85,15 @@ function bool Tech_IsActivatedC(int flag){
 }
 
 function bool Tech_IsDoneC(int flag){
-	return (CheckInventory("tech_doneflags") & (1<<flag)) > 0 || (CheckInventory("tech_doneflags2") & (1<<flag)) > 0;
+	return ((CheckInventory("tech_doneflags") & (1<<flag)) > 0) || ((CheckInventory("tech_doneflags2") & (1<<flag)) > 0);
 }
 
 function bool Tech_IsLockC(int flag){
-	return (CheckInventory("tech_lockflags") & (1<<flag)) > 0 || (CheckInventory("tech_lockflags2") & (1<<flag)) > 0;
+	return ((CheckInventory("tech_lockflags") & (1<<flag)) > 0) || ((CheckInventory("tech_lockflags2") & (1<<flag)) > 0);
 }
 
 function bool Tech_IsLoadC(int flag){
-	return (CheckInventory("tech_loadflags") & (1<<flag)) > 0 || (CheckInventory("tech_loadflags2") & (1<<flag)) > 0;
+	return ((CheckInventory("tech_loadflags") & (1<<flag)) > 0) || ((CheckInventory("tech_loadflags2") & (1<<flag)) > 0);
 }
 
 function void Tech_ChangeFlags(int id, int flag, int value)

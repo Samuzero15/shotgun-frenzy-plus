@@ -76,15 +76,19 @@ script 100 OPEN
 
         // print centerscreen message
         sethudsize(800, 600, 0);
-        setfont("BIGFONT");
+        setfont("STATBIGS");
         if (f_SurvivalLastLevel == m_SurvivalWave) {
-        	hudmessage(s:"FINAL WAVE"; 2, 0, cr_red, 400.0, 200.0, 5.0); }
+        	hudmessage(s:"FINAL WAVE"; 2, 0, cr_red, 400.0, 200.0, 5.0); 
+            setfont("CONFONT");
+            hudmessage(s:"Final Wave", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
+        }
         else {
         	hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 0, cr_red, 400.0, 200.0, 5.0);
+            setfont("CONFONT");
+            hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
         }
-        setfont("CONFONT");
-        hudmessage(s:"Current Wave ", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 35.0, 9999.0);
-        
+        g_MonstersLeft = 0;
+
         // heal core
         acs_execute(405, 0, 0, 0, 0);
 		
@@ -156,15 +160,22 @@ script 100 OPEN
         // wait until most of the demons are dead
         while(1)
         {
+            GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
+            GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
+		    GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
+		    GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
+		    GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
+
             // recount
-            l_RemainingMonsters = thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112);
-            
+            l_RemainingMonsters = thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114);
+            g_MonstersLeft = l_RemainingMonsters;
 			f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
 			
 			//log(s:"l_RemainingMonsters = ", d:l_RemainingMonsters);
             if (l_RemainingMonsters < 5)     break;
             delay(1);
         }
+        g_MonstersLeft =-1;
     
         // kill off the remaining demons
         thing_destroy(110, 0);

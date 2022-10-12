@@ -34,12 +34,20 @@
 #include "acsutils.acs"
 
 #libdefine INTDB_MAXPLAYERS 32
+#libdefine INTDB_GUARDIANSTATE_STANDBY 1 // In game timer, before guardian timer.
+#libdefine INTDB_GUARDIANSTATE_PREPARED 2 // In guardian timer.
+#libdefine INTDB_GUARDIANSTATE_ATTACK 3 // Spawning guardians.
+#libdefine INTDB_GUARDIANSTATE_DEFEAT 4 // After spawning, waiting for defeat
+#libdefine INTDB_GAMETYPE_COMBATFRENZY 0
+#libdefine INTDB_GAMETYPE_SHOTGUNFRENZY 1
+#libdefine INTDB_GAMETYPE_SURVIVALDEFENDER 5
 
 // game
 int g_Status;
 int g_SkillScore;
 int g_SpecialPortal;
-int g_GuardianWave;
+int g_GuardianState;
+int g_MonstersLeft;
 //int g_AIDirector_TrackRockets;
 //int g_AIDirector_TrackPlasma;
 //int g_AIDirector_TrackFlamer;
@@ -63,7 +71,6 @@ int g_GuardianWave;
 int f_AIDir_SpawnCount;
 int f_Gametype;
 int g_TenMinMark;
-int g_GuardianMode;
 int g_GameOver;
 int g_GameEnding;
 int g_GameTimer;

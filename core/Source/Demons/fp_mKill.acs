@@ -20,6 +20,7 @@ Script "SFPlus_MonsterKill" Kill{
 	delay(1); // Let the monsters set their flags in the decorate.
 	
 	if(CheckFlag(0, "ISMONSTER") && !CheckFlag(0, "FRIENDLY")){
+	  GiveInventory("MarkToken_IAmDead", 1);
 	  bool flag_boss = checkinventory("FPMToken_Boss");
 	  bool flag_hard = checkinventory("FPMToken_Hard");
 	  bool flag_frozen = checkinventory("FPMToken_Frozen");

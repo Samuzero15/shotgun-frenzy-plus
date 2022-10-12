@@ -350,7 +350,7 @@ script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
 		}
 		else
 		{
-			if (g_GuardianMode == 0) {
+			if (g_GuardianState < INTDB_GUARDIANSTATE_ATTACK) {
 				// a nice pretty message
 				sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 				setfont("BCOUNT");

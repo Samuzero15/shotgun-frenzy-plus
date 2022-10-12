@@ -98,16 +98,39 @@ Script "SFPlus_ShowForEveryone" OPEN
 		if (f_UseScoreSystem == 1)
 			Acs_NamedExecuteAlways("HUD_ShowTeamScore", 0, getlevelinfo(LEVELINFO_KILLED_MONSTERS));
 		
-		if(g_status != 0 && (g_GameTimer > 0 || g_GuardianTimer > 0)){
-			if(g_GameTimer > 0)
-				Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GameTimer);
+		if(f_GameType == INTDB_GAMETYPE_COMBATFRENZY || f_GameType == INTDB_GAMETYPE_SHOTGUNFRENZY){
+			if(g_status != 0){
+				if(g_GameTimer > 0)
+					Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GameTimer);
+				else {
+					switch(g_GuardianState){
+						case INTDB_GUARDIANSTATE_STANDBY:
+							Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+						break;
+						case INTDB_GUARDIANSTATE_PREPARED: 
+							Acs_NamedExecuteAlways("HUD_ShowNumberLeft", 0, g_MonstersLeft);
+						break;
+						case INTDB_GUARDIANSTATE_ATTACK: 
+							Acs_NamedExecuteAlways("HUD_ShowString", 0, 1);
+						break;
+						case INTDB_GUARDIANSTATE_DEFEAT:
+							Acs_NamedExecuteAlways("HUD_ShowNumberLeft", 0, g_MonstersLeft);
+						break;
+					}	
+				}
+			}
 
-			else if(g_GuardianTimer >= 0)
-				Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+		}else if (f_GameType == INTDB_GAMETYPE_SURVIVALDEFENDER){
+			if(g_MonstersLeft > 0)
+				Acs_NamedExecuteAlways("HUD_ShowNumberLeft", 0, g_MonstersLeft);
+			else if (g_MonstersLeft == -1)
+				Acs_NamedExecuteAlways("HUD_ShowString", 0, 2);
 		}
-		Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+					
 	}
+		//Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
 }
+
 
 script "SFPlus_PlayerFullScreenHUD" ENTER
 {
@@ -277,6 +300,27 @@ script "HUD_ShowTimer" (int tics) clientside
 	setfont("STATBIGS");
 	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 	hudmessage(s: PlayHUD_TimerEX(tics); 1, 255, CR_TAN, 400.0, 28.1, 7.0);
+	setfont("CONFONT");
+}
+
+script "HUD_ShowNumberLeft" (int val) clientside
+{
+	setfont("STATBIGS");
+	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+	hudmessage(d:val, s:" Left"; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
+	setfont("CONFONT");
+}
+
+script "HUD_ShowString" (int which) clientside
+{
+	str string = "";
+	switch(which){
+		case 1: string = "wait"; break;
+		case 2: string = "DONE"; break;
+	}
+	setfont("STATBIGS");
+	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+	hudmessage(s:string; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
 	setfont("CONFONT");
 }
 

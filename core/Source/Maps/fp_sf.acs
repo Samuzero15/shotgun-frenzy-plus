@@ -23,7 +23,7 @@ function void SFPlus_DefaultVars(void)
 {
 	// setup gametype value
 	f_UseScoreSystem = 0;
-	f_Gametype =    1;
+	f_Gametype =    INTDB_GAMETYPE_SHOTGUNFRENZY;
 	// game settings
 	f_Startcash =   2500;                   // player starting cash, 2500 is the default
 	c_Startcash =   5000;                   // starting cash for the commander (SF maps only)
