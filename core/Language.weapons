@@ -208,11 +208,14 @@ WEPS_CRYO_SNOW_UP1_DESC = "Spreads a mist of inflamable gas, if a fire is lit, i
 
 // BFG Pack
 
-WEPS_BFGL_NAME = "B.F.G. Love";
+WEPS_BFGL_NAME = "BIG GUNS";
 WEPS_BFGL_DESC = "Big problems require Big Friggin Guns.";
 
 WEPS_BFGL_BFG_NAME =    "B.F.G. 9000";
 WEPS_BFGL_BFG_DESC =    "Creates a big charged energy ball which it will explode at the first impact.\n\n"
-                        "But you know that already, so, why are you reading this again?";
-WEPS_BFGL_BFG_UP0_NAME = "Super BFG";
-WEPS_BFGL_BFG_UP0_DESC = "Rips through the horde, and blasts everything on its way.";
+                        "But you know that already, so, why are you reading this again?\n\n"
+                        "Alt-fire uses cells to launch a flurry of plasma shots as long as you hold the trigger.";
+WEPS_BFGL_BFG_UP1_NAME = "Splash-Spread BFG";
+WEPS_BFGL_BFG_UP1_DESC = "Rips through the horde, and blasts everything on its way. Alt-fire fires more projectiles and does AoD on travel.";
+WEPS_BFGL_BFG_UP2_NAME = "Overcharged BFG";
+WEPS_BFGL_BFG_UP2_DESC = "Fires a seeking, devastating, and incremental big ball. Up to 10 hits. Costs 300 cells per shot. Alt-fire shoots seeking projectiles, and the damage is increased.";

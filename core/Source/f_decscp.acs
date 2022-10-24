@@ -13,9 +13,11 @@
 
 #include "zcommon.acs"
 #include "acsutils.acs"
+#import "fl_techs.acs"
 #import "f_intdb.acs"
 #import "f_Rank.acs"
 #import "f_tip.acs"
+#include "samu_tools.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -178,7 +180,7 @@ script "AltState_Burn" (void)
 	 	z = GetActorZ(0) + 16.0;
 		Spawn("FlamerRemainsSpawner", x, y, z, 0, 0);
 	}
-	delay(35);
+	delay(35*sf_GetMonsterClass_Health()*(1+CheckInventory("Champ_Type")));
 	TakeInventory("AltState_Burning", 1);
 }
 
@@ -190,11 +192,13 @@ script "AltState_Stun" (void)
 	SetActorProperty(0, APROP_SPEED, 0);
 	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
 		SetActorState (0, "Pain");
-		log(s:"I can't move! bzzzt!");
 		delay(6);
 	}
 	SetActorProperty(0, APROP_SPEED, ori_speed);
-	delay(35);
+	// Cooldown depends on the monster class and if its a champion.
+	// Duration is doubled if the monster is a champion.
+	// 1 second * class * 1+is champion?
+	delay(35*sf_GetMonsterClass_Health()*(1+CheckInventory("Champ_Type")));
 	TakeInventory("AltState_Stunned", 1);
 }
 
@@ -223,13 +227,16 @@ script "PlayerId" (void){
 	SetResultValue(ActivatorTID());
 }
 
+#define PATCHER_UPGRADEABLES 10
+
 function bool IsATurret(int tid){
-	str turrets[9] ={
+	str turrets[PATCHER_UPGRADEABLES] ={
 		"TurretBullet_HEAD",
 		"TurretShotgun_Head",
 		"TurretChaingun_Head",
 		"TurretRocket_Head",
 		"TurretPlasma_Head",
+		"TurretTesla_Head",
 		"TurretBase_Head",
 		"TurretBFG_Head",
 		"HealthDispenser_Base",
@@ -237,7 +244,7 @@ function bool IsATurret(int tid){
 	};
 
 		//log(s:GetActorClass(tid));
-	for(int i = 0; i < 9; i ++){
+	for(int i = 0; i < PATCHER_UPGRADEABLES; i ++){
 		if(CheckActorClass(tid, turrets[i])){
 			 return true;
 		}

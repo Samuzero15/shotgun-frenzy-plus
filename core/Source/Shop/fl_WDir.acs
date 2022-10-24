@@ -146,7 +146,8 @@ function void SFPlus_DefineWeapons (void){
 	pack = WeaponPack_AddLang(FP_OP, "bfg", 15, "BFGL");
 
 	wep = Weapon_AddLang("BFG", pack, "bfg", "BFGL_BFG");
-	WeaponUpgrade_AddLang("BFGS",		wep, 0, "BFGL_BFG_UP0");
+	WeaponUpgrade_AddLang("BFG_Splash",		wep, 1, "BFGL_BFG_UP1");
+	WeaponUpgrade_AddLang("BFG_Overcharge",	wep, 2, "BFGL_BFG_UP2");
 }
 
 function str Weapon_GetSameKind(int wid){

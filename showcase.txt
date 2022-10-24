@@ -6,7 +6,14 @@
 ) Different messages will be displayed upon enter, death and disconnect events.
 ) Now the game autosaves your progress each 10 seconds in the game!
 ) Added an new powerup, Hell-trigger!, Allows you to fire fast, and with infinite ammo for a short time!
-) Runes (WIP)
+) Runes!, Skulltag + some original ones!
+) The Patcher Gun!, now fix and upgrade your turrets by using your credits! It gives you experience upon use!
+) Speaking of upgraded turrets, now each turret and dispenser (except the base turret) can be upgraded up to Level 5.
+) But beware! Turrets and Dispensers can attract monsters!
+) Champions! (again, thanks Mikk & TDDR!)
+) New techs to research! (Veteran Marines, Stimpacks, Grenades...)
+) A Timer/Enemy Counter! Just to let you know how much time is left before hitting the end!
+) Now Health and Armor Bonuses can be drop in a splashy way upon any kill! Like credits!
 
 [\cfChanged / Fixed\c-]
 ) Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
@@ -21,9 +28,20 @@
 ) Armor-Repair dispenser's effect has been patched up.
 ) Mech upgrades now will be shown in the stocking pad.
 ) Inventory, Player & Kill-Streak huds will clean itself once the player disconnects (or spectates).
+) Auto SSG and Big Chambered Buckshot can now drop ricochet pellets.
+) Plasma Rifle can cause a small AoD upon each projectile, that and a new Alt-Fire which it makes a big plasma ball that hits 3 times a single enemy with some AoD. 
+) Split Plasma Rifle Pri-Fire can now cause splittable plasmas on impact.
+) Advanced Plasma Rifle can create a pretty much close altfire like normal Plasma Rifle but instead of multihitting, it explodes and spreads extra advanced plasma balls.
+) The Auto Spitter fires faster and takes less ammo.
+) Visual tweaks on the base Quadshot.
+) Flamers can cause Burn! Set on fire one, and see how the fire spreads through the horde!
+) Grenade Flinger's Alt-Fire can now launch a grenade which it explodes early upon contact.
+) Expansive Flinger's Alt-Fire is the same as last change, but explodes in a few seconds, spreading the rest of the grenades in the air, just if you want to create a rain of explosive mini grenades.
+) Double slug Railgun can now fire 2 rails per shot, and fires faster.
+) Spear-Taser Railgun can fire a constant short ranged rail that rips everyone in it's path, and now it's Alt-fire stuns the first enemy on hit.
 
 [\cfRemoved\c-]
-
+nothing uwu.
 
 
 

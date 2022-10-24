@@ -1,5 +1,5 @@
 //This goes into frenzy_turrets.wad, replacing the DECORATE lump
-actor TeslaCoil
+actor TeslaCoil_old
 {
 	obituary "%o was zapped by a tesla coil."
 	health 750
@@ -118,7 +118,7 @@ actor Boom
   }
 }
 
-ACTOR TurretBullet
+ACTOR TurretBullet_old
 {
 	obituary "%o was shot up by a Bullet Turret."
 	health 450
@@ -290,7 +290,7 @@ ACTOR TurretBullet
 	}
 }
 
-ACTOR TurretRocket
+ACTOR TurretRocket_old
 {
 	obituary "%o was blown up by a Rocket Turret."
 	health 450
@@ -348,7 +348,7 @@ ACTOR TurretRocket
 	}
 }
 
-ACTOR TurretPlasma
+ACTOR TurretPlasma_old
 {
 	obituary "%o was blasted by a Plasma Turret."
 	health 450
@@ -518,7 +518,7 @@ ACTOR TurretShotgun_old
 	}
 }
 
-ACTOR TurretFlame
+ACTOR TurretFlame_old
 {
 	obituary "%o was burnt by a Flame Turret."
 	health 750
@@ -600,7 +600,7 @@ ACTOR TurretFlame
 	}
 }
 
-ACTOR TurretRail
+ACTOR TurretRail_old
 {
 	obituary "%o was blasted by a Rail Turret."
 	health 450
@@ -664,13 +664,6 @@ ACTOR TurretRail
 
 //Protecting players from being damaged by turrets and drones and other weapons and preventing rocket turrets from commiting suicide thx to players
 
-actor RocketFromTurret : Rocket { damagetype "MarineFire" }
-
-actor PlasmaFromTurret : PlasmaBall { damagetype "MarineFire" }
-
-actor BulletPuffTurret : BulletPuff { damagetype "MarineFire" }
-
-actor InvisiblePuff { damagetype "MarineFire" }
 
 
 

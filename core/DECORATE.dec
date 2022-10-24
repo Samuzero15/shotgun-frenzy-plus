@@ -17,6 +17,11 @@ const int DEPLOY_TURRET_BFG = 7;
 const int DEPLOY_DISPENSER_AMMO = 8;
 const int DEPLOY_DISPENSER_HEALTH = 9;
 
+actor RocketFromTurret : Rocket { damagetype "MarineFire" }
+actor PlasmaFromTurret : PlasmaBall { damagetype "MarineFire" }
+actor BulletPuffTurret : BulletPuff { damagetype "MarineFire" }
+actor InvisiblePuff { damagetype "MarineFire" }
+
 #include "Actors/sfrenzy14.dec"
 #include "Actors/acsutils.dec"
 

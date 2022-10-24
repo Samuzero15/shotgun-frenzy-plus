@@ -89,7 +89,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wu_railgun_up1", 	1);
 	Prices_add("pr_wu_railgun_up2", 	2);
 	Prices_add("pr_wu_flamer_up0", 		2);
-	Prices_add("pr_wu_bfg_up0", 		4);
+	Prices_add("pr_wu_bfg_up1", 		4);
+	Prices_add("pr_wu_bfg_up2", 		6);
 	
 	//Price on recycling.
 	Prices_add("pr_wr_ssg", 			700);
@@ -128,7 +129,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_wr_flamer", 			10000);
 	Prices_add("pr_wr_flamer_up0", 		15000);
 	Prices_add("pr_wr_bfg", 			20000);
-	Prices_add("pr_wr_bfg_up0", 		30000);
+	Prices_add("pr_wr_bfg_up1", 		30000);
+	Prices_add("pr_wr_bfg_up2", 		30000);
 	
 	//Item prices
 	Prices_add("pr_p_soulsphere", 		150);

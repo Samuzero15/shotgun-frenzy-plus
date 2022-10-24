@@ -33,33 +33,33 @@ ACTOR TurretRail 24304
 	states
 	{
 		Spawn:
-			TRT1 A 1 A_Look
-			TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
-			TRT1 A 5  A_PlaySound("turret/active", CHAN_AUTO, 6)
+			RATR A 1 A_Look
+			//TNT1 A 0 ACS_NamedExecuteAlways("Turret_HPBar", 0, 40)
+			RATR A 5  A_PlaySound("turret/active", CHAN_AUTO, 6)
 			loop
 		See:
-			TRT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Chase
-			TRT1 A 5  A_PlaySound("turret/active", CHAN_AUTO, 6)
+			RATR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Chase
+			RATR A 5  A_PlaySound("turret/active", CHAN_AUTO, 6)
 			loop
 		Missile:
-			TRT1 A 1 A_PlaySound("turret/sight", CHAN_AUTO)
-			TRT1 ABCD 1 A_FaceTarget
-			TRT1 E 4 bright A_CustomRailgun(8*random(1,8), 0, "00 FF FF", "FF FF FF", 0, 1, 0, "InvisiblePuff")
-			TRT1 A 1
+			RATR A 1 A_PlaySound("turret/sight", CHAN_AUTO)
+			RATR BCD 1 A_FaceTarget
+			RATR DCB 1 bright A_CustomRailgun(8*random(1,8), 0, "00 FF FF", "FF FF FF", 0, 1, 0, "InvisiblePuff")
+			RATR A 1
 			goto See
 		Pain:
-			TRT1 A 1
-			TRT1 A 1 A_Pain
+			RATR A 1
+			RATR A 1 A_Pain
 			goto See
 		Death:
 			//BTRT A 1 bright A_SpawnItemEx ("Boom", 0, 0, 60, 0, 0, 0, 0, 160)
-			BTRT A 0
-			BTRT A 0 A_KillChildren
+			RATR A 0
+			RATR A 0 A_KillChildren
             NULL A 0 A_NoBlocking
-			BTRT A 1 bright A_SpawnItemEx("explosionemitter_t", 0)
-			BTRT A 0 bright A_StopSoundEx ("SoundSlot5")
-			BTRT A 0 bright A_PlaySound ("weapons/rocklx")
-			BTRT B 1
+			RATR A 1 bright A_SpawnItemEx("explosionemitter_t", 0)
+			RATR A 0 bright A_StopSoundEx ("SoundSlot5")
+			RATR A 0 bright A_PlaySound ("weapons/rocklx")
+			TNT1 A 1
             NULL A 0 A_NoBlocking
 			TNT1 A 0 A_SpawnItem("Junk_Turret_Spawn")
 			MISL B 8 bright

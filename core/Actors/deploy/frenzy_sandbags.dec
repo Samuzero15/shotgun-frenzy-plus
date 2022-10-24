@@ -15,30 +15,6 @@ ACTOR sandbag_built 30554
 	}
 }
 
-ACTOR Sandbag_Build : Inventory
-{
-	radius 64
-	height 32
-	
-	inventory.pickupmessage "You have activated the build protocol!"
-	
-	//+COUNTITEM
-	inventory.amount 0
-	
-	renderstyle add
-	
-	states
-	{
-		Spawn:
-			TNT1 A 0
-			TNT1 A 0 A_GiveInventory("build_check")
-			TNT1 A 0 A_SpawnItem("Sandbag_Building")
-		Spawn2:
-			BULD A 1 A_SpawnItem("BuildableMarker")
-			loop
-	}
-}
-
 ACTOR Sandbag_Building : BuildBase
 {
 	renderstyle add

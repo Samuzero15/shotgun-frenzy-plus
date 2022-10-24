@@ -9,6 +9,18 @@
 
 ## v0 - Before the beginning...
 
+#### (16 - 24 / 10 / 2022) [Sprites for flame and rail turrets + BFG upgrade]
+	*) Extra touchs on the turret code
+	+) Extra sprites for the Rail Turret, Thanks MadCat!
+	+) New sprite replacement for the flamer turret! (yes, i did frankedsprited this one, and im proud of it uwu)
+	*) Some renames in the files.
+	*) Updating the showcase list.
+	*) Super BFG now becomes the Splash-Spread BFG, specially beacuse now this weapon spreads faster and does some extra damage.
+	*) BFG and all the other bfgs gains an altfire, the beta's Doom BFG. (that flurry of plasmas 'member?)
+	!+) A new upgrade for the BFG! The Overcharged BFG!
+	// This big bastard fires a ball that hits 10 times. Exploding on each hit, and increasing it's damage and size. Also Seeks.
+	// While it's by far the most expensive in ammo consumption (300 cells per shot), slow compared to the original bfg, and quite expensive in the terminal (6 UPs). This weapon works as a nice counterpart to it's splashy counsin. Making it effective for dealing a shietton of damage with a massive big ball. It's powerful enough to oneshot a Cyberdemon-Annihilator! And, you don't really waste ammo, since it's projectile seeking will get rid of any loose ends on the battlefield, so this is also a good choice to consider. 
+	
 #### (11 / 10 / 2022) [Map markers on the last enemies]
 	+) Now, on the last enemies before starting a guardian wave or before ending the map, a red dot will be marked on your automap, so you will know what enemies are remaining in the map.
 	

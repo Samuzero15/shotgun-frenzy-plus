@@ -27,7 +27,7 @@ ACTOR FrenzyPlayer : DoomPlayer
 	Player.WeaponSlot 6, "Launcher", 		"Launcher_Multi", 		"Launcher_Exploder", 	"Flinger", 					"Flinger_Expander", 		"Flinger_MinePlacer"
 	Player.WeaponSlot 7, "SF_Railgun", 		"Railgun_Taser", 		"Railgun_Slug", 		"PlasmaGun", 				"PlasmaGun_Advanced", 		"PlasmaGun_Spread"
 	Player.WeaponSlot 8, "Flamer", 			"FlamerS", 				"BoomerCannon"
-	Player.WeaponSlot 9, "BFG", 			"BFGS"
+	Player.WeaponSlot 9, "BFG", 			"BFG_Splash"
 	
 	
 	//+NOSKIN
