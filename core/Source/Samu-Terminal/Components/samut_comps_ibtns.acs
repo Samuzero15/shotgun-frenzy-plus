@@ -55,7 +55,7 @@ function int ImgButton_AddCardOff(int grid, int cell, int w, int h, int offx, in
 function int ImgButton_Dup(int x, int y, int w, int h){
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	
 	return id;
@@ -67,7 +67,7 @@ function int ImgButton_DupGrid(int grid, int row, int col, int w, int h){
 	
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -78,7 +78,7 @@ function int ImgButton_DupCard(int grid, int cell, int w, int h){
 	
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -89,7 +89,7 @@ function int ImgButton_DupGridOff(int grid, int row, int col, int w, int h, int 
 	
 	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -100,7 +100,7 @@ function int ImgButton_DupCardOff(int grid, int cell, int w, int h, int offx, in
 	
 	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
 	}
 	return id;
 }

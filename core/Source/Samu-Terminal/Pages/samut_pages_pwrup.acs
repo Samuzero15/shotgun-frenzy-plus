@@ -67,25 +67,19 @@ function void PowBuyPage_AddComps(int cell, int powerup){
 	Label_setColor(i, color);
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_setTag(i, powpage_vars[0]);
-	Component_Save(Label_getRect(i));
 	PowBuyPage_SaveToGroup(powerup, 2, i);
 	
-	i = Label_AddCardOff(powpage_vars[1], cell, 100.0, 14.0);
-	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	i = Label_DupCardOff(i, powpage_vars[1], cell, 100.0, 14.0);
 	Label_setText(i, powdesc);
 	Label_setFont(i, "confont");
-	Component_Save(Label_getRect(i));
 	PowBuyPage_SaveToGroup(powerup, 3, i);
 	
-	i = Label_AddCardOff(powpage_vars[1], cell, 32.0, 25.0);
-	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	i = Label_DupCardOff(i, powpage_vars[1], cell, 32.0, 25.0);
 	Label_setText(i, strparam(d:powprice, s:"$"));
 	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-	Component_Save(Label_getRect(i));
 	PowBuyPage_SaveToGroup(powerup, 4, i);
 	
-	i = Label_AddCardOff(powpage_vars[1], cell, 32.0, 6.0);
-	Component_LoadProps(i, STCOMP_LBL, Label_GetRect(i));
+	i = Label_DupCardOff(i, powpage_vars[1], cell, 32.0, 6.0);
 	Label_setText(i, StrParam(d:Checkinventory(Item_getActor(powerup)), s:"/",d:Item_getMax(powerup)));
 	PowBuyPage_SaveToGroup(powerup, 5, i);
 	

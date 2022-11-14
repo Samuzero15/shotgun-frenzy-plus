@@ -177,17 +177,18 @@ script 306 (void)
 	p_LastWeap[playernumber()] = lastWeapon;
 	*/
 	if (CheckInventory("PowerInvulnerable") == 0) {
+	if(GetUserCVar(playernumber(), "sfp_mechmsg")){
+		setfont("BIGFONT");
+		hudmessage(s:
+		"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory and press use or hold \cguse \ca for 1 second!\
+		\n\n\cbQuit early \cato \cgavoid death!\
+		\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
+		\n\n\cgPrimary fire \cafor your \cbNails\
+		\n\n\cgSecondary Fire \cafor your \cbRockets\
+		\n\n\n\ci Now give em' Hell!\n\n\n \ca(Disable this msg with '\cvsfp_mechmsg false\ca')"
+		; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
+	}
 	
-	setfont("BIGFONT");
-    hudmessage(s:
-	"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory\
-\ or hold \cguse \ca for 1 second!\
-	\n\n\cbQuit early \cato \cgavoid death!\
-	\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
-	\n\n\cgPrimary fire \cafor your \cbNails\
-	\n\n\cgSecondary Fire \cafor your \cbRockets\
-	\n\n\n\ci Now give em' Hell!"
-	; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
 	
 	//f_TipShow("VEHIC", " War Mech State", "Deployed for action!", 10);
 	Notify_PlayerEX(0, " Mech State", "Deployed!", "VEHIC", 0);

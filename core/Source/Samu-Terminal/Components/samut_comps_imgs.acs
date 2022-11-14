@@ -1,6 +1,6 @@
 
 /**	
-	The Image contains a string. And nothing more.
+	The Image contains a string to a graphic. And nothing more.
 */
 
 #include "samut_cgnsf_imgs.acs"
@@ -133,7 +133,7 @@ function int Image_Add_P (str file, int coffx, int coffy, int align, int parent)
 function int Image_AddDup(int x, int y, int w, int h){
 	int id = Component_Allocate(STCOMP_LBL, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IMG, Image_getRect(id));
+		Component_Load(id, STCOMP_IMG, Image_getRect(id));
 	}
 	
 	return id;
@@ -145,7 +145,7 @@ function int Image_AddDupGrid(int grid, int row, int col, int w, int h){
 	
 	int id = Component_Allocate(STCOMP_LBL, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IMG, Image_getRect(id));
+		Component_Load(id, STCOMP_IMG, Image_getRect(id));
 		Image_setPosition(id, x, y);
 	}
 	return id;
@@ -157,7 +157,7 @@ function int Image_AddDupCard(int grid, int cell, int w, int h){
 	
 	int id = Component_Allocate(STCOMP_LBL, x, y, w, h);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_IMG, Image_getRect(id));
+		Component_Load(id, STCOMP_IMG, Image_getRect(id));
 		Image_setPosition(id, x, y);
 	}
 	return id;

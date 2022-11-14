@@ -15,6 +15,7 @@
 #include "stexec_rcyfuns.acs"
 #include "stexec_mupfuns.acs"
 #include "stexec_pupfuns.acs"
+#include "stexec_supfuns.acs"
 
 
 function void STExecute_OkayAction(void){

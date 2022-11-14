@@ -51,16 +51,28 @@ Actor FlamerRemainsSpawner{
   states{
     Spawn:
       TNT1 A 0
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, -2, -2 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 2, 2 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, -2, 2 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 2, -2 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 4, 0 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, -4, 0 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 0, 4 ,0)
-      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, 0, -4 ,0)
+      TNT1 A 0 A_SetArg(0, 3) // range
+      goto Aura
+    Aura:
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(0), args[0]*sin(0) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(45), args[0]*sin(45) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(90), args[0]*sin(90) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(135), args[0]*sin(135) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(180), args[0]*sin(180) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(225), args[0]*sin(225) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(270), args[0]*sin(270) ,0)
+      TNT1 A 0 A_SpawnItemEx("FlamerRemains", 0, 0, 0, args[0]*cos(315), args[0]*sin(315) ,0)
       TNT1 A 0 A_RadiusGive("AltState_BurnGiver", 128, RGF_MONSTERS)
       Stop
+  }
+}
+
+Actor FlamerRemainsSpawner_Turret : FlamerRemainsSpawner{
+  states{
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_SetArg(0, 12) // range
+      goto Super::Aura
   }
 }
 
@@ -71,7 +83,7 @@ actor FlamerRemains
   Radius 13
   Height 8
   Speed 25
-  Damage 8
+  Damage (8)
   RenderStyle Add
   Alpha 0.75
   scale 0.575
@@ -86,7 +98,7 @@ actor FlamerRemains
   States
   {
   Spawn:
-    FIRE ABCDEDCDEDCEDC 1 BRIGHT A_Explode(3,64,0,0,64)
+    FIRE ABCDEDCDEDEFGH 1 BRIGHT A_Explode(2,64,0,0,64)
     stop
   }
 }

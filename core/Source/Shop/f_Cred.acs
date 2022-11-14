@@ -34,6 +34,10 @@ script 105 (int l_AmountSpecial, int l_SplatCombo, int l_NoSoundQue) CLIENTSIDE
 	}
 }
 
+script "SFPlus_PickupMsg" (int howmuch, int type){
+	ACS_NamedExecuteAlways("SF_PickupMsgDisplay",0, howmuch, type);
+}
+
 script "SFPlus_CreditPickup" (int howmuch, int color){
 	ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, howmuch, color);
 	sf_AddCredits_S(howmuch, playernumber());

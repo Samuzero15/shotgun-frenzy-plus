@@ -349,6 +349,12 @@ sb2 DPSKEPCH
 $random inv/sandbag {sb1 sb2}
 $limit inv/sandbag 8
 
+g/ArmorPickup ArPickup
+
+misc/EclipseMineral	TYRMINPK
+$volume misc/EclipseMineral 0.8
+
+
 ////// Samu-term sounds
 
 A-Greet1 A-Greet1

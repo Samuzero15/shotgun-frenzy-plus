@@ -16,6 +16,13 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
             int dmg = arg1;
             int percent;
 
+            if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "TitaniumArmor") == 0){
+                percent = 0.70 + 0.10 * checkinventory("RuneTemperance");
+                dmg = (arg1 * (1.0 - percent)) >> 16;
+
+                ArmorHitSFX(dmg);
+                SetResultValue(dmg);
+            }
             
              
             if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "SteelPlatingArmor") == 0){
@@ -35,31 +42,6 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
                 ArmorHitSFX(dmg);
                 SetResultValue(dmg);
             }
-
-            
-
-            //if(checkinventory("RuneTemperance")){
-                
-                //SetActivatorToTarget(0);
-                //log(s:"(fp_event) Save percent: ", f:GetArmorInfo(ARMORINFO_SAVEPERCENT));
-                //log(s:"(fp_event) Current Armor: ", d:armor);
-                //log(s:"(fp_event) Damage Took: ", d:arg1);
-                  
-                /*
-                // Your armor takes double damage.
-                if(GetArmorInfo(ARMORINFO_SAVEAMOUNT) > 0){
-                    int dmg = 2 * ((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16);
-                    //log(s:"(fp_event) Save percent: ", f:GetArmorInfo(ARMORINFO_SAVEPERCENT));
-                    //log(s:"(fp_event) Current Armor: ", d:armor);
-                    //log(s:"(fp_event) Damage Took: ", d:arg1);
-                    //log(s:"(fp_event) Damage Absorbed: ", d:((arg1 * GetArmorInfo(ARMORINFO_SAVEPERCENT)) >> 16));
-                    
-                    if(CheckInventory("BasicArmor") < dmg){
-                        GiveInventory("TemperanceRune_BreakToken", 1);
-                    }
-                    SetResultValue(dmg);
-                }*/
-            //}
         break;
     }    
 }

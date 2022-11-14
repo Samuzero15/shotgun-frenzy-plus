@@ -1,0 +1,199 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_StUpDir.acs
+// Stimer Upgrade directory
+
+// Here it lays all of the stimpack upgrades on the game.
+// For the prices, take a look at fl_price.
+// The prices are on UP points!
+
+#library "fl_StUpDir"
+#import "f_intdb.acs"
+#include "zcommon.acs"
+#include "acsutils.acs"
+//#include "samu_tools.acs"
+
+#define FP_STIMUP_MAX 10
+
+int StimUpTop = 0;
+int StimUp_list[FP_STIMUP_MAX][5];
+
+function void SFPlus_DefineStimUps(void){
+    StimUpTop = 0;
+	StimUp_Add ("Soul Healing",	    "Overhealth", 	"SUBTN1");
+    StimUp_Add ("Bigger Pocket",	"Amount", 	    "SUBTN2");
+    StimUp_Add ("Extra Dosis",	    "ExtraDosis", 	"SUBTN3");
+    StimUp_Add ("Skin Tightening",	"HardShell", 	"SUBTN4");
+    StimUp_Add ("Platelets Cells",	"Cicatrizate", 	"SUBTN5");
+    StimUp_Add ("Caffeine Pills",	"Caffeine", 	"SUBTN6");
+    StimUp_Add ("Blood Stimulant",	"Stimulant", 	"SUBTN7");
+}
+
+function void StimUp_Add (str name, str actor, str btnimg){
+	int upg = StimUpTop;
+	
+	if(StimUpTop >= FP_StimUP_MAX)
+	{ 
+		log(s:"(fl_PUpDir): Too much stimpack upgrades!");
+		return;
+	}
+	// Look up language.txt
+	StimUp_List[upg][0] = name;
+	StimUp_List[upg][1] = strparam(l:strparam(s:"FP_SUD_",s:actor));
+	StimUp_List[upg][2] = strparam(s:"StimUp_",s:actor);
+	// Lookup fl_price.acs
+	StimUp_List[upg][3] = strparam(s:"pr_su_", s:actor); 
+	StimUp_List[upg][4] = btnimg;
+	StimUpTop++;
+}
+
+function str StimUp_getName(int up){	return StimUp_List[up][0];}
+function str StimUp_getDesc(int up){	return StimUp_List[up][1];}
+function str StimUp_getActor(int up){	return StimUp_List[up][2];}
+function str StimUp_getIcon(int up){	return StimUp_List[up][4];}
+function int StimUp_getPrice(int up){	
+    int price = CheckInventory(StimUp_List[up][3]);
+	return price + ((price * CheckInventory(StimUp_getActor(up))) / 4);}
+
+script "SFPlus_DebugStimUps" (void){
+	log(s:"===START===(Stimer upgrade Directory)===START===");
+	for (int i = 0; i < StimUpTop; i++ ){
+		giveInventory(StimUp_getActor(i), 1);
+		log(s:"");
+		log(s:StimUp_getName(i), s:" (",d:StimUp_getPrice(i), s:" U.Ps)", s:" [", s:StimUp_getIcon(i), s:"]");
+		log(s:"-----------------------------------------");
+		log(s:StimUp_getDesc(i));
+		log(s:"=========================================");
+		delay(1);
+	}
+	log(s:"====END====(Stimpack upgrade Directory)====END====");
+}
+
+Script "SFPlus_ToggleStimpackUp" (int which)
+{
+	ToggleInventory(StimUp_getActor(which));
+	log(s:StimUp_getName(which), s:cond(CheckInventory(StimUp_getActor(which)) > 0, " Enabled!", " Disabled!"));
+}
+
+Script "SFPlus_FullStimpackUps" (void)
+{
+	for (int i = 0; i < StimUpTop; i++ ){
+		giveInventory(StimUp_getActor(i), 1);
+		log(s:StimUp_getName(i), s:" Set!");
+	}
+}
+
+Script "Stimpack_Healme" (void)
+{
+    int overheal = CheckInventory("StimUp_Overhealth");
+    int dosis = CheckInventory("StimUp_ExtraDosis");
+    int armor = CheckInventory("StimUp_HardShell");
+    int cicatr = CheckInventory("StimUp_Cicatrizate");
+    int coffie  = CheckInventory("StimUp_Caffeine");
+    int stimul = CheckInventory("StimUp_Stimulant");
+
+    if(stimul) ACS_NamedExecuteAlways("StimUp_StimulantPower", 0);
+    if(coffie) ACS_NamedExecuteAlways("StimUp_CaffeinePower", 0);
+    if(cicatr) ACS_NamedExecuteAlways("StimUp_CicatrizatePower", 0);
+    
+    delay(2);
+    int healme = 20 + 6*dosis;
+    if(armor){ // A percentage of your dosis will be added also as armor bonuses.
+        int armor_get = ((healme*(0.5))>>16) * armor;
+        GiveInventory("ArmorShard", armor_get);
+        //log(s:"(StimUp) Armor Repair: ", d:armor_get);
+    }
+    if(overheal){ // Divide the health to add some overhealing after using a stimpack.
+        int overhealhp = ((healme*(0.1*overheal))>>16);
+        healme = healme - overhealhp;
+        GiveInventory("HealthBonus", overhealhp);
+        //log(s:"(StimUp) Over heal: ", d:overhealhp);
+    }
+    GiveInventory("Stimpack", healme);
+    //log(s:"(StimUp) Normal Heal: ", d:healme);
+}
+
+Script "StimUp_CaffeinePower" (void)
+{// For some time, gain some 10% speed!
+    GiveInventory("StimUp_CaffeinePowerGiver", 1);
+    if(CheckInventory("StimUpScript_Caffeine")) terminate;
+    GiveInventory("StimUpScript_Caffeine", 1);
+    int ori_speed = getactorproperty(0, APROP_Speed);
+    while(CheckInventory("StimUp_CaffeinePower")){
+        int coffie = CheckInventory("StimUp_Caffeine");
+        setactorproperty(0, APROP_SPEED, ori_speed + 0.1*coffie);
+        //log(s:"(StimUp) Caffeine On. Speed:", f:(getActorProperty(0, APROP_SPEED)));
+        delay(1);
+    }
+    TakeInventory("StimUpScript_Caffeine", 1);
+    setactorproperty(0, APROP_SPEED, ori_speed);
+    //log(s:"(StimUp) Caffeine Gone.");
+}
+
+Script "StimUp_StimulantPower" (void)
+{// For a large time (1:30 minutes) gain +10 MaxHP per stimulant level.
+    GiveInventory("StimUp_StimulantPowerGiver", 1);
+    if(CheckInventory("StimUpScript_Stimulant")) terminate;
+    GiveInventory("StimUpScript_Stimulant", 1);
+    int ori_maxHP = getactorproperty(0, APROP_SpawnHealth);
+    while(CheckInventory("StimUp_StimulantPower")){
+        int stimul = CheckInventory("StimUp_Stimulant");
+        setactorproperty(0, APROP_SpawnHealth, ori_maxHP + 20*stimul);
+        //log(s:"(StimUp) Stimulant On. MaxHP=", d:(getActorProperty(0, APROP_SpawnHealth)));
+        delay(1);
+    }
+    TakeInventory("StimUpScript_Stimulant", 1);
+    setactorproperty(0, APROP_SpawnHealth, ori_maxHP);
+    //log(s:"(StimUp) Stimulant Gone.");
+}
+
+Script "StimUp_CicatrizatePower" (void)
+{// For 10 seconds, regenerate 1 hp. (in each 10-level tics)
+
+    GiveInventory("StimUp_CicatrizatePowerGiver", 1);
+    if(CheckInventory("StimUpScript_Cicatrizate")) terminate;
+    GiveInventory("StimUpScript_Cicatrizate", 1);
+    int ticks = 0;
+    int maxHP, nowHP;
+    while(CheckInventory("StimUp_CicatrizatePower")){
+        int regen = CheckInventory("StimUp_Cicatrizate");
+        //log(s:"(StimUp) Regeneration On. Regen Delay=", d:(10-regen));
+        if(ticks > 10-regen){
+            //log(s:"(StimUp) Regeneration On. Regen 1 HP");
+            maxHP = getactorproperty(0, APROP_SpawnHealth);
+            nowHP = getactorproperty(0, APROP_Health);
+            if(nowHP < maxHP){
+                setactorproperty(0, APROP_Health, PlayerHealth() + 1);
+            }
+            ticks = 0;
+        }
+        
+        ticks = ticks+1;
+        delay(1);
+    }
+    TakeInventory("StimUpScript_Cicatrizate", 1);
+}
+
+function str StimUp_ReportUps(void){
+	str result = "Current stats";
+
+    for (int i = 0; i < StimUpTop; i++ ){
+		result = Strparam(s:result, s:StimUp_StrUpgrade(i));
+	}
+
+	return result;
+}
+
+function str StimUp_StrUpgrade(int up){
+	str res;
+	int lvl_amount = CheckInventory(StimUp_getActor(up));
+    if (!lvl_amount) return res;
+    str string = StimUp_getName(up);
+	str lvl_str = cond(lvl_amount == 5, "FULL", strparam(s:"LV. ", d:lvl_amount));
+	
+	res = Strparam(s:"\n \cj", s:lvl_str, s:" \cv", s:string);
+	
+	return res;
+}

@@ -79,12 +79,16 @@
 	Negative Values, Executions on the server. (Needs a NET script.)
 	Touch it if you want to handle more actions.
 */
+
+#libdefine STEXE_STIMUP_BUY			51
+#libdefine STEXE_STIMUP_GIVE		-41
+#libdefine STEXE_STIMUP_HOVER 		52
+
 #libdefine STEXE_PLAYUP_ASK		47
 #libdefine STEXE_PLAYUP_SET		48
 #libdefine STEXE_PLAYUP_GET		-40
 #libdefine STEXE_PLAYUP_SETDESC		46
 #libdefine STEXE_PLAYUP_BTNHOVER 	45
-
 
 #libdefine STEXE_UPGPAGECAT 42
 #libdefine STEXE_UPG1PAGEDESC 41
@@ -232,7 +236,7 @@ int stexe_true_args = 0;
 int stexe_false = 0;
 int stexe_false_args = 0;
 
-int wallet = 0;
+int wallet[2];
 int techs = 0;
 
 int pant = 0;

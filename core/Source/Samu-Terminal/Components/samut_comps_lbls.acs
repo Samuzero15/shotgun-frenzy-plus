@@ -17,101 +17,78 @@ function int Label_AddGrid(int grid, int row, int col){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
 	
-	int id = Component_Allocate(STCOMP_LBL, x, y, 0.0, 0.0);
-	if(id != -1){
-		Label_SetDefaultProps(id);
-	}
-	return id;
+	int l = Label_Add(x, y);// Stupid limited ACS.
+	return l;
 }
 
 function int Label_AddGridOff(int grid, int row, int col, int offx, int offy){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
 	
-	int id = Component_Allocate(STCOMP_LBL, x + offx, y + offy, 0.0, 0.0);
-	if(id != -1){
-		Label_SetDefaultProps(id);
-	}
-	return id;
+	int l = Label_Add(x + offx, y + offy);// Stupid limited ACS.
+	return l;
 }
 
 function int Label_AddCard(int grid, int cell){
 	int x = Card_GetX(grid, cell);
 	int y = Card_GetY(grid, cell);
 	
-	int id = Component_Allocate(STCOMP_LBL, x, y, 0.0, 0.0);
-	if(id != -1){
-		Label_SetDefaultProps(id);
-	}
-	return id;
+	int l = Label_Add(x, y);// Stupid limited ACS.
+	return l;
 }
 
 function int Label_AddCardOff(int grid, int cell, int offx, int offy){
 	int x = Card_GetX(grid, cell);
 	int y = Card_GetY(grid, cell);
 	
-	int id = Component_Allocate(STCOMP_LBL, x + offx, y + offy, 0.0, 0.0);
-	if(id != -1){
-		Label_SetDefaultProps(id);
-	}
-	return id;
+	int l = Label_Add(x + offx, y + offy);// Stupid limited ACS.
+	return l;
 }
 
 //Duplicate constructors.
 //This will make another component with the same properties saved with Component_SaveProps function.
 
 //A time saver if you dont like to re-define the component again and again.
-function int Label_Dup(int x, int y){
+function int Label_Dup(int copy, int x, int y){
+	
 	int id = Component_Allocate(STCOMP_LBL, x, y, 0.0, 0.0);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_LBL, Label_getRect(id));
+		Component_Save(Label_getRect(copy));
+		Component_Load(id, STCOMP_LBL, Label_getRect(id));
 	}
-	
 	return id;
 }
 
-function int Label_DupGrid(int grid, int row, int col){
+function int Label_DupGrid(int copy, int grid, int row, int col){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
 	
-	int id = Component_Allocate(STCOMP_LBL, x, y, 0.0, 0.0);
-	if(id != -1){
-		Component_LoadProps(id, STCOMP_LBL, Label_getRect(id));
-	}
-	return id;
+	int l = Label_Dup(copy, x, y);
+	return l;
 }
 
-function int Label_DupCard(int grid, int cell){
+function int Label_DupCard(int copy, int grid, int cell){
 	int x = Card_GetX(grid, cell);
 	int y = Card_GetY(grid, cell);
 	
-	int id = Component_Allocate(STCOMP_LBL, x, y, 0.0, 0.0);
-	if(id != -1){
-		Component_LoadProps(id, STCOMP_LBL, Label_getRect(id));
-	}
-	return id;
+	int l = Label_Dup(copy, x, y);
+	return l;
 }
 
-function int Label_DupGridOff(int grid, int row, int col, int offx, int offy){
+function int Label_DupGridOff(int copy, int grid, int row, int col, int offx, int offy){
 	int x = Grid_GetX(grid, row, col);
 	int y = Grid_GetY(grid, row, col);
 	
-	int id = Component_Allocate(STCOMP_LBL, x + offx, y + offy, 0.0, 0.0);
-	if(id != -1){
-		Component_LoadProps(id, STCOMP_LBL, Label_getRect(id));
-	}
-	return id;
+	int l = Label_Dup(copy, x + offx, y + offy);
+	return l;
 }
 
-function int Label_DupCardOff(int grid, int cell, int offx, int offy){
+function int Label_DupCardOff(int copy, int grid, int cell, int offx, int offy){
 	int x = Card_GetX(grid, cell);
 	int y = Card_GetY(grid, cell);
-	
-	int id = Component_Allocate(STCOMP_LBL, x + offx, y + offy, 0.0, 0.0);
-	if(id != -1){
-		Component_LoadProps(id, STCOMP_LBL, Label_getRect(id));
-	}
-	return id;
+
+	int l = Label_Dup(copy, x + offx, y + offy);
+	return l;
 }
 
 // For Re-positioning within the layout.

@@ -155,6 +155,15 @@ Actor pr_pu_healcoins 			: Integer {}
 Actor pr_pu_prometeo 			: Integer {}
 Actor pr_pu_runesync 			: Integer {}
 
+//Stimpack upgrade prices.
+Actor pr_su_overhealth		: Integer {}
+Actor pr_su_amount		    : Integer {}
+Actor pr_su_extradosis		: Integer {}
+Actor pr_su_hardshell		: Integer {}
+Actor pr_su_cicatrizate		: Integer {}
+Actor pr_su_caffeine		: Integer {}
+Actor pr_su_stimulant		: Integer {}
+
 //Commander research / build
 Actor pr_cmd_genlab : Integer {}
 Actor pr_cmd_armory : Integer {}

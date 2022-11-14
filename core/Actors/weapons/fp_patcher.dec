@@ -79,7 +79,7 @@ Actor Patcher_BeamShot {
 Actor PatcherAdv_BeamShot : Patcher_BeamShot{
 	States{
 		Spawn:
-			PLSS ABABABABABABABABABABABABABABABAB 1 BRIGHT
+			PLSS ABABABABABABABABABABABABAB 1 BRIGHT
 		stop
 	}
 }
@@ -95,7 +95,7 @@ Actor Patcher_AltBeamShot : Patcher_BeamShot{
 Actor PatcherAdv_AltBeamShot : Patcher_AltBeamShot{
 	States{
 		Spawn:
-			PLSS ABABABABABABABABABABABABABABABAB 1 BRIGHT
+			PLSS ABABABABABABABABABABABABAB 1 BRIGHT
 		stop
 	}
 }
@@ -131,12 +131,46 @@ Actor Patcher_Libra : CustomInventory {
 	}
 }
 
+Actor Patcher_LibraAdvanced : Patcher_Libra {
+	States{
+		Pickup:
+			TNT1 A 0 A_FireBullets(0, 0, 1, 1, "Patcher_LibraPuff", FBF_NOFLASH, 512)
+		stop
+	}
+}
+
+Actor PatcherEffect_Fixed : Patcher_Libra {
+	States{
+		Pickup:
+			TNT1 A 0 A_PlaySound("p/deploy")
+			TNT1 A 0 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	}
+}
+
+Actor PatcherEffect_Upgraded : Patcher_Libra {
+	States{
+		Pickup:
+			TNT1 A 0 A_SpawnItemEx("splatEmitter_CFX", 0, 0, 0, 0)
+		stop
+	}
+}
+
+Actor PatcherEffect_Fail : Patcher_Libra {
+	States{
+		Pickup:
+			TNT1 A 0 A_PlaySound("SamuTerm/Error")
+		stop
+	}
+}
+
 Actor Patcher_HudHeal : Boolean {}
 Actor Patcher_HudMaxHP : Boolean {}
 Actor Patcher_HudNoMoney : Boolean {}
 Actor Patcher_Script : Boolean {}
 Actor Patcher_HudBuff : Boolean {}
 Actor Patcher_HudBuffed : Boolean {}
+Actor Patcher_FrameRefresh : Boolean {}
 
 Actor PowerPatcher_DMGUpLv5 : PowerDamage {
 	DamageFactor normal, 2.0

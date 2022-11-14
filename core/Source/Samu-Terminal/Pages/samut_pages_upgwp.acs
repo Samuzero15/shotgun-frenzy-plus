@@ -190,17 +190,15 @@ function void InitListUpPage(int pageTag){
 	Label_setText(i, "Standard Set");
 	Label_setFont(i,"StatBigs");
 	Label_setTag (i, pagetag);
-	Component_Save(Label_GetRect(i));
 	listup_vars[2] = i;
 	
 	// 		Notification 1 if no weapons. Slot[8]
-	i = Label_Dup(Vars_Mid_Wid(), Vars_Mid_Hei());
+	i = Label_Dup(i, Vars_Mid_Wid(), Vars_Mid_Hei());
 	Label_setText(i, "Upgrades not avilable.");
-	Component_Save(Label_GetRect(i));
 	listup_vars[8] = i;
 	
 	// 		Notification 2 if no weapons. Slot[9]
-	i = Label_Dup(Vars_Mid_Wid(), Vars_Mid_Hei());
+	i = Label_Dup(i, Vars_Mid_Wid(), Vars_Mid_Hei());
 	Label_setFont(i,"confont");
 	Label_setText(i, "\n\n\n\nEither you upgraded all your guns, or you don't have the basic ones. \n                         Try it next time...");
 	listup_vars[9] = i;
@@ -255,11 +253,9 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 	else if(Weapon_getCat(weapon) == FP_ADV) color = CR_CYAN;
 	else if(Weapon_getCat(weapon) == FP_OP) color = CR_ORANGE;
 	Label_setColor(title, color);
-	
-	Component_Save(Label_getRect(title));
 	ListUpPage_SaveGroup(weapon, 1, title);
 	
-	desc = Label_DupCardOff	(layout, 1, 90.0, 12.0); 
+	desc = Label_DupCardOff	(title, layout, 1, 90.0, 12.0); 
 	Label_setText			(desc,"Hover to check the possible upgrades.");
 	Label_setFont			(desc,"Confont");
 	Label_setWrapWidth		(desc, 400);
@@ -267,7 +263,7 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 	
 	if(Weapon_getUpsNum(Weapon) == 1){
 		// The weapon contains an unique upgrade.
-		i = Label_DupCardOff(layout, 1, 40.0, 18.0); 
+		i = Label_DupCardOff(title, layout, 1, 40.0, 18.0); 
 		Label_setText		(i,strparam(d:wepup1, s:" UP"));
 		Label_setAligns		(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 		ListUpPage_SaveGroup(weapon, 3, i);
@@ -283,12 +279,12 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 		ListUpPage_SaveGroup(weapon, 4, i);
 	} else {
 		// The weapon contains 2 upgrades.
-		i = Label_DupCardOff(layout, 1, 16.0, 18.0); 
+		i = Label_DupCardOff(title, layout, 1, 16.0, 18.0); 
 		Label_setText	(i,strparam(d:wepup1, s:" UP"));
 		Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 		ListUpPage_SaveGroup(weapon, 3, i);
 	
-		i = Label_DupCardOff(layout, 1, 64.0, 18.0); 
+		i = Label_DupCardOff(title, layout, 1, 64.0, 18.0); 
 		Label_setText	(i,strparam(d:wepup2, s:" UP"));
 		Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 		ListUpPage_SaveGroup(weapon, 5, i);

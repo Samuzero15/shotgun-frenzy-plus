@@ -215,6 +215,15 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_mu_self_destruct", 	8000);
 	Prices_add("pr_mu_auto_repair", 	4000);
 	Prices_add("pr_mu_efficiency", 		15000);
+
+	//Stimpack Up. prices
+	Prices_add("pr_su_overhealth", 	900);
+	Prices_add("pr_su_amount", 		500);
+	Prices_add("pr_su_extradosis", 	1000);
+	Prices_add("pr_su_hardshell", 	750);
+	Prices_add("pr_su_cicatrizate", 1250);
+	Prices_add("pr_su_caffeine", 	1100);
+	Prices_add("pr_su_stimulant", 	1500);
 	
 	//Play Up. prices
 	Prices_add("pr_pu_powupupgrade_1",		3);

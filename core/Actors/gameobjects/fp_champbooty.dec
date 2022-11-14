@@ -1,0 +1,164 @@
+
+
+Actor UpgradeCard : CustomInventory {
+	Radius 16
+  	Height 16
+	Inventory.Pickupmessage "An Upgrade card! +1 U.P!"
+	//Inventory.PickupSound "g/ArmorPickup"
+	states
+	  {
+		Spawn:
+			UCAR D -1
+			stop
+		Pickup:
+			TNT1 A 0 ACS_NamedExecute("UpgradeCard_Pickme", 0)
+			stop
+	  }
+}
+
+Actor TitaniumArmor : BasicArmorPickup 
+{
+  Inventory.Icon "HEVAB0"
+  Armor.Savepercent 100
+  Armor.Saveamount 400
+}
+
+Actor TitaniumArmor_Pickup : CustomInventory {
+	Radius 20
+  	Height 48
+	Inventory.Pickupmessage "Titanium Armor!"
+	Inventory.PickupSound "g/ArmorPickup"
+	states
+	  {
+		Spawn:
+			HEVA AB 6
+			loop
+		Pickup:
+            TNT1 A 0 A_GiveInventory("Flag_RedArmor", 1)
+			TNT1 A 0 A_JumpIf(CallACS("Armor_ArmorShardsOnly") != 1, "JustGiveArmor")
+			TNT1 A 0 ACS_NamedExecuteAlways("Armor_ReplaceShardsWithArmor", 0, 1)
+			stop
+		JustGiveArmor:
+			TNT1 A 0 A_GiveInventory("TitaniumArmor", 1)
+			stop
+	  }
+}
+
+Actor EclipseMineralBase : CustomInventory
+{
+	Radius 16
+	Height 52
+	Inventory.Amount 0
+	Inventory.MaxAmount 0
+	+Inventory.UNDROPPABLE
+	+Inventory.AUTOACTIVATE
+	+Inventory.ALWAYSPICKUP
+	+COUNTITEM
+	+MOVEWITHSECTOR
+	+DONTGIB
+	+FLOATBOB
+	Inventory.PickupSound "misc/EclipseMineral"
+}
+
+
+Actor SmallMineral : EclipseMineralBase
+{
+	Inventory.PickupMessage "A shiny mineral! +100 Credits!"
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
+		Stop
+	Blue:
+        TSBL ABCDEDCB 4 Bright
+        Loop
+	Yellow:
+        TSYE ABCDEDCB 4 Bright
+        Loop
+	Red:
+        TSRE ABCDEDCB 4 Bright
+        Loop
+	Green:
+        TSGR ABCDEDCB 4 Bright
+        Loop
+	Orange:
+        TSOR ABCDEDCB 4 Bright
+        Loop
+	Purple:
+        TSPU ABCDEDCB 4 Bright
+        Loop
+	Pink:
+        TSPI ABCDEDCB 4 Bright
+        Loop
+	White:
+        TSWH ABCDEDCB 4 Bright
+        Loop
+	Cyan:
+        TSCY ABCDEDCB 4 Bright
+        Loop
+	Teal:
+        TSTE ABCDEDCB 4 Bright
+        Loop
+	Brown:
+        TSBR ABCDEDCB 4 Bright
+        Loop
+	Lime:
+        TSLI ABCDEDCB 4 Bright
+        Loop
+	Use:
+		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 100)
+		Stop
+	}
+}
+
+Actor BigMineral : EclipseMineralBase
+{
+	Inventory.PickupMessage "A big mineral! +250 Credits!"
+	
+	States
+	{
+    Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
+		Stop
+	Blue:
+        TBBL ABCDEF 4 Bright
+        Loop
+	Yellow:
+        TBYE ABCDEF 4 Bright
+        Loop
+	Red:
+        TBRE ABCDEF 4 Bright
+        Loop
+	Green:
+        TBGR ABCDEF 4 Bright
+        Loop
+	Orange:
+        TBOR ABCDEF 4 Bright
+        Loop
+	Purple:
+        TBPU ABCDEF 4 Bright
+        Loop
+	Pink:
+        TBPI ABCDEF 4 Bright
+        Loop
+	White:
+        TBWH ABCDEF 4 Bright
+        Loop
+	Cyan:
+        TBCY ABCDEF 4 Bright
+        Loop
+	Teal:
+        TBTE ABCDEF 4 Bright
+        Loop
+	Brown:
+        TBBR ABCDEF 4 Bright
+        Loop
+	Lime:
+        TBLI ABCDEF 4 Bright
+        Loop
+	Use:
+		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 250)
+		Stop
+	}
+}

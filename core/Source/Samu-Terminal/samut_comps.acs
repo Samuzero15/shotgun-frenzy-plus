@@ -25,8 +25,6 @@ function void SamuTerm_InitComps(void){
 	Toaster_Initialize();
 	Prompt_Initialize();
 	
-	if(pagetags[STTAGS_ALPHA] != 10) Components_Add();
-	else Toast_SetPosition(320.0, 150.0);
 	//Custom shiet.
 	SamuTerm_InitPages();
 }
@@ -41,106 +39,13 @@ function void Components_Clear(void){
 	pagetags[STTAGS_LAST] = 0;
 }
 
-function void Components_Add(void){
-	int lbl;
-	
-	wallet = Label_Add(320.0,470.0); 
-	Label_setText(wallet, "");
-	Label_setFont(wallet,"CONFONT");
-	Label_setColor(wallet,CR_gold);
-	Label_setShow(wallet, true);
-
-	int ibtn;
-	str exitbtn;
-	str props;
-	int card;
-	str common = "hoverimage=BTNHOV, execute=STEXE_GTCAT, ";
-	
-	Card_SetPosition(176.0, 400.0);
-	Card_SetStep(64.0);
-	Card_SetCells(4);
-	card = Card_Generate();
-	
-	
-	ibtn = ImgButton_AddCard(card, 1, 32.0, 32.0); 
-	Prop_StrDef_Start(common);
-	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN1");
-	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  1);
-	Prop_StrDef_End();
-	ImgButton_setProps(ibtn, propstr);
-	ImgButton_setTag(ibtn, 0);
-	
-	
-	ibtn = ImgButton_AddCard(card, 2, 32.0, 32.0);
-	Prop_StrDef_Start(common);
-	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN2");
-	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  2);
-	Prop_StrDef_End();
-	ImgButton_setProps(ibtn,propstr);
-	ImgButton_setTag(ibtn, 0);
-	
-	
-	ibtn = ImgButton_AddCard(card, 3, 32.0, 32.0);
-	Prop_StrDef_Start(common);
-	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTN3");
-	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  3);
-	Prop_StrDef_End(); 
-	ImgButton_setProps(ibtn,propstr);
-	ImgButton_setTag(ibtn, 0);
-	//ImgButton_setDescription(ibtn, "Recycle weapons");
-		
-	ibtn = ImgButton_AddCard(card, 4, 32.0, 32.0);
-	Prop_StrDef_Start(common);
-	Prop_StrDef_Add(ST_PSTR_STR, "image",   "BTNOK");
-	Prop_StrDef_Add(ST_PSTR_INT, "exe_a1",  4);
-	Prop_StrDef_End();
-	ImgButton_setProps(ibtn,propstr);
-	ImgButton_setTag(ibtn, 0);
-	//ImgButton_setDescription(ibtn, "More items");
-	
-	
-	//print(d:Grid_Generate());
-	if(pagetags[STTAGS_ALPHA] == 20){
-		exitBtn = "BTNEXIT2";
-		
-		//ACS POWAAAAAAAAAAR
-		ibtn = ImgButton_Add(176.0,400.0, 32.0, 32.0); 
-		Prop_StrDef_Start(common);
-		Prop_StrDef_Add(ST_PSTR_STR, "image",  "BTN7");
-		Prop_StrDef_Add(ST_PSTR_INT, "exe_a1", 1);
-		Prop_StrDef_Add(ST_PSTR_INT, "tag",    pagetags[STTAGS_ALPHA]);
-		Prop_StrDef_End();
-		ImgButton_setProps(ibtn,propstr);
-		
-		ibtn = ImgButton_Add(176.0 + 64.0,400.0, 32.0, 32.0); 
-		Prop_StrDef_Start(common);
-		Prop_StrDef_Add(ST_PSTR_STR, "image",  "BTN5");
-		Prop_StrDef_Add(ST_PSTR_INT, "exe_a1", 2);
-		Prop_StrDef_Add(ST_PSTR_INT, "tag",    pagetags[STTAGS_ALPHA]);
-		Prop_StrDef_End();
-		ImgButton_setProps(ibtn,propstr);
-		
-	} else exitBtn = "BTNEXIT";
-	
-	
-	ibtn = ImgButton_Add(432.0,400.0, 32.0, 32.0);
-	Prop_StrDef_Start("hoverimage=BTNHOV,");
-	Prop_StrDef_Add(ST_PSTR_STR, "image",   exitBtn);
-	Prop_StrDef_Add(ST_PSTR_INT, "tag",     pagetags[STTAGS_ALPHA]);
-	Prop_StrDef_Add(ST_PSTR_INT, "execute", STEXE_CLOSE);
-	Prop_StrDef_End();
-	ImgButton_setProps(ibtn,propstr);
-	
-	//ImgButton_setDescription(ibtn, "Back to the reality");
-}
-
 function void Component_Save(int comprect){
 	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
 		comp_propsave[i] = RectGetUserData(comprect, i);
 	}
 }
 
-function void Component_LoadProps(int id, int type, int rect){
+function void Component_Load(int id, int type, int rect){
 	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
 		SetRectUserData(rect, i, comp_propsave[i]);
 	}

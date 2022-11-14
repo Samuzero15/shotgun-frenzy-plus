@@ -62,9 +62,9 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		{
 			if (armorTech){
 				// [Samu] Preventing Armor Overrides.
-				if(CheckInventory("BasicArmor") == 0) {takeInventory("Flag_BlueArmor", 1);}
+				if(CheckInventory("BasicArmor") == 0) {takeInventory("Flag_BlueArmor", 1);takeInventory("Flag_RedArmor", 1);}
 				
-				if(CheckInventory("BasicArmor") < 100 && !CheckInventory("Flag_BlueArmor")){
+				if(CheckInventory("BasicArmor") < 100 && !(CheckInventory("Flag_BlueArmor") || !CheckInventory("Flag_RedArmor"))){
 					giveinventory("SteelPlatingArmor", 1);
 				}
 				// steel plating
@@ -80,13 +80,16 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			s:"Speed Factor: ", f:getActorProperty(0,APROP_Speed),s:"\n",
 			s:"Damage Factor:", f:getActorProperty(0,APROP_DamageFactor));
 			*/
+
+			int stimul = CheckInventory("StimUp_Stimulant");
+			int coffie = CheckInventory("StimUp_Caffeine");
 			
 			// Do all calculations depending on the researches and unit upgrades.
 			//Apply da techs!
-			setactorproperty(0, APROP_SPEED, 1.0 + speedboost);  		
+			setactorproperty(0, APROP_SPEED, 1.0 + speedboost + 0.1*coffie*CheckInventory("StimUp_CaffeinePower"));  		
 			
-			setactorproperty(0, APROP_SpawnHealth, 100 + healthboost);
-			giveinventory("Health", 100 + healthboost);
+			setactorproperty(0, APROP_SpawnHealth, 100 + healthboost + 20*stimul*CheckInventory("StimUp_StimulantPower"));
+			giveinventory("Health", 100 + healthboost + 10*stimul*CheckInventory("StimUp_StimulantPower"));
 			SetInventory("HUD_MaxHp", 1 + 1*health1 + 1*health2 + 3*bodyEnhance);
 			
 			setactorproperty(0, APROP_DamageFactor,1.0 - defenseboost);
@@ -112,7 +115,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			 if (Tech_IsDone(TECH_ARMORY_GNADES))
 				GiveInventory("Inventory_HandGrenade", 5);
 			 if (Tech_IsDone(TECH_GENLAB_STIMPK))
-				GiveInventory("Inventory_Stimpack", 10);
+				GiveInventory("Inventory_Stimpack", 5 + CheckInventory("StimUp_Amount"));
 			 if (Tech_IsDone(TECH_ARMORY_BOOMRN)) 
 				giveinventory("Upgrade_Boomshot", 1);   // boomshot rounds
              if (Tech_IsDone(TECH_ARMORY_AMMOBP)) 
@@ -185,12 +188,13 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 		// [Samu] Expansive re-stock and armor repair upgrades for the players.
 		int health_give = 10 + 15*CheckInventory("PlayUp_ExpansiveRestock");
 		int armor = Checkinventory("BasicArmor");
-		int armor_max = 100 + 100*CheckInventory("Flag_BlueArmor");
+		int armor_max = 100 + 100*CheckInventory("Flag_BlueArmor") + 200*CheckInventory("Flag_RedArmor");
 		int armor_left = armor_max - armor;
 		int armor_give = 5 + 15*CheckInventory("PlayUp_ArmorRepair") + 30*CheckInventory("PlayUp_ExpansiveRestock");
 		giveinventory("Health", health_give);
 			
 		if(armor == 0 && armorTech && CheckInventory("PlayUp_ArmorRepair")){
+			takeInventory("Flag_RedArmor", 1);
 			takeInventory("Flag_BlueArmor", 1);
 			GiveInventory("SteelPlatingArmor", 1);
 			f_SmallTip ("Green Armor Granted!", cr_green, 3);
@@ -316,19 +320,36 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	
 	c = CR_WHITE;
 	s++;
-	uplvl = strparam(s:"+ (M.Up) Nails Lv. ", d:CheckInventory("MechUp_Nails"));
+	uplvl = strparam(s:"+(M.Up) Nails Lv. ", d:CheckInventory("MechUp_Nails"));
 	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Nails"), uplvl);
-	uplvl = strparam(s:"+ (M.Up) Rockets Lv. ", d:CheckInventory("MechUp_Rockets"));
+	uplvl = strparam(s:"+(M.Up) Rockets Lv. ", d:CheckInventory("MechUp_Rockets"));
 	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Rockets"), uplvl);
-	uplvl = strparam(s:"+ (M.Up) Armor Lv. ", d:CheckInventory("MechUp_Armor"));
+	uplvl = strparam(s:"+(M.Up) Armor Lv. ", d:CheckInventory("MechUp_Armor"));
 	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Armor"), uplvl);
-	uplvl = strparam(s:"+ (M.Up) Manuver Lv. ", d:CheckInventory("MechUp_Speed"));
+	uplvl = strparam(s:"+(M.Up) Manuver Lv. ", d:CheckInventory("MechUp_Speed"));
 	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Speed"), uplvl);
-	uplvl = strparam(s:"+ (M.Up) Auto Repair Lv. ", d:CheckInventory("MechUp_AutoRepair"));
+	uplvl = strparam(s:"+(M.Up) Auto Repair Lv. ", d:CheckInventory("MechUp_AutoRepair"));
 	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_AutoRepair"), uplvl);
-	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_LifeSave"), 		"+ (M.Up) Life Saver");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_SelfDestruct"), 	"+ (M.Up) Self Destruct");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_Efficiency"), 		"+ (M.Up) Efficiency");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_LifeSave"), 		"+(M.Up) Life Saver");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_SelfDestruct"), 	"+(M.Up) Self Destruct");
+	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_Efficiency"), 		"+(M.Up) Efficiency");
+	
+	s++;
+	uplvl = strparam(s:"+(S.Up) Extra Dosis Lv.", d:CheckInventory("StimUp_ExtraDosis"));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_ExtraDosis"), uplvl);
+	uplvl = strparam(s:"+(S.Up) ", d:CheckInventory("StimUp_Amount"), s:" Stimpacks More");
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Amount"), uplvl);
+	uplvl = strparam(s:"+(S.Up) ", d:(10*CheckInventory("StimUp_Overhealth")), s:"% Overheal");
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Overhealth"), uplvl);
+	uplvl = strparam(s:"+(S.Up) 50% A.Repair Lv", d:(CheckInventory("StimUp_HardShell")));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_HardShell"), uplvl);
+	uplvl = strparam(s:"+(S.Up) Regen. Lv", d:(CheckInventory("StimUp_Cicatrizate")));
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Cicatrizate"), uplvl);
+	uplvl = strparam(s:"+(S.Up) ", d:(10*CheckInventory("StimUp_Caffeine")), s:"% Speed Up");
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Caffeine"), uplvl);
+	uplvl = strparam(s:"+(S.Up) ", d:(20*CheckInventory("StimUp_Stimulant")), s:" Max HP");
+	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Stimulant"), uplvl);
+
 	delay(17);
 }
 

@@ -21,6 +21,9 @@ int powerup_list[PUPHUD_MAX][2];
 
 Script "SFPlus_PowerupList" Enter Clientside{
 	if(ConsolePlayerNumber() == Playernumber()){
+		PowHud_Add("MaxHP", 		"StimUp_StimulantPower");
+		PowHud_Add("Speed", 		"StimUp_CaffeinePower");
+		PowHud_Add("Regen", 		"StimUp_CicatrizatePower");
 		PowHud_Add("x4 Damage", 		"PowerQuadDamage");
 		PowHud_Add("x6 Damage", 		"PlayUp_PowUpUpgrade_6xDmg");
 		PowHud_Add("Fast Fire", 		"Inv_Power_Infinity");
@@ -42,6 +45,7 @@ Script "SFPlus_PowerupList" Enter Clientside{
 		while(PlayerInGame(PlayerNumber())){
 			for(int i = 0; i < puphud_amount; i++){
 				PowHud_Show(i);
+				PowHud_Update(i);
 			}
 			delay(1);
 			PowHud_Clear();
@@ -67,10 +71,42 @@ function str PowHud_Get(int which, int prop){
 	return powerup_list[which][prop];
 }
 
+function void PowHud_Set(int which, int prop, int value){
+	if(which >= PUPHUD_MAX || which < 0){
+		log(s:"(fp_puhud.acs): Label ", d:which, s:" not found.");
+		return;
+	}
+	powerup_list[which][prop] = value;
+}
+
 function void PowHud_Clear(void){
 	for (int i = puphud_stack; i >= 0; i--)
 		ClearHudMessage(6100+i); 
 	puphud_stack = 0;
+}
+
+function void PowHud_Update(int which) {
+	str msg = PowHud_Get(which, PUPHUD_PROP_LABEL);
+	if(CheckInventory(PowHud_Get(which, PUPHUD_PROP_ACTOR))){
+		str label = "";
+		switch(which){
+			case 0: 
+			label = strparam(s:"+",d:(20*CheckInventory("StimUp_Stimulant")), s:" Max HP");
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+			case 1:
+			label = strparam(s:"+",d:(10*CheckInventory("StimUp_Caffeine")), s:"% Speed");
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+			case 2: 
+			label = strparam(d:(10-CheckInventory("StimUp_Cicatrizate")), s:" Tic Hp Regen");
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+			
+		}
+		
+		//log(s:"(PowHud) Index: ",d:which, s:", Label: ", s:msg);
+	}
 }
 
 function void PowHud_Show(int which) {
@@ -108,7 +144,7 @@ function void PowHud_Show(int which) {
 		}
 		else{
 			msg = Strparam(
-				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cp"),
+				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cu"),
 				s:effect, s:" \c-",
 				s:cond(secs < 10, strparam(d:secs, s:".", d:(powtime % 35)), strparam(d:secs)));
 		}

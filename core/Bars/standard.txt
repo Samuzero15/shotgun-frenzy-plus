@@ -26,15 +26,15 @@ statusbar normal// Standard Doom Status bar
 		alpha 0.5{DrawImage "MEDIA0",  50,  520;}
 		drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
 		// Danger health
-		inInventory HUD_DangerHealth, 1 drawnumber 3, StatBigsNums, RED, health, alignment(center), 55, 520;
+		inInventory HUD_DangerHealth, 1 drawnumber 5, StatBigsNums, RED, health, alignment(center), 55, 520;
 		// Critic health
-		else inInventory HUD_CriticHealth, 1  drawnumber 3, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
+		else inInventory HUD_CriticHealth, 1  drawnumber 5, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
 		// Low health
-		else inInventory HUD_LowHealth, 1 drawnumber 3, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
+		else inInventory HUD_LowHealth, 1 drawnumber 5, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
 		// Over health
-		else inInventory HUD_OverHealth, 1 drawnumber 3, StatBigsNums, CYAN, health, alignment(center), 55, 520;
+		else inInventory HUD_OverHealth, 1 drawnumber 5, StatBigsNums, CYAN, health, alignment(center), 55, 520;
 		// Normal health
-		else drawnumber 3, StatBigsNums, GREEN, health, alignment(center), 55, 520;
+		else drawnumber 5, StatBigsNums, GREEN, health, alignment(center), 55, 520;
 		
 	}else {
 		drawString STATBIGS, White, "Mech Armor",  85, 550, 0, alignment(center);
@@ -264,7 +264,7 @@ statusbar normal// Standard Doom Status bar
 		
 	}
 	
-	
+	/*
 	alpha 0.7
 	{// [Samu] INVENTORY ITEMS list start
 	drawswitchableimage "Inventory_Stimpack", "10HPSI_0", "10HPSI_1", 180, 585;
@@ -325,6 +325,6 @@ statusbar normal// Standard Doom Status bar
 	drawswitchableimage "Inventory_GreedSphere", "GREEDI_0", "GREEDI_1", 560, 585;
 	
 	}// INVENTORY ITEMS list end
-	
+	*/
 	}
 }

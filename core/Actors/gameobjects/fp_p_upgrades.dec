@@ -21,6 +21,76 @@ actor PlayUp_HealCoins			          : Boolean {}
 actor PlayUp_Prometeo			            : Boolean {}
 actor PlayUp_RuneSync 			          : Boolean {}
 
+// Stimpack upgrade tokens
+actor StimUp_OverHealth   : Integer { Inventory.MaxAmount 5 }
+actor StimUp_Amount       : Integer { Inventory.MaxAmount 5 }
+actor StimUp_ExtraDosis   : Integer { Inventory.MaxAmount 5 }
+actor StimUp_HardShell    : Integer { Inventory.MaxAmount 5 }
+actor StimUp_Cicatrizate  : Integer { Inventory.MaxAmount 5 }
+actor StimUp_Caffeine     : Integer { Inventory.MaxAmount 5 }
+actor StimUp_Stimulant    : Integer { Inventory.MaxAmount 5 }
+
+Actor PowerToken : PowerSpeed
+{
+  Speed 1.0
+  +POWERSPEED.NOTRAIL
+}
+
+ACTOR StimUp_StimulantPower : PowerToken {}
+ACTOR StimUp_CaffeinePower : PowerToken {}
+ACTOR StimUp_CicatrizatePower : PowerToken {}
+Actor StimUpScript_Stimulant : Boolean {}
+Actor StimUpScript_Caffeine : Boolean {}
+Actor StimUpScript_Cicatrizate : Boolean {}
+
+Actor StimUp_StimulantPowerGiver : PowerupGiver {
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Powerup.Type "StimUp_StimulantPower"
+  Powerup.Color "", 0.0
+  Powerup.Duration -30
+  Inventory.PickupMessage "Stim.UP Stimulant PowerGiver!" // "Invulnerability!"
+  States
+  {
+  Spawn:
+    PINV ABCD 6 Bright
+    Loop
+  }
+}
+
+Actor StimUp_CaffeinePowerGiver : PowerupGiver {
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Powerup.Type "StimUp_CaffeinePower"
+  Powerup.Color "", 0.0
+  Powerup.Duration -15
+  Inventory.PickupMessage "Stim.UP Caffeine PowerGiver!" // "Invulnerability!"
+  States
+  {
+  Spawn:
+    PINV ABCD 6 Bright
+    Loop
+  }
+}
+
+Actor StimUp_CicatrizatePowerGiver : PowerupGiver {
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Powerup.Type "StimUp_CicatrizatePower"
+  Powerup.Color "", 0.0
+  Powerup.Duration -10
+  Inventory.PickupMessage "Stim.UP Cicatrizate PowerGiver!" // "Invulnerability!"
+  States
+  {
+  Spawn:
+    PINV ABCD 6 Bright
+    Loop
+  }
+}
+
 Actor SpecialTeleportFog : TeleportFog replaces TeleportFog {
 	States{
 		Spawn:

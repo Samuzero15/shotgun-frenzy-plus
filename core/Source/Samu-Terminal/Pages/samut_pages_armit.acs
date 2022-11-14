@@ -60,28 +60,28 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	if(Item_getType(itemid) == FP_ITEM_T_DEPLOY) color = cr_Orange;
 	else color = cr_cyan;
 	
-	i = Label_AddGridOff(grid, x, y, offx, 4.0); 
-	Label_setText	(i, prop0);
-	Label_setFont	(i,"StatBigs");
-	Label_setAligns	(i, align, HUD_ALIGN_TOP);
-	Label_setColor	(i, color);
-	Label_setTag	(i, pageTag);
-	Component_save(Label_getRect(i));
-	ArmItmPage_SaveGroup(itemId, 0, i);
+	int i2;
+	i2 = Label_AddGridOff(grid, x, y, offx, 4.0); 
+	Label_setText	(i2, prop0);
+	Label_setFont	(i2,"StatBigs");
+	Label_setAligns	(i2, align, HUD_ALIGN_TOP);
+	Label_setColor	(i2, color);
+	Label_setTag	(i2, pageTag);
+	ArmItmPage_SaveGroup(itemId, 0, i2);
 	
-	i = Label_DupGridOff(grid, x, y, offx, 16.0); 
+	i = Label_DupGridOff(i2, grid, x, y, offx, 16.0); 
 	Label_setText(i, prop2);
 	Label_setFont(i,"Confont");
 	Label_setWrapWidth(i, 250);
 	ArmItmPage_SaveGroup(itemId, 1, i);
 	
-	i = Label_DupGridOff(grid, x, y, offx, 30.0); 
+	i = Label_DupGridOff(i2, grid, x, y, offx, 30.0); 
 	Label_setText(i, prop3);
 	Label_setFont(i,"Confont");
 	Label_setColor(i, CR_GREEN);
 	ArmItmPage_SaveGroup(itemId, 2, i);
 	
-	i = Label_DupGridOff(grid, x, y, 16.0, 30.0); 
+	i = Label_DupGridOff(i2, grid, x, y, 16.0, 30.0); 
 	Label_setFont(i,"Confont");
 	Label_setText(i, prop4);
 	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);

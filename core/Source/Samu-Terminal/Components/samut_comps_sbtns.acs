@@ -96,7 +96,7 @@ function int StrButton_AddGridOff(int card, int row, int col, str string, int of
 function int StrButton_Dup(int x, int y){
 	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_SBTN, StrButton_GetRect(id));
+		Component_Load(id, STCOMP_SBTN, StrButton_GetRect(id));
 		str text = StrButton_getText(id);
 		StrButton_Setup(text);
 		StrButton_SetDimensions(id, tmp[0], tmp[1]);
@@ -112,7 +112,7 @@ function int StrButton_DupCard(int grid, int cell){
 	
 	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
 	if(id != -1){
-		Component_LoadProps(id, STCOMP_SBTN, StrButton_GetRect(id));
+		Component_Load(id, STCOMP_SBTN, StrButton_GetRect(id));
 		str text = StrButton_getText(id);
 		StrButton_Setup(text);
 		StrButton_SetDimensions(id, tmp[0], tmp[1]);

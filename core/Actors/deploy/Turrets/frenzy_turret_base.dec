@@ -3,7 +3,7 @@ ACTOR TurretBase : Deploy_Building
 	states
 	{
 		Deploy:
-			NULL A 1 A_SpawnItemEx("TurretBase_Head", 0, 0, 0, 0, 0, 0, 0, 0, args[2])
+			NULL A 1 A_SpawnItemEx("TurretBase_Head", 0, 0, 0, 0, 0, 0, 0, 0, 0, args[2])
 			stop
 	}
 }

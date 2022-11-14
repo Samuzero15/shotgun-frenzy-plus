@@ -11,6 +11,10 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 {
 	// Eitherway, this will list all of the functions about the executions.
 	switch(cmd){
+
+		case STEXE_STIMUP_BUY: 	 STExecute_StimUpBuy(arg1);		break;
+		case STEXE_STIMUP_GIVE:  STExecute_StimUpGive(arg1);	break;
+		case STEXE_STIMUP_HOVER: STExecute_StimUpDesc(arg1);	break;
 		
 		case STEXE_PLAYUP_GET: STExecute_PlayUpGet(arg1); break;
 		case STEXE_PLAYUP_SET: STExecute_PlayUpSet(arg1); break;

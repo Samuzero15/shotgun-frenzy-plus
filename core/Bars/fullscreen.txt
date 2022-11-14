@@ -8,16 +8,22 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 			
 			inInventory HUD_DangerHealth, 1
 			{
-				drawnumber 3, STATBIGSNums, RED, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, STATBIGSNums, RED, health, drawshadow, alignment(left), 40, -26;
 			}else{ inInventory HUD_CriticHealth, 1 {
-				drawnumber 3, STATBIGSNums, ORANGE, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, STATBIGSNums, ORANGE, health, drawshadow, alignment(left), 40, -26;
 			}else{ inInventory HUD_LowHealth, 1 {
-				drawnumber 3, STATBIGSNums, YELLOW, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, STATBIGSNums, YELLOW, health, drawshadow, alignment(left), 40, -26;
 			}else{ inInventory HUD_OverHealth, 1 {
-				drawnumber 3, STATBIGSNums, CYAN, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, STATBIGSNums, CYAN, health, drawshadow, alignment(left), 40, -26;
 			}else{ // Normal health
-				drawnumber 3, STATBIGSNums, GREEN, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, STATBIGSNums, GREEN, health, drawshadow, alignment(left), 40, -26;
 			}}}}
+
+			inInventory Inventory_Stimpack, 1 {
+				drawimage "ITEM10", 5, -80;
+				drawnumber 2, STATBIGS, GOLD, "Inventory_Stimpack", whennotzero, 35, -60;
+			}
+			
 
 			//armor
 			drawimage armoricon, 20, -24, centerbottom;

@@ -26,6 +26,7 @@
 #import "fl_WDir.acs"
 #import "fl_IDir.acs"
 #import "fl_MUpDir.acs"
+#import "fl_StUpDir.acs"
 #import "fl_PUpDir.acs"
 #import "fl_techs.acs"
 #import "fp_kshud.acs"
@@ -274,6 +275,7 @@ script "SFPlus_InitializeEverything" OPEN{
 	SFPlus_DefineWeapons();
 	SFPlus_DefineItems();
 	SFPlus_DefineTechs();
+	SFPlus_DefineStimUps();
 	
 	ProgTip_Init();
 	delay(1); // give this tic to the map default variables.

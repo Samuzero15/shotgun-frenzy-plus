@@ -1,0 +1,36 @@
+function void STExecute_StimUpBuy(int upgrade) {
+
+    int name = StimUp_getName(upgrade);
+	int actor = StimUp_getActor(upgrade);
+	int price = StimUp_getPrice(upgrade);
+
+    if(GetPlayCredits() < price){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = upgrade + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(stradd(stradd("Sure to apply the ", name), "?"),CR_ORANGE);
+		else{
+			localambientsound("vehicle/mechupgrade",128);
+			Toaster_ShowToast(stradd(name," added! (click for more)"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_STIMUP_GIVE, upgrade, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+function void STExecute_StimUpGive(int upgrade) {
+    str actor = StimUp_getActor(upgrade);
+	int payprice = StimUp_getPrice(upgrade);
+
+	sf_RemoveCredits(payprice, PlayerNumber());
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(actor, 1);
+}
+
+function void STExecute_StimUpDesc(int upgrade) {
+    str desc = StimUp_GetDesc(upgrade);
+    Label_SetText(stimpage_vars[2], desc);
+}

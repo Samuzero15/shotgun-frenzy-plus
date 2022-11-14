@@ -1,0 +1,15 @@
+
+Name: HeavyArmor
+Connection: None
+Type: Armor
+Palette: Doom
+Summon: heavyarmor
+Use Type: Instant
+
+Submitted: Captain Toenail
+Decorate: Captain Toenail
+GLDefs: Captain Toenail
+Sounds: No
+Sprites: Doom 2
+Sprite Edit: Captain Toenail
+Idea Base: Former Commando's Armour

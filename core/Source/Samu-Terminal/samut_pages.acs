@@ -13,49 +13,122 @@
 #include "samut_pages_armit.acs"
 #include "samut_pages_pwrup.acs"
 #include "samut_pages_mechup.acs"
+#include "samut_pages_stimup.acs"
 #include "samut_pages_playup.acs"
 
 #include "samut_pages_cmd_main.acs"
 
+#define ST_PAGEALPHA_CMD 10
+#define ST_PAGEALPHA_ATE 0
+#define ST_PAGEALPHA_HTE 20
+#define ST_PAGEALPHA_MTE 30
+
 function void SamuTerm_InitPages(void){
-	if(pagetags[STTAGS_ALPHA] == 20){
-		InitPowBuyPage(1);
-		PlayUpPage_Init(2);
-	}else if(pageTags[STTAGS_ALPHA] == 30){
-		MechUpPage_Init(pageTags[STTAGS_ALPHA]);
-	}else if(pageTags[STTAGS_ALPHA] == 10){
-		CMDPage_Init();
-	}
-	else{
-		setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
-		BuyWpnPage_Init(1);
-		RcyWpnPage_Init(3);
-		
-		ArmItmPage_Init(4);
-		InitListUPPage(2);
+
+	int card;
+	int b;
+	Card_SetPosition(176.0, 424.0);
+	Card_SetStep(64.0);
+	Card_SetCells(5);
+	card = Card_Generate();
+
+	wallet[0] = Label_Add(60.0,452.0); 
+	Label_setText(wallet[0], "");
+	Label_setFont(wallet[0],"STATBIGS");
+	Label_setColor(wallet[0],CR_gold);
+	Label_setShow(wallet[0], true);
+
+	wallet[1] = Label_Add(580.0,452.0); 
+	Label_setText(wallet[1], "");
+	Label_setFont(wallet[1],"STATBIGS");
+	Label_setColor(wallet[1],CR_cyan);
+	Label_setShow(wallet[1], true);
+
+	switch(pagetags[STTAGS_ALPHA]){
+		int i;
+		case ST_PAGEALPHA_HTE:
+			i = Image_Add (0.0, 0.0, "TFRAME");
+			Image_SetShow(b, true);
+			make_menubutton(card, 1, 1, "BTN7");
+			make_menubutton(card, 2, 2, "BTN5");
+			make_menubutton(card, 3, 3, "SUBTN0");
+			make_exitbutton(card, 5, "BTNEXIT2");
+
+			setPageTitle_Alpha("Health Terminal", CR_CYAN);
+			InitPowBuyPage(1);
+			PlayUpPage_Init(2);
+			StimUpPage_Init(3);
+		break;
+		case ST_PAGEALPHA_ATE:
+			i = Image_Add (0.0, 0.0, "TFRAME");
+			Image_SetShow(b, true);
+			make_menubutton(card, 1, 1, "BTN1");
+			make_menubutton(card, 2, 2, "BTN2");
+			make_menubutton(card, 3, 3, "BTN3");
+			make_menubutton(card, 4, 4, "BTNOK");
+			make_exitbutton(card, 5, "BTNEXIT");
+
+			setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
+			BuyWpnPage_Init(1);
+			RcyWpnPage_Init(3);
+			ArmItmPage_Init(4);
+			InitListUPPage(2);
+		break;
+		case ST_PAGEALPHA_MTE:
+			Image_Add (0.0, 0.0, "TFRAME");
+			make_exitbutton(card, 1, "BTNEXIT");
+			MechUpPage_Init(pageTags[STTAGS_ALPHA]);
+		break;
+		case ST_PAGEALPHA_CMD:
+			Toast_SetPosition(320.0, 150.0);
+			CMDPage_Init();
+		break;
+		default:
+			log(s:"(SamuTerm): This alphatag (",d:pagetags[STTAGS_ALPHA], s:") is unknown!");
+		break;
 	}
 }
 
 function void UpdatePages(void){
 	if(pagetags[STTAGS_ALPHA] == 20){
+		updateWallet();
 		UpdatePowBuyPage(1);
 		PlayUpPage_Update(2);
-		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+		StimUpPage_Update(3);
 	}else if(pageTags[STTAGS_ALPHA] == 30){
+		updateWallet();
 		MechUpPage_Update(pageTags[STTAGS_ALPHA]);
-		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
 	}else if(pageTags[STTAGS_ALPHA] == 10){
 		CMDPage_Update();
 	}else{
+		updateWallet();
 		BuyWpnPage_Update(1);
 		RcyWpnPage_Update(3);
 		ArmItmPage_Update(4);
-		//UpdateUpgPage(11);
-
 		UpdateListUPPage(2);
-		Label_setText(wallet, StrParam(s:"You have: ", d:getPlayCredits(), s:" credits and ", d:getPlayUPts(), s:" Upgrade points."));
+		
 		//Label_setText(wallet, StrParam(s:"Price of p_key: ", d:Prices_getValue_K("pr_wb_bfg")));
 	}
+}
+
+function int make_menubutton(int card, int cell, int cat, int img) {
+	int b = ImgButton_AddCard(card, cell, 32.0, 32.0);
+			ImgButton_SetImage		(b, img);
+			ImgButton_SetHoverImage	(b, "BTNHOV");
+			ImgButton_SetTag		(b, pagetags[STTAGS_ALPHA]);
+			ImgButton_SetExecute	(b, STEXE_GTCAT);
+			ImgButton_SetArgs		(b, cat, 0, 0);
+	return b;
+}
+
+function void make_exitbutton(int card, int cell, int img) {
+	int b = make_menubutton(card, cell, 0, img);
+	ImgButton_SetExecute	(b, STEXE_CLOSE);
+}
+
+function void updateWallet(void){
+	Label_setText(wallet[0], StrParam(d:getPlayCredits(), s:"$"));
+	Label_setText(wallet[1], StrParam(d:getPlayUPts(), s:" U.P"));
 }
 
 function void setPageTitle_Alpha(str title, int color){

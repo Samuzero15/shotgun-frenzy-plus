@@ -1,3 +1,4 @@
+Actor Flag_RedArmor : Inventory {Inventory.MaxAmount 1}
 Actor Flag_BlueArmor : Inventory {Inventory.MaxAmount 1}
 
 Actor KillCounter : Inventory{
@@ -22,6 +23,7 @@ Actor SteelPlatingArmor_Pickup : CustomInventory {
 	Radius 20
   	Height 48
 	Inventory.Pickupmessage "Steel Plating Armor!"
+	Inventory.PickupSound "g/ArmorPickup"
 	states
 	  {
 		Spawn:
@@ -29,7 +31,7 @@ Actor SteelPlatingArmor_Pickup : CustomInventory {
 			loop
 		Pickup:
 			TNT1 A 0 A_JumpIf(CallACS("Armor_ArmorShardsOnly") != 1, "JustGiveArmor")
-			TNT1 A 0 ACS_NamedExecute("Armor_ReplaceShardsWithArmor", 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("Armor_ReplaceShardsWithArmor", 0)
 			stop
 		JustGiveArmor:
 			TNT1 A 0 A_GiveInventory("SteelPlatingArmor", 1)
@@ -44,17 +46,18 @@ Actor MegaSphereArmor : BlueArmor
   Inventory.Pickupmessage "Megasphere Armor!"
   Armor.Savepercent 100
   Armor.Saveamount 200
+  Inventory.PickupSound "g/ArmorPickup"
   //+INVENTORY.QUIET
 }
 
 actor ArmorShard : ArmorBonus
-{ // + 5 AP. (Up to 300 AP) If picked up alone. Acts like vanilla green armor 
+{ // + 2 AP. (Up to 300 AP) If picked up alone. Acts like vanilla green armor 
 	//(33% dmg absorb, 66% dmg taken)
 	Inventory.Pickupmessage "Armor Shard. (+5 Armor)"
 	Inventory.Icon "ARSDA0"
 	Inventory.PickupSound "pickup/armorshard"
-	Armor.Saveamount 5
-	Armor.MaxSaveAmount 300
+	Armor.Saveamount 2
+	Armor.MaxSaveAmount 500
 	States
 	{
 	Spawn:
@@ -67,7 +70,7 @@ Actor ArmorShard_One : ArmorShard {Armor.Saveamount 1}
 
 actor SF_HealthBonus : HealthBonus
 { // The good ol' health vial, but this time, overheals +5 HP (up to 300 HP)
-	Inventory.Amount 5
+	Inventory.Amount 2
 	Inventory.MaxAmount 300
 }
 
@@ -174,6 +177,7 @@ ACTOR MagneticPickup : CustomInventory
 
 
 ACTOR ArmorShard_Pickup : MagneticPickup {
+	Inventory.PickupSound "pickup/armorshard"
 	states{
 		Frame.A:
 			ARSD A 1 A_SpawnItemEx("Blur_ArmorShardA")
@@ -188,6 +192,8 @@ ACTOR ArmorShard_Pickup : MagneticPickup {
 			ARSD D 1 A_SpawnItemEx("Blur_ArmorShardD")
 			goto Super::Frame.Action
 		Pickup:
+			TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_PickupMsg", 0, 2, 1)
+			TNT1 A 0 A_PlaySound("pickup/armorshard", CHAN_AUTO, 0.4)
 			TNT1 A 0 A_GiveInventory("ArmorShard", 5)
 		stop
 	}
@@ -195,6 +201,7 @@ ACTOR ArmorShard_Pickup : MagneticPickup {
 
 
 ACTOR HealthBonus_Pickup : MagneticPickup {
+	Inventory.PickupSound "g/healing"
 	states{
 		Frame.A:
 			BON1 A 1 A_SpawnItemEx("Blur_HealthBonusA")
@@ -210,7 +217,9 @@ ACTOR HealthBonus_Pickup : MagneticPickup {
 			goto Frame.Action
 		
 		Pickup:
+			TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_PickupMsg", 0, 2, 0)
 			TNT1 A 0 A_GiveInventory("SF_HealthBonus", 1)
+			TNT1 A 0 A_PlaySound("g/healing", CHAN_AUTO, 0.4)
 		stop
 	}
 }

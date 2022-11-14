@@ -257,7 +257,10 @@ Actor Sup_Pickup : CustomInventory {
 	}
 }
 
-Actor Sup_ClipBox : Sup_Pickup { States {
+Actor Sup_ClipBox : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up a clip box"
+	Inventory.PickupSound "g/reloading"
+ States {
 		Spawn:
 			AMMO A 0
 		goto Super::Spawn
@@ -266,7 +269,10 @@ Actor Sup_ClipBox : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_ClipPistol : Sup_Pickup { States {
+Actor Sup_ClipPistol : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up a 9mm clip"
+	Inventory.PickupSound "g/reloading"
+ States {
 		Spawn:
 			CLIP A 0
 		goto Super::Spawn
@@ -275,7 +281,10 @@ Actor Sup_ClipPistol : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_ShellBox : Sup_Pickup { States {
+Actor Sup_ShellBox : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up box of shells"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			SBOX A 0
 		goto Super::Spawn
@@ -284,7 +293,10 @@ Actor Sup_ShellBox : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_RocketBox : Sup_Pickup { States {
+Actor Sup_RocketBox : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up a box of rockets"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			BROK A 0
 		goto Super::Spawn
@@ -293,7 +305,10 @@ Actor Sup_RocketBox : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_CellPack : Sup_Pickup { States {
+Actor Sup_CellPack : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up a battery pack"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			CELP A 0
 		goto Super::Spawn
@@ -302,7 +317,10 @@ Actor Sup_CellPack : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_FlingerAmmo : Sup_Pickup { States {
+Actor Sup_FlingerAmmo : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up some flinger grenades"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			GRNS A 0
 		goto Super::Spawn
@@ -311,7 +329,10 @@ Actor Sup_FlingerAmmo : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_DualshotAmmo : Sup_Pickup { States {
+Actor Sup_DualshotAmmo : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up some nails"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			DDAM A 0
 		goto Super::Spawn
@@ -320,7 +341,10 @@ Actor Sup_DualshotAmmo : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_Gasoline : Sup_Pickup { States {
+Actor Sup_Gasoline : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up a gas canister"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			AGAS A 0
 		goto Super::Spawn
@@ -329,7 +353,10 @@ Actor Sup_Gasoline : Sup_Pickup { States {
 		stop
 }}
 
-Actor Sup_HeavyBullets : Sup_Pickup { States {
+Actor Sup_HeavyBullets : Sup_Pickup { 
+	Inventory.PickupMessage "Picked up a box of heavy bullets"
+	Inventory.PickupSound "g/reloading"
+	States {
 		Spawn:
 			RAMM A 0
 		goto Super::Spawn
@@ -340,6 +367,7 @@ Actor Sup_HeavyBullets : Sup_Pickup { States {
 
 Actor Sup_Medikit : Sup_Pickup {
 	Inventory.PickupMessage "Picked up a Medikit"
+	Inventory.PickupSound "g/healing"
 	States {
 		Spawn:
 			MEDI A 0
@@ -351,6 +379,7 @@ Actor Sup_Medikit : Sup_Pickup {
 
 Actor Sup_SteelPlatingArmor : Sup_Pickup {
 	Inventory.PickupMessage "Steel Plating Armor!"
+	Inventory.PickupSound "g/ArmorPickup"
 	States {
 		Spawn:
 			TNT1 A 0

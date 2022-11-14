@@ -18,6 +18,7 @@
 #import "f_Rank.acs"
 #import "f_tip.acs"
 #include "samu_tools.acs"
+#include "wep_patcher.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -105,6 +106,14 @@ Script "Player_IsDed" (void) {
 	setResultValue(GetActorProperty(0, APROP_HEALTH) < 1);
 }
 
+Script "Armor_CompleteTo" (int amount){
+	int armor_points = CheckInventory("BasicArmor");
+	if(armor_points < amount){
+		int diff = amount - armor_points;
+		GiveInventory("ArmorShard_One", diff);
+	}
+}
+
 Script "Armor_ArmorShardsOnly" (void){
 	SetResultValue(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0);
 }
@@ -116,13 +125,36 @@ Script "Armor_ReplaceShardsWithArmor" (int armortype){
 	if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0){
 		int armor_points = CheckInventory("BasicArmor");
 		TakeInventory("BasicArmor", 9999999);
-		GiveInventory("SteelPlatingArmor", 1);
+
+		switch(armortype){
+			case 0:
+				GiveInventory("SteelPlatingArmor", 1);
+			break;
+			case 1:
+				GiveInventory("TitaniumArmor", 1);
+			break;
+		}
+		
 		int armor_points_now = CheckInventory("BasicArmor");
 		if(armor_points > armor_points_now){
 			int diff = armor_points - armor_points_now;
 			GiveInventory("ArmorShard_One", diff);
 		}
 	}
+}
+
+Script "UpgradeCard_PickMe" (void)
+{
+	// 30 % of gaining 1 exp point after each drop.
+	// Because I know they will exploit this.
+	sf_AddUpPoints(1, PlayerNumber());
+}
+
+Script "Mineral_PickMe" (int amount)
+{
+	// 30 % of gaining 1 exp point after each drop.
+	// Because I know they will exploit this.
+	sf_AddCredits(amount, PlayerNumber());
 }
 
 Script "Supplier_GrantExp" (void)
@@ -227,7 +259,7 @@ script "PlayerId" (void){
 	SetResultValue(ActivatorTID());
 }
 
-#define PATCHER_UPGRADEABLES 10
+#define PATCHER_UPGRADEABLES 11
 
 function bool IsATurret(int tid){
 	str turrets[PATCHER_UPGRADEABLES] ={
@@ -236,6 +268,7 @@ function bool IsATurret(int tid){
 		"TurretChaingun_Head",
 		"TurretRocket_Head",
 		"TurretPlasma_Head",
+		"TurretFlame_HEAD",
 		"TurretTesla_Head",
 		"TurretBase_Head",
 		"TurretBFG_Head",
@@ -255,185 +288,6 @@ function bool IsATurret(int tid){
 
 script "IAmATurret" (void){
 	SetResultValue(IsATurret(ActivatorTID()));
-}
-
-#libdefine PATCHER_HID_HEALTH 2700
-#libdefine PATCHER_HID_COST	  2701
-#libdefine PATCHER_HID_MSG 	  2702
-#libdefine PATCHER_FIXINMULT 0.10
-#libdefine PATCHER_PRICEMULT 0.07
-#libdefine PATCHER_BUFFMULT 0.20
-#libdefine PATCHER_USERVAR_FIX "user_fixcost"
-#libdefine PATCHER_USERVAR_UPG "user_upgcost"
-#libdefine PATCHER_USERVAR_RANGE "user_rangestart"
-#libdefine PATCHER_USERVAR_RANGEUP "user_rangeup"
-#libdefine BUILDING_MAXLVL 5
-
-function void Patcher_Display(int playnum){
-	int hp = GetActorProperty(0, APROP_HEALTH);
-	int maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
-	int price = GetUserVariable(0, PATCHER_USERVAR_FIX);
-	int buff_price = GetUserVariable(0, PATCHER_USERVAR_UPG);
-
-	int fix = (maxhp * PATCHER_FIXINMULT) >> 16;
-	int color = CR_WHITE;
-	str msg = 0;
-	
-	int lvl = GetActorProperty(0, APROP_STAMINA);
-	if(CheckInventory("PowerPatcher_DMGUpLv1") ||
-		 CheckInventory("PowerPatcher_DMGUpLv2") ||
-		 CheckInventory("PowerPatcher_DMGUpLv3") ||
-		 CheckInventory("PowerPatcher_DMGUpLv4") ||
-		 CheckInventory("PowerPatcher_DMGUpLv5") ) {
-		color = CR_GOLD;
-		msg = strparam(s:"Level ",d:lvl,s:"");
-	}
-	SetActivator(990+playnum);
-	if(CheckWeapon("Patcher_Advanced")){
-		price = price/2;
-		buff_price = buff_price/2;
-	} 
-	int cost = strparam(s:"Repair Cost: ", d:price, s:" credits\nUpgrade Cost: ", d:buff_price, s:" credits");
-	msg = -1;
-	if(CheckInventory("Patcher_HudHeal")){
-		
-		//color = CR_GREEN;
-		msg = strparam(s:"Repaired \cd", d:fix,s:"\c- HP!" );
-	} else if(CheckInventory("Patcher_HudMaxHp")){
-		//color = CR_CYAN;
-		msg = strparam(s:"\cvFully Repaired");
-	} else if(CheckInventory("Patcher_HudNoMoney")){
-		//color = CR_ORANGE;
-		msg = strparam(s:"\cgNot enough credits!");
-	} else if (CheckInventory("Patcher_HudBuff")){
-		//color = CR_GOLD;
-		msg = strparam(s:"Upgraded to \cfLevel ", d:lvl, s:"!");
-	} else if (CheckInventory("Patcher_HudBuffed")){
-		//color = CR_GOLD;
-		msg = strparam(s:"Max Level!");
-	}
-	if(msg != -1) f_CenterTipPatcher(msg);
-	 										  
-	SetHudSize(320, 240, 0);
-	Setfont("confont");
-	HudMessage(d:hp, s:"/", d:maxhp; HUDMSG_FADEOUT, PATCHER_HID_HEALTH, color, 320*0.5, 240*0.65, 0.2, 1.0);
-	SetHudSize(0, 0, 0);
-	SetHudSize(640, 480, 0);
-	Setfont("confont");
-	HudMessage(s:cost; HUDMSG_FADEOUT, PATCHER_HID_COST, CR_WHITE, 640*0.5, 480*0.70, 0.2, 1.0);
-	SetHudSize(0, 0, 0);
-}
-
-script "Patcher_TurretScouter" (void){
-	if(CheckInventory("Patcher_Script")) terminate;
-	else GiveInventory("Patcher_Script", 1);
-
-	int framecount = 0;
-	While(CheckWeapon("Patcher") || CheckWeapon("Patcher_Advanced")){
-		GiveInventory("Patcher_Libra", 1);
-		if(framecount >= 7){
-			TakeInventory("Patcher_HudHeal", 1);
-			TakeInventory("Patcher_HudMaxHp", 1);
-			TakeInventory("Patcher_HudNoMoney", 1);
-			TakeInventory("Patcher_HudBuff", 1);
-			TakeInventory("Patcher_HudBuffed", 1);
-			framecount = 0;
-		}
-		delay(5);
-		framecount++;
-	}
-	TakeInventory("Patcher_HudHeal", 1);
-	TakeInventory("Patcher_HudMaxHp", 1);
-	TakeInventory("Patcher_HudNoMoney", 1);
-	TakeInventory("Patcher_HudBuff", 1);
-	TakeInventory("Patcher_HudBuffed", 1);
-	TakeInventory("Patcher_Script", 1);
-}
-script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
-	//log(s:"arg2: ", s:arg2);
-    if(type != GAMEEVENT_ACTOR_DAMAGED || !(
-		strcmp(arg2, "PriPatcherDmg") == 0 ||
-		strcmp(arg2, "AltPatcherDmg") == 0 ||
-		strcmp(arg2, "IdlePatcherDmg") == 0 
-	)) terminate;
-
-	if(!IsATurret(ActivatorTID())){
-		SetResultValue(0);
-		terminate;
-	}
-		
-	int atid, playnum;
-	SetActivator(0, AAPTR_Damage_Source);
-		playnum = PlayerNumber();
-	if(playnum == -1) terminate;
-	
-	
-	if(strcmp(arg2, "PriPatcherDmg") == 0){
-		SetActivator(0, AAPTR_Damage_Target);
-		If(GetActorProperty(0, APROP_HEALTH) < GetActorProperty(0, APROP_SPAWNHEALTH)){
-			int price = GetUserVariable(0, PATCHER_USERVAR_FIX);
-			int fix = (GetActorProperty(0, APROP_SPAWNHEALTH)*PATCHER_FIXINMULT) >> 16;
-			SetActivator(0, AAPTR_Damage_Source); // Back to the player
-			if(CheckWeapon("Patcher_Advanced")) price = price/2;
-			SetActivator(0, AAPTR_Damage_Target); // Back to the turret.
-
-			if(p_Credits[playnum] < price){
-				SetActivator(990+playnum);
-				GiveInventory("Patcher_HudNoMoney", 1);
-			}else{
-				p_Credits[playnum] -= price;
-				GiveInventory("Health", fix);
-				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				GiveInventory("Patcher_HudHeal", 1);
-				Rank_GrantEXP(playnum, 1);
-			}
-		} else {
-			SetActivator(0, AAPTR_Damage_Source); // Back to the player
-			GiveInventory("Patcher_HudMaxHP", 1);
-		}
-		
-	} else if(strcmp(arg2, "AltPatcherDmg") == 0){
-		SetActivator(0, AAPTR_Damage_Target);
-		int lvl = GetActorProperty(0, APROP_STAMINA);
-		int price_upg = GetUserVariable(0, PATCHER_USERVAR_UPG);
-		int rng = GetUserVariable(0, PATCHER_USERVAR_RANGE);
-		int rng_up = GetUserVariable(0, PATCHER_USERVAR_RANGEUP);
-
-		SetActivator(0, AAPTR_Damage_Source); // Back to the player
-		if(CheckWeapon("Patcher_Advanced")) price_upg = price_upg/2;
-		SetActivator(0, AAPTR_Damage_Target); // Back to the turret.
-
-		if(p_Credits[playnum] < price_upg){
-				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				GiveInventory("Patcher_HudNoMoney", 1);
-		}else{
-			if(lvl < BUILDING_MAXLVL){
-				p_Credits[playnum] -= price_upg;
-				
-				SetActorProperty(0, APROP_STAMINA, lvl + 1);
-				lvl = GetActorProperty(0, APROP_STAMINA);
-
-				SetUserVariable(0, "user_range", rng + rng_up*(lvl));
-
-				GiveInventory("Patcher_Upgrade_RESET", 1);
-				GiveInventory(strparam(s:"Patcher_Upgrade_LV", d:lvl), 1);
-				
-				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				Rank_GrantEXP(playnum, 5);
-				log(s:"Upgraded to level: \ci", d:lvl);
-				GiveInventory("Patcher_HudBuff", 1);
-			}else{
-				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				GiveInventory("Patcher_HudBuffed", 1);
-				log(s:"Level Maxed");
-			}
-		}
-		log(s:"Turret Level: ", d:lvl);
-	} else if(strcmp(arg2, "IdlePatcherDmg") == 0){
-		SetActivator(0, AAPTR_Damage_Target);
-		Patcher_Display(playnum);
-	}
-	SetResultValue(0);
 }
 
 function str cond_str (int c){
@@ -596,7 +450,7 @@ Script "Building_AggroLoop" (int tid) {
 			GiveInventory("Building_GetRange", GetUserVariable(0, "user_range"));
 		}
 		GiveInventory("Building_HateRadius", 1);
-		Log(s:"Give the HateRadius, radius:", d:CheckInventory("Building_GetRange"));
+		//Log(s:"Give the HateRadius, radius:", d:CheckInventory("Building_GetRange"));
 		delay(35*5);
 	}
 }

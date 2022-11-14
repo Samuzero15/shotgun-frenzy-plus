@@ -53,21 +53,21 @@ function void PlayUpPage_Init(int pageTag){
 
 function void PlayUpPage_InitDetails(void){
 	int i = 0;
-		i = Label_Add		(320.0, 110.0);
-			Label_SetFont	(i, "STATBIGS");
-			Component_Save(Label_getRect(i));
-			Label_setColor  (i, CR_CYAN);
-		playup_vars[1] = i; // Name
+	int i2;
+		i2 = Label_Add		(320.0, 110.0);
+			Label_SetFont	(i2, "STATBIGS");
+			Label_setColor  (i2, CR_CYAN);
+		playup_vars[1] = i2; // Name
 		
-		i = Label_Dup			(240.0, 190.0);
+		i = Label_Dup			(i2, 240.0, 190.0);
 			Label_SetFont		(i, "confont");
 			Label_setAligns 	(i, HUD_ALIGN_LEFT, HUD_ALIGN_CENTER);
+			Label_setColor  (i, CR_WHITE);
 			Label_setWrapWidth	(i, 350);
 		playup_vars[2] = i; // Description
 		
-		i = Label_Dup		(160.0, 250.0);
+		i = Label_Dup		(i2, 160.0, 250.0);
 			Label_SetText	(i, "Cost on ups");
-			Label_setColor  (i, CR_WHITE);
 		playup_vars[3] = i; // Cost
 		
 		i = StrButton_AddMid 	(160.0, 275.0, "Upgrade");
@@ -113,9 +113,8 @@ function void PlayUpPage_AddButtons(int pageTag, int posx, int posy){
 		i = Label_Add		(posx, posy - 8.0);
 			Label_SetText	(i, "Pick an upgrade");
 			Label_SetTag	(i, pagetag);
-		Component_Save(Label_getRect(i));
 		
-		i = Label_Dup		(posx, posy + 40.0);
+		i = Label_Dup		(i, posx, posy + 40.0);
 			Label_SetText	(i, "");
 			Label_SetFont	(i, "STATBIGS");
 		playup_vars[0] = i; // Upgrade name.

@@ -79,12 +79,8 @@ function void RcyWpnPage_Init(int pageTag){
 	Label_setAligns	(rcywpn_vars[6], HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	Label_setShow   (rcywpn_vars[6], false);
 
-	rcywpn_vars[7] = Label_Add	(320.0,240.0);
+	rcywpn_vars[7] = Label_Dup	(rcywpn_vars[6], 320.0,240.0);
 	Label_setText	(rcywpn_vars[7], "No weapons to recycle...");
-	Label_setFont	(rcywpn_vars[7],"StatBigs"); 
-	Label_setTag	(rcywpn_vars[7], pageTag);
-	Label_setAligns	(rcywpn_vars[7], HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-	Label_setShow   (rcywpn_vars[7], false);
 
 }
 
@@ -115,10 +111,9 @@ function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	Label_setShow	(i, false);
 	Label_setAligns	(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_setTag	(i, pageTag);
-	Component_Save(Label_getRect(i));
 	RcyWpnPage_SaveGroup(wpn, 1, i);
 	
-	i = Label_Dup(0.0, 0.0); 
+	i = Label_Dup(i, 0.0, 0.0); 
 	Label_setText	(i,strparam(s:"+ ",d:stat2,s:" $"));
 	Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	Label_setFont	(i, "confont");

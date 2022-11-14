@@ -36,6 +36,7 @@ user bool sfp_welcome = true;
 user bool sfp_hitmarksnd = true;
 user int sfp_earningdisp = 3;
 user int sfp_killstreakhud = 1;
+user bool sfp_mechmsg = true;
 
 // Champion cvars
 server int  sfp_champ_onbanned = 0;

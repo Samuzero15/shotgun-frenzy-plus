@@ -230,35 +230,34 @@ function void BuyWpnPage_InitPackDetails(int card){
 		Label_setFont		(i, "STATBIGS");
 		Label_setShow		(i, false);
 		Label_setTag		(i, buywpn_vars[3]);
-		Component_Save(Label_getRect(i));
 	buywpn_vars[9] = i;
 	
-	i = Label_Dup		(410.0, 78.0); //Description
+	i = Label_Dup			(i, 410.0, 78.0); //Description
 		Label_SetText		(i, "");
 		Label_setFont		(i, "Confont");
 		Label_setWrapWidth	(i, 350);
 	buywpn_vars[10] = i;
 	
-	i = Label_AddCard		(card, 1); // Weapon 1 desc
-		Label_setFont		(i, "STATBIGS");
-		Label_setText		(i, "");
-		Label_setWrapWidth	(i, 400);
-		Label_SetAligns		(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
-		Label_setShow 		(i, false);
-		Label_setTag		(i, buywpn_vars[3]);
-		Component_save(Label_getRect(i));
-	buywpn_vars[11] = i;
+	int i2;
+	i2 = Label_AddCard		(card, 1); // Weapon 1 desc
+		Label_setFont		(i2, "STATBIGS");
+		Label_setText		(i2, "");
+		Label_setWrapWidth	(i2, 400);
+		Label_SetAligns		(i2, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+		Label_setShow 		(i2, false);
+		Label_setTag		(i2, buywpn_vars[3]);
+	buywpn_vars[11] = i2;
 	
-	i = Label_DupCardOff(card, 1, -8.0, 16.0); // Weapon 1 name
+	i = Label_DupCardOff	(i2, card, 1, -8.0, 16.0); // Weapon 1 name
 		Label_setText		(i, "");
 		Label_setFont		(i, "Confont");
 	buywpn_vars[12] = i;
 		
-	i = Label_DupCard		(card, 2);// Weapon 2 name
+	i = Label_DupCard		(i2, card, 2);// Weapon 2 name
 		Label_setText		(i, "");
 	buywpn_vars[13] = i;
 	
-	i = Label_DupCardOff(card, 2, -8.0, 16.0);// Weapon 1 desc
+	i = Label_DupCardOff	(i2, card, 2, -8.0, 16.0);// Weapon 1 desc
 		Label_setText		(i, "");
 		Label_setFont		(i, "Confont");
 	buywpn_vars[14] = i;

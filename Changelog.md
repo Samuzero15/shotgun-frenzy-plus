@@ -9,6 +9,25 @@
 
 ## v0 - Before the beginning...
 
+#### (30 / 10 - 14 / 11 / 2022) [Stimpack upgrades!, fixes and champion drops (wip)]
+	!+) Yes!, now the stimpacks are upgradeable! Get them on the Health terminal!
+	-) Reduced the amount of stimpacks given by 5, but, you can go back to 10 with the stimpack upgrades.
+	+) Added some extra items for the future item drops from champions (WIP)
+	*) Some small rewrite on the teminal menus.
+	*) Moved the patcher code to a separated file.
+	*) Clientsided the scripts coming from the patcher display (needs testing tho)
+	+) Added a new CVAR to toggle the mech message upon using your mech.
+	*) Fixed dissapearing base turrets.
+	+) Now the flame turret on level 5, will add a fire ring upon each fire state!
+	*) Changed some sounds for armor/ammo pickups and added some feedback sounds for the patcher.
+	+) Added some stimpack counter for the full screen.
+	*) Modified the fullscreen player hud, now kill-streaks are visible! (inluding high, current and next milestone)
+	// That, and now you can see your rank + the current experience in a neat way.
+	+) Talking about the new champdrops, added:
+	// An upgrade card (Adds 1 U.P)
+	// Minerals (Small = 100$, Big = 250$)
+	// Titanium Armor (500 AP with a 60% (20% with temperance rune) Damage absorb)
+
 #### (16 - 24 / 10 / 2022) [Sprites for flame and rail turrets + BFG upgrade]
 	*) Extra touchs on the turret code
 	+) Extra sprites for the Rail Turret, Thanks MadCat!

@@ -11,6 +11,15 @@ STSTR_KFAADDED = "Lock and load! (+ keys)";
 STSTR_NCON	= "Phasing-walls Activated";
 STSTR_NCOFF	= "Phasing-walls Dectivated";
 
+// Stimpack upgrade descriptions
+FP_SUD_Overhealth 	=	"A 10% of your stimpack heal factor can overheal you.";
+FP_SUD_Amount 	=	"Hold some extra stimpacks with you.";
+FP_SUD_ExtraDosis 	=	"+5 HP extra for each stimpack use.";
+FP_SUD_HardShell 	=	"50% of your stimpack healing can repair your armor.";
+FP_SUD_Cicatrizate 	=	"Regenerate for 10 seconds 1 HP (each 10-level tics).";
+FP_SUD_Caffeine 	=	"Temporary +10%*level Speed. (10 seconds).";
+FP_SUD_Stimulant 	=	"+20*Level MaxHP for 1:30 minutes.";
+
 // Player upgrade descriptions
 FP_PUD_PowUpUpgrade_1 	=	"Your restorative powerups gains stronger effects!\n\n"
 							"-) Soulsphere -> +200 HP, up to 300 MaxHP.\n\n"
@@ -18,7 +27,7 @@ FP_PUD_PowUpUpgrade_1 	=	"Your restorative powerups gains stronger effects!\n\n"
 							"-) Godsphere -> +15 seconds, works up to 45 secs.";
 
 FP_PUD_PowUpUpgrade_2 	=	"Your combat powerups gains stronger effects!\n\n"
-							"-) Helltrigger -> +15 seconds, weapon insta-switch.\n\n"
+							"-) Helltrigger -> +15 seconds.\n\n"
 							"-) Ammosphere -> 50% chance to use, and keep the sphere.\n\n"
 							"-) Quad-Damage -> +15 seconds, x6 instead of x4.";
 

@@ -99,6 +99,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Display earnings?", "sfp_earningdisp", "EarningDispOptions"
 	Option "Enable kill-streak hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
 	Option "Welcome MSG?", "sfp_welcome", "Boolean"
+	Option "Mech Mount MSG?", "sfp_mechmsg", "Boolean"
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
@@ -146,6 +147,9 @@ OptionMenu "SFPlusUserOptionHelp"{
 	StaticText ""
 	StaticText "Welcome MSG", 1
 	StaticText "Do you want to keep watching the start-up message?"
+	StaticText ""
+	StaticText "Mech Mount MSG", 1
+	StaticText "When mounting your mech, see the quick tutorial msg?"
 	StaticText ""
 	StaticText "Play old soundtrack", 1
 	StaticText "Since the people remembers shotgun frenzy for"

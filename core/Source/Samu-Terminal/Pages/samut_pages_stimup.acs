@@ -1,0 +1,133 @@
+
+int stimpage_vars[50];
+
+#define STIMPAGE_NCOMPGROUP 4
+#define STIMPAGE_NPRIVARS 5
+
+function void StimUpPage_Update(int pageTag) {
+    setPageTitle(pageTag, "Stimpack Upgrades!", CR_CYAN);
+	if(isOnTheSamePage(pageTag)){
+		stimpage_vars[3] = 0;
+		for(int j = 0; j < StimUpTop; j++){
+			StimUpPage_UpdateComps(j);
+		}
+		
+		Label_SetText(stimpage_vars[4], StimUp_ReportUps());
+		Label_SetText(stimpage_vars[2], "");
+	}
+}
+
+function void StimUpPage_Init(int pageTag) {
+    stimpage_vars[0] = pageTag;
+    int i;
+
+    i = Label_Add(320.0, 70.0);
+    Label_SetText(i, "All the added effects activate upon the use of the stimpack!");
+    Label_SetTag(i, stimpage_vars[0]);
+
+	stimpage_vars[2] = Label_Dup(i, 320.0, 360.0);
+    Label_SetText(stimpage_vars[2], "");
+    Label_SetTag (stimpage_vars[2], stimpage_vars[0]);
+	Label_setWrapWidth(stimpage_vars[2],400);
+
+	stimpage_vars[4] = Label_Dup(i, 170.0, 150.0);
+
+    Card_SetPosition(350.0,90.0);
+	Card_SetCells(8);
+	Card_SetStep(35.0);
+	Card_SetVerticalOri(true);
+	stimpage_vars[1] = Card_Generate();
+
+    for(int j = 0; j < StimUpTop; j++){
+		StimUpPage_AddComps(j, stimpage_vars[0], stimpage_vars[1],  j+1);
+	}
+}
+
+function void StimUpPage_UpdateComps(int upgrade){
+	str name = StimUp_GetName(upgrade);
+	str desc = StimUp_GetDesc(upgrade);
+	str actor = StimUp_GetActor(upgrade);
+	str price = StimUp_GetPrice(upgrade);
+
+	int card = stimpage_vars[1];
+	
+	int lname = StimUpPage_LoadFromGroup(upgrade, 1),
+		lprice = StimUpPage_LoadFromGroup(upgrade, 2),
+		llevel = StimUpPage_LoadFromGroup(upgrade, 3), 
+		ibut = StimUpPage_LoadFromGroup(upgrade, 4);
+	
+	bool showit = CheckInventory(actor) < 5;
+	Label_setShow(lname, showit);
+	Label_setShow(lprice, showit);
+	Label_setShow(llevel, showit);
+	ImgButton_setShow(ibut, showit);
+	
+	if(showit) stimpage_vars[3]++;
+	else return;
+	int topping = stimpage_vars[3];
+	
+	bool isaffordable = GetPlayCredits() >= price;
+
+	Label_setColor(lname, cond(isaffordable, CR_WHITE, CR_RED));
+	Label_setColor(lprice, cond(isaffordable, CR_Green, CR_RED));
+	Label_setColor(llevel, cond(isaffordable, CR_Green, CR_RED));
+	ImgButton_setImage(ibut, cond(isaffordable, StimUp_GetIcon(upgrade), "BTNDEN"));
+	
+	Label_setText(llevel, strparam(s:"Level ", d:(CheckInventory(actor) + 1)));
+	Label_setText(lprice, strparam(d:price, s:" $"));
+	
+	Label_SetPosToCardOff(lname, card, topping, 40.0, 2.0);
+	Label_SetPosToCardOff(lprice, card, topping, 40.0, 22.0);
+	Label_SetPosToCardOff(llevel, card, topping, 40.0, 12.0);
+	ImgButton_SetPosToCard(ibut, card, topping);
+	
+}
+
+function void StimUpPage_AddComps(int upgrade, int tag, int card, int cell){
+
+	int i;
+	
+	str name = StimUp_GetName(upgrade);
+	str desc = StimUp_GetDesc(upgrade);
+	str actor = StimUp_GetActor(upgrade);
+	//int maxup = StimUp_GetMax(upgrade);
+	str price = StimUp_GetPrice(upgrade);
+	
+	i = ImgButton_AddCard(card, cell, 32.0, 32.0);
+	ImgButton_setImage(i, StimUp_GetIcon(upgrade));
+	ImgButton_setHoverImage(i, "btnhov");
+	ImgButton_setTag(i, tag);
+	ImgButton_setExecute(i, STEXE_STIMUP_BUY);
+	ImgButton_setArgs(i, upgrade, 0 ,0);
+	ImgButton_setExeHover(i, STEXE_STIMUP_HOVER);
+	ImgButton_setArgsHover(i, upgrade, 0 ,0);
+	StimUpPage_SaveToGroup(upgrade, 4, i);
+	
+	int i2;
+	i2 = Label_AddCardOff(card, cell, 40.0, 2.0);
+	Label_setText(i2, name);
+	Label_setFont(i2, "StatBigs");
+	Label_setTag(i2, tag);
+	Label_setAligns(i2, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_setColor(i2, CR_WHITE);
+	StimUpPage_SaveToGroup(upgrade, 1, i2);
+	
+	i = Label_DupCardOff(i2, card, cell, 40.0, 20.0);
+	Label_setText(i, strparam(d:price, s:" $"));
+	Label_setColor(i, CR_GREEN);
+	Component_Save(Label_GetRect(i));
+	StimUpPage_SaveToGroup(upgrade, 2, i);
+	
+	i = Label_DupCardOff(i2, card, cell, 40.0, 12.0);
+	Label_setText(i, "Level");
+	Label_setFont(i, "Confont");
+	StimUpPage_SaveToGroup(upgrade, 3, i);
+}
+
+function void StimUpPage_SaveToGroup(int up, int id, int comp){
+	stimpage_vars[STIMPAGE_NCOMPGROUP * up + STIMPAGE_NPRIVARS + (id-1)] = comp;
+}
+
+function int StimUpPage_LoadFromGroup(int up, int id){
+	return stimpage_vars[STIMPAGE_NCOMPGROUP * up + STIMPAGE_NPRIVARS + (id-1)];
+}

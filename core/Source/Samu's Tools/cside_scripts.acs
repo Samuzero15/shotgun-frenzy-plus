@@ -14,6 +14,17 @@ script "SF_CreditAddDisplay" (int howMuch, int color, int mode) clientside
 	// Standard gain.
 }
 
+script "SF_PickupMsgDisplay" (int howMuch, int type) clientside
+{
+	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
+	//log(s:"cvar sfp_earningdisp ", d:cvar);
+	switch(type){
+		case 0: ShowNumbers("+", howmuch, " HP", CR_CYAN, "BIGFONT", cvar); break;
+		case 1: ShowNumbers("+", howmuch, " AP", CR_GREEN, "BIGFONT", cvar); break;
+	}
+	
+}
+
 script "SF_CreditAddDisplaySmall" (int howMuch, int color) clientside
 {
 	//ShowNumbersSmall("+", howmuch, color);
