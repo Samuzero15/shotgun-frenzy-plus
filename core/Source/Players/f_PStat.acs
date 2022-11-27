@@ -312,14 +312,16 @@ script 249 OPEN
 {
 	delay(35*3);
 	CmdEvent_Initialize();
+	
 	AutoResearch_Add(CMDEVT_REWARD_HEALTH1, 100);
 	AutoResearch_Add(CMDEVT_REWARD_STIMPK, 	250);
 	AutoResearch_Add(CMDEVT_REWARD_ARMOR, 	500);
 	AutoResearch_Add(CMDEVT_REWARD_AMMOBP, 	800);
 	AutoResearch_Add(CMDEVT_REWARD_HEALTH2, 1200);
 	AutoResearch_Add(CMDEVT_REWARD_BOOMRN, 	1700);
+	AutoResearch_Add(CMDEVT_REWARD_RUSYNC, 	2000);
 	AutoResearch_Add(CMDEVT_REWARD_PUMP1, 	2300);
-	AutoResearch_Add(CMDEVT_REWARD_SPEEDB, 	3000);
+	AutoResearch_Add(CMDEVT_REWARD_SPEEDB, 	3300);
 	AutoResearch_Add(CMDEVT_REWARD_RESISB, 	3800);
 	AutoResearch_Add(CMDEVT_REWARD_REGENB, 	4700);
 	AutoResearch_Add(CMDEVT_REWARD_PUMP2, 	5600);

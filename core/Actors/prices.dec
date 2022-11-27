@@ -164,6 +164,15 @@ Actor pr_su_cicatrizate		: Integer {}
 Actor pr_su_caffeine		: Integer {}
 Actor pr_su_stimulant		: Integer {}
 
+//Rune tier prices
+Actor pr_rt_u2		: Integer {}
+Actor pr_rt_u3		: Integer {}
+Actor pr_rt_u4		: Integer {}
+Actor pr_rt_1		: Integer {}
+Actor pr_rt_2		: Integer {}
+Actor pr_rt_3		: Integer {}
+Actor pr_rt_4		: Integer {}
+
 //Commander research / build
 Actor pr_cmd_genlab : Integer {}
 Actor pr_cmd_armory : Integer {}
@@ -182,13 +191,18 @@ Actor pr_cmd_ar_arms2 : Integer {}
 Actor pr_cmd_ar_boomrn : Integer {}
 Actor pr_cmd_ar_ammobp : Integer {}
 Actor pr_cmd_gl_stimpk : Integer {}
+Actor pr_cmd_gl_rusync : Integer {}
 Actor pr_cmd_ar_gnades : Integer {}
 Actor pr_cmd_rf_pump1 : Integer {}
 Actor pr_cmd_rf_pump2 : Integer {}
+Actor pr_cmd_rf_engine : Integer {}
+Actor pr_cmd_rf_coinx5 : Integer {}
 Actor pr_cmd_mc_advsys : Integer {}
 Actor pr_cmd_mc_airsup : Integer {}
 Actor pr_cmd_mc_ioncan : Integer {}
 Actor pr_cmd_mc_cpulse : Integer {}
+Actor pr_cmd_mc_cboost : Integer {}
+Actor pr_cmd_mc_coptim : Integer {}
 
 //Commander deploy.
 Actor pr_cmd_pulse_repair : Integer {}

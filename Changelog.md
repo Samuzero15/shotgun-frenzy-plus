@@ -9,6 +9,26 @@
 
 ## v0 - Before the beginning...
 
+#### (15 - 27 / 11 / 2022) (v1.0 Release!) [Rune terminal, C.Pulses, techs & relase!]
+	!+) Rune shop available in the Health terminal!
+	+) Now champions can drop extra rewards exclusive to their pools. in the drops also include Runes, a new red armor, and gems (extra credits)
+	*) Stimpack upgrade and Rune shop are locked behind their new techs.
+	*) New / Revamped Core pulses 
+	// Warcry: Damage up and fast fire for all marines
+	// Repair: Fully repairs your risked core
+	// Heal: Instant free megasphere, resistance up & a few invincibility seconds.
+	// Smite: Damage the demons near of the risked sector with a high damage.
+	+) New techs
+	// In refinery upgrades
+	// Compensation: Coins worths 5 times more.
+	// Engine Boost: Faster coin production in the refinery.
+	// Core Booster: Increases the intensity / duration of core effects
+	// Core Optimizer: Decreases the standby time and start up time when calling a core pulse.
+	// Rune sync: Unlocks the rune shop. (Rewarded in 2000 kills on CF/SD maps)
+	*) Also implemented the poison champion.
+	// While in it's range, damages you, and debuffs you with -25% damage, and -25% resistance.
+	// About time to make a release! (although it's barely tested online, but should be stable enough, SHOULD)
+
 #### (30 / 10 - 14 / 11 / 2022) [Stimpack upgrades!, fixes and champion drops (wip)]
 	!+) Yes!, now the stimpacks are upgradeable! Get them on the Health terminal!
 	-) Reduced the amount of stimpacks given by 5, but, you can go back to 10 with the stimpack upgrades.

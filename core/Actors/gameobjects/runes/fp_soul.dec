@@ -2,15 +2,16 @@ ACTOR SoulRune : RuneGiver {
     // 100 kills activates a free Soulsphere.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RSOUA0
 	Inventory.MaxAmount 0
 	Rune.Type Soul
+    scale 0.75
 	Inventory.PickupMessage "Soul!"
     Inventory.PickupSound "runes/soul"
 	States
 	{
 	Spawn:
-		STRR DCBA 6
+		RSOU ABCDCB 6
 		Loop
 	}
 }
@@ -34,6 +35,14 @@ Actor SoulRune_Counter : Rune_Activation {
     states{
         Pickup:
             TNT1 A 0 A_GiveInventory("SoulRune_Kills", 1)
+        stop
+    }
+}
+
+Actor SoulRune_ChampCounter : Rune_Activation {
+    states{
+        Pickup:
+            TNT1 A 0 A_GiveInventory("SoulRune_Kills", 2)
         stop
     }
 }

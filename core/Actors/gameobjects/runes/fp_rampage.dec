@@ -34,8 +34,8 @@ Actor RampageRune_Damage : PowerDamage {
 Actor RampageRune_Powerup : PowerupGiver{
     +INVENTORY.ADDITIVETIME
     +INVENTORY.AUTOACTIVATE
-	powerup.duration 8
-    Powerup.Color "255 255 255" 0.3
+	powerup.duration 15
+    Powerup.Color "0 0 0" 0.0
     Renderstyle Translucent
 }
 

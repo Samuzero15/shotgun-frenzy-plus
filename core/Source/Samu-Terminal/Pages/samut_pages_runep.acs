@@ -1,0 +1,158 @@
+
+int runepage_vars[60];
+
+#define RUNEPAGE_NCOMPGROUP 1
+#define RUNEPAGE_NPRIVARS 15
+
+#define RUNEPAGE_TIERSTRINGS 9
+
+function void RunePage_Update(int pageTag) {
+	setPageTitle(pageTag, "Rune shop", CR_CYAN);
+	
+	if(isOnTheSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
+		int runetier = 0;
+		runetier = CheckInventory("RuneTier");
+		for(int k = 0; k < 4; k++){
+			if(k >= 1 && k <= 3){
+				if(runetier >= k) 	Label_setShow(runepage_vars[RUNEPAGE_TIERSTRINGS+k], true);
+				else 				Label_setShow(runepage_vars[RUNEPAGE_TIERSTRINGS+k], false);
+			}
+			
+			Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k], 
+			strparam(s:"Tier ", d:k+1, s:" - (",d:CheckInventory(strparam(s:"pr_rt_", d:(k+1))),s:" $)"));
+		}
+
+		Label_setText(runepage_vars[3], "");
+		Label_setText(runepage_vars[4], "");
+
+		for(int j = 0; j < RuneTop; j++){
+			RunePage_UpdateComps(j);
+		}
+
+		if(runetier < 3){
+			StrButton_setText(runepage_vars[5], strparam(s:"Unlock Tier ", d:runetier+2));
+			Label_setText(runepage_vars[6], strparam(d:Rune_getTierUnlockPrice(runetier+2),s:"UP"));
+		}else
+		{
+			StrButton_setShow(runepage_vars[5], false);
+			Label_setShow(runepage_vars[6], false);
+		}
+
+		int current = Rune_getCurrent();
+		if(current != -1){
+			Label_setShow(runepage_vars[7], true);
+			Label_setShow(runepage_vars[8], true);
+			Label_setText(runepage_vars[8], Rune_getName(current));
+		}else{
+			Label_setShow(runepage_vars[7], false);
+			Label_setShow(runepage_vars[8], false);
+		}
+	}
+}
+
+function void RunePage_Init(int pageTag) {
+	runepage_vars[0] = pageTag;
+	if(Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
+	Grid_SetPosition(125.0,280.0);
+	Grid_SetDimensions(4,5);
+	Grid_SetCellSize(64.0, -64.0);
+	runepage_vars[1] = Grid_Generate();
+
+	for(int j = 0; j < RuneTop; j++){
+		RunePage_AddComps(j, runepage_vars[0], runepage_vars[1], Rune_GetTier(j), (j % 5)+1);
+	}
+	
+	Card_SetPosition(176.0,270.0);
+	Card_SetCells(4);
+	Card_SetStep(-64.0);
+	Card_SetVerticalOri(true);
+	runepage_vars[2] = Card_Generate();
+
+	// Title
+	runepage_vars[3] = Label_Add(320.0,348.0); 
+	Label_setText(runepage_vars[3], "");
+	Label_setFont(runepage_vars[3],"STATBIGS");
+	Label_setColor(runepage_vars[3],CR_CYAN);
+	Label_setTag(runepage_vars[3], runepage_vars[0]);
+
+	// Description
+	runepage_vars[4] = Label_Dup(runepage_vars[3],320.0,360.0); 
+	Label_setFont(runepage_vars[4],"CONFONT");
+	Label_setColor(runepage_vars[4],CR_WHITE);
+
+	runepage_vars[5] = StrButton_AddMid (500.0, 275.0, "Unlock Tier ");
+	StrButton_setColor	(runepage_vars[5], CR_CYAN);
+	StrButton_setTag	(runepage_vars[5], runepage_vars[0]);
+	StrButton_setExecute(runepage_vars[5], STEXE_RUNESHOP_BUYTIER);
+
+	runepage_vars[6] = Label_Dup(runepage_vars[4], 500.0,285.0); 
+	Label_setColor(runepage_vars[6],CR_CYAN);
+
+	runepage_vars[7] = Label_Dup(runepage_vars[6], 500.0,185.0); 
+	Label_setText(runepage_vars[7], "Linked Rune");
+	Label_setFont(runepage_vars[7],"STATBIGS");
+	Label_setColor(runepage_vars[7],CR_White);
+
+	runepage_vars[8] = Label_Dup(runepage_vars[7], 500.0,200.0); 
+	Label_setText(runepage_vars[8], "");
+	Label_setColor(runepage_vars[8], CR_CYAN);
+
+	// Tier strings.
+		for(int k = 0; k < 4; k++){
+			runepage_vars[RUNEPAGE_TIERSTRINGS+k] = Label_AddCard(runepage_vars[2], k+1); 
+			Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k], strparam(s:"Tier ", d:k+1));
+			Label_setFont(runepage_vars[RUNEPAGE_TIERSTRINGS+k],"STATBIGS");
+			Label_setTag(runepage_vars[RUNEPAGE_TIERSTRINGS+k], runepage_vars[0]);
+		}
+	}else{
+		int i;
+
+		i = Label_Add(320.0, 220.0);
+		Label_SetText(i, "ACCESS DENIED");
+		Label_SetTag(i, runepage_vars[0]);
+		Label_SetFont(i, "STATBIGS");
+		Label_SetColor(i, CR_BRICK);
+
+		i = Label_Dup(i,320.0, 235.0);
+		Label_SetText(i, "Rune Sync. is not researched yet");
+		Label_SetColor(i, CR_WHITE);
+
+		i = Label_Dup(i,320.0, 250.0);
+		Label_SetText(i, "This page is not available at the moment, come back later.");
+		Label_SetFont(i, "Confont");
+		Label_SetWrapWidth(i, 500);
+	}
+}
+
+function void RunePage_UpdateComps(int rune){
+	int ibut = RunePage_LoadFromGroup(rune, 1);
+	int price = Rune_GetPrice(rune);
+	bool isaffordable = GetPlayCredits() >= price;
+
+	ImgButton_setImage(ibut, cond(isaffordable, Rune_GetIcon(rune), "BTNDEN"));
+	ImgButton_setShow(ibut, cond(CheckInventory("RuneTier") >= Rune_GetTier(rune)-1, true, false));
+	
+}
+
+function void RunePage_AddComps(int rune, int tag, int grid, int r, int c){
+	int i;
+	str actor = Rune_GetActor(rune);
+	
+	i = ImgButton_AddGrid(grid, r, c, 32.0, 32.0);
+	ImgButton_setImage(i, Rune_GetIcon(rune));
+	ImgButton_setHoverImage(i, "btnhov");
+	ImgButton_setTag(i, tag);
+	ImgButton_setExecute(i, STEXE_RUNESHOP_BUY);
+	ImgButton_setArgs(i, rune, 0 ,0);
+	ImgButton_setExeHover(i, STEXE_RUNESHOP_HOVER);
+	ImgButton_setArgsHover(i, rune, 0 ,0);
+	RunePage_SaveToGroup(rune, 1, i);
+}
+
+function void RunePage_SaveToGroup(int rune, int id, int comp){
+	runepage_vars[RUNEPAGE_NCOMPGROUP * rune + RUNEPAGE_NPRIVARS + (id-1)] = comp;
+}
+
+function int RunePage_LoadFromGroup(int rune, int id){
+	return runepage_vars[RUNEPAGE_NCOMPGROUP * rune + RUNEPAGE_NPRIVARS + (id-1)];
+}

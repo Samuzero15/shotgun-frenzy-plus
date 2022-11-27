@@ -36,10 +36,15 @@ Actor AmmunitionRune_Satchel : Rune_Activation {
 	}
 }
 
+ACTOR Ammunition_InfiniteAmmo : PowerInfiniteAmmo
+{
+	Powerup.Color "0 0 0" 0.0
+}
+
 Actor AmmunitionRune_Activate : PowerupGiver{
     +INVENTORY.AUTOACTIVATE
-    powerup.type InfiniteAmmo
-	powerup.duration 35
-    Powerup.Color None
+    powerup.type Ammunition_InfiniteAmmo
+	powerup.duration 47
+    Powerup.Color "0 0 0" 0.0
     Renderstyle Translucent
 }

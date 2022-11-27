@@ -14,6 +14,7 @@
 #import "fl_mupDir.acs"
 #import "fl_techs.acs"
 #import "fc_AStr.acs"
+#import "fl_RuneDir.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -177,6 +178,8 @@ script 306 (void)
 	p_LastWeap[playernumber()] = lastWeapon;
 	*/
 	if (CheckInventory("PowerInvulnerable") == 0) {
+		Rune_SaveAndUnequip();
+
 	if(GetUserCVar(playernumber(), "sfp_mechmsg")){
 		setfont("BIGFONT");
 		hudmessage(s:
@@ -363,6 +366,7 @@ script 307 (void)
     acs_execute(106, 0, 1, 1, 1);
 	delay(5);
 	ACS_Execute(56,0,p_LastWeap[playernumber()],0,0);
+	Rune_LoadAndEquip();
 	
 	int msgtimer;
 	while(p_MechTimer[playernumber()] > 0){
@@ -405,6 +409,7 @@ script 31 (void)
 				delay(1);
 				count++;
 			}
+			Rune_LoadAndEquip();
 			fp_mech_onentrance[playernumber()] = 0;
 		}
     }

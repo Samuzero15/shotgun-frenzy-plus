@@ -87,7 +87,7 @@ function void STExecute_CMDGotToCat2(int dest, int btndata){
 	if(!CMDBut_GetAccessCond(btndata))
 		Toaster_ShowToast("Requirements not met, Access Denied.", CR_RED);
 	else{
-		Toaster_ShowToast(strparam(s:"Going to category.", d:dest), CR_RED);
+		//Toaster_ShowToast(strparam(s:"Going to category.", d:dest), CR_RED);
 		CMDPage_SetButtonLayout(dest);
 	}
 }

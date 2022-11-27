@@ -61,7 +61,12 @@
 #libdefine CMDEVT_RESEARCH_CPULSE			CMDEVT_RESEARCH_PUMP2+1
 #libdefine CMDEVT_RESEARCH_STIMPK			CMDEVT_RESEARCH_CPULSE+1
 #libdefine CMDEVT_RESEARCH_GNADES			CMDEVT_RESEARCH_STIMPK+1
-#libdefine CMDEVT_AIRSTK_POINT				CMDEVT_RESEARCH_GNADES+1
+#libdefine CMDEVT_RESEARCH_RUSYNC			CMDEVT_RESEARCH_GNADES+1
+#libdefine CMDEVT_RESEARCH_COPTIM			CMDEVT_RESEARCH_RUSYNC+1
+#libdefine CMDEVT_RESEARCH_CBOOST			CMDEVT_RESEARCH_COPTIM+1
+#libdefine CMDEVT_RESEARCH_ENGINE			CMDEVT_RESEARCH_CBOOST+1
+#libdefine CMDEVT_RESEARCH_COINX5			CMDEVT_RESEARCH_ENGINE+1
+#libdefine CMDEVT_AIRSTK_POINT				CMDEVT_RESEARCH_COINX5+1
 #libdefine CMDEVT_AIRSTK_LINE1				CMDEVT_AIRSTK_POINT+1
 #libdefine CMDEVT_AIRSTK_LINE2				CMDEVT_AIRSTK_LINE1+1
 #libdefine CMDEVT_AIRSTK_WAVES				CMDEVT_AIRSTK_LINE2+1
@@ -71,7 +76,10 @@
 #libdefine CMDEVT_CPULSE_HEAL				CMDEVT_SCRIPT_IONCAN+1
 #libdefine CMDEVT_CPULSE_CRIPPLE			CMDEVT_CPULSE_HEAL+1
 #libdefine CMDEVT_CPULSE_HALT				CMDEVT_CPULSE_CRIPPLE+1
-#libdefine CMDEVT_SCRIPT_NUKE				CMDEVT_CPULSE_HALT+1
+#libdefine CMDEVT_CPULSE_REPAIR				CMDEVT_CPULSE_HALT+1
+#libdefine CMDEVT_CPULSE_WARCRY				CMDEVT_CPULSE_REPAIR+1
+#libdefine CMDEVT_CPULSE_SMITE				CMDEVT_CPULSE_WARCRY+1
+#libdefine CMDEVT_SCRIPT_NUKE				CMDEVT_CPULSE_SMITE+1
 #libdefine CMDEVT_BUILD_GENLAB				CMDEVT_SCRIPT_NUKE+1
 #libdefine CMDEVT_BUILD_ARMORY				CMDEVT_BUILD_GENLAB+1
 #libdefine CMDEVT_BUILD_MECHFA				CMDEVT_BUILD_ARMORY+1
@@ -90,6 +98,7 @@
 #libdefine CMDEVT_REWARD_PUMP1				CMDEVT_REWARD_VETMER+1
 #libdefine CMDEVT_REWARD_PUMP2				CMDEVT_REWARD_PUMP1+1
 #libdefine CMDEVT_REWARD_STIMPK				CMDEVT_REWARD_PUMP2+1
+#libdefine CMDEVT_REWARD_RUSYNC				CMDEVT_REWARD_STIMPK+1
 
 #libdefine CMDEVT_NULL -1
 
@@ -137,11 +146,16 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_VETMER, TECH_MARCOM_VETMER, "VETERAN MERCENARIES", 	"CM44");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_IONCAN, TECH_MARCOM_IONCAN,	"ION CANNON", 			"CM53");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_AIRSUP, TECH_MARCOM_AIRSUP,	"AIR SUPPORT", 			"CM54");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP1,  TECH_REFINE_PUMP1,		"PROCESSING PHASE 1", 	"CM56");
-	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP2,  TECH_REFINE_PUMP2,		"PROCESSING PHASE 2", 	"CM57");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP1,  TECH_REFINE_PUMP1,	"PROCESSING PHASE 1", 	"CM56");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_PUMP2,  TECH_REFINE_PUMP2,	"PROCESSING PHASE 2", 	"CM57");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_CPULSE, TECH_MARCOM_CPULSE,	"CORE PULSES",  		"CM66");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_STIMPK, TECH_GENLAB_STIMPK,	"STIMPACKS", 	 		"CC30");
 	CmdEvent_Add_Research(CMDEVT_RESEARCH_GNADES, TECH_ARMORY_GNADES,	"HAND GRENADES", 	 	"CC31");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_RUSYNC, TECH_GENLAB_RUSYNC,	"RUNE SYNCRONIZATION", 	"CC26");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_CBOOST, TECH_MARCOM_CBOOST,	"CORE BOOSTER", 	 	"CC20");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_COPTIM, TECH_MARCOM_COPTIM,	"CORE OPTIMIZER", 		"CC21");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_ENGINE, TECH_REFINE_ENGINE,	"ENGINE BOOST", 		"CC22");
+	CmdEvent_Add_Research(CMDEVT_RESEARCH_COINX5, TECH_REFINE_COINX5,	"COMPENSATION", 		"CC23");
 	
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_POINT	 	,0);
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_LINE1	 	,1);
@@ -151,9 +165,12 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Aerial(CMDEVT_AIRSTK_EXECUTE 	,-3);
 	
 	CmdEvent_Add_Script(CMDEVT_SCRIPT_IONCAN	,304,0,0,0);
-	CmdEvent_Add_Pulse(CMDEVT_CPULSE_HEAL		,4);
-	CmdEvent_Add_Pulse(CMDEVT_CPULSE_CRIPPLE	,1);
-	CmdEvent_Add_Pulse(CMDEVT_CPULSE_HALT		,5);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_HEAL		,1);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_CRIPPLE	,2);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_HALT		,3);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_SMITE		,4);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_REPAIR		,5);
+	CmdEvent_Add_Pulse(CMDEVT_CPULSE_WARCRY		,6);
 	CmdEvent_Add_Script(CMDEVT_SCRIPT_NUKE		,451,0,0,0);
 	
 	CmdEvent_Add_Build(CMDEVT_BUILD_GENLAB		,1);
@@ -175,6 +192,7 @@ function void CmdEvent_Initialize(void){
 	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP1,  	TECH_REFINE_PUMP1,	"PROCESSING PHASE 1", 	"CM56");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_PUMP2,  	TECH_REFINE_PUMP2,	"PROCESSING PHASE 2", 	"CM57");
 	CmdEvent_Add_Reward(CMDEVT_REWARD_VETMER,  	TECH_MARCOM_VETMER, "VETERAN MERCENARIES", 	"CM44");
+	CmdEvent_Add_Reward(CMDEVT_REWARD_RUSYNC, 	TECH_GENLAB_RUSYNC,	"RUNE SYNCRONIZATION", 	 "CC26");
 
 }
 
@@ -304,10 +322,13 @@ function void CmdEvent_Announce(int cmd_event_index){
 			msg = "Collect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
 		break;
 		case CMDEVT_RESEARCH_STIMPK:
-			msg = "Collect at the Armory\n\nStimpacks\n\nMarines can start with 10 Stimpacks\nEach stimpack heals 20 hp.";
+			msg = "Collect at the Armory\n\nStimpacks\n\nMarines can start with 5 Stimpacks\nEach stimpack heals 20 hp.";
 		break;
 		case CMDEVT_RESEARCH_GNADES:
 			msg = "Collect at the Armory\n\nHand Grenades\n\nNow Marines can launch 5 grenades.";
+		break;
+		case CMDEVT_RESEARCH_RUSYNC:
+			msg = "Buy in Health Terminal\n\nRune Synchronization\n\nNow Marines can buy & equip runes.";
 		break;
 		case CMDEVT_RESEARCH_PUMP1:
 			msg = "Refinery Pump 1 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";
@@ -317,6 +338,9 @@ function void CmdEvent_Announce(int cmd_event_index){
 		break;
 		case CMDEVT_RESEARCH_VETMER:
 			msg = "Veteran Mercenaries Activated!\n\nPlayers under Sergant Rank gains x3 Exp!\nand under Major Rank, x2 Exp Points.";
+		break;
+		case CMDEVT_RESEARCH_COINX5:
+			msg = "Compensation\n\nDropped coins worths 5 times more!.";
 		break;
 		
 		case CMDEVT_REWARD_HEALTH1: 
@@ -350,7 +374,10 @@ function void CmdEvent_Announce(int cmd_event_index){
 			msg = "Veteran Mercenaries\n\nPlayers under Sergant Rank gains x3 Exp. \nand under Major Rank, x2 Exp Points.";
 		break;
 		case CMDEVT_REWARD_STIMPK:
-			msg = "Stimpacks\n\nMarines can start with 10 Stimpacks\nEach stimpack heals 20 hp.";
+			msg = "Stimpacks\n\nMarines can start with 5 Stimpacks\nEach stimpack heals 20 hp.\n\nImprove them in the Health Terminal.";
+		break;
+		case CMDEVT_REWARD_RUSYNC:
+			msg = "Rune Synchronization\n\nMarines can now buy Runes in the Health Terminal\n\nUpgrade the shop by spending some UPs for more runes.";
 		break;
 		case CMDEVT_REWARD_PUMP1:
 			msg = "Credit Processing (Phase 1)\n\nExtra credits for the players.";

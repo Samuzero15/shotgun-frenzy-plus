@@ -24,6 +24,18 @@ Script "SFPlus_PowerupList" Enter Clientside{
 		PowHud_Add("MaxHP", 		"StimUp_StimulantPower");
 		PowHud_Add("Speed", 		"StimUp_CaffeinePower");
 		PowHud_Add("Regen", 		"StimUp_CicatrizatePower");
+		PowHud_Add("Defense", 			"RuneDefense");
+		PowHud_Add("Rampage", 			"RuneRampage");
+		PowHud_Add("Ammunition", 		"RuneAmmunition");
+		PowHud_Add("Blast", 			"RuneBlast");
+		PowHud_Add("Soul", 				"RuneSoul");
+
+		PowHud_Add("(C.P Warcry) Fast Fire.",	"CorePulse_WARCRY_RageUp");
+		PowHud_Add("(C.P Warcry) 50% Dmg Up.",	"CorePulse_WARCRY_DamageUp");
+		PowHud_Add("(C.P Heal) 50% Resist.","CorePulse_Heal_Resistance");
+		PowHud_Add("(C.P Heal) Invul.",	"CorePulse_Heal_Invul");
+		PowHud_Add("\cg-25% Def", 		"ChampPoison_CurseArmor");
+		PowHud_Add("\cg-25% Atk", 		"ChampPoison_CurseDamage");
 		PowHud_Add("x4 Damage", 		"PowerQuadDamage");
 		PowHud_Add("x6 Damage", 		"PlayUp_PowUpUpgrade_6xDmg");
 		PowHud_Add("Fast Fire", 		"Inv_Power_Infinity");
@@ -32,16 +44,24 @@ Script "SFPlus_PowerupList" Enter Clientside{
 		PowHud_Add("Prometeo x2 DMG", 	"PlayUp_Prometeo_Power_2xDmg");
 		PowHud_Add("Prometeo Shield", 	"PlayUp_Prometeo_Power_Invul");
 		PowHud_Add("Spawn Shield", 		"PlayUp_Spawnshield_Power");
-		PowHud_Add("Defense", 			"RuneDefense");
-		PowHud_Add("Rampage", 			"RuneRampage");
-		PowHud_Add("Health", 			"RuneHealth");
-		PowHud_Add("Ammunition", 		"RuneAmmunition");
-		PowHud_Add("Fortune", 			"RuneFortune");
-		PowHud_Add("Soul", 				"RuneSoul");
-		PowHud_Add("Resurrection", 		"RuneResurrection");
-		PowHud_Add("Blast", 			"RuneBlast");
-		PowHud_Add("Blast Cooldown", 	"BlastRune_CooldownTime");
+		PowHud_Add("Rage", 				"RuneDoubleFiringSpeed");
+		PowHud_Add("Strength", 			"RuneDoubleDamage");
+		PowHud_Add("Resistance", 		"RuneHalfDamage");
+		PowHud_Add("Reflection", 		"RuneReflection");
+		PowHud_Add("Regeneration", 		"RuneRegeneration");
+		PowHud_Add("Haste", 			"RuneSpeed25");
+		PowHud_Add("Drain", 			"RuneDrain");
+		PowHud_Add("Prosperity", 		"RuneProsperity");
+		PowHud_Add("Spread", 			"RuneSpread");
+		PowHud_Add("High Jump", 		"RuneHighJump");
 		PowHud_Add("Temperance", 		"RuneTemperance");
+		PowHud_Add("Health", 			"RuneHealth");
+		PowHud_Add("Fortune", 			"RuneFortune");
+		PowHud_Add("Resurrection", 		"RuneResurrection");
+		
+		
+		
+		
 		while(PlayerInGame(PlayerNumber())){
 			for(int i = 0; i < puphud_amount; i++){
 				PowHud_Show(i);
@@ -87,6 +107,8 @@ function void PowHud_Clear(void){
 
 function void PowHud_Update(int which) {
 	str msg = PowHud_Get(which, PUPHUD_PROP_LABEL);
+	int time;
+	str cooldown;
 	if(CheckInventory(PowHud_Get(which, PUPHUD_PROP_ACTOR))){
 		str label = "";
 		switch(which){
@@ -100,6 +122,35 @@ function void PowHud_Update(int which) {
 			break;
 			case 2: 
 			label = strparam(d:(10-CheckInventory("StimUp_Cicatrizate")), s:" Tic Hp Regen");
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+
+			case 3: 
+			cooldown = PowHud_Timer(GetActorPowerupTics(0, "DefenseRune_ShieldInvul"));
+			label = strparam(s:"Defense", s:cooldown);
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+
+			case 4: 
+			cooldown = PowHud_Timer(GetActorPowerupTics(0, "RampageRune_Damage"));
+			label = strparam(s:"Rampage", s:cooldown);
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+
+			case 5: 
+			cooldown = PowHud_Timer(GetActorPowerupTics(0, "Ammunition_InfiniteAmmo"));
+			label = strparam(s:"Ammunition", s:cooldown);
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+
+			case 6: 
+			cooldown = PowHud_Timer(GetActorPowerupTics(0, "BlastRune_CooldownTime"));
+			label = strparam(s:"Blast", s:cooldown);
+			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
+			break;
+
+			case 7: 
+			label = strparam(s:"Soul (", d:CheckInventory("SoulRune_Kills") ,s:")");
 			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
 			break;
 			
@@ -137,16 +188,14 @@ function void PowHud_Show(int which) {
 			
 		}
 		int secs = (powtime)/ 35;
+		int time_str = PowHud_Timer(powtime);
 		if(secs > 86640 || secs < -86639) // More than one day (Infinite powerups)
 		{
 			msg = Strparam(
 				s:"\cv", s:effect);
 		}
 		else{
-			msg = Strparam(
-				s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cu"),
-				s:effect, s:" \c-",
-				s:cond(secs < 10, strparam(d:secs, s:".", d:(powtime % 35)), strparam(d:secs)));
+			msg = Strparam(s:time_str, s:" \cv", s:cond(wearoff, cond(flicker,"\cf" ,"\ci"),"\cu"),s:effect);
 		}
 		
 
@@ -156,4 +205,17 @@ function void PowHud_Show(int which) {
 		puphud_stack++;
 	}
 	
+}
+
+function str PowHud_Timer(int time){
+	str time_str;
+	if(time == 0){
+		time_str = "";
+	}
+	else{
+		str secs = time/35;
+		str milisecs = fixedMul(fixedDiv((time%35)<<16, 35.0),10.0)>>16;
+		time_str = strparam(s:" \cu(\c-",s:cond(secs < 10, strparam(d:secs, s:".", d:milisecs, s:"s\cu)"), strparam(d:secs, s:"s\cu)")));
+	}
+	return time_str;
 }

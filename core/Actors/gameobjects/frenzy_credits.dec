@@ -238,7 +238,7 @@ ACTOR Credit_GoldenCoin : ClassicCredit
 	{
 	Spawn:
 		TNT1 A 0
-		CRED A 0
+		CRED A 1
 		goto SUPER::SpawnLoop
 	Pickup:
 		CRED A 0
@@ -255,7 +255,7 @@ ACTOR Credit_SilverCoin : ClassicCredit
 	{
 	Spawn:
 		TNT1 A 0
-		CRED C 0
+		CRED C 1
 		goto SUPER::SpawnLoop
 	Pickup:
 		CRED C 0
@@ -272,7 +272,7 @@ ACTOR Credit_CopperCoin : ClassicCredit
 	{
 	Spawn:
 		TNT1 A 0
-		CRED D 0
+		CRED D 1
 		goto SUPER::SpawnLoop
 	Pickup:
 		CRED D 0

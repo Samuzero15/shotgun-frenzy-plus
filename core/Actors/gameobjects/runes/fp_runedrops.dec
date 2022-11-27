@@ -1,0 +1,607 @@
+
+Actor RuneDrop : CustomInventory {
+	// A fading pickup that must be took between the time limit before it disappears.
+	Inventory.PickupSound "misc/p_pkup"
+
+	var int user_counter;
+	var int user_ticlimit;
+	var int user_frametic;
+	var int user_fadetic;
+	var int user_fade;
+	var int user_frame;
+	var int user_framelimit;
+	var int user_stayseconds;
+	States{
+		Spawn:
+			"####" "#" 0 A_SetUserVar("user_framelimit", 0)
+			"####" "#" 0 A_SetUserVar("user_frametic", 1)
+		Spawn.Timer:
+			"####" "#" 0 A_SetUserVar("user_stayseconds", 45)
+			"####" "#" 0 A_SetUserVar("user_ticlimit", 35*15)
+			"####" "#" 1 A_SetUserVar("user_fadetic", 4)
+		Spawn.Wait:
+			"####" "#" 0 A_JumpIf(user_counter >= (user_ticlimit - 105), "Spawn.Fade")
+			"####" "#" 1
+			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
+			"####" "#" 0 A_JumpIf(user_counter % user_frametic == 0, "Spawn.SetFrame")
+			loop
+        Spawn.Wait.Brightme:
+			"####" "#" 0 A_JumpIf(user_counter >= (user_ticlimit - 105), "Spawn.Fade.Brightme")
+			"####" "#" 1 Bright
+			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
+			"####" "#" 0 A_JumpIf(user_counter % user_frametic == 0, "Spawn.SetFrame.Brightme")
+			loop
+		Spawn.Fade:
+			"####" "#" 0 A_JumpIf(user_counter >= user_ticlimit, "Disappear")
+			"####" "#" 1
+			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
+			"####" "#" 0 A_JumpIf(user_counter % user_fadetic == 0, "Spawn.SetFade")
+			loop
+        
+        Spawn.Fade.Brightme:
+			"####" "#" 0 A_JumpIf(user_counter >= user_ticlimit, "Disappear")
+			"####" "#" 1 Bright
+			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
+			"####" "#" 0 A_JumpIf(user_counter % user_fadetic == 0, "Spawn.SetFade.Brightme")
+			loop
+
+        Spawn.SetFade.Brightme:
+			"####" "#" 0 A_SetUserVar("user_fade", !user_fade)
+			"####" "#" 0 A_JumpIf(user_fade == 0, "Spawn.Fade.In.Brightme")
+			goto Spawn.Fade.Out.Brightme
+		Spawn.Fade.Out.Brightme:
+			"####" "#" 0 A_FadeOut(0.7)
+			goto Spawn.SetFrame.Brightme
+		Spawn.Fade.In.Brightme:
+			"####" "#" 0 A_FadeIn(0.7)
+			goto Spawn.SetFrame.Brightme
+
+		Spawn.SetFade:
+			"####" "#" 0 A_SetUserVar("user_fade", !user_fade)
+			"####" "#" 0 A_JumpIf(user_fade == 0, "Spawn.Fade.In")
+			goto Spawn.Fade.Out
+		Spawn.Fade.Out:
+			"####" "#" 0 A_FadeOut(0.7)
+			goto Spawn.SetFrame
+		Spawn.Fade.In:
+			"####" "#" 0 A_FadeIn(0.7)
+			goto Spawn.SetFrame
+		
+		Spawn.SetFrame:
+            
+			"####" "#" 0 A_JumpIf(user_framelimit == 0 || (user_counter % user_frametic != 0), "Spawn.Wait")
+			"####" "#" 0 A_JumpIf(user_frame >= user_framelimit, "Spawn.ResetFrame")
+			"####" "#" 0 A_JumpIf(user_frame == 7, "Spawn.FrameH")
+			"####" "#" 0 A_JumpIf(user_frame == 6, "Spawn.FrameG")
+			"####" "#" 0 A_JumpIf(user_frame == 5, "Spawn.FrameF")
+			"####" "#" 0 A_JumpIf(user_frame == 4, "Spawn.FrameE")
+			"####" "#" 0 A_JumpIf(user_frame == 3, "Spawn.FrameD")
+			"####" "#" 0 A_JumpIf(user_frame == 2, "Spawn.FrameC")
+			"####" "#" 0 A_JumpIf(user_frame == 1, "Spawn.FrameB")
+            "####" "#" 1 A_Jump(256, "Spawn.FrameA")
+			goto Spawn.FrameA
+        
+        Spawn.SetFrame.Brightme:
+			"####" "#" 0 A_JumpIf(user_framelimit == 0 || (user_counter % user_frametic != 0), "Spawn.Wait.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame >= user_framelimit, "Spawn.ResetFrame")
+			"####" "#" 0 A_JumpIf(user_frame == 7, "Spawn.FrameH.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame == 6, "Spawn.FrameG.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame == 5, "Spawn.FrameF.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame == 4, "Spawn.FrameE.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame == 3, "Spawn.FrameD.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame == 2, "Spawn.FrameC.Brightme")
+			"####" "#" 0 A_JumpIf(user_frame == 1, "Spawn.FrameB.Brightme")
+            "####" "#" 1 A_Jump(256, "Spawn.FrameA.Brightme")
+			goto Spawn.FrameA.Brightme
+
+		Spawn.NextFrame:
+			"####" "#" 0 A_SetUserVar("user_frame", user_frame+1)
+			goto Spawn.Wait
+        
+        Spawn.NextFrame.Brightme:
+			"####" "#" 0 A_SetUserVar("user_frame", user_frame+1)
+			goto Spawn.Wait.Brightme
+
+		Spawn.ResetFrame:
+			"####" "#" 0 A_SetUserVar("user_frame", 0)
+            "####" "#" 1 A_Jump(256, "Spawn.FrameA")
+			goto Spawn.FrameA
+        
+        Spawn.ResetFrame.Brightme:
+			"####" "#" 0 A_SetUserVar("user_frame", 0)
+            "####" "#" 1 A_Jump(256, "Spawn.FrameA.Brightme")
+			goto Spawn.FrameA.Brightme
+
+		Spawn.FrameA:
+			"####" A 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameB:
+			"####" B 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameC:
+			"####" C 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameD:
+			"####" D 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameE:
+			"####" E 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameF:
+			"####" F 0
+			goto Spawn.NextFrame
+
+		Spawn.FrameG:
+			"####" G 0
+			goto Spawn.NextFrame
+		
+		Spawn.FrameH:
+			"####" H 0
+			goto Spawn.NextFrame
+        
+        Spawn.FrameA.Brightme:
+			"####" A 0
+			goto Spawn.NextFrame.Brightme
+
+		Spawn.FrameB.Brightme:
+			"####" B 0
+			goto Spawn.NextFrame.Brightme
+
+		Spawn.FrameC.Brightme:
+			"####" C 0
+			goto Spawn.NextFrame.Brightme
+
+		Spawn.FrameD.Brightme:
+			"####" D 0
+			goto Spawn.NextFrame.Brightme
+
+		Spawn.FrameE.Brightme:
+			"####" E 0
+			goto Spawn.NextFrame.Brightme
+
+		Spawn.FrameF.Brightme:
+			"####" F 0
+			goto Spawn.NextFrame.Brightme
+
+		Spawn.FrameG.Brightme:
+			"####" G 0
+			goto Spawn.NextFrame.Brightme
+		
+		Spawn.FrameH.Brightme:
+			"####" H 0
+			goto Spawn.NextFrame.Brightme
+
+		Disappear:
+			TNT1 A 0
+			stop
+		stop
+
+		Pickup:
+			TNT1 A 0
+		stop
+	}
+}
+
+Actor RageRune_Drop : RuneDrop { 
+    +NOGRAVITY
+	Inventory.PickupMessage "$PICKUP_RAGE"
+    Inventory.PickupAnnouncerEntry "rage"
+ States {
+		Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 8)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			RAGR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("RageRune", 1)
+		stop
+}}
+
+Actor StrengthRune_Drop : RuneDrop { 
+    +NOGRAVITY
+	Inventory.PickupMessage "$PICKUP_STRENGTH"
+    Inventory.PickupAnnouncerEntry "strength"
+ States {
+		Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			STRR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("StrengthRune", 1)
+		stop
+}}
+
+ACTOR DrainRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "$PICKUP_DRAIN"
+	Inventory.PickupAnnouncerEntry "drain"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			DRAR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("DrainRune", 1)
+		stop
+	}
+}
+
+ACTOR SpreadRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	+FLOATBOB
+	Inventory.PickupMessage "$PICKUP_SPREAD"
+	Inventory.PickupAnnouncerEntry "spread"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			SPRR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("SpreadRune", 1)
+		stop
+	}
+}
+
+ACTOR ResistanceRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "$PICKUP_RESISTANCE"
+	Inventory.PickupAnnouncerEntry "resistance"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 8)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			RESR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ResistanceRune", 1)
+		stop
+	}
+}
+
+ACTOR RegenerationRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	+FLOATBOB
+	Inventory.PickupMessage "$PICKUP_REGENERATION"
+	Inventory.PickupAnnouncerEntry "regeneration"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			REGR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("RegenerationRune", 1)
+		stop
+	}
+}
+
+ACTOR ProsperityRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "$PICKUP_PROSPERITY"
+	Inventory.PickupAnnouncerEntry "prosperity"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			PRSR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ProsperityRune", 1)
+		stop
+	}
+}
+
+ACTOR ReflectionRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	+FLOATBOB
+	Inventory.PickupMessage "$PICKUP_REFLECTION"
+	Inventory.PickupAnnouncerEntry "reflection"
+	States
+	{
+
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			REFR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ReflectionRune", 1)
+		stop
+	}
+}
+
+ACTOR HighJumpRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "$PICKUP_HIGHJUMP"
+	Inventory.PickupAnnouncerEntry "highjump"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			HIJR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("HighJumpRune", 1)
+		stop
+	}
+}
+
+ACTOR HasteRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	+FLOATBOB
+	Inventory.PickupMessage "$PICKUP_HASTE"
+	Inventory.PickupAnnouncerEntry "haste"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			HASR A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("HasteRune", 1)
+		stop
+	}
+}
+
+ACTOR AmmunitionRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "Ammunition!"
+	Inventory.PickupSound "runes/ammunition"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 6)
+			TNT1 A 0 A_SetUserVar("user_frametic",   5) 
+			RAMO A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("AmmunitionRune", 1)
+		stop
+	}
+}
+
+ACTOR BlastRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "Blast!"
+	Inventory.PickupSound "runes/blast"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			RBST A 0
+		goto Super::Spawn.Timer
+
+        Spawn.FrameD:
+			"####" B 0
+			goto Super::Spawn.NextFrame
+
+		Pickup:
+			TNT1 A 0 A_GiveInventory("BlastRune", 1)
+		stop
+	}
+}
+
+ACTOR DefenseRune_Drop : RuneDrop
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "Defense!"
+	Inventory.PickupSound "runes/defense"
+	scale 0.5
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			RDEF A 0
+		goto Super::Spawn.Timer
+
+        Spawn.FrameA.Brightme:
+			"####" A 0
+			goto Super::Spawn.NextFrame
+
+        Spawn.FrameB:
+			"####" A 0
+			goto Super::Spawn.NextFrame.Brightme
+
+		Pickup:
+			TNT1 A 0 A_GiveInventory("DefenseRune", 1)
+		stop
+	}
+}
+
+ACTOR FortuneRune_Drop : RuneDrop 
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "Fortune!"
+	Inventory.PickupSound "runes/fortune"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
+			TNT1 A 0 A_SetUserVar("user_frametic",   8) 
+			RFOR T 0
+		goto Super::Spawn.Timer
+
+        Spawn.FrameA:
+            "####" T 0
+            goto Super::Spawn.NextFrame
+        Spawn.FrameB:
+			"####" T 0
+			goto Super::Spawn.NextFrame
+        
+        Spawn.SetFrame:
+            "####" "#" 0 A_SpawnItemEx("Blood", random(-2,2), random(-2,2), 8)
+			goto Super::Spawn.SetFrame
+
+		Pickup:
+			TNT1 A 0 A_GiveInventory("FortuneRune", 1)
+		stop
+    }
+}
+
+ACTOR TemperanceRune_Drop : RuneDrop {
+	+NOGRAVITY
+	Inventory.PickupMessage "Temperance!"
+	Inventory.PickupSound "runes/temperance"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 8)
+			TNT1 A 0 A_SetUserVar("user_frametic",   4) 
+			RTMP A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("TemperanceRune", 1)
+		stop
+	}
+}
+
+ACTOR SoulRune_Drop : RuneDrop {
+	+NOGRAVITY
+    scale 0.75
+	Inventory.PickupMessage "Soul!"
+    Inventory.PickupSound "runes/soul"
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 6)
+			TNT1 A 0 A_SetUserVar("user_frametic",   5) 
+			RTMP A 0
+		goto Super::Spawn.Timer
+
+        Spawn.FrameE:
+            "####" C 0
+            goto Super::Spawn.NextFrame
+        Spawn.FrameF:
+			"####" D 0
+			goto Super::Spawn.NextFrame
+
+		Pickup:
+			TNT1 A 0 A_GiveInventory("SoulRune", 1)
+		stop
+	}
+}
+
+ACTOR RampageRune_Drop : RuneDrop {
+	+NOGRAVITY
+	Inventory.PickupMessage "Rampage!"
+	Inventory.PickupSound "runes/rampage"
+	scale 0.5
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			RRMP A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("RampageRune", 1)
+		stop
+	}
+}
+
+ACTOR HealthRune_Drop : RuneDrop {
+	+NOGRAVITY
+	Inventory.PickupMessage "Health!"
+	Inventory.PickupSound "runes/health"
+	scale 0.5
+	States
+	{
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   4) 
+			RHLT A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("HealthRune", 1)
+		stop
+	}
+}
+
+ACTOR ResurrectionRune_Drop : RuneDrop {
+	+NOGRAVITY
+	Inventory.PickupMessage "Resurrection!"
+	Inventory.PickupSound "runes/resurrection"
+	scale 0.9
+	FloatSpeed 2
+	States
+	{
+	Spawn:
+		RRES A 1 Bright A_SpawnItem("ResurrectionRune_GFX")
+		RRES A 5 Bright A_fadein(0.5)
+		RRES A 6 A_fadeout(0.5)
+		Loop
+
+        Spawn:
+            TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_framelimit", 4)
+			TNT1 A 0 A_SetUserVar("user_frametic",   3) 
+			RRES A 0
+		goto Super::Spawn.Timer
+
+        Spawn.FrameA:
+            "####" A 0 A_SpawnItem("ResurrectionRune_GFX")
+            goto Super::Spawn.NextFrame.Brightme
+        
+        Spawn.FrameA.Brightme:
+            "####" A 0 A_SpawnItem("ResurrectionRune_GFX")
+            goto Super::Spawn.NextFrame.Brightme
+        Spawn.FrameB.Brightme:
+            "####" A 0 A_fadein(0.5)
+			goto Super::Spawn.NextFrame
+        Spawn.FrameC:
+            "####" A 0 A_fadeout(0.5)
+			goto Super::Spawn.NextFrame
+        Spawn.FrameD:
+            "####" A 0 
+			goto Super::Spawn.NextFrame.Brightme
+
+		Pickup:
+			TNT1 A 0 A_GiveInventory("ResurrectionRune", 1)
+		stop
+	}
+}

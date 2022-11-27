@@ -3,7 +3,6 @@ statusbar normal// Standard Doom Status bar
     inInventory Not SamuTInv_HideSBAR{
 	drawbar "EXPBR", "EXPBR0", Hud_EXP, horizontal, interpolate(15),  399, 570;
 	drawbar "EXPBL", "EXPBL0", Hud_EXP, horizontal, reverse, interpolate(15),  9, 570;
-	drawimage runeicon, 320, 240, center;
 	
 	inInventory not HUD_Spectating{
 		drawnumber 5, Confont, LightBlue, Hud_EXP, alignment(center), 380, 570;
@@ -12,7 +11,7 @@ statusbar normal// Standard Doom Status bar
 	}
 	
 	drawimage "HUD2", 0, 487;
-	
+	drawimage runeicon, 100, 520, center;
 	//
 
     //[Samu] If use secondary ammo...

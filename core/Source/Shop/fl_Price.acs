@@ -170,6 +170,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_cmd_gl_speedb", 		1500);
 	Prices_add("pr_cmd_gl_regenb", 		2000);
 	Prices_add("pr_cmd_gl_stimpk",	  	1200);
+	Prices_add("pr_cmd_gl_rusync",	  	3500);
 	
 	//Armory researches
 	Prices_add("pr_cmd_ar_arms1", 		1500);
@@ -181,12 +182,16 @@ script "SFPlus_DefinePrices" Open
 	//Refinery researches
 	Prices_add("pr_cmd_rf_pump1", 		4500);
 	Prices_add("pr_cmd_rf_pump2", 		4500);
+	Prices_add("pr_cmd_rf_engine", 		7000);
+	Prices_add("pr_cmd_rf_coinx5", 		7000);
 	
 	//Marine command researches
 	Prices_add("pr_cmd_mc_advsys", 		1200);
 	Prices_add("pr_cmd_mc_airsup", 		4000);
 	Prices_add("pr_cmd_mc_ioncan", 		5000);
 	Prices_add("pr_cmd_mc_cpulse", 		2000);
+	Prices_add("pr_cmd_mc_coptim", 		5000);
+	Prices_add("pr_cmd_mc_cboost", 		5000);
 	
 	//Commander deploys / actions
 	Prices_add("pr_cmd_turret_bullet", 	600);
@@ -224,6 +229,14 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_su_cicatrizate", 1250);
 	Prices_add("pr_su_caffeine", 	1100);
 	Prices_add("pr_su_stimulant", 	1500);
+
+	Prices_add("pr_rt_u4", 	3); // Unlock tier 4 (U.P)
+	Prices_add("pr_rt_u3", 	2); // Unlock tier 3 (U.P)
+	Prices_add("pr_rt_u2", 	1); // Unlock tier 2 (U.P)
+	Prices_add("pr_rt_4", 	3800);
+	Prices_add("pr_rt_3", 	2750);
+	Prices_add("pr_rt_2", 	1250);
+	Prices_add("pr_rt_1", 	500);
 	
 	//Play Up. prices
 	Prices_add("pr_pu_powupupgrade_1",		3);

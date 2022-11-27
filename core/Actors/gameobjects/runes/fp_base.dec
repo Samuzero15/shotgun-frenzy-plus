@@ -14,6 +14,8 @@ Actor RuneTemperance : RuneToken {}
 Actor RuneSoul : RuneToken {}
 Actor RuneResurrection : RuneToken {}
 
+Actor RuneTier : Integer {}
+
 Actor Rune_Activation : CustomInventory {
     Inventory.PickupMessage ""
     Inventory.PickupSound ""
@@ -29,6 +31,8 @@ Actor Rune_Activation : CustomInventory {
     }
 }
 
+#include "Actors/gameobjects/runes/fp_runedrops.dec"
+#include "Actors/gameobjects/runes/fp_skulltagrunes.dec"
 #include "Actors/gameobjects/runes/fp_ammunition.dec"
 #include "Actors/gameobjects/runes/fp_blast.dec"
 #include "Actors/gameobjects/runes/fp_defense.dec"

@@ -2,6 +2,7 @@
 #include "zcommon.acs"
 
 script "SFP_Events" (int type, int arg1, int arg2) Event {
+    
     switch(type){
         case GAMEEVENT_ACTOR_DAMAGED:
             int hpold = getActorProperty(0, APROP_HEALTH);
@@ -15,7 +16,8 @@ script "SFP_Events" (int type, int arg1, int arg2) Event {
             // Temperance will now add extra percentages to the saving amount
             int dmg = arg1;
             int percent;
-
+            //log(s:arg2);
+            if(!stricmp(arg2, "Suicide")) terminate;
             if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "TitaniumArmor") == 0){
                 percent = 0.70 + 0.10 * checkinventory("RuneTemperance");
                 dmg = (arg1 * (1.0 - percent)) >> 16;
@@ -142,15 +144,22 @@ script "SFPlus_OnPlayerDamage" (int dmg, int fatal){
     }
     SetResultValue(TotalDmg);
 }
-script "SFPlus_OnMonsterKill" (void){
+
+
+script "SFPlus_OnMonsterKill" (int ischamp){
     if(checkinventory("RuneRampage")){
         GiveInventory("RampageRune_Activate", 1);
     }
 
     if(checkinventory("RuneSoul")){
-        GiveInventory("SoulRune_Counter", 1);
+        if(ischamp){
+            GiveInventory("SoulRune_ChampCounter", 1);
+        } 
+        else        GiveInventory("SoulRune_Counter", 1);
+        
     }
 }
+
 
 script "SFPlus_Dash" (void){
     int DASH_SPD = 40; // Speed defined by monster.

@@ -36,22 +36,28 @@
 #libdefine FP_CB_UPGRADE_GENLAB_SPEEDB		FP_CB_UPGRADE_GENLAB_ARMOR+1
 #libdefine FP_CB_UPGRADE_GENLAB_RESISB		FP_CB_UPGRADE_GENLAB_SPEEDB+1
 #libdefine FP_CB_UPGRADE_GENLAB_REGENB		FP_CB_UPGRADE_GENLAB_RESISB+1
-#libdefine FP_CB_UPGRADE_GENLAB_STIMPK		FP_CB_UPGRADE_GENLAB_REGENB+1
+#libdefine FP_CB_UPGRADE_GENLAB_RUSYNC		FP_CB_UPGRADE_GENLAB_REGENB+1
+#libdefine FP_CB_UPGRADE_GENLAB_STIMPK		FP_CB_UPGRADE_GENLAB_RUSYNC+1
 #libdefine FP_CB_UPGRADE_ARMORY				FP_CB_UPGRADE_GENLAB_STIMPK+1
 #libdefine FP_CB_UPGRADE_ARMORY_ARMS1		FP_CB_UPGRADE_ARMORY+1
 #libdefine FP_CB_UPGRADE_ARMORY_ARMS2		FP_CB_UPGRADE_ARMORY_ARMS1+1
 #libdefine FP_CB_UPGRADE_ARMORY_BOOMRN		FP_CB_UPGRADE_ARMORY_ARMS2+1
 #libdefine FP_CB_UPGRADE_ARMORY_AMMOBP		FP_CB_UPGRADE_ARMORY_BOOMRN+1
-#libdefine FP_CB_UPGRADE_REFINE				FP_CB_UPGRADE_ARMORY_AMMOBP+1
+#libdefine FP_CB_UPGRADE_ARMORY_GNADES		FP_CB_UPGRADE_ARMORY_AMMOBP+1
+#libdefine FP_CB_UPGRADE_REFINE				FP_CB_UPGRADE_ARMORY_GNADES+1
 #libdefine FP_CB_UPGRADE_REFINE_PUMP1		FP_CB_UPGRADE_REFINE+1
 #libdefine FP_CB_UPGRADE_REFINE_PUMP2		FP_CB_UPGRADE_REFINE_PUMP1+1
-#libdefine FP_CB_UPGRADE_MARCOM				FP_CB_UPGRADE_REFINE_PUMP2+1
+#libdefine FP_CB_UPGRADE_REFINE_ENGINE		FP_CB_UPGRADE_REFINE_PUMP2+1
+#libdefine FP_CB_UPGRADE_REFINE_COINX5		FP_CB_UPGRADE_REFINE_ENGINE+1
+#libdefine FP_CB_UPGRADE_MARCOM				FP_CB_UPGRADE_REFINE_COINX5+1
 #libdefine FP_CB_UPGRADE_MARCOM_VETMER		FP_CB_UPGRADE_MARCOM+1
 #libdefine FP_CB_UPGRADE_MARCOM_AIRSUP		FP_CB_UPGRADE_MARCOM_VETMER+1
 #libdefine FP_CB_UPGRADE_MARCOM_ADVSYS		FP_CB_UPGRADE_MARCOM_AIRSUP+1
 #libdefine FP_CB_UPGRADE_MARCOM_IONCAN		FP_CB_UPGRADE_MARCOM_ADVSYS+1
 #libdefine FP_CB_UPGRADE_MARCOM_CPULSE		FP_CB_UPGRADE_MARCOM_IONCAN+1
-#libdefine FP_CB_SUPPORT					FP_CB_UPGRADE_MARCOM_CPULSE+1
+#libdefine FP_CB_UPGRADE_MARCOM_COPTIM		FP_CB_UPGRADE_MARCOM_CPULSE+1
+#libdefine FP_CB_UPGRADE_MARCOM_CBOOST		FP_CB_UPGRADE_MARCOM_COPTIM+1
+#libdefine FP_CB_SUPPORT					FP_CB_UPGRADE_MARCOM_CBOOST+1
 #libdefine FP_CB_SUPPORT_AIRSTK				FP_CB_SUPPORT+1
 #libdefine FP_CB_SUPPORT_AIRSTK_POINT		FP_CB_SUPPORT_AIRSTK+1	
 #libdefine FP_CB_SUPPORT_AIRSTK_LINE_1		FP_CB_SUPPORT_AIRSTK_POINT+1	
@@ -65,7 +71,10 @@
 #libdefine FP_CB_SUPPORT_CPULSE_HEAL		FP_CB_SUPPORT_CPULSE+1
 #libdefine FP_CB_SUPPORT_CPULSE_CRIPPLE		FP_CB_SUPPORT_CPULSE_HEAL+1
 #libdefine FP_CB_SUPPORT_CPULSE_HALT		FP_CB_SUPPORT_CPULSE_CRIPPLE+1
-#libdefine FP_CB_SUPPORT_MARK_ATTACK		FP_CB_SUPPORT_CPULSE_HALT+1
+#libdefine FP_CB_SUPPORT_CPULSE_SMITE		FP_CB_SUPPORT_CPULSE_HALT+1
+#libdefine FP_CB_SUPPORT_CPULSE_REPAIR		FP_CB_SUPPORT_CPULSE_SMITE+1
+#libdefine FP_CB_SUPPORT_CPULSE_WARCRY		FP_CB_SUPPORT_CPULSE_REPAIR+1
+#libdefine FP_CB_SUPPORT_MARK_ATTACK		FP_CB_SUPPORT_CPULSE_WARCRY+1
 #libdefine FP_CB_SUPPORT_MARK_DEFEND		FP_CB_SUPPORT_MARK_ATTACK+1
 #libdefine FP_CB_SUPPORT_MARK_DEPLOY		FP_CB_SUPPORT_MARK_DEFEND+1
 #libdefine FP_CB_SUPPORT_MARK_REGROUP		FP_CB_SUPPORT_MARK_DEPLOY+1
@@ -88,11 +97,6 @@
 #libdefine FP_CB_DEPLOY_TURRET_BFG			FP_CB_DEPLOY_TURRET_SHOTGUN+1
 #libdefine FP_CB_NUKE						FP_CB_DEPLOY_TURRET_BFG+1
 #libdefine FP_CB_NUKE_IT_NOW				FP_CB_NUKE+1
-#libdefine FP_CB_UPGRADE_MARCOM_POPTIM		FP_CB_NUKE_IT_NOW+1
-#libdefine FP_CB_UPGRADE_MARCOM_PFUSER		FP_CB_UPGRADE_MARCOM_POPTIM+1
-#libdefine FP_CB_UPGRADE_REFINE_COINX5		FP_CB_UPGRADE_MARCOM_PFUSER+1
-#libdefine FP_CB_UPGRADE_REFINE_ENGINE		FP_CB_UPGRADE_REFINE_COINX5+1
-#libdefine FP_CB_UPGRADE_ARMORY_GNADES		FP_CB_UPGRADE_REFINE_ENGINE+1
 
 
 #libdefine FP_COM_BUTTONS 99
@@ -130,6 +134,7 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_UPGRADE_GENLAB_RESISB, 	CMDEVT_RESEARCH_RESISB, 	"UPG_GENLAB_RESISB");
 	CMDBut_Add(FP_CB_UPGRADE_GENLAB_REGENB, 	CMDEVT_RESEARCH_REGENB, 	"UPG_GENLAB_REGENB");
 	CMDBut_Add(FP_CB_UPGRADE_GENLAB_STIMPK, 	CMDEVT_RESEARCH_STIMPK, 	"UPG_GENLAB_STIMPK");
+	CMDBut_Add(FP_CB_UPGRADE_GENLAB_RUSYNC, 	CMDEVT_RESEARCH_RUSYNC, 	"UPG_GENLAB_RUSYNC");
 	
 	CMDBut_Add(FP_CB_UPGRADE_ARMORY, CMDEVT_NULL,"UPG_ARMORY");
 	CMDBut_Add(FP_CB_UPGRADE_ARMORY_ARMS1,		CMDEVT_RESEARCH_ARMS1, 	"UPG_ARMORY_ARMS1");
@@ -141,8 +146,8 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_UPGRADE_REFINE, CMDEVT_NULL,"UPG_REFINE");
 	CMDBut_Add(FP_CB_UPGRADE_REFINE_PUMP1,		CMDEVT_RESEARCH_PUMP1, "UPG_REFINE_PUMP1");
 	CMDBut_Add(FP_CB_UPGRADE_REFINE_PUMP2,		CMDEVT_RESEARCH_PUMP2, "UPG_REFINE_PUMP2");
-	CMDBut_Add(FP_CB_UPGRADE_REFINE_ENGINE,		CMDEVT_NULL, 			"UPG_REFINE_ENGINE");
-	CMDBut_Add(FP_CB_UPGRADE_REFINE_COINX5,		CMDEVT_NULL, 			"UPG_REFINE_COINX5");
+	CMDBut_Add(FP_CB_UPGRADE_REFINE_ENGINE,		CMDEVT_RESEARCH_ENGINE, "UPG_REFINE_ENGINE");
+	CMDBut_Add(FP_CB_UPGRADE_REFINE_COINX5,		CMDEVT_RESEARCH_COINX5, "UPG_REFINE_COINX5");
 	
 
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM, CMDEVT_NULL, "UPG_MARCOM");
@@ -151,8 +156,8 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM_VETMER,		CMDEVT_RESEARCH_VETMER, "UPG_MARCOM_VETMER");
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM_IONCAN,		CMDEVT_RESEARCH_IONCAN, "UPG_MARCOM_IONCAN");
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM_CPULSE,		CMDEVT_RESEARCH_CPULSE, "UPG_MARCOM_CPULSE");
-	CMDBut_Add(FP_CB_UPGRADE_MARCOM_PFUSER,		CMDEVT_NULL, 			"UPG_MARCOM_PFUSER");
-	CMDBut_Add(FP_CB_UPGRADE_MARCOM_POPTIM,		CMDEVT_NULL, 			"UPG_MARCOM_POPTIM");
+	CMDBut_Add(FP_CB_UPGRADE_MARCOM_CBOOST,		CMDEVT_RESEARCH_CBOOST, "UPG_MARCOM_CBOOST");
+	CMDBut_Add(FP_CB_UPGRADE_MARCOM_COPTIM,		CMDEVT_RESEARCH_COPTIM, "UPG_MARCOM_COPTIM");
 	
 	CMDBut_Add(FP_CB_SUPPORT_AIRSTK, CMDEVT_NULL, "SUP_AIRSTK");
 	CMDBut_Add(FP_CB_SUPPORT_AIRSTK_POINT,		CMDEVT_AIRSTK_POINT,  	"SUP_AIRSTK_POINT");
@@ -167,6 +172,9 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_SUPPORT_CPULSE_HEAL,		CMDEVT_CPULSE_HEAL,		"SUP_CPULSE_HEAL");
 	CMDBut_Add(FP_CB_SUPPORT_CPULSE_CRIPPLE,	CMDEVT_CPULSE_CRIPPLE,	"SUP_CPULSE_CRIPPLE");
 	CMDBut_Add(FP_CB_SUPPORT_CPULSE_HALT,		CMDEVT_CPULSE_HALT,		"SUP_CPULSE_HALT");
+	CMDBut_Add(FP_CB_SUPPORT_CPULSE_SMITE,		CMDEVT_CPULSE_SMITE,	"SUP_CPULSE_SMITE");
+	CMDBut_Add(FP_CB_SUPPORT_CPULSE_REPAIR,		CMDEVT_CPULSE_REPAIR,	"SUP_CPULSE_REPAIR");
+	CMDBut_Add(FP_CB_SUPPORT_CPULSE_WARCRY,		CMDEVT_CPULSE_WARCRY,	"SUP_CPULSE_WARCRY");
 	CMDBut_Add(FP_CB_SUPPORT_MARK_ATTACK,		CMDEVT_MARKER_ATTACK, 	"SUP_MARK_ATTACK");
 	CMDBut_Add(FP_CB_SUPPORT_MARK_DEFEND,		CMDEVT_MARKER_DEFEND,	"SUP_MARK_DEFEND");
 	CMDBut_Add(FP_CB_SUPPORT_MARK_DEPLOY,		CMDEVT_MARKER_DEPLOY,	"SUP_MARK_DEPLOY");
@@ -211,6 +219,7 @@ function void CMDBut_SetPrices(void){
 	CMDBut_SetPrice		(FP_CB_UPGRADE_GENLAB_RESISB, "gl_resisb");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_GENLAB_REGENB, "gl_regenb");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_GENLAB_STIMPK, "gl_stimpk");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_GENLAB_RUSYNC, "gl_rusync");
 
 	CMDBut_SetPrice		(FP_CB_UPGRADE_ARMORY_ARMS1, "ar_arms1");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_ARMORY_ARMS2, "ar_arms2");
@@ -220,12 +229,16 @@ function void CMDBut_SetPrices(void){
 
 	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_PUMP1, "rf_pump1");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_PUMP2, "rf_pump2");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_ENGINE, "rf_engine");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_COINX5, "rf_coinx5");
 
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_AIRSUP, "mc_airsup");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_ADVSYS, "mc_advsys");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_VETMER, "mc_advsys");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_IONCAN, "mc_ioncan");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_CPULSE, "mc_cpulse");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_COPTIM, "mc_coptim");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_CBOOST, "mc_cboost");
 
 	CMDBut_SetPrice		 (FP_CB_SUPPORT_AIRSTK_EXE, "airstrike");
 	CMDBut_SetPrice		 (FP_CB_SUPPORT_DROPMONEY, "moneybag");
@@ -314,6 +327,11 @@ function int CMDBut_UpdateConds(int btn){
 		case FP_CB_UPGRADE_GENLAB_STIMPK: CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_GENLAB_STIMPK)); 
 			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_GENLAB_HEALTH1), "Requires Human Eng. Phase 1...");
 		break;
+		case FP_CB_UPGRADE_GENLAB_RUSYNC: 
+			CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_GENLAB_RUSYNC)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_GENLAB_HEALTH2) && Tech_IsDoneC(TECH_MARCOM),
+			 "Requires Human Eng. Phase 2 and Marine Command...");
+		break;
 
 		// Armory upgrades
 		case FP_CB_UPGRADE_ARMORY_ARMS1:
@@ -331,6 +349,12 @@ function int CMDBut_UpdateConds(int btn){
 		// Refinery upgrades
 		case FP_CB_UPGRADE_REFINE_PUMP1: CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_PUMP1)); break;
 		case FP_CB_UPGRADE_REFINE_PUMP2: CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_PUMP2)); break;
+		case FP_CB_UPGRADE_REFINE_ENGINE: CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_ENGINE)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Requires the Marine Command...");
+		break;
+		case FP_CB_UPGRADE_REFINE_COINX5: CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_COINX5)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Requires the Marine Command...");
+		break;
 
 		// Marine command upgrades
 		case FP_CB_UPGRADE_MARCOM_AIRSUP: CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_AIRSUP)); break;
@@ -341,6 +365,14 @@ function int CMDBut_UpdateConds(int btn){
 			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_ARMORY_ARMS2), "Requires Arms Phase 2...");
 		break;
 		case FP_CB_UPGRADE_MARCOM_CPULSE: CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_CPULSE)); break;
+		case FP_CB_UPGRADE_MARCOM_COPTIM: 
+			CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_COPTIM)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_CPULSE), "Requires Core Pulses...");
+		break;
+		case FP_CB_UPGRADE_MARCOM_CBOOST: 
+			CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_CBOOST)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_CPULSE), "Requires Core Pulses...");
+		break;
 
 		// Support commands
 		case FP_CB_SUPPORT_IONCAN: 
@@ -353,9 +385,14 @@ function int CMDBut_UpdateConds(int btn){
 		break;
 
 		// Core Pulses
-		case FP_CB_SUPPORT_CPULSE_HEAL: CMDBut_SetShowCond (btn, !Tech_IsLockC(TECH_MARCOM_CPULSE)); break;
-		case FP_CB_SUPPORT_CPULSE_CRIPPLE: CMDBut_SetShowCond (btn, !Tech_IsLockC(TECH_MARCOM_CPULSE)); break;
-		case FP_CB_SUPPORT_CPULSE_HALT: CMDBut_SetShowCond (btn, !Tech_IsLockC(TECH_MARCOM_CPULSE)); break;
+		case FP_CB_SUPPORT_CPULSE_HEAL:
+		case FP_CB_SUPPORT_CPULSE_CRIPPLE:
+		case FP_CB_SUPPORT_CPULSE_HALT:
+		case FP_CB_SUPPORT_CPULSE_SMITE:
+		case FP_CB_SUPPORT_CPULSE_REPAIR:
+		case FP_CB_SUPPORT_CPULSE_WARCRY: 
+			CMDBut_SetShowCond (btn, !Tech_IsLockC(TECH_MARCOM_CPULSE)); 
+		break;
 		
 		
 		// Airstrike commands.
@@ -412,265 +449,6 @@ function void CMDBut_InitConds(void) {
 		//CMDBut_Delay (i, 0);
 	}
 }
-
-function void oldcode (void) {
-	/*
-	btn = FP_CB_BUILD_GENLAB;
-	CMDBut_SetPrice		(btn, 	"genlab");
-	CMDBut_SetShowCond	(btn, 	!Tech_IsActivatedC(TECH_GENLAB));
-	CMDBut_SetEvent		(btn, 	CMDEVT_BUILD_GENLAB);
-	
-	btn = FP_CB_BUILD_ARMORY;
-	CMDBut_SetPrice		(btn,  	"armory");
-	CMDBut_SetShowCond	(btn,	!Tech_IsActivatedC(TECH_ARMORY));
-	CMDBut_SetEvent		(btn, 	CMDEVT_BUILD_ARMORY);
-	
-	btn = FP_CB_BUILD_MECHFA;
-	CMDBut_SetPrice		(btn, 	"mechfa");
-	CMDBut_SetShowCond	(btn,	!Tech_IsActivatedC(TECH_MECHFA));
-	CMDBut_SetEvent		(btn, 	CMDEVT_BUILD_MECHFA);
-	
-	btn = FP_CB_BUILD_REFINE;
-	CMDBut_SetPrice		(btn, 	"refine");
-	CMDBut_SetShowCond	(btn,	!Tech_IsActivatedC(TECH_REFINE));
-	CMDBut_SetEvent		(btn, 	CMDEVT_BUILD_REFINE);
-	
-	btn = FP_CB_BUILD_MARCOM;
-	CMDBut_SetPrice		(btn, 	"marcom");
-	CMDBut_SetShowCond	(btn,	!Tech_IsActivatedC(TECH_MARCOM));
-	CMDBut_SetEvent		(btn, 	CMDEVT_BUILD_MARCOM);
-	
-	btn = FP_CB_BUILD_NUKESY;
-	CMDBut_SetPrice		(btn, 	"nukesy");
-	CMDBut_SetShowCond	(btn,	!Tech_IsActivatedC(TECH_NUKESY) && CheckInventory("f_allownuke"));
-	CMDBut_SetEvent		(btn, 	CMDEVT_BUILD_NUKESY);
-	*/
-	/**
-		Upgrade buttons.
-	*/
-	/*
-	btn = FP_CB_UPGRADE_GENLAB;
-	CMDBut_SetShowCond	(btn, Tech_IsDoneC(TECH_GENLAB));
-	
-	btn = FP_CB_UPGRADE_GENLAB_HEALTH1;
-	CMDBut_SetPrice		(btn, "gl_health1");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_GENLAB_HEALTH1));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_HEALTH1);
-	
-	btn = FP_CB_UPGRADE_GENLAB_HEALTH2;
-	CMDBut_SetPrice		(btn, "gl_health2");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_GENLAB_HEALTH2) && Tech_IsDoneC(TECH_GENLAB_HEALTH1));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_HEALTH2);
-	
-	btn = FP_CB_UPGRADE_GENLAB_ARMOR;
-	CMDBut_SetPrice		 (btn, "gl_armor1");
-	CMDBut_SetShowCond	 (btn, !Tech_IsDoneC(TECH_GENLAB_ARMOR));
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_GENLAB_HEALTH1), "Requires Human Eng. Phase 1...");
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_ARMOR);
-	
-	btn = FP_CB_UPGRADE_GENLAB_SPEEDB;
-	CMDBut_SetPrice		 (btn, "gl_speedb");
-	CMDBut_SetShowCond	 (btn, !Tech_IsDoneC(TECH_GENLAB_SPEEDB));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_SPEEDB);
-	
-	btn = FP_CB_UPGRADE_GENLAB_RESISB;
-	CMDBut_SetPrice		(btn, "gl_resisb");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_GENLAB_RESISB));
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_GENLAB_HEALTH2), "Requires Human Eng. Phase 2...");
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_RESISB);
-	
-	btn = FP_CB_UPGRADE_GENLAB_REGENB;
-	CMDBut_SetPrice		 (btn, "gl_regenb");
-	CMDBut_SetShowCond	 (btn, !Tech_IsDoneC(TECH_GENLAB_REGENB));
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_GENLAB_HEALTH2), "Requires Human Eng. Phase 2...");
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_REGENB);
-	
-	CMDBut_SetShowCond	(FP_CB_UPGRADE_ARMORY, Tech_IsDoneC(TECH_ARMORY));
-	
-	btn = FP_CB_UPGRADE_ARMORY_ARMS1;
-	CMDBut_SetPrice		(btn, "ar_arms1");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_ARMORY_ARMS1));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_ARMS1);
-	
-	btn = FP_CB_UPGRADE_ARMORY_ARMS2;
-	CMDBut_SetPrice		(btn, "ar_arms2");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_ARMORY_ARMS2) && Tech_IsDoneC(TECH_ARMORY_ARMS1));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_ARMS2);
-	
-	btn = FP_CB_UPGRADE_ARMORY_BOOMRN;
-	CMDBut_SetPrice		(btn, "ar_boomrn");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_ARMORY_BOOMRN));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_BOOMRN);
-	
-	btn = FP_CB_UPGRADE_ARMORY_AMMOBP;
-	CMDBut_SetPrice		(btn, "ar_ammobp");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_ARMORY_AMMOBP));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_AMMOBP);
-	
-	CMDBut_SetShowCond	(FP_CB_UPGRADE_REFINE, Tech_IsDoneC(TECH_REFINE));
-	
-	btn = FP_CB_UPGRADE_REFINE_PUMP1;
-	CMDBut_SetPrice		(btn, "rf_pump1");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_PUMP1));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_PUMP1);
-	
-	btn = FP_CB_UPGRADE_REFINE_PUMP2;
-	CMDBut_SetPrice		(btn, "rf_pump2");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_PUMP2));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_PUMP2);
-	
-	CMDBut_SetShowCond	(FP_CB_UPGRADE_MARCOM, Tech_IsDoneC(TECH_MARCOM));
-	
-	btn = FP_CB_UPGRADE_MARCOM_AIRSUP;
-	CMDBut_SetPrice		(btn, "mc_airsup");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_AIRSUP);
-	
-	btn = FP_CB_UPGRADE_MARCOM_ADVSYS;
-	CMDBut_SetPrice		(btn, "mc_advsys");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_MARCOM_ADVSYS));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_ADVSYS);
-
-	btn = FP_CB_UPGRADE_MARCOM_VETMER;
-	CMDBut_SetPrice		(btn, "mc_advsys");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_MARCOM_VETMER));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_VETMER);
-	
-	btn = FP_CB_UPGRADE_MARCOM_IONCAN;
-	CMDBut_SetPrice		(btn, "mc_ioncan");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_MARCOM_IONCAN));
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_ARMORY_ARMS2), "Requires Arms Phase 2...");
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_IONCAN);
-	
-	
-	btn = FP_CB_UPGRADE_MARCOM_CPULSE;
-	CMDBut_SetPrice		(btn, "mc_cpulse");
-	CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_MARCOM_CPULSE));
-	CMDBut_SetEvent		(btn, CMDEVT_RESEARCH_CPULSE);
-	
-	/**
-		Support buttons.
-	*/
-	
-	/*
-	btn = FP_CB_SUPPORT_IONCAN;
-	CMDBut_SetShowCond 	 (btn, !Tech_IsLockC(TECH_MARCOM_IONCAN));
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_IONCAN), "Research it in the Marine Command first!");
-	CMDBut_SetEvent		(btn, CMDEVT_SCRIPT_IONCAN);
-	
-	btn = FP_CB_SUPPORT_CPULSE;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_CPULSE));
-	CMDBut_SetAccessCond 	(btn, Tech_IsDoneC(TECH_MARCOM_CPULSE), "Research it in the Marine Command first!");
-	
-	btn = FP_CB_SUPPORT_CPULSE_HEAL;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_CPULSE));
-	CMDBut_SetEvent		(btn, CMDEVT_CPULSE_HEAL);
-	
-	btn = FP_CB_SUPPORT_CPULSE_CRIPPLE;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_CPULSE));
-	CMDBut_SetEvent		(btn, CMDEVT_CPULSE_CRIPPLE);
-	
-	btn = FP_CB_SUPPORT_CPULSE_HALT;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_CPULSE));
-	CMDBut_SetEvent		(btn, CMDEVT_CPULSE_HALT);
-	
-	// Airstrike commands.
-	btn = FP_CB_SUPPORT_AIRSTK;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_AIRSUP), "Research it in the Marine Command first!");
-	
-	btn = FP_CB_SUPPORT_AIRSTK_LINE_1;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_LINE1);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_LINE_2;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_LINE2);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_WAVES_1;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP) && airstk_waves == 1);
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_WAVES);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_WAVES_3;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP) && airstk_waves == 3);
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_WAVES);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_WAVES_5;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP) && airstk_waves == 5);
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_WAVES);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_POINT;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_POINT);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_CLEAR;
-	CMDBut_SetShowCond 		(btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetEvent			(btn, CMDEVT_AIRSTK_CANCEL);
-	
-	btn = FP_CB_SUPPORT_AIRSTK_EXE;
-	CMDBut_SetShowCond 	 (btn, !Tech_IsLockC(TECH_MARCOM_AIRSUP));
-	CMDBut_SetPrice		 (btn, "airstrike");
-	CMDBut_SetIgnorePrice(btn, true);
-	CMDBut_SetEvent		 (btn, CMDEVT_AIRSTK_EXECUTE);
-	
-	// Drop money bag.
-	btn = FP_CB_SUPPORT_DROPMONEY;
-	CMDBut_SetPrice		 (btn, "moneybag");
-	CMDBut_SetShowCond	 (btn, checkInventory("c_allow_moneybag") && checkInventory("p_team_credits") >= 3000);
-	CMDBut_SetIgnorePrice(btn, true);
-	CMDBut_SetEvent		 (btn, CMDEVT_SPAWN_MONEYBAG);
-	*/
-	/*
-	// All deploy buttons.
-	*/
-	/*
-	btn = FP_CB_DEPLOY_DISP_HEALTH;
-	CMDBut_SetPrice		(btn, "disp_health");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_DISP_HEALTH);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_DISP_AMMO;
-	CMDBut_SetPrice		 (btn, "disp_ammo");
-	CMDBut_SetShowCond	(btn, allow_turret_C());
-	CMDBut_SetEvent		(btn, CMDEVT_DEPLOY_DISP_AMMO);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_BARRIER;
-	CMDBut_SetPrice		 (btn, "sandbags");
-	CMDBut_SetShowCond	(btn, allow_turret_c());
-	CMDBut_SetEvent		(btn, CMDEVT_SPAWN_SANDBAGS);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_MINEFIELD;
-	CMDBut_SetPrice		 (btn, "minefield");
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), 
-		"Build the marine command to unlock this.");
-		CMDBut_SetEvent		(btn, CMDEVT_SPAWN_LANDMINES);
-	//CMDBut_SetIgnorePrice(btn, true);
-	
-	btn = FP_CB_DEPLOY_TURRET;
-	CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Build the marine command to unlock this.");
-
-	/*
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_BULLET, 	CMDEVT_DEPLOY_TURRET_BULLET, 	"turret_bullet", false);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_SHOTGUN, 	CMDEVT_DEPLOY_TURRET_SHOTGUN, 	"turret_shotgun", false);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_ROCKET, 	CMDEVT_DEPLOY_TURRET_ROCKET, 	"turret_rocket", false);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_PLASMA, 	CMDEVT_DEPLOY_TURRET_PLASMA, 	"turret_plasma", true);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_TESCOL, 	CMDEVT_DEPLOY_TURRET_TESLA, 	"turret_tesla", true);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_FLAMER, 	CMDEVT_DEPLOY_TURRET_FLAME, 	"turret_flame", true);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_CHAINGUN, 	CMDEVT_DEPLOY_TURRET_CHAINGUN, 	"turret_chaingun", true);
-	CMDBut_Conds_Deploy(FP_CB_DEPLOY_TURRET_BFG, 		CMDEVT_DEPLOY_TURRET_BFG, 		"turret_bfg", true);
-					*/			
-	/*
-	CMDBut_SetShowCond		(FP_CB_NUKE, !CheckInventory("c_NukeLaunched") && CheckInventory("f_allownuke"));
-	CMDBut_SetShowCond		(FP_CB_NUKE_IT_NOW, !CheckInventory("c_NukeLaunched") && CheckInventory("f_allownuke"));
-	CMDBut_SetEvent			(FP_CB_NUKE_IT_NOW,  CMDEVT_SCRIPT_NUKE);
-	CMDBut_SetAccessCond 	(FP_CB_NUKE, Tech_IsDoneC(TECH_NUKESY) && Tech_IsDoneC(TECH_ARMORY_ARMS2),
-								"Requires Arms 2 and the Nuke Sylo...");
-	*/
-}
-
 
 function str CMDBut_GetName(int w){		return CMDBut_List[w][0];}
 function str CMDBut_GetDesc(int w){		return CMDBut_List[w][1];}

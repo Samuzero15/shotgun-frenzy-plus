@@ -32,6 +32,9 @@ Script "SFPlus_MonsterKill" Kill{
 	  //if(CheckFlag(0, "NOPAIN"))log(s:"This monster goes painless.");
 		 // monster class
 	  int monsterClass = sf_GetMonsterClass_Health();
+	  int ischamp = CheckInventory("Champ_Type");
+
+		
 	  int splat = flag_gibbed;
 	  int noprofit = flag_NoCount;
 	  int montype;
@@ -59,10 +62,9 @@ Script "SFPlus_MonsterKill" Kill{
 	  i++;
 	  }
   	  
-	 
-
+	 if(ischamp) ItemDr_ChampionDrop(monsterClass);
 	 // Drop reward items.
-	 ItemDr_MonsterDrop(monsterClass);
+	 else ItemDr_MonsterDrop(monsterClass);
 	 
 
 	 // Calculate the money gain by the player.
@@ -76,6 +78,7 @@ Script "SFPlus_MonsterKill" Kill{
 	 //log(d:ActivatorTID());
 	 
 	 SetActivatorToTarget(0);
+	 ACS_NamedExecuteAlways("SFPlus_OnMonsterKill", 0, ischamp);
 	 //print(d:ActivatorTID());
 	 //printbold(s:"No profit? = ", d:noProfit);
 	p_monsterKilled(monsterClass, splat, noProfit, montype);

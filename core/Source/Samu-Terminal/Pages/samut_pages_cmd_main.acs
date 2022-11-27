@@ -248,6 +248,7 @@ function void CMDPage_UpdateButton2(int slot){
 		int up_btndata = CMDBut_UpdateConds(btndata);
 		
 		if(up_btndata != btndata){
+			log(s:"slot: ", d:slot, s:" sex: ", d:up_btndata);
 			CMDPage_SetButtonInSlot(slot, up_btndata);
 			CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, up_btndata);
 			btndata = up_btndata;
@@ -317,6 +318,7 @@ function void CMDPage_SetButtonLayout(int layout){
 			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_GENLAB_RESISB);
 			CMDPage_SetButtonInSlot(4, FP_CB_UPGRADE_GENLAB_REGENB);
 			CMDPage_SetButtonInSlot(5, FP_CB_UPGRADE_GENLAB_STIMPK);
+			CMDPage_SetButtonInSlot(6, FP_CB_UPGRADE_GENLAB_RUSYNC);
 			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
 			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
 		break;
@@ -345,8 +347,8 @@ function void CMDPage_SetButtonLayout(int layout){
 			CMDPage_SetButtonInSlot(2, FP_CB_UPGRADE_MARCOM_IONCAN);
 			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_MARCOM_CPULSE);
 			CMDPage_SetButtonInSlot(4, FP_CB_UPGRADE_MARCOM_VETMER);
-			CMDPage_SetButtonInSlot(5, FP_CB_UPGRADE_MARCOM_PFUSER);
-			CMDPage_SetButtonInSlot(6, FP_CB_UPGRADE_MARCOM_POPTIM);
+			CMDPage_SetButtonInSlot(5, FP_CB_UPGRADE_MARCOM_CBOOST);
+			CMDPage_SetButtonInSlot(6, FP_CB_UPGRADE_MARCOM_COPTIM);
 			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
 			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
 		break;
@@ -380,6 +382,9 @@ function void CMDPage_SetButtonLayout(int layout){
 			CMDPage_SetButtonInSlot(0, FP_CB_SUPPORT_CPULSE_HEAL);
 			CMDPage_SetButtonInSlot(1, FP_CB_SUPPORT_CPULSE_CRIPPLE);
 			CMDPage_SetButtonInSlot(2, FP_CB_SUPPORT_CPULSE_HALT);
+			CMDPage_SetButtonInSlot(3, FP_CB_SUPPORT_CPULSE_SMITE);
+			CMDPage_SetButtonInSlot(4, FP_CB_SUPPORT_CPULSE_REPAIR);
+			CMDPage_SetButtonInSlot(5, FP_CB_SUPPORT_CPULSE_WARCRY);
 			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
 			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_SUPPORT);
 		break;

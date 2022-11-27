@@ -115,7 +115,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			 if (Tech_IsDone(TECH_ARMORY_GNADES))
 				GiveInventory("Inventory_HandGrenade", 5);
 			 if (Tech_IsDone(TECH_GENLAB_STIMPK))
-				GiveInventory("Inventory_Stimpack", 5 + CheckInventory("StimUp_Amount"));
+				SetInventory("Inventory_Stimpack", 5 + CheckInventory("StimUp_Amount"));
 			 if (Tech_IsDone(TECH_ARMORY_BOOMRN)) 
 				giveinventory("Upgrade_Boomshot", 1);   // boomshot rounds
              if (Tech_IsDone(TECH_ARMORY_AMMOBP)) 

@@ -16,8 +16,8 @@ ACTOR ResurrectionRune : RuneGiver {
 	{
 	Spawn:
 
-		RRES A 1 Bright A_SpawnItem("ResurrectionRune_GFX")
-		RRES A 5 Bright A_fadein(0.5)
+		RRES A 3 Bright A_SpawnItem("ResurrectionRune_GFX")
+		RRES A 3 Bright A_fadein(0.5)
 		RRES A 6 A_fadeout(0.5)
 		Loop
 	}

@@ -39,6 +39,7 @@ script "SFPlus_PickupMsg" (int howmuch, int type){
 }
 
 script "SFPlus_CreditPickup" (int howmuch, int color){
+	howmuch = howmuch*(1+4*Tech_isDone(TECH_REFINE_COINX5));
 	ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, howmuch, color);
 	sf_AddCredits_S(howmuch, playernumber());
 	sf_AddTeamCredits(howmuch);
@@ -77,7 +78,6 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(Human() && 
 		(CheckActorClass(ActivatorTID(), "FrenzyPlayer") 
 		|| CheckActorClass(ActivatorTID(), "MONSTEREDITED_MechPlayer"))){
-			ACS_NamedExecuteAlways("SFPlus_OnMonsterKill", 0);
 
 		
 	if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))

@@ -4,7 +4,7 @@ ACTOR FortuneRune : RuneGiver {
 	// Credits are more common.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RFORT0
 	Inventory.MaxAmount 0
 	Rune.Type Fortune
 	Inventory.PickupMessage "Fortune!"
@@ -12,7 +12,7 @@ ACTOR FortuneRune : RuneGiver {
 	States
 	{
 	Spawn:
-		STRR DCBA 6
-		Loop
+		RFOR T 8 A_SpawnItemEx("Blood", random(-2,2), random(-2,2), 8)
+		loop
 	}
 }

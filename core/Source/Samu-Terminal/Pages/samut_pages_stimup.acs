@@ -6,41 +6,59 @@ int stimpage_vars[50];
 
 function void StimUpPage_Update(int pageTag) {
     setPageTitle(pageTag, "Stimpack Upgrades!", CR_CYAN);
-	if(isOnTheSamePage(pageTag)){
+	
+	if(isOnTheSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_STIMPK)){
 		stimpage_vars[3] = 0;
 		for(int j = 0; j < StimUpTop; j++){
 			StimUpPage_UpdateComps(j);
 		}
-		
 		Label_SetText(stimpage_vars[4], StimUp_ReportUps());
 		Label_SetText(stimpage_vars[2], "");
 	}
 }
 
 function void StimUpPage_Init(int pageTag) {
-    stimpage_vars[0] = pageTag;
-    int i;
+	stimpage_vars[0] = pageTag;
+	int i;
+	if(Tech_IsDoneC(TECH_GENLAB_STIMPK)){
+		
+		i = Label_Add(320.0, 70.0);
+		Label_SetText(i, "All the added effects activate upon the use of the stimpack!");
+		Label_SetTag(i, stimpage_vars[0]);
 
-    i = Label_Add(320.0, 70.0);
-    Label_SetText(i, "All the added effects activate upon the use of the stimpack!");
-    Label_SetTag(i, stimpage_vars[0]);
+		stimpage_vars[2] = Label_Dup(i, 320.0, 360.0);
+		Label_SetText(stimpage_vars[2], "");
+		Label_SetTag (stimpage_vars[2], stimpage_vars[0]);
+		Label_setWrapWidth(stimpage_vars[2],400);
 
-	stimpage_vars[2] = Label_Dup(i, 320.0, 360.0);
-    Label_SetText(stimpage_vars[2], "");
-    Label_SetTag (stimpage_vars[2], stimpage_vars[0]);
-	Label_setWrapWidth(stimpage_vars[2],400);
+		stimpage_vars[4] = Label_Dup(i, 170.0, 150.0);
 
-	stimpage_vars[4] = Label_Dup(i, 170.0, 150.0);
+		Card_SetPosition(350.0,90.0);
+		Card_SetCells(8);
+		Card_SetStep(35.0);
+		Card_SetVerticalOri(true);
+		stimpage_vars[1] = Card_Generate();
 
-    Card_SetPosition(350.0,90.0);
-	Card_SetCells(8);
-	Card_SetStep(35.0);
-	Card_SetVerticalOri(true);
-	stimpage_vars[1] = Card_Generate();
+		for(int j = 0; j < StimUpTop; j++){
+			StimUpPage_AddComps(j, stimpage_vars[0], stimpage_vars[1],  j+1);
+		}
+	}else{
+		i = Label_Add(320.0, 220.0);
+		Label_SetText(i, "ACCESS DENIED");
+		Label_SetTag(i, stimpage_vars[0]);
+		Label_SetFont(i, "STATBIGS");
+		Label_SetColor(i, CR_BRICK);
 
-    for(int j = 0; j < StimUpTop; j++){
-		StimUpPage_AddComps(j, stimpage_vars[0], stimpage_vars[1],  j+1);
+		i = Label_Dup(i,320.0, 235.0);
+		Label_SetText(i, "Stimpacks are not researched yet");
+		Label_SetColor(i, CR_WHITE);
+
+		i = Label_Dup(i,320.0, 250.0);
+		Label_SetText(i, "This page is not available at the moment, come back later.");
+		Label_SetFont(i, "Confont");
+		Label_SetWrapWidth(i, 500);
 	}
+    
 }
 
 function void StimUpPage_UpdateComps(int upgrade){

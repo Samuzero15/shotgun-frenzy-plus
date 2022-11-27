@@ -4,7 +4,7 @@ ACTOR BlastRune : RuneGiver {
     // Takes 1 second cooldown after using it's effect.
 	+NOGRAVITY
 	+INVENTORY.AUTOACTIVATE
-	Inventory.Icon RESRA0
+	Inventory.Icon RBSTA0
 	Inventory.MaxAmount 0
 	Rune.Type Blast
 	Inventory.PickupMessage "Blast!"
@@ -12,7 +12,7 @@ ACTOR BlastRune : RuneGiver {
 	States
 	{
 	Spawn:
-		STRR DCBA 6
+		RBST ABCB 6
 		Loop
 	}
 }
@@ -26,8 +26,7 @@ Actor BlastRune_Cooldown : PowerupGiver {
     +INVENTORY.AUTOACTIVATE
     +VisibilityPulse
     powerup.type BlastRune_CooldownTime
-    Powerup.Color InverseMap
-    Powerup.Color "0 0 0" 0.3
+    Powerup.Color "0 0 0" 0.0
     Renderstyle Translucent
 }
 

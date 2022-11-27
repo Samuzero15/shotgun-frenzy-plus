@@ -66,16 +66,17 @@ script 350 (void)
         // movement animation
         floor_raisebyvalue(286, 100, 128);
         floor_lowerbyvalue(285, 100, 128);
-        delay(35*1);
+        delay(35-10*Tech_IsDone(TECH_REFINE_ENGINE));
         floor_lowerbyvalue(286, 100, 128);
         floor_raisebyvalue(285, 100, 128);
         
         // delay before repeating
-        delay(35*1);
+        delay(35-10*Tech_IsDone(TECH_REFINE_ENGINE));
         
         // increase credit count
 		pump1 = Tech_IsDone(TECH_REFINE_PUMP1);
 		pump2 = Tech_IsDone(TECH_REFINE_PUMP2);
+        // Deeper pumps, duply the credit gaining.
         c_Credits += (2 + 4*pump1 + 4*pump2);
     }
 }

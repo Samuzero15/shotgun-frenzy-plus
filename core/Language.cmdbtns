@@ -124,6 +124,10 @@ CBDATA_N_UPG_GENLAB_STIMPK = "Stimpacks";
 CBDATA_D_UPG_GENLAB_STIMPK = "Marines start with 10 stimpacks."
 						 "\n+20 HP on use.";
 
+CBDATA_I_UPG_GENLAB_RUSYNC = "CC26";
+CBDATA_N_UPG_GENLAB_RUSYNC = "Rune Synchronization"; 
+CBDATA_D_UPG_GENLAB_RUSYNC = "Marines can buy runes in the health terminal.";
+
 
 CBDATA_I_UPG_ARMORY_ARMS1 = "CM26";
 CBDATA_N_UPG_ARMORY_ARMS1 = "Arms Phase 1"; 
@@ -196,14 +200,14 @@ CBDATA_N_UPG_MARCOM_CPULSE = "Core Pulse";
 CBDATA_D_UPG_MARCOM_CPULSE = "Your core gains the capacity to create special effects\n"
 						 "that affects in the battle field.";
 
-CBDATA_I_UPG_MARCOM_POPTIM = "CC21";
-CBDATA_N_UPG_MARCOM_POPTIM = "Pulse Optimizer"; 
-CBDATA_D_UPG_MARCOM_POPTIM = "Less recharge and startup delay on pulses.\n"
+CBDATA_I_UPG_MARCOM_COPTIM = "CC21";
+CBDATA_N_UPG_MARCOM_COPTIM = "Core Optimizer"; 
+CBDATA_D_UPG_MARCOM_COPTIM = "Less recharge and startup delay on pulses.\n"
 						 "-25% secs on recharge. -2 secs on startup.";
 
-CBDATA_I_UPG_MARCOM_PFUSER = "CC20";
-CBDATA_N_UPG_MARCOM_PFUSER = "Pulse Fuser"; 
-CBDATA_D_UPG_MARCOM_PFUSER = "Improves the effects of your core pulses.";	
+CBDATA_I_UPG_MARCOM_CBOOST = "CC20";
+CBDATA_N_UPG_MARCOM_CBOOST = "Core Booster"; 
+CBDATA_D_UPG_MARCOM_CBOOST = "Improves the effects of your core pulses.";	
 
 CBDATA_I_SUP_AIRSTK = "CM76";
 CBDATA_N_SUP_AIRSTK = "Airstrike attack..."; 
@@ -256,7 +260,7 @@ CBDATA_D_SUP_CPULSE = "Activate a core pulse";
 
 CBDATA_I_SUP_CPULSE_HEAL = "CM69";
 CBDATA_N_SUP_CPULSE_HEAL = "Heal pulse"; 
-CBDATA_D_SUP_CPULSE_HEAL = "Fully heals the current risked sector's core."; 
+CBDATA_D_SUP_CPULSE_HEAL = "Activate a free megasphere, grants a short invul, \nand a 50% temporal resistance up for all marines."; 
 
 CBDATA_I_SUP_CPULSE_CRIPPLE = "CM68";
 CBDATA_N_SUP_CPULSE_CRIPPLE = "Cripple pulse"; 
@@ -266,11 +270,15 @@ CBDATA_I_SUP_CPULSE_HALT = "CM67";
 CBDATA_N_SUP_CPULSE_HALT = "Halt Pulse"; 
 CBDATA_D_SUP_CPULSE_HALT = "Holds up the monster spawning for 60 seconds."; 
 
-CBDATA_I_SUP_CPULSE_WAR = "CM67";
-CBDATA_N_SUP_CPULSE_WAR = "War Pulse"; 
-CBDATA_D_SUP_CPULSE_WAR = "Powerups all marines with x2 Damage and Fast Fire"; 
+CBDATA_I_SUP_CPULSE_REPAIR = "CC25";
+CBDATA_N_SUP_CPULSE_REPAIR = "Repair pulse"; 
+CBDATA_D_SUP_CPULSE_REPAIR = "Fixes the risked core to 100% hp."; 
 
-CBDATA_I_SUP_CPULSE_SMITE = "CM67";
+CBDATA_I_SUP_CPULSE_WARCRY = "CC19";
+CBDATA_N_SUP_CPULSE_WARCRY = "Warcry Pulse"; 
+CBDATA_D_SUP_CPULSE_WARCRY = "Powerups all marines with x2 Damage and Fast Fire"; 
+
+CBDATA_I_SUP_CPULSE_SMITE = "CC18";
 CBDATA_N_SUP_CPULSE_SMITE = "Smite Pulse"; 
 CBDATA_D_SUP_CPULSE_SMITE = "Greatly damages the monsters inside of the risked sector."; 
 

@@ -7,7 +7,10 @@
 ) Now the game autosaves your progress each 10 seconds in the game!
 ) Added an new powerup, Hell-trigger!, Allows you to fire fast, and with infinite ammo for a short time!
 ) Runes!, Skulltag + some original ones!
+) Rune shop and Stimpack upgrades are available in the Health terminal! 
 ) The Patcher Gun!, now fix and upgrade your turrets by using your credits! It gives you experience upon use!
+) New Core pulses, Warcry and Smite, revamped heal pulse and rename the other pusle to Revive.
+) New techs to be researched!
 ) Speaking of upgraded turrets, now each turret and dispenser (except the base turret) can be upgraded up to Level 5.
 ) But beware! Turrets and Dispensers can attract monsters!
 ) Champions! (again, thanks Mikk & TDDR!)
@@ -18,7 +21,7 @@
 [\cfChanged / Fixed\c-]
 ) Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
 ) Mech Sync upgrade will only appear in the shotgun frenzy maps.
-) Ohoho! Shotgun and Chaingun turrets can now be pursacheable on the ammo terminal!
+) Ohoho! Shotgun and Chaingun turrets now can be pursacheable on the ammo terminal!
 ) Now the turrets will drop the smoke if they're low of its 50% of their health
 ) Now the turret displays an explosion, with fire and stuff.
 ) Prometeo protocol's invul effect has been nerfed to 5 seconds.
@@ -41,7 +44,6 @@
 ) Spear-Taser Railgun can fire a constant short ranged rail that rips everyone in it's path, and now it's Alt-fire stuns the first enemy on hit.
 
 [\cfRemoved\c-]
-nothing uwu.
 
 
 

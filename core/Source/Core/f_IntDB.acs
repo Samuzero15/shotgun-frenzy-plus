@@ -29,6 +29,7 @@
 #import "fl_StUpDir.acs"
 #import "fl_PUpDir.acs"
 #import "fl_techs.acs"
+#import "fl_runedir.acs"
 #import "fp_kshud.acs"
 #import "fp_ptdir.acs"
 #include "zcommon.acs"
@@ -276,6 +277,7 @@ script "SFPlus_InitializeEverything" OPEN{
 	SFPlus_DefineItems();
 	SFPlus_DefineTechs();
 	SFPlus_DefineStimUps();
+	SFPlus_DefineRunes();
 	
 	ProgTip_Init();
 	delay(1); // give this tic to the map default variables.

@@ -1,0 +1,138 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_runeDir.acs
+// Runes directory!
+
+// All the runes in a single file!
+
+#library "fl_runeDir"
+#import "f_intdb.acs"
+#include "zcommon.acs"
+#include "acsutils.acs"
+//#include "samu_tools.acs"
+
+#define FP_Rune_MAX 20
+
+int RuneTop = 0;
+int Rune_list[FP_Rune_MAX][7]; //[Amount][Props]
+int Rune_Saved[32];
+
+function void SFPlus_DefineRunes(void){
+    RuneTop = 0;
+    int tier = 4;
+	Rune_Add ("Strength",       "StrengthRune",     "RBTN02", tier, "RuneDoubleDamage"); 
+	Rune_Add ("Rage",           "RageRune",         "RBTN08", tier, "RuneDoubleFiringSpeed");
+    Rune_Add ("Spread",         "SpreadRune",       "RBTN11", tier, "RuneSpread"); 
+	Rune_Add ("Resistance",     "ResistanceRune",   "RBTN10", tier, "RuneHalfDamage");
+    Rune_Add ("Rampage",        "RampageRune",      "RBTN14", tier, "RuneRampage");
+
+    tier = 3;
+	Rune_Add ("Drain",          "DrainRune",        "RBTN03", tier, "RuneDrain");
+    Rune_Add ("Reflection",     "ReflectionRune",   "RBTN06", tier, "RuneReflection");
+    Rune_Add ("Defense",        "DefenseRune",      "RBTN19", tier, "RuneDefense");
+    Rune_Add ("Resurrection",   "ResurrectionRune", "RBTN01", tier, "RuneResurrection");
+    Rune_Add ("Soul",           "SoulRune",         "RBTN13", tier, "RuneSoul");
+
+    tier = 2;
+    Rune_Add ("Prosperity",     "ProsperityRune",   "RBTN07", tier, "RuneProsperity");
+    Rune_Add ("Blast",          "BlastRune",        "RBTN17", tier, "RuneBlast");
+    Rune_Add ("Ammunition",     "AmmunitionRune",   "RBTN16", tier, "RuneAmmunition");
+    Rune_Add ("Fortune",        "FortuneRune",      "RBTN18", tier, "RuneFortune");
+    Rune_Add ("Temperance",     "TemperanceRune",   "RBTN15", tier, "RuneTemperance");
+
+    tier = 1;
+    Rune_Add ("Health",         "HealthRune",       "RBTN12", tier, "RuneHealth");
+	Rune_Add ("Regeneration",   "RegenerationRune", "RBTN09", tier, "RuneRegeneration");
+	Rune_Add ("High Jump",      "HighJumpRune",     "RBTN05", tier, "RuneDoubleDamage");
+	Rune_Add ("Haste",          "HasteRune",        "RBTN04", tier, "RuneSpeed25");
+}
+
+function void Rune_Add (str name, str actor, str btnimg, int tier, str poweractor){
+	int upg = RuneTop;
+	
+	if(RuneTop >= FP_Rune_MAX)
+	{ 
+		log(s:"(fl_runedir): Too much runes!");
+		return;
+	}
+	// Look up language.txt
+	Rune_List[upg][0] = name;
+	Rune_List[upg][1] = strparam(l:strparam(s:"FP_RD_",s:actor));
+	Rune_List[upg][2] = actor;
+	// Lookup fl_price.acs
+	Rune_List[upg][3] = strparam(s:"pr_rt_", d:tier); 
+	Rune_List[upg][4] = btnimg;
+    Rune_List[upg][5] = tier;
+    Rune_List[upg][6] = poweractor;
+	RuneTop++;
+}
+
+function str Rune_getName(int up){	return Rune_List[up][0];}
+function str Rune_getDesc(int up){	return Rune_List[up][1];}
+function str Rune_getActor(int up){	return Rune_List[up][2];}
+function str Rune_getIcon(int up){	return Rune_List[up][4];}
+function str Rune_getTier(int up){	return Rune_List[up][5];}
+function int Rune_getPrice(int up){	return CheckInventory(Rune_List[up][3]);}
+function str Rune_getPowerActor(int up){ return Rune_List[up][6];}
+
+function int Rune_getCurrent(void){ 
+    int res = -1;
+    for(int i; i < RuneTop; i++){
+        if(CheckInventory(Rune_getPowerActor(i))){
+            res = i;
+            break;
+        }
+    }
+    return res;
+}
+
+function void Rune_SaveAndUnequip(void){ 
+    int play = PlayerNumber();
+    Rune_Saved[play] = Rune_getCurrent();
+    TakeInventory(Rune_getPowerActor(Rune_Saved[play]), 1);
+}
+
+function void Rune_LoadAndEquip(void){ 
+    int play = PlayerNumber();
+    GiveInventory(Rune_getActor(Rune_Saved[play]), 1);
+    Rune_Saved[play] = -1;
+}
+
+function int Rune_getTierUnlockPrice(int tier){ 
+    int res = 0;
+    switch(tier){
+        case 2: res = CheckInventory("pr_rt_u2"); break;
+        case 3: res = CheckInventory("pr_rt_u3"); break;
+        case 4: res = CheckInventory("pr_rt_u4"); break;
+        case 1: default: res = 0;
+    }
+    return res;
+}
+
+Script "SFPlus_RandomRune" (int arg) {
+    int pick = Rune_Pick(arg);
+    print(d:pick,s:") ", s:Rune_getName(pick));
+}
+
+function int Rune_Pick(int tier){
+    int result;
+    if(tier == 0) 
+    {
+        result = random(0, RuneTop-1);
+    } 
+    else {
+        int picks[5];
+        int stackpicks = 0;
+        for(int i; i < RuneTop; i++){
+            if(tier == Rune_getTier(i)){
+                picks[stackpicks] = i;
+                stackpicks++;
+            }
+        }
+        result = picks[random(0, stackpicks-1)];
+        
+    }
+    return result;
+}

@@ -33,6 +33,6 @@ Actor DefenseRune_Shield : PowerupGiver{
     +VisibilityPulse
     powerup.type DefenseRune_ShieldInvul
 	powerup.duration 15
-    Powerup.Color None
+    Powerup.Color "0 0 0" 0.0
     Renderstyle Translucent
 }

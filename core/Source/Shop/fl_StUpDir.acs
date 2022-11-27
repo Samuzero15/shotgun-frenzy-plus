@@ -7,7 +7,7 @@
 
 // Here it lays all of the stimpack upgrades on the game.
 // For the prices, take a look at fl_price.
-// The prices are on UP points!
+// The prices are on credits!
 
 #library "fl_StUpDir"
 #import "f_intdb.acs"

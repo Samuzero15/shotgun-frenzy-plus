@@ -232,7 +232,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 				Rank_GrantEXP(playnum, 1);
 			}
 		} else {
-			GiveInventory("PatcherEffect_Failed", 1);
+			GiveInventory("PatcherEffect_Fail", 1);
 			SetActivator(0, AAPTR_Damage_Source); // Back to the player
 			GiveInventory("Patcher_HudMaxHP", 1);
 			GiveInventory("Patcher_FrameRefresh", 1);
@@ -250,7 +250,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 		SetActivator(0, AAPTR_Damage_Target); // Back to the turret.
 
 		if(p_Credits[playnum] < price_upg){
-				GiveInventory("PatcherEffect_Failed", 1);
+				GiveInventory("PatcherEffect_Fail", 1);
 				SetActivator(0, AAPTR_Damage_Source); // Back to the player
 				GiveInventory("Patcher_HudNoMoney", 1);
 				GiveInventory("Patcher_FrameRefresh", 1);
@@ -276,13 +276,13 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 				If(GetActorProperty(0, APROP_HEALTH) < GetActorProperty(0, APROP_SPAWNHEALTH)){
 					p_Credits[playnum] -= price_upg;
 					GiveInventory("Health", GetActorProperty(0, APROP_SPAWNHEALTH));
-					GiveInventory("PatcherEffect_Failed", 1);
+					GiveInventory("PatcherEffect_Fail", 1);
 					SetActivator(0, AAPTR_Damage_Source); // Back to the player
 					Rank_GrantEXP(playnum, 3); 
 					GiveInventory("Patcher_HudBuffed", 1);
 					GiveInventory("Patcher_FrameRefresh", 1);
 				}else{
-					GiveInventory("PatcherEffect_Failed", 1);
+					GiveInventory("PatcherEffect_Fail", 1);
 					SetActivator(0, AAPTR_Damage_Source); // Back to the player
 					GiveInventory("Patcher_HudMaxHP", 1);
 					GiveInventory("Patcher_FrameRefresh", 1);

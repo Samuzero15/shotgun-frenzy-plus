@@ -12,6 +12,13 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 	// Eitherway, this will list all of the functions about the executions.
 	switch(cmd){
 
+		case STEXE_RUNESHOP_BUY: 	STExecute_RuneBuy(arg1);	break;
+		case STEXE_RUNESHOP_GET: 	STExecute_RuneGet(arg1);	break;
+		case STEXE_RUNESHOP_GIVE: 	STExecute_RuneGive(arg1);	break;
+		case STEXE_RUNESHOP_HOVER: 	STExecute_RuneDesc(arg1);	break;
+		case STEXE_RUNESHOP_BUYTIER: 	STExecute_RuneTierBuy();	break;
+		case STEXE_RUNESHOP_GIVETIER: 	STExecute_RuneTierGive();	break;
+
 		case STEXE_STIMUP_BUY: 	 STExecute_StimUpBuy(arg1);		break;
 		case STEXE_STIMUP_GIVE:  STExecute_StimUpGive(arg1);	break;
 		case STEXE_STIMUP_HOVER: STExecute_StimUpDesc(arg1);	break;

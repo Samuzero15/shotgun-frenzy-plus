@@ -80,6 +80,13 @@
 	Touch it if you want to handle more actions.
 */
 
+#libdefine STEXE_RUNESHOP_BUYTIER		58
+#libdefine STEXE_RUNESHOP_GIVETIER		-43
+#libdefine STEXE_RUNESHOP_BUY		56
+#libdefine STEXE_RUNESHOP_GET		57
+#libdefine STEXE_RUNESHOP_GIVE		-42
+#libdefine STEXE_RUNESHOP_HOVER 	55
+
 #libdefine STEXE_STIMUP_BUY			51
 #libdefine STEXE_STIMUP_GIVE		-41
 #libdefine STEXE_STIMUP_HOVER 		52

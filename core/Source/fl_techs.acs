@@ -48,7 +48,11 @@
 #libdefine TECH_REFINE_BOUNTY	29
 #libdefine TECH_REFINE_DEEPER	30
 #libdefine TECH_REFINE_FASTER	31
-#libdefine TECH_TEST	32
+#libdefine TECH_GENLAB_RUSYNC	32
+#libdefine TECH_MARCOM_CBOOST	33
+#libdefine TECH_MARCOM_COPTIM	34
+#libdefine TECH_REFINE_ENGINE	35
+#libdefine TECH_REFINE_COINX5	36
 
 int fp_techstate[99];
 int fp_techflags[2][3];
@@ -85,15 +89,30 @@ function bool Tech_IsActivatedC(int flag){
 }
 
 function bool Tech_IsDoneC(int flag){
-	return ((CheckInventory("tech_doneflags") & (1<<flag)) > 0) || ((CheckInventory("tech_doneflags2") & (1<<flag)) > 0);
+	int res;
+	switch(flag / 32){
+		case 0: res = ((CheckInventory("tech_doneflags") & (1<<flag)) > 0); break;
+		case 1: res = ((CheckInventory("tech_doneflags2") & (1<<flag)) > 0); break;
+	}
+	return res;
 }
 
 function bool Tech_IsLockC(int flag){
-	return ((CheckInventory("tech_lockflags") & (1<<flag)) > 0) || ((CheckInventory("tech_lockflags2") & (1<<flag)) > 0);
+	int res;
+	switch(flag / 32){
+		case 0: res = ((CheckInventory("tech_lockflags") & (1<<flag)) > 0); break;
+		case 1: res = ((CheckInventory("tech_lockflags2") & (1<<flag)) > 0); break;
+	}
+	return res;
 }
 
 function bool Tech_IsLoadC(int flag){
-	return ((CheckInventory("tech_loadflags") & (1<<flag)) > 0) || ((CheckInventory("tech_loadflags2") & (1<<flag)) > 0);
+	int res;
+	switch(flag / 32){
+		case 0: res = ((CheckInventory("tech_loadflags") & (1<<flag)) > 0); break;
+		case 1: res = ((CheckInventory("tech_loadflags2") & (1<<flag)) > 0); break; 
+	} 
+	return res;
 }
 
 function void Tech_ChangeFlags(int id, int flag, int value)

@@ -63,8 +63,10 @@ script 400 (void)
 #define FP_MCOM_CPULSE_CRIPPLE	"SFPLus_CripplePulse"
 #define FP_MCOM_CPULSE_HEAL		"SFPLus_HealPulse"
 #define FP_MCOM_CPULSE_SMITE	"SFPLus_SmitePulse"
-#define FP_MCOM_CPULSE_REVIVE	"SFPLus_RevivePulse"
+#define FP_MCOM_CPULSE_REPAIR	"SFPLus_RepairPulse"
 #define FP_MCOM_CPULSE_HALT		"SFPLus_HaltPulse"
+#define FP_MCOM_CPULSE_WARCRY		"SFPLus_WarcryPulse"
+#define FP_MCOM_CPULSE_SHOCK		"SFPLus_ShockPulse"
 
 script "SFPlus_CoreRecharge" (int delay_time){	
 	int slot = Notify_QueueFreeSpace();
@@ -73,6 +75,10 @@ script "SFPlus_CoreRecharge" (int delay_time){
 	
 	Tech_Set(TECH_MARCOM_CPULSE, TECHF_DONE);
 }
+
+// Need the shock and war pulses
+// Shock: all the demons will be stunned for a while.
+// War: All players gain x2.5 Dmg Up and Fast fire. 
 
 script "SFPlus_CorePulse" (int pulse_cmd)
 {	// A Generalized script for all of the core pulses.
@@ -91,36 +97,47 @@ script "SFPlus_CorePulse" (int pulse_cmd)
 	int execute;
 	int charge_delay;
 	switch(pulse_cmd){
-		case 1: // Harms all demons with 500 dmg.
-			pulse_name = "CRIPPLE"; 
-			execute = FP_MCOM_CPULSE_CRIPPLE; 
-			charge_delay = 20; 
-		break;
-		case 2: // Repairs the living cores gradually for 10 seconds.
+		case 1: // Buffs players with some extra 
 			pulse_name = "HEAL"; 
 			execute = FP_MCOM_CPULSE_HEAL; 
 			charge_delay = 15; 
 		break;
-		case 3: // Harms all demons within the risked sector with 3000 dmg.
-			pulse_name = "SMITE"; 
-			execute = FP_MCOM_CPULSE_SMITE; 
-			charge_delay = 30; 
+		case 2: // Harms all demons with 500 dmg.
+			pulse_name = "CRIPPLE"; 
+			execute = FP_MCOM_CPULSE_CRIPPLE; 
+			charge_delay = 20; 
 		break;
-		case 4: // Instantly repairs the risked core.
-			pulse_name = "REVIVE"; 
-			execute = FP_MCOM_CPULSE_REVIVE; 
-			charge_delay = 30; 
-		break;
-		case 5: // Stops monster spawning for a minute.
+		case 3: // Stops monster spawning for a minute.
 			pulse_name = "HALT"; 
 			execute = FP_MCOM_CPULSE_HALT; 
 			charge_delay = 25; 
 		break;
+		case 4: // Harms all demons within the risked sector with 3000 dmg.
+			pulse_name = "SMITE"; 
+			execute = FP_MCOM_CPULSE_SMITE; 
+			charge_delay = 30; 
+		break;
+		case 5: // Instantly repairs the risked core.
+			pulse_name = "REPAIR"; 
+			execute = FP_MCOM_CPULSE_REPAIR; 
+			charge_delay = 30; 
+		break;
+		case 6: // Stops monster spawning for a minute.
+			pulse_name = "WARCRY"; 
+			execute = FP_MCOM_CPULSE_WARCRY; 
+			charge_delay = 30; 
+		break;
+		case 7: // Stops monster spawning for a minute.
+			pulse_name = "SHOCK"; 
+			execute = FP_MCOM_CPULSE_SHOCK; 
+			charge_delay = 25; 
+		break;
 	}
-	
+	int startup_delay = 5-2*Tech_isDone(TECH_MARCOM_COPTIM);
+	charge_delay = charge_delay - ((floor(charge_delay * 0.25))>> 16)*Tech_isDone(TECH_MARCOM_COPTIM);
 	Notify_Message(strparam(s:pulse_name, s:" PULSE ACTIVATED"),
-		"Activating in 5 seconds...", "INFO", 2);
-    delay(35 * 5);
+		strparam(s:"Activating in ",d:startup_delay,s:" seconds..."), "INFO", 2);
+    delay(35 * (startup_delay));
 	acs_execute(126, 0, 1, 0, 0);
     ambientsound("x1/taser", 125);
 	//Effects
@@ -142,12 +159,13 @@ script FP_MCOM_CPULSE_CRIPPLE (void)
 	giveActorInventory(113, "FPMToken_NoCount", 1);
 	giveActorInventory(114, "FPMToken_NoCount", 1);
 	// Temporaly disable the credit earning of these monsters.
+	int damage = 500 * (1+2*Tech_isDone(TECH_MARCOM_CBOOST));
 	delay(2);
-	thing_damage(110, 500, "NoCount");
-	thing_damage(111, 500, "NoCount");
-	thing_damage(112, 500, "NoCount");
-	thing_damage(113, 500, "NoCount");
-	thing_damage(114, 500, "NoCount");
+	thing_damage(110, damage, "NoCount");
+	thing_damage(111, damage, "NoCount");
+	thing_damage(112, damage, "NoCount");
+	thing_damage(113, damage, "NoCount");
+	thing_damage(114, damage, "NoCount");
 	delay(2);
 	// Re-activate the credit earning.
 	takeActorInventory(110, "FPMToken_NoCount", 1);
@@ -161,13 +179,14 @@ script FP_MCOM_CPULSE_CRIPPLE (void)
 // Harms any demon inside of the risked sector with 3000 hp.
 script FP_MCOM_CPULSE_SMITE (void)
 {
-	giveActorInventory(114, "FPMToken_NoCount", 1);
+	giveActorInventory(110 + g_Status, "FPMToken_NoCount", 1);
 	// Temporaly disable the credit earning of these monsters.
+	int damage = 3000 * (1+4*Tech_isDone(TECH_MARCOM_CBOOST));
 	delay(2);
-	thing_damage(110 + g_Status, 3000,  "NoCount");
+	thing_damage(110 + g_Status, damage,  "NoCount");
 	delay(2);
 	// Re-activate the credit earning.
-	takeActorInventory(110, "FPMToken_NoCount", 1);
+	takeActorInventory(110 + g_Status, "FPMToken_NoCount", 1);
 }
 
 // halt pulse
@@ -180,9 +199,10 @@ script FP_MCOM_CPULSE_HALT (void)
 	ProgTip_SetMsg		(-1, "HALT PULSE");
 	ProgTip_SetEndMsg1	(-1, "HALT PULSE EXPIRED!");
 	ProgTip_SetEndMsg2	(-1, "Hostiles are spawning again!");
+	int time = 60 + 30*Tech_isDone(TECH_MARCOM_CBOOST);
 
 	int slot = Notify_QueueFreeSpace();
-	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, -1, 60, slot);
+	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, -1, time, slot);
 	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
 
 	// reactivate demons
@@ -192,46 +212,60 @@ script FP_MCOM_CPULSE_HALT (void)
 // heal pulse
 script FP_MCOM_CPULSE_HEAL (int pslot)
 {
-	ProgTip_DefaultProps(-1);
-	ProgTip_SetMsg		(-1, "HEAL PULSE");
-	ProgTip_SetEndMsg1	(-1, "HEAL PULSE EXPIRED!");
-	ProgTip_SetEndMsg2	(-1, "Cores will no longer repair themselves!");
-
-	int heal_time = 0;
-	int hp, maxhp, hp_gain, hp_cap;
-	int slot = Notify_QueueFreeSpace();
-	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, -1, 10, slot);
-	do{ 
-		// Yes, you can do stuff while you wait for the script!
-		if(heal_time % 5 == 0){ // Each 5 tics
-			for(int i = 1; i <= 4; i++){
-				int tid = 100 + i;
-				if(GetActorProperty(tid, APROP_Health) > 0){// Check if this core is still standing.
-					hp = GetActorProperty(tid, APROP_Health);
-					
-					// Check which core is it, the base one will always be the strongest.
-					if(i == 4) 	maxhp = 1500;
-					else 		maxhp = 750;
-					
-					// Cap hp per 5 tics.
-					hp_cap = 10;
-					if(maxhp - hp < hp_cap) hp_gain = maxhp - hp;
-					else 					hp_gain = hp_cap;
-					// Finally heal it.
-					setactorproperty(tid, APROP_Health, hp + hp_gain);
-					// Fun fact: using just hp_gain, will kill the cores instantly in full hp!
-				}
-			}
+	// Give an instant megasphere (Activated upon pickup), +30% resistance 20 seconds, and a 5 second short invul to all players.
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
 			
+			int megasphere_now = CheckInventory("Inventory_Megasphere");
+			GiveInventory("Inventory_Megasphere", 1);
+			UseInventory("Inventory_Megasphere");
+			if(CheckInventory("Inventory_Megasphere") != megasphere_now){
+				GiveInventory("Inventory_Megasphere", 1); // Check if it's on maximum, might not add the temporal megasphere, and if it does, refund it.
+			}
+			TakeInventory("CorePulse_Heal_Resistance", 1);
+			TakeInventory("CorePulse_Heal_Invul", 1);
+
+			GiveInventory("CorePulse_Heal_Resistance", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			GiveInventory("CorePulse_Heal_Invul", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			
+			
+			SetActivator(0);
 		}
-		heal_time++;
-		delay(1);
-	}while (p_TipProcess[slot]); // Wait for it.
+	}
+}
+
+script FP_MCOM_CPULSE_WARCRY (int pslot)
+{
+	// Give a x3 damage up, and fast fire for 20 seconds.
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			
+			TakeInventory("CorePulse_Warcry_RageUp", 1);
+			TakeInventory("CorePulse_Warcry_DamageUp", 1);
+
+			GiveInventory("CorePulse_Warcry_RageUp", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			GiveInventory("CorePulse_Warcry_DamageUp", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			
+			
+			SetActivator(0);
+		}
+	}
+}
+
+script FP_MCOM_CPULSE_SHOCK (int pslot)
+{
+	// Paralize your enemies for a while.
+	// Eh, next update lol.
 }
 
 // core revive
-script FP_MCOM_CPULSE_REVIVE (void)
+script FP_MCOM_CPULSE_REPAIR (void)
 {
-	if (100 + g_Status != 104)       setactorproperty(100 + g_Status, APROP_Health, 750);
-	else                             setactorproperty(100 + g_Status, APROP_Health, 1500);
+	int extrahealth = 300*Tech_isDone(TECH_MARCOM_CBOOST);
+	if (100 + g_Status != 104)       setactorproperty(100 + g_Status, APROP_Health, 750 + extrahealth);
+	else                             setactorproperty(100 + g_Status, APROP_Health, 1500 + extrahealth);
 }

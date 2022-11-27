@@ -1,0 +1,69 @@
+
+function void STExecute_RuneBuy(int r){
+    int price = Rune_getPrice(r);
+	log(s:Rune_getPowerActor(r));
+	if(getPlayCredits() < price)
+	{	
+		Toaster_ShowToast("You don't have enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}else if (CheckInventory(Rune_getPowerActor(r))){
+        Toaster_ShowToast("You already have this rune linked!",CR_ORANGE);
+		localAmbientSound("SamuTerm/Error",127);
+    }
+	else{
+		Prompt_Resize(35,10);
+        str title = strparam(s:"Buy ", s:Rune_GetName(r) ,s:"?");
+		Prompt_Ask(title, "\nAre you sure you want to buy this rune? \n\n\cfYour current rune will be replaced!", CR_CYAN);
+		Prompt_ExecuteOnTrue(STEXE_RUNESHOP_GET, r, 0, 0);
+		//Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
+	}
+}
+
+function void STExecute_RuneGet(int r){
+    str msg = strparam(s:Rune_GetName(r), s:" Rune linked!");
+	Toaster_ShowToast(msg, CR_CYAN);
+	SamuTerm_CallOpExecute(STEXE_RUNESHOP_GIVE, r, 0, 0);
+	LocalAmbientSound("p/deploy",128);
+}
+
+
+function void STExecute_RuneGive(int r){
+	sf_RemoveCredits(Rune_getPrice(r), PlayerNumber());
+
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(Rune_getActor(r), 1);
+}
+
+function void STExecute_RuneDesc(int r){
+    Label_setText(runepage_vars[3], Rune_GetName(r));
+	Label_setText(runepage_vars[4], Rune_GetDesc(r));
+}
+
+function void STExecute_RuneTierBuy(void){
+	int tierup = CheckInventory("RuneTier");
+
+    if(GetPlayUPts() < Rune_getTierUnlockPrice(tierup+2)){
+		Toaster_ShowToast("Not enough U.Ps!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = tierup + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(strparam(s:"Sure to unlock the tier ", d:tierup+2, s:" of runes?"),CR_ORANGE);
+		else{
+			//localambientsound("vehicle/mechupgrade",128);
+			Toaster_ShowToast(strparam(s:"Tier ",d:tierup+2,s:" unlocked! (click for more)"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_RUNESHOP_GIVETIER, 0, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+
+function void STExecute_RuneTierGive(void){
+	int tierup = CheckInventory("RuneTier");
+	sf_RemoveUpPoints(Rune_getTierUnlockPrice(tierup+2), PlayerNumber());
+
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory("RuneTier", 1);
+}

@@ -61,6 +61,31 @@ ACTOR Boomer_Resister : PowerupGiver
 	}
 }
 
+ACTOR CorePulse_Heal_Resistance : PowerProtection
+{
+	+INVENTORY.ADDITIVETIME
+	damagefactor "normal", 0.5
+	powerup.duration -20
+}
+
+ACTOR CorePulse_Heal_Invul : PowerInvulnerable
+{
+	+INVENTORY.ADDITIVETIME
+	powerup.duration -5
+}
+
+ACTOR CorePulse_Warcry_DamageUp : PowerDamage
+{
+	+INVENTORY.ADDITIVETIME
+	damagefactor "normal", 1.5
+	powerup.duration -20
+}
+
+ACTOR CorePulse_Warcry_RageUp : PowerDoubleFiringSpeed
+{
+	+INVENTORY.ADDITIVETIME
+	powerup.duration -20
+}
 
 // Asorber Unit
 //ACTOR Upgrade_Asorber_Factor : PowerProtection
