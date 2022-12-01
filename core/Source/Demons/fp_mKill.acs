@@ -49,8 +49,10 @@ Script "SFPlus_MonsterKill" Kill{
 		if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")) 
 			chance = chance + 5; 
 		while((1 + flag_gibbed + flag_boss + flag_hard) > i){
-			if(random(0, 100) < chance)
-				Spawn("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
+			if(random(0, 100) < chance){
+				SpawnForced("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
+			}
+				
 			i++;
 		}
 	 }

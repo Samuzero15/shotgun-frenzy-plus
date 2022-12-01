@@ -77,8 +77,8 @@ function void SFPlus_DefineWeapons (void){
 	pack = WeaponPack_AddLang(FP_BAS, "shotgun", 2, "SHOTGUN");
 
 	wep = Weapon_AddLang("SSG", pack, "ssg", "SHOTGUN_SSG");
-	WeaponUpgrade_AddLang("SSG_Autoload",		wep, 1, "SHOTGUN_SSG_UP1");
-	WeaponUpgrade_AddLang("SSG_Explosive",		wep, 2, "SHOTGUN_SSG_UP2");
+	WeaponUpgrade_AddLang("SSG_Explosive",		wep, 2, "SHOTGUN_SSG_UP1");
+	WeaponUpgrade_AddLang("SSG_Autoload",		wep, 1, "SHOTGUN_SSG_UP2");
 		
 	wep = Weapon_AddLang("Quadshot", pack, "quadshot", "SHOTGUN_QUAD");
 	WeaponUpgrade_AddLang("Quadshot_Full",		wep, 0, "SHOTGUN_QUAD_UP0");

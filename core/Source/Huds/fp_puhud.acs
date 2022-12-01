@@ -20,6 +20,7 @@ int puphud_amount;
 int powerup_list[PUPHUD_MAX][2];
 
 Script "SFPlus_PowerupList" Enter Clientside{
+	puphud_amount = 0;
 	if(ConsolePlayerNumber() == Playernumber()){
 		PowHud_Add("MaxHP", 		"StimUp_StimulantPower");
 		PowHud_Add("Speed", 		"StimUp_CaffeinePower");

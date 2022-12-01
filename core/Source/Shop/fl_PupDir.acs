@@ -24,8 +24,8 @@ int PlayUp_list[FP_PLAYUP_MAX][5];
 function void SFPlus_DefinePlayUps(void){
 	PlayUpTop = 0;
 	
-	PlayUp_Add ("Defensive Powerup Upgrade",	"PowUpUpgrade_1", 	"HBTN07");
-	PlayUp_Add ("Offensive Powerup Upgrade",	"PowUpUpgrade_2", 	"HBTN07");
+	PlayUp_Add ("Defensive Powerup Upgrade",	"PowUpUpgrade_Defense", 	"HBTN07");
+	PlayUp_Add ("Offensive Powerup Upgrade",	"PowUpUpgrade_Attack", 	"HBTN07");
 	if(checkinventory("f_gametype") == 1 || f_GameType == 1)
 		PlayUp_Add ("Mech Syncronize",		"MechSync", 		"HBTN05");
 	//PlayUp_Add ("Rune Syncronize",		"RuneSync", 		"HBTN08");

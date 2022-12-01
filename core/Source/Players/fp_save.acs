@@ -12,6 +12,8 @@
 #import "fl_pupdir.acs"
 #import "fl_idir.acs"
 #import "fl_wdir.acs"
+#import "fl_stupdir.acs"
+#import "fl_runedir.acs"
 
 int save_player_count = 0;
 int save_player_dict[99]; // Hold's the name, which it should be unique.
@@ -59,7 +61,7 @@ Script "SFPlus_StatsLoop" (void) {
 		PlayStats_Load(id);
 	}
 	while (PlayerInGame(playernumber())){
-		delay(35*10); // Each 10 seconds, save the stats.
+		delay(35*30); // Each 30 seconds, save the stats.
 		
 		PlayStats_Update(id);
 	}
@@ -107,6 +109,15 @@ function void PlayStats_Load(int id){
 		GiveInventory(MechUp_GetActor(j), save_player_stats[id][i]);
 		i++;
 	}
+	for (j = 0; j < StimUpTop; j++){ // Stimpack upgades
+		GiveInventory(StimUp_GetActor(j), save_player_stats[id][i]);
+		i++;
+	}
+	//log(s:"Loading rune ", d:save_player_stats[id][i]);
+	if(save_player_stats[id][i] != -1){ // The current rune.
+		GiveInventory(Rune_GetActor(save_player_stats[id][i]), 1);
+	}
+	i++;
 	//log(s:"States Loaded");
 }
 
@@ -139,6 +150,14 @@ function void PlayStats_Update(int id){
 		PlayStats_Save(CheckInventory(MechUp_GetActor(j)), 	id, i);
 		i++;
 	}
+
+	for (j = 0; j < StimUpTop; j++){ // Stimpack upgrades
+		PlayStats_Save(CheckInventory(StimUp_getActor(j)), 	id, i);
+		i++;
+	}
+	// the current rune
+	PlayStats_Save(Rune_getCurrent(), 	id, i);
+	i++;
 	//log(s:"States Updated");
 }
 

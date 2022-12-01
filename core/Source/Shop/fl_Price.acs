@@ -20,32 +20,27 @@ int fp_PriceStack = 0;
 
 //Remember, to let the terminal sync values, It's more efficient to use Inventory items.
 //Sure, you will end up with a long-ass Decorate, but that's a small price worth to pay. 
-script "SFPlus_PriceSyncher1" ENTER
+script "SFPlus_PriceSyncher" ENTER
 {// Synchs all of the prices so far. Start to End
-	//log(s:"Syncing from start to end.");
+	delay(5); // Just in case.
 	int counter;
-	while(true){
+	int range = 100;
+	bool sync_done = false;
+	while(counter < fp_priceStack && !sync_done){
 		setActivatorToPlayer(playerNumber());
-		if(counter == fp_priceStack) counter = 0;
-		
-		SetInventory(Prices_getKey(counter), Prices_getValue_I(counter));
-		counter++;
+		// Update forward and backwards bewteen range per tic.
+		for(int i = 0; i < range; i ++){
+			SetInventory(Prices_getKey(counter + i), Prices_getValue_I(counter+i));
+			SetInventory(Prices_getKey(fp_PriceStack-1 - (counter+i)), Prices_getValue_I(fp_PriceStack-1 - (counter+i)));
+			if((counter + i) >= fp_priceStack) {
+				sync_done = true;
+				break;
+			}
+		}
+		counter = counter + range;
 		delay(1);
 	}
-}
-
-script "SFPlus_PriceSyncher2" ENTER
-{// Synchs all of the prices so far. End to Start
-	//log(s:"Syncing from end to start.");
-	int counter;
-	while(true){
-		setActivatorToPlayer(playerNumber());
-		if(counter == fp_priceStack) counter = 0;
-		
-		SetInventory(Prices_getKey(fp_PriceStack-1 - counter), Prices_getValue_I(fp_PriceStack-1 - counter));
-		counter++;
-		delay(1);
-	}
+	//log(s:"Prices synced for player:", d:playernumber());
 }
 
 script "SFPlus_DefinePrices" Open
@@ -239,8 +234,8 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_rt_1", 	500);
 	
 	//Play Up. prices
-	Prices_add("pr_pu_powupupgrade_1",		3);
-	Prices_add("pr_pu_powupupgrade_2",		3);
+	Prices_add("pr_pu_PowUpUpgrade_Defense",		3);
+	Prices_add("pr_pu_PowUpUpgrade_Attack",		3);
 	Prices_add("pr_pu_mechsync",			10);
 	Prices_add("pr_pu_expansiverestock",	2);
 	Prices_add("pr_pu_bodyenhancement",		3);

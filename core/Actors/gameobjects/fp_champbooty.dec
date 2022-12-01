@@ -63,12 +63,13 @@ Actor EclipseMineralBase : CustomInventory
 
 Actor SmallMineral : EclipseMineralBase
 {
-	Inventory.PickupMessage "A shiny mineral! +100 Credits!"
+	Inventory.PickupMessage "A shiny mineral! +50 Credits!"
 	
 	States
 	{
 	Spawn:
-		TNT1 A 0 NoDelay A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
+		TNT1 A 1 NoDelay 
+		TNT1 A 1 A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
 		Stop
 	Blue:
         TSBL ABCDEDCB 4 Bright
@@ -107,19 +108,20 @@ Actor SmallMineral : EclipseMineralBase
         TSLI ABCDEDCB 4 Bright
         Loop
 	Use:
-		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 100)
+		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 50)
 		Stop
 	}
 }
 
 Actor BigMineral : EclipseMineralBase
 {
-	Inventory.PickupMessage "A big mineral! +250 Credits!"
+	Inventory.PickupMessage "A big shiny mineral! +150 Credits!"
 	
 	States
 	{
     Spawn:
-		TNT1 A 0 NoDelay A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
+		TNT1 A 1
+		TNT1 A 1 A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
 		Stop
 	Blue:
         TBBL ABCDEF 4 Bright
@@ -158,7 +160,7 @@ Actor BigMineral : EclipseMineralBase
         TBLI ABCDEF 4 Bright
         Loop
 	Use:
-		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 250)
+		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 150)
 		Stop
 	}
 }

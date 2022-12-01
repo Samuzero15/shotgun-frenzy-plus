@@ -19,8 +19,8 @@ script "SF_PickupMsgDisplay" (int howMuch, int type) clientside
 	int cvar = GetUserCvar(PlayerNumber(), "sfp_earningdisp");
 	//log(s:"cvar sfp_earningdisp ", d:cvar);
 	switch(type){
-		case 0: ShowNumbers("+", howmuch, " HP", CR_CYAN, "BIGFONT", cvar); break;
-		case 1: ShowNumbers("+", howmuch, " AP", CR_GREEN, "BIGFONT", cvar); break;
+		case 0: ShowNumbers("+", howmuch, " HP", CR_CYAN, "VERVIBES", cvar); break;
+		case 1: ShowNumbers("+", howmuch, " AP", CR_GREEN, "VERVIBES", cvar); break;
 	}
 	
 }

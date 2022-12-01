@@ -9,6 +9,20 @@
 
 ## v0 - Before the beginning...
 
+#### (28 / 11 - 1 / 12 / 2022) [A quick Hotfix]
+	*) Fixed the strange text in the Kill streak hud.
+	*) Fixed the random dissapeareance of the Health bonuses and Armor shards, same for the credits and minerals.
+	*) Swapped the order of the SSG upgrades, now you can buy the proper ones.
+	*) Reduced the desyncing of coins and hb/as generation.
+	*) Optimized the price syncher.
+	*) Saves now can save stimpack upgrades and current rune.
+	*) Recycle page now allows you to recycle the upgraded gun.
+	*) Hidden some debug messages.
+	*) Changed the font of the messages caused by HB and AS.
+	*) Removed the message of powerups when re-entering the game.
+	*) Reduced the price of the minerals, small worths 50 and big worths 150 now.
+	*) Timer display has been changed to show on the last 10 seconds of the game the last miliseconds instead of tics left.
+
 #### (15 - 27 / 11 / 2022) (v1.0 Release!) [Rune terminal, C.Pulses, techs & relase!]
 	!+) Rune shop available in the Health terminal!
 	+) Now champions can drop extra rewards exclusive to their pools. in the drops also include Runes, a new red armor, and gems (extra credits)

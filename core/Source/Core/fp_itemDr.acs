@@ -168,7 +168,7 @@ function int ItemDr_getChance(int class,int nitem){
 
 function void ItemDr_Spawn(str item){
     if(item == 0) return;
-
+    //printbold(s:item, s:" was spawned.");
     Spawn("ItemFog",
             GetActorX(0) + random(0, 10.0),
             GetActorY(0) + random(0, 10.0),

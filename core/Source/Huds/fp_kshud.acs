@@ -56,18 +56,18 @@ script "SFPlus_KillStreakHud" ENTER {
 			{
 				case 2: 
 					if(KSNow < KSHiScore)
-						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_HISCORE, "");
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_HISCORE, 0);
 					else if(KSNow < GetNextStreakMilestone())
-						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_MILESTONE, "<>");
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_MILESTONE, 1);
 					else
-						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_OVERFLOW, "()");
+						ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_OVERFLOW, 2);
 				break;
 				case 1:
 					if(KSNow >= KSHiScore){
 						if(KSNow < GetNextStreakMilestone())
-							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_MILESTONE, "<>");
+							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_MILESTONE, 1);
 						else
-							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_OVERFLOW, "()");
+							ACS_NamedExecuteAlways("SFPlus_KSHud_Number_Add", 0, KSNow, FP_KSHUD_CR_OVERFLOW, 2);
 					}
 				break;
 			}
@@ -102,13 +102,28 @@ Script "SFPlus_KSHud_Death" DEATH
 
 // Clientsided scripts.
 
-Script "SFPlus_KSHud_Number_Add" (int value, int color, int awa) CLIENTSIDE 
+Script "SFPlus_KSHud_Number_Add" (int value, int color, int type) CLIENTSIDE 
 {
 	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
 		int tics, scale;
+		str pre,suf;
+		switch(type){
+			case 0: 
+			pre = "";
+			suf = "";
+			break;
+			case 1:
+			pre = "<";
+			suf = ">";
+			break;
+			case 2:
+			pre = "(";
+			suf = ")";
+			break;
+		}
 		while(tics < FP_KSHUD_SCALETICS){
 			scale = 2*(FP_KSHUD_SCALETICS-tics);
-			KSHud_ShowNumber(value, scale, color, awa);
+			KSHud_ShowNumber(value, scale, color, pre, suf);
 			tics++;
 			delay(1);
 		}
@@ -119,7 +134,7 @@ Script "SFPlus_KSHud_Number_Add" (int value, int color, int awa) CLIENTSIDE
 Script "SFPlus_KSHud_Number_End" (int scale, int value) CLIENTSIDE 
 {
 	if(IsClient() && consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
-		KSHud_ShowNumber(value, scale, CR_BRICK, "");
+		KSHud_ShowNumber(value, scale, CR_BRICK, "", "");
 	}
 }
 
@@ -167,11 +182,11 @@ Script "SFPlus_KSHud_Shutdown" (int value, int hiscore) CLIENTSIDE
 		ACS_NamedExecute("SFPlus_KSHud_Number_End", 0, 2, value);
 		KSHud_ShowText1("Shutdown!", CR_BRICK);
 		if(value > hiscore){
-			KSHud_ShowText2(strparam(s:"New Kill-Streak Hi-score: ", d:value, s:" kills!"),
+			KSHud_ShowText2(strparam(s:"New K.S. Hi-score: ", d:value, s:" kills!"),
 			CR_WHITE);
 		}else
 		  if(getCvar("sfp_killstreakhud") == 2){
-			KSHud_ShowText2(strparam(s:"You did a ", d:value, s:" kill streak in this run."),
+			KSHud_ShowText2(strparam(d:value, s:" kills in a row."),
 			CR_BRICK);
 		  }
 		}
@@ -190,8 +205,8 @@ function void KSHud_ShowText2(str msg,int color){
 			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T2, color, "Confont", FP_KSHUD_ID3);
 }
 
-function void KSHud_ShowNumber(int value, int scale, int color, str ya){
-	KSHud_Print(strparam(s:ya, s:" ", d:value, s:" ", s:ya),
+function void KSHud_ShowNumber(int value, int scale, int color, str pre, str suf){
+	KSHud_Print(strparam(s:pre, s:" ", d:value, s:" ", s:suf),
 	scale, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y, color, "STATBIGS", FP_KSHUD_ID1);
 }
 

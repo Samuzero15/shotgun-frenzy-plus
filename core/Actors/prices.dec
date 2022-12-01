@@ -144,8 +144,8 @@ Actor pr_mu_life_save : Integer {}
 Actor pr_mu_efficiency : Integer {}
 
 //Player upgrade prices.
-Actor pr_pu_powupupgrade_1		: Integer {}
-Actor pr_pu_powupupgrade_2		: Integer {}
+Actor pr_pu_PowUpUpgrade_Defense		: Integer {}
+Actor pr_pu_PowUpUpgrade_Attack		: Integer {}
 Actor pr_pu_mechsync 			: Integer {}
 Actor pr_pu_expansiverestock	: Integer {}
 Actor pr_pu_bodyenhancement		: Integer {}

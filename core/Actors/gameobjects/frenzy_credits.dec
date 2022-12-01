@@ -101,11 +101,11 @@ ACTOR ClassicCreditBoom
 		Spawn:
 			NULL A 0
 			NULL A 0 A_PlaySound("CoinBoom")
-			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10))
-			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10))
-			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10))
-			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10))
-			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10))
+			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
+			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
+			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
+			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
+			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
 			NULL A 0 A_SpawnItemEx("ClassicCreditMini", 0, 0, 0, random(-15, 15), random(-15, 15), random(-15, 15))
 			NULL A 0 A_SpawnItemEx("ClassicCreditMini", 0, 0, 0, random(-15, 15), random(-15, 15), random(-15, 15))
 			NULL A 0 A_SpawnItemEx("ClassicCreditMini", 0, 0, 0, random(-15, 15), random(-15, 15), random(-15, 15))
@@ -197,7 +197,7 @@ ACTOR ClassicCredit : CustomInventory
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 0
+		TNT1 A 1
 	SpawnLoop:
 		"####" "#" 0 A_JumpIf(user_countdown >= 1200, "Disappear")
 		"####" "#" 1 A_Look
@@ -237,7 +237,6 @@ ACTOR Credit_GoldenCoin : ClassicCredit
 	States
 	{
 	Spawn:
-		TNT1 A 0
 		CRED A 1
 		goto SUPER::SpawnLoop
 	Pickup:
@@ -254,11 +253,9 @@ ACTOR Credit_SilverCoin : ClassicCredit
 	States
 	{
 	Spawn:
-		TNT1 A 0
 		CRED C 1
 		goto SUPER::SpawnLoop
 	Pickup:
-		CRED C 0
 		TNT1 A 0 A_SetArg(0, 2)
 		TNT1 A 0 A_SetArg(1, 2)
 		CRED C 1 
@@ -271,11 +268,9 @@ ACTOR Credit_CopperCoin : ClassicCredit
 	States
 	{
 	Spawn:
-		TNT1 A 0
 		CRED D 1
 		goto SUPER::SpawnLoop
 	Pickup:
-		CRED D 0
 		TNT1 A 0 A_SetArg(0, 1)
 		TNT1 A 0 A_SetArg(1, 18)
 		CRED D 1
@@ -284,12 +279,9 @@ ACTOR Credit_CopperCoin : ClassicCredit
 }
 
 actor CreditSpawner : RandomSpawner{
-	DropItem "Credit_GoldenCoin" "96", 1
+	DropItem "Credit_GoldenCoin" "40", 1
 	DropItem "Credit_SilverCoin" "128", 1
-	DropItem "Credit_SilverCoin" "160", 1
-	DropItem "Credit_CopperCoin" "192", 1
-	DropItem "Credit_CopperCoin" "224", 1
-	DropItem "Credit_CopperCoin" "255", 1
+	DropItem "Credit_CopperCoin" "216", 1
 }
 
 //Actor DropCredits_Amount : Integer {}
