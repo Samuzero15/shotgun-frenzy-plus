@@ -1,3 +1,26 @@
+[\cfChanged / Fixed\c-]
+
+) Fixed the strange text in the Kill streak hud.
+) Fixed the random dissapeareance of the Health bonuses and Armor shards, same for the credits and minerals.
+) Swapped the order of the SSG upgrades, now you can buy the proper ones.
+) Reduced the desyncing of coins and hb/as generation.
+) Optimized the price syncher.
+) Saves now can save stimpack upgrades and current rune.
+) Recycle page now allows you to recycle the upgraded gun.
+) Hidden some debug messages.
+) Changed the font of the messages caused by HB and AS.
+) Removed the message of powerups when re-entering the game.
+) Reduced the price of the minerals, small worths 50 and big worths 150 now.
+) Timer display has been changed to show on the last 10 seconds of the game the last miliseconds instead of tics left.
+) Re-ordered the weapons, and narrowed them in 5 slots
+// Slot 1 is for pistol and shotgun, basic slot
+// Slot 2 for standard weapons, with their upgraded variants.
+// Slot 3 for advanced weapons, with their upgraded variants.
+// Slot 4 for overpowered weapons, with their upgraded variants.
+// Slot 5 for the other supportive weapons (like patcher or supplier)
+) Ok, forgot the random probability of the champion apperance, lul.
+
+Past Update (v1.0)
 
 [\cfAdded\c-]
 ) Ammosphere now is buyable in the health terminal.
@@ -44,11 +67,3 @@
 ) Spear-Taser Railgun can fire a constant short ranged rail that rips everyone in it's path, and now it's Alt-fire stuns the first enemy on hit.
 
 [\cfRemoved\c-]
-
-
-
-
-
-
-
-
