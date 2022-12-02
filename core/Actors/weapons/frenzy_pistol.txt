@@ -14,7 +14,8 @@ ACTOR Beretta : Weapon
 	Weapon.UpSound "w/load1"
 	AttackSound "weapons/pistol"
 	DamageType			MarineFire
-	
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 3000
 	States
 	{
 		Ready:
@@ -53,6 +54,7 @@ ACTOR Beretta_Dual : Weapon
 	Weapon.AmmoGive 20
 	Weapon.AmmoType1 "ClipPistol"
 	Weapon.AmmoType2 "ClipPistol"
+	Weapon.SlotPriority 2.0
 	Obituary "%o was gunned down by %k's dual pistols."
 	+WEAPON.WIMPY_WEAPON
 	Inventory.Pickupmessage "Picked up 2 pistols."
@@ -60,7 +62,7 @@ ACTOR Beretta_Dual : Weapon
 	Weapon.UpSound "w/load1"
 	AttackSound "weapons/pistol"
 	DamageType			MarineFire
-	
+	Weapon.SelectionOrder 3000
 	States
 	{
 		Ready:
@@ -108,6 +110,7 @@ ACTOR Beretta_SMG : Weapon
 	Weapon.AmmoGive1 20
 	Weapon.AmmoType1 "ClipPistol"
 	Weapon.AmmoType2 "ClipPistol"
+	Weapon.SlotPriority 3.0
 	Obituary "%o was gunned down by %k's SMG."
 	+WEAPON.WIMPY_WEAPON
 	Inventory.Pickupmessage "Picked up an SMG."
@@ -115,7 +118,7 @@ ACTOR Beretta_SMG : Weapon
 	Weapon.UpSound "w/load1"
 	AttackSound "weapons/pistol"
 	DamageType			MarineFire
-	
+	Weapon.SelectionOrder 3000
 	States
 	{
 		Ready:

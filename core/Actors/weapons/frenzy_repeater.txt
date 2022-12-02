@@ -16,7 +16,7 @@ ACTOR Repeater : Weapon
 	
 	Weapon.UpSound			"w/load2"
 	AttackSound			"x5/fire2"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 1.0
 	+weapon.NOAUTOAIM
 	+weapon.NO_AUTO_SWITCH
 	+weapon.NOAUTOfire
@@ -141,7 +141,7 @@ ACTOR Repeater_DoubleSpeed : Weapon
 	
 	Weapon.UpSound			"w/load2"
 	//AttackSound			"x5/fire2"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
 	+weapon.NOAUTOAIM
 	+weapon.NO_AUTO_SWITCH
 	+weapon.NOAUTOfire
@@ -273,7 +273,7 @@ ACTOR Repeater_BlastShells : Weapon
 	
 	Weapon.UpSound			"w/load2"
 	AttackSound			"x3/fire1"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
 	
 	Tag "Gauss J. Bullet Repeater"
 	

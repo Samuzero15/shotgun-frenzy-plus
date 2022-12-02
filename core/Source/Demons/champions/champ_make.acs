@@ -1,7 +1,7 @@
 
 function void Champ_Make(void) {
 	int health;
-    int make_champion = !champion_nospawn && (/*f_PercentFast > random(0,99)*/ true || champion_forcespawn > 0);
+    int make_champion = !champion_nospawn && (f_PercentFast > random(0,100) || champion_forcespawn > 0);
 	int champ = Champ_Dice();
 	if(Champ_IsBanned(champ)){
 		if(champion_onbanned == 1){

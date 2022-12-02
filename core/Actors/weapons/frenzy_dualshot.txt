@@ -12,7 +12,8 @@ ACTOR Dualshot : Weapon
 	+WEAPON.NOAUTOFIRE
 	
 	Weapon.UpSound			"w7/load"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	Tag "Nail Dualshot"
 	States
 	{
@@ -73,7 +74,8 @@ ACTOR Dualshot_FlakShells : Weapon
 	+WEAPON.NOAUTOFIRE
 	
 	Weapon.UpSound			"w7/load"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	Tag "Flak Dualshot"
 	States
 	{
@@ -176,7 +178,8 @@ ACTOR Dualshot_Razor : Weapon
 	
 	Weapon.UpSound			"w7/load"
 	Weapon.ReadySound		"weapons/sawidle"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	Tag "Razorblade Dualshot"
 	States
 	{

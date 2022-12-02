@@ -1,6 +1,7 @@
 Actor Patcher : Weapon
 {
-  Weapon.SlotNumber 2
+  Weapon.SlotPriority 1.0
+  Weapon.SelectionOrder 2500
   Inventory.PickupMessage "You found the Patcher Gun!"
   obituary "%o was shocked by %k's Patcher Gun, which it should'nt happen, because this gun is for cooperative, so, wtf just happened?"
   states
@@ -40,6 +41,7 @@ Actor Patcher : Weapon
 
 Actor Patcher_Advanced : Patcher
 {
+	Weapon.SelectionOrder 2300
 	states{
 		Fire:
 			PLPI A 0

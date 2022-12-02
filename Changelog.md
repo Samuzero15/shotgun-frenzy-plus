@@ -9,7 +9,7 @@
 
 ## v0 - Before the beginning...
 
-#### (28 / 11 - 1 / 12 / 2022) [A quick Hotfix]
+#### (28 / 11 - 1 / 12 / 2022) (v1.1 Release!) [A quick Hotfix]
 	*) Fixed the strange text in the Kill streak hud.
 	*) Fixed the random dissapeareance of the Health bonuses and Armor shards, same for the credits and minerals.
 	*) Swapped the order of the SSG upgrades, now you can buy the proper ones.
@@ -22,6 +22,13 @@
 	*) Removed the message of powerups when re-entering the game.
 	*) Reduced the price of the minerals, small worths 50 and big worths 150 now.
 	*) Timer display has been changed to show on the last 10 seconds of the game the last miliseconds instead of tics left.
+	*) Re-ordered the weapons, and narrowed them in 5 slots
+	// Slot 1 is for pistol and shotgun, basic slot
+	// Slot 2 for standard weapons, with their upgraded variants.
+	// Slot 3 for advanced weapons, with their upgraded variants.
+	// Slot 4 for overpowered weapons, with their upgraded variants.
+	// Slot 5 for the other supportive weapons (like patcher or supplier)
+	*) Ok, forgot the random probability of the champion apperance, lul.
 
 #### (15 - 27 / 11 / 2022) (v1.0 Release!) [Rune terminal, C.Pulses, techs & relase!]
 	!+) Rune shop available in the Health terminal!

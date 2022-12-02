@@ -11,7 +11,8 @@ ACTOR SSG : Weapon
 	Weapon.UpSound			"w2/load"
 	AttackSound			"w3/fire1"
 	Tag "Super Shotgun"
-	Weapon.selectionorder 3000
+	Weapon.SelectionOrder 2500
+	Weapon.SlotPriority 1.0
 	States
 	{
 		Ready:
@@ -128,7 +129,8 @@ ACTOR SSG_Autoload : Weapon
 	Weapon.UpSound			"w2/load"
 	AttackSound			"w3/fire2"
 	Tag "Super Shotgun + Autoload"
-	Weapon.selectionorder 3000
+	Weapon.SelectionOrder 2300
+	Weapon.SlotPriority 2.0
 	States
 	{
 		Ready:
@@ -239,7 +241,8 @@ ACTOR SSG_Explosive : Weapon
 	Weapon.UpSound			"w2/load"
 	AttackSound			"w3/fire1"
 	Tag "Super Shotgun + Explosive"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:

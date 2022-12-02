@@ -10,7 +10,8 @@ ACTOR SF_Railgun : Weapon
 	AttackSound			"x1/fire1"
 	//[Samu] No ripping, booo :v
 	Tag "Laser Railgun"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	States
 	{
 		Ready:
@@ -67,7 +68,8 @@ ACTOR Railgun_Taser : Weapon
 	Weapon.UpSound			"w/load6"
 	//AttackSound			"x1/fire1"
 	Tag "Spear-Taser Railgun"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:
@@ -153,7 +155,8 @@ ACTOR Railgun_Slug : Weapon
 	Weapon.UpSound			"w/load6"
 	AttackSound			"x1/fire1"
 	Tag "Double Slug Railgun"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:

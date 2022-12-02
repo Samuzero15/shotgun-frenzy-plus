@@ -10,8 +10,8 @@ ACTOR Spitter : Weapon 24001
 	AttackSound			"w6/fire"
 	
 	Tag "Assault Spitter"
-	Weapon.selectionorder 3000
-	
+	Weapon.SelectionOrder 2500
+	Weapon.SlotPriority 1.0
 	States
 	{
 		Ready:
@@ -97,8 +97,8 @@ ACTOR Spitter_SSG : Weapon
 	Weapon.UpSound			"w6/up"
 	AttackSound			"w6/fire"
 	Tag "Assault Spitter + Shell Grenades"
-	Weapon.selectionorder 3000
-	
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:
@@ -196,7 +196,8 @@ ACTOR Spitter_GLauncher : Weapon
 	Weapon.UpSound			"w6/up"
 	AttackSound			"w6/fire"
 	Tag "Assault Spitter + Nerve-Gas Launcher"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	
 	States
 	{

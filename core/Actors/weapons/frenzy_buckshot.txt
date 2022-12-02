@@ -1,8 +1,6 @@
 // main damage reduced from 11 or 12
 // fire damage reduced from 19
 
-
-
 ACTOR Buckshot_LoadedShells : Inventory
 {
 	Inventory.MaxAmount 10
@@ -27,7 +25,8 @@ ACTOR Buckshot : Weapon
 	AttackSound			"w2/fire"
 	
 	Tag "Semi-Auto. Buckshot"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	
 	States
 	{
@@ -262,7 +261,8 @@ ACTOR Buckshot_Chamber : Weapon
 	AttackSound			"w2/fire"
 	
 	Tag "Semi-Auto. Buckshot + Wide Chamber"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	
 	States
 	{
@@ -659,7 +659,8 @@ ACTOR Buckshot_Explosive : Weapon
 	AttackSound			"w2/fire"
 	
 	Tag "Semi-Auto Buckshot + Ignited Shells"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:

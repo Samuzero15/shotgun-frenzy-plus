@@ -11,7 +11,8 @@ ACTOR Quadshot : Weapon
 	Weapon.UpSound			"w4/load"
 	
 	tag "Anti-Riot Quadshot CSW"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	States
 	{
 		Ready:
@@ -93,7 +94,8 @@ ACTOR Quadshot_Full : Weapon
 	Weapon.UpSound			"w4/load"
 	
 	tag "Explosive Quadshot PEW"
-	Weapon.selectionorder 3000
+	Weapon.SelectionOrder 2300
+	Weapon.SlotPriority 2.0
 	States
 	{
 		Ready:
@@ -174,7 +176,8 @@ ACTOR Quadshot_Explosive : Weapon
 	AttackSound			"w2/fire"
 	DamageType			MarineFire
 	tag "Combat Chain-Shell Quadshot SB9"
-	Weapon.selectionorder 3000
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:

@@ -8,7 +8,8 @@ ACTOR Flamer : Weapon
 	
 	Weapon.UpSound			"w/load6"
 	AttackSound			"x2/fire1"
-	weapon.selectionorder 2800
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	States
 	{
 		Ready:
@@ -43,7 +44,8 @@ ACTOR Flamer : Weapon
 
 actor FlamerS : Flamer
 {
-	weapon.selectionorder 2800
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
         States
         {
                 Ready:

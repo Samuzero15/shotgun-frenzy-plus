@@ -68,7 +68,7 @@ script "SFPlus_DeployPlayerBuilding" (int which){
 			Player_SpawnBuilding("TurretFlame", "Inventory_TurretFlame", btid);
 		break;
 		case DEPLOY_TURRET_TESLA:
-			Player_SpawnBuilding("TurretTesla", "Inventory_TurretTesla", btid);
+			Player_SpawnBuilding("TurretTesla", "Inventory_TeslaCoil", btid);
 		break;
 		case DEPLOY_TURRET_BFG:
 			Player_SpawnBuilding("TurretBFG", "Inventory_TurretBfg", btid);

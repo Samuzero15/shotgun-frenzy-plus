@@ -5,6 +5,8 @@ ACTOR BFG : BFG9000
   Weapon.AmmoType2 "Cell"
   Weapon.UpSound			"w/load6"
   Tag "BFG"
+  Weapon.SlotPriority 1.0
+  Weapon.SelectionOrder 2500
   States
   {
   Fire:
@@ -93,8 +95,8 @@ Actor BFGSplash_SplashIt {
 
 actor BFG_Splash : BFG
 {
-  Weapon.SlotNumber 8
-  weapon.selectionorder 2800
+  Weapon.SlotPriority 2.0
+  Weapon.SelectionOrder 2300
   Tag "BFG Splash"
   States
   {
@@ -176,10 +178,10 @@ actor BFG_Overcharge : BFG
 // Each hit increases its stats, range, damage and size of projectile.
 // The last hit is the most devastating. Absurdly powerful against one enemy. Like Cyberdemons.
 // The catch it's on it's projectile speed, and ammo cost, 2 shots with backpack.
-  Weapon.SlotNumber 8
-  weapon.selectionorder 2800
   Tag "BFG Overcharge"
   Weapon.AmmoUse 300
+  Weapon.SlotPriority 2.0
+  Weapon.SelectionOrder 2300
   States
   {
     Ready:

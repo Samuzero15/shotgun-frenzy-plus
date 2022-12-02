@@ -8,7 +8,8 @@ ACTOR Launcher : Weapon
 	+WEAPON.NOAUTOFIRE
 	
 	Weapon.UpSound			"w8/load"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	Tag "Rocket Launcher"
 	States
 	{
@@ -52,7 +53,8 @@ ACTOR Launcher_Multi : Weapon
 	+WEAPON.NOAUTOFIRE
 	
 	Weapon.UpSound			"w8/load"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	Tag "Multiple Rocket Launcher"
 	States
 	{
@@ -105,7 +107,8 @@ ACTOR Launcher_Exploder : Weapon
 	+WEAPON.NOAUTOFIRE
 	
 	Weapon.UpSound			"w8/load"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	Tag "Exploder Rocket Launcher"
 	States
 	{

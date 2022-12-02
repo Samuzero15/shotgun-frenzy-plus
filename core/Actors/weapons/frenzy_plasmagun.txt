@@ -10,7 +10,8 @@ ACTOR PlasmaGun : Weapon
 	
 	Weapon.UpSound			"w/load6"
 	AttackSound			"x2/fire1"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 1.0
+	Weapon.SelectionOrder 2500
 	Tag "Plasma Rifle"
 	States
 	{
@@ -68,7 +69,8 @@ ACTOR PlasmaGun_Advanced : Weapon
 	
 	Weapon.UpSound			"w/load6"
 	Tag "Advanced Plasma Rifle"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	States
 	{
 		Ready:
@@ -122,7 +124,8 @@ ACTOR PlasmaGun_Spread : Weapon
 	Obituary			"%o got melted by %k's plasma balls of steel"
 	
 	Weapon.UpSound			"w/load6"
-	weapon.selectionorder 2900
+	Weapon.SlotPriority 2.0
+	Weapon.SelectionOrder 2300
 	
 	Tag "Plasma Rifle + Spread Chip"
 	States
