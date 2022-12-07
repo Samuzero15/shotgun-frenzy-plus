@@ -65,6 +65,8 @@ OptionMenu SFPlus_GameOptions{
 	Slider "Player's Extra DMG %", "sfp_playerdmgmult", 0.0, 200.0, 5.0, 0
 	Slider "Monster's Extra HP % *", "sfp_monsterhpmult", 0.0, 200.0, 5.0, 0
 	Slider "Monster's Extra HP over Lv20", "sfp_monsolv20hpmult", 0.0, 200.0, 5.0, 0
+	Option "Allow AutoSave Items *", "sfp_autosaveitems", "Boolean"
+	StaticText ""
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
 }
@@ -238,6 +240,11 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "Increase this factor, and the monster will absorb more damage."
 	StaticText "Works only if the player count is greater than 3."
 	StaticText "The more players are in, the harder to kill they get!"
+	StaticText ""
+	StaticText "Allow Autosave items", 1
+	StaticText "This cvar will keep the items of every player in game."
+	StaticText "between a span of 30 seconds in game. It's still experimental"
+	StaticText "so expect some bugs, and lag."
 	StaticText ""
 }
 

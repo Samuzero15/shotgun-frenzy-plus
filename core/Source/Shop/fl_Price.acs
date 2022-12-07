@@ -217,13 +217,13 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_mu_efficiency", 		15000);
 
 	//Stimpack Up. prices
-	Prices_add("pr_su_overhealth", 	900);
-	Prices_add("pr_su_amount", 		500);
-	Prices_add("pr_su_extradosis", 	1000);
-	Prices_add("pr_su_hardshell", 	750);
-	Prices_add("pr_su_cicatrizate", 1250);
-	Prices_add("pr_su_caffeine", 	1100);
-	Prices_add("pr_su_stimulant", 	1500);
+	Prices_add("pr_su_overhealth", 	250);
+	Prices_add("pr_su_amount", 		100);
+	Prices_add("pr_su_extradosis", 	400);
+	Prices_add("pr_su_hardshell", 	150);
+	Prices_add("pr_su_cicatrizate", 550);
+	Prices_add("pr_su_caffeine", 	525);
+	Prices_add("pr_su_stimulant", 	600);
 
 	Prices_add("pr_rt_u4", 	3); // Unlock tier 4 (U.P)
 	Prices_add("pr_rt_u3", 	2); // Unlock tier 3 (U.P)

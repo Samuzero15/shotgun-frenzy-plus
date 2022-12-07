@@ -16,9 +16,8 @@
 #include "samu_tools.acs"
 
 Script "SFPlus_MonsterKill" Kill{
-	ACS_NamedExecuteAlways("SFPlus_ChampionDeath", 0);
 	delay(1); // Let the monsters set their flags in the decorate.
-	
+	ACS_NamedExecuteAlways("SFPlus_ChampionDeath", 0);
 	if(CheckFlag(0, "ISMONSTER") && !CheckFlag(0, "FRIENDLY")){
 	  GiveInventory("MarkToken_IAmDead", 1);
 	  bool flag_boss = checkinventory("FPMToken_Boss");
@@ -33,13 +32,20 @@ Script "SFPlus_MonsterKill" Kill{
 		 // monster class
 	  int monsterClass = sf_GetMonsterClass_Health();
 	  int ischamp = CheckInventory("Champ_Type");
-
-		
 	  int splat = flag_gibbed;
 	  int noprofit = flag_NoCount;
 	  int montype;
 	  if	(flag_boss) montype = 2;
 	  if	(flag_hard) montype = 1;
+	 
+		if(ischamp && CheckInventory("ChampZombie_SkipDeathScript")){
+			SetActivatorToTarget(0);
+			ACS_NamedExecuteAlways("SFPlus_OnMonsterKill", 0, ischamp);
+			p_monsterKilled(monsterClass, splat, noProfit, montype);
+			terminate;
+		}
+	  
+	  
 
 	  int i = 0;
 	  int chance = 10;
@@ -66,13 +72,7 @@ Script "SFPlus_MonsterKill" Kill{
   	  
 	 if(ischamp) ItemDr_ChampionDrop(monsterClass);
 	 // Drop reward items.
-	 else ItemDr_MonsterDrop(monsterClass);
-	 
-
-	 // Calculate the money gain by the player.
-	 int howMuch = p_MonsterCredits[monsterClass] + playercount();
-	 int splatbonus = howmuch/2;
-	 if(splat > 0)	howMuch += splatBonus;
+	 ItemDr_MonsterDrop(monsterClass);
 	 
 		//debugTidPointers (0);
 		//debugTidPointersStrings(0);

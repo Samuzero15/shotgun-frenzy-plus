@@ -161,7 +161,7 @@ script 53 ENTER
 	Stats_PlayerNames[playernumber()] = strparam(n:0);
 	
 	//Save/Load the stats if the player already entered in the game.
-	ACS_NamedExecuteAlways("SFPlus_StatsLoop", 0);
+	ACS_NamedExecuteAlways("SFPlus_StatsLoad", 0);
 	
     // perform respawn actions
     acs_executealways(54, 0, 0, 0, 0);
@@ -187,6 +187,11 @@ script 54 RESPAWN
 	// [Samu] In case of tank past life.
 	takeinventory("TankGun", 1);
 	takeinventory("TankGunAdvanced", 1);
+
+	// [Samu] Re-take the tokes for the buckshot
+	TakeInventory("Buckshot_FirstTime", 1);
+	TakeInventory("Buckshot_Chamber_FirstTime",1);
+	TakeInventory("Buckshot_Explosive_FirstTime",1);
 	
 	TakeInventory("BasicArmor", 0xFFFFFFF);
   
@@ -312,14 +317,13 @@ script 249 OPEN
 {
 	delay(35*3);
 	CmdEvent_Initialize();
-	
 	AutoResearch_Add(CMDEVT_REWARD_HEALTH1, 100);
 	AutoResearch_Add(CMDEVT_REWARD_STIMPK, 	250);
 	AutoResearch_Add(CMDEVT_REWARD_ARMOR, 	500);
 	AutoResearch_Add(CMDEVT_REWARD_AMMOBP, 	800);
+	AutoResearch_Add(CMDEVT_REWARD_RUSYNC, 	1000);
 	AutoResearch_Add(CMDEVT_REWARD_HEALTH2, 1200);
 	AutoResearch_Add(CMDEVT_REWARD_BOOMRN, 	1700);
-	AutoResearch_Add(CMDEVT_REWARD_RUSYNC, 	2000);
 	AutoResearch_Add(CMDEVT_REWARD_PUMP1, 	2300);
 	AutoResearch_Add(CMDEVT_REWARD_SPEEDB, 	3300);
 	AutoResearch_Add(CMDEVT_REWARD_RESISB, 	3800);

@@ -3,7 +3,13 @@ Script "SFPlus_ChampionHit" (int type, int arg1, int arg2) Event
 {
 	if(type != GAMEEVENT_ACTOR_DAMAGED) terminate;
 	SetActivator(0, AAPTR_Damage_Source);
+	
  	if(Champ_GetType() <= 0) terminate;
+	/*
+	if((GetActorProperty(0, APROP_HEALTH) - arg1) <= 0){
+		
+		terminate;
+	}*/
 	int mon_class = sf_GetMonsterClass_Health();
 	switch(Champ_GetType()){
 		case CHAMP_GOLDEN: // The player will lose money for the lost health, done by this champion
@@ -29,3 +35,4 @@ Script "SFPlus_ChampionHit" (int type, int arg1, int arg2) Event
 		break;
 	}
 }
+

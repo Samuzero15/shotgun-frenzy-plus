@@ -59,7 +59,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	SFPlus_DefinePlayUps();
 	SFPlus_DefineMechUps();
 	SFPlus_DefineStimUps();
-	
+	SFPlus_DefineRunes();
 		
 	
 	

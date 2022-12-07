@@ -43,7 +43,7 @@ function void Champ_Make(void) {
 				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_HEALING);
 				ACS_NamedExecuteAlways("SFPlus_ChampConstEffects", 0, CHAMP_EMPEROR);
 			break; case CHAMP_ZOMBIE:
-				GiveInventory("ChampZombie_LivesLeft", 3);
+				GiveInventory("ChampZombie_LivesLeft", 2);
 			break; case CHAMP_EMPEROR: // Buffs nearby allies.
 				setactorproperty(0, APROP_Health, health*3);
 				TakeInventory("ChampBuff_NormalAtk", 1);

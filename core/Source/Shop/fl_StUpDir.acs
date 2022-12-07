@@ -55,7 +55,7 @@ function str StimUp_getActor(int up){	return StimUp_List[up][2];}
 function str StimUp_getIcon(int up){	return StimUp_List[up][4];}
 function int StimUp_getPrice(int up){	
     int price = CheckInventory(StimUp_List[up][3]);
-	return price + ((price * CheckInventory(StimUp_getActor(up))) / 4);}
+	return price + ((price * CheckInventory(StimUp_getActor(up))) / 2);}
 
 script "SFPlus_DebugStimUps" (void){
 	log(s:"===START===(Stimer upgrade Directory)===START===");

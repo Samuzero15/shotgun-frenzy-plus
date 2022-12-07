@@ -9,6 +9,26 @@
 
 ## v0 - Before the beginning...
 
+#### (7 / 12 / 2022) [Zombie Champ. balance and crash fix]
+	*) Fixed the crash caused by a raising Zombie Champion after deleting it's corpse. (Again, thanks Kaminsky for the hint!)
+	*) Now some particle gore effects will spawn over the dead zombie champion after using all it's lives.
+	*) Now a champion zombie will try to rise with only 2 extra lives (in that way, you can kill it up to 3 times) resurrect chances are: 70% at first death and 35% at second death.
+	*) If a champion zombie is resurrected by any enemy resurrecter (like archviles), it will consume 1 life for the early raising.
+	*) A zombie champion after the first death, will not drop any reward items after dying again. (but still you will get paid after the kill).
+
+#### (5 / 12 / 2022) [Optional autosave]
+	*) Now the autosave function will only trigger when activating the sfp_autosaveitems on ccmd.
+	*) Reworked the autosave function to keep items for everyone, with a little less lag (i hope).
+
+#### (3 / 12 / 2022) [Another quickish bugfix]
+	*) Reduced the prices of the stimpack upgrades, in order to get pursached in early game.
+	*) Fixed the rune terminal not showing it's runes.
+	*) Rune Sync. will now be granted in 1000 kills on CF/SD maps
+	*) Save functions will be a little more patient now, in order to reduce the server lag.
+	*) Modified the tech research message, to include also the icon of the research.
+	*) Cleared out some left overs of logs messages.
+	*) Buckshots when using it for the first time, now starts with some ammo loaded in the chamber!
+
 #### (28 / 11 - 1 / 12 / 2022) (v1.1 Release!) [A quick Hotfix]
 	*) Fixed the strange text in the Kill streak hud.
 	*) Fixed the random dissapeareance of the Health bonuses and Armor shards, same for the credits and minerals.

@@ -1,26 +1,5 @@
-[\cfChanged / Fixed\c-]
 
-) Fixed the strange text in the Kill streak hud.
-) Fixed the random dissapeareance of the Health bonuses and Armor shards, same for the credits and minerals.
-) Swapped the order of the SSG upgrades, now you can buy the proper ones.
-) Reduced the desyncing of coins and hb/as generation.
-) Optimized the price syncher.
-) Saves now can save stimpack upgrades and current rune.
-) Recycle page now allows you to recycle the upgraded gun.
-) Hidden some debug messages.
-) Changed the font of the messages caused by HB and AS.
-) Removed the message of powerups when re-entering the game.
-) Reduced the price of the minerals, small worths 50 and big worths 150 now.
-) Timer display has been changed to show on the last 10 seconds of the game the last miliseconds instead of tics left.
-) Re-ordered the weapons, and narrowed them in 5 slots
-// Slot 1 is for pistol and shotgun, basic slot
-// Slot 2 for standard weapons, with their upgraded variants.
-// Slot 3 for advanced weapons, with their upgraded variants.
-// Slot 4 for overpowered weapons, with their upgraded variants.
-// Slot 5 for the other supportive weapons (like patcher or supplier)
-) Ok, forgot the random probability of the champion apperance, lul.
 
-Past Update (v1.0)
 
 [\cfAdded\c-]
 ) Ammosphere now is buyable in the health terminal.
@@ -66,4 +45,39 @@ Past Update (v1.0)
 ) Double slug Railgun can now fire 2 rails per shot, and fires faster.
 ) Spear-Taser Railgun can fire a constant short ranged rail that rips everyone in it's path, and now it's Alt-fire stuns the first enemy on hit.
 
-[\cfRemoved\c-]
+////////// (v1.1) //////////
+
+) Fixed the strange text in the Kill streak hud.
+) Fixed the random dissapeareance of the Health bonuses and Armor shards, same for the credits and minerals.
+) Swapped the order of the SSG upgrades, now you can buy the proper ones.
+) Reduced the desyncing of coins and hb/as generation.
+) Optimized the price syncher.
+) Saves now can save stimpack upgrades and current rune.
+) Recycle page now allows you to recycle the upgraded gun.
+) Hidden some debug messages.
+) Changed the font of the messages caused by HB and AS.
+) Removed the message of powerups when re-entering the game.
+) Reduced the price of the minerals, small worths 50 and big worths 150 now.
+) Timer display has been changed to show on the last 10 seconds of the game the last miliseconds instead of tics left.
+) Re-ordered the weapons, and narrowed them in 5 slots
+// Slot 1 is for pistol and shotgun, basic slot
+// Slot 2 for standard weapons, with their upgraded variants.
+// Slot 3 for advanced weapons, with their upgraded variants.
+// Slot 4 for overpowered weapons, with their upgraded variants.
+// Slot 5 for the other supportive weapons (like patcher or supplier)
+) Ok, forgot the random probability of the champion apperance, lul.
+
+////////// (v1.2) //////////
+
+) Reduced the prices of the stimpack upgrades, in order to get pursached in early game.
+) Fixed the rune terminal not showing it's runes.
+) Rune Sync. will now be granted in 1000 kills on CF/SD maps
+) Save functions will be a little more patient now, in order to reduce the server lag.
+) Modified the tech research message, to include also the icon of the research.
+) Cleared out some left overs of logs messages.
+) Buckshots when using it for the first time, now starts with some ammo loaded in the chamber!
+) Fixed the crash caused by a raising Zombie Champion after deleting it's corpse. (Again, thanks Kaminsky for the hint!)
+) Now a champion zombie will try to rise with only 2 extra lives (in that way, you can kill it up to 3 times) resurrect chances are: 70% at first death and 35% at second death.
+) If a champion zombie is resurrected by any enemy resurrecter (like archviles), it will consume 1 life for the early raising.
+) A zombie champion after the first death, will not drop any reward items after dying again. (but still you will get paid after the kill).
+) Now the autosave function will only trigger when activating the sfp_autosaveitems on ccmd.

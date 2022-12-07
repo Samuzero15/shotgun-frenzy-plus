@@ -248,7 +248,7 @@ function void CMDPage_UpdateButton2(int slot){
 		int up_btndata = CMDBut_UpdateConds(btndata);
 		
 		if(up_btndata != btndata){
-			log(s:"slot: ", d:slot, s:" sex: ", d:up_btndata);
+			//log(s:"slot: ", d:slot, s:" sex: ", d:up_btndata);
 			CMDPage_SetButtonInSlot(slot, up_btndata);
 			CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, up_btndata);
 			btndata = up_btndata;

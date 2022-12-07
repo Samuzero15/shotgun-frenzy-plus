@@ -38,7 +38,7 @@ Actor BlastRune_Activate : Rune_Activation {
             TNT1 A 0 A_Blast(0, 255, 255, 20, "BlastRune_GFX", "pentacle/project")
         stop
         NoEffect:
-            TNT1 A 0 a_log("Blast used already")
+            TNT1 A 0 //a_log("Blast used already")
         fail
 	}
 }

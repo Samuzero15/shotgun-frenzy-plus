@@ -35,6 +35,8 @@ Actor ChampHybrid_Type1 : Integer {}
 Actor ChampHybrid_Type2 : Integer {}
 Actor ChampZombie_SkipDeathScript : Boolean {}
 Actor ChampZombie_LivesLeft : Integer {Inventory.MaxAmount 3}
+Actor ChampZombie_ReallyDead : Boolean {}
+Actor ChampZombie_Resurrected : Boolean {}
 
 Actor Monster_MaxHealth : Integer {}
 

@@ -10,6 +10,7 @@ function void RunePage_Update(int pageTag) {
 	setPageTitle(pageTag, "Rune shop", CR_CYAN);
 	
 	if(isOnTheSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
+		//log(s:"Rune tier: ", d:CheckInventory("RuneTier"));
 		int runetier = 0;
 		runetier = CheckInventory("RuneTier");
 		for(int k = 0; k < 4; k++){

@@ -1,0 +1,110 @@
+[Enu default]
+
+/*
+CEDATA_I_* // Icon of the research event
+CEDATA_N_* // Name of the research event
+CEDATA_CM_* // Message when commander researchs it.
+CEDATA_RM_* // Message when rewarded by the CF/SD map.
+*/
+
+CEDATA_I_RESEARCH_HEALTH1 = "CM12";
+CEDATA_N_RESEARCH_HEALTH1 = "HUMAN ENG. (PHASE 1)";
+CEDATA_CM_RESEARCH_HEALTH1 = "Collect at Genetics Lab\n\nHuman Engineering Phase 1\nStandard health increased";
+CEDATA_RM_RESEARCH_HEALTH1 = "Human Eng. (Phase 1)\n\nMarines' default health rises up to 120";
+
+CEDATA_I_RESEARCH_HEALTH2 = "CM13";
+CEDATA_N_RESEARCH_HEALTH2 = "HUMAN ENG. (PHASE 2)";
+CEDATA_CM_RESEARCH_HEALTH2 = "Collect at Genetics Lab\n\nHuman Engineering Phase 2\nStandard health increased";
+CEDATA_RM_RESEARCH_HEALTH2 = "Human Eng. (Phase 2)\n\nMarines' default health rises up to 140";
+
+CEDATA_I_RESEARCH_SPEEDB = "CM15";
+CEDATA_N_RESEARCH_SPEEDB = "ADRENALINE";	
+CEDATA_CM_RESEARCH_SPEEDB = "Collect at Genetics Lab\n\nAdrenaline\nMarines can move faster.";
+CEDATA_RM_RESEARCH_SPEEDB = "Adrenaline\n\nMarines can move faster.";
+
+CEDATA_I_RESEARCH_ARMOR = "CM16";
+CEDATA_N_RESEARCH_ARMOR = "STEEL PLATING";
+CEDATA_CM_RESEARCH_ARMOR = "Collect at Genetics Lab\n\nResister Unit\nMarines can resist more damage.";
+CEDATA_RM_RESEARCH_ARMOR = "Steel Plating\n\nMarines can use the green armor.";
+
+CEDATA_I_RESEARCH_REGENB = "CM18";
+CEDATA_N_RESEARCH_REGENB = "ABSORBER UNIT";
+CEDATA_CM_RESEARCH_REGENB = "Collect at Genetics Lab\n\nAsorber Unit\nMarines can regenerate health.";
+CEDATA_RM_RESEARCH_REGENB = "Asorber Unit\n\nMarines can regenerate health.";
+
+CEDATA_I_RESEARCH_RESISB = "CM17";
+CEDATA_N_RESEARCH_RESISB = "RESISTER UNIT";
+CEDATA_CM_RESEARCH_RESISB = "Collect at Genetics Lab\n\nResister Unit\nMarines can sustain more damage.";
+CEDATA_RM_RESEARCH_RESISB = "Resister Unit\n\nMarines can resist more damage.";
+
+CEDATA_I_RESEARCH_ARMS1 = "CM26";
+CEDATA_N_RESEARCH_ARMS1 = "ARMS (PHASE 1)";
+CEDATA_CM_RESEARCH_ARMS1 = "New weapons unlocked!\n\nExploder, Commando and Plasmatic\n packs are available in the ammo \nterminal!";
+
+CEDATA_I_RESEARCH_ARMS2 = "CM27";
+CEDATA_N_RESEARCH_ARMS2 = "ARMS (PHASE 2)";
+CEDATA_CM_RESEARCH_ARMS2 = "New weapons unlocked!\n\nBFG-Like and Pyromancer packs \nare available in the ammo terminal!";
+
+CEDATA_I_RESEARCH_BOOMRN = "CM28";
+CEDATA_N_RESEARCH_BOOMRN = "BOOMSHOT ROUNDS";
+CEDATA_CM_RESEARCH_BOOMRN = "Collect at the Armory\n\nBoomshot Rounds\nIncreased weapon damage";
+CEDATA_RM_RESEARCH_BOOMRN = "Boomshot Rounds\n\nMarines can deal more damage.";
+
+CEDATA_I_RESEARCH_AMMOBP = "CM29";
+CEDATA_N_RESEARCH_AMMOBP = "AMMO BACKPACK";
+CEDATA_CM_RESEARCH_AMMOBP = "Collect at the Armory\n\nAmmo Backpack\nTake more ammo with you!";
+CEDATA_RM_RESEARCH_AMMOBP = "Ammo Backpack\n\nMarines can grab more ammo.";
+
+CEDATA_I_RESEARCH_STIMPK = "CC30";
+CEDATA_N_RESEARCH_STIMPK = "STIMPACKS";
+CEDATA_CM_RESEARCH_STIMPK = "Collect at the Armory\n\nStimpacks\n\nMarines can start with 5 Stimpacks\nEach stimpack heals 20 hp.";
+CEDATA_RM_RESEARCH_STIMPK = "Stimpacks\n\nMarines can start with 5 Stimpacks\nEach stimpack heals 20 hp.\n\nImprove them in the Health Terminal.";
+
+CEDATA_I_RESEARCH_GNADES = "CC31";
+CEDATA_N_RESEARCH_GNADES = "HAND GRENADES";
+CEDATA_CM_RESEARCH_GNADES = "Collect at the Armory\n\nHand Grenades\n\nNow Marines can launch 5 grenades.";
+
+CEDATA_I_RESEARCH_RUSYNC = "CC26";
+CEDATA_N_RESEARCH_RUSYNC = "RUNE SYNCRONIZATION";
+CEDATA_CM_RESEARCH_RUSYNC = "Buy in Health Terminal\n\nRune Synchronization\n\nNow Marines can buy & equip runes.";
+CEDATA_RM_RESEARCH_RUSYNC = "Rune Synchronization\n\nMarines can now buy Runes in \nthe Health Terminal\n\nUpgrade the shop by spending \nsome UPs for more runes.";
+
+CEDATA_I_RESEARCH_PUMP1 = "CM56";
+CEDATA_N_RESEARCH_PUMP1 = "PROCESSING PHASE 1";
+CEDATA_CM_RESEARCH_PUMP1 = "Refinery Pump 1 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";
+CEDATA_RM_RESEARCH_PUMP1 = "Credit Processing (Phase 1)\n\nExtra credits for the players.";
+
+CEDATA_I_RESEARCH_PUMP2 = "CM56";
+CEDATA_N_RESEARCH_PUMP2 = "PROCESSING PHASE 2";
+CEDATA_CM_RESEARCH_PUMP2 = "Refinery Pump 2 activated!\n\nExtra credits for the team \nand the players. Keep up the good work!";
+CEDATA_RM_RESEARCH_PUMP2 = "Credit Processing (Phase 2)\n\nExtra credits for the players.";
+
+CEDATA_I_RESEARCH_VETMER = "CM44";
+CEDATA_N_RESEARCH_VETMER = "VETERAN MERCENARIES";
+CEDATA_CM_RESEARCH_VETMER = "Veteran Mercenaries Activated!\n\nPlayers under Sergant Rank gains x3 Exp!\nand under Major Rank, x2 Exp Points.";
+CEDATA_RM_RESEARCH_VETMER = "Veteran Mercenaries\n\nPlayers under Sergant Rank gains x3 Exp. \nand under Major Rank, x2 Exp Points.";
+
+CEDATA_I_RESEARCH_COINX5 = "CC23";
+CEDATA_N_RESEARCH_COINX5 = "COMPENSATION";
+CEDATA_CM_RESEARCH_COINX5 = "Compensation\n\nDropped coins worths 5 times more!.";
+
+CEDATA_I_RESEARCH_ADVSYS = "CM44";
+CEDATA_N_RESEARCH_ADVSYS = "ADVANCED SYSTEMS";
+
+CEDATA_I_RESEARCH_IONCAN = "CM53";
+CEDATA_N_RESEARCH_IONCAN = "ION CANNON";
+
+CEDATA_I_RESEARCH_AIRSUP = "CM54";
+CEDATA_N_RESEARCH_AIRSUP = "AIR SUPPORT";
+
+CEDATA_I_RESEARCH_CPULSE = "CM66";
+CEDATA_N_RESEARCH_CPULSE = "CORE PULSES";
+
+CEDATA_I_RESEARCH_CBOOST = "CC20";
+CEDATA_N_RESEARCH_CBOOST = "CORE BOOSTER";
+
+CEDATA_I_RESEARCH_COPTIM = "CC21";
+CEDATA_N_RESEARCH_COPTIM = "CORE OPTIMIZER";	
+
+CEDATA_I_RESEARCH_ENGINE = "CC22";
+CEDATA_N_RESEARCH_ENGINE = "ENGINE BOOST";

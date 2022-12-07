@@ -110,7 +110,7 @@ function void Champ_SetHybridPower(str actor){
 		break; case CHAMP_STEALTH: // Nearly invisible.
 			GiveInventory("ChampBuff_Stealth", 1);
 		break; case CHAMP_ZOMBIE:
-			GiveInventory("ChampZombie_LivesLeft", 3);
+			GiveInventory("ChampZombie_LivesLeft", 2);
 		break;
 
 		case CHAMP_EMPEROR: // Buffs nearby allies.

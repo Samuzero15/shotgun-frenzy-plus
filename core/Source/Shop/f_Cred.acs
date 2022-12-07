@@ -180,7 +180,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 script "SFPlus_StreakMilestone" (void) {
 	int play = playernumber();
 	int streakMilestone = getNextStreakMilestone();
-	if(GetActorProperty(0, APROP_HEALTH) > 1 && p_Streak[play] >= streakMilestone){
+	if(GetActorProperty(0, APROP_HEALTH) >= 1 && p_Streak[play] >= streakMilestone){
 		p_StreakLevel[play]++;
 		sf_AddUpPoints(1 + p_StreakLevel[play]/2, play);
 		f_BigCenterTip ("You broke a streak milestone!", CR_CYAN);

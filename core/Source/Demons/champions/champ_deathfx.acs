@@ -1,30 +1,30 @@
 
 Script "SFPlus_ChampionDeath" (void){
 	if(CheckInventory("Champ_Type") >= 1){
-		if(CheckInventory("ChampZombie_SkipDeathScript") && CheckInventory("ChampZombie_LivesLeft")){
-			// Resurrect it again, with less chance
-			int dice = random(0,99);
-			int lives = CheckInventory("ChampZombie_LivesLeft");
-			
-			if(dice < 60*lives){
-				delay(random(35*2, 35*10));
-				TakeInventory("ChampZombie_LivesLeft", 1);
-				while(GetActorProperty(0, APROP_HEALTH) <= 0){
-					// Try raising.
-					delay(1);
-					Thing_Raise(0, 1);
-				}
-				SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
-			}
-			else terminate;
-		}
-		if(CheckInventory("ChampZombie_SkipDeathScript")) terminate;
+		
 		int x = GetActorX(0);
 		int y = GetActorY(0);
 		int z = GetActorFloorZ(0);
 		int angle = GetActorAngle(0);
 		int tid = ActivatorTID();
-
+		if(CheckInventory("ChampZombie_SkipDeathScript")){
+			int dice = random(0,99);
+			int lives = CheckInventory("ChampZombie_LivesLeft");
+			//log(s:"ChampZombie death again, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+			if(dice < 35*lives){
+				ACS_NamedExecuteAlways("SFPlus_ChampZombie_Raise", 0);
+			}
+			else {
+				//log(s:"ChampZombie raise again failed, deleting, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+				GiveInventory("ChampZombie_ReallyDead", 1);
+				delay(35);
+				SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
+				SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
+				SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
+				Thing_Remove(0);
+			}
+			terminate;
+		}
 		if(Champ_IsType(CHAMP_EXPLOSIVE) || Champ_IsType(CHAMP_PRIDEFUL)){ // In matter of a second, explodes!
 			delay(5);
 			SpawnForced("ChampExplosive_Kaboom", x, y, z, 0,  angle);
@@ -34,15 +34,9 @@ Script "SFPlus_ChampionDeath" (void){
 			SpawnForced("ChampGolden_MoneySplash", x, y, z, 0, angle);
 		}
 		if(Champ_IsType(CHAMP_ZOMBIE) || Champ_IsType(CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
-			delay(random(35*2, 35*10));
+			//log(s:"ChampZombie death");
 			GiveInventory("ChampZombie_SkipDeathScript", 1);
-			while(GetActorProperty(0, APROP_HEALTH) <= 0){
-				// Try raising.
-				delay(1);
-				Thing_Raise(0, 1);
-			}
-			TakeInventory("ChampZombie_LivesLeft", 1);
-			SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+			ACS_NamedExecuteAlways("SFPlus_ChampZombie_Raise", 0);
 		}
 		if(Champ_IsType(CHAMP_SPLIT)){ // Spawns 2 copies of the same monster!
 			int who = GetActorClass(0);
@@ -63,4 +57,45 @@ Script "SFPlus_ChampionDeath" (void){
 			// Give it back the TID of the dead monster, 
 		}
 	}
+}
+
+Script "SFPlus_ChampZombie_Raise" (void){
+	//log(s:"ChampionZombie is trying to raise up randomly, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+	int random_delay = random(35*2, 35*5);
+	int counter = 0;
+	while(counter < random_delay && !CheckInventory("ChampZombie_ReallyDead") && GetActorProperty(0, APROP_HEALTH) <= 0){
+		// Check if i am resurrected by an archvile.
+		delay(1);
+		counter ++;
+	}
+	if(GetActorProperty(0, APROP_HEALTH) > 0){
+		TakeInventory("ChampZombie_LivesLeft", 1);
+		//log(s:"ChampionZombie rised again by an archvile, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+		SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+		terminate;
+	}
+	if(CheckInventory("ChampZombie_ReallyDead") || (CheckInventory("ChampZombie_LivesLeft") == 0)){
+		//log(s:"ChampionZombie is dead, really dead, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+		terminate;
+	}
+	//log(s:"ChampionZombie is trying to raise up forcefully, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+	while(GetActorProperty(0, APROP_HEALTH) <= 0 && !CheckInventory("ChampZombie_ReallyDead")){
+		// Now, Try raising.
+		delay(1);
+		if(CheckInventory("ChampZombie_LivesLeft")) Thing_Raise(0, 1);
+		else{
+			//log(s:"ChampionZombie is being blocked, cannot rise, it's dead.");
+			int x = GetActorX(0);
+			int y = GetActorY(0);
+			int z = GetActorFloorZ(0);
+			SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
+			SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
+			SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
+			terminate;
+		}
+		// Even if checked already, check again if the actor is not deleted of the game yet. if deleted this var must be 0.
+	}
+	TakeInventory("ChampZombie_LivesLeft", 1);
+	//log(s:"ChampionZombie rised again, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
+	SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
 }
