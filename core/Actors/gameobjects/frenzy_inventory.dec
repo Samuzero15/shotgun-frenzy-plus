@@ -383,6 +383,7 @@ ACTOR Inventory_Stimpack : Inventory_Item
 	inventory.pickupmessage "Soulsphere!"
 	inventory.icon "ITEM10"
 	inventory.maxamount 99
+	-Inventory.INVBAR
 	
 	States
 	{

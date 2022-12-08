@@ -21,16 +21,12 @@
 // Useful for filters.
 #libdefine FP_ITEM_T_POWERUP 1
 #libdefine FP_ITEM_T_DEPLOY 2
-// In case of mech upgrades.
-#libdefine FP_ITEM_T_UPGRADE 3
-// You can only hold 1 rune.
-#libdefine FP_ITEM_T_RUNE 4
-#libdefine FP_ITEM_T_DEPLOY_NOTARMORY 5
+#libdefine FP_ITEM_T_DEFAULT 0
+#libdefine FP_ITEM_T_HIDDEN -1
 
 #libdefine ITEMSHOP_ARMORY 0
 #libdefine ITEMSHOP_HEALTH_POWERUP 1
-#libdefine ITEMSHOP_HEALTH_RUNE 2
-#libdefine ITEMSHOP_HEALTH_MISC 3
+#libdefine ITEMSHOP_HEALTH_MISC 2
 
 #libdefine ITEMSHOP_NUM 4
 
@@ -48,55 +44,32 @@ function void SFPlus_DefineItems(void){
 	fp_LastItem = 0;
 	fp_itemshop_last[ITEMSHOP_ARMORY] = 0;
 	fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP] = 0;
-	fp_itemshop_last[ITEMSHOP_HEALTH_RUNE] = 0;
 	fp_itemshop_last[ITEMSHOP_HEALTH_MISC] = 0;
 	
-	Item_Add_Powerup("Inventory_Soulsphere", "Soulsphere", "soulsphere", 3, CR_BLUE,"ITEM01",
-		"Heals and overheals you 100 HP");
-	Item_Add_Powerup("Inventory_Megasphere", "Megasphere", "megasphere", 3, CR_CYAN,"ITEM02", 
-		"Grants you 200 Hp and a Blue armor.");
-	Item_Add_Powerup("Inventory_Godsphere", "Godsphere", "godsphere", 1, CR_WHITE,"ITEM03",
-		"Protects you from any damage!");
-	Item_Add_Powerup("Inventory_Berserk2", "Quadsphere", "berserk2", 1, CR_RED,"ITEM04",
-		"Your weapons harms 4 times more!");
-	Item_Add_Powerup("Inventory_AmmoGiver", "Ammo Sphere", "berserk2", 1, CR_GREEN,"ITEM09",
-		"Restock your ammo by yourself!");
-	Item_Add_Powerup("Inventory_Helltrigger", "Hell Trigger", "helltrigger", 1, CR_ORANGE,"ITEMP4",
-		"Fire faster, and free ammo!");
-	/*Item_Add_Powerup("Inventory_Necrosphere", "Hell Trigger", "helltrigger", 1, CR_ORANGE,"ITEM09",
-		"Damages every enemy arround you!");*/
+	Item_Add_Powerup("Inventory_Soulsphere",  "soulsphere", 	3, CR_BLUE,  	"SOULSPHERE");
+	Item_Add_Powerup("Inventory_Megasphere",  "megasphere", 	3, CR_CYAN,  	"MEGASPHERE");
+	Item_Add_Powerup("Inventory_Godsphere",   "godsphere",  	1, CR_WHITE, 	"GODSPHERE");
+	Item_Add_Powerup("Inventory_Berserk2",    "berserk2",   	1, CR_RED,		"BERSERK2");
+	Item_Add_Powerup("Inventory_AmmoGiver",   "berserk2",   	1, CR_GREEN,	"AMMOSPHERE");
+	Item_Add_Powerup("Inventory_Helltrigger", "helltrigger", 	1, CR_ORANGE,	"HELLTRIGGER");
 		
-	Item_Add_Inv("p_backpack", "Personal Backpack", "backpack", 1, "CM29", 0,
-		"Carry more ammo with you!");
-	Item_Add_Inv("Inventory_MarineMine", "Personal Mines", "mines", 16, "CM31", "IMIN0",
-		"Set it on the floor, and let them come!");
-		
-	Item_Add_Deploy("Inventory_MineDrone", "Mine drone", "drone_mine", 8, "CM48", "ITEM06",
-		"Throw it and let it blow.");
-	Item_Add_Deploy("Inventory_SawDrone", "Saw drone", "drone_saw", 8, "CM48","ITEM05",
-		"Ready to find some meat.");
-	Item_Add_Deploy("Inventory_HealthDispenser", "Health Dispenser", "disp_health", 3, "CM33", "HDIS0",
-		"Heals nearby allies.");
-	Item_Add_Deploy("Inventory_AmmoDispenser", "Ammo Dispenser", "disp_ammo", 3, "CM32", "ADIS0",
-		"Stocks nearby allies.");
-	Item_Add_deploy("Inventory_TurretBullet", "Bullet Turret", "turret_bullet", 8, "CM40", "ITEM08", 
-		"Basic and Cheap.");
-	Item_Add_deploy("Inventory_TurretRocket", "Rocket Turret", "turret_rocket", 8, "CM41", "ITMB0",
-		"Rock it with some rockets");
-	Item_Add_deploy("Inventory_TurretPlasma", "Plasma Turret", "turret_plasma", 8, "CM42", "ITMC0",
-		"Plasmatize those demons");
-	Item_Add_deploy("Inventory_TurretRail", "Rail Turret", "turret_rail", 8, "CM43", "ITMD0",
-		"Rails for the enemy lines");
-	Item_Add_deploy("Inventory_TurretFlame", "Flame Turret", "turret_flame", 8, "CM47", "ITME0", 
-		"Ignites the nearest foes");
-	Item_Add_deploy("Inventory_TurretChaingun", "Chaingun Turret", "turret_chaingun", 8, "CC14", "ITEMP1",
-		"No demon will outsmart these bullets.");
-	Item_Add_deploy("Inventory_TurretShotgun", "Shotgun Turret", "turret_shotgun", 8, "CC13", "ITEMP2",
-		"Spready attack, fires twice.");
+	Item_Add_Inv("p_backpack", 						"backpack", 		1, 		"PBACKPACK");
+	Item_Add_Inv("Inventory_MarineMine", 			"mines", 			16, 	"MARINEMINE");
+	Item_Add_Deploy("Inventory_MineDrone", 			"drone_mine", 		8, 		"MINEDRONE");
+	Item_Add_Deploy("Inventory_SawDrone", 			"drone_saw", 		8, 		"SAWDRONE");
+	Item_Add_Deploy("Inventory_HealthDispenser", 	"disp_health", 		3, 		"HEALDISP");
+	Item_Add_Deploy("Inventory_AmmoDispenser",		"disp_ammo", 		3, 		"AMMODISP");
+	Item_Add_deploy("Inventory_TurretBullet", 		"turret_bullet", 	8, 		"BULLTURRET");
+	Item_Add_deploy("Inventory_TurretRocket", 		"turret_rocket", 	8, 		"ROCKTURRET");
+	Item_Add_deploy("Inventory_TurretPlasma", 		"turret_plasma", 	8,	 	"PLASTURRET");
+	Item_Add_deploy("Inventory_TurretRail", 		"turret_rail", 		8, 		"RAILTURRET");
+	Item_Add_deploy("Inventory_TurretFlame",		"turret_flame", 	8, 		"FLAMTURRET");
+	Item_Add_deploy("Inventory_TurretChaingun",		"turret_chaingun", 	8, 		"CHAITURRET");
+	Item_Add_deploy("Inventory_TurretShotgun",		"turret_shotgun", 	8, 		"SHOTTURRET");
 	
-	Item_Add_Hidden("Inventory_GreedSphere", "Greed Sphere", 1, "ITEMP3");
-	Item_Add_Hidden("Inventory_TeslaCoil", "Tesla Coil", 8, "ITEM07");
-	Item_Add_Hidden("Inventory_Stimpack", "Stimpack", 10, "ITEM10");
+	Item_Add_Hidden("Inventory_GreedSphere", 	1, "GREEDSPHERE");
+	Item_Add_Hidden("Inventory_TeslaCoil",		8, "TESLTURRET");
+	Item_Add_Hidden("Inventory_Stimpack", 		10, "STIMPACK");
 	
 }
 
@@ -104,44 +77,59 @@ function void SFPlus_DefineItems(void){
 //Definers
 ////////////////////////////////////////////
 
-function void Item_Add_Rune(str actor, str name, str price, str icon, str desc){
-	str pr = strparam(s:"pr_r_", s:price);
-	int it = Item_Add(FP_ITEM_T_RUNE, actor, name, pr, 1, icon, 0, desc);
-	Item_AppendToShop(it, ITEMSHOP_HEALTH_RUNE);
-}
-
-function void Item_Add_Deploy(str actor, str name, str price, int max, str icon, str sphere, str desc){
+function void Item_Add_Deploy(str actor, str price, int max, str lang){
 	str pr = strparam(s:"pr_d_", s:price);
-	int it = Item_Add(FP_ITEM_T_DEPLOY, actor, name, pr, max, icon, sphere, desc);
+	int it = Item_Add(FP_ITEM_T_DEPLOY, actor, max, pr, lang);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
 }
 
-function void Item_Add_Powerup(str actor, str name, str price, int max, str icon, str sphere, str desc){
+function void Item_Add_Powerup(str actor, str price, int max, int color, str lang){
 	str pr = strparam(s:"pr_p_", s:price);
-	int it = Item_Add(FP_ITEM_T_POWERUP, actor, name, pr, max, icon, sphere, desc);
+	int it = Item_Add_Color(FP_ITEM_T_POWERUP, actor, max, pr, color, lang);
 	Item_AppendToShop(it, ITEMSHOP_HEALTH_POWERUP);
 }
 
-function void Item_Add_Inv(str actor, str name, str price, int max, str icon, str sphere, str desc){
+function void Item_Add_Inv(str actor, str price, int max, str lang){
 	str pr = strparam(s:"pr_i_", s:price);
-	int it = Item_Add(0,actor, name, pr, max, icon, sphere, desc);
+	int it = Item_Add(0, actor, max, pr, lang);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
 }
 
-function void Item_Add_Hidden(str actor, str name, int max, str sphere){
-	int it = Item_Add(-1,actor, name, 0, max, 0, sphere, 0);
+function void Item_Add_Hidden(str actor, int max, str lang){
+	int it = Item_Add(-1, actor, max, 0, lang);
 }
 
-function int Item_Add(int type, str actor, str name, str price, int max, str icon, str sphere, str desc){
-	
+function int Item_Add(int type, str actor, int max, int price, str lang){
+	str name = strparam(l:strparam(s:"ITDATA_N_",s:lang)); 
+	str icon = strparam(l:strparam(s:"ITDATA_I_",s:lang)); 
+	str desc = strparam(l:strparam(s:"ITDATA_D_",s:lang));
+	str ibtn = strparam(l:strparam(s:"ITDATA_B_",s:lang));
+
 	fp_Items[fp_LastItem][0] = type;
 	fp_Items[fp_LastItem][1] = actor;
-	fp_Items[fp_LastItem][2] = name;
+	fp_Items[fp_LastItem][2] = max;
 	fp_Items[fp_LastItem][3] = price;
-	fp_Items[fp_LastItem][4] = max;
+	fp_Items[fp_LastItem][4] = name;
 	fp_Items[fp_LastItem][5] = icon;
-	fp_Items[fp_LastItem][6] = sphere;
-	fp_Items[fp_LastItem][7] = desc;
+	fp_Items[fp_LastItem][6] = desc;
+	fp_Items[fp_LastItem][7] = ibtn;
+	
+	fp_LastItem++;
+	return fp_LastItem;
+}
+function int Item_Add_Color(int type, str actor, int max, int price, int color, str lang){
+	str name = strparam(l:strparam(s:"ITDATA_N_",s:lang)); 
+	str icon = strparam(l:strparam(s:"ITDATA_I_",s:lang)); 
+	str desc = strparam(l:strparam(s:"ITDATA_D_",s:lang));
+
+	fp_Items[fp_LastItem][0] = type;
+	fp_Items[fp_LastItem][1] = actor;
+	fp_Items[fp_LastItem][2] = max;
+	fp_Items[fp_LastItem][3] = price;
+	fp_Items[fp_LastItem][4] = name;
+	fp_Items[fp_LastItem][5] = icon;
+	fp_Items[fp_LastItem][6] = desc;
+	fp_Items[fp_LastItem][7] = color;
 	
 	fp_LastItem++;
 	return fp_LastItem;
@@ -149,15 +137,15 @@ function int Item_Add(int type, str actor, str name, str price, int max, str ico
 // Getters
 function int Item_GetType(int it){	return fp_Items[it][0];}
 function int Item_GetActor(int it){	return fp_Items[it][1];}
-function int Item_GetName(int it){	return fp_Items[it][2];}
-
+function int Item_GetMax(int it){	return fp_Items[it][2];}
 function int Item_GetPrice(int it){
 	return CheckInventory(fp_Items[it][3]);
 }
-function int Item_GetMax(int it){	return fp_Items[it][4];}
+function int Item_GetName(int it){	return fp_Items[it][4];}
 function int Item_GetIcon(int it){	return fp_Items[it][5];}
-function int Item_GetSphere(int it){return fp_Items[it][6];}
-function int Item_GetDesc(int it){	return fp_Items[it][7];}
+function int Item_GetDesc(int it){	return fp_Items[it][6];}
+function int Item_GetArg1(int it){return fp_Items[it][7];}
+
 
 function void Item_AppendToShop(int it, int shop){
 	fp_itemshop[shop][fp_itemshop_last[shop]] = it-1;

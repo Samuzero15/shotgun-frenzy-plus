@@ -9,7 +9,11 @@
 
 ## v0 - Before the beginning...
 
-#### (7 / 12 / 2022) [Zombie Champ. balance and crash fix]
+#### (8 / 12 / 2022) [Item directory rewrite]
+	*) Made a new file for data storage of items called Language Items.
+	*) Rewrote the Item directory, and encapsulated a few things in there.
+
+#### (7 / 12 / 2022) (v1.2 Release!) [Zombie Champ. balance and crash fix]
 	*) Fixed the crash caused by a raising Zombie Champion after deleting it's corpse. (Again, thanks Kaminsky for the hint!)
 	*) Now some particle gore effects will spawn over the dead zombie champion after using all it's lives.
 	*) Now a champion zombie will try to rise with only 2 extra lives (in that way, you can kill it up to 3 times) resurrect chances are: 70% at first death and 35% at second death.

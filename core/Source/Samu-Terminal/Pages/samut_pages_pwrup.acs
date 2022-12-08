@@ -51,8 +51,9 @@ function void PowBuyPage_AddComps(int cell, int powerup){
 	str powname = Item_getName(powerup);
 	int powprice = Item_getPrice(powerup);
 	str powdesc = Item_getDesc(powerup);
-	str powicon = Item_getSphere(powerup);
-	int color = Item_getIcon(powerup);
+	str powicon = Item_getIcon(powerup);
+	int color = Item_getArg1(powerup);
+	//log(s:"Colour: ", d:color);
 	
 	i = StrButton_AddCard(powpage_vars[1], cell, "BUY");
 	StrButton_setColor(i, color);

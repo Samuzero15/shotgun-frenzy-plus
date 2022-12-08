@@ -60,7 +60,7 @@ function void ItemHud_ShowItem(int itemid) {
 	
 	int num = CheckInventory(Item_GetActor(itemid));
 	int max_num = Item_GetMax(itemid);
-	str img = Item_GetSphere(itemid);
+	str img = Item_GetIcon(itemid);
 	
 	// Set position
 	if(num > 0 && img != 0 && !CheckInventory("SamuTInv_UsingTerminal")) {

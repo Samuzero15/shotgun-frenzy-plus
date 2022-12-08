@@ -1,0 +1,112 @@
+[Enu default]
+
+/*
+ITDATA_I_* = ""; 
+// Icon of item
+ITDATA_N_* = ""; 
+// Name of the item
+ITDATA_D_* = ""; 
+// Description of the item
+ITDATA_B_* = "";
+// Button image for the item (used in armory shop.)
+**/
+
+ITDATA_I_SOULSPHERE = "ITEM01";
+ITDATA_N_SOULSPHERE = "Soulsphere";
+ITDATA_D_SOULSPHERE = "Heals and overheals you 100 HP";
+
+ITDATA_I_MEGASPHERE = "ITEM02";
+ITDATA_N_MEGASPHERE = "Megasphere";
+ITDATA_D_MEGASPHERE = "Grants you 200 Hp and a Blue armor";
+
+ITDATA_I_GODSPHERE = "ITEM03";
+ITDATA_N_GODSPHERE = "Godsphere";
+ITDATA_D_GODSPHERE = "Protects you from any damage!";
+
+ITDATA_I_BERSERK2 = "ITEM04";
+ITDATA_N_BERSERK2 = "Quadsphere";
+ITDATA_D_BERSERK2 = "Your weapons harms 4 times more!";
+
+ITDATA_I_AMMOSPHERE = "ITEM09";
+ITDATA_N_AMMOSPHERE = "Ammo Sphere";
+ITDATA_D_AMMOSPHERE = "Fully Restocks your ammo!";
+
+ITDATA_I_HELLTRIGGER = "ITEMP4";
+ITDATA_N_HELLTRIGGER = "Hell Trigger";
+ITDATA_D_HELLTRIGGER = "Fire twice as fast and with no limits!";
+
+ITDATA_B_PBACKPACK = "CM29";
+ITDATA_N_PBACKPACK = "Personal Backpack";
+ITDATA_D_PBACKPACK = "Carry more ammo with you!";
+
+ITDATA_I_MARINEMINE = "IMIN0";
+ITDATA_B_MARINEMINE = "CM29";
+ITDATA_N_MARINEMINE = "Personal Mines";
+ITDATA_D_MARINEMINE = "Set it on the floor, and let them come!";
+
+ITDATA_I_MINEDRONE = "ITEM06";
+ITDATA_B_MINEDRONE = "CM48";
+ITDATA_N_MINEDRONE = "Saw drone";
+ITDATA_D_MINEDRONE = "Throw it and let it blow.";
+
+ITDATA_I_SAWDRONE = "ITEM05";
+ITDATA_B_SAWDRONE = "CM48";
+ITDATA_N_SAWDRONE = "Saw drone";
+ITDATA_D_SAWDRONE = "Ready to find some meat.";
+
+ITDATA_I_HEALDISP = "HDIS0"; 
+ITDATA_B_HEALDISP = "CM33";
+ITDATA_N_HEALDISP = "Health Dispenser"; 
+ITDATA_D_HEALDISP = "Heals nearby allies."; 
+
+ITDATA_I_AMMODISP = "ADIS0"; 
+ITDATA_B_AMMODISP = "CM32";
+ITDATA_N_AMMODISP = "Ammo Dispenser"; 
+ITDATA_D_AMMODISP = "Stocks nearby allies."; 
+
+ITDATA_I_BULLTURRET = "ITEM08"; 
+ITDATA_B_BULLTURRET = "CM40";
+ITDATA_N_BULLTURRET = "Bullet Turret"; 
+ITDATA_D_BULLTURRET = "Basic and Cheap"; 
+
+ITDATA_I_ROCKTURRET = "ITMB0"; 
+ITDATA_B_ROCKTURRET = "CM41";
+ITDATA_N_ROCKTURRET = "Rocket Turret"; 
+ITDATA_D_ROCKTURRET = "Explosive rockets."; 
+
+ITDATA_I_PLASTURRET = "ITMC0"; 
+ITDATA_B_PLASTURRET = "CM42";
+ITDATA_N_PLASTURRET = "Plasma Turret"; 
+ITDATA_D_PLASTURRET = "Plasmatize those demons"; 
+
+ITDATA_I_RAILTURRET = "ITMD0"; 
+ITDATA_B_RAILTURRET = "CM43";
+ITDATA_N_RAILTURRET = "Rail Turret"; 
+ITDATA_D_RAILTURRET = "Rails for the enemy lines"; 
+
+ITDATA_I_CHAITURRET = "ITEMP1"; 
+ITDATA_B_CHAITURRET = "CC14";
+ITDATA_N_CHAITURRET = "Chaingun Turret"; 
+ITDATA_D_CHAITURRET = "No demon will outsmart these bullets."; 
+
+ITDATA_I_SHOTTURRET = "ITEMP2"; 
+ITDATA_B_SHOTTURRET = "CC13";
+ITDATA_N_SHOTTURRET = "Shotgun Turret"; 
+ITDATA_D_SHOTTURRET = "Spready attack, fires twice."; 
+
+ITDATA_I_FLAMTURRET = "ITME0"; 
+ITDATA_B_FLAMTURRET = "CM47";
+ITDATA_N_FLAMTURRET = "Flame Turret"; 
+ITDATA_D_FLAMTURRET = "Ignites the nearest foes"; 
+
+ITDATA_I_GREEDSPHERE = "ITEMP3"; 
+ITDATA_N_GREEDSPHERE = "Greed Sphere"; 
+ITDATA_D_GREEDSPHERE = ""; 
+
+ITDATA_I_TESLTURRET = "ITEM07"; 
+ITDATA_N_TESLTURRET = "Tesla Coil"; 
+ITDATA_D_TESLTURRET = ""; 
+
+ITDATA_I_STIMPACK = "ITEM10"; 
+ITDATA_N_STIMPACK = "Stimpack"; 
+ITDATA_D_STIMPACK = ""; 
