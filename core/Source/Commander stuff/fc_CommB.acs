@@ -47,7 +47,7 @@ function bool CMD_FloorCheck(int tid){
 script "SFPlus_DeployPlayerBuilding" (int which){
 	int ptid = ActivatorTID();
 	int btid = ptid;
-	printbold(s:"PlayerTID: ", d:ptid, s:" / SummonTID: ", d:btid);
+	//printbold(s:"PlayerTID: ", d:ptid, s:" / SummonTID: ", d:btid);
 	switch(which){
 		case DEPLOY_TURRET_BULLET:
 			Player_SpawnBuilding("TurretBullet", "Inventory_TurretBullet", btid);
@@ -72,6 +72,12 @@ script "SFPlus_DeployPlayerBuilding" (int which){
 		break;
 		case DEPLOY_TURRET_BFG:
 			Player_SpawnBuilding("TurretBFG", "Inventory_TurretBfg", btid);
+		break;
+		case DEPLOY_DISPENSER_AMMO:
+			Player_SpawnBuilding("AmmoDispenser", "Inventory_AmmoDispenser", btid);
+		break;
+		case DEPLOY_DISPENSER_HEALTH:
+			Player_SpawnBuilding("HealthDispenser", "Inventory_HealthDispenser", btid);
 		break;
 	}
 		

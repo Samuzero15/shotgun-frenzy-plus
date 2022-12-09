@@ -92,10 +92,10 @@ ACTOR Railgun_Taser : Weapon
 			TNT1 A 0 A_PlaySoundEx ("Railgun_Taser/StartLaser", soundslot7, 1)
 			X1E2 A 1 A_GunFlash
 			X1E2 B 2 
-			X1E2 C 2 A_RailAttack (10 + 5*random(0,2), 0, 0, "", "", RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer")
+			X1E2 C 2 A_RailAttack (10 + 5*random(0,2), 0, 0, "", "", RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer1")
 			X1E2 A 1 
 			X1E2 B 2 
-			X1E2 C 2 A_RailAttack (10 + 5*random(0,2), 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer")
+			X1E2 C 2 A_RailAttack (10 + 5*random(0,2), 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer1")
 			TNT1 A 0 A_GiveInventory("Railgun_Taser_WindUp", 1)
 			TNT1 A 0 A_JumpIfInventory("Railgun_Taser_WindUp", 7, "Hold")
 			TNT1 A 0 A_JumpIfNoAmmo(2)
@@ -106,15 +106,31 @@ ACTOR Railgun_Taser : Weapon
 			X1E2 BABCB 5 A_SpawnItem(Smoke_Spawner, 0, -20, 0)
 			goto Ready
 		Hold:
+			X1E2 B 2 A_Jump(256, "Hold.Tracer1", "Hold.Tracer2")
+			goto Hold.Tracer1
+		Hold.Tracer1:
 			X1E2 A 0 A_GunFlash
-			X1E2 BC 2 A_RailAttack (10 + 5*random(0,4), 0, 0, "", "", RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer")
+			X1E2 C 2 A_RailAttack (10 + 5*random(0,4), 0, 0, "", "", RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer1")
 			TNT1 A 0 A_GunFlash
-			X1E2 B 2 A_RailAttack (10 + 5*random(0,4), 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer")
-			TNT1 AA 0 A_RailAttack (10 + 5*random(0,4), 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer")
+			X1E2 B 2 A_RailAttack (10 + 5*random(0,4), 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer1")
+			TNT1 AA 0 A_RailAttack (10 + 5*random(0,4), 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer1")
 			X1E2 C 2 
 			TNT1 A 0 A_PlaySoundEx ("Railgun_Taser/LoopLaser", soundslot7, 1)
 			TNT1 A 0 A_JumpIfNoAmmo(2)
-			X1E2 A 4 A_Refire
+			X1E2 A 4 A_Refire("Hold")
+			goto Hold.End
+		Hold.Tracer2:
+			X1E2 A 0 A_GunFlash
+			X1E2 C 2 A_RailAttack (10 + 5*random(0,4), 0, 0, "", "", RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer2")
+			TNT1 A 0 A_GunFlash
+			X1E2 B 2 A_RailAttack (10 + 5*random(0,4), 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer2")
+			TNT1 AA 0 A_RailAttack (10 + 5*random(0,4), 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_SpearPuff",0,0,1024,0,10.0,0,"Rail_Laser_Tracer2")
+			X1E2 C 2 
+			TNT1 A 0 A_PlaySoundEx ("Railgun_Taser/LoopLaser", soundslot7, 1)
+			TNT1 A 0 A_JumpIfNoAmmo(2)
+			X1E2 A 4 A_Refire("Hold")
+			goto Hold.End
+		Hold.End:
 			TNT1 A 0 A_StopSoundEx (soundslot7)
 			TNT1 A 0 A_PlaySoundEx ("Railgun_Taser/Stop", soundslot9)
 			TNT1 A 0 A_TakeInventory("Railgun_Taser_WindUp", 9999)
@@ -123,12 +139,12 @@ ACTOR Railgun_Taser : Weapon
 		AltFire:
 			X1E2 A 1 A_PlaySoundEx ("x1/taser", soundslot8)
 			X1E2 A 1 A_GunFlash
-			X1E2 BC 2 A_RailAttack (20, 0, 0, "", "", RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer")
+			X1E2 BC 2 A_RailAttack (20, 0, 0, "", "", RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer1")
 			TNT1 A 0 A_GunFlash
-			X1E2 BC 2 A_RailAttack (20, 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer")
+			X1E2 BC 2 A_RailAttack (20, 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer1")
 			TNT1 A 0 A_GunFlash
-			X1E2 B 2 A_RailAttack (20, 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer")
-			X1E2 C 2 A_RailAttack (20, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer")
+			X1E2 B 2 A_RailAttack (20, 0, 0, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer1")
+			X1E2 C 2 A_RailAttack (20, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer1")
 			X1E2 A 4 A_Refire
 			goto Ready
 		Flash:

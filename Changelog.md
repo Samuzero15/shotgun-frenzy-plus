@@ -9,9 +9,17 @@
 
 ## v0 - Before the beginning...
 
-#### (8 / 12 / 2022) [Item directory rewrite]
+#### (8 / 12 / 2022) [Item directory rewrite & rewrites & fixes] 
 	*) Made a new file for data storage of items called Language Items.
 	*) Rewrote the Item directory, and encapsulated a few things in there.
+	*) Now the laser from the Spear-Taser Railgun is now visible in multiplayer (although the taser projectile was nerfed visually :( daang you limited zandronum!)
+	*) Now the Stimpack is invisible in the Item Hud.
+	*) Fixed the disbalance of monster spawning when 3 or more players join in.
+	*) Modified the skill system. SHOULD be a little more exact.
+	*) Refactorized the hud messages from the final fights. And now added 2 extra stats, Cores protected (CF and SF), and Waves cleared (SD)
+	*) After a zombie champion is killed, it will re-target again to the risked core.
+	*) After shocking an enemy, it will also re-target again to the risked core.
+	*) Alright, now turrets will not interrupt the hate command, hopefuly.
 
 #### (7 / 12 / 2022) (v1.2 Release!) [Zombie Champ. balance and crash fix]
 	*) Fixed the crash caused by a raising Zombie Champion after deleting it's corpse. (Again, thanks Kaminsky for the hint!)
@@ -20,11 +28,11 @@
 	*) If a champion zombie is resurrected by any enemy resurrecter (like archviles), it will consume 1 life for the early raising.
 	*) A zombie champion after the first death, will not drop any reward items after dying again. (but still you will get paid after the kill).
 
-#### (5 / 12 / 2022) [Optional autosave]
+#### (5 / 12 / 2022)
 	*) Now the autosave function will only trigger when activating the sfp_autosaveitems on ccmd.
 	*) Reworked the autosave function to keep items for everyone, with a little less lag (i hope).
 
-#### (3 / 12 / 2022) [Another quickish bugfix]
+#### (3 / 12 / 2022)
 	*) Reduced the prices of the stimpack upgrades, in order to get pursached in early game.
 	*) Fixed the rune terminal not showing it's runes.
 	*) Rune Sync. will now be granted in 1000 kills on CF/SD maps

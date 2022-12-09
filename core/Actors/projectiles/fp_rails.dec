@@ -98,13 +98,14 @@ Actor Rail_SpearPuff : Rail_TaserPuff
 	}
 }
 
+/*
 ACTOR Rail_Taser_Tracer : RandomSpawner
 {
 	DropItem "Rail_Taser_Tracer1", 255, 1
 	DropItem "Rail_Taser_Tracer2", 255, 1
 	DropItem "Rail_Taser_Tracer3", 255, 1
 	DropItem "Rail_Taser_Tracer4", 255, 1
-}
+}*/
 
 ACTOR Rail_Taser_Tracer1
 {
@@ -124,87 +125,91 @@ ACTOR Rail_Taser_Tracer1
 	States
 	{
 		Spawn:
-			TNT1 A 0
-			
-			PLSE B 1 BRIGHT A_Explode(1,16,0,0,16)
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
+			PLSE B 1
+			TNT1 A 0 // Does´nt work AAAAAA A_SpawnItemEx("Rail_Taser_Tracer_Sparks", 0, 0, 0, frandom(-5, 5), frandom(-5, 5), frandom(-5, 5))
+		LoopMe:
+			PLSE B 1 BRIGHT A_Explode(1,24,0,0,24)
 			TNT1 A 0 a_Fadeout(0.05)
 			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE B 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
 			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE C 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
 			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE D 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
 			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			PLSE C 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
 			TNT1 A 0 a_Fadeout(0.05)
 			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
 			loop
 	}
 }
-ACTOR Rail_Taser_Tracer2 : Rail_Taser_Tracer1
+ACTOR Rail_Taser_Tracer_Sparks
 {
-	scale 0.3
+	Radius				11
+	Height				8
+	
+	RenderStyle			Add
+	Scale				0.3
+	
+	DamageType			MarineFire
+	
+	+NOINTERACTION
+	+NODAMAGETHRUST
+	+NoGRAVITY
+	+BLOODLESSIMPACT
 	States
 	{
 		Spawn:
 			TNT1 A 0
-			PLSE D 1 BRIGHT A_Explode(1,16,0,0,16)
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
-			TNT1 A 0 a_Fadeout(0.05)
-			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
-			PLSE D 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
-			TNT1 A 0 a_Fadeout(0.05)
-			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
-			PLSE C 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
-			TNT1 A 0 a_Fadeout(0.05)
-			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
-			PLSE B 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
-			TNT1 A 0 a_Fadeout(0.05)
-			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
-			PLSE C 1 bright 
-			TNT1 A 0 ThrustThing(random(0,360), 1, 1, 0)
-			TNT1 A 0 ThrustThingZ(0, 1, random(0,1), 1)
-			TNT1 A 0 a_Fadeout(0.05)
-			TNT1 A 0 A_RadiusGive("AltState_StunGiver", 16, RGF_MONSTERS)
+			PLSE DDCBC 1 bright a_Fadeout(0.05)
 			loop
 	}
 }
 
-ACTOR Rail_Taser_Tracer3 : Rail_Taser_Tracer1
-{
-	scale 0.4
-}
-
-ACTOR Rail_Taser_Tracer4 : Rail_Taser_Tracer2
-{
-	scale 0.4
-}
-
-ACTOR Rail_Laser_Tracer : RandomSpawner
+/*
+ACTOR Rail_Laser_Tracer : RandomSpawner // Goddammit Zandronum!
 {
 	DropItem "Rail_Laser_Tracer1", 255, 1
 	DropItem "Rail_Laser_Tracer2", 255, 1
 }
+
+ACTOR Rail_Laser_Tracer
+{
+	Radius				11
+	Height				8
+	RenderStyle			Add
+	Scale				0.7
+	Alpha				0.5
+	DamageType			MarineFire
+	+NOINTERACTION
+	+NODAMAGETHRUST
+	+BLOODLESSIMPACT
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1 NoDelay 
+			TNT1 A 1 A_Jump(256, "Tracer1", "Tracer2")
+			Stop
+		Tracer1:
+			PLSS A 1 BRIGHT A_Explode(1,16,0,0,16)
+			TNT1 A 0 A_Log("Tracer 1")
+		Tracer1Loop:
+			PLSS BABABA 1 bright a_Fadeout(0.05)
+			loop
+		Tracer2:
+			PLSS B 1 BRIGHT A_Explode(1,16,0,0,16)
+			TNT1 A 0 A_Log("Tracer 2")
+		Tracer2Loop:
+			PLSS ABABAB 1 bright a_Fadeout(0.05)
+			loop
+	}
+}
+
+*/
 
 ACTOR Rail_Laser_Tracer1
 {
@@ -217,16 +222,14 @@ ACTOR Rail_Laser_Tracer1
 	
 	DamageType			MarineFire
 	
-	+NOINTERACTION
 	+NODAMAGETHRUST
 	+BLOODLESSIMPACT
-	
+	+NoGRAVITY
 	States
 	{
 		Spawn:
-			TNT1 A 0
-			TNT1 A 0 A_Jump(128, 2)
-			PLSS A 1 BRIGHT A_Explode(1,16,0,0,16)
+			PLSS A 1
+			PLSS A 1 BRIGHT A_Explode(1,24,0,0,24)
 			PLSS BABABA 1 bright a_Fadeout(0.05)
 			loop
 	}
@@ -237,8 +240,7 @@ ACTOR Rail_Laser_Tracer2 : Rail_Laser_Tracer1
 	States
 	{
 		Spawn:
-			TNT1 A 0
-			TNT1 A 0 A_Jump(128, 2)
+			PLSS B 1 
 			PLSS B 1 BRIGHT A_Explode(1,16,0,0,16)
 			PLSS ABABAB 1 bright a_Fadeout(0.05)
 			loop

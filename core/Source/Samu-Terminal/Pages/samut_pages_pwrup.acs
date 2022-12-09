@@ -52,7 +52,7 @@ function void PowBuyPage_AddComps(int cell, int powerup){
 	int powprice = Item_getPrice(powerup);
 	str powdesc = Item_getDesc(powerup);
 	str powicon = Item_getIcon(powerup);
-	int color = Item_getArg1(powerup);
+	int color = Item_GetIBtnOrColor(powerup);
 	//log(s:"Colour: ", d:color);
 	
 	i = StrButton_AddCard(powpage_vars[1], cell, "BUY");

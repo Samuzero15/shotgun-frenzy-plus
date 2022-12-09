@@ -51,7 +51,7 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	int prop0, prop1, prop2, prop3, prop4;
 	
 	prop0 = Item_GetName(itemid);
-	prop1 = Item_GetArg1(itemid);
+	prop1 = Item_GetIBtnOrColor(itemid);
 	prop2 = Item_GetDesc(itemid);
 	prop3 = strParam(d:Item_GetPrice(itemId), s:" $");
 	prop4 = strParam(d:CheckInventory(Item_getActor(itemId)), s:"/", d:Item_getMax(itemId) );
@@ -104,7 +104,7 @@ function void ArmItmPage_UpdateItem(int itemId){
 	int quantity = Checkinventory(Item_getActor(itemid));
 	int maximum = Item_getMax(itemid);
 	
-	str button = Item_getArg1(itemid);
+	str button = Item_getIBtnOrColor(itemid);
 	bool caniafford = GetPlayCredits() >= price;
 	
 	if(quantity == maximum)

@@ -78,16 +78,27 @@ function int f_AIDir_Check (void)
    	return m_SurvivalWave * 15 + 1;
 }
 
+function int AIDir_AverageKPM(void){
+    // Average kills per minute. Considers player count and game length (+ guardian wave). Used for measuring the skill issue.
+    int res;
+    if (f_Gametype == 5) { // In case of survival defender maps.
+        res = m_AIDCap*(PlayerCount())*(m_SurvivalWave);
+    }else {
+        res = m_AIDCap + ((m_AIDCap/2)*PlayerCount())*(f_Gamelength+f_GuardianLength);
+    }
+    return res;
+}
+
 function int AIDir_ExtraLevelGap(void){
     // Adds some extra gap, allowing the lower monsters fight a bit longer.
-    if(playercount() > 2) return (PlayerCount()/2)*5;
+    if(playercount() > 2) return (PlayerCount()/2);
     return 0;
 } 
 
 function int AIDir_CurrentLevel(void){
     // The short of f_AIDir_Check() / 10
     // Determines the monster levelset to spawn.
-    return (f_AIDir_Check() / 10 + AIDir_ExtraLevelGap());
+    return (f_AIDir_Check() / (10 + AIDir_ExtraLevelGap()));
 }
 
 // the ai director debugger
@@ -102,7 +113,8 @@ script 269 (void)//OPEN
 		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore(),
 		s:"\nPupDir Upgrades Score: ", d:PUTrack_GetScore(),
 		s:"\nAI Director status: ", d:f_AIDir_Check(),
-		s:"\nAI Spawn Level: ", d:(AIDir_CurrentLevel() + 1));
+		s:"\nAI Spawn Level: ", d:(AIDir_CurrentLevel() + 1),
+        s:"\nAverage Kills per minute: ", d:AIDir_AverageKPM());
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
         delay(1);
 		

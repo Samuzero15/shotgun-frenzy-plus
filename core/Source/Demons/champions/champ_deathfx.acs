@@ -69,9 +69,13 @@ Script "SFPlus_ChampZombie_Raise" (void){
 		counter ++;
 	}
 	if(GetActorProperty(0, APROP_HEALTH) > 0){
+		
 		TakeInventory("ChampZombie_LivesLeft", 1);
 		//log(s:"ChampionZombie rised again by an archvile, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
 		SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+		delay(35);
+		thing_hate(0, g_Status + 100, 4);
+    	thing_hate(0, g_Status + 100, 4);
 		terminate;
 	}
 	if(CheckInventory("ChampZombie_ReallyDead") || (CheckInventory("ChampZombie_LivesLeft") == 0)){
@@ -98,4 +102,7 @@ Script "SFPlus_ChampZombie_Raise" (void){
 	TakeInventory("ChampZombie_LivesLeft", 1);
 	//log(s:"ChampionZombie rised again, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
 	SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+	delay(35);
+	thing_hate(0, g_Status + 100, 4);
+    thing_hate(0, g_Status + 100, 4);
 }

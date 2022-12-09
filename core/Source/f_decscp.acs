@@ -229,8 +229,10 @@ script "AltState_Stun" (void)
 	SetActorProperty(0, APROP_SPEED, ori_speed);
 	// Cooldown depends on the monster class and if its a champion.
 	// Duration is doubled if the monster is a champion.
-	// 1 second * class * 1+is champion?
-	delay(35*sf_GetMonsterClass_Health()*(1+CheckInventory("Champ_Type")));
+	// 2 seconds * class * 1+is champion?
+	thing_hate(0, g_Status + 100, 4);
+    thing_hate(0, g_Status + 100, 4);
+	delay(35*(2+sf_GetMonsterClass_Health())*(1+CheckInventory("Champ_Type")));
 	TakeInventory("AltState_Stunned", 1);
 }
 
@@ -453,6 +455,12 @@ Script "Building_AggroLoop" (int tid) {
 		//Log(s:"Give the HateRadius, radius:", d:CheckInventory("Building_GetRange"));
 		delay(35*5);
 	}
+}
+
+Script "Building_AggroBack" (void) {
+	delay(35);
+	thing_hate(0, g_Status + 100, 4);
+    thing_hate(0, g_Status + 100, 4);
 }
 
 Script "Building_GetRange" (void) {

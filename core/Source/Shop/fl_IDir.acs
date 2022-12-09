@@ -67,9 +67,9 @@ function void SFPlus_DefineItems(void){
 	Item_Add_deploy("Inventory_TurretChaingun",		"turret_chaingun", 	8, 		"CHAITURRET");
 	Item_Add_deploy("Inventory_TurretShotgun",		"turret_shotgun", 	8, 		"SHOTTURRET");
 	
-	Item_Add_Hidden("Inventory_GreedSphere", 	1, "GREEDSPHERE");
-	Item_Add_Hidden("Inventory_TeslaCoil",		8, "TESLTURRET");
-	Item_Add_Hidden("Inventory_Stimpack", 		10, "STIMPACK");
+	Item_Add_Hidden("Inventory_GreedSphere", 	1, "GREEDSPHERE", true);
+	Item_Add_Hidden("Inventory_TeslaCoil",		8, "TESLTURRET", true);
+	Item_Add_Hidden("Inventory_Stimpack", 		10, "STIMPACK", false);
 	
 }
 
@@ -79,27 +79,27 @@ function void SFPlus_DefineItems(void){
 
 function void Item_Add_Deploy(str actor, str price, int max, str lang){
 	str pr = strparam(s:"pr_d_", s:price);
-	int it = Item_Add(FP_ITEM_T_DEPLOY, actor, max, pr, lang);
+	int it = Item_Add(FP_ITEM_T_DEPLOY, actor, max, pr, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
 }
 
 function void Item_Add_Powerup(str actor, str price, int max, int color, str lang){
 	str pr = strparam(s:"pr_p_", s:price);
-	int it = Item_Add_Color(FP_ITEM_T_POWERUP, actor, max, pr, color, lang);
+	int it = Item_Add_Color(FP_ITEM_T_POWERUP, actor, max, pr, color, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_HEALTH_POWERUP);
 }
 
 function void Item_Add_Inv(str actor, str price, int max, str lang){
 	str pr = strparam(s:"pr_i_", s:price);
-	int it = Item_Add(0, actor, max, pr, lang);
+	int it = Item_Add(0, actor, max, pr, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
 }
 
-function void Item_Add_Hidden(str actor, int max, str lang){
-	int it = Item_Add(-1, actor, max, 0, lang);
+function void Item_Add_Hidden(str actor, int max, str lang, int showinihud){
+	int it = Item_Add(-1, actor, max, 0, lang, showinihud);
 }
 
-function int Item_Add(int type, str actor, int max, int price, str lang){
+function int Item_Add(int type, str actor, int max, int price, str lang, bool showinhud){
 	str name = strparam(l:strparam(s:"ITDATA_N_",s:lang)); 
 	str icon = strparam(l:strparam(s:"ITDATA_I_",s:lang)); 
 	str desc = strparam(l:strparam(s:"ITDATA_D_",s:lang));
@@ -113,11 +113,12 @@ function int Item_Add(int type, str actor, int max, int price, str lang){
 	fp_Items[fp_LastItem][5] = icon;
 	fp_Items[fp_LastItem][6] = desc;
 	fp_Items[fp_LastItem][7] = ibtn;
-	
+	fp_Items[fp_LastItem][8] = showinhud;
+
 	fp_LastItem++;
 	return fp_LastItem;
 }
-function int Item_Add_Color(int type, str actor, int max, int price, int color, str lang){
+function int Item_Add_Color(int type, str actor, int max, int price, int color, str lang, bool showinhud){
 	str name = strparam(l:strparam(s:"ITDATA_N_",s:lang)); 
 	str icon = strparam(l:strparam(s:"ITDATA_I_",s:lang)); 
 	str desc = strparam(l:strparam(s:"ITDATA_D_",s:lang));
@@ -130,6 +131,7 @@ function int Item_Add_Color(int type, str actor, int max, int price, int color, 
 	fp_Items[fp_LastItem][5] = icon;
 	fp_Items[fp_LastItem][6] = desc;
 	fp_Items[fp_LastItem][7] = color;
+	fp_Items[fp_LastItem][8] = showinhud;
 	
 	fp_LastItem++;
 	return fp_LastItem;
@@ -144,7 +146,8 @@ function int Item_GetPrice(int it){
 function int Item_GetName(int it){	return fp_Items[it][4];}
 function int Item_GetIcon(int it){	return fp_Items[it][5];}
 function int Item_GetDesc(int it){	return fp_Items[it][6];}
-function int Item_GetArg1(int it){return fp_Items[it][7];}
+function int Item_GetIBtnOrColor(int it){return fp_Items[it][7];}
+function int Item_GetShowInHud(int it){return fp_Items[it][8];}
 
 
 function void Item_AppendToShop(int it, int shop){

@@ -63,7 +63,7 @@ function void ItemHud_ShowItem(int itemid) {
 	str img = Item_GetIcon(itemid);
 	
 	// Set position
-	if(num > 0 && img != 0 && !CheckInventory("SamuTInv_UsingTerminal")) {
+	if(num > 0 && img != 0 && !CheckInventory("SamuTInv_UsingTerminal") && Item_GetShowInHud(itemid)) {
 	
 	int index = itemhud_stack;
 	int w = 800, h = 640;

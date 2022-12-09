@@ -72,16 +72,16 @@ ACTOR TurretTesla_Head : TurretHeadBase 24306
 			goto Missile.Reload
 
 		Missile.Fire.Count:
-			TNT1 A 0 A_LogInt(stamina)
+			TNT1 A 0 //A_LogInt(stamina)
 			TNT1 A 0 A_JumpIf(stamina == 5, "Missile.Fire.Count.Lv5")
 			TNT1 A 0 A_SetUserVar("user_zaps", user_zaps + 1)
-			TNT1 A 0 A_LogInt(user_zaps)
+			TNT1 A 0 //A_LogInt(user_zaps)
 			TNT1 A 0 A_JumpIf(user_zaps < stamina+1, "Missile.Fire")
 			goto Missile.Reload
 
 		Missile.Fire.Count.Lv5:
 			TNT1 A 0 A_SetUserVar("user_zaps", user_zaps + 1)
-			TNT1 A 0 A_LogInt(user_zaps)
+			TNT1 A 0 //A_LogInt(user_zaps)
 			TNT1 A 0 A_JumpIf(user_zaps < stamina, "Missile.Fire.Lv5")
 			goto Missile.Reload
 		
