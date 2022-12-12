@@ -3,14 +3,21 @@ ACTOR splatEmitter_Lite
 {
 	radius 32
 	height 32
+	+CLIENTSIDEONLY
 	States
 	{
 		Spawn:
+			TNT1 A 0 
+			TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 0)
+			TNT1 A 1
 			TNT1 A 0 A_SpawnDebris("splatBlood_Eye")
 			TNT1 A 0 A_SpawnDebris("splatBlood_Spray")
 			TNT1 A 0 A_SpawnDebris("splatBlood_Rib")
 			TNT1 A 0 A_SpawnDebris("splatBlood_Spine")
 			Stop
+		NoSpawn:
+			TNT1 A 1 
+			stop
 	}
 }
 
@@ -21,6 +28,9 @@ ACTOR MassiveGoreExplosion
 	States
 	{
 		Spawn:
+			TNT1 A 0 
+			TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 0)
+			TNT1 A 1
 			TNT1 A 0 A_SpawnDebris("splatBlood_EyeGiant")
 			TNT1 A 0 A_SpawnDebris("splatBlood_SprayGiant")
 			TNT1 A 0 A_SpawnDebris("splatBlood_RibGiant")
@@ -30,6 +40,9 @@ ACTOR MassiveGoreExplosion
 			TNT1 A 0 A_SpawnDebris("splatBlood_RibGiant")
 			TNT1 A 0 A_SpawnDebris("splatBlood_SpineGiant")
 			Stop
+		NoSpawn:
+			TNT1 A 1 
+			stop
 	}
 }
 
@@ -390,13 +403,16 @@ ACTOR splatShellCasing
 	+DOOMBOUNCE
 	- NOGRAVITY
 	+CLIENTSIDEONLY
-	SeeSound "splatShell"
+	//SeeSound "splatShell"
 	States
 	{
 		Spawn:
-		CASE A 0 A_PlaySound("NULL")
+		CASE A 0 
+		CASE A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
+		CASE A 1 A_PlaySound("splatShell")
+		LoopMe:
 		CASE ACBHEGFD 1
-		Goto Spawn+1
+		Loop
 		Death:
 		CASE A 0 A_Jump(32,8)
 		CASE A 0 A_Jump(37,8)
@@ -421,6 +437,10 @@ ACTOR splatShellCasing
 		Stop
 		CASE H 350
 		Stop
+
+		NoSpawn:
+		TNT1 A 1
+		Stop
 	}
 }
 ACTOR splatBulletCasing
@@ -433,13 +453,16 @@ ACTOR splatBulletCasing
 	+DOOMBOUNCE
 	- NOGRAVITY
 	+CLIENTSIDEONLY
-	SeeSound "splatBulletCasing"
+	//SeeSound "splatBulletCasing"
 	States
 	{
 		Spawn:
-		BULC A 0 A_PlaySound("NULL")
+		BULC A 0 
+		BULC A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
+		BULC A 1 A_PlaySound("splatBulletCasing")
+		LoopMe:
 		BULC ACBHEGFD 1
-		Goto Spawn+1
+		Loop
 		Death:
 		BULC A 0 A_Jump(32,8)
 		BULC A 0 A_Jump(37,8)
@@ -464,6 +487,10 @@ ACTOR splatBulletCasing
 		Stop
 		BULC H 350
 		Stop
+
+		NoSpawn:
+		TNT1 A 1
+		Stop
 	}
 }
 
@@ -472,9 +499,12 @@ ACTOR splatBulletCasing_Lite : splatBulletCasing
 	States
 	{
 		Spawn:
-		BULC A 0 A_PlaySound("NULL")
+		BULC A 0 
+		BULC A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
+		BULC A 1 A_PlaySound("splatBulletCasing")
+		LoopMe:
 		BULC ACBHEGFD 1
-		Goto Spawn+1
+		Loop
 		Death:
 		BULC A 0 A_Jump(32,8)
 		BULC A 0 A_Jump(37,8)
@@ -498,6 +528,10 @@ ACTOR splatBulletCasing_Lite : splatBulletCasing
 		BULC G 35
 		Stop
 		BULC H 35
+		Stop
+
+		NoSpawn:
+		TNT1 A 1
 		Stop
 	}
 }

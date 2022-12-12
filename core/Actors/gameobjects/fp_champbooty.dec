@@ -1,6 +1,6 @@
 
 
-Actor UpgradeCard : CustomInventory {
+Actor UpgradeCard : Fading_Pickup {
 	Radius 16
   	Height 16
 	Inventory.Pickupmessage "An Upgrade card! +1 U.P!"
@@ -8,8 +8,14 @@ Actor UpgradeCard : CustomInventory {
 	states
 	  {
 		Spawn:
-			UCAR D -1
-			stop
+			TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 20)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
+			UCAR D 0 Bright
+			goto Super::Spawn
+		Spawn.FrameA:
+        	UCAR D 0 Bright
+        	goto Super::Spawn
 		Pickup:
 			TNT1 A 0 ACS_NamedExecute("UpgradeCard_Pickme", 0)
 			stop
@@ -20,7 +26,7 @@ Actor TitaniumArmor : BasicArmorPickup
 {
   Inventory.Icon "HEVAB0"
   Armor.Savepercent 100
-  Armor.Saveamount 400
+  Armor.Saveamount 300
 }
 
 Actor TitaniumArmor_Pickup : CustomInventory {
@@ -44,122 +50,161 @@ Actor TitaniumArmor_Pickup : CustomInventory {
 	  }
 }
 
-Actor EclipseMineralBase : CustomInventory
+Actor Fading_TitaniumArmor : Fading_Pickup {
+	Inventory.PickupMessage "Titanium Armor!"
+	Inventory.PickupSound "g/ArmorPickup"
+	States {
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 30)
+			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
+			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
+			HEVA A 0
+		goto Super::Spawn.Timer
+		Pickup:
+			TNT1 A 0 A_GiveInventory("TitaniumArmor_Pickup", 1)
+		stop
+}}
+
+Actor SmallGem : Fading_Pickup
 {
 	Radius 16
 	Height 52
 	Inventory.Amount 0
 	Inventory.MaxAmount 0
 	+Inventory.UNDROPPABLE
-	+Inventory.AUTOACTIVATE
-	+Inventory.ALWAYSPICKUP
 	+COUNTITEM
 	+MOVEWITHSECTOR
 	+DONTGIB
 	+FLOATBOB
 	Inventory.PickupSound "misc/EclipseMineral"
-}
-
-
-Actor SmallMineral : EclipseMineralBase
-{
 	Inventory.PickupMessage "A shiny mineral! +50 Credits!"
-	
 	States
 	{
 	Spawn:
-		TNT1 A 1 NoDelay 
+		TNT1 A 1 NoDelay
+		TNT1 A 0 A_SetUserVar("user_stayseconds", 20)
+		TNT1 A 0 A_SetUserVar("user_framelimit", 8)
+		TNT1 A 0 A_SetUserVar("user_frametic",   4) 
 		TNT1 A 1 A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
 		Stop
+
 	Blue:
-        TSBL ABCDEDCB 4 Bright
-        Loop
+        TSBL A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Yellow:
-        TSYE ABCDEDCB 4 Bright
-        Loop
+        TSYE A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Red:
-        TSRE ABCDEDCB 4 Bright
-        Loop
+        TSRE A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Green:
-        TSGR ABCDEDCB 4 Bright
-        Loop
+        TSGR A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Orange:
-        TSOR ABCDEDCB 4 Bright
-        Loop
+        TSOR A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Purple:
-        TSPU ABCDEDCB 4 Bright
-        Loop
+        TSPU A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Pink:
-        TSPI ABCDEDCB 4 Bright
-        Loop
+        TSPI A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	White:
-        TSWH ABCDEDCB 4 Bright
-        Loop
+        TSWH A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Cyan:
-        TSCY ABCDEDCB 4 Bright
-        Loop
+        TSCY A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Teal:
-        TSTE ABCDEDCB 4 Bright
-        Loop
+        TSTE A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Brown:
-        TSBR ABCDEDCB 4 Bright
-        Loop
+        TSBR A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Lime:
-        TSLI ABCDEDCB 4 Bright
-        Loop
-	Use:
+        TSLI A 0 Bright
+        goto Super::Spawn.Timer.Brightme
+	
+	Spawn.FrameF.Brightme:
+		"####" D 0
+		goto Super::Spawn.NextFrame.Brightme
+
+	Spawn.FrameG.Brightme:
+		"####" C 0
+		goto Super::Spawn.NextFrame.Brightme
+	
+	Spawn.FrameH.Brightme:
+		"####" B 0
+		goto Super::Spawn.NextFrame.Brightme
+
+	Pickup:
 		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 50)
 		Stop
 	}
 }
 
-Actor BigMineral : EclipseMineralBase
+Actor BigGem : Fading_Pickup
 {
+	Radius 16
+	Height 52
+	Inventory.Amount 0
+	Inventory.MaxAmount 0
+	+Inventory.UNDROPPABLE
+	+COUNTITEM
+	+MOVEWITHSECTOR
+	+DONTGIB
+	+FLOATBOB
+	Inventory.PickupSound "misc/EclipseMineral"
 	Inventory.PickupMessage "A big shiny mineral! +150 Credits!"
-	
 	States
 	{
-    Spawn:
-		TNT1 A 1
+	Spawn:
+		TNT1 A 1 NoDelay 
+		TNT1 A 0 A_SetUserVar("user_stayseconds", 20)
+		TNT1 A 0 A_SetUserVar("user_framelimit", 6)
+		TNT1 A 0 A_SetUserVar("user_frametic",   4) 
 		TNT1 A 1 A_Jump(256, "Blue", "Yellow", "Red", "Green", "Orange", "Purple", "Pink", "White", "Cyan", "Teal", "Brown", "Lime")
 		Stop
+
 	Blue:
-        TBBL ABCDEF 4 Bright
-        Loop
+        TBBL A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Yellow:
-        TBYE ABCDEF 4 Bright
-        Loop
+        TBYE A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Red:
-        TBRE ABCDEF 4 Bright
-        Loop
+        TBRE A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Green:
-        TBGR ABCDEF 4 Bright
-        Loop
+        TBGR A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Orange:
-        TBOR ABCDEF 4 Bright
-        Loop
+        TBOR A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Purple:
-        TBPU ABCDEF 4 Bright
-        Loop
+        TBPU A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Pink:
-        TBPI ABCDEF 4 Bright
-        Loop
+        TBPI A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	White:
-        TBWH ABCDEF 4 Bright
-        Loop
+        TBWH A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Cyan:
-        TBCY ABCDEF 4 Bright
-        Loop
+        TBCY A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Teal:
-        TBTE ABCDEF 4 Bright
-        Loop
+        TBTE A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Brown:
-        TBBR ABCDEF 4 Bright
-        Loop
+        TBBR A 0 Bright
+        goto Super::Spawn.Timer.Brightme
 	Lime:
-        TBLI ABCDEF 4 Bright
-        Loop
-	Use:
+        TBLI A 0 Bright
+        goto Super::Spawn.Timer.Brightme
+
+	Pickup:
 		TNT1 A 0 ACS_NamedExecute("Mineral_Pickme", 0, 150)
 		Stop
 	}

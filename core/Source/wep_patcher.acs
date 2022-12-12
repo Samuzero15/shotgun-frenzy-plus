@@ -198,7 +198,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 		strcmp(arg2, "IdlePatcherDmg") == 0 
 	)) terminate;
 
-	if(!IsATurret(ActivatorTID())){
+	if(!IsATurret(ActivatorTID()) || CheckActorClass(ActivatorTID(), "BatteryCore") || CheckActorClass(ActivatorTID(), "Battery")){
 		SetResultValue(0);
 		terminate;
 	}

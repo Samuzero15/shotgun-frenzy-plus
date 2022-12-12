@@ -312,8 +312,14 @@ Actor NailBlur
    +DROPOFF
    States
    {
-   Spawn:
-      DART A 1 A_FadeOut(0.1)
-      goto Spawn
+	Spawn:
+		DART A 1
+		DART A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
+	Loopme:
+		DART A 1 A_FadeOut(0.1)
+		goto Loopme
+	  NoSpawn:
+	  	TNT1 A 0
+	  Stop
    }
 }

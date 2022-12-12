@@ -40,7 +40,7 @@ Script "SFPlus_MonsterKill" Kill{
 	 
 		if(ischamp && CheckInventory("ChampZombie_SkipDeathScript")){
 			SetActivatorToTarget(0);
-			ACS_NamedExecuteAlways("SFPlus_OnMonsterKill", 0, ischamp);
+			ACS_NamedExecuteAlways("Runes_OnMonsterKill", 0, ischamp);
 			p_monsterKilled(monsterClass, splat, noProfit, montype);
 			terminate;
 		}
@@ -80,7 +80,7 @@ Script "SFPlus_MonsterKill" Kill{
 	 //log(d:ActivatorTID());
 	 
 	 SetActivatorToTarget(0);
-	 ACS_NamedExecuteAlways("SFPlus_OnMonsterKill", 0, ischamp);
+	 ACS_NamedExecuteAlways("Runes_OnMonsterKill", 0, ischamp);
 	 //print(d:ActivatorTID());
 	 //printbold(s:"No profit? = ", d:noProfit);
 	p_monsterKilled(monsterClass, splat, noProfit, montype);

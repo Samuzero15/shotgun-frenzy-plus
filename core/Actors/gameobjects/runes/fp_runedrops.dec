@@ -1,5 +1,5 @@
 
-Actor RuneDrop : CustomInventory {
+Actor RuneDrop : CustomInventory { // yes, the fading pickup code, i know, but with a small difference.
 	// A fading pickup that must be took between the time limit before it disappears.
 	Inventory.PickupSound "misc/p_pkup"
 
@@ -16,7 +16,7 @@ Actor RuneDrop : CustomInventory {
 			"####" "#" 0 A_SetUserVar("user_framelimit", 0)
 			"####" "#" 0 A_SetUserVar("user_frametic", 1)
 		Spawn.Timer:
-			"####" "#" 0 A_SetUserVar("user_stayseconds", 45)
+			"####" "#" 0 A_SetUserVar("user_stayseconds", 30)
 			"####" "#" 0 A_SetUserVar("user_ticlimit", 35*15)
 			"####" "#" 1 A_SetUserVar("user_fadetic", 4)
 		Spawn.Wait:
@@ -183,7 +183,13 @@ Actor RuneDrop : CustomInventory {
 
 		Pickup:
 			TNT1 A 0
-		stop
+			TNT1 A 0 A_JumpIfInventory("Input_Use", 1, "Pickup.Give")
+			TNT1 A 0 ACS_NamedExecuteAlways("Runes_PickMessage", 0)
+		fail
+
+		Pickup.Give:
+			TNT1 A 0
+		Stop
 	}
 }
 
@@ -198,7 +204,7 @@ Actor RageRune_Drop : RuneDrop {
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			RAGR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("RageRune", 1)
 		stop
 }}
@@ -214,7 +220,7 @@ Actor StrengthRune_Drop : RuneDrop {
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			STRR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("StrengthRune", 1)
 		stop
 }}
@@ -232,7 +238,7 @@ ACTOR DrainRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			DRAR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("DrainRune", 1)
 		stop
 	}
@@ -252,7 +258,7 @@ ACTOR SpreadRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			SPRR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("SpreadRune", 1)
 		stop
 	}
@@ -271,7 +277,7 @@ ACTOR ResistanceRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			RESR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ResistanceRune", 1)
 		stop
 	}
@@ -291,7 +297,7 @@ ACTOR RegenerationRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			REGR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("RegenerationRune", 1)
 		stop
 	}
@@ -310,7 +316,7 @@ ACTOR ProsperityRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			PRSR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ProsperityRune", 1)
 		stop
 	}
@@ -331,7 +337,7 @@ ACTOR ReflectionRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			REFR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ReflectionRune", 1)
 		stop
 	}
@@ -350,7 +356,7 @@ ACTOR HighJumpRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			HIJR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("HighJumpRune", 1)
 		stop
 	}
@@ -370,7 +376,7 @@ ACTOR HasteRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			HASR A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("HasteRune", 1)
 		stop
 	}
@@ -389,7 +395,7 @@ ACTOR AmmunitionRune_Drop : RuneDrop
 			TNT1 A 0 A_SetUserVar("user_frametic",   5) 
 			RAMO A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("AmmunitionRune", 1)
 		stop
 	}
@@ -413,7 +419,7 @@ ACTOR BlastRune_Drop : RuneDrop
 			"####" B 0
 			goto Super::Spawn.NextFrame
 
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("BlastRune", 1)
 		stop
 	}
@@ -442,7 +448,7 @@ ACTOR DefenseRune_Drop : RuneDrop
 			"####" A 0
 			goto Super::Spawn.NextFrame.Brightme
 
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("DefenseRune", 1)
 		stop
 	}
@@ -473,7 +479,7 @@ ACTOR FortuneRune_Drop : RuneDrop
             "####" "#" 0 A_SpawnItemEx("Blood", random(-2,2), random(-2,2), 8)
 			goto Super::Spawn.SetFrame
 
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("FortuneRune", 1)
 		stop
     }
@@ -491,7 +497,7 @@ ACTOR TemperanceRune_Drop : RuneDrop {
 			TNT1 A 0 A_SetUserVar("user_frametic",   4) 
 			RTMP A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("TemperanceRune", 1)
 		stop
 	}
@@ -518,7 +524,7 @@ ACTOR SoulRune_Drop : RuneDrop {
 			"####" D 0
 			goto Super::Spawn.NextFrame
 
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("SoulRune", 1)
 		stop
 	}
@@ -537,7 +543,7 @@ ACTOR RampageRune_Drop : RuneDrop {
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
 			RRMP A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("RampageRune", 1)
 		stop
 	}
@@ -556,7 +562,7 @@ ACTOR HealthRune_Drop : RuneDrop {
 			TNT1 A 0 A_SetUserVar("user_frametic",   4) 
 			RHLT A 0
 		goto Super::Spawn.Timer
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("HealthRune", 1)
 		stop
 	}
@@ -600,7 +606,7 @@ ACTOR ResurrectionRune_Drop : RuneDrop {
             "####" A 0 
 			goto Super::Spawn.NextFrame.Brightme
 
-		Pickup:
+		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ResurrectionRune", 1)
 		stop
 	}

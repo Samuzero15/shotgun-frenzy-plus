@@ -37,83 +37,93 @@ Script "ItemDr_InitRewards" open{
 
 	int class = 0;
 	ItemDr_Add_R(class,       "Inventory_Soulsphere", 6.0);
-	ItemDr_Add(class,         "Medikit",              25.0);
-    ItemDr_Add_Champ_R(class,   "SmallMineral",           5.0);
+	ItemDr_Add(class,         "Fading_Medikit",      25.0);
+    ItemDr_Add_Champ_R(class,   "SmallGem",           5.0);
 	
 	class = 1;
 	ItemDr_Add_R(class, "Inventory_Megasphere",     10.0);
-    ItemDr_Add(class,   "Medikit",                  25.0);
-    ItemDr_Add_Champ_R(class,   "SmallMineral",           10.0);
+    ItemDr_Add(class,   "Fading_Medikit",                  25.0);
+    ItemDr_Add_Champ_R(class,   "SmallGem",           10.0);
     ItemDr_Add_Champ_Rune(class, 1, 5.0);
 	
 	class = 2;
 	ItemDr_Add_R(class, "Inventory_Soulsphere",     16.0);
 	ItemDr_Add(class,   "Inventory_Megasphere",     8.0);
-    ItemDr_Add(class,   "SteelPlatingArmor_Pickup", 13.5);
-    ItemDr_Add(class,   "Medikit",                  25.0);
+    ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
+    ItemDr_Add(class,   "Fading_Medikit",                  25.0);
     ItemDr_Add_Champ_R(class,   "UpgradeCard",          0.5);
     ItemDr_Add_Champ_Rune(class, 2, 2.5);
     ItemDr_Add_Champ_Rune(class, 1, 7.5);
-    ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   10.0);
-    ItemDr_Add_Champ(class,   "SmallMineral",           15.0);
+    ItemDr_Add_Champ(class,   "Fading_TitaniumArmor",   10.0);
+    ItemDr_Add_Champ(class,   "SmallGem",           15.0);
 	
 	class = 3;
 	ItemDr_Add_R(class, "Inventory_TurretBullet",   20.0);
+    ItemDr_Add(class,   "Inventory_TurretShotgun",  10.0);
 	ItemDr_Add(class,   "Inventory_Soulsphere",     12.0);
 	ItemDr_Add(class,   "Inventory_Berserk2",       10.0);
-    ItemDr_Add(class,   "SteelPlatingArmor_Pickup", 13.5);
-    ItemDr_Add(class,   "Medikit",                  25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",          3.5);
+    ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
+    ItemDr_Add(class,   "Fading_Medikit",                  25.0);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",          2.5);
     ItemDr_Add_Champ_Rune(class, 3, 3.0);
     ItemDr_Add_Champ_Rune(class, 2, 4.0);
     ItemDr_Add_Champ_Rune(class, 1, 8.0);
+    ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
     ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   15.0);
-    ItemDr_Add_Champ(class,   "SmallMineral",           20.0);
+    ItemDr_Add_Champ(class,   "SmallGem",           20.0);
+    
 	
 	class = 4;
 	ItemDr_Add_R(class, "Inventory_TeslaCoil",      12.0);
 	ItemDr_Add(class,   "Inventory_TurretBullet",   8.0);
+    ItemDr_Add(class,   "Inventory_TurretShotgun",  4.0);
 	ItemDr_Add(class,   "Inventory_Berserk2",       6.0);
 	ItemDr_Add(class,   "Inventory_Godsphere",      10.0);
-    ItemDr_Add(class,   "SteelPlatingArmor_Pickup", 13.5);
-    ItemDr_Add(class,   "Medikit",                  25.0);
+    ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
+    ItemDr_Add(class,   "Fading_Medikit",           25.0);
     ItemDr_Add_Champ_R(class,   "UpgradeCard",          5.0);
     ItemDr_Add_Champ_Rune(class, 4, 3.0);
     ItemDr_Add_Champ_Rune(class, 3, 4.0);
     ItemDr_Add_Champ_Rune(class, 2, 8.0);
+    ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
     ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   20.0);
-    ItemDr_Add_Champ(class,   "BigMineral",             15.0);
-    ItemDr_Add_Champ(class,   "SmallMineral",           25.0);
+    ItemDr_Add_Champ(class,   "BigGem",             15.0);
+    ItemDr_Add_Champ(class,   "SmallGem",           25.0);
 	
 	class = 5;
 	ItemDr_Add_R(class, "Inventory_Berserk2",       12.0);
 	ItemDr_Add(class,   "Inventory_Megasphere",     10.0);
 	ItemDr_Add(class,   "Inventory_Godsphere",      6.0);
 	ItemDr_Add(class,   "Inventory_Ammogiver",      6.0);
-    ItemDr_Add(class,   "SteelPlatingArmor_Pickup", 13.5);
-    ItemDr_Add(class,   "Medikit",                  25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",          5.5);
+    ItemDr_Add(class,   "Inventory_TurretShotgun",  13.5);
+    ItemDr_Add(class,   "Inventory_TurretChaingun",  11.0);
+    ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
+    ItemDr_Add(class,   "Fading_Medikit",           25.0);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",      5.5);
     ItemDr_Add_Champ_Rune(class, 4, 4.0);
     ItemDr_Add_Champ_Rune(class, 3, 6.0);
     ItemDr_Add_Champ_Rune(class, 2, 10.0);
+    ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
     ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   25.0);
-    ItemDr_Add_Champ(class,   "BigMineral",             17.5);
-    ItemDr_Add_Champ(class,   "SmallMineral",           30.0);
+    ItemDr_Add_Champ(class,   "BigGem",             17.5);
+    ItemDr_Add_Champ(class,   "SmallGem",           30.0);
 	
 	class = 6;
 	ItemDr_Add_R(class, "Inventory_Berserk2",       20.0);
 	ItemDr_Add(class,   "Inventory_Megasphere",     16.0);
 	ItemDr_Add(class,   "Inventory_Godsphere",      8.0);
 	ItemDr_Add(class,   "Inventory_Ammogiver",      8.0);
-    ItemDr_Add(class,   "SteelPlatingArmor_Pickup", 13.5);
-    ItemDr_Add(class,   "Medikit",                  25.0);
+    ItemDr_Add(class,   "Inventory_TurretChaingun", 11.0);
+    ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
+    ItemDr_Add(class,   "Fading_Medikit",           25.0);
     ItemDr_Add_Champ_R(class,   "UpgradeCard",          6.0);
     ItemDr_Add_Champ_Rune(class, 4, 6.0);
     ItemDr_Add_Champ_Rune(class, 3, 7.0);
     ItemDr_Add_Champ_Rune(class, 2, 12.0);
+    ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
     ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   30.0);
-    ItemDr_Add_Champ(class,   "BigMineral",             20.0);
-    ItemDr_Add_Champ(class,   "SmallMineral",           35.0);
+    ItemDr_Add_Champ(class,   "BigGem",             20.0);
+    ItemDr_Add_Champ(class,   "SmallGem",           35.0);
     
 }
 
@@ -222,7 +232,6 @@ function void ItemDr_ChampionDrop(int monsterClass){
     if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneTemperance")){
         chance = (5 + monsterClass*2) * 1.0;
         if(ItemDr_Dice(chance)){
-            // Should be an Ammo Satchel.
             for(int ars = 0; ars < random(2,4); ars++){
                 ItemDr_Spawn("ArmorShard");
             }

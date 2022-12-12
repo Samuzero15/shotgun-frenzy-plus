@@ -384,6 +384,7 @@ script 125 (int l_Condition)
 	//[Samu] you think you can get a good score by dying a lot!?
 	// collect final score
 	int average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM()<<16), 70.0)>>16;
+	if(average_kpm_percent > 70) average_kpm_percent = 70;
 	int lastwave_percent;
 	
 	// 70% of skill score depends of the number of monsters killed, and 30% depending on the gametype.
@@ -398,7 +399,7 @@ script 125 (int l_Condition)
 	}
 	if (l_Condition == 4)       g_FinalSkillScore -= 20; // Substract if defeated.
 	
-	int death_skill_discount = (p_TotalPlayerDeaths / PlayerCount())*2;
+	int death_skill_discount = ((p_TotalPlayerDeaths / PlayerCount()) / 3)*2;
 	if(PlayerCount() == 0) g_FinalSkillScore = 0;
 	else{
 		if(p_TotalPlayerDeaths == 0 && l_Condition != 4) g_FinalSkillScore += 30; // Perfection bonus.

@@ -64,7 +64,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 				// [Samu] Preventing Armor Overrides.
 				if(CheckInventory("BasicArmor") == 0) {takeInventory("Flag_BlueArmor", 1);takeInventory("Flag_RedArmor", 1);}
 				
-				if(CheckInventory("BasicArmor") < 100 && !(CheckInventory("Flag_BlueArmor") || !CheckInventory("Flag_RedArmor"))){
+				if(CheckInventory("BasicArmor") < 100 && !(CheckInventory("Flag_BlueArmor") || CheckInventory("Flag_RedArmor"))){
 					giveinventory("SteelPlatingArmor", 1);
 				}
 				// steel plating

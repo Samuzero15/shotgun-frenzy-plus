@@ -604,12 +604,6 @@ Actor DispenserPickup : CustomInventory{
 	+INVENTORY.QUIET//[Samu] Shadap!
 }
 
-actor BulletPuffTurret : BulletPuff { 
-	+Mthruspecies
-	+thruspecies
-	damagetype "MarineFire" 
-}
-
 Actor Turret_UpLevel: Integer { Inventory.MaxAmount 3}
 Actor Building_AggroTid : Integer {}
 Actor Building_GetRange : Boolean {}

@@ -49,16 +49,16 @@ ACTOR Supplier : Weapon
 		Fire:
 			TNT1 A 0 A_TakeInventory("Sup_HealMode", 1)
 			W7E1 A 0 A_PlaySound("w6/up")
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipBox",		random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol",	random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", 	random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ShellBox", 	random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_RocketBox", 	random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_Gasoline", 	random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_HeavyBullets", random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_DualshotAmmo", random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_FlingerAmmo", 	random(-16,16), random(-16,16), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_CellPack", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipBox",		random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol",	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ShellBox", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_RocketBox", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_Gasoline", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_HeavyBullets", random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_DualshotAmmo", random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_FlingerAmmo", 	random(-16,16), random(-16,16), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_CellPack", 	random(-16,16), random(-16,16), 0)
 			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
 			W7E1 A 6 A_TakeInventory("Supplies_Ammo", 1)
 			W7E1 BCDE 5
@@ -67,9 +67,9 @@ ACTOR Supplier : Weapon
 		Altfire:
 			TNT1 A 0 A_GiveInventory("Sup_HealMode", 1)
 			W7E2 A 0 A_PlaySound("w6/up")
-			W7E2 A 0 A_SpawnItemEX ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32), random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEX ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_Medikit" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
 			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
 			W7E2 A 6 A_TakeInventory("Supplies_Health", 1)
 			W7E2 BCDE 5
@@ -101,26 +101,26 @@ ACTOR Supplier_Big : Supplier
 		Fire:
 			TNT1 A 0 A_TakeInventory("Sup_HealMode", 1)
 			W7E1 A 0 A_PlaySound("w6/up")
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipPistol", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ClipBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ShellBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_ShellBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_RocketBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_RocketBox" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_CellPack" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_CellPack" , random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_Gasoline", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_Gasoline", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_HeavyBullets", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_HeavyBullets", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_DualshotAmmo", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_DualshotAmmo", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_FlingerAmmo", random(-32,32), random(-32,32), 0)
-			W7E1 A 0 A_SpawnItemEx ("Sup_FlingerAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ClipBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ShellBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_ShellBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_RocketBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_RocketBox" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_CellPack" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_CellPack" , random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_Gasoline", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_Gasoline", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_HeavyBullets", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_HeavyBullets", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_DualshotAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_DualshotAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_FlingerAmmo", random(-32,32), random(-32,32), 0)
+			W7E1 A 0 A_SpawnItemEx ("Fading_FlingerAmmo", random(-32,32), random(-32,32), 0)
 			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
 			W7E1 A 5 A_TakeInventory("Supplies_Ammo_Big", 1)
 			W7E1 BCDE 5
@@ -129,13 +129,13 @@ ACTOR Supplier_Big : Supplier
 		Altfire:
 			TNT1 A 0 A_GiveInventory("Sup_HealMode", 1)
 			W7E2 A 0 A_PlaySound("w6/up")
-			W7E2 A 0 A_SpawnItemEX ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32), random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32), random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_Medikit" , random(-32,32),random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_SteelPlatingArmor" , random(-32,32), random(-32,32), 0)
-			W7E2 A 0 A_SpawnItemEx ("Sup_SteelPlatingArmor" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEX ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_Medikit" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_Medikit" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_SteelPlatingArmor" , random(-32,32), random(-32,32), 0)
+			W7E2 A 0 A_SpawnItemEx ("Fading_SteelPlatingArmor" , random(-32,32), random(-32,32), 0)
 			TNT1 A 0 ACS_NamedExecuteAlways("Supplier_GrantExp", 0)
 			W7E2 A 6 A_TakeInventory("Supplies_Health_Big", 1)
 			W7E2 BCDE 5
@@ -148,117 +148,7 @@ ACTOR Supplier_Big : Supplier
 	}
 }
 
-// The supplied resources.
-// They will stand on the floor, up to 45 seconds.
-// If not picked up, they disappear.
-
-Actor Sup_Pickup : CustomInventory {
-	// A fading pickup that must be took between the time limit before it disappears.
-	Inventory.PickupSound "misc/p_pkup"
-
-	var int user_counter;
-	var int user_ticlimit;
-	var int user_frametic;
-	var int user_fadetic;
-	var int user_fade;
-	var int user_frame;
-	var int user_framelimit;
-	var int user_stayseconds;
-	States{
-		Spawn:
-			"####" "#" 0 A_SetUserVar("user_framelimit", 0)
-			"####" "#" 0 A_SetUserVar("user_frametic", 1)
-		Spawn.Timer:
-			"####" "#" 0 A_SetUserVar("user_stayseconds", 45)
-			"####" "#" 0 A_SetUserVar("user_ticlimit", 35*user_stayseconds)
-			"####" "#" 1 A_SetUserVar("user_fadetic", 4)
-		Spawn.Wait:
-			"####" "#" 0 A_JumpIf(user_counter >= (user_ticlimit - 105), "Spawn.Fade")
-			"####" "#" 1
-			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
-			"####" "#" 0 A_JumpIf(user_counter % user_frametic == 0, "Spawn.SetFrame")
-			loop
-		Spawn.Fade:
-			"####" "#" 0 A_JumpIf(user_counter >= user_ticlimit, "Disappear")
-			"####" "#" 1
-			"####" "#" 0 A_SetUserVar("user_counter", user_counter+1)
-			"####" "#" 0 A_JumpIf(user_counter % user_fadetic == 0, "Spawn.SetFade")
-			loop
-		Spawn.SetFade:
-			"####" "#" 0 A_SetUserVar("user_fade", !user_fade) // Vary between 0 and 1
-			"####" "#" 0 A_JumpIf(user_fade == 0, "Spawn.Fade.In")
-			goto Spawn.Fade.Out
-		Spawn.Fade.Out:
-			"####" "#" 0 A_FadeOut(0.7)
-			goto Spawn.SetFrame
-		Spawn.Fade.In:
-			"####" "#" 0 A_FadeIn(0.7)
-			goto Spawn.SetFrame
-		
-		Spawn.SetFrame:
-			"####" "#" 0 A_JumpIf(user_framelimit == 0 || (user_counter % user_frametic != 0), "Spawn.Wait")
-			"####" "#" 0 A_JumpIf(user_frame >= user_framelimit, "Spawn.ResetFrame")
-			"####" "#" 0 A_JumpIf(user_frame == 7, "Spawn.FrameH")
-			"####" "#" 0 A_JumpIf(user_frame == 6, "Spawn.FrameG")
-			"####" "#" 0 A_JumpIf(user_frame == 5, "Spawn.FrameF")
-			"####" "#" 0 A_JumpIf(user_frame == 4, "Spawn.FrameE")
-			"####" "#" 0 A_JumpIf(user_frame == 3, "Spawn.FrameD")
-			"####" "#" 0 A_JumpIf(user_frame == 2, "Spawn.FrameC")
-			"####" "#" 0 A_JumpIf(user_frame == 1, "Spawn.FrameB")
-			goto Spawn.FrameA
-
-		Spawn.NextFrame:
-			"####" "#" 0 A_SetUserVar("user_frame", user_frame+1)
-			goto Spawn.Wait
-
-		Spawn.ResetFrame:
-			"####" "#" 0 A_SetUserVar("user_frame", 0)
-			goto Spawn.FrameA
-
-		Spawn.FrameA:
-			"####" A 0
-			goto Spawn.NextFrame
-
-		Spawn.FrameB:
-			"####" B 0
-			goto Spawn.NextFrame
-
-		Spawn.FrameC:
-			"####" C 0
-			goto Spawn.NextFrame
-
-		Spawn.FrameD:
-			"####" D 0
-			goto Spawn.NextFrame
-
-		Spawn.FrameE:
-			"####" E 0
-			goto Spawn.NextFrame
-
-		Spawn.FrameF:
-			"####" F 0
-			goto Spawn.NextFrame
-
-		Spawn.FrameG:
-			"####" G 0
-			goto Spawn.NextFrame
-		
-		Spawn.FrameH:
-			"####" H 0
-			goto Spawn.NextFrame
-
-		Disappear:
-			TNT1 A 0
-			stop
-		stop
-
-		Pickup:
-			TNT1 A 0
-		stop
-	}
-}
-
-Actor Sup_ClipBox : Sup_Pickup { 
+Actor Fading_ClipBox : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up a clip box"
 	Inventory.PickupSound "g/reloading"
  States {
@@ -270,7 +160,7 @@ Actor Sup_ClipBox : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_ClipPistol : Sup_Pickup { 
+Actor Fading_ClipPistol : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up a 9mm clip"
 	Inventory.PickupSound "g/reloading"
  States {
@@ -282,7 +172,7 @@ Actor Sup_ClipPistol : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_ShellBox : Sup_Pickup { 
+Actor Fading_ShellBox : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up box of shells"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -294,7 +184,7 @@ Actor Sup_ShellBox : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_RocketBox : Sup_Pickup { 
+Actor Fading_RocketBox : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up a box of rockets"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -306,7 +196,7 @@ Actor Sup_RocketBox : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_CellPack : Sup_Pickup { 
+Actor Fading_CellPack : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up a battery pack"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -318,7 +208,7 @@ Actor Sup_CellPack : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_FlingerAmmo : Sup_Pickup { 
+Actor Fading_FlingerAmmo : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up some flinger grenades"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -330,7 +220,7 @@ Actor Sup_FlingerAmmo : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_DualshotAmmo : Sup_Pickup { 
+Actor Fading_DualshotAmmo : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up some nails"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -342,7 +232,7 @@ Actor Sup_DualshotAmmo : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_Gasoline : Sup_Pickup { 
+Actor Fading_Gasoline : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up a gas canister"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -354,7 +244,7 @@ Actor Sup_Gasoline : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_HeavyBullets : Sup_Pickup { 
+Actor Fading_HeavyBullets : Fading_Pickup { 
 	Inventory.PickupMessage "Picked up a box of heavy bullets"
 	Inventory.PickupSound "g/reloading"
 	States {
@@ -366,19 +256,19 @@ Actor Sup_HeavyBullets : Sup_Pickup {
 		stop
 }}
 
-Actor Sup_Medikit : Sup_Pickup {
+Actor Fading_Medikit : Fading_Pickup {
 	Inventory.PickupMessage "Picked up a Medikit"
 	Inventory.PickupSound "g/healing"
 	States {
 		Spawn:
-			MEDI A 0
+			MEDI A 0 
 		goto Super::Spawn
 		Pickup:
 			TNT1 A 0 A_GiveInventory("Medikit", 25)
 		stop
 }}
 
-Actor Sup_SteelPlatingArmor : Sup_Pickup {
+Actor Fading_SteelPlatingArmor : Fading_Pickup {
 	Inventory.PickupMessage "Steel Plating Armor!"
 	Inventory.PickupSound "g/ArmorPickup"
 	States {

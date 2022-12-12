@@ -7,7 +7,16 @@
 	// Comments
 	!) Pretty important stuff.
 
-## v0 - Before the beginning...
+## v1 - The path of the damned...
+
+#### (10 - 11 / 12 / 2022) [Particle control, maunal picked runes, other fixes]
+	*) Added new cvars to control the particles in game. Meant to reduce the lag in clientside.
+	*) Now runes will not be picked up and linked when you bump on them, you will have to press use when bumping into a rune. Meant to reduce the inconvenience of suddenly change the rune in mid-battle.
+	*) Now the patcher will not damage the cores.
+	*) Steel plating armor effect has been fixed.
+	*) Now the gems, titanium armor and upgrade card will disappear over time. Same thing for the medikits and steel plating armors.
+	*) Modified the item pools for monsters, adding the shotgun and chaingun turrets, and the greedsphere for the champions.
+	*) Fixed the price of the plasma pack back to 6000 credits.
 
 #### (8 / 12 / 2022) [Item directory rewrite & rewrites & fixes] 
 	*) Made a new file for data storage of items called Language Items.
@@ -62,9 +71,11 @@
 	// Slot 5 for the other supportive weapons (like patcher or supplier)
 	*) Ok, forgot the random probability of the champion apperance, lul.
 
+## v0 - Before the beginning...
+
 #### (15 - 27 / 11 / 2022) (v1.0 Release!) [Rune terminal, C.Pulses, techs & relase!]
 	!+) Rune shop available in the Health terminal!
-	+) Now champions can drop extra rewards exclusive to their pools. in the drops also include Runes, a new red armor, and gems (extra credits)
+	+) Now champions can drop extra rewards exclusive to their pools. In their drops also include Runes, a new red armor, and gems (extra credits)
 	*) Stimpack upgrade and Rune shop are locked behind their new techs.
 	*) New / Revamped Core pulses 
 	// Warcry: Damage up and fast fire for all marines
@@ -96,10 +107,10 @@
 	+) Added some stimpack counter for the full screen.
 	*) Modified the fullscreen player hud, now kill-streaks are visible! (inluding high, current and next milestone)
 	// That, and now you can see your rank + the current experience in a neat way.
-	+) Talking about the new champdrops, added:
+	+) Talking about the new champ-drops, added:
 	// An upgrade card (Adds 1 U.P)
 	// Minerals (Small = 100$, Big = 250$)
-	// Titanium Armor (500 AP with a 60% (20% with temperance rune) Damage absorb)
+	// Titanium Armor (400 AP with a 50% (+20% with temperance rune) Damage absorb)
 
 #### (16 - 24 / 10 / 2022) [Sprites for flame and rail turrets + BFG upgrade]
 	*) Extra touchs on the turret code

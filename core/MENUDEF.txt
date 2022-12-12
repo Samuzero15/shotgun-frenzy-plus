@@ -103,6 +103,17 @@ OptionMenu SFPlus_UserOptions{
 	Option "Welcome MSG?", "sfp_welcome", "Boolean"
 	Option "Mech Mount MSG?", "sfp_mechmsg", "Boolean"
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
+	StaticText ""
+	StaticText "Show/Hide Particles?"
+	StaticText ""
+	Option "Blood splats", "sfp_part_gore", "ShowHideBoolean"
+	Option "Light bars", "sfp_part_lightbars", "ShowHideBoolean"
+	Option "Money splash", "sfp_part_moneysplash", "ShowHideBoolean"
+	Option "Blur", "sfp_part_blur", "ShowHideBoolean"
+	Option "Casings", "sfp_part_casings", "ShowHideBoolean"
+	Option "Smoke", "sfp_part_smoke", "ShowHideBoolean"
+	Option "Junk", "sfp_part_junk", "ShowHideBoolean"
+	StaticText ""
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 }
@@ -247,6 +258,13 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "so expect some bugs, and lag."
 	StaticText ""
 }
+
+OptionValue "ShowHideBoolean"
+{
+	0, "Hide"
+	1, "Show"
+}
+
 
 OptionValue "NostalgiaBoolean"
 {

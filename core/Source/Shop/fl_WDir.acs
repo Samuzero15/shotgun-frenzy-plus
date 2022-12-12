@@ -126,7 +126,7 @@ function void SFPlus_DefineWeapons (void){
 	WeaponUpgrade_AddLang("Flinger_MinePlacer",	wep, 2, "EXPLOSIVE_FLIN_UP2");
 		
 	//Plasmatic pack
-	pack = WeaponPack_AddLang(FP_ADV, "heavy", 8, "PLASMA");
+	pack = WeaponPack_AddLang(FP_ADV, "plasma", 8, "PLASMA");
 
 	wep = Weapon_AddLang("Plasmagun", pack, "plasmagun", "PLASMA_PLSG");
 	WeaponUpgrade_AddLang("Plasmagun_Spread",	wep, 1, "PLASMA_PLSG_UP1");

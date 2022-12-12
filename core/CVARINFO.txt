@@ -38,6 +38,13 @@ user bool sfp_hitmarksnd = true;
 user int sfp_earningdisp = 3;
 user int sfp_killstreakhud = 1;
 user bool sfp_mechmsg = true;
+user bool sfp_part_gore = false;
+user bool sfp_part_lightbars = false;
+user bool sfp_part_moneysplash = false;
+user bool sfp_part_blur = false;
+user bool sfp_part_smoke = false;
+user bool sfp_part_casings = false;
+user bool sfp_part_junk = false;
 
 // Champion cvars
 server int  sfp_champ_onbanned = 0;

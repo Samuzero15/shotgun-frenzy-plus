@@ -178,7 +178,7 @@ script 54 RESPAWN
 	setactorproperty(0, APROP_SpawnHealth, getActorProperty(0, AProp_Health));
 	
 	ACS_NamedExecute("Auto-Use Items", 0);
-	ACS_NamedExecute("SFPlus_ConstantEffects", 0);
+	ACS_NamedExecute("Runes_ConstantEffects", 0);
     p_Streak[playernumber()] = 0; // Reset the kill-streak.
     
     // take boomer cannon incase it glitched

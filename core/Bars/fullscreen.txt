@@ -23,7 +23,7 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 				drawimage "ITEM10", 5, -80;
 				drawnumber 2, STATBIGS, GOLD, "Inventory_Stimpack", whennotzero, 35, -60;
 			}
-			drawimage runeicon, 20, -50, center;
+			drawimage runeicon, 150, -20, center;
 			
 
 			//armor

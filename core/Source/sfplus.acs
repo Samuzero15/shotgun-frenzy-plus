@@ -22,7 +22,7 @@
 #import "fp_ithud.acs" // The item hud
 #import "fp_save.acs" // Saving data from maps
 #import "fp_aquse.acs" // Auto use and quick use scripts
-#import "fp_event.acs" // Testing stuff..
+#import "fp_runes.acs" // Testing stuff..
 //#import "f_TMap.acs" <- intresting stuff...
 
 script "SFPlus_ClearSector" (int sector){

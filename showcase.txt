@@ -81,3 +81,21 @@
 ) If a champion zombie is resurrected by any enemy resurrecter (like archviles), it will consume 1 life for the early raising.
 ) A zombie champion after the first death, will not drop any reward items after dying again. (but still you will get paid after the kill).
 ) Now the autosave function will only trigger when activating the sfp_autosaveitems on ccmd.
+
+///////// (v1.3) //////////
+
+) Added new cvars to control the particles in game. Meant to reduce the lag in clientside.
+) Now runes will not be picked up and linked when you bump on them, you will have to press use when bumping into a rune. Meant to reduce the inconvenience of suddenly change the rune in mid-battle.
+) Now the patcher will not damage the cores.
+) Steel plating armor effect has been fixed.
+) Now the gems, titanium armor and upgrade card will disappear over time. Same thing for the medikits and steel plating armors.
+) Modified the item pools for monsters, adding the shotgun and chaingun turrets, and the greedsphere for the champions.
+) Fixed the price of the plasma pack back to 6000 credits.
+) Now the laser from the Spear-Taser Railgun is now visible in multiplayer.
+) Now the Stimpack is invisible in the Item Hud.
+) Fixed the disbalance of monster spawning when 3 or more players join in.
+) Modified the skill system. SHOULD be a little more exact.
+) Refactorized the hud messages from the final fights. And now added 2 extra stats, Cores protected (CF and SF), and Waves cleared (SD)
+) After a zombie champion is killed, it will re-target again to the risked core.
+) After shocking an enemy, it will also re-target again to the risked core.
+) Alright, now turrets will not interrupt the hate command, hopefuly.

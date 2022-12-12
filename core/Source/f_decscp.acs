@@ -23,7 +23,7 @@
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
 // I have no shaem.
-script "SecFireTrigger" ENTER
+script "ItemInputs" ENTER
 {
  int buttons;
 
@@ -33,23 +33,44 @@ script "SecFireTrigger" ENTER
    
 	if (buttons & BT_ALTATTACK)	GiveInventory("Akimbo_Fire2", 1);
 	else 						TakeInventory("Akimbo_Fire2", 1);
+
+	if (buttons & BT_ATTACK)	GiveInventory("Akimbo_Fire1", 1);
+	else						TakeInventory("Akimbo_Fire1", 1);
+
+	if (buttons & BT_USE)		GiveInventory("Input_Use", 1);
+	else						TakeInventory("Input_Use", 1);
    delay(1);
  }
 }
 
-
-script "PriFireTrigger" ENTER
-{
- int buttons;
-
- while (TRUE)
- {
-   buttons = GetPlayerInput(-1, INPUT_BUTTONS);
-   
-	if (buttons & BT_ATTACK)	GiveInventory("Akimbo_Fire1", 1);
-	else						TakeInventory("Akimbo_Fire1", 1);
-   delay(1);
- }
+script "ParticleCheck" (int type) ClientSide{
+	int cvar = 0;
+	int player_console = consolePlayerNumber();
+	switch(type){
+		case 0: // Blood
+			cvar = "sfp_part_gore";
+		break;
+		case 1: // Money splash
+			cvar = "sfp_part_moneysplash";
+		break;
+		case 2: // Lightbars
+			cvar = "sfp_part_lightbars";
+		break;
+		case 3: // Blur
+			cvar = "sfp_part_blur";
+		break;
+		case 4: // Casings
+			cvar = "sfp_part_casings";
+		break;
+		case 5: // Smoke
+			cvar = "sfp_part_smoke";
+		break;
+		case 6: // Smoke
+			cvar = "sfp_part_junk";
+		break;
+	}
+	//PrintBold(s:"Particles: ", d:GetUserCVar(player_console, cvar));
+	if(!GetUserCVar(player_console, cvar)) {SetActorState(0, "NoSpawn");}	
 }
 
 function void AddAmmoCapacity (str ammo, int amount){
