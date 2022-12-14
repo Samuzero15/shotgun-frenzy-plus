@@ -48,27 +48,29 @@ Script "SFPlus_MonsterKill" Kill{
 	  
 
 	  int i = 0;
-	  int chance = 10;
+	  int chance = 5;
+	  bool spawn_sfx = false;
 
 	 // [Samu] Drop credits
 	 if(!flag_NoCount){
 		if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")) 
 			chance = chance + 5; 
-		while((1 + flag_gibbed + flag_boss + flag_hard) > i){
-			if(random(0, 100) < chance){
+		while((monsterClass/2 + flag_gibbed + flag_boss + flag_hard + ischamp) > i){
+			// Drop the coins.
+			if(random(0, 100) < chance)
 				SpawnForced("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
+			
+			// Drop Health-Armor Bonuses
+			if(random(0, 100) < chance){
+				ItemDr_Spawn("HealthArmorBonusSplash");
+				spawn_sfx = true;
 			}
-				
+
 			i++;
 		}
+		if(spawn_sfx) PlaySound(ActivatorTID(), "misc/spawn");
 	 }
-	 // Drop Health-Armor Bonuses
-	  i = 0;
-	  while((1 + flag_gibbed + flag_boss + flag_hard) > i){
-		if(random(0, 100) < chance)
-			ItemDr_Spawn("HealthArmorBonusSplash");
-	  i++;
-	  }
+	 
   	  
 	 if(ischamp) ItemDr_ChampionDrop(monsterClass);
 	 // Drop reward items.

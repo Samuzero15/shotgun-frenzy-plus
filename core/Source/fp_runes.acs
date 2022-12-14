@@ -20,7 +20,7 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
             //log(s:arg2);
             if(!stricmp(arg2, "Suicide")) terminate;
             if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "TitaniumArmor") == 0){
-                percent = 0.60 + 0.15 * checkinventory("RuneTemperance");
+                percent = 0.45 + 0.15 * checkinventory("RuneTemperance");
                 dmg = (arg1 * (1.0 - percent)) >> 16;
 
                 ArmorHitSFX(dmg);

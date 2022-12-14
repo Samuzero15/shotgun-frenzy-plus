@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (14 / 12 / 2022) [Touching the item drops]
+	*) Refactored some rune drop scripts.
+	*) Fixed the limit of dropping the first 4 items.
+	*) Now the credits, health bonuses and armor shard drops chances will be dependant of the monster type and if it's a champion.
+	*) Now the stimpack upgrade "Hard Shell" wilnow grant extra 5% on the armor repair.
+	-) Nerfed a bit the Titanium armor. 45% damage absorbtion (+ 15% with the temperance).
+
 #### (10 - 11 / 12 / 2022) [Particle control, maunal picked runes, other fixes]
 	*) Added new cvars to control the particles in game. Meant to reduce the lag in clientside.
 	*) Now runes will not be picked up and linked when you bump on them, you will have to press use when bumping into a rune. Meant to reduce the inconvenience of suddenly change the rune in mid-battle.

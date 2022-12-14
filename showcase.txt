@@ -99,3 +99,7 @@
 ) After a zombie champion is killed, it will re-target again to the risked core.
 ) After shocking an enemy, it will also re-target again to the risked core.
 ) Alright, now turrets will not interrupt the hate command, hopefuly.
+) Fixed the limit of dropping the first 4 items.
+) Now the credits, health bonuses and armor shard drops chances will be dependant of the monster type and if it's a champion.
+) Now the stimpack upgrade "Hard Shell" wilnow grant extra 5% on the armor repair.
+) Nerfed a bit the Titanium armor. 45% damage absorbtion (+ 15% with the temperance).

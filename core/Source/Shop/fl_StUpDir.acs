@@ -101,7 +101,7 @@ Script "Stimpack_Healme" (void)
     delay(2);
     int healme = 20 + 6*dosis;
     if(armor){ // A percentage of your dosis will be added also as armor bonuses.
-        int armor_get = ((healme*(0.5))>>16) * armor;
+        int armor_get = ((healme*(0.5+(0.05*armor)))>>16);
         GiveInventory("ArmorShard", armor_get);
         //log(s:"(StimUp) Armor Repair: ", d:armor_get);
     }

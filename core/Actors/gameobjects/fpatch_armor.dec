@@ -53,7 +53,7 @@ Actor MegaSphereArmor : BlueArmor
 actor ArmorShard : ArmorBonus
 { // + 2 AP. (Up to 300 AP) If picked up alone. Acts like vanilla green armor 
 	//(33% dmg absorb, 66% dmg taken)
-	Inventory.Pickupmessage "Armor Shard. (+5 Armor)"
+	Inventory.Pickupmessage "Armor Shard. (+2 Armor)"
 	Inventory.Icon "ARSDA0"
 	Inventory.PickupSound "pickup/armorshard"
 	Armor.Saveamount 2

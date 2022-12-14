@@ -50,12 +50,12 @@ Script "ItemDr_InitRewards" open{
 	ItemDr_Add_R(class, "Inventory_Soulsphere",     16.0);
 	ItemDr_Add(class,   "Inventory_Megasphere",     8.0);
     ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
-    ItemDr_Add(class,   "Fading_Medikit",                  25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",          0.5);
+    ItemDr_Add(class,   "Fading_Medikit",           25.0);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",      0.5);
     ItemDr_Add_Champ_Rune(class, 2, 2.5);
     ItemDr_Add_Champ_Rune(class, 1, 7.5);
     ItemDr_Add_Champ(class,   "Fading_TitaniumArmor",   10.0);
-    ItemDr_Add_Champ(class,   "SmallGem",           15.0);
+    ItemDr_Add_Champ(class,   "SmallGem",               15.0);
 	
 	class = 3;
 	ItemDr_Add_R(class, "Inventory_TurretBullet",   20.0);
@@ -64,12 +64,12 @@ Script "ItemDr_InitRewards" open{
 	ItemDr_Add(class,   "Inventory_Berserk2",       10.0);
     ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
     ItemDr_Add(class,   "Fading_Medikit",                  25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",          2.5);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",          1.5);
     ItemDr_Add_Champ_Rune(class, 3, 3.0);
     ItemDr_Add_Champ_Rune(class, 2, 4.0);
     ItemDr_Add_Champ_Rune(class, 1, 8.0);
     ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
-    ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   15.0);
+    ItemDr_Add_Champ(class,   "Fading_TitaniumArmor",   15.0);
     ItemDr_Add_Champ(class,   "SmallGem",           20.0);
     
 	
@@ -81,12 +81,12 @@ Script "ItemDr_InitRewards" open{
 	ItemDr_Add(class,   "Inventory_Godsphere",      10.0);
     ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
     ItemDr_Add(class,   "Fading_Medikit",           25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",          5.0);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",          2.5);
     ItemDr_Add_Champ_Rune(class, 4, 3.0);
     ItemDr_Add_Champ_Rune(class, 3, 4.0);
     ItemDr_Add_Champ_Rune(class, 2, 8.0);
     ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
-    ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   20.0);
+    ItemDr_Add_Champ(class,   "Fading_TitaniumArmor",   20.0);
     ItemDr_Add_Champ(class,   "BigGem",             15.0);
     ItemDr_Add_Champ(class,   "SmallGem",           25.0);
 	
@@ -95,16 +95,16 @@ Script "ItemDr_InitRewards" open{
 	ItemDr_Add(class,   "Inventory_Megasphere",     10.0);
 	ItemDr_Add(class,   "Inventory_Godsphere",      6.0);
 	ItemDr_Add(class,   "Inventory_Ammogiver",      6.0);
-    ItemDr_Add(class,   "Inventory_TurretShotgun",  13.5);
     ItemDr_Add(class,   "Inventory_TurretChaingun",  11.0);
+    ItemDr_Add(class,   "Inventory_TurretShotgun",  13.5);
     ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
     ItemDr_Add(class,   "Fading_Medikit",           25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",      5.5);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",      3.5);
     ItemDr_Add_Champ_Rune(class, 4, 4.0);
     ItemDr_Add_Champ_Rune(class, 3, 6.0);
     ItemDr_Add_Champ_Rune(class, 2, 10.0);
     ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
-    ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   25.0);
+    ItemDr_Add_Champ(class,   "Fading_TitaniumArmor",   25.0);
     ItemDr_Add_Champ(class,   "BigGem",             17.5);
     ItemDr_Add_Champ(class,   "SmallGem",           30.0);
 	
@@ -116,12 +116,12 @@ Script "ItemDr_InitRewards" open{
     ItemDr_Add(class,   "Inventory_TurretChaingun", 11.0);
     ItemDr_Add(class,   "Fading_SteelPlatingArmor", 13.5);
     ItemDr_Add(class,   "Fading_Medikit",           25.0);
-    ItemDr_Add_Champ_R(class,   "UpgradeCard",          6.0);
+    ItemDr_Add_Champ_R(class,   "UpgradeCard",          5.0);
     ItemDr_Add_Champ_Rune(class, 4, 6.0);
     ItemDr_Add_Champ_Rune(class, 3, 7.0);
     ItemDr_Add_Champ_Rune(class, 2, 12.0);
     ItemDr_Add_Champ(class,   "Greedsphere",           7.5);
-    ItemDr_Add_Champ(class,   "TitaniumArmor_Pickup",   30.0);
+    ItemDr_Add_Champ(class,   "Fading_TitaniumArmor",   30.0);
     ItemDr_Add_Champ(class,   "BigGem",             20.0);
     ItemDr_Add_Champ(class,   "SmallGem",           35.0);
     
@@ -211,40 +211,16 @@ function void ItemDr_ChampionDrop(int monsterClass){
         }
     }
     
-    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneHealth")){
-        chance = (5 + monsterClass*2) * 1.0;
-        if(ItemDr_Dice(chance)){
-            for(int bd = 0; bd < random(2,5); bd++){
-                ItemDr_Spawn("HealthRune_BloodDrip");
-            }
-            spawn_fx = true;
-        }
-    }
-    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneAmmunition")){
-        chance = (5 + monsterClass*2) * 1.0;
-        if(ItemDr_Dice(chance)){
-            for(int as = 0; as < random(1,3); as++){
-                ItemDr_Spawn("AmmunitionRune_Satchel");
-            }
-            spawn_fx = true;
-        }
-    }
-    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneTemperance")){
-        chance = (5 + monsterClass*2) * 1.0;
-        if(ItemDr_Dice(chance)){
-            for(int ars = 0; ars < random(2,4); ars++){
-                ItemDr_Spawn("ArmorShard");
-            }
-            spawn_fx = true;
-        }
-    }
+    spawn_fx = ItemDr_RuneDrops("RuneHealth", "HealthRune_BloodDrip", 2, 5, monsterClass);
+    spawn_fx = ItemDr_RuneDrops("RuneAmmunition", "AmmunitionRune_Satchel", 1, 3, monsterClass);
+    spawn_fx = ItemDr_RuneDrops("RuneTemperance", "ArmorShard", 3, 6, monsterClass);
     if(spawn_fx)    PlaySound(ActivatorTID(), "misc/spawn");
 
 }
 
 function void ItemDr_MonsterDrop(int monsterClass)
 {
-// probability of dropping item
+    // probability of dropping item
 	//[Samu] Alright, im doing this just for the sake of refactoring!
 	
   int chance = p_MonsterItem[monsterClass];
@@ -253,51 +229,44 @@ function void ItemDr_MonsterDrop(int monsterClass)
       chance = chance + 10.0;
   }
 
+  int dropped = 0;
   int spawn_fx = false; 
   if ((ItemDr_Dice(chance))){
     //log(s:"(ItemDr) Success, trying to drop stuff.");
-    for (int i = 0; i < ITEMDROP_MAX; i++){
+    for (int i = 0; i < ITEMDROP_ITEMS && dropped < ITEMDROP_MAX; i++){
         chance = ItemDr_getChance(monsterClass, i);
         if(chance != 0.0){
             if (ItemDr_Dice(chance)){
                 //log(s:"(ItemDr) An item has been dropped!.");
                 ItemDr_Spawn(ItemDr_getItem(monsterClass, i));
                 spawn_fx = true;
-            }/*else{
-                //log(s:"(ItemDr) No drop.");
-            }*/
+                dropped++;
+            }
         }
         
     }
   }
   
-    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneHealth")){
-        chance = (5 + monsterClass*2) * 1.0;
-        if(ItemDr_Dice(chance)){
-            for(int bd = 0; bd < random(2,5); bd++){
-                ItemDr_Spawn("HealthRune_BloodDrip");
-            }
-            spawn_fx = true;
-        }
-    }
-    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneAmmunition")){
-        chance = (5 + monsterClass*2) * 1.0;
-        if(ItemDr_Dice(chance)){
-            for(int as = 0; as < random(1,3); as++){
-                ItemDr_Spawn("AmmunitionRune_Satchel");
-            }
-            spawn_fx = true;
-        }
-    }
-    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneTemperance")){
-        chance = (5 + monsterClass*2) * 1.0;
-        if(ItemDr_Dice(chance)){
-            // Should be an Ammo Satchel.
-            for(int ars = 0; ars < random(2,4); ars++){
-                ItemDr_Spawn("ArmorShard");
-            }
-            spawn_fx = true;
-        }
-    }
+    spawn_fx = ItemDr_RuneDrops("RuneHealth", "HealthRune_BloodDrip", 2, 5, monsterClass);
+    spawn_fx = ItemDr_RuneDrops("RuneAmmunition", "AmmunitionRune_Satchel", 1, 3, monsterClass);
+    spawn_fx = ItemDr_RuneDrops("RuneTemperance", "ArmorShard", 3, 6, monsterClass);
     if(spawn_fx)    PlaySound(ActivatorTID(), "misc/spawn");
+}
+
+
+function int ItemDr_RuneDrops(str rune, str drop, int min, int max, int monsterClass) {
+    bool spawn_fx = 0;
+    int chance = (5 + monsterClass*2) * 1.0;
+    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")){
+      chance = chance + 10.0;
+    }
+    if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), rune)){
+        if(ItemDr_Dice(chance)){
+            for(int id = 0; id < random(min,max); id++){
+                ItemDr_Spawn(drop);
+            }
+            spawn_fx = true;
+        }
+    }
+    return spawn_fx;
 }
