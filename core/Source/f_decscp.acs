@@ -43,6 +43,7 @@ script "ItemInputs" ENTER
  }
 }
 
+/*
 script "ParticleCheck" (int type) ClientSide{
 	int cvar = 0;
 	int player_console = consolePlayerNumber();
@@ -72,6 +73,7 @@ script "ParticleCheck" (int type) ClientSide{
 	//PrintBold(s:"Particles: ", d:GetUserCVar(player_console, cvar));
 	if(!GetUserCVar(player_console, cvar)) {SetActorState(0, "NoSpawn");}	
 }
+*/
 
 function void AddAmmoCapacity (str ammo, int amount){
 	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);

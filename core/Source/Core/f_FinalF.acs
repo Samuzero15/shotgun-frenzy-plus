@@ -198,8 +198,10 @@ script 108 (int l_RemainingMonsters)
 		// We're gonna ignore the "5 monsters to guardian" rule.
 		
         // recount
+		/*
 		f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
         l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) + thingcount(0, 110);
+		*/
 
         g_MonstersLeft = l_RemainingMonsters;
 		
@@ -269,8 +271,10 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
        //[Samu] Zandronum is dumb counting monsters.
 		
 		g_MonstersLeft = thingcount(0, 118) + thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
-
+		
+		/*
 		f_BigCenterTipBold(strparam(s:"Monsters remaining: ", d:g_MonstersLeft), CR_BRICK);
+		*/
 		if(g_GameOver) Terminate;
 		// Keep hatin'
 		thing_hate(118, 104, 4);
@@ -387,7 +391,7 @@ script 125 (int l_Condition)
 	if(average_kpm_percent > 70) average_kpm_percent = 70;
 	int lastwave_percent;
 	
-	// 70% of skill score depends of the number of monsters killed, and 30% depending on the gametype.
+	// 70% of skill score depends on the number of monsters killed, and 30% depending on the gametype.
 	// If any other game type (CF or SF) 10% per each surviving core.
 	// else (SD) 30% proportional to the last wave reached.
 
@@ -397,15 +401,21 @@ script 125 (int l_Condition)
 	}else{
 		g_FinalSkillScore = average_kpm_percent + g_SkillScore;
 	}
+
+	int death_skill_discount = 0;
 	if (l_Condition == 4)       g_FinalSkillScore -= 20; // Substract if defeated.
-	
-	int death_skill_discount = ((p_TotalPlayerDeaths / PlayerCount()) / 3)*2;
-	if(PlayerCount() == 0) g_FinalSkillScore = 0;
 	else{
 		if(p_TotalPlayerDeaths == 0 && l_Condition != 4) g_FinalSkillScore += 30; // Perfection bonus.
 		else g_FinalSkillScore -= death_skill_discount;// Substract player deaths too.
 	} 
 	
+	if(PlayerCount() == 0){
+		g_FinalSkillScore = 0;
+		death_skill_discount = 100;
+	}else{
+		death_skill_discount = ((p_TotalPlayerDeaths / PlayerCount()) / 3)*2;
+	}
+
 
 	// check limits
     if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;

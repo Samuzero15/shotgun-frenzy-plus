@@ -106,8 +106,8 @@ ACTOR ClassicCreditBoom
 			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
 			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
 			NULL A 0 A_SpawnItemEx("CreditSpawner", 0, 0, 0, random(-10, 10), random(-10, 10), random(-10, 10), 0, SXF_NOCHECKPOSITION)
-			NULL A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 1)
-			NULL A 1
+			//NULL A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 1)
+			//NULL A 1
 			NULL A 0 A_SpawnItemEx("ClassicCreditMini", 0, 0, 0, random(-15, 15), random(-15, 15), random(-15, 15))
 			NULL A 0 A_SpawnItemEx("ClassicCreditMini", 0, 0, 0, random(-15, 15), random(-15, 15), random(-15, 15))
 			NULL A 0 A_SpawnItemEx("ClassicCreditMini", 0, 0, 0, random(-15, 15), random(-15, 15), random(-15, 15))

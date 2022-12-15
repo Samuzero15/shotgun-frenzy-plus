@@ -8,7 +8,7 @@ ACTOR splatEmitter_Lite
 	{
 		Spawn:
 			TNT1 A 0 
-			TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 0)
+			//TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 0)
 			TNT1 A 1
 			TNT1 A 0 A_SpawnDebris("splatBlood_Eye")
 			TNT1 A 0 A_SpawnDebris("splatBlood_Spray")
@@ -29,7 +29,7 @@ ACTOR MassiveGoreExplosion
 	{
 		Spawn:
 			TNT1 A 0 
-			TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 0)
+			//TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 0)
 			TNT1 A 1
 			TNT1 A 0 A_SpawnDebris("splatBlood_EyeGiant")
 			TNT1 A 0 A_SpawnDebris("splatBlood_SprayGiant")
@@ -408,7 +408,7 @@ ACTOR splatShellCasing
 	{
 		Spawn:
 		CASE A 0 
-		CASE A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
+		//CASE A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
 		CASE A 1 A_PlaySound("splatShell")
 		LoopMe:
 		CASE ACBHEGFD 1
@@ -458,7 +458,7 @@ ACTOR splatBulletCasing
 	{
 		Spawn:
 		BULC A 0 
-		BULC A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
+		//BULC A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
 		BULC A 1 A_PlaySound("splatBulletCasing")
 		LoopMe:
 		BULC ACBHEGFD 1
@@ -500,7 +500,7 @@ ACTOR splatBulletCasing_Lite : splatBulletCasing
 	{
 		Spawn:
 		BULC A 0 
-		BULC A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
+		//BULC A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 4)
 		BULC A 1 A_PlaySound("splatBulletCasing")
 		LoopMe:
 		BULC ACBHEGFD 1

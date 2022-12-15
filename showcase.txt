@@ -1,5 +1,4 @@
-
-
+////////// (v1.0) //////////
 
 [\cfAdded\c-]
 ) Ammosphere now is buyable in the health terminal.
@@ -11,14 +10,14 @@
 ) Runes!, Skulltag + some original ones!
 ) Rune shop and Stimpack upgrades are available in the Health terminal! 
 ) The Patcher Gun!, now fix and upgrade your turrets by using your credits! It gives you experience upon use!
-) New Core pulses, Warcry and Smite, revamped heal pulse and rename the other pusle to Revive.
+) New Core pulses, Warcry and Smite, revamped heal pulse and renamed the other core pulse to Revive.
 ) New techs to be researched!
 ) Speaking of upgraded turrets, now each turret and dispenser (except the base turret) can be upgraded up to Level 5.
 ) But beware! Turrets and Dispensers can attract monsters!
 ) Champions! (again, thanks Mikk & TDDR!)
 ) New techs to research! (Veteran Marines, Stimpacks, Grenades...)
 ) A Timer/Enemy Counter! Just to let you know how much time is left before hitting the end!
-) Now Health and Armor Bonuses can be drop in a splashy way upon any kill! Like credits!
+) Now Health and Armor Bonuses can be dropped in a splashy way upon any kill! Like credits!
 
 [\cfChanged / Fixed\c-]
 ) Mech Sync upgrade now costs 10 U.P.s, that thing is waaay too powerful to let it go cheap.
@@ -84,22 +83,21 @@
 
 ///////// (v1.3) //////////
 
-) Added new cvars to control the particles in game. Meant to reduce the lag in clientside.
-) Now runes will not be picked up and linked when you bump on them, you will have to press use when bumping into a rune. Meant to reduce the inconvenience of suddenly change the rune in mid-battle.
+) Now runes will not be picked up and linked when you bump on them, you will have to press "use" when bumping into a rune. Meant to reduce the inconvenience of suddenly change the rune in mid-battle.
 ) Now the patcher will not damage the cores.
-) Steel plating armor effect has been fixed.
+) Steel plating tech effect has been fixed.
 ) Now the gems, titanium armor and upgrade card will disappear over time. Same thing for the medikits and steel plating armors.
 ) Modified the item pools for monsters, adding the shotgun and chaingun turrets, and the greedsphere for the champions.
 ) Fixed the price of the plasma pack back to 6000 credits.
 ) Now the laser from the Spear-Taser Railgun is now visible in multiplayer.
 ) Now the Stimpack is invisible in the Item Hud.
 ) Fixed the disbalance of monster spawning when 3 or more players join in.
-) Modified the skill system. SHOULD be a little more exact.
+) Modified the skill system. SHOULD be a little more acurrate.
 ) Refactorized the hud messages from the final fights. And now added 2 extra stats, Cores protected (CF and SF), and Waves cleared (SD)
 ) After a zombie champion is killed, it will re-target again to the risked core.
 ) After shocking an enemy, it will also re-target again to the risked core.
 ) Alright, now turrets will not interrupt the hate command, hopefuly.
 ) Fixed the limit of dropping the first 4 items.
 ) Now the credits, health bonuses and armor shard drops chances will be dependant of the monster type and if it's a champion.
-) Now the stimpack upgrade "Hard Shell" wilnow grant extra 5% on the armor repair.
+) Now the stimpack upgrade "Hard Shell" will now grant extra 5% on the armor repair.
 ) Nerfed a bit the Titanium armor. 45% damage absorbtion (+ 15% with the temperance).

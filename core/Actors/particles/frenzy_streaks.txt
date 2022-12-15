@@ -80,7 +80,8 @@ actor streak_red
 	States
 	{
 		Spawn:
-			TNT1 A 1 NoDelay ACS_NamedExecuteAlways("ParticleCheck", 0, 2)
+			//TNT1 A 1 NoDelay ACS_NamedExecuteAlways("ParticleCheck", 0, 2)
+			TNT1 A 1
 			TNT1 A 1 A_Jump(256, "Loopme")
 		Loopme:
 			STRK A 1 bright A_FadeOut(0.02)

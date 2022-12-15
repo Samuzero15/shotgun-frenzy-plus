@@ -104,6 +104,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Mech Mount MSG?", "sfp_mechmsg", "Boolean"
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
 	StaticText ""
+	/*
 	StaticText "Show/Hide Particles?"
 	StaticText ""
 	Option "Blood splats", "sfp_part_gore", "ShowHideBoolean"
@@ -114,6 +115,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Smoke", "sfp_part_smoke", "ShowHideBoolean"
 	Option "Junk", "sfp_part_junk", "ShowHideBoolean"
 	StaticText ""
+	*/
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 }

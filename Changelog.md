@@ -9,7 +9,13 @@
 
 ## v1 - The path of the damned...
 
-#### (14 / 12 / 2022) [Touching the item drops]
+#### (16 / 12 / 2022) (v1.3b Quickfix!) [Removing the cvars related to particles]
+	-) Removed the particle removal for clients as an attempt to reduce the CPU usage from the server.
+
+#### (15 / 12 / 2022) (v1.3a Quickfix!) [Division issue]
+	*) A division by 0 on the final fight script now is fixed, i hope.
+
+#### (14 / 12 / 2022) (v1.3 Release!)  [Touching the item drops]
 	*) Refactored some rune drop scripts.
 	*) Fixed the limit of dropping the first 4 items.
 	*) Now the credits, health bonuses and armor shard drops chances will be dependant of the monster type and if it's a champion.

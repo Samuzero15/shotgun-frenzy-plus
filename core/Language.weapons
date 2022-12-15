@@ -179,7 +179,7 @@ WEPS_PYRO_FLAM_DESC =    "Spews fire wherever you fire it, burning everything on
 WEPS_PYRO_FLAM_UP0_NAME = "Super Flamer";
 WEPS_PYRO_FLAM_UP0_DESC = "Bigger flames, more fire, more crisp and ashes.";
 
-// Not added yet, just thowing out some ideas.
+// Not added yet, just throwing out some ideas.
 // Blue flames anyone?
 WEPS_PYRO_FLAM_UP1_NAME = "Cold Flamer";
 WEPS_PYRO_FLAM_UP1_DESC = "Blue flames. Cools enemies on impact. More Damage.";
