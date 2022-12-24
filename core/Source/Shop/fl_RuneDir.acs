@@ -45,7 +45,7 @@ function void SFPlus_DefineRunes(void){
     tier = 1;
     Rune_Add ("Health",         "HealthRune",       "RBTN12", tier, "RuneHealth");
 	Rune_Add ("Regeneration",   "RegenerationRune", "RBTN09", tier, "RuneRegeneration");
-	Rune_Add ("High Jump",      "HighJumpRune",     "RBTN05", tier, "RuneDoubleDamage");
+	Rune_Add ("High Jump",      "HighJumpRune",     "RBTN05", tier, "RuneHighJump");
 	Rune_Add ("Haste",          "HasteRune",        "RBTN04", tier, "RuneSpeed25");
 }
 

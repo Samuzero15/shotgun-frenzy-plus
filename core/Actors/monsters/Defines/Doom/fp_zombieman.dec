@@ -25,6 +25,7 @@ ACTOR sfZombieMan : FPlus_Monster replaces ZombieMan
 			POSS AABBCCDD 4 A_Chase
 			goto See
 		Missile:
+			POSS E 2 A_FaceTarget
 			POSS E 0 A_PlaySound ("grunt/attack",CHAN_BODY,0.5)
 			POSS F 8 A_CustomMissile("CommonBullet", 32.0, 0, frandom(-11.25,11.25), 0, 0)
 			POSS E 8

@@ -142,7 +142,7 @@ actor DeploySpot : MapSpot{
 actor DeployBlocker
 {
 	mass 999999999
-	radius 40
+	radius 32
 	height 48
 	
 	

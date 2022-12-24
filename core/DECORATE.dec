@@ -62,9 +62,9 @@ Actor Fading_Pickup : CustomInventory {
 			loop
 		Spawn.Timer.Brightme:
 			"####" "#" 0 A_SetUserVar("user_ticlimit", 35*user_stayseconds)
-			"####" "#" 1 A_JumpIf(user_frametic == 0, "Spawn.Default.Frametic")
-			"####" "#" 1 A_JumpIf(user_stayseconds == 0, "Spawn.Default.StaySeconds")
-			"####" "#" 1 A_JumpIf(user_fadetic == 0, "Spawn.Default.FadeTic")
+			"####" "#" 1 A_JumpIf(user_frametic == 0, "Spawn.Default.Frametic.Brightme")
+			"####" "#" 1 A_JumpIf(user_stayseconds == 0, "Spawn.Default.StaySeconds.Brightme")
+			"####" "#" 1 A_JumpIf(user_fadetic == 0, "Spawn.Default.FadeTic.Brightme")
         Spawn.Wait.Brightme:
 			"####" "#" 0 A_JumpIf(user_counter >= (user_ticlimit - 105), "Spawn.Fade.Brightme")
 			"####" "#" 1 Bright
@@ -79,10 +79,10 @@ Actor Fading_Pickup : CustomInventory {
 			"####" "#" 0 A_SetUserVar("user_frametic", 1)
 			goto Spawn.Timer.Brightme
 		Spawn.Default.StaySeconds:
-			"####" "#" 0 A_SetUserVar("user_stayseconds", 45)
+			"####" "#" 0 A_SetUserVar("user_stayseconds", 35)
 			goto Spawn.Timer
 		Spawn.Default.StaySeconds.Brightme:
-			"####" "#" 0 A_SetUserVar("user_stayseconds", 45)
+			"####" "#" 0 A_SetUserVar("user_stayseconds", 35)
 			goto Spawn.Timer.Brightme
 		Spawn.Default.FadeTic:
 			"####" "#" 0 A_SetUserVar("user_fadetic", 4)

@@ -297,3 +297,18 @@ ACTOR Rail_Standard_Tracer
 			loop
 	}
 }
+
+ACTOR Rail_Slug_Tracer : Rail_Standard_Tracer
+{
+	Radius				14
+	Scale				1.1
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			PLSS AB 1 BRIGHT A_Explode(5,20,0,0,20)
+			PLSS AB 1 BRIGHT 
+			PLSS ABABAB 1 bright a_Fadeout(0.05)
+			loop
+	}
+}

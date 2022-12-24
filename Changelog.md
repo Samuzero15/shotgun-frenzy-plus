@@ -9,6 +9,27 @@
 
 ## v1 - The path of the damned...
 
+#### (18 - 23 / 12 / 2022) [Some extra fixes and goodies]
+	*) Fixed a thing_hate problem which hoarded the cpu usage on server side.
+	*) Demons and mech demons will jump in a shorter range now, between 200 and 300 map units respectively.
+	*) Now the chaingun turret should'nt flicker in multiplayer.
+	*) Powerups will launch their upgraded effects without overriding the type of upgrade.
+	*) Defense rune has been fixed, now it can trigger in any kind of damage event (with armor or not)
+	*) Defense rune will activate after 1 tick of recieving damage, in case of hitscan attacks, they must hit the target before activating the effect of this rune.
+	*) Defense rune's duration has been buffed to 52 tics (almost 1.5 seconds)
+	*) Now all baron's green fire attack will pass through the horde.
+	*) Cyberbarons will attack with the green fireball more often rather than going with the rockets.
+	*) Cybruiser's projectile speed has been nerfed a bit.
+	*) Zombiemans will face the target before shooting a bullet.
+	*) Reduced the errors caused by the shell grenades.
+	*) Buckshots, Spitters and the Advanced Plasmagun will fire faster with the help of the Rage Rune.
+	*) Now the backpack will not be shown in the item hud.
+	*) Dropped runes will mention their names on the game, when you're near of them.
+	*) Changed the messages when players are building turrets. Just to reduce the spam in console, caused by print msgs.
+	*) Some sound feedback when the building deploying fails.
+	*) Double Slug Railgun can attack through the hordes, dealing half damage to everyone behind the first enemy hit.
+	*) Prosperity rune's effect is now restored to it's 450 Hp/Ap max effect.
+
 #### (16 / 12 / 2022) (v1.3b Quickfix!) [Removing the cvars related to particles]
 	-) Removed the particle removal for clients as an attempt to reduce the CPU usage from the server.
 

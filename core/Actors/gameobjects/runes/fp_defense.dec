@@ -26,13 +26,15 @@ Actor DefenseRune_Activate : Rune_Activation {
 	}
 }
 
+Actor DefenseRune_Token : Boolean {}
+
 ACTOR DefenseRune_ShieldInvul : PowerInvulnerable {}
 
 Actor DefenseRune_Shield : PowerupGiver{
 	+INVENTORY.AUTOACTIVATE
     +VisibilityPulse
     powerup.type DefenseRune_ShieldInvul
-	powerup.duration 15
+	powerup.duration 52
     Powerup.Color "0 0 0" 0.0
     Renderstyle Translucent
 }

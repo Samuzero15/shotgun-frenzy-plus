@@ -53,7 +53,7 @@ function void SFPlus_DefineItems(void){
 	Item_Add_Powerup("Inventory_AmmoGiver",   "berserk2",   	1, CR_GREEN,	"AMMOSPHERE");
 	Item_Add_Powerup("Inventory_Helltrigger", "helltrigger", 	1, CR_ORANGE,	"HELLTRIGGER");
 		
-	Item_Add_Inv("p_backpack", 						"backpack", 		1, 		"PBACKPACK");
+	Item_Add_Inv_Hide("p_backpack", 				"backpack", 		1, 		"PBACKPACK");
 	Item_Add_Inv("Inventory_MarineMine", 			"mines", 			16, 	"MARINEMINE");
 	Item_Add_Deploy("Inventory_MineDrone", 			"drone_mine", 		8, 		"MINEDRONE");
 	Item_Add_Deploy("Inventory_SawDrone", 			"drone_saw", 		8, 		"SAWDRONE");
@@ -93,6 +93,11 @@ function void Item_Add_Inv(str actor, str price, int max, str lang){
 	str pr = strparam(s:"pr_i_", s:price);
 	int it = Item_Add(0, actor, max, pr, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
+}
+
+function void Item_Add_Inv_Hide(str actor, str price, int max, str lang){
+	Item_Add_Inv(actor, price, max, lang);
+	fp_Items[fp_LastItem-1][8] = false;
 }
 
 function void Item_Add_Hidden(str actor, int max, str lang, int showinihud){

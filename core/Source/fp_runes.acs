@@ -1,13 +1,16 @@
 #library "fp_runes"
 #include "zcommon.acs"
 #import "f_tip.acs"
+#import "fl_runeDir.acs"
 
 script "Rune_Events" (int type, int arg1, int arg2) Event {
+    int hpold, hpnow;
     
     switch(type){
         case GAMEEVENT_ACTOR_DAMAGED:
-            int hpold = getActorProperty(0, APROP_HEALTH);
-            int hpnow = hpold - arg1;
+            if(!stricmp(arg2, "Suicide")) terminate;
+            hpold = getActorProperty(0, APROP_HEALTH);
+            hpnow = hpold - arg1;
             if(playernumber() >= 0){
                 SetResultValue(ACS_NamedExecuteWithResult("Runes_OnPlayerDamage", arg1, hpnow <= 0));
             }
@@ -17,8 +20,16 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
             // Temperance will now add extra percentages to the saving amount
             int dmg = arg1;
             int percent;
+            hpold = getActorProperty(0, APROP_HEALTH);
+            hpnow = hpold - arg1;
+
             //log(s:arg2);
             if(!stricmp(arg2, "Suicide")) terminate;
+
+            if(playernumber() >= 0){
+                SetResultValue(ACS_NamedExecuteWithResult("Runes_OnPlayerDamage", arg1, hpnow <= 0));
+            }
+
             if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "TitaniumArmor") == 0){
                 percent = 0.45 + 0.15 * checkinventory("RuneTemperance");
                 dmg = (arg1 * (1.0 - percent)) >> 16;
@@ -135,8 +146,8 @@ script "Runes_OnPlayerDamage" (int dmg, int fatal){
         }
     }
     else{
-        if(checkinventory("RuneDefense")){
-            GiveInventory("DefenseRune_Activate", 1);
+        if(checkinventory("RuneDefense") && !CheckInventory("DefenseRune_Token")){
+            ACS_NamedExecuteAlways("RuneDefense_Activate", 0);
         }
 
         if(checkinventory("RuneBlast")){
@@ -144,6 +155,14 @@ script "Runes_OnPlayerDamage" (int dmg, int fatal){
         }
     }
     SetResultValue(TotalDmg);
+}
+
+Script "RuneDefense_Activate" (void){
+    if(CheckInventory("DefenseRune_Token")) Terminate;
+    GiveInventory("DefenseRune_Token", 1);
+    delay(1); // Take all the damage within this tic.
+    GiveInventory("DefenseRune_Activate", 1);
+    TakeInventory("DefenseRune_Token", 1);
 }
 
 
@@ -162,7 +181,8 @@ script "Runes_OnMonsterKill" (int ischamp){
 }
 
 script "Runes_PickMessage" (int type){
-    f_SmallTip ("Hold Use to link this rune!", CR_CYAN, 0);
+    //log(s:"rune type: ", d:type);
+    f_SmallTip_Runes (Strparam(s:"Hold Use to link the \cj",s:Rune_getName(type),s:" \c-rune!"), CR_CYAN, 0);
 }
 
 

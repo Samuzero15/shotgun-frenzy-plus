@@ -96,7 +96,6 @@ Actor Inventory_Powerup : Inventory_Item {
 
 		PowUpUpgrade.Defense:
 			TNT1 A 0 
-			TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 			TNT1 A 1 A_Jump(256, "Effect")
 			goto Effect
 		PowUpUpgrade.Attack:

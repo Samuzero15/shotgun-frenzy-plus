@@ -5,6 +5,7 @@ const int REPEATER_FIRECHANCE = 2;
 Actor Rep_Heat : Inventory {inventory.MaxAmount 200}
 Actor Rep_IdleSpin : Boolean {}
 Actor Rep_GetOut : Boolean {}
+Actor Rep_GetOutNow : Boolean {}
 
 ACTOR Repeater : Weapon
 {
@@ -55,7 +56,7 @@ ACTOR Repeater : Weapon
 			TNT1 A 0 A_StopSound(CHAN_7)
 			TNT1 A 0 A_GiveInventory("Rep_GetOut", 1)
 		Deselect.Loop:
-			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 1)
+			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 2)
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
 			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)
 			TNT1 A 0 a_Takeinventory("Rep_Heat", 200)
@@ -311,7 +312,7 @@ ACTOR Repeater_BlastShells : Weapon
 			TNT1 A 0 A_StopSound(CHAN_7)
 			TNT1 A 0 A_GiveInventory("Rep_GetOut", 1)
 		Deselect.Loop:
-			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 1)
+			TNT1 A 0 A_JumpIf(CallACS("Player_IsDed"), 2)
 			TNT1 A 0 A_JumpIfInventory("Rep_IdleSpin", 1, "NoSpin")
 			X5E2 A 1 A_Lower
 			TNT1 A 0 A_TakeInventory("Rep_IdleSpin", 1)

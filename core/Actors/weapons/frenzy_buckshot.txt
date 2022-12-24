@@ -202,12 +202,15 @@ ACTOR Buckshot : Weapon
 		Fire.Recoil:
 			"####" "#" 0 A_FireBullets(4, 4, 7, 10, "BulletPuff_Standard")
 			"####" "#" 1 offset (0,37)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,43)
 			"####" "#" 1 offset (0,45)
 			"####" "#" 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
 			"####" "#" 1 offset (0,42)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,38)
 			"####" "#" 1 offset (0,34)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,32)
 			"####" "#" 10 A_Refire
 			goto Ready0
@@ -581,12 +584,15 @@ ACTOR Buckshot_Chamber : Weapon
 		Fire.Recoil:
 			"####" "#" 0 A_FireBullets(4, 4, 9, 10, "BulletPuff_Blast")
 			"####" "#" 1 offset (0,37)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,43)
 			"####" "#" 1 offset (0,45)
 			"####" "#" 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
 			"####" "#" 1 offset (0,42)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,38)
 			"####" "#" 1 offset (0,34)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,32)
 			"####" "#" 10 A_Refire
 			goto Ready0
@@ -845,12 +851,15 @@ ACTOR Buckshot_Explosive : Weapon
 		Fire.Recoil:
 			"####" "#" 0 A_FireBullets(6, 6, 7, 14, "BulletPuff_Explosive")
 			"####" "#" 1 offset (0,37)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,43)
 			"####" "#" 1 offset (0,45)
 			"####" "#" 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
 			"####" "#" 1 offset (0,42)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,38)
 			"####" "#" 1 offset (0,34)
+			"####" "#" 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			"####" "#" 1 offset (0,32)
 			"####" "#" 10 A_Refire
 			goto Ready0

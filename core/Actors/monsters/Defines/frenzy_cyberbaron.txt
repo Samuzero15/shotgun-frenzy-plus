@@ -35,7 +35,7 @@ spawnid 204
     CBOS R 8 A_BruisAttack
       Goto See
   Missile:
-    CBOS E 0 A_jump(80,5)
+    CBOS E 0 A_jump(115,5)
     CBOS E 10 A_FaceTarget
     CBOS E 10 A_FaceTarget
     CBOS F 10 Bright A_customMissile(cyberattack2,27,16,0)

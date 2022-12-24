@@ -167,7 +167,7 @@ WEPS_PLASMA_RAIL_DESC =    "This gun can create laser rails which "
 WEPS_PLASMA_RAIL_UP1_NAME = "Spear-Taser Railgun";
 WEPS_PLASMA_RAIL_UP1_DESC = "Reduced range, but incredibly fast and sharp. Alt-fire stuns the first enemy with the Taser.";
 WEPS_PLASMA_RAIL_UP2_NAME = "Double-Slug Railgun";
-WEPS_PLASMA_RAIL_UP2_DESC = "Laser lasts longer, and fires 2 lasers per shot. Use Secondary to fire 2 Slug Rails.";
+WEPS_PLASMA_RAIL_UP2_DESC = "Laser lasts longer, Half penetrates, 2 rails per shot. Use Secondary to fire 2 Slug Rails which penetrates everything with some heavy damage.";
 
 // Pyromaniac
 

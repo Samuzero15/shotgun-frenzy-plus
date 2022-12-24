@@ -200,8 +200,9 @@ script 108 (int l_RemainingMonsters)
         // recount
 		/*
 		f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
-        l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) + thingcount(0, 110);
 		*/
+        l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) + thingcount(0, 110);
+		
 
         g_MonstersLeft = l_RemainingMonsters;
 		

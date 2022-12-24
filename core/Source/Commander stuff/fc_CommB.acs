@@ -48,39 +48,43 @@ script "SFPlus_DeployPlayerBuilding" (int which){
 	int ptid = ActivatorTID();
 	int btid = ptid;
 	//printbold(s:"PlayerTID: ", d:ptid, s:" / SummonTID: ", d:btid);
+	str item = "";
+	str actor = "";
 	switch(which){
 		case DEPLOY_TURRET_BULLET:
-			Player_SpawnBuilding("TurretBullet", "Inventory_TurretBullet", btid);
+			actor = "TurretBullet"; item = "Inventory_TurretBullet";
 		break;
 		case DEPLOY_TURRET_SHOTGUN:
-			Player_SpawnBuilding("TurretShotgun", "Inventory_TurretShotgun", btid);
+			actor = "TurretShotgun"; item = "Inventory_TurretShotgun";
 		break;
 		case DEPLOY_TURRET_CHAINGUN:
-			Player_SpawnBuilding("TurretChaingun", "Inventory_TurretChaingun", btid);
+			actor = "TurretChaingun"; item = "Inventory_TurretChaingun";
 		break;
 		case DEPLOY_TURRET_ROCKET:
-			Player_SpawnBuilding("TurretRocket", "Inventory_TurretRocket", btid);
+			actor = "TurretRocket"; item = "Inventory_TurretRocket";
 		break;
 		case DEPLOY_TURRET_PLASMA:
-			Player_SpawnBuilding("TurretPlasma", "Inventory_TurretPlasma", btid);
+			actor = "TurretPlasma"; item = "Inventory_TurretPlasma";
 		break;
 		case DEPLOY_TURRET_FLAME:
-			Player_SpawnBuilding("TurretFlame", "Inventory_TurretFlame", btid);
+			actor = "TurretFlame"; item = "Inventory_TurretFlame";
 		break;
 		case DEPLOY_TURRET_TESLA:
-			Player_SpawnBuilding("TurretTesla", "Inventory_TeslaCoil", btid);
+			actor = "TurretTesla"; item = "Inventory_TeslaCoil";
 		break;
 		case DEPLOY_TURRET_BFG:
-			Player_SpawnBuilding("TurretBFG", "Inventory_TurretBfg", btid);
+			actor = "TurretBFG"; item = "Inventory_TurretBfg";
 		break;
 		case DEPLOY_DISPENSER_AMMO:
-			Player_SpawnBuilding("AmmoDispenser", "Inventory_AmmoDispenser", btid);
+			actor = "AmmoDispenser"; item = "Inventory_AmmoDispenser";
 		break;
 		case DEPLOY_DISPENSER_HEALTH:
-			Player_SpawnBuilding("HealthDispenser", "Inventory_HealthDispenser", btid);
+			actor = "HealthDispenser"; item = "Inventory_HealthDispenser";
 		break;
 	}
-		
+	
+	if(!Player_SpawnBuilding(actor, item, btid))
+		LocalAmbientSound("SamuTerm/Error", 128);
 	
 	
 }
@@ -88,7 +92,11 @@ script "SFPlus_DeployPlayerBuilding" (int which){
 // Spawn something in the indicated position, minding the area
 function bool Player_SpawnBuilding(str this, str or_deez, int sid){
 	int ptid = ActivatorTID();
-	int r = 64.0;
+	// Math time!
+	// (sqrt(2.0)*radius)/2 is the radius of look determinated by the angle of the player.
+	// 45.25 is the extra radius caused by the deployable to be spawned. (Assuming 32 as radius, h=sqrt(2.0)*radius)
+	// 4.0 as error radius of space, just to make sure.
+	int r = FixedDiv(FixedMul(sqrt(2.0), GetActorProperty(0, APROP_RADIUS)), 2.0) + 45.25 + 32.0;
 	if(CMD_SpawnEX(this, sid, ptid, r, 0)){
 		//log(s:"Spawned the ", s:this);
 		return true;
@@ -139,14 +147,14 @@ function bool CMD_SpawnEX(str something, int tid, int owner_tid, int radius, int
 	bool valid_area = CMD_AreaCheck(y);
 	bool valid_floor = CMD_FloorCheck(500);
 	if ((!sector_check && (free && valid_floor)) || (free && valid_area && valid_floor)){
-		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), tid);
+		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), tid, angle);
 	}
 	if(sucess == false){
-		if		(sector_check && !valid_area) 	print (s:"Can't build in a lost sector!");
+		if		(sector_check && !valid_area) 	f_SmallTip ("Can't build in a lost sector!", CR_RED, 0);
 		else if (!valid_floor)  
-								print (s:"Can't build over the liquids or void!");
-		else if (!free) 		print (s:"The area is blocked or unstable for building!");
-		else print(s:"Ah crap, something went wrong goddamit.");
+								f_SmallTip ("Can't build over the liquids or void!", CR_RED, 0);
+		else if (!free) 		f_SmallTip ("The area is blocked or unstable for building!", CR_RED, 0);
+		else f_SmallTip ("Ah crap, something went wrong goddamit.", CR_RED, 0);
 	}
 	
 	return sucess;

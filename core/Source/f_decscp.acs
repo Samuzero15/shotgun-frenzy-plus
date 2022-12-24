@@ -80,28 +80,29 @@ function void AddAmmoCapacity (str ammo, int amount){
 }
 
 script "PersonalBP_Expand" (void) {
-	if(	getAmmoCapacity("Ammo_2BackpacksToken") == 3 ||
-	 	getAmmoCapacity("Ammo_PersonalBPToken") == 2 ||
+	if(	getAmmoCapacity("Ammo_2BackpacksToken") == 3 && getAmmoCapacity("Ammo_PersonalBPToken") == 2 ||
 	  	!CheckInventory("P_Backpack")){
 			// Dont expand if already expanded (having the backpack or not) or if we don't have the item.
 			terminate; 
 		}
 	
-	AddAmmoCapacity("Clip", 			100);
-	AddAmmoCapacity("ClipPistol",		50);
-	AddAmmoCapacity("Shell", 			30);
-	AddAmmoCapacity("RocketAmmo", 		25);
-	AddAmmoCapacity("HeavyBullets", 	100);
-	AddAmmoCapacity("Dualshot_Ammo", 	50);
-	AddAmmoCapacity("Cell", 			200);
-	AddAmmoCapacity("GLauncher_Ammo", 	25);
-	AddAmmoCapacity("Flinger_Ammo", 	50);
-	AddAmmoCapacity("Gasoline",			50);
-
-	AddAmmoCapacity("Ammo_PersonalBPToken", 1); // Set token.
-
-	if(GetAmmoCapacity("Ammo_BackpackToken") == 2){
+	if(GetAmmoCapacity("Ammo_2BackpacksToken") == 2){
 		AddAmmoCapacity("Ammo_2BackpacksToken", 1); // Set token.
+	}
+
+	if(GetAmmoCapacity("Ammo_PersonalBPToken") == 1){
+		AddAmmoCapacity("Clip", 			100);
+		AddAmmoCapacity("ClipPistol",		50);
+		AddAmmoCapacity("Shell", 			30);
+		AddAmmoCapacity("RocketAmmo", 		25);
+		AddAmmoCapacity("HeavyBullets", 	100);
+		AddAmmoCapacity("Dualshot_Ammo", 	50);
+		AddAmmoCapacity("Cell", 			200);
+		AddAmmoCapacity("GLauncher_Ammo", 	25);
+		AddAmmoCapacity("Flinger_Ammo", 	50);
+		AddAmmoCapacity("Gasoline",			50);
+
+		AddAmmoCapacity("Ammo_PersonalBPToken", 1); // Set token.
 	}
 }
 
@@ -126,7 +127,7 @@ Script "Player_GetRank" (void){
 }
 
 Script "Player_IsDed" (void) {
-	setResultValue(GetActorProperty(0, APROP_HEALTH) < 1);
+	setResultValue(PlayerHealth() <= 0);
 }
 
 Script "Armor_CompleteTo" (int amount){
@@ -168,15 +169,11 @@ Script "Armor_ReplaceShardsWithArmor" (int armortype){
 
 Script "UpgradeCard_PickMe" (void)
 {
-	// 30 % of gaining 1 exp point after each drop.
-	// Because I know they will exploit this.
 	sf_AddUpPoints(1, PlayerNumber());
 }
 
 Script "Mineral_PickMe" (int amount)
 {
-	// 30 % of gaining 1 exp point after each drop.
-	// Because I know they will exploit this.
 	sf_AddCredits(amount, PlayerNumber());
 }
 
@@ -254,7 +251,6 @@ script "AltState_Stun" (void)
 	// Duration is doubled if the monster is a champion.
 	// 2 seconds * class * 1+is champion?
 	thing_hate(0, g_Status + 100, 4);
-    thing_hate(0, g_Status + 100, 4);
 	delay(35*(2+sf_GetMonsterClass_Health())*(1+CheckInventory("Champ_Type")));
 	TakeInventory("AltState_Stunned", 1);
 }
@@ -464,7 +460,7 @@ Script "Turret_States" (int height){
 Script "Building_AggroLoop" (int tid) {
 	delay(5);
 	while(GetActorProperty(0, APROP_HEALTH) >= 1){
-		//log(s:"Aggroing")
+		//log(s:"Aggroing");
 		TakeInventory("Building_GetRange", 0xFFFFFFFF);
 		//
 		if(CheckActorClass(0, "AmmoDispenser_Base") || CheckActorClass(0, "HealthDispenser_Base"))
@@ -478,12 +474,18 @@ Script "Building_AggroLoop" (int tid) {
 		//Log(s:"Give the HateRadius, radius:", d:CheckInventory("Building_GetRange"));
 		delay(35*5);
 	}
+	//log(s:"Done aggroing");
 }
 
-Script "Building_AggroBack" (void) {
-	delay(35);
-	thing_hate(0, g_Status + 100, 4);
-    thing_hate(0, g_Status + 100, 4);
+Script "Building_AttackFirst" (int tidtohate, int tidtarget) {
+	if( tidtohate == 666 || tidtohate == 667 || CheckInventory("Building_AttackFirst")) Terminate;
+	int tid = ActivatorTid();
+	GiveInventory("Building_AttackFirst", 1);
+	Thing_Hate(tid, tidtarget, 4);
+	delay(35*5);
+	TakeInventory("Building_AttackFirst", 1);
+	thing_hate(tid, g_Status + 100, 4);
+	
 }
 
 Script "Building_GetRange" (void) {

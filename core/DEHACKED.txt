@@ -2,4 +2,8 @@ Doom version = 21
 Patch format = 6
 Ammo 1 (Shells)
 Max ammo = 60
+
 Misc 0
+Max Soulsphere = 400
+Max Armor = 400
+Blue Armor Class = 4

@@ -89,18 +89,20 @@ ACTOR PlasmaGun_Advanced : Weapon
 			X2E3 B 1 A_PlayWeaponSound("weapons/plasmaf")
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Adv2", 0)
 			X2E3 B 1
+			TNT1 A 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			X2E3 A 1
 			X2E3 C 1 A_PlayWeaponSound("weapons/plasmaf")
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Adv2", 0)
 			X2E3 C 1
+			TNT1 A 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
 			X2E3 A 1
 			X2E3 A 15 A_Refire
 			goto Ready
 			
 		
 		AltFire:
-			X2E3 BBCCBCBC 1 BRIGHT
-			X2E3 C 1 A_PlayWeaponSound("weapons/plasmaf")
+			X2E3 BBCC 1 BRIGHT
+			X2E3 BCBC 1 BRIGHT A_PlayWeaponSound("weapons/plasmaf")
 			X2E3 A 3
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Adv2Alt", 0)
 			X2E3 A 15 A_Refire

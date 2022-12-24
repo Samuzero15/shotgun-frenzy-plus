@@ -141,3 +141,15 @@ Actor Mon_BFGBall : BFGBall
 Actor Mon_Rocket : Rocket {
 	DamageType "DemonFire"
 }
+
+Actor Mon_BaronBall : BaronBall replaces BaronBall {
+   +MTHRUSPECIES
+	DamageType "DemonFire"
+   speed 17
+}
+
+Actor Mon_DoomImpBall : DoomImpBall replaces DoomImpBall {
+   +MTHRUSPECIES
+	DamageType "DemonFire"
+   speed 12
+}

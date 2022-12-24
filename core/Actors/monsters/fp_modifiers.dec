@@ -66,7 +66,7 @@ Actor ChampBuff_NormalDef : PowerProtection {
 
 Actor ChampBuff_BlurInvisible : PowerInvisibility {
     Powerup.Duration 0x7FFFFFFF
-    Powerup.Strength 90
+    Powerup.Strength 70
     Powerup.Mode "Translucent"
 }
 
