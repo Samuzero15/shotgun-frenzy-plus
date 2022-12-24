@@ -9,7 +9,13 @@
 
 ## v1 - The path of the damned...
 
-#### (18 - 23 / 12 / 2022) [Some extra fixes and goodies]
+#### (24 / 12 / 2022) (v1.4a Quickfix!) [Attempt to fix the cpu memory overload]
+	-) Removed the aggro attraction from all buildings. for now.
+	*) Now sector recapturing will be counted in the final score.
+	*) Now sector recaps are enable once again with no recap minimal (when this var is 0).
+	// Oh merry christmas :D
+
+#### (18 - 23 / 12 / 2022) (v1.4 Release!) [Some extra fixes and goodies]
 	*) Fixed a thing_hate problem which hoarded the cpu usage on server side.
 	*) Demons and mech demons will jump in a shorter range now, between 200 and 300 map units respectively.
 	*) Now the chaingun turret should'nt flicker in multiplayer.

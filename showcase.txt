@@ -104,7 +104,7 @@
 
 ///////// (v1.4) //////////
 
-) Fixed a thing_hate problem which hoarded the cpu usage on server side.
+) Removed the aggro attaction from the turrets. In attempt to fix the cpu memory overload in server side.
 ) Demons and mech demons will jump in a shorter range now, between 200 and 300 map units respectively.
 ) Now the chaingun turret should'nt flicker in multiplayer.
 ) Powerups will launch their upgraded effects without overriding the type of upgrade.

@@ -73,6 +73,7 @@ int g_MonstersLeft;
 int f_AIDir_SpawnCount;
 int f_Gametype;
 int g_TenMinMark;
+int g_RecapCount;
 int g_GameOver;
 int g_GameEnding;
 int g_GameTimer;
@@ -256,7 +257,7 @@ function void InitDB_ReadConsole(void)
 	if (sf_cacodemons)		f_Cacodemons = sf_cacodemons;
 	
 	if(sf_percentfast)  	f_PercentFast 	= InitDB_Clamp(sf_percentfast,  1,  50, 0);
-	if(sfp_recapmin) 		m_RecapMin    	= InitDB_Clamp(sfp_recapmin, 	  1,  10, 0);
+	if(sfp_recapmin) 		m_RecapMin    	= InitDB_Clamp(sfp_recapmin, 	  0,  10, 0);
 	if(sfp_maxmonsters) 	m_AIDCap 	  	= InitDB_Clamp(sfp_maxmonsters, 50, 500, 250);
 	if(sfp_playerdmgmult)	p_dmgmult		= InitDB_Clamp(sfp_playerdmgmult, 1.00, 200.0, 0.0);
 	if(sfp_monsterhpmult)	m_hpmult		= InitDB_Clamp(sfp_monsterhpmult, 1.00, 200.0, 0.0);

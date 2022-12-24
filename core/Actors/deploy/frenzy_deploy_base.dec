@@ -653,7 +653,7 @@ Actor Building_HateRadius : CustomInventory {
 		Pickup: // User_Radius should be defined by the turret.
 			//TNT1 A 0 A_RadiusGive("Building_AggroTid",user_range,RGF_MONSTERS, tid)
 			TNT1 A 0
-			TNT1 A 0 A_JumpIf(CheckClass("AmmoDispenser_Base") || CheckClass("HealthDispenser_Base"),"DispensersFirst")
+			TNT1 A 1 A_JumpIf(CheckClass("AmmoDispenser_Base") || CheckClass("HealthDispenser_Base"),"DispensersFirst")
 			TNT1 A 0 A_SpawnItem("Building_HateTarget")
 			TNT1 A 0 A_RadiusGive("Building_Aggro",CallACS("Building_GetRange"), RGF_MONSTERS | RGF_CUBE)
 			Stop
@@ -763,7 +763,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 			TNT1 A 0 A_SetUserVar("user_rangestart", user_range)
 			TNT1 A 0 A_SetUserVar("user_rangeup", 64)
 			
-			TNT1 A 1 ACS_NamedExecuteAlways("Building_AggroLoop", 0)
+			TNT1 A 1 //ACS_NamedExecuteAlways("Building_AggroLoop", 0)
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_States", 0, 40)		
 			//TNT1 A 0 ACS_NamedExecuteAlways("DebugTID", 0, 0, tid)
 			TNT1 A 1

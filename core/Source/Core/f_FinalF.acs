@@ -400,7 +400,7 @@ script 125 (int l_Condition)
 		lastwave_percent = FixedMul(FixedDiv(m_SurvivalWave<<16, f_SurvivalLastLevel<<16), 30.0)>>16;
 		g_FinalSkillScore = average_kpm_percent + lastwave_percent;
 	}else{
-		g_FinalSkillScore = average_kpm_percent + g_SkillScore;
+		g_FinalSkillScore = average_kpm_percent + g_SkillScore + g_RecapCount*5;
 	}
 
 	int death_skill_discount = 0;
@@ -425,7 +425,12 @@ script 125 (int l_Condition)
 	// Debug info.
 	log(s:"Game kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" / ", d:AIDir_AverageKPM(), s:" kills. +", d:average_kpm_percent, s:"%");
 	if(f_Gametype == 5) log(s:"Waves completed: ", d:m_SurvivalWave, s:" / ", d:f_SurvivalLastLevel,s:" waves. +", d:lastwave_percent, s:" %");
-	else				log(s:"Core protection Bonus: +", d:g_SkillScore, s:" %");
+	else{
+		if(g_RecapCount > 0){
+			log(s:"Sector Recaptures: ", d:g_RecapCount, s:" Times, Bonus: +", d:(g_RecapCount*5), s:" %");
+		}
+		log(s:"Core protection Bonus: +", d:g_SkillScore, s:" %");
+	}
 	if(p_TotalPlayerDeaths == 0) log(s:"No deaths! +", d:30, s:"%");
 	else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:((p_TotalPlayerDeaths / PlayerCount())*2), s:"%");
 	log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
@@ -465,8 +470,22 @@ script 125 (int l_Condition)
 			FinalFight_ScoreString(2, "Protected", g_SkillScore/10, " \cgcores");
         delay(2);
     }
-    
-    delay(35*1);
+	if(g_RecapCount){
+		delay(15);
+		int recap_counter = 0;
+		while(recap_counter < g_RecapCount)
+		{
+			ambientsound("weapons/pistol", 20);
+			recap_counter++;
+			FinalFight_ClearString(0);
+			FinalFight_ScoreString(1, "Sector Recaptures", recap_counter, " \cgtimes");
+			FinalFight_ClearString(2);
+			
+			delay(2);
+		}
+	}
+	
+    delay(35);
 	
 	while(l_SkillLevel < g_FinalSkillScore)
     {
@@ -514,6 +533,11 @@ script 125 (int l_Condition)
     delay(35 * 6);
 
     exit_normal(0);
+}
+
+function void FinalFight_ClearString(int id){
+	hudmessagebold(s:""; 0, 151+id, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 55.0 + 15.0*id, 0.0);
+	hudmessagebold(s:""; 0, 154+id, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 55.0 + 15.0*id, 0.0);
 }
 
 function void FinalFight_ScoreString(int id, str label, int number, str label_number){

@@ -54,8 +54,23 @@ script 51 OPEN
 
 function int SecMan_RecapCond(int sector){
 	// Decides if the selected sector is recapturable.
-	return (m_CalcSector() < m_recapmin && sector > 1);
+	return (m_CalcSector() <= m_recapmin && sector > 1);
 }
+
+script "SFPlus_SecManDebug" (void)//OPEN
+{
+	str msg;
+    while(1)
+    {
+		msg = strParam(
+        s:"Recap minimal: ", d:m_recapmin, 
+        s:"\nMonster in risked sectors: ", d:m_CalcSector(),
+        s:"\nRecap Condition: ", d:SecMan_RecapCond(g_status));
+        hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
+        delay(1);
+		
+    }
+}  
 
 Function void SecMan_ToggleDoors(bool closed, int sector, int doortype, int doorspeed){
 	// Switches the doors, and unclogs them off if there is some monsters stucking the door.
@@ -142,6 +157,7 @@ Script "SFPlus_SecManMainLoop" OPEN {
 				acs_terminate(129, 0);// Kill the timer script.
 				SecMan_ToggleDoors(1, g_Status-1, f_Doortype, f_Doorspeed); // Close them again.
 				acs_execute(103, 0, 0, 0, 0);
+				g_RecapCount++; // Add a recapture point, +5% skill bonus for each recapture.
 				
 				skip_recap = true;
 				break; // Break the time wait-up
@@ -190,6 +206,7 @@ Script "SFPlus_SecManMainLoop" OPEN {
 			if (SecMan_RecapCond(g_Status)){
 				SecMan_ToggleDoors(1, g_Status-1, f_Doortype, f_Doorspeed);
 				acs_execute(103, 0, 0, 0, 0);
+				g_RecapCount++; // Add a recapture point, +5% skill bonus for each recapture.
 				break;
 			}
 			delay(5);
