@@ -243,14 +243,17 @@ script "AltState_Stun" (void)
 	int ori_speed = GetActorProperty(0, APROP_SPEED);
 	SetActorProperty(0, APROP_SPEED, 0);
 	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
-		SetActorState (0, "Pain");
+		//SetActorState (0, "Pain");
+		Thing_Damage(0, 1, 0);
+		SetActorProperty(0, APROP_HEALTH, GetActorProperty(0, APROP_HEALTH) + 1);
 		delay(6);
 	}
 	SetActorProperty(0, APROP_SPEED, ori_speed);
+	//SetActorState (0, "Spawn");
 	// Cooldown depends on the monster class and if its a champion.
 	// Duration is doubled if the monster is a champion.
 	// 2 seconds * class * 1+is champion?
-	thing_hate(0, g_Status + 100, 4);
+	//thing_hate(0, g_Status + 100, 4);
 	delay(35*(2+sf_GetMonsterClass_Health())*(1+CheckInventory("Champ_Type")));
 	TakeInventory("AltState_Stunned", 1);
 }
@@ -471,21 +474,22 @@ Script "Building_AggroLoop" (int tid) {
 			GiveInventory("Building_GetRange", GetUserVariable(0, "user_range"));
 		}
 		GiveInventory("Building_HateRadius", 1);
+		//GiveInventory("Building_AlertThem", 1);
 		//Log(s:"Give the HateRadius, radius:", d:CheckInventory("Building_GetRange"));
-		delay(35*5);
+		delay(35*4);
 	}
 	//log(s:"Done aggroing");
 }
 
-Script "Building_AttackFirst" (int tidtohate, int tidtarget) {
-	if( tidtohate == 666 || tidtohate == 667 || CheckInventory("Building_AttackFirst")) Terminate;
-	int tid = ActivatorTid();
+
+Script "Building_AttackThis" (void) {
+	if(CheckInventory("Building_AttackFirst")) Terminate;
+	//int tid = ActivatorTid();
 	GiveInventory("Building_AttackFirst", 1);
-	Thing_Hate(tid, tidtarget, 4);
-	delay(35*5);
+	GiveInventory("Building_Attack", 1);
+	delay(35*4);
 	TakeInventory("Building_AttackFirst", 1);
-	thing_hate(tid, g_Status + 100, 4);
-	
+	thing_hate(0, g_Status + 100, 4);
 }
 
 Script "Building_GetRange" (void) {

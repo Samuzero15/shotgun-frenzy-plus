@@ -21,7 +21,7 @@ ACTOR Inventory_Soulsphere : Inventory_Powerup
 		goto Effect.Flash
 	Effect:
 		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_ItemCooldown", 0, 10)
-		TNT1 A 0 A_GiveInventory("Soulsphere", 1)
+		TNT1 A 0 A_GiveInventory("Soulsphere_Health", 1)
         goto Effect.Flash
 	PowUpUpgrade.Mech:
 		TNT1 A 0 ACS_NamedExecute("SFPlus_MechHeal", 0, 500)
@@ -61,7 +61,7 @@ ACTOR Inventory_Megasphere : Inventory_Powerup
 		TNT1 A 0 A_GiveInventory("Flag_BlueArmor",1) // To hold up the green armor override
 		goto Effect.Flash
 	Effect:
-		TNT1 AA 0 A_GiveInventory("Soulsphere", 1) //Two Soulspheres to ensure Health goes to 200
+		TNT1 A 0 A_GiveInventory("Megasphere_Health", 1)
 		TNT1 A 0 A_JumpIfInventory("Flag_RedArmor", 1, "IHaveRedArmor")
 		TNT1 A 0 A_GiveInventory("MegaSphereArmor", 1) //Give this new type of armor that does not suck
 		TNT1 A 0 A_TakeInventory("Flag_RedArmor", 1)

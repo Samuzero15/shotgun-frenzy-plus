@@ -52,7 +52,7 @@ WEPS_ASSAULT_SPIT_DESC =    "Nifty machine to attack weaker demons, thanks for i
 	                        "It's perfect to deal with the rushing waves at the start.";
 
 WEPS_ASSAULT_SPIT_UP1_NAME = "Spread Spitter + Shell Grenades";
-WEPS_ASSAULT_SPIT_UP1_DESC = "You gain more spread for this gun, and also you can launch shell grenades.";
+WEPS_ASSAULT_SPIT_UP1_DESC = "Fires 3 bullets per shot in a spreaider way, and also you can launch shell grenades.";
 WEPS_ASSAULT_SPIT_UP2_NAME = "Auto Spitter + Gas Grenades";
 WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster, no breaks. Throws N.Gas grenades, they cause stun and poison to the horde. Uses less ammo.";
 

@@ -221,6 +221,7 @@ ACTOR ClassicCredit : CustomInventory
 		"####" "#" 0 A_JumpIf(user_countdown >= 1200, "Disappear")
 		"####" "#" 0 A_SetUserVar("user_countdown", user_countdown+1)
 		"####" "#" 0 A_CheckFlag("ISMONSTER", "SpawnLoop", AAPTR_TARGET)
+		"####" "#" 0 A_CheckFlag("FRIENDLY", "SpawnLoop", AAPTR_TARGET)
 		"####" "#" 0 A_JumpIfTargetInlos(3,0,JLOSF_DEADNOJUMP, 128)
 		"####" "#" 0 A_ClearTarget
 		"####" "#" 1 

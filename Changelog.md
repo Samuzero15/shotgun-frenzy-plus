@@ -9,6 +9,17 @@
 
 ## v1 - The path of the damned...
 
+#### (25 / 12 / 2022) (v1.4b Quickfix!) [A gift of fixes in christmas]
+	*) Music will not be resetted when the guardian wave ends.
+	*) Some other fixes about the zombie champion
+	+) Champion descriptions! (on the menu > champion banlist)
+	*) Lowered the price of the bullet turret to 650 credits (in order to add 2 turrets more for the player who want's to go full support)
+	*) Re-implemented the upgrade powerups from the patcher to the turrets.
+	*) Soulsphere and Megaspheres healing factors are restored to their original 100 and 200 Ohp.
+	*) Re-implemented the building aggresion scripts, lets give this another try before dropping this idea.
+	*) Increased the spawn time from 3 seconds to 5 seconds in the waves.
+	*) Re-implemented the stun effect, now it should retarget back to where it belongs.
+
 #### (24 / 12 / 2022) (v1.4a Quickfix!) [Attempt to fix the cpu memory overload]
 	-) Removed the aggro attraction from all buildings. for now.
 	*) Now sector recapturing will be counted in the final score.

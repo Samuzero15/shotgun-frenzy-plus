@@ -123,3 +123,11 @@
 ) Some sound feedback when the building deploying fails.
 ) Double Slug Railgun can attack through the hordes, dealing half damage to everyone behind the first enemy hit.
 ) Prosperity rune's effect is now restored to it's 450 Hp/Ap max effect.
+) Music will not be resetted when the guardian wave ends.
+) Champion descriptions! (on the menu > champion banlist)
+) Lowered the price of the bullet turret to 650 credits (in order to add 2 turrets more for the player who want's to go full support)
+) Re-implemented the upgrade powerups from the patcher to the turrets.
+) Soulsphere and Megaspheres healing factors are restored to their original 100 and 200 Ohp.
+) Re-implemented the building aggresion scripts, lets give this another try before dropping this idea.
+) Increased the spawn time from 3 seconds to 5 seconds in the waves.
+) Re-implemented the stun effect, now it should retarget back to where it belongs.

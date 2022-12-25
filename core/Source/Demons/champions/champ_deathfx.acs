@@ -7,9 +7,11 @@ Script "SFPlus_ChampionDeath" (void){
 		int z = GetActorFloorZ(0);
 		int angle = GetActorAngle(0);
 		int tid = ActivatorTID();
+		
 		if(CheckInventory("ChampZombie_SkipDeathScript")){
 			int dice = random(0,99);
 			int lives = CheckInventory("ChampZombie_LivesLeft");
+			//log(d:Tid);
 			//log(s:"ChampZombie death again, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
 			if(dice < 35*lives){
 				ACS_NamedExecuteAlways("SFPlus_ChampZombie_Raise", 0);
@@ -35,6 +37,7 @@ Script "SFPlus_ChampionDeath" (void){
 		}
 		if(Champ_IsType(CHAMP_ZOMBIE) || Champ_IsType(CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
 			//log(s:"ChampZombie death");
+			//log(d:Tid);
 			GiveInventory("ChampZombie_SkipDeathScript", 1);
 			ACS_NamedExecuteAlways("SFPlus_ChampZombie_Raise", 0);
 		}
@@ -63,18 +66,22 @@ Script "SFPlus_ChampZombie_Raise" (void){
 	//log(s:"ChampionZombie is trying to raise up randomly, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
 	int random_delay = random(35*2, 35*5);
 	int counter = 0;
-	while(counter < random_delay && !CheckInventory("ChampZombie_ReallyDead") && GetActorProperty(0, APROP_HEALTH) <= 0){
+	int old_tid = ActivatorTid();
+	int uni_tid = UniqueTID();
+	Thing_ChangeTID(0, uni_tid);
+	while(counter < random_delay && !CheckInventory("ChampZombie_ReallyDead") && GetActorProperty(uni_tid, APROP_HEALTH) <= 0){
 		// Check if i am resurrected by an archvile.
 		delay(1);
 		counter ++;
 	}
-	if(GetActorProperty(0, APROP_HEALTH) > 0){
+	if(GetActorProperty(uni_tid, APROP_HEALTH) > 0){
 		
 		TakeInventory("ChampZombie_LivesLeft", 1);
 		//log(s:"ChampionZombie rised again by an archvile, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
-		SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+		SetActorProperty(uni_tid, APROP_Health, CheckInventory("Monster_MaxHealth"));
 		delay(35);
-		thing_hate(0, g_Status + 100, 4);
+		thing_hate(uni_tid, g_Status + 100, 4);
+		Thing_ChangeTID(uni_tid, old_tid);
 		terminate;
 	}
 	if(CheckInventory("ChampZombie_ReallyDead") || (CheckInventory("ChampZombie_LivesLeft") == 0)){
@@ -82,15 +89,15 @@ Script "SFPlus_ChampZombie_Raise" (void){
 		terminate;
 	}
 	//log(s:"ChampionZombie is trying to raise up forcefully, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
-	while(GetActorProperty(0, APROP_HEALTH) <= 0 && !CheckInventory("ChampZombie_ReallyDead")){
+	while(GetActorProperty(uni_tid, APROP_HEALTH) <= 0 && !CheckInventory("ChampZombie_ReallyDead")){
 		// Now, Try raising.
 		delay(1);
-		if(CheckInventory("ChampZombie_LivesLeft")) Thing_Raise(0, 1);
+		if(CheckInventory("ChampZombie_LivesLeft")) Thing_Raise(uni_tid, 1);
 		else{
 			//log(s:"ChampionZombie is being blocked, cannot rise, it's dead.");
-			int x = GetActorX(0);
-			int y = GetActorY(0);
-			int z = GetActorFloorZ(0);
+			int x = GetActorX(uni_tid);
+			int y = GetActorY(uni_tid);
+			int z = GetActorFloorZ(uni_tid);
 			SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
 			SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
 			SpawnForced("splatEmitter_Lite", x, y, z, 0, 0);
@@ -100,7 +107,8 @@ Script "SFPlus_ChampZombie_Raise" (void){
 	}
 	TakeInventory("ChampZombie_LivesLeft", 1);
 	//log(s:"ChampionZombie rised again, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
-	SetActorProperty(0, APROP_Health, CheckInventory("Monster_MaxHealth"));
+	SetActorProperty(uni_tid, APROP_Health, CheckInventory("Monster_MaxHealth"));
 	delay(35);
-	thing_hate(0, g_Status + 100, 4);
+	thing_hate(uni_tid, g_Status + 100, 4);
+	Thing_ChangeTID(uni_tid, old_tid);
 }

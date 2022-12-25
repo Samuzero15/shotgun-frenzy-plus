@@ -144,6 +144,88 @@ OptionMenu SFPlus_ChampionBanlist{
 	Option "Prideful", 		"sfp_champ_16", 	"BanBoolean"
 	StaticText ""
 	Option "On Banned Champion", 		"sfp_champ_onbanned", 	"OnBanBoolean"
+	StaticText ""
+	SubMenu "About Champions", "SFPlusChampionsAbout"
+}
+
+OptionMenu "SFPlusChampionsAbout"{
+	Title "About the Champions"
+	StaticText "", 1
+	StaticText "Meaty", 1
+	StaticText "Red Coloured"
+	StaticText "Sustains a lot of damage, is hard to kill"
+	StaticText ""
+	StaticText "Quick", 1
+	StaticText "Yellow Coloured"
+	StaticText "Runs fast and attacks faster."
+	StaticText ""
+	StaticText "Strong", 1
+	StaticText "Dark Red Coloured"
+	StaticText "Deals heavy damage at their targets."
+	StaticText ""
+	StaticText "Stealth", 1
+	StaticText "Traslucent"
+	StaticText "It's hard to detect. Your sight may fool you."
+	StaticText ""
+	StaticText "Poison", 1
+	StaticText "Dark Green Coloured, surrounded by green particles."
+	StaticText "Deals damage as long as you're inside of its range."
+	StaticText "The more closer you get, the more damage you take."
+	StaticText "If poisoned, it will nerf your attack and defense at 25%."
+	StaticText ""
+	StaticText "Explosive", 1
+	StaticText "Bronze Coloured"
+	StaticText "The moment it dies, it will go kaboom."
+	StaticText "This explosion affects enemies and alies alike."
+	StaticText ""
+	StaticText "Golden", 1
+	StaticText "Gold Coloured"
+	StaticText "It can steal your coins upon taking damage."
+	StaticText "After it dies, drops a shower of credits."
+	StaticText ""
+	StaticText "Split", 1
+	StaticText "Blue Coloured"
+	StaticText "When it dies, spawns 2 copies of the same monster."
+	StaticText "Each monster's health is the half of HP from the former parent"
+	StaticText ""
+	StaticText "Teleport", 1
+	StaticText "Green coloured"
+	StaticText "Teleports each 2 seconds in random directions."
+	StaticText ""
+	StaticText "Healing", 1
+	StaticText "Pink coloured, surrounded with violet particles"
+	StaticText "Each monster who is near of this champion"
+	StaticText "will recover a percentage of health."
+	StaticText ""
+	StaticText "Pusher", 1
+	StaticText "Cyan coloured"
+	StaticText "Pushes the waves and all marines arround like the wind."
+	StaticText ""
+	StaticText "Puller", 1
+	StaticText "Silver coloured"
+	StaticText "Pulls the waves and all marines arround like a magnet."
+	StaticText ""
+	StaticText "Hybrid", 1
+	StaticText "2 Colours flickering each other."
+	StaticText "This champion holds 2 skills from other champions, except prideful."
+	StaticText ""
+	StaticText "Emperor", 1
+	StaticText "Black coloured, surrounded by yellow particles."
+	StaticText "Aside of being powerful by it's own."
+	StaticText "It will also, buff every demon near of this champion"
+	StaticText "making them dangerously fast and strong."
+	StaticText ""
+	StaticText "Zombie", 1
+	StaticText "Brown Coloured."
+	StaticText "It does'nt matter how did you kill it"
+	StaticText "This champion will rise again. Up to 2 times."
+	StaticText ""
+	StaticText "Prideful", 1
+	StaticText "Rainbow coloured."
+	StaticText "This champion contains all the powerups from all champions."
+	StaticText "Luckly, it's a rare enemy to encounter."
+	StaticText "Higher chance to drop items from the champion pool."
+	StaticText ""
 }
 
 OptionMenu "SFPlusUserOptionHelp"{

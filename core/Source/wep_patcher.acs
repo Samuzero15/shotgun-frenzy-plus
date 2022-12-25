@@ -263,7 +263,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 				SetUserVariable(0, "user_range", rng + rng_up*(lvl));
 
 				GiveInventory("Patcher_Upgrade_RESET", 1);
-				GiveInventory(strparam(s:"Patcher_Upgrade_LV", d:lvl), 1);
+				Patcher_UpgradeSelect(lvl);
 				GiveInventory("PatcherEffect_Upgraded", 1);
 				SetActivator(0, AAPTR_Damage_Source); // Back to the player
 				Rank_GrantEXP(playnum, 5);
@@ -296,4 +296,16 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 		Patcher_Display(playnum);
 	}
 	SetResultValue(0);
+}
+
+function void Patcher_UpgradeSelect(int lvl){
+	str item = "";
+	switch(lvl){
+		case 1:	item = "Patcher_Upgrade_LV1";	break;
+		case 2:	item = "Patcher_Upgrade_LV2";	break;
+		case 3:	item = "Patcher_Upgrade_LV3";	break;
+		case 4:	item = "Patcher_Upgrade_LV4";	break;
+		case 5:	item = "Patcher_Upgrade_LV5";	break;
+	}
+	GiveInventory(item, 1);
 }

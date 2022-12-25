@@ -78,13 +78,13 @@ function int f_AIDir_Check (void)
    	return m_SurvivalWave * 15 + 1;
 }
 
-function int AIDir_AverageKPM(void){
+function int AIDir_AverageKPM(int num_players){
     // Average kills per minute. Considers player count and game length (+ guardian wave). Used for measuring the skill issue.
     int res;
     if (f_Gametype == 5) { // In case of survival defender maps.
-        res = m_AIDCap*(PlayerCount())*(m_SurvivalWave);
+        res = m_AIDCap*(num_players)*(m_SurvivalWave);
     }else {
-        res = m_AIDCap + ((m_AIDCap/2)*PlayerCount())*(f_Gamelength+f_GuardianLength);
+        res = m_AIDCap + ((m_AIDCap/2)*num_players)*(f_Gamelength+f_GuardianLength);
     }
     return res;
 }
@@ -114,7 +114,7 @@ script 269 (void)//OPEN
 		s:"\nPupDir Upgrades Score: ", d:PUTrack_GetScore(),
 		s:"\nAI Director status: ", d:f_AIDir_Check(),
 		s:"\nAI Spawn Level: ", d:(AIDir_CurrentLevel() + 1),
-        s:"\nAverage Kills per minute: ", d:AIDir_AverageKPM());
+        s:"\nAverage Kills per minute: ", d:AIDir_AverageKPM(Playercount()));
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);
         delay(1);
 		

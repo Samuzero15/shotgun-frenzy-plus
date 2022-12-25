@@ -139,7 +139,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_d_drone_mine", 		100);
 	Prices_add("pr_d_disp_health", 		500);
 	Prices_add("pr_d_disp_ammo", 		500);
-	Prices_add("pr_d_turret_bullet", 	800);
+	Prices_add("pr_d_turret_bullet", 	650);
 	Prices_add("pr_d_turret_rocket", 	1500);
 	Prices_add("pr_d_turret_plasma", 	1700);
 	Prices_add("pr_d_turret_rail", 		1900);

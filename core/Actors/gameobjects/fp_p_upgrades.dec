@@ -182,6 +182,19 @@ Actor PlayUp_Prometeo_Activate : CustomInventory
 
 actor PlayUp_Prometeo_Used	: Boolean {}
 
+Actor Megasphere_Health : Soulsphere
+{
+	inventory.amount 200
+	Inventory.MaxAmount 200
+}
+
+Actor Soulsphere_Health : Soulsphere
+{
+	inventory.amount 100
+	Inventory.MaxAmount 200
+}
+
+
 Actor SuperSoulsphere : Soulsphere
 {
 	inventory.amount 200

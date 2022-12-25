@@ -30,8 +30,6 @@ script 107 OPEN
     // define a local container
     int l_RemainingMonsters;
 	
-    
-	
     // wait until the game is active
     while(g_Status == 0)
         delay(35);
@@ -39,9 +37,6 @@ script 107 OPEN
 	//log(d:35 * 60 * f_GameLength, s:" tics");
 	g_GameTimer = 35 * 60 * f_GameLength;
 	g_GuardianTimer = 35 * 60 * f_GuardianLength;
-
-	
-	
 	//InitDB_Debug();
     
     if(f_Gametype == 5){ // survival?
@@ -203,7 +198,6 @@ script 108 (int l_RemainingMonsters)
 		*/
         l_RemainingMonsters = thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) + thingcount(0, 110);
 		
-
         g_MonstersLeft = l_RemainingMonsters;
 		
         if (l_RemainingMonsters < 5 || mKilled >= mTotal)     break;
@@ -260,6 +254,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		
 	int mkilled, mTotal; 
 	int timeout = 300; // 5 Minutes (in secs) before moving to next map.
+	//if(g_GameOver) Terminate;
 	g_GuardianState = INTDB_GUARDIANSTATE_DEFEAT;
 
     while(GuardianWave_LoopCond(surv) && timeout > 0){
@@ -292,6 +287,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		Notify_Message("Demon Re-threat!","They're leaving where they came!","DEMONT", 0);
 	if(g_GameOver) Terminate;
 	// Good, time's over, kill the left overs.
+	//g_GuardianState = INTDB_GUARDIANSTATE_DEFEAT;
 	ACS_NamedExecute("SFPlus_KillnEnd", 0, 2);
 }
 
@@ -302,6 +298,14 @@ Script "SFPlus_KillnEnd" (int reason){
     thing_destroy(112, 0);
     thing_destroy(113, 0);
     thing_destroy(114, 0);
+
+	delay(35);
+	thing_remove(118);
+	thing_remove(110);
+	thing_remove(111);
+	thing_remove(112);
+	thing_remove(113);
+	thing_remove(114);
     
     // endgame
     acs_execute(125, 0, reason, 0, 0);
@@ -320,6 +324,7 @@ script 125 (int l_Condition)
     int l_PlayerDeaths = -1;
     int l_SkillLevel = -1;
     int g_FinalSkillScore = 0;
+	int n_players = PlayerCount();
     
 	ACS_Terminate(100,0); // Kill the sector management survival script if used at all.
 	acs_Terminate(129,0); // Kill the timer counter.
@@ -336,8 +341,6 @@ script 125 (int l_Condition)
     g_FinalSkillScore = g_SkillScore / (2+(PlayerCount()/2));
 	*/
 
-	
-	
 	if (l_Condition < 1 || l_condition > 4){
 		hudmessagebold(s:"No Count!"; 1, 150, CR_RED, s_ScreenSize[0] * 0.5 + 0.0, s_ScreenSize[1] * 0.5 + 0.0, 5.0);
 		delay(35*6);
@@ -388,7 +391,7 @@ script 125 (int l_Condition)
 	
 	//[Samu] you think you can get a good score by dying a lot!?
 	// collect final score
-	int average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM()<<16), 70.0)>>16;
+	int average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM(n_players)<<16), 70.0)>>16;
 	if(average_kpm_percent > 70) average_kpm_percent = 70;
 	int lastwave_percent;
 	
@@ -410,11 +413,11 @@ script 125 (int l_Condition)
 		else g_FinalSkillScore -= death_skill_discount;// Substract player deaths too.
 	} 
 	
-	if(PlayerCount() == 0){
+	if(n_players == 0){
 		g_FinalSkillScore = 0;
 		death_skill_discount = 100;
 	}else{
-		death_skill_discount = ((p_TotalPlayerDeaths / PlayerCount()) / 3)*2;
+		death_skill_discount = ((p_TotalPlayerDeaths / n_players) / 3)*2;
 	}
 
 
@@ -423,7 +426,7 @@ script 125 (int l_Condition)
     if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
 	
 	// Debug info.
-	log(s:"Game kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" / ", d:AIDir_AverageKPM(), s:" kills. +", d:average_kpm_percent, s:"%");
+	log(s:"Game kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" / ", d:AIDir_AverageKPM(n_players), s:" kills. +", d:average_kpm_percent, s:"%");
 	if(f_Gametype == 5) log(s:"Waves completed: ", d:m_SurvivalWave, s:" / ", d:f_SurvivalLastLevel,s:" waves. +", d:lastwave_percent, s:" %");
 	else{
 		if(g_RecapCount > 0){
@@ -432,7 +435,7 @@ script 125 (int l_Condition)
 		log(s:"Core protection Bonus: +", d:g_SkillScore, s:" %");
 	}
 	if(p_TotalPlayerDeaths == 0) log(s:"No deaths! +", d:30, s:"%");
-	else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:((p_TotalPlayerDeaths / PlayerCount())*2), s:"%");
+	else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:((p_TotalPlayerDeaths / n_players)*2), s:"%");
 	log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
     
     // display killed demons

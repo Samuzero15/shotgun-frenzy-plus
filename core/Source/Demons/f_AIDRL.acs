@@ -427,10 +427,14 @@ script 120 OPEN
         // make demons hate the sectors core
         thing_hate(109, g_Status + 100, 4);
         thing_hate(110, g_Status + 100, 4);
+        //thing_hate(111, g_Status + 100, 4);
+        //thing_hate(112, g_Status + 100, 4);
+        //thing_hate(113, g_Status + 100, 4);
+        //thing_hate(114, g_Status + 100, 4);
 	
 		// Hope this fixes the infinite wave's bug.
 		if(g_GuardianState == INTDB_GUARDIANSTATE_PREPARED) break;
-        delay(35 * 3);
+        delay(35 * 5);
     }
 }  
 
