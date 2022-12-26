@@ -9,6 +9,10 @@
 
 ## v1 - The path of the damned...
 
+#### (26 / 12 / 2022) (v1.4c Quickfix!) [Rewritting patcher's upgrade powerups]
+	*) Re-written the powerup upgrades from the patcher in turrets.
+	*) Now the patcher will be drawn faster, and with a small sound as the beretta.
+
 #### (25 / 12 / 2022) (v1.4b Quickfix!) [A gift of fixes in christmas]
 	*) Music will not be resetted when the guardian wave ends.
 	*) Some other fixes about the zombie champion

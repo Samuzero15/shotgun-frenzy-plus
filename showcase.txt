@@ -131,3 +131,5 @@
 ) Re-implemented the building aggresion scripts, lets give this another try before dropping this idea.
 ) Increased the spawn time from 3 seconds to 5 seconds in the waves.
 ) Re-implemented the stun effect, now it should retarget back to where it belongs.
+) Re-written the powerup upgrades from the patcher in turrets.
+) Now the patcher will be drawn faster, and with a small sound as the beretta.

@@ -262,8 +262,9 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 
 				SetUserVariable(0, "user_range", rng + rng_up*(lvl));
 
-				GiveInventory("Patcher_Upgrade_RESET", 1);
-				Patcher_UpgradeSelect(lvl);
+				//GiveInventory("Patcher_Upgrade_RESET", 1);
+				//Patcher_UpgradeSelect(lvl);
+				
 				GiveInventory("PatcherEffect_Upgraded", 1);
 				SetActivator(0, AAPTR_Damage_Source); // Back to the player
 				Rank_GrantEXP(playnum, 5);
