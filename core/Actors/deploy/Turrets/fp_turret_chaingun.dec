@@ -50,7 +50,7 @@ ACTOR TurretChaingun_Head : TurretHeadBase 24308
 	{	
 		Spawn.Head:
 			TNT1 A 0 A_SetUserVar("user_fixcost", 200)
-			TNT1 A 0 A_SetUserVar("user_upgcost", 2500)
+			TNT1 A 0 A_SetUserVar("user_upgcost", 2000)
 			TNT1 A 0 A_SetUserVar("user_rangestart", 1028)
 			TNT1 A 0 A_SetUserVar("user_rangeup", 256)
 			TNT1 A 0 A_SetUserVar("user_range", user_rangestart)

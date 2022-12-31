@@ -132,24 +132,32 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 }
 
 Script "SamuTerm_VariableSync" ENTER{
-	while(1){
-		SetInventory("p_Money", 		p_credits[playernumber()]);
-		SetInventory("p_UpPoint", 		p_Exp_points[playernumber()]);
-		SetInventory("p_team_credits", 	c_credits);
-		SetInventory("f_allownuke", 	f_AllowNuke);
-		SetInventory("c_nukelaunched", 	c_NukeLaunched);
-		SetInventory("f_allownuke", 	f_AllowNuke);
-		SetInventory("c_nukelaunched", 	c_NukeLaunched);
-		SetInventory("c_allow_moneybag", 	c_allow_moneybag);
-		SetInventory("c_allow_turret", 		allow_turret_C());
-		SetInventory("c_timer_turret", 		c_allow_turret);
-		SetInventory("c_timer", 		Timer());
-		SetInventory("f_gametype", 		f_Gametype);
-		SetInventory("pr_cmd_airstrike", AirStrike_GetPrice());
-		SyncAllMechaPrices();
+	while(PlayerInGame(PlayerNumber())){
+		if(TerminalInUse()){ // Sync only if using the terminal.
+			Samuterm_SetInv("p_Money", 		p_credits[playernumber()]);
+			Samuterm_SetInv("p_UpPoint", 		p_Exp_points[playernumber()]);
+			Samuterm_SetInv("p_team_credits", 	c_credits);
+			Samuterm_SetInv("f_allownuke", 	f_AllowNuke);
+			Samuterm_SetInv("c_nukelaunched", 	c_NukeLaunched);
+			Samuterm_SetInv("f_allownuke", 	f_AllowNuke);
+			Samuterm_SetInv("c_nukelaunched", 	c_NukeLaunched);
+			Samuterm_SetInv("c_allow_moneybag", 	c_allow_moneybag);
+			Samuterm_SetInv("c_allow_turret", 		allow_turret_C());
+			Samuterm_SetInv("c_timer_turret", 		c_allow_turret);
+			Samuterm_SetInv("c_timer", 		Timer());
+			Samuterm_SetInv("f_gametype", 		f_Gametype);
+			Samuterm_SetInv("pr_cmd_airstrike", AirStrike_GetPrice());
+			Samuterm_SetInv("mech_BUY", f_Price[52]);
+			Samuterm_SetInv("mech_state", p_TankSlot[PlayerNumber()]);
+		}
 		
 		delay(1);
 	}
+}
+
+function void Samuterm_SetInv(str item, int value){
+	if(CheckInventory(item) != value)
+		SetInventory(item, value);
 }
 
 function void debug(void){

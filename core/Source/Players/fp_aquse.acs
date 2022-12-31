@@ -16,7 +16,7 @@ script "Auto-Use Items" (void){
 	
 	int cvar = GetUserCvar(PlayerNumber(),"sfp_autouse");
 	int result;
-	while(cvar){
+	while(cvar && PlayerInGame(PlayerNumber())){
 		health = GetActorProperty(0, APROP_HEALTH);
 		maxHealth = GetActorProperty(0, APROP_SPAWNHEALTH);
 		cvar = GetUserCvar(PlayerNumber(),"sfp_autouse");

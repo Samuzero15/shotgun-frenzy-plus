@@ -133,15 +133,39 @@ Script "SFPlus_ShowForEveryone" OPEN
 		//Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
 }
 
-
-script "SFPlus_PlayerFullScreenHUD" ENTER
+script "SFPlus_PlayerFullScreenHUD_Sync" ENTER
 {
     // display loop
-    while(1)
+    while(playerInGame(PlayerNumber()))
     {
-		int kills = p_RankExp[p_Rank[playernumber()] + 1] - p_Exp[playernumber()];
-		
-		ACS_NAMEDEXECUTEALWAYS("SyncWithSBARINFO", 0, kills);
+		ACS_NamedExecuteAlways("SyncWithSBARINFO", 0, p_RankExp[p_Rank[playernumber()] + 1] - p_Exp[playernumber()]);
+		delay(1);
+    }
+}  
+
+script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide 
+{
+    // display loop
+	int credits, kills, next_range, exp, deaths, ups,
+	 streak, histreak, msstreak, mechtimer, corehp, 
+	 status, teamcredits, commander, ranknow;
+    while(playerInGame(PlayerNumber()) && consolePlayerNumber() == PlayerNumber() && ConsolePlayerNumber() >= 0)
+    {
+		credits = CheckInventory("HUD_Credits");
+		ups = CheckInventory("HUD_Ups");
+		next_range = CheckInventory("HUD_NextRange");
+		exp = CheckInventory("HUD_Exp");
+		deaths = CheckInventory("HUD_Deaths");
+		streak = CheckInventory("HUD_Streak");
+		histreak = CheckInventory("HUD_HiStreak");
+		msstreak = CheckInventory("HUD_MsStreak");
+		mechtimer = CheckInventory("HUD_MechTime");
+		corehp = CheckInventory("HUD_CoreHP");
+		status = CheckInventory("HUD_Sector");
+		teamcredits = CheckInventory("HUD_TeamCredits");
+		commander = CheckInventory("HUD_Commander");
+		ranknow = CheckInventory("HUD_RankNow");
+		kills = next_range - exp;
 		
 		if(getCvar("screenblocks") == 12 || getCvar("screenblocks") < 11 || CheckInventory("SamuTInv_UsingTerminal")){
 			//[Samu] Hide the damn hud, ets annoying.
@@ -164,28 +188,27 @@ script "SFPlus_PlayerFullScreenHUD" ENTER
         acs_executealways(605, 0, 0, 0, 0);
 
         // mmm: add kills left display
-       
         if (kills < 0)
           kills = 0;
         
         // hud information
         setfont("CONFONT");
-		Acs_NamedExecuteAlways("Hud_ShowPlayerStats", 0, p_Credits[playernumber()], p_Exp_Points[playernumber()], p_TotalPlayerDeaths);
-		Acs_NamedExecuteAlways("Hud_ShowPlayerStats_Streak", 0, p_Streak[playernumber()], p_StreakHi[playernumber()], getNextStreakMilestone());
+		Acs_NamedExecuteAlways("Hud_ShowPlayerStats", 0, credits, ups, deaths);
+		Acs_NamedExecuteAlways("Hud_ShowPlayerStats_Streak", 0, streak, histreak, msstreak);
 
-    if(g_Status == 5)
-	{
-		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
-			5, getactorproperty(104,APROP_Health));
-	}
-	else if (c_NukeLaunched == 0 || g_Status < 4)
+		if(status == 5)
+		{
+			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
+				5, corehp);
+		}
+		else if (c_NukeLaunched == 0 || status < 4)
         {
 		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
-			g_Status, getactorproperty(100 + g_status,APROP_Health));
+			status, corehp);
         }
-        else if(c_NukeLaunched == 1 || g_Status == 4)
+        else if(c_NukeLaunched == 1 || status == 4)
         {
-			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0, 4, getactorproperty(104,APROP_Health));
+			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0, 4, corehp);
 		}
 		
 	
@@ -193,14 +216,14 @@ script "SFPlus_PlayerFullScreenHUD" ENTER
         // team credits and mech status (if a commander based game)
         if (f_Gametype == 1){
           Acs_NamedExecuteAlways("Hud_ShowTeamCredits_MechInfo", 0,
-								c_credits, c_Commander, p_MechTimer[playernumber()]);
+								teamcredits, commander, mechtimer);
 		}								
         //log(d:p_MechTimer[playernumber()]);
         // current rank
         acs_executealways(604, 0, p_Rank[playernumber()], 0, 0);
 		
 		// Rank Bar.
-		Acs_NamedExecuteAlways("Hud_ShowExperienceBar", 0, kills * 20, p_RankExp[p_Rank[playernumber()] + 1], p_Exp[playernumber()]);
+		Acs_NamedExecuteAlways("Hud_ShowExperienceBar", 0, kills * 20, next_range, exp);
         
 		
         delay(1);

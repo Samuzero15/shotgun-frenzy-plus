@@ -5,6 +5,7 @@ const int PART_RADIUS = 1;
 const int PART_HEIGHT = 2;
 
 Actor ParticleAura : ParticleFountain {
+    +ClientsideOnly
     states {
         Spawn:
             TNT1 A 1 NoDelay A_Warp(AAPTR_Target, 0,0,0,0,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
@@ -43,7 +44,6 @@ Actor ParticleSpark_Spawner {
     +NoBLockMAp
     +NoGravity
     +NoDropOff
-    +ClientsideOnly
     radius 30
     height 64
     var int user_Radius;
@@ -52,7 +52,7 @@ Actor ParticleSpark_Spawner {
         Spawn:
             TNT1 A 0 NoDelay A_SetUserVar("user_Radius", CallACS("Particle_Get", PART_RADIUS))
             TNT1 A 0 A_SetUserVar("user_Height", CallACS("Particle_Get", PART_HEIGHT))
-            TNT1 A 1 A_Jump(256, "Spawn.Go")
+            TNT1 A 50 A_Jump(256, "Spawn.Go")
             goto Spawn.Go
         Spawn.Go:
             TNT1 AAAAAAAAAAAAAAA 0 A_SpawnItemEx("ParticleSpark", random(-user_Radius, user_Radius), random(-user_Radius,user_Radius), random(5, user_Height))
@@ -198,7 +198,7 @@ Actor ParticleAura_BurnGFX : ParticleAura_Picker{
 Actor ParticleAura_StunGFX : ParticleAura_Picker{
     states {
         Frame:
-            TNT1 A 1 A_JumpIfInventory("AltState_Stunned", 1, "TrueFrame", AAPTR_Target)
+            TNT1 A 5 A_JumpIfInventory("AltState_Stunned", 1, "TrueFrame", AAPTR_Target)
             goto Death
         TrueFrame:
             TNT1 A 0 A_JumpIf(user_nextcolor == 1, "Set.Sparks") 

@@ -39,8 +39,8 @@ ACTOR TurretRocket_Head : TurretHeadBase 24305
 	states
 	{
 		Spawn.Head:
-			TNT1 A 0 A_SetUserVar("user_fixcost", 500)
-			TNT1 A 0 A_SetUserVar("user_upgcost", 4500)
+			TNT1 A 0 A_SetUserVar("user_fixcost", 250)
+			TNT1 A 0 A_SetUserVar("user_upgcost", 2500)
 			TNT1 A 0 A_SetUserVar("user_rounds", 0)
 			RTRT A 1 A_Look
 			goto See

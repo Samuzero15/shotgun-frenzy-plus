@@ -128,7 +128,8 @@ Actor Fading_Pickup : CustomInventory {
 			goto Spawn.SetFrame
 		
 		Spawn.SetFrame:
-			"####" "#" 0 A_JumpIf(user_framelimit == 0 || (user_counter % user_frametic != 0), "Spawn.Wait")
+			"####" "#" 0 A_JumpIf(user_framelimit == 0, "Spawn.Wait")
+			"####" "#" 0 A_JumpIf(user_counter % user_frametic != 0, "Spawn.Wait")
 			"####" "#" 0 A_JumpIf(user_frame >= user_framelimit, "Spawn.ResetFrame")
 			"####" "#" 0 A_JumpIf(user_frame == 7, "Spawn.FrameH")
 			"####" "#" 0 A_JumpIf(user_frame == 6, "Spawn.FrameG")
@@ -137,11 +138,12 @@ Actor Fading_Pickup : CustomInventory {
 			"####" "#" 0 A_JumpIf(user_frame == 3, "Spawn.FrameD")
 			"####" "#" 0 A_JumpIf(user_frame == 2, "Spawn.FrameC")
 			"####" "#" 0 A_JumpIf(user_frame == 1, "Spawn.FrameB")
-            "####" "#" 1 A_Jump(256, "Spawn.FrameA")
+            "####" "#" 50 A_Jump(256, "Spawn.FrameA")
 			goto Spawn.FrameA
         
         Spawn.SetFrame.Brightme:
-			"####" "#" 0 A_JumpIf(user_framelimit == 0 || (user_counter % user_frametic != 0), "Spawn.Wait.Brightme")
+			"####" "#" 0 A_JumpIf(user_framelimit == 0, "Spawn.Wait.Brightme")
+			"####" "#" 0 A_JumpIf(user_counter % user_frametic != 0, "Spawn.Wait.Brightme")
 			"####" "#" 0 A_JumpIf(user_frame >= user_framelimit, "Spawn.ResetFrame.Brightme")
 			"####" "#" 0 A_JumpIf(user_frame == 7, "Spawn.FrameH.Brightme")
 			"####" "#" 0 A_JumpIf(user_frame == 6, "Spawn.FrameG.Brightme")
@@ -150,7 +152,7 @@ Actor Fading_Pickup : CustomInventory {
 			"####" "#" 0 A_JumpIf(user_frame == 3, "Spawn.FrameD.Brightme")
 			"####" "#" 0 A_JumpIf(user_frame == 2, "Spawn.FrameC.Brightme")
 			"####" "#" 0 A_JumpIf(user_frame == 1, "Spawn.FrameB.Brightme")
-            "####" "#" 1 A_Jump(256, "Spawn.FrameA.Brightme")
+            "####" "#" 50 A_Jump(256, "Spawn.FrameA.Brightme")
 			goto Spawn.FrameA.Brightme
 
 		Spawn.NextFrame:
@@ -163,12 +165,12 @@ Actor Fading_Pickup : CustomInventory {
 
 		Spawn.ResetFrame:
 			"####" "#" 0 A_SetUserVar("user_frame", 0)
-            "####" "#" 1 A_Jump(256, "Spawn.FrameA")
+            "####" "#" 50 A_Jump(256, "Spawn.FrameA")
 			goto Spawn.FrameA
         
         Spawn.ResetFrame.Brightme:
 			"####" "#" 0 A_SetUserVar("user_frame", 0)
-            "####" "#" 1 A_Jump(256, "Spawn.FrameA.Brightme")
+            "####" "#" 50 A_Jump(256, "Spawn.FrameA.Brightme")
 			goto Spawn.FrameA.Brightme
 
 		Spawn.FrameA:

@@ -37,8 +37,8 @@ ACTOR TurretBFG_Head : TurretHeadBase 24310
 	states
 	{
 		Spawn.Head:
-			TNT1 A 0 A_SetUserVar("user_fixcost", 1000)
-			TNT1 A 0 A_SetUserVar("user_upgcost", 6600)
+			TNT1 A 0 A_SetUserVar("user_fixcost", 750)
+			TNT1 A 0 A_SetUserVar("user_upgcost", 4000)
 			BFGT A 3
 			BFGT A 2 A_Look
 			goto See

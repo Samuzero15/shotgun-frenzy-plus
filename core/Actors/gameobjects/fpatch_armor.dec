@@ -56,7 +56,7 @@ actor ArmorShard : ArmorBonus
 	Inventory.Pickupmessage "Armor Shard. (+2 Armor)"
 	Inventory.Icon "ARSDA0"
 	Inventory.PickupSound "pickup/armorshard"
-	Armor.Saveamount 2
+	Armor.Saveamount 3
 	Armor.MaxSaveAmount 500
 	States
 	{
@@ -70,13 +70,13 @@ Actor ArmorShard_One : ArmorShard {Armor.Saveamount 1}
 
 actor SF_HealthBonus : HealthBonus
 { // The good ol' health vial, but this time, overheals +5 HP (up to 300 HP)
-	Inventory.Amount 2
+	Inventory.Amount 3
 	Inventory.MaxAmount 300
 }
 
 ACTOR MagneticPickup : CustomInventory 
 {
-	+INVENTORY.QUIET //[Samu] Shadap!
+		+INVENTORY.QUIET //[Samu] Shadap!
 	//+SOLID
 	+COUNTITEM
 	+INVENTORY.NEVERRESPAWN
@@ -119,8 +119,9 @@ ACTOR MagneticPickup : CustomInventory
 	See:
 		"####" "#" 0 A_SetUserVar("user_mode", 2)
 		"####" "#" 0 A_SetUserVar("user_countdown", user_countdown+1)
-		"####" "#" 0 A_CheckFlag("ISMONSTER", "SpawnLoop", AAPTR_TARGET)
-		"####" "#" 0 A_CheckFlag("FRIENDLY", "SpawnLoop", AAPTR_TARGET)
+		"####" "#" 0 A_JumpIf(!CallACS("MagneticPickup_TargetIsPlayer"), "SpawnLoop") // Check if who i am chasing is the player
+		//"####" "#" 0 A_CheckFlag("ISMONSTER", "SpawnLoop", AAPTR_TARGET)
+		//"####" "#" 0 A_CheckFlag("FRIENDLY", "SpawnLoop", AAPTR_TARGET)
 		"####" "#" 0 A_JumpIfTargetInlos("Chase",0,JLOSF_DEADNOJUMP, 186)
 		"####" "#" 0 A_ClearTarget
 		Goto Frame
@@ -132,14 +133,15 @@ ACTOR MagneticPickup : CustomInventory
 
 	Frame.Reset:
 		"####" "#" 0 A_SetUserVar("user_frame", -1)
-		"####" "#" 1 A_Jump(256,"Frame.A")
+		"####" "#" 50 A_Jump(256,"Frame.A")
 		goto Frame.A
 
 	Frame:
 		"####" "#" 0 A_SetUserVar("user_frame", user_frame+1)
 		"####" "#" 0 A_JumpIf(user_gottafade == 1, "FadeTic")
 		"####" "#" 0 A_JumpIf(user_frame / 3 >= 6, "Frame.Reset")
-		"####" "#" 1 A_Jump(256, "Frame.Animate")
+		"####" "#" 50 A_Jump(256, "Frame.Animate")
+		goto Frame.Animate
 	Frame.Animate:
 		"####" "#" 0 A_JumpIf(user_fadetics >= 5 && user_fadetics <= 7, "Frame.Tilt")
 		"####" "#" 0 A_JumpIf(user_frame / 3 == 5, "Frame.B")
@@ -148,7 +150,7 @@ ACTOR MagneticPickup : CustomInventory
 		"####" "#" 0 A_JumpIf(user_frame / 3 == 2, "Frame.C")
 		"####" "#" 0 A_JumpIf(user_frame / 3 == 1, "Frame.B")
 		"####" "#" 0 A_JumpIf(user_frame / 3 == 0, "Frame.A")
-		"####" "#" 1 A_Jump(256,"Frame.A")
+		"####" "#" 50 A_Jump(256,"Frame.A")
 		goto Frame.A
 	
 	Frame.A:
@@ -193,7 +195,7 @@ ACTOR ArmorShard_Pickup : MagneticPickup {
 	Inventory.PickupSound "pickup/armorshard"
 	states{
 		Spawn:
-			ARSD A 1
+			ARSD A 1 //A_log("ArmorShar spawned?")
 			goto Super::SpawnLoop
 		Frame.A:
 			ARSD A 1 A_SpawnItemEx("Blur_ArmorShardA",0,0,-2)

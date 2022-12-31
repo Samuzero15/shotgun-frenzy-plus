@@ -9,6 +9,19 @@
 
 ## v1 - The path of the damned...
 
+#### (28 - 30 / 21 / 2022) (v1.5 Release!) [Optimizing code & Patcher's lower prices]
+	*) Done some optimizations in the Killstreak and fullscreen huds by, heh, literally fully clientside both of modules.
+	*) Now you can customize the killstreak hud with your own colors and with the transparency level.
+	*) Modified the particle spawning in acs way for the Stun and Burn altered states.
+	*) Lowered down the prices from the turrets in repairing and upgrading turrets.
+	+) Restored the particle system back where it belongs.
+	*) Toned down the prices of the patcher for the fixing and upgrading turrets.
+	*) Buffed the fixing effect for the patcher, now heals 20 % of health
+	*) Upgraded Turrets will now regenerate 10% of their HPs.
+	*) Attempting to reduce the problem of "FireRockets state not found"
+	*) Sparks from the buildings can be switched in the menu now.
+	*) Now flame bullets will spread fire always! (And that affects the Combat Boomstick, Flame SSG and Flame Buckshot)
+
 #### (26 / 12 / 2022) (v1.4c Quickfix!) [Rewritting patcher's upgrade powerups]
 	*) Re-written the powerup upgrades from the patcher in turrets.
 	*) Now the patcher will be drawn faster, and with a small sound as the beretta.
@@ -25,9 +38,9 @@
 	*) Re-implemented the stun effect, now it should retarget back to where it belongs.
 
 #### (24 / 12 / 2022) (v1.4a Quickfix!) [Attempt to fix the cpu memory overload]
-	-) Removed the aggro attraction from all buildings. for now.
+	-) Removed the aggro attraction from all buildings. For now.
 	*) Now sector recapturing will be counted in the final score.
-	*) Now sector recaps are enable once again with no recap minimal (when this var is 0).
+	*) Now sector recaps are enabled once again with no recap minimal (when this var is 0).
 	// Oh merry christmas :D
 
 #### (18 - 23 / 12 / 2022) (v1.4 Release!) [Some extra fixes and goodies]

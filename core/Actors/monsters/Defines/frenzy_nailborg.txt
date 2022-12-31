@@ -314,7 +314,7 @@ Actor NailBlur
    {
 	Spawn:
 		DART A 1
-		DART A 1 //ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
+		DART A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
 	Loopme:
 		DART A 1 A_FadeOut(0.1)
 		goto Loopme

@@ -133,3 +133,17 @@
 ) Re-implemented the stun effect, now it should retarget back to where it belongs.
 ) Re-written the powerup upgrades from the patcher in turrets.
 ) Now the patcher will be drawn faster, and with a small sound as the beretta.
+
+///////// (v1.5) //////////
+
+) Done some optimizations in the Killstreak and fullscreen huds by, heh, literally fully clientside both of modules.
+) Now you can customize the killstreak hud with your own colors and with the transparency level.
+) Modified the particle spawning in acs way for the Stun and Burn altered states.
+) Lowered down the prices from the turrets in repairing and upgrading turrets.
+) Restored the particle system back where it belongs.
+) Toned down the prices of the patcher for the fixing and upgrading turrets.
+) Buffed the fixing effect for the patcher, now heals 20 % of health
+) Upgraded Turrets will now regenerate 10% of their HPs.
+) Attempting to reduce the problem of "FireRockets state not found"
+) Sparks from the buildings can be switched in the menu now.
+) Now flame bullets will spread fire always! (And that affects the Combat Boomstick, Flame SSG and Flame Buckshot)

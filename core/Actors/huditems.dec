@@ -21,6 +21,13 @@ Actor HUD_OnMech			: Integer {}
 Actor HUD_MechState			: Integer {}
 Actor HUD_MechTime_min		: Integer {}
 Actor HUD_MechTime_sec		: Integer {}
+Actor HUD_HiStreak			: Integer {}
+Actor HUD_MsStreak			: Integer {}
+Actor HUD_NextRange			: Integer {}
+Actor HUD_MechTime			: Integer {}
+Actor HUD_Commander			: Integer {}
+Actor HUD_RankNow			: Integer {}
+Actor HUD_KS				: Integer {}
 
 Actor HUD_Sector 			: Integer {}
 Actor HUD_CoreHP 			: Integer {}

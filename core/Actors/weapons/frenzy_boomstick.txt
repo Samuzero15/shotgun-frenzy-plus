@@ -47,10 +47,6 @@ ACTOR Boomstick : Weapon
 			SHTF B 1 offset(0,0) Bright A_Light2
 			SHTF A 1 offset(0,0) bright A_Light1
 			Goto LightDone
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 		
 	}
 }
@@ -110,9 +106,6 @@ ACTOR Boomstick_Full : Weapon
 			SHTF B 1 offset(0,0) Bright A_Light2
 			SHTF A 1 offset(0,0) bright A_Light1
 			Goto LightDone
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+
 	}
 }

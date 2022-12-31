@@ -103,8 +103,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Welcome MSG?", "sfp_welcome", "Boolean"
 	Option "Mech Mount MSG?", "sfp_mechmsg", "Boolean"
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
-	StaticText ""
-	/*
+	StaticText ""	
 	StaticText "Show/Hide Particles?"
 	StaticText ""
 	Option "Blood splats", "sfp_part_gore", "ShowHideBoolean"
@@ -114,8 +113,16 @@ OptionMenu SFPlus_UserOptions{
 	Option "Casings", "sfp_part_casings", "ShowHideBoolean"
 	Option "Smoke", "sfp_part_smoke", "ShowHideBoolean"
 	Option "Junk", "sfp_part_junk", "ShowHideBoolean"
+	Option "Sparks", "sfp_part_sparks", "ShowHideBoolean"
 	StaticText ""
-	*/
+	StaticText "Kill-streak settings"
+	StaticText ""
+	Slider "Transparency", "sfp_killstreakhud_alpha" , 0.0, 1.0, 0.1, 0
+	Option "Milestone Color", "sfp_killstreakhud_color1", "Color"
+	Option "Hiscore Color", "sfp_killstreakhud_color2", "Color"
+	Option "Overflow Color", "sfp_killstreakhud_color3", "Color"
+	Option "Shutdown Color", "sfp_killstreakhud_color4", "Color"
+	StaticText ""
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 }
@@ -341,6 +348,31 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "between a span of 30 seconds in game. It's still experimental"
 	StaticText "so expect some bugs, and lag."
 	StaticText ""
+}
+
+OptionValue "Color"
+{
+	0, "\caBrick"
+	1, "\cbTan"
+	2, "\ccGray"
+	3, "\cdGreen"
+	4, "\ceBrown"
+	5, "\cfGold"
+	6, "\cgRed"
+	7, "\chBlue"
+	8, "\ciOrange"
+	9, "\cjWhite"
+	10, "\ckYellow"
+	12, "\cmBlack"
+	13, "\cnLight Blue"
+	14, "\coCream"
+	15, "\cpOlive"
+	16, "\cqDark Green"
+	17, "\crDark Red"
+	18, "\csDark Brown"
+	19, "\ctPurple"
+	20, "\cuDark Gray"
+	21, "\cvCyan"
 }
 
 OptionValue "ShowHideBoolean"

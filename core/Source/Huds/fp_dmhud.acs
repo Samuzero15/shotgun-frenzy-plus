@@ -41,7 +41,7 @@ script "SFPlus_DamagedHud" (void) {
 		
 		
 		if(hp <= lowHp >> 16){
-			ACS_NamedExecuteAlways( "SFPlus_DamagedHud_Show", 0, hp, lowhp);
+			ACS_NamedExecuteAlways("SFPlus_DamagedHud_Show", 0, hp, lowhp);
 		}
 		delay(35);
 	}

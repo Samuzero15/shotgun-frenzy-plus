@@ -325,6 +325,7 @@ script 125 (int l_Condition)
     int l_SkillLevel = -1;
     int g_FinalSkillScore = 0;
 	int n_players = PlayerCount();
+	
     
 	ACS_Terminate(100,0); // Kill the sector management survival script if used at all.
 	acs_Terminate(129,0); // Kill the timer counter.
@@ -391,52 +392,51 @@ script 125 (int l_Condition)
 	
 	//[Samu] you think you can get a good score by dying a lot!?
 	// collect final score
-	int average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM(n_players)<<16), 70.0)>>16;
-	if(average_kpm_percent > 70) average_kpm_percent = 70;
+	int average_kpm_percent;
 	int lastwave_percent;
-	
-	// 70% of skill score depends on the number of monsters killed, and 30% depending on the gametype.
-	// If any other game type (CF or SF) 10% per each surviving core.
-	// else (SD) 30% proportional to the last wave reached.
+	if(n_players != 0){
+		average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM(n_players)<<16), 70.0)>>16;
+		if(average_kpm_percent > 70) average_kpm_percent = 70;
+		
+		// 70% of skill score depends on the number of monsters killed, and 30% depending on the gametype.
+		// If any other game type (CF or SF) 10% per each surviving core.
+		// else (SD) 30% proportional to the last wave reached.
 
-	if(f_Gametype == 5){
-		lastwave_percent = FixedMul(FixedDiv(m_SurvivalWave<<16, f_SurvivalLastLevel<<16), 30.0)>>16;
-		g_FinalSkillScore = average_kpm_percent + lastwave_percent;
-	}else{
-		g_FinalSkillScore = average_kpm_percent + g_SkillScore + g_RecapCount*5;
-	}
+		if(f_Gametype == 5){
+			lastwave_percent = FixedMul(FixedDiv(m_SurvivalWave<<16, f_SurvivalLastLevel<<16), 30.0)>>16;
+			g_FinalSkillScore = average_kpm_percent + lastwave_percent;
+		}else{
+			g_FinalSkillScore = average_kpm_percent + g_SkillScore + g_RecapCount*5;
+		}
 
-	int death_skill_discount = 0;
-	if (l_Condition == 4)       g_FinalSkillScore -= 20; // Substract if defeated.
-	else{
-		if(p_TotalPlayerDeaths == 0 && l_Condition != 4) g_FinalSkillScore += 30; // Perfection bonus.
-		else g_FinalSkillScore -= death_skill_discount;// Substract player deaths too.
-	} 
-	
-	if(n_players == 0){
+		int death_skill_discount = 0;
+		if (l_Condition == 4)       g_FinalSkillScore -= 20; // Substract if defeated.
+		else{
+			if(p_TotalPlayerDeaths == 0 && l_Condition != 4) g_FinalSkillScore += 30; // Perfection bonus.
+			else g_FinalSkillScore -= death_skill_discount;// Substract player deaths too.
+		} 
+		death_skill_discount = ((p_TotalPlayerDeaths / n_players) / 3)*2;
+
+		// Debug info.
+		log(s:"Game kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" / ", d:AIDir_AverageKPM(n_players), s:" kills. +", d:average_kpm_percent, s:"%");
+		if(f_Gametype == 5) log(s:"Waves completed: ", d:m_SurvivalWave, s:" / ", d:f_SurvivalLastLevel,s:" waves. +", d:lastwave_percent, s:" %");
+		else{
+			if(g_RecapCount > 0){
+				log(s:"Sector Recaptures: ", d:g_RecapCount, s:" Times, Bonus: +", d:(g_RecapCount*5), s:" %");
+			}
+			log(s:"Core protection Bonus: +", d:g_SkillScore, s:" %");
+		}
+		if(p_TotalPlayerDeaths == 0) log(s:"No deaths! +", d:30, s:"%");
+		else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:((p_TotalPlayerDeaths / n_players)*2), s:"%");
+		log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
+	} else {
 		g_FinalSkillScore = 0;
 		death_skill_discount = 100;
-	}else{
-		death_skill_discount = ((p_TotalPlayerDeaths / n_players) / 3)*2;
 	}
-
-
+	
 	// check limits
     if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
     if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
-	
-	// Debug info.
-	log(s:"Game kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" / ", d:AIDir_AverageKPM(n_players), s:" kills. +", d:average_kpm_percent, s:"%");
-	if(f_Gametype == 5) log(s:"Waves completed: ", d:m_SurvivalWave, s:" / ", d:f_SurvivalLastLevel,s:" waves. +", d:lastwave_percent, s:" %");
-	else{
-		if(g_RecapCount > 0){
-			log(s:"Sector Recaptures: ", d:g_RecapCount, s:" Times, Bonus: +", d:(g_RecapCount*5), s:" %");
-		}
-		log(s:"Core protection Bonus: +", d:g_SkillScore, s:" %");
-	}
-	if(p_TotalPlayerDeaths == 0) log(s:"No deaths! +", d:30, s:"%");
-	else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:((p_TotalPlayerDeaths / n_players)*2), s:"%");
-	log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
     
     // display killed demons
     setfont("STATBIGS");

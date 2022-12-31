@@ -73,7 +73,7 @@ function void ArmorHitSFX(int dmg){
 script "Runes_ConstantEffects" (void) {
     int last_health = GetActorProperty(ActivatorTID(), APROP_HEALTH);
     int tics = 0;
-    while(GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0) {
+    while(GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 && PlayerInGame(PlayerNumber())) {
 
         if(checkinventory("RuneHealth")){
             last_health = RuneEffect_ExtraHealth(last_health, 0.5); 

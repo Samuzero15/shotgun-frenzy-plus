@@ -153,6 +153,9 @@ Actor Fading_ClipBox : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
  States {
 		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			AMMO A 0
 		goto Super::Spawn
 		Pickup:
@@ -165,6 +168,9 @@ Actor Fading_ClipPistol : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
  States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			CLIP A 0
 		goto Super::Spawn
 		Pickup:
@@ -177,6 +183,9 @@ Actor Fading_ShellBox : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			SBOX A 0
 		goto Super::Spawn
 		Pickup:
@@ -189,6 +198,9 @@ Actor Fading_RocketBox : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			BROK A 0
 		goto Super::Spawn
 		Pickup:
@@ -201,6 +213,9 @@ Actor Fading_CellPack : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			CELP A 0
 		goto Super::Spawn
 		Pickup:
@@ -213,6 +228,9 @@ Actor Fading_FlingerAmmo : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			GRNS A 0
 		goto Super::Spawn
 		Pickup:
@@ -225,6 +243,9 @@ Actor Fading_DualshotAmmo : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			DDAM A 0
 		goto Super::Spawn
 		Pickup:
@@ -237,6 +258,9 @@ Actor Fading_Gasoline : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
 			AGAS A 0
 		goto Super::Spawn
 		Pickup:
@@ -249,7 +273,10 @@ Actor Fading_HeavyBullets : Fading_Pickup {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			RAMM A 0
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
+			RAMM A 1
 		goto Super::Spawn
 		Pickup:
 			TNT1 A 0 A_GiveInventory("HeavyBullets", 50)
@@ -261,10 +288,13 @@ Actor Fading_Medikit : Fading_Pickup {
 	Inventory.PickupSound "g/healing"
 	States {
 		Spawn:
-			MEDI A 0 
+			TNT1 A 1
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			TNT1 A 0 A_SetUserVar("user_frametic", 1)
+			MEDI A 1 
 		goto Super::Spawn
 		Pickup:
-			TNT1 A 0 A_GiveInventory("Medikit", 25)
+			TNT1 A 0 A_GiveInventory("Medikit", 1)
 		stop
 }}
 
@@ -276,7 +306,8 @@ Actor Fading_SteelPlatingArmor : Fading_Pickup {
 			TNT1 A 0
 			TNT1 A 0 A_SetUserVar("user_framelimit", 2)
 			TNT1 A 0 A_SetUserVar("user_frametic",   6) 
-			ARM1 A 0
+			TNT1 A 0 A_SetUserVar("user_stayseconds", 120)
+			ARM1 A 1
 		goto Super::Spawn.Timer
 		Pickup:
 			TNT1 A 0 A_GiveInventory("SteelPlatingArmor_Pickup", 1)

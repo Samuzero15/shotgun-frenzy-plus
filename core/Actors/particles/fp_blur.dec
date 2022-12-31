@@ -14,7 +14,7 @@ Actor Blur
    {
    Spawn:
 	  TNT1 A 1
-	  //TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
+	  TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
 	  TNT1 A 1 A_Jump(256, "Frame")
 	  goto Frame
 	Frame:
@@ -35,7 +35,7 @@ Actor BrightBlur : Blur
    {
    Spawn:
 	  TNT1 A 1 Bright
-	 // TNT1 A 1 Bright ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
+	  TNT1 A 1 Bright ACS_NamedExecuteAlways("ParticleCheck", 0 , 3)
 	  TNT1 A 1 A_Jump(256, "Frame")
 	goto Frame
 	Frame:

@@ -21,23 +21,25 @@ int fp_PriceStack = 0;
 //Remember, to let the terminal sync values, It's more efficient to use Inventory items.
 //Sure, you will end up with a long-ass Decorate, but that's a small price worth to pay. 
 script "SFPlus_PriceSyncher" ENTER
-{// Synchs all of the prices so far. Start to End
+{// Synchs all of the prices so far.
 	delay(5); // Just in case.
 	int counter;
 	int range = 100;
 	bool sync_done = false;
-	while(counter < fp_priceStack && !sync_done){
+	while(counter < fp_priceStack && !sync_done && PlayerInGame(PlayerNumber())){
 		setActivatorToPlayer(playerNumber());
 		// Update forward and backwards bewteen range per tic.
-		for(int i = 0; i < range; i ++){
-			SetInventory(Prices_getKey(counter + i), Prices_getValue_I(counter+i));
-			SetInventory(Prices_getKey(fp_PriceStack-1 - (counter+i)), Prices_getValue_I(fp_PriceStack-1 - (counter+i)));
-			if((counter + i) >= fp_priceStack) {
-				sync_done = true;
-				break;
+		//if (CheckInventory("SamuTInv_UsingTerminal")){
+			for(int i = 0; i < range; i ++){
+				SetInventory(Prices_getKey(counter + i), Prices_getValue_I(counter+i));
+				SetInventory(Prices_getKey(fp_PriceStack-1 - (counter+i)), Prices_getValue_I(fp_PriceStack-1 - (counter+i)));
+				if((counter + i) >= fp_priceStack) {
+					sync_done = true;
+					break;
+				}
 			}
-		}
-		counter = counter + range;
+			counter = counter + range;
+		//}
 		delay(1);
 	}
 	//log(s:"Prices synced for player:", d:playernumber());

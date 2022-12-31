@@ -42,7 +42,7 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24307
 	states
 	{
 		Spawn.Head:
-			TNT1 A 0 A_SetUserVar("user_fixcost", 100)
+			TNT1 A 0 A_SetUserVar("user_fixcost", 150)
 			TNT1 A 0 A_SetUserVar("user_upgcost", 1500)
 			TNT1 A 0 A_SetUserVar("user_range", user_rangestart)
 			STRT A 1 A_Look

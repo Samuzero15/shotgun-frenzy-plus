@@ -1,10 +1,4 @@
 
-
-function void SyncAllMechaPrices(void){
-	SetInventory("mech_BUY", f_Price[52]);
-	SetInventory("mech_state", p_TankSlot[PlayerNumber()]);
-}
-
 function int getPlayCredits(void){
 	return CheckInventory("p_Money");
 }
