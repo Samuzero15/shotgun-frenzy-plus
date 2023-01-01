@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (1 / 1 / 2023) (v1.5a Quickfix!) [New year fixes.]
+	//2023 is here, shit, 3 years in this lol
+	*) Modified the item hud, killstreak hud and powerup hud in order to stay shown no matter how much
+	*) Some attempts to prevent the desync.
+	*) Fix on magnet for Credits and armor and health bonus.
+	*) Added some clientside flags for many particles.
+
 #### (28 - 30 / 21 / 2022) (v1.5 Release!) [Optimizing code & Patcher's lower prices]
 	*) Done some optimizations in the Killstreak and fullscreen huds by, heh, literally fully clientside both of modules.
 	*) Now you can customize the killstreak hud with your own colors and with the transparency level.

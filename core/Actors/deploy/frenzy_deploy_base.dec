@@ -789,34 +789,35 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_States", 0, 40)		
 			//TNT1 A 0 ACS_NamedExecuteAlways("DebugTID", 0, 0, tid)
 			TNT1 A 1
-			TNT1 A 1 A_Jump(256, "Spawn.Head")
+			TNT1 A 50 A_Jump(256, "Spawn.Head")
 			goto Spawn.Head
 		
 		See:
 			"####" "#" 0 A_JumpIfhealthLower(user_crithealth,"See.Smoke")
 			"####" "#" 0 A_ClearTarget
 			"####" "######################################################" 1 A_Chase
+			"####" "#" 50 A_Jump(256, "See.Sound")
 			goto See.Sound
 
 		See.Smoke:
 			"####" "#" 0 A_SpawnItemEx("Smoke_Spawner",0,0,40)
-			"####" "#" 1 A_Jump(256, "See+2")
+			"####" "#" 50 A_Jump(256, "See+2")
 			goto See+2
 		
 		See.Sound:
 			"####" "#" 5 A_PlaySound("turret/active", CHAN_AUTO, 6)
-			"####" "#" 1 A_Jump(256, "See")
+			"####" "#" 50 A_Jump(256, "See")
 			goto See
 
 		Missile:
 			"####" "#" 0 A_JumpIfCloser(user_range, "Missile.Start") // The range, in the hard way.
 			"####" "#" 1 
-			"####" "#" 1 A_Jump(256, "See")
+			"####" "#" 50 A_Jump(256, "See")
 			goto See
 		Pain:
 			"####" "#" 1
 			"####" "#" 1 A_Pain
-			"####" "#" 1 A_Jump(256, "See")
+			"####" "#" 50 A_Jump(256, "See")
 			goto See
 		
 		XDeath:

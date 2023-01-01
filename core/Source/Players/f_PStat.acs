@@ -154,6 +154,7 @@ script 53 ENTER
     p_TankSlot[play] = 0;
 	p_StreakLevel[play] = 0;
 	p_Mechtimer[play] = -2;
+	p_StreakHi[play] = 0; // Reset the High score kill-streak.
 	
     Notify_Player_Enter();
 	

@@ -147,3 +147,7 @@
 ) Attempting to reduce the problem of "FireRockets state not found"
 ) Sparks from the buildings can be switched in the menu now.
 ) Now flame bullets will spread fire always! (And that affects the Combat Boomstick, Flame SSG and Flame Buckshot)
+) Modified the item hud, killstreak hud and powerup hud in order to stay shown no matter how much
+) Some attempts to prevent the desync.
+) Fix on magnet for Credits and armor and health bonus.
+) Added some clientside flags for many particles.

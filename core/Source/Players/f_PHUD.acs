@@ -220,7 +220,7 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
 		}								
         //log(d:p_MechTimer[playernumber()]);
         // current rank
-        acs_executealways(604, 0, p_Rank[playernumber()], 0, 0);
+        acs_executealways(604, 0, ranknow, 0, 0);
 		
 		// Rank Bar.
 		Acs_NamedExecuteAlways("Hud_ShowExperienceBar", 0, kills * 20, next_range, exp);

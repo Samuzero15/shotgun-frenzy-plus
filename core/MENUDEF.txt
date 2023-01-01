@@ -99,7 +99,6 @@ OptionMenu SFPlus_UserOptions{
 	NumberField "Megasphere Low HP %", "sfp_megasphere_t" , 5, 75, 5, "sfp_Autouse"
 	Option "Hear Hitmark sound?", "sfp_hitmarksnd", "Boolean"
 	Option "Display earnings?", "sfp_earningdisp", "EarningDispOptions"
-	Option "Enable kill-streak hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
 	Option "Welcome MSG?", "sfp_welcome", "Boolean"
 	Option "Mech Mount MSG?", "sfp_mechmsg", "Boolean"
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
@@ -115,9 +114,10 @@ OptionMenu SFPlus_UserOptions{
 	Option "Junk", "sfp_part_junk", "ShowHideBoolean"
 	Option "Sparks", "sfp_part_sparks", "ShowHideBoolean"
 	StaticText ""
-	StaticText "Kill-streak settings"
+	StaticText "Kill-streak HUD settings"
 	StaticText ""
-	Slider "Transparency", "sfp_killstreakhud_alpha" , 0.0, 1.0, 0.1, 0
+	Option "Enable hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
+	Slider "Transparency", "sfp_killstreakhud_alpha" , 0.0, 100.0, 80.0, 0
 	Option "Milestone Color", "sfp_killstreakhud_color1", "Color"
 	Option "Hiscore Color", "sfp_killstreakhud_color2", "Color"
 	Option "Overflow Color", "sfp_killstreakhud_color3", "Color"

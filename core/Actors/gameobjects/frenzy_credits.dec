@@ -217,15 +217,17 @@ ACTOR ClassicCredit : CustomInventory
 		loop
 		"####" "#" 1
 		stop
+	
 	See:
 		"####" "#" 0 A_JumpIf(user_countdown >= 1200, "Disappear")
 		"####" "#" 0 A_SetUserVar("user_countdown", user_countdown+1)
-		"####" "#" 0 A_JumpIf(!CallACS("MagneticPickup_TargetIsPlayer"), "SpawnLoop")
 		"####" "#" 0 A_JumpIfTargetInlos(3,0,JLOSF_DEADNOJUMP, 128)
+	ClearAndTic:
 		"####" "#" 0 A_ClearTarget
 		"####" "#" 1 
 		Goto SpawnLoop
-		"####" "#" 1 A_FaceTarget
+		"####" "#" 1 A_JumpIf(!CallACS("MagneticPickup_TargetIsPlayer"), "ClearAndTic")
+		"####" "#" 0 A_FaceTarget
 		"####" "#" 0 A_Recoil(-5)
 		Loop
 	

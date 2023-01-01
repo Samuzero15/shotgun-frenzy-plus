@@ -51,18 +51,21 @@ ACTOR TurretBullet_Head : TurretHeadBase 24301
 	{
 		Spawn.Head:
 			TNT1 A 0 A_SetUserVar("user_fixcost", 50)
-			TNT1 A 0 A_SetUserVar("user_upgcost", 200)
+			TNT1 A 0 A_SetUserVar("user_upgcost", 400)
 			TNT1 A 0 A_SetUserVar("user_rangeup", 128)
 			TNT1 A 0 A_SetUserVar("user_range", user_rangestart)
 			BTRT A 1 A_Look
-		goto See
+			"####" "#" 50 A_Jump(256, "See")
+			goto See
 
 		See:
 			BTRT A 1 A_Chase
+			"####" "#" 50 A_Jump(256, "SUPER::See")
 			goto SUPER::See
 		
 		Pain:
 			BTRT A 1
+			"####" "#" 50 A_Jump(256, "Super::Pain")
 			goto Super::Pain
 			/** Alright, let me explain this code.
 				The first 2 upgrades will add 2 shots more for the turret.
@@ -74,12 +77,14 @@ ACTOR TurretBullet_Head : TurretHeadBase 24301
 		
 		Missile.Start:
 			BTRT A 1 A_FaceTarget
+			"####" "#" 50 A_Jump(256, "Missile.Fire")
 			goto Missile.Fire
 		Missile.Fire:
 			BTRT A 1 A_CustomMissile("TurretProj_Bullet", 50, 0, frandom(-10.5, 10.5), 0)
 			BTRT B 1 bright A_PlaySound("turret/firebullet")
 			BTRT A 0 A_SpawnItemEx("splatBulletCasing", 32, 16, 45+random(-18,18), 0, 3)
 			BTRT A 0 A_JumpIfHealthLower(user_crithealth, "Missile.SmokeCount")
+			"####" "#" 50 A_Jump(256, "Missile.Count")
 			goto Missile.Count
 
 		Missile.Upgrades:
@@ -89,12 +94,14 @@ ACTOR TurretBullet_Head : TurretHeadBase 24301
 			TNT1 A 0 A_CustomMissile("TurretProj_Bullet", 50, 0, frandom(-10.5, 10.5), 0)
 			TNT1 A 0 A_JumpIf(stamina < 3, "Missile.Fire")
 			TNT1 A 0 A_CustomMissile("TurretProj_Bullet", 50, 0, frandom(-10.5, 10.5), 0)
+			"####" "#" 50 A_Jump(256, "Missile.Fire")
 			goto Missile.Fire
 
 		Missile.Count:
 			TNT1 A 0 A_SetUserVar("user_bulletsfired", user_bulletsfired+1)
 			TNT1 A 0 A_JumpIf(user_bulletsfired < (15 + stamina), "Missile.Upgrades")
 			TNT1 A 0 A_SetUserVar("user_bulletsfired", 0)
+			"####" "#" 50 A_Jump(256, "Missile.Rest")
 			goto Missile.Rest
 
 		Missile.SmokeCount:
@@ -102,6 +109,7 @@ ACTOR TurretBullet_Head : TurretHeadBase 24301
 			TNT1 A 0 A_JumpIf(user_smoketic < 3, "Missile.Count")
 			NULL A 0 A_SpawnItemEx("Smoke_Spawner")
 			TNT1 A 0 A_SetUserVar("user_smoketic", 0)
+			"####" "#" 50 A_Jump(256, "Missile.Count")
 			goto Missile.Count
 		
 		Missile.Rest:
@@ -110,6 +118,7 @@ ACTOR TurretBullet_Head : TurretHeadBase 24301
 			TNT1 A 0 A_SetUserVar("user_extrabullets", 0)
 			BTRT AAAA 1 bright
 			BTRT A 5
+			"####" "#" 50 A_Jump(256, "See")
 			goto See
 	}
 }

@@ -40,7 +40,7 @@ Actor FPlus_Monster {
 			"####" "#" 0 A_ChangeFlag("MISSILEEVENMORE", true)
 			"####" "#" 0 A_ChangeFlag("QUICKTORETALIATE", true)
 			"####" "#" 0 A_ChangeFlag("NORADIUSDMG", TRUE)
-			"####" "#" 1 A_Jump(256, "Spawn") 
+			"####" "#" 50 A_Jump(256, "Spawn") 
 		goto Spawn
 		
 		BeHard:
@@ -48,18 +48,18 @@ Actor FPlus_Monster {
 			"####" "#" 0 A_ChangeFlag("MISSILEMORE", true)
 			"####" "#" 0 A_ChangeFlag("QUICKTORETALIATE", true)
 			"####" "#" 0 ACS_NamedExecuteAlways("Monster_HPBar", 0, height)
-			"####" "#" 1 A_Jump(256, "Spawn") 
+			"####" "#" 50 A_Jump(256, "Spawn") 
 		goto Spawn
 		
 		MonXDeath: // Overridable, if does not have it, go to it's death.
 			"####" "#" 0 
 			"####" "#" 0 A_TakeInventory("FPMToken_Gibbed",1)
-			"####" "#" 1 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
+			"####" "#" 50 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
 		goto MonDeath
 		
 		MonDeath:
 			"####" "#" 0 A_TakeInventory("FPMToken_Gibbed",1) // Flag Token.
-			"####" "#" 1 a_Log("WARNING: Monster logic issue in Death State")
+			"####" "#" 50 a_Log("WARNING: Monster logic issue in Death State")
 		goto FadeOut+1
 		
 		MonRaise:
@@ -84,20 +84,20 @@ Actor FPlus_Monster {
 		
 		Death:
 			"####" "#" 0 
-			"####" "#" 1 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
+			"####" "#" 50 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
 		stop
 		
 		Death.NoCount:
 			"####" "#" 0 
 			"####" "#" 0 A_GiveInventory("FPMToken_NoCount", 1)
-			"####" "#" 1 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
+			"####" "#" 50 A_Jump(256, "MonDeath") // Called for all of the inherited classes.
 		stop
 		
 		XDeath:
 			"####" "#" 0 
 			"####" "#" 0 A_SpawnItem ("splatEmitter_Lite" , 0, 0, 0, 0)
 			"####" "#" 0 A_GiveInventory("FPMToken_Gibbed",1) 
-			"####" "#" 1 A_Jump(256, "MonXDeath") // Called for all of the inherited classes.
+			"####" "#" 50 A_Jump(256, "MonXDeath") // Called for all of the inherited classes.
 		stop
 		
 		Raise:
@@ -105,7 +105,7 @@ Actor FPlus_Monster {
 			"####" "#" 0 A_TakeInventory("FPMToken_Frozen",1)
 			"####" "#" 0 A_TakeInventory("FPMToken_NoCount", 1)
 			"####" "#" 0 A_TakeInventory("MarkToken_IAmDead", 1)
-			"####" "#" 1 A_Jump(256, "MonRaise") // Called for all of the inherited classes.
+			"####" "#" 50 A_Jump(256, "MonRaise") // Called for all of the inherited classes.
 		goto MonRaise
 	
 	}

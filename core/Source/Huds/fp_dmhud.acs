@@ -30,8 +30,8 @@ script "SFPlus_DamagedHud_Respawn" RESPAWN{
 
 script "SFPlus_DamagedHud" (void) {
 	
-	while(GetActorProperty(0, APROP_HEALTH) > 0){
-		int hp = GetActorProperty(0, APROP_HEALTH);
+	while(PlayerHealth() > 0){
+		int hp = PlayerHealth();
 		int maxhp = // If we're using the mech, the max health changes.
 		cond(p_TankSlot[playernumber()] == 2, 
 			1500 + 900 * checkinventory("MechUp_Armor"), 
@@ -41,7 +41,7 @@ script "SFPlus_DamagedHud" (void) {
 		
 		
 		if(hp <= lowHp >> 16){
-			ACS_NamedExecuteAlways("SFPlus_DamagedHud_Show", 0, hp, lowhp);
+			NamedExecuteClientScript("SFPlus_DamagedHud_Show", PlayerNumber(), hp, lowhp);
 		}
 		delay(35);
 	}

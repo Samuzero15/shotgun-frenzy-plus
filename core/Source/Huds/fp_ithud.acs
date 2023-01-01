@@ -21,7 +21,15 @@ int itemhud_stack = 0;
 int itemhud_caretx;
 int itemhud_carety;
 
-Script "SFPlus_InventoryList" ENTER Clientside{
+script "SFPlus_InventoryList_Enter" ENTER{
+	NamedExecuteClientScript("SFPlus_InventoryList", PlayerNumber());
+}
+
+script "SFPlus_InventoryList_Respawn" RESPAWN{
+	NamedExecuteClientScript("SFPlus_InventoryList", PlayerNumber());
+}
+
+Script "SFPlus_InventoryList" (void) Clientside{
 	if(ConsolePlayerNumber() == Playernumber()){
 		SFPlus_DefineItems();
 		while(PlayerInGame(PlayerNumber())){

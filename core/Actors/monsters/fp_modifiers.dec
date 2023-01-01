@@ -272,6 +272,7 @@ ACTOR ChampEffect_Emperor_ParticleEmmit
 	
 	+NOCLIP
 	+NOGRAVITY
+    +ClientsideOnly
 	var int user_parts;
 	
 	States
@@ -297,6 +298,7 @@ ACTOR ChampEffect_Healing_ParticleEmmit
 	
 	+NOCLIP
 	+NOGRAVITY
+    +ClientsideOnly
 	var int user_parts;
 	
 	States
@@ -322,6 +324,7 @@ ACTOR ChampEffect_Poison_ParticleEmmit
 	
 	+NOCLIP
 	+NOGRAVITY
+    +ClientsideOnly
 	var int user_parts;
 	
 	States

@@ -19,9 +19,17 @@ int puphud_stack;
 int puphud_amount;
 int powerup_list[PUPHUD_MAX][2];
 
-Script "SFPlus_PowerupList" Enter Clientside{
+script "SFPlus_PowerupList_Enter" ENTER{
+	NamedExecuteClientScript("SFPlus_PowerupList", PlayerNumber());
+}
+
+script "SFPlus_PowerupList_Respawn" RESPAWN{
+	NamedExecuteClientScript("SFPlus_PowerupList", PlayerNumber());
+}
+
+Script "SFPlus_PowerupList" (void) CLIENTSIDE{
 	puphud_amount = 0;
-	if(ConsolePlayerNumber() == Playernumber()){
+	if(ConsolePlayerNumber() == Playernumber() && ConsolePlayerNumber() >= 0){
 		PowHud_Add("MaxHP", 		"StimUp_StimulantPower");
 		PowHud_Add("Speed", 		"StimUp_CaffeinePower");
 		PowHud_Add("Regen", 		"StimUp_CicatrizatePower");
@@ -60,10 +68,7 @@ Script "SFPlus_PowerupList" Enter Clientside{
 		PowHud_Add("Fortune", 			"RuneFortune");
 		PowHud_Add("Resurrection", 		"RuneResurrection");
 		
-		
-		
-		
-		while(PlayerInGame(PlayerNumber())){
+		while(PlayerHealth() > 0){
 			for(int i = 0; i < puphud_amount; i++){
 				PowHud_Show(i);
 				PowHud_Update(i);
@@ -190,7 +195,7 @@ function void PowHud_Show(int which) {
 		}
 		int secs = (powtime)/ 35;
 		int time_str = PowHud_Timer(powtime);
-		if(secs > 86640 || secs < -86639) // More than one day (Infinite powerups)
+		if(secs > 86640 || secs < -86639) // More than one day (Infinite powerups, like runes)
 		{
 			msg = Strparam(
 				s:"\cv", s:effect);
