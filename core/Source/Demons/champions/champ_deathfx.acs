@@ -34,6 +34,7 @@ Script "SFPlus_ChampionDeath" (void){
 		}
 		if(Champ_IsType(CHAMP_GOLDEN) || Champ_IsType(CHAMP_PRIDEFUL)){ // Spawn some extra money on death!
 			SpawnForced("ChampGolden_MoneySplash", x, y, z, 0, angle);
+			//SpawnForced("BigGem", x, y, z, 0, angle);
 		}
 		if(Champ_IsType(CHAMP_ZOMBIE) || Champ_IsType(CHAMP_PRIDEFUL)){ // It does'nt care if it's dead, it will come back. 
 			//log(s:"ChampZombie death");

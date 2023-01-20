@@ -70,32 +70,77 @@ function void ArmorHitSFX(int dmg){
     }
 }
 
-script "Runes_ConstantEffects" (void) {
-    int last_health = GetActorProperty(ActivatorTID(), APROP_HEALTH);
-    int tics = 0;
-    while(GetActorProperty(ActivatorTID(), APROP_HEALTH) > 0 && PlayerInGame(PlayerNumber())) {
-
-        if(checkinventory("RuneHealth")){
-            last_health = RuneEffect_ExtraHealth(last_health, 0.5); 
-        }
-
-        if(CheckInventory("RuneAmmunition")) {
-            if(tics == 1 && random(0, 100) < 20){
-                GiveInventory("AmmunitionRune_Activate", 1);
-                //log(s:"Infinite ammo.");
-            }
-        }
-
-        if(checkinventory("RuneSoul")){
-            GiveInventory("SoulRune_Activate", 1);
-        }else{
+Script "RuneSoul_Effect" (void) {
+    while(checkinventory("RuneSoul")){
+        If(CheckInventory("SoulRune_Kills") >= 100){
             GiveInventory("SoulRune_Reset", 1);
+            GiveInventory("SoulRune_Soulsphere", 1);
         }
-
-        tics = (tics % 35) + 1;
         delay(1);
     }
     GiveInventory("SoulRune_Reset", 1);
+}
+
+Script "RuneAmmunition_Effect" (void) {
+    int tics;
+    while(checkinventory("RuneAmmunition")){
+        if(tics == 1 && random(0, 100) < 30 && !CheckInventory("Inv_Power_Infinity")){
+            GiveInventory("AmmunitionRune_Activate", 1);
+            //log(s:"Infinite ammo.");
+        }
+        tics = (tics % 35) + 1;
+        delay(1);
+    }
+}
+
+Script "RuneHealth_Effect" (void) {
+    // Spread's triple ammo consumption.
+    int health = GetActorProperty(0,APROP_HEALTH);
+
+    while(checkinventory("RuneHealth")){
+        health = RuneEffect_ExtraHealth(health, 0.5); 
+        delay(1);
+    }
+}
+
+Script "RuneSpread_Effect" (void) {
+    // Spread's triple ammo consumption.
+    int a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, i;
+    a0 = CheckInventory("Clip");
+    a1 = CheckInventory("ClipPistol");
+    a2 = CheckInventory("Shell");
+    a3 = CheckInventory("RocketAmmo");
+    a4 = CheckInventory("Cell");
+    a5 = CheckInventory("HeavyBullets");
+    a6 = CheckInventory("Dualshot_Ammo");
+    a7 = CheckInventory("GLauncher_Ammo");
+    a8 = CheckInventory("Flinger_Ammo");
+    a9 = CheckInventory("Gasoline");
+
+    while(CheckInventory("RuneSpread")){
+        a0 = RuneEffect_ConsumeMoreAmmo (a0, "Clip");
+        a1 = RuneEffect_ConsumeMoreAmmo (a1, "ClipPistol");
+        a2 = RuneEffect_ConsumeMoreAmmo (a2, "Shell");
+        a3 = RuneEffect_ConsumeMoreAmmo (a3, "RocketAmmo");
+        a4 = RuneEffect_ConsumeMoreAmmo (a4, "Cell");
+        a5 = RuneEffect_ConsumeMoreAmmo (a5, "HeavyBullets");
+        a6 = RuneEffect_ConsumeMoreAmmo (a6, "Dualshot_Ammo");
+        a7 = RuneEffect_ConsumeMoreAmmo (a7, "GLauncher_Ammo");
+        a8 = RuneEffect_ConsumeMoreAmmo (a8, "Flinger_Ammo");
+        a9 = RuneEffect_ConsumeMoreAmmo (a9, "Gasoline");
+        delay(1);
+    }
+}
+
+function int RuneEffect_ConsumeMoreAmmo (int current_ammo, str ammo_type){
+    int used_ammo;
+    If(current_ammo != CheckInventory(ammo_type)) {
+        used_ammo = current_ammo - CheckInventory(ammo_type);
+        if(used_ammo > 0){
+            TakeInventory(ammo_type, used_ammo*2);
+        }
+    }
+    return CheckInventory(ammo_type);
 }
 
 function int RuneEffect_ExtraHealth(int last_health, int health_mult)
@@ -119,12 +164,20 @@ script "SFPlus_OnTeleport" (void) {
 	// What happens to the teleported things?
 	SetActivatorToTarget(0);
 	delay(5);
-	if(CheckActorClass(ActivatorTID(), "FrenzyPlayer")){
+    int tid = ActivatorTID();
+	if(CheckActorClass(tid, "FrenzyPlayer")){
 		// If a player was teleported, check if he got the spawn protection upgrade.
-		if(CheckActorInventory(ActivatorTID(), "PlayUp_SpawnShield")){
-			TakeActorInventory(ActivatorTID(), "PlayUp_SpawnShield_Power", 1);
-			delay(1);
-			giveActorinventory(ActivatorTID(),"PlayUp_SpawnShield_Activate", 1);
+		if(CheckActorInventory(tid, "PlayUp_SpawnShield") && !CheckActorInventory(tid, "PlayUp_Spawnshield_Cooldown")){
+            if(!CheckActorInventory(tid, "PlayUp_SpawnShield_Power")){
+                giveActorinventory(tid,"PlayUp_SpawnShield_Activate", 1);
+                
+                delay(35*10); // 10 second's effect
+                giveActorinventory(tid,"PlayUp_SpawnShield_Cooldown", 5);
+                while(CheckActorInventory(tid, "PlayUp_Spawnshield_Cooldown")){
+                    takeActorinventory(tid,"PlayUp_SpawnShield_Cooldown", 1);
+                    delay(35);
+                }
+            }
 		}
 	}
 }
@@ -172,19 +225,20 @@ script "Runes_OnMonsterKill" (int ischamp){
     }
 
     if(checkinventory("RuneSoul")){
-        if(ischamp){
-            GiveInventory("SoulRune_ChampCounter", 1);
-        } 
+        if(ischamp) GiveInventory("SoulRune_ChampCounter", 1);
         else        GiveInventory("SoulRune_Counter", 1);
         
     }
 }
 
 script "Runes_PickMessage" (int type){
-    //log(s:"rune type: ", d:type);
-    f_SmallTip_Runes (Strparam(s:"Hold Use to link the \cj",s:Rune_getName(type),s:" \c-rune!"), CR_CYAN, 0);
+    ACS_NamedExecuteAlways("Runes_ShowPickMessage", 0, type);
 }
 
+script "Runes_ShowPickMessage" (int type) CLIENTSIDE{
+    SFPlus_DefineRunes();
+    f_SmallTip_Runes (Strparam(s:"Hold \ci",k:"+use",s:"\c- to link the \cj",s:Rune_getName(type),s:" \c-rune!"), CR_CYAN, 0);
+}
 
 script "SFPlus_Dash" (void){
     int DASH_SPD = 40; // Speed defined by monster.

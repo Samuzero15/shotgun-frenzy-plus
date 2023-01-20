@@ -21,7 +21,7 @@ ACTOR CommanderCam 2310
 			goto Spawn
 		Spawn_Sandbags:
 			NULL A 1 A_SpawnItemEx ("Sandbag_Building", 512, 0, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 0, 0)
 			goto Spawn
 		Spawn_TurretBullet:
 			NULL A 1 A_SpawnItemEx("TurretBullet", 512, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
@@ -49,7 +49,7 @@ ACTOR CommanderCam 2310
 			goto Spawn
 		Spawn_Landmine:
 			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 512, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 			/*
 		Spawn_LostSoul:
@@ -58,7 +58,7 @@ ACTOR CommanderCam 2310
 			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 512, -100, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 412, 0, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 612, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_Demon:
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 512, 0, 64, 0)
@@ -66,36 +66,36 @@ ACTOR CommanderCam 2310
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 512, -100, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 412, 0, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 612, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_Revenant:
 			NULL A 1 A_SpawnItemEx("sfTeamRevenant", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_HellKnight:
 			NULL A 1 A_SpawnItemEx("sfTeamHellKnight", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_BaronOfHell:
 			NULL A 1 A_SpawnItemEx("sfTeamBaronOfHell", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_Cyberdemon:
 			NULL A 1 A_SpawnItemEx("sfTeamCyberdemon", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 			*/
 		Spawn_StrikeMarker:
 			NULL A 1 A_SpawnItemEx("StrikeMarkerP", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_StrikeMarker1:
 			NULL A 1 A_SpawnItemEx("StrikeMarker1", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_StrikeMarker2:
 			NULL A 1 A_SpawnItemEx("StrikeMarker2", 512, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 512, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 512, 0, 64, 0)
 			goto Spawn
 		Spawn_IonCannon:
 			NULL A 1 A_SpawnItemEx("IonBeam", 512, 0, 64, 0)
@@ -139,7 +139,7 @@ ACTOR CommanderCamLow 2320
 			goto Spawn
 		Spawn_Sandbags:
 			NULL A 1 A_SpawnItemEx ("Sandbag_Building", 512, 0, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 0, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 0, 0)
 			goto Spawn
 		Spawn_TurretBullet:
 			NULL A 1 A_SpawnItemEx("TurretBullet", 128, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
@@ -167,7 +167,7 @@ ACTOR CommanderCamLow 2320
 			goto Spawn
 		Spawn_Landmine:
 			NULL AAAAAA 0 A_SpawnItemEx("Landmine", 128, 0, 64, frandom(0.0,16.0), 0, frandom(1.0,4.0), frandom(0.0,359.0))
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		/*
 		Spawn_LostSoul:
@@ -176,7 +176,7 @@ ACTOR CommanderCamLow 2320
 			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 128, -100, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 28, 0, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamLostSoul", 228, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_Demon:
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 128, 0, 64, 0)
@@ -184,36 +184,36 @@ ACTOR CommanderCamLow 2320
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 128, -100, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 28, 0, 64, 0)
 			NULL A 1 A_SpawnItemEx("sfTeamDemon", 228, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_Revenant:
 			NULL A 1 A_SpawnItemEx("sfTeamRevenant", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_HellKnight:
 			NULL A 1 A_SpawnItemEx("sfTeamHellKnight", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_BaronOfHell:
 			NULL A 1 A_SpawnItemEx("sfTeamBaronOfHell", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_Cyberdemon:
 			NULL A 1 A_SpawnItemEx("sfTeamCyberdemon", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 			*/
 		Spawn_StrikeMarker1:
 			NULL A 1 A_SpawnItemEx("StrikeMarker1", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_StrikeMarker2:
 			NULL A 1 A_SpawnItemEx("StrikeMarker2", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_StrikeMarker:
 			NULL A 1 A_SpawnItemEx("StrikeMarkerP", 128, 0, 64, 0)
-			NULL A 1 A_SpawnItemEx("splatEmitter_CFX", 128, 0, 64, 0)
+			NULL A 1 A_SpawnItemEx("SparksEmitter_Deploy", 128, 0, 64, 0)
 			goto Spawn
 		Spawn_IonCannon:
 			NULL A 1 A_SpawnItemEx("IonBeam", 128, 0, 64, 0)

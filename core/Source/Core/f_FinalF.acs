@@ -178,13 +178,15 @@ script 108 (int l_RemainingMonsters)
 	int mtotal, mkilled;
         
     // wait until most of the demons are dead
+	GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
+
     while(1)
     {
-		GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
+		/**/
 
 		//[Samu] I've always hated zandronum for these broken fuctions.
 		mtotal = GetLevelInfo (LEVELINFO_TOTAL_MONSTERS),
@@ -257,13 +259,13 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 	//if(g_GameOver) Terminate;
 	g_GuardianState = INTDB_GUARDIANSTATE_DEFEAT;
 
+	GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
+	GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
+
     while(GuardianWave_LoopCond(surv) && timeout > 0){
-		GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
-		GiveActorInventory(118, "MarkOnMap_ThisAsshole", 1);
        //[Samu] Zandronum is dumb counting monsters.
 		
 		g_MonstersLeft = thingcount(0, 118) + thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114) - surv;
@@ -410,12 +412,13 @@ script 125 (int l_Condition)
 		}
 
 		int death_skill_discount = 0;
+		death_skill_discount = ((p_TotalPlayerDeaths / n_players) / 3);
 		if (l_Condition == 4)       g_FinalSkillScore -= 20; // Substract if defeated.
 		else{
 			if(p_TotalPlayerDeaths == 0 && l_Condition != 4) g_FinalSkillScore += 30; // Perfection bonus.
 			else g_FinalSkillScore -= death_skill_discount;// Substract player deaths too.
 		} 
-		death_skill_discount = ((p_TotalPlayerDeaths / n_players) / 3)*2;
+		
 
 		// Debug info.
 		log(s:"Game kills: ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" / ", d:AIDir_AverageKPM(n_players), s:" kills. +", d:average_kpm_percent, s:"%");

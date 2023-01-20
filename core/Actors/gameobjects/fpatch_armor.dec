@@ -100,22 +100,12 @@ ACTOR MagneticPickup : CustomInventory
 	States
 	{
 	Spawn:
-		TNT1 A 0
-		TNT1 A 1
-	SpawnLoop:
-		"####" "#" 0 A_JumpIf(user_countdown >= 1200, "Disappear")
-		"####" "#" 0 A_SetUserVar("user_mode", 1)
+		TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 30)
+		TNT1 A 50 A_Jump(256, "Spawn.Init")
+		goto Spawn.Init
+	Spawn.Loop:
 		"####" "#" 0 A_Look
 		goto Frame
-	Disappear:
-		"####" "#" 0 A_JumpIf(user_countdown >= 1280, "Begone")
-		"####" "#" 0 A_SetUserVar("user_gottafade", 1)
-		"####" "#" 0 A_SetUserVar("user_mode", 1)
-		"####" "#" 0 A_Look
-		goto Frame
-	Begone:
-		"####" "#" 0
-		stop
 	See:
 		"####" "#" 0 A_SetUserVar("user_mode", 2)
 		"####" "#" 0 A_SetUserVar("user_countdown", user_countdown+1)
@@ -140,7 +130,6 @@ ACTOR MagneticPickup : CustomInventory
 
 	Frame:
 		"####" "#" 0 A_SetUserVar("user_frame", user_frame+1)
-		"####" "#" 0 A_JumpIf(user_gottafade == 1, "FadeTic")
 		"####" "#" 0 A_JumpIf(user_frame / 3 >= 6, "Frame.Reset")
 		"####" "#" 50 A_Jump(256, "Frame.Animate")
 		goto Frame.Animate
@@ -168,27 +157,14 @@ ACTOR MagneticPickup : CustomInventory
 		"####" D 1
 		goto Frame.Action
 
-	FadeTic:
-		"####" "#" 0 A_SetUserVar("user_fadetics", user_fadetics+1)
-		goto Frame.Animate
-	
-	Frame.Tilt:
-		"####" "#" 1 
-		"####" "#" 0 A_JumpIf(user_fadetics == 7, "Frame.TiltReset")
-		goto Frame.Action
-	Frame.TiltReset:
-		"####" "#" 0 A_SetUserVar("user_fadetics", 0)
-		goto Frame.Action
-
 	Frame.Action:
-		//TNT1 A 0 A_LogInt(user_gottafade)
 		"####" "#" 0 A_JumpIf(user_mode == 1, "Tic")
-		"####" "#" 0 A_JumpIf(user_mode == 2, "Spawnloop")
+		"####" "#" 0 A_JumpIf(user_mode == 2, "Spawn.loop")
 		"####" "#" 0 A_JumpIf(user_mode == 3, "See")
 		goto See
 	Tic:
 		"####" "#" 0 A_SetUserVar("user_countdown", user_countdown+1)
-		goto SpawnLoop
+		goto Spawn.Loop
     }
 }
 
@@ -196,9 +172,9 @@ ACTOR MagneticPickup : CustomInventory
 ACTOR ArmorShard_Pickup : MagneticPickup {
 	Inventory.PickupSound "pickup/armorshard"
 	states{
-		Spawn:
+		Spawn.Init:
 			ARSD A 1 //A_log("ArmorShar spawned?")
-			goto Super::SpawnLoop
+			goto Super::Spawn.Loop
 		Frame.A:
 			ARSD A 1 A_SpawnItemEx("Blur_ArmorShardA",0,0,-2)
 			goto Super::Frame.Action
@@ -212,7 +188,7 @@ ACTOR ArmorShard_Pickup : MagneticPickup {
 			ARSD D 1 A_SpawnItemEx("Blur_ArmorShardD",0,0,-2)
 			goto Super::Frame.Action
 		Pickup:
-			TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_PickupMsg", 0, 2, 1)
+			TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_PickupMsg", 0, 3, 1)
 			TNT1 A 0 A_PlaySound("pickup/armorshard", CHAN_AUTO, 0.4)
 			TNT1 A 0 A_GiveInventory("ArmorShard", 5)
 		stop
@@ -223,24 +199,24 @@ ACTOR ArmorShard_Pickup : MagneticPickup {
 ACTOR HealthBonus_Pickup : MagneticPickup {
 	Inventory.PickupSound "g/healing"
 	states{
-		Spawn:
+		Spawn.Init:
 			BON1 A 1
 			goto Super::SpawnLoop
 		Frame.A:
-			BON1 A 1 A_SpawnItemEx("Blur_HealthBonusA",0,0,-2)
+			BON1 A 1 A_SpawnItemEx("Blur_HealthBonusA",0,0,2)
 			goto Frame.Action
 		Frame.B:
-			BON1 B 1 A_SpawnItemEx("Blur_HealthBonusB",0,0,-2)
+			BON1 B 1 A_SpawnItemEx("Blur_HealthBonusB",0,0,2)
 			goto Frame.Action
 		Frame.C:
-			BON1 C 1 A_SpawnItemEx("Blur_HealthBonusC",0,0,-2)
+			BON1 C 1 A_SpawnItemEx("Blur_HealthBonusC",0,0,2)
 			goto Frame.Action
 		Frame.D:
-			BON1 D 1 A_SpawnItemEx("Blur_HealthBonusD",0,0,-2)
+			BON1 D 1 A_SpawnItemEx("Blur_HealthBonusD",0,0,2)
 			goto Frame.Action
 		
 		Pickup:
-			TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_PickupMsg", 0, 2, 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_PickupMsg", 0, 3, 0)
 			TNT1 A 0 A_GiveInventory("SF_HealthBonus", 1)
 			TNT1 A 0 A_PlaySound("g/healing", CHAN_AUTO, 0.4)
 		stop

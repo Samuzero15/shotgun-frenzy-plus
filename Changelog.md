@@ -9,6 +9,21 @@
 
 ## v1 - The path of the damned...
 
+#### (9 - 20 / 1 / 2023) [Optimizating stuff, and some fixes.]
+	*) Some more optimizations on the scripts.
+	*) Now fading items will not be done by decorate but done now by an small ACS script.
+	*) Turrets will now add credits to it's owner.
+	*) Another attempt to call always the kill streak HUD.
+	*) Spread will always spend x3 Ammo. For the sake of a nerf.
+	*) Did some adjusts in the Enemy Marker actor. (Thanks Mr. Satan!)
+	*) Clientsided some other HUD scripts.
+	*) Patcher projectiles will now they activate as Hitscan projectiles!
+	*) Optimized the display code for the patcher turret checker.
+	*) Now, stealth champions will be actually traslucent up to 25% of alpha by the help of ACS. (they did'nt fade in server side)
+	*) Spawn shield will now call a 3 second cooldown timer after triggering its effects.
+	*) Some other code rewrites.
+	*) Marker Enemy is now clientsided, yay! (and now follows the enemies through an ACS script)
+
 #### (1 / 1 / 2023) (v1.5a Quickfix!) [New year fixes.]
 	//2023 is here, shit, 3 years in this lol
 	*) Modified the item hud, killstreak hud and powerup hud in order to stay shown no matter how much

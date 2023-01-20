@@ -130,10 +130,10 @@ ACTOR TurretRocket_BuildC1
 			BLDC K 1
 			BLDC L 1
 			BLDC M 1
-			BLDC N 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC N 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC O 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC P 1
-			BLDC O 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC O 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC N 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC M 1
 			BLDC L 1
@@ -141,13 +141,13 @@ ACTOR TurretRocket_BuildC1
 			BLDC J 1
 			BLDC K 1
 			BLDC L 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC N 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC O 1
 			BLDC P 1
 			BLDC O 1
 			BLDC N 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC L 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC K 1
 			BLDC J 1
@@ -155,11 +155,11 @@ ACTOR TurretRocket_BuildC1
 			BLDC L 1
 			BLDC M 1
 			BLDC N 1
-			BLDC O 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC O 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC P 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC O 1
 			BLDC N 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC L 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC K 1
 			BLDC IHGFECBA 1
@@ -185,7 +185,7 @@ ACTOR TurretRocket_BuildC2
 			BLDC ABCDEFGHI 1
 			BLDC I 5
 			BLDC J 1
-			BLDC K 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC K 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC L 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC M 1
 			BLDC N 1
@@ -194,27 +194,27 @@ ACTOR TurretRocket_BuildC2
 			BLDC O 1
 			BLDC N 1
 			BLDC M 1
-			BLDC L 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC L 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC K 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC J 1
 			BLDC K 1
 			BLDC L 1
 			BLDC M 1
 			BLDC N 1
-			BLDC O 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC O 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC P 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC O 1
 			BLDC N 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC L 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
-			BLDC K 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC K 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC J 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC K 1
 			BLDC L 1
 			BLDC M 1
 			BLDC N 1
 			BLDC O 1
-			BLDC P 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC P 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC O 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC N 1
 			BLDC M 1
@@ -252,31 +252,31 @@ ACTOR TurretRocket_BuildC3
 			BLDC O 1
 			BLDC N 1
 			BLDC M 1
-			BLDC L 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC L 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC K 1 A_PlaySound("plats/pt1_pt1_strt", CHAN_AUTO)
 			BLDC J 1
 			BLDC K 1
 			BLDC L 1
 			BLDC M 1
 			BLDC N 1
-			BLDC O 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC O 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC P 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC O 1
 			BLDC N 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC L 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC K 1
 			BLDC J 1
 			BLDC K 1
 			BLDC L 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC N 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC O 1
 			BLDC P 1
 			BLDC O 1
-			BLDC N 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC N 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC M 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
-			BLDC L 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC L 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC K 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC IHGFECBA 1
 			stop
@@ -300,28 +300,28 @@ ACTOR TurretRocket_BuildC4
 			BLDC A 1 A_PlaySound("plats/pt1_strt", CHAN_AUTO)
 			BLDC ABCDEFGHI 1
 			BLDC I 5
-			BLDC J 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC J 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC K 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC L 1
 			BLDC M 1
 			BLDC N 1
 			BLDC O 1
 			BLDC P 1
-			BLDC O 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC O 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC N 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC M 1
 			BLDC L 1
 			BLDC K 1
 			BLDC J 1
 			BLDC K 1
-			BLDC L 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC L 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC M 1 A_PlaySound("plats/pt1_strt", CHAN_AUTO)
 			BLDC N 1
 			BLDC O 1
 			BLDC P 1
 			BLDC O 1
 			BLDC N 1
-			BLDC M 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC M 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC L 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC K 1
 			BLDC J 1
@@ -329,10 +329,10 @@ ACTOR TurretRocket_BuildC4
 			BLDC L 1
 			BLDC M 1
 			BLDC N 1
-			BLDC O 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC O 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC P 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC O 1
-			BLDC N 50 A_SpawnItemEx("splatEmitter_CFX2", 0, 0, 8)
+			BLDC N 50 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
 			BLDC M 1 A_PlaySound("plats/pt1_stop", CHAN_AUTO)
 			BLDC L 1
 			BLDC K 1

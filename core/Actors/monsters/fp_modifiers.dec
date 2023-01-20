@@ -20,13 +20,8 @@ ACTOR MarkOnMap_ThisAsshole : CustomInventory
 	states
 	{
 	Use:
-        TNT1 A 0 A_JumpIfInventory("MarkToken_IAmDead", 1, "NotNeeded")
-        TNT1 A 0 A_JumpIfInventory("MarkToken_Marked", 1, "NotNeeded")
-        TNT1 A 0 A_SpawnItemEx("marker_enemy", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION)
+        TNT1 A 0 ACS_NamedExecuteAlways("Marker_Script", 0, 0)
 		Stop
-    NotNeeded:
-        TNT1 A 0
-        stop
 	}
 }
 
@@ -244,7 +239,7 @@ Actor ChampEffect_Healing : MonsterModifier {
         Use:
             //TNT1 A 0 A_CheckSight("End") //only heal when seen by the player
             TNT1 A 0 A_RadiusGive("ChampEffectOnMonster_Healing", 256, RGF_MONSTERS)
-            TNT1 AAAAA 0 A_SpawnItemEx("ChampEffect_Healing_ParticleEmmit")
+            TNT1 A 0 A_SpawnItemEx("ChampEffect_Healing_ParticleEmmit")
             stop
     }
 }
@@ -262,7 +257,7 @@ Actor ChampEffect_Emperor : MonsterModifier {
     states{
         Use:
             TNT1 A 0 A_RadiusGive("ChampEffectOnMonster_Emperor", 256, RGF_MONSTERS)
-            TNT1 AAAAA 0 A_SpawnItemEx("ChampEffect_Emperor_ParticleEmmit")
+            TNT1 A 0 A_SpawnItemEx("ChampEffect_Emperor_ParticleEmmit")
             stop
     }
 }
@@ -272,21 +267,13 @@ ACTOR ChampEffect_Emperor_ParticleEmmit
 	
 	+NOCLIP
 	+NOGRAVITY
-    +ClientsideOnly
 	var int user_parts;
 	
 	States
 	{
 		Spawn:
 			TNT1 A 1
-			TNT1 A 1 A_SetUserVar("user_parts", 10)
-		Loopme:
-			TNT1 A 0 A_SpawnItemEx("ChampQuickAura_Emperor", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
-			TNT1 A 0 A_Warp(AAPTR_Target, 0,0,0,0,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-			TNT1 A 2 A_SetUserVar("user_parts", user_parts-1)
-			TNT1 A 1 A_JumpIf(user_parts <= 0, "Death")
-			goto Loopme
-		Death:
+			TNT1 AAA 0 A_SpawnItemEx("ChampQuickAura_Emperor", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
 			TNT1 A 1
 			stop
 	}
@@ -298,21 +285,13 @@ ACTOR ChampEffect_Healing_ParticleEmmit
 	
 	+NOCLIP
 	+NOGRAVITY
-    +ClientsideOnly
 	var int user_parts;
 	
 	States
 	{
 		Spawn:
 			TNT1 A 1
-			TNT1 A 1 A_SetUserVar("user_parts", 10)
-		Loopme:
-			TNT1 A 0 A_SpawnItemEx("ChampQuickAura_Healing", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
-			TNT1 A 0 A_Warp(AAPTR_Target, 0,0,0,0,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-			TNT1 A 2 A_SetUserVar("user_parts", user_parts-1)
-			TNT1 A 1 A_JumpIf(user_parts <= 0, "Death")
-			goto Loopme
-		Death:
+			TNT1 AAA 0 A_SpawnItemEx("ChampQuickAura_Healing", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
 			TNT1 A 1
 			stop
 	}
@@ -324,21 +303,13 @@ ACTOR ChampEffect_Poison_ParticleEmmit
 	
 	+NOCLIP
 	+NOGRAVITY
-    +ClientsideOnly
 	var int user_parts;
 	
 	States
 	{
 		Spawn:
 			TNT1 A 1
-			TNT1 A 1 A_SetUserVar("user_parts", 10)
-		Loopme:
-			TNT1 A 0 A_SpawnItemEx("ChampQuickAura_Poison", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
-			TNT1 A 0 A_Warp(AAPTR_Target, 0,0,0,0,WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE)
-			TNT1 A 2 A_SetUserVar("user_parts", user_parts-1)
-			TNT1 A 1 A_JumpIf(user_parts <= 0, "Death")
-			goto Loopme
-		Death:
+			TNT1 AAA 0 A_SpawnItemEx("ChampQuickAura_Poison", 0, 0, 0, 0, 0, 3, 0, SXF_CLIENTSIDE, 0)
 			TNT1 A 1
 			stop
 	}

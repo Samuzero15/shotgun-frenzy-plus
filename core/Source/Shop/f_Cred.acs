@@ -27,7 +27,7 @@ script 105 (int l_AmountSpecial, int l_SplatCombo, int l_NoSoundQue) CLIENTSIDE
 		
 		if(l_AmountSpecial == 99){ // Coin pickup
 		 NamedRequestScriptPuke("SF_Net_AddCredits", 5, PlayerNumber());
-		 ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, 5, CR_Gold);
+		 NamedExecuteClientScript("SF_CreditAddDisplay", playernumber(), 5, CR_Gold);
 		 NamedRequestScriptPuke("SF_Net_AddTeamCredits", 25);
 		}else p_monsterKilled(1, 0, false, false);
 		}
@@ -35,12 +35,12 @@ script 105 (int l_AmountSpecial, int l_SplatCombo, int l_NoSoundQue) CLIENTSIDE
 }
 
 script "SFPlus_PickupMsg" (int howmuch, int type){
-	ACS_NamedExecuteAlways("SF_PickupMsgDisplay",0, howmuch, type);
+	NamedExecuteClientScript("SF_PickupMsgDisplay", playernumber(), howmuch, type);
 }
 
 script "SFPlus_CreditPickup" (int howmuch, int color){
 	howmuch = howmuch*(1+4*Tech_isDone(TECH_REFINE_COINX5));
-	ACS_NamedExecuteAlways("SF_CreditAddDisplay",0, howmuch, color);
+	NamedExecuteClientScript("SF_CreditAddDisplay", playernumber(), howmuch, color);
 	sf_AddCredits_S(howmuch, playernumber());
 	sf_AddTeamCredits(howmuch);
 	if(CheckInventory("PlayUp_HealCoins")) GiveInventory("HealthBonus", howmuch);
@@ -63,7 +63,6 @@ script "SF_Net_KillRewardCredits" (int monster, int splat) NET{
 
 //[Samu] Time for the Clientside rape!
 function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, int enemytype)
-
 {
 	//log(s:GetActorClass(0));
 	int l_Amount;
@@ -113,10 +112,10 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(!noProfit){
 		if(bossmon || hardmon){
 			sf_AddCredits_S(l_Amount, playerNumber());
-			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, l_Amount, color, 1);
+			NamedExecuteClientScript("SF_CreditAddDisplay", playerNumber(), l_Amount, color, 1);
 		}else{
 			sf_AddCredits_S(l_Amount, playerNumber());
-			ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0,l_Amount, color);
+			NamedExecuteClientScript("SF_CreditAddDisplay", playerNumber(), l_Amount, color);
 		}
 	}//else log(s:"Did'nt count!");
 	
@@ -143,6 +142,8 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	Rank_GrantEXP(playernumber(), 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
 	if(GetActorProperty(0, APROP_HEALTH) > 1){
 		p_Streak[playernumber()] ++;
+		NamedExecuteClientScript("SFPlus_KillStreakHud", PlayerNumber(), 
+			p_Streak[playernumber()], p_StreakHi[PlayerNumber()], getNextStreakMilestone());
 	}
 		
 		
@@ -154,7 +155,9 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
   
 	}else{
 		l_Amount = p_MonsterCredits[monsterClass] + playercount();
+		//log(s:"Turret: ", d:ActivatorTID());
 		int drone_owner = ActivatorTID() - 10000;
+		int turret_owner = ActivatorTID() - 15000;
 		//log(s:"Drone: ", d:drone_owner);
 		if(drone_owner >= 0 && drone_owner < 32){ 
 		// Drone exeption, grant 1 kill per drone, and some money to the player.
@@ -164,12 +167,23 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 			// 25% Chance to get an experience point!
 			Rank_GrantEXP(drone_owner, cond(random(0, 99) < 25, 1, 0));
 			sf_AddDroneTips(l_Amount, drone_owner);
-		}
-		else{
+		}else if (turret_owner >= 0 && turret_owner < 32){
+			// Ugh, fiiine. Turrets will grant money to the owner.
+			// BUT, not experience.
+			int rest_amount = l_Amount/4;
+			l_Amount = l_Amount/2;
+
+			SetActivatorToPlayer(turret_owner);
+			sf_AddDroneTips(l_Amount, turret_owner);
+
+			// Still give the tips for other players. Except the turret owner.
+			if(rest_amount > 0){
+				giveTipsToPlayers_Except(rest_amount, turret_owner);
+			}
+		}else{
 			// give a quarter part of the loot for everyone.
 			// dont grant any experience for that.
 			l_Amount = l_Amount/4;
-			//log(s:"Amount: ", d:l_amount, s:" Activator: ", d:ActivatorTID());
 			if(l_amount > 0){
 				giveTipsToPlayers(l_Amount);
 			}

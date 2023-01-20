@@ -108,7 +108,7 @@ function void Champ_SetHybridPower(str actor){
 			TakeInventory("ChampBuff_NormalAtk", 1);
 			GiveInventory("ChampBuff_Strong", 1);
 		break; case CHAMP_STEALTH: // Nearly invisible.
-			GiveInventory("ChampBuff_Stealth", 1);
+			ACS_NamedExecuteAlways("SFPlus_BeTraslucent", 0);
 		break; case CHAMP_ZOMBIE:
 			GiveInventory("ChampZombie_LivesLeft", 2);
 		break;
@@ -128,8 +128,12 @@ function void Champ_SetHybridPower(str actor){
 	}
 }
 
+Script "SFPlus_BeTraslucent" (void) clientside {
+	SetActorProperty(0, APROP_Alpha, 0.25);
+	SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
+}
 
-script "SFPlus_2Translations" (int a, int b){
+script "SFPlus_2Translations" (int a, int b) clientside{
 	while(GetActorProperty(0, APROP_Health) > 0){
 		Thing_setTranslation(0, a);
 		delay(15);
@@ -138,7 +142,7 @@ script "SFPlus_2Translations" (int a, int b){
 	}
 }
 
-script "SFPlus_RainbowTranslation" (void){
+script "SFPlus_RainbowTranslation" (void) clientside{
 	while(GetActorProperty(0, APROP_Health) > 0){
 		Thing_setTranslation(0, CHAMPCOLOR_RED);
 		delay(6);

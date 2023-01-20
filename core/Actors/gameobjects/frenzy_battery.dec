@@ -137,7 +137,7 @@ ACTOR AttackBattery : MorphedMonster 30002
 
 ACTOR BatteryCore : Battery 30003
 {
-	Health 1400
+	Health 1500
 	states
 	{
 		Death:

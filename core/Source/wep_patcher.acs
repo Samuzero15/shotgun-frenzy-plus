@@ -9,7 +9,17 @@
 #libdefine PATCHER_USERVAR_RANGEUP "user_rangeup"
 #libdefine BUILDING_MAXLVL 5
 
+#libdefine PATCHER_MSG_FIX 1
+#libdefine PATCHER_MSG_MAXHP 2
+#libdefine PATCHER_MSG_NOMONEY 3
+#libdefine PATCHER_MSG_UPGRADED 4
+#libdefine PATCHER_MSG_MAXUPGRADED 5
+#libdefine PATCHER_MSG_MODE_MOVE 6
+#libdefine PATCHER_MSG_MODE_UPGRADE 7
+
 function void Patcher_Display(int playnum){
+	SetActivator(0, AAPTR_Damage_Target);
+
 	int hp = GetActorProperty(0, APROP_HEALTH);
 	int maxhp = GetActorProperty(0, APROP_SPAWNHEALTH);
 	int fix_price = GetUserVariable(0, PATCHER_USERVAR_FIX);
@@ -21,37 +31,17 @@ function void Patcher_Display(int playnum){
 	int msg = -1;
 	
 	SetActivator(990+playnum);
-
 	if(CheckWeapon("Patcher_Advanced")){
 		fix_price = fix_price/2;
 		buff_price = buff_price/2;
 	} 
-	
-	if (CheckInventory("Patcher_HudHeal")){
-		//color = CR_GREEN;
-		msg = 1;
-		NamedExecuteClientScript("Patcher_ShowMsg", playnum, msg, lvl, fix);	
-	} else if(CheckInventory("Patcher_HudMaxHp")){
-		//color = CR_CYAN;
-		msg = 2;
-		NamedExecuteClientScript("Patcher_ShowMsg", playnum, msg, lvl, fix);	
-	} else if(CheckInventory("Patcher_HudNoMoney")){
-		//color = CR_ORANGE;
-		msg = 3;
-		NamedExecuteClientScript("Patcher_ShowMsg", playnum, msg, lvl, fix);	
-	} else if (CheckInventory("Patcher_HudBuff")){
-		//color = CR_GOLD;
-		msg = 4;
-		NamedExecuteClientScript("Patcher_ShowMsg", playnum, msg, lvl, fix);	
-	} else if (CheckInventory("Patcher_HudBuffed")){
-		msg = 5;
-		NamedExecuteClientScript("Patcher_ShowMsg", playnum, msg, lvl, fix);	
-	}else {
-		NamedExecuteClientScript("Patcher_ShowMsg", playnum, msg, lvl, fix);	
-	}
-
 	NamedExecuteClientScript("Patcher_ShowHealth", playnum, hp, maxhp);	    
-	NamedExecuteClientScript("Patcher_ShowCosts", playnum, fix_price, buff_price, fix, lvl);	  
+	NamedExecuteClientScript("Patcher_ShowCosts", playnum, fix_price, buff_price, fix, lvl); 
+}
+
+function void Patcher_ShowMsg(int msgid, int play, int value){
+	SetActivator(990+play);
+	NamedExecuteClientScript("Patcher_ShowMsg", play, msgid, value);	
 }
 
 script "Patcher_ShowHealth" (int hp, int maxhp) CLIENTSIDE
@@ -62,24 +52,30 @@ script "Patcher_ShowHealth" (int hp, int maxhp) CLIENTSIDE
 	SetHudSize(0, 0, 0);
 }
 
-script "Patcher_ShowMsg" (int msg_num, int lvl, int fix) CLIENTSIDE 
+script "Patcher_ShowMsg" (int msg_num, int value) CLIENTSIDE 
 {
 	str msg;
 	switch(msg_num){
-		case 1:
-			msg = strparam(s:"Repaired \cd", d:fix,s:"\c- HP!" );
+		case PATCHER_MSG_FIX:
+			msg = strparam(s:"Repaired \cd", d:value,s:"\c- HP!" );
 		break;
-		case 2:
+		case PATCHER_MSG_MAXHP:
 			msg = "\cgFull HP";
 		break;
-		case 3:
+		case PATCHER_MSG_NOMONEY:
 			msg = "\cgNot enough credits!";
 		break;
-		case 4:
-			msg = strparam(s:"Upgraded to \cfLevel ", d:lvl, s:"!");
+		case PATCHER_MSG_UPGRADED:
+			msg = strparam(s:"Upgraded to \cfLevel ", d:value, s:"!");
 		break;
-		case 5:
+		case PATCHER_MSG_MAXUPGRADED:
 			msg = "\cvFully repaired!";
+		break;
+		case PATCHER_MSG_MODE_MOVE:
+			msg = "Switched to \ciMove \c-mode";
+		break;
+		case PATCHER_MSG_MODE_UPGRADE:
+			msg = "Switched to \ciUpgrade \c-mode";
 		break;
 	}
 	
@@ -100,92 +96,28 @@ script "Patcher_ShowCosts" (int price, int buff_price, int fix, int lvl) CLIENTS
 	SetHudSize(0, 0, 0);
 }
 
-function void PatcherHud_TakeThis(int which){
-	switch(which){
-		case 1: TakeInventory("Patcher_HudHeal", 1); break;
-		case 2: TakeInventory("Patcher_HudMaxHp", 1); break;
-		case 3: TakeInventory("Patcher_HudNoMoney", 1); break;
-		case 4: TakeInventory("Patcher_HudBuff", 1); break;
-		case 5: TakeInventory("Patcher_HudBuffed", 1); break;
-		default: break;
-	}
-}
 
 script "Patcher_TurretScouter" (void){
-	if(CheckInventory("Patcher_Script")) terminate;
+	int use;
+	If(CheckInventory("Patcher_script")) Terminate;
 	else GiveInventory("Patcher_Script", 1);
-
-	int framecount = 0;
-	int countnow = 0;
-	int flag1 = CheckInventory("Patcher_HudHeal");
-	int flag2 = CheckInventory("Patcher_HudMaxHp");
-	int flag3 = CheckInventory("Patcher_HudNoMoney");
-	int flag4 = CheckInventory("Patcher_HudBuff");
-	int flag5 = CheckInventory("Patcher_HudBuffed");
-	int lastflag = 0;
 	While(CheckWeapon("Patcher") || CheckWeapon("Patcher_Advanced")){
 		if(CheckWeapon("Patcher"))					GiveInventory("Patcher_Libra", 1);
 		else if(CheckWeapon("Patcher_Advanced"))	GiveInventory("Patcher_LibraAdvanced", 1);
-
-		if(flag1 != CheckInventory("Patcher_HudHeal")){
-			PatcherHud_TakeThis(lastflag);
-			lastflag = 1;
-			countnow = true;
+		log(s:"Turret scouter script");
+		if(CheckInventory("Input_Use") && use != CheckInventory("Input_Use")){
+			use = 1;
+			SetInventory("Patcher_Mode", !CheckInventory("Patcher_Mode"));
+			log(s:"Switch mode");
+			if(CheckInventory("Patcher_Mode"))
+				Patcher_ShowMsg(PATCHER_MSG_MODE_MOVE, PlayerNumber(), 0);
+			else
+				Patcher_ShowMsg(PATCHER_MSG_MODE_UPGRADE, PlayerNumber(), 0);
+			
 		}
-		if(flag2 != CheckInventory("Patcher_HudMaxHp")){
-			PatcherHud_TakeThis(lastflag);
-			lastflag = 2;
-			countnow = true;
-		}
-		if(flag3 != CheckInventory("Patcher_HudNoMoney")){
-			PatcherHud_TakeThis(lastflag);
-			lastflag = 3;
-			countnow = true;
-		}
-		if(flag4 != CheckInventory("Patcher_HudBuff")){
-			PatcherHud_TakeThis(lastflag);
-			lastflag = 4;
-			countnow = true;
-		}
-		if(flag5 != CheckInventory("Patcher_HudBuffed")){
-			PatcherHud_TakeThis(lastflag);
-			lastflag = 5;
-			countnow = true;
-		}
-
-		if(CheckInventory("Patcher_FrameRefresh")){
-			framecount = 0;
-			TakeInventory("Patcher_FrameRefresh", 1);
-		}
-
-		if(countnow == True){
-			if(framecount >= 35){
-				TakeInventory("Patcher_HudHeal", 1);
-				TakeInventory("Patcher_HudMaxHp", 1);
-				TakeInventory("Patcher_HudNoMoney", 1);
-				TakeInventory("Patcher_HudBuff", 1);
-				TakeInventory("Patcher_HudBuffed", 1);
-				framecount = 0;
-				countnow = false;
-				lastflag = 0;
-			}
-			else framecount++;
-		}
-		
-
-		flag1 = CheckInventory("Patcher_HudHeal");
-		flag2 = CheckInventory("Patcher_HudMaxHp");
-		flag3 = CheckInventory("Patcher_HudNoMoney");
-		flag4 = CheckInventory("Patcher_HudBuff");
-		flag5 = CheckInventory("Patcher_HudBuffed");
-		//log(s:"(Patcher_Hud) frameCount: ", d:framecount, s:" lastflag: ", d:lastflag, s:" counting? ", d:countnow);
-		delay(1);
+		use = CheckInventory("Input_Use");
+		delay(5);
 	}
-	TakeInventory("Patcher_HudHeal", 1);
-	TakeInventory("Patcher_HudMaxHp", 1);
-	TakeInventory("Patcher_HudNoMoney", 1);
-	TakeInventory("Patcher_HudBuff", 1);
-	TakeInventory("Patcher_HudBuffed", 1);
 	TakeInventory("Patcher_Script", 1);
 }
 script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
@@ -217,23 +149,28 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 			SetActivator(0, AAPTR_Damage_Target); // Back to the turret.
 
 			if(p_Credits[playnum] < price){
+				Patcher_ShowMsg(PATCHER_MSG_NOMONEY, playnum, 0);
 				SetActivator(990+playnum);
-				GiveInventory("Patcher_HudNoMoney", 1);
-				GiveInventory("Patcher_FrameRefresh", 1);
+				
+				//GiveInventory("Patcher_HudNoMoney", 1);
+				//GiveInventory("Patcher_FrameRefresh", 1);
 			}else{
 				p_Credits[playnum] -= price;
 				GiveInventory("Health", fix);
 				GiveInventory("PatcherEffect_Fixed", 1);
+				SpawnForced("SparksEmitter_Building", GetActorX(0), GetActorY(0), GetActorZ(0));
+				Patcher_ShowMsg(PATCHER_MSG_FIX, playnum, fix);
 				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				GiveInventory("Patcher_HudHeal", 1);
-				GiveInventory("Patcher_FrameRefresh", 1);
+				//GiveInventory("Patcher_HudHeal", 1);
+				//GiveInventory("Patcher_FrameRefresh", 1);
 				Rank_GrantEXP(playnum, 1);
 			}
 		} else {
 			GiveInventory("PatcherEffect_Fail", 1);
+			Patcher_ShowMsg(PATCHER_MSG_MAXHP, playnum, 0);
 			SetActivator(0, AAPTR_Damage_Source); // Back to the player
-			GiveInventory("Patcher_HudMaxHP", 1);
-			GiveInventory("Patcher_FrameRefresh", 1);
+			//GiveInventory("Patcher_HudMaxHP", 1);
+			//GiveInventory("Patcher_FrameRefresh", 1);
 		}
 		
 	} else if(strcmp(arg2, "AltPatcherDmg") == 0){
@@ -249,47 +186,113 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 
 		if(p_Credits[playnum] < price_upg){
 				GiveInventory("PatcherEffect_Fail", 1);
+				Patcher_ShowMsg(PATCHER_MSG_NOMONEY, playnum, 0);
 				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				GiveInventory("Patcher_HudNoMoney", 1);
-				GiveInventory("Patcher_FrameRefresh", 1);
+				//GiveInventory("Patcher_HudNoMoney", 1);
+				//GiveInventory("Patcher_FrameRefresh", 1);
 		}else{
-			if(lvl < BUILDING_MAXLVL){
-				p_Credits[playnum] -= price_upg;
-				SetActorProperty(0, APROP_STAMINA, lvl + 1);
-				lvl = GetActorProperty(0, APROP_STAMINA);
-
-				SetUserVariable(0, "user_range", rng + rng_up*(lvl));
-
-				GiveInventory("PatcherEffect_Upgraded", 1);
-				SetActivator(0, AAPTR_Damage_Source); // Back to the player
-				Rank_GrantEXP(playnum, 5);
-				//log(s:"Upgraded to level: \ci", d:lvl);
-				GiveInventory("Patcher_HudBuff", 1);
-				GiveInventory("Patcher_FrameRefresh", 1);
-			}else{ 
-				// If fully upgraded, you can fully fix the turret by paying it's full price.
-				// Expensive, yes. But, free experience!
-				If(GetActorProperty(0, APROP_HEALTH) < GetActorProperty(0, APROP_SPAWNHEALTH)){
+			SetActivator(0, AAPTR_Damage_Source); // Back to the player
+			if(CheckInventory("Patcher_Mode")){
+				SetActivator(0, AAPTR_Damage_Target); // Back to the turret
+				ACS_NamedExecuteAlways("Building_MoveTo", 0);
+			}else{
+				SetActivator(0, AAPTR_Damage_Target); // Back to the turret
+				if(lvl < BUILDING_MAXLVL){
 					p_Credits[playnum] -= price_upg;
-					GiveInventory("Health", GetActorProperty(0, APROP_SPAWNHEALTH));
-					GiveInventory("PatcherEffect_Fail", 1);
+					SetActorProperty(0, APROP_STAMINA, lvl + 1);
+					lvl = GetActorProperty(0, APROP_STAMINA);
+					ACS_NamedExecuteAlways("Building_UpgradeStats", 0);
+					SetUserVariable(0, "user_range", rng + rng_up*(lvl));
+					SpawnForced("SparksEmitter_Deploy", GetActorX(0), GetActorY(0), GetActorZ(0));
+					
+					Patcher_ShowMsg(PATCHER_MSG_UPGRADED, playnum, lvl);
 					SetActivator(0, AAPTR_Damage_Source); // Back to the player
-					Rank_GrantEXP(playnum, 3); 
-					GiveInventory("Patcher_HudBuffed", 1);
-					GiveInventory("Patcher_FrameRefresh", 1);
-				}else{
-					GiveInventory("PatcherEffect_Fail", 1);
-					SetActivator(0, AAPTR_Damage_Source); // Back to the player
-					GiveInventory("Patcher_HudMaxHP", 1);
-					GiveInventory("Patcher_FrameRefresh", 1);
+					Rank_GrantEXP(playnum, 5);
+					//log(s:"Upgraded to level: \ci", d:lvl);
+					//GiveInventory("Patcher_HudBuff", 1);
+					//GiveInventory("Patcher_FrameRefresh", 1);
+				}else{ 
+					// If fully upgraded, you can fully fix the turret by paying it's full price.
+					// Expensive, yes. But, free experience!
+					If(GetActorProperty(0, APROP_HEALTH) < GetActorProperty(0, APROP_SPAWNHEALTH)){
+						p_Credits[playnum] -= price_upg;
+						GiveInventory("Health", GetActorProperty(0, APROP_SPAWNHEALTH));
+						GiveInventory("PatcherEffect_Fail", 1);
+						Patcher_ShowMsg(PATCHER_MSG_MAXUPGRADED, playnum, 0);
+						SetActivator(0, AAPTR_Damage_Source); // Back to the player
+						Rank_GrantEXP(playnum, 3); 
+						//GiveInventory("Patcher_HudBuffed", 1);
+						//GiveInventory("Patcher_FrameRefresh", 1);
+					}else{
+						GiveInventory("PatcherEffect_Fail", 1);
+						Patcher_ShowMsg(PATCHER_MSG_MAXHP, playnum, 0);
+						SetActivator(0, AAPTR_Damage_Source); // Back to the player
+						//GiveInventory("Patcher_HudMaxHP", 1);
+						//GiveInventory("Patcher_FrameRefresh", 1);
+					}
+					
 				}
-				
 			}
 		}
 		//log(s:"Turret Level: ", d:lvl);
 	} else if(strcmp(arg2, "IdlePatcherDmg") == 0){
-		SetActivator(0, AAPTR_Damage_Target);
 		Patcher_Display(playnum);
 	}
 	SetResultValue(0);
+}
+
+Script "Building_MoveTo" (void){
+	if(!CheckInventory("Patcher_MoveMe")){
+		GiveInventory("Patcher_MoveMe", 1);
+	}else terminate;
+
+	int movespotid = 7990, x, y, z;
+	while(GetActorProperty(0, APROP_Health) >= 1){
+		If(ThingCount(0, movespotid)){
+			log(s:"Building: Oh i see, ok im teleporting.");
+			x = GetActorX(movespotid);
+			y = GetActorY(movespotid);
+			z = GetActorZ(movespotid);
+			Thing_Remove(7990);
+			delay(1);
+			SetActorPosition(0, x,  y,  z, 1);
+			TakeInventory("Patcher_MoveMe", 1);
+			break;
+		}else{
+			log(s:"Building: Ok, where i should move?");
+		}
+		delay(35);
+	}
+}
+
+
+Script "Building_UpgradeStats" (void){
+	if(!CheckInventory("Patcher_ScriptActive")){
+		GiveInventory("Patcher_ScriptActive", 1);
+	}else terminate;
+
+	int current_level = 0;
+	int health = GetActorProperty(0, APROP_HEALTH);
+	int heal_factor = 0;
+	int max_health = GetActorProperty(0, APROP_SpawnHealth);
+	while(health >= 1){
+		health = GetActorProperty(0, APROP_HEALTH);
+		if(current_level != GetActorProperty(0, APROP_STAMINA)){ // Upgrade damage and damage factor.
+			SetActorProperty(0, APROP_DamageFactor, 1.0-(0.1)*current_level); // Armor up
+			SetActorProperty(0, APROP_DamageMultiplier, 1.0+(0.2)*current_level); // Damage up
+			current_level = GetActorProperty(0, APROP_STAMINA);
+			SetActorProperty(0, APROP_Health, max_health);// Fully heal it
+		}else {
+			max_health = GetActorProperty(0, APROP_SpawnHealth);
+			if(health < max_health && health >= 1 && current_level > 0){ // regen script
+				heal_factor = FixedMul(0.015*current_level, max_health*1.0) >> 16;
+				if((health + heal_factor) >= max_health){
+					SetActorProperty(0, APROP_Health, max_health);
+				}else{
+					SetActorProperty(0, APROP_Health, health + heal_factor);
+				}
+			}
+		}
+		delay(35);
+	}
 }

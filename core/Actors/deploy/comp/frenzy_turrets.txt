@@ -706,7 +706,7 @@ ACTOR TurretBullet_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TurretBullet", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }
@@ -744,7 +744,7 @@ ACTOR TurretRocket_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TurretRocket", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }
@@ -783,7 +783,7 @@ ACTOR TurretPlasma_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TurretPlasma", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }
@@ -821,7 +821,7 @@ ACTOR TurretRail_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TurretRail", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }
@@ -859,7 +859,7 @@ ACTOR TurretShotgun_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TurretShotgun", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }
@@ -897,7 +897,7 @@ ACTOR TurretTesla_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TeslaCoil", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }
@@ -935,7 +935,7 @@ ACTOR TurretFlame_Building : BuildBase
 		Spawn2:
 			BULD ABCDEFGHI 40
 			BULD I 0 A_SpawnItem ("TurretFlame", 0, 128, 0, 0)
-                        BULD I 1 A_SpawnItem ("splatEmitter_CFX", 0, 128, 0, 0)
+                        BULD I 1 A_SpawnItem ("SparksEmitter_Deploy", 0, 128, 0, 0)
 			stop
 	}
 }

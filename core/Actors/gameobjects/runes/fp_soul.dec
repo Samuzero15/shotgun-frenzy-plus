@@ -19,16 +19,22 @@ ACTOR SoulRune : RuneGiver {
 Actor SoulRune_Soulsphere : Inventory_Soulsphere {+INVENTORY.AUTOACTIVATE}
 Actor SoulRune_Kills : Integer {Inventory.MaxAmount 100}
 
-Actor SoulRune_Activate : Rune_Activation {
-    states{
-        Pickup:
-            TNT1 A 0 A_JumpIfInventory("SoulRune_Kills", 100, "Effect")
-		stop
-        Effect:
-            TNT1 A 0 A_GiveInventory("SoulRune_Reset", 1)
-            TNT1 A 0 A_GiveInventory("SoulRune_Soulsphere", 1)
+Actor SoulRune_Pickup : CustomInventory
+{
+	+NOGRAVITY
+    scale 0.75
+	Inventory.PickupMessage "Soul!"
+    Inventory.PickupSound "runes/soul"
+	States
+	{
+	Spawn:
+		RHLT ABCD 4
+		Loop
+    Pickup:
+        TNT1 A 0 ACS_NamedExecuteAlways("RuneSoul_Effect", 0)
+        TNT1 A 0 A_GiveInventory("SoulRune", 1)
         stop
-    }
+	}
 }
 
 Actor SoulRune_Counter : Rune_Activation {

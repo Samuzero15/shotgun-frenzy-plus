@@ -96,27 +96,26 @@ script 616 (void)
 Script "SFPlus_ShowForEveryone" OPEN
 {
 	while(!g_GameOver){
-		delay(1);
 		if (f_UseScoreSystem == 1)
 			Acs_NamedExecuteAlways("HUD_ShowTeamScore", 0, getlevelinfo(LEVELINFO_KILLED_MONSTERS));
 		
 		if(f_GameType == INTDB_GAMETYPE_COMBATFRENZY || f_GameType == INTDB_GAMETYPE_SHOTGUNFRENZY){
 			if(g_status != 0){
 				if(g_GameTimer > 0)
-					Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GameTimer);
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, g_GameTimer);
 				else {
 					switch(g_GuardianState){
 						case INTDB_GUARDIANSTATE_STANDBY:
-							Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, g_GuardianTimer);
 						break;
 						case INTDB_GUARDIANSTATE_PREPARED: 
-							Acs_NamedExecuteAlways("HUD_ShowNumberLeft", 0, g_MonstersLeft);
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, g_MonstersLeft);
 						break;
 						case INTDB_GUARDIANSTATE_ATTACK: 
-							Acs_NamedExecuteAlways("HUD_ShowString", 0, 1);
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 3);
 						break;
 						case INTDB_GUARDIANSTATE_DEFEAT:
-							Acs_NamedExecuteAlways("HUD_ShowNumberLeft", 0, g_MonstersLeft);
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, g_MonstersLeft);
 						break;
 					}	
 				}
@@ -124,13 +123,30 @@ Script "SFPlus_ShowForEveryone" OPEN
 
 		}else if (f_GameType == INTDB_GAMETYPE_SURVIVALDEFENDER){
 			if(g_MonstersLeft > 0)
-				Acs_NamedExecuteAlways("HUD_ShowNumberLeft", 0, g_MonstersLeft);
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, g_MonstersLeft);
 			else if (g_MonstersLeft == -1)
-				Acs_NamedExecuteAlways("HUD_ShowString", 0, 2);
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 4);
 		}
-					
+		delay(3);
 	}
 		//Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
+}
+
+
+script "HUD_ShowGameProgress" (int showtype, int value) clientside {
+	//if(consolePlayerNumber() == PlayerNumber()){
+		setfont("STATBIGS");
+		sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+		str string = "";
+		switch (showtype){
+			case 1: string = strparam(s:PlayHUD_TimerEX(value)); break;
+			case 2: string = strparam(d:value, s:" Left"); break;
+			case 3: string = "wait"; break;
+			case 4: string = "DONE";  break;
+		}
+		hudmessage(s:string; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
+		setfont("CONFONT");
+	//}
 }
 
 script "SFPlus_PlayerFullScreenHUD_Sync" ENTER
@@ -138,8 +154,8 @@ script "SFPlus_PlayerFullScreenHUD_Sync" ENTER
     // display loop
     while(playerInGame(PlayerNumber()))
     {
-		ACS_NamedExecuteAlways("SyncWithSBARINFO", 0, p_RankExp[p_Rank[playernumber()] + 1] - p_Exp[playernumber()]);
-		delay(1);
+		ACS_NamedExecuteAlways("SFPlus_SyncWithSBARINFO", 0, p_RankExp[p_Rank[playernumber()] + 1] - p_Exp[playernumber()]);
+		delay(35);
     }
 }  
 
@@ -148,7 +164,7 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
     // display loop
 	int credits, kills, next_range, exp, deaths, ups,
 	 streak, histreak, msstreak, mechtimer, corehp, 
-	 status, teamcredits, commander, ranknow;
+	 status, teamcredits, commander, ranknow, game_type, nuke_launched;
     while(playerInGame(PlayerNumber()) && consolePlayerNumber() == PlayerNumber() && ConsolePlayerNumber() >= 0)
     {
 		credits = CheckInventory("HUD_Credits");
@@ -165,6 +181,8 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
 		teamcredits = CheckInventory("HUD_TeamCredits");
 		commander = CheckInventory("HUD_Commander");
 		ranknow = CheckInventory("HUD_RankNow");
+		nuke_launched = CheckInventory("HUD_NukeLaunched");
+		game_type = CheckInventory("HUD_Gametype");
 		kills = next_range - exp;
 		
 		if(getCvar("screenblocks") == 12 || getCvar("screenblocks") < 11 || CheckInventory("SamuTInv_UsingTerminal")){
@@ -201,12 +219,12 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
 			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
 				5, corehp);
 		}
-		else if (c_NukeLaunched == 0 || status < 4)
+		else if (nuke_launched == 0 || status < 4)
         {
 		Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0,
 			status, corehp);
         }
-        else if(c_NukeLaunched == 1 || status == 4)
+        else if(nuke_launched == 1 || status == 4)
         {
 			Acs_NamedExecuteAlways("Hud_ShowCoreHealth", 0, 4, corehp);
 		}
@@ -214,7 +232,7 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
 	
         
         // team credits and mech status (if a commander based game)
-        if (f_Gametype == 1){
+        if (game_type == 1){
           Acs_NamedExecuteAlways("Hud_ShowTeamCredits_MechInfo", 0,
 								teamcredits, commander, mechtimer);
 		}								
@@ -308,16 +326,16 @@ function str PlayHUD_TimerEX(int tics){
 
 function str PlayHUD_MechStatus(int mech_tics){
 	str mech_string = "\n\nMech Status:";
-	
-	if(mech_tics >= 0){
+	int mechstate = CheckInventory("Hud_MechState");
+	if(mechstate == 2){
+		mech_string = StrAdd(mech_string, "\n\ciManuvering");
+	}else if(mechstate == 0){
+		mech_string = "";
+	}else{
 		mech_string = StrAdd(mech_string, cond(mech_tics,
 			StrAdd("\n\crRepairing\cj\n", PlayHUD_Timer(mech_tics)),
 			"\n\cvPrepared"));
-	} else if(mech_tics == -1){
-		mech_string = StrAdd(mech_string, "\n\ciManuvering");
-	} else{
-		mech_string = "";
-	}
+	} 
 	return mech_string;
 }
 
@@ -326,35 +344,6 @@ script "HUD_ShowTeamScore" (int points) clientside
 	setfont("CONFONT");
 	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 	hudmessage(s:"Team score: ",d:points; 1, 256, CR_TAN, 400.0, 18.1, 7.0);
-}
-
-script "HUD_ShowTimer" (int tics) clientside
-{
-	setfont("STATBIGS");
-	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-	hudmessage(s: PlayHUD_TimerEX(tics); 1, 255, CR_TAN, 400.0, 28.1, 7.0);
-	setfont("CONFONT");
-}
-
-script "HUD_ShowNumberLeft" (int val) clientside
-{
-	setfont("STATBIGS");
-	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-	hudmessage(d:val, s:" Left"; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
-	setfont("CONFONT");
-}
-
-script "HUD_ShowString" (int which) clientside
-{
-	str string = "";
-	switch(which){
-		case 1: string = "wait"; break;
-		case 2: string = "DONE"; break;
-	}
-	setfont("STATBIGS");
-	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-	hudmessage(s:string; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
-	setfont("CONFONT");
 }
 
 script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_tics) clientside

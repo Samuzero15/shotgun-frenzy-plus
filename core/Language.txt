@@ -56,7 +56,8 @@ FP_PUD_ArmorRepair  	=	"The health dispenser can repair your current armor faste
 							"upgrade equipped.";
 							
 FP_PUD_SpawnShield  	=	"Upon teleporting to the battlefield (or in re-spawning) "
-							"you're protected against all damage for 10 seconds.\n\n"
+							"you're protected against all damage for 10 seconds.\n"
+							"After that, there is a cooldown of 3 seconds before triggering the Spawn-Shield.\n\n"
 							"Now make your heroic entrance without the fear of losing your "
 							"precious life!";
 

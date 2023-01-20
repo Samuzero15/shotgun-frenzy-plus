@@ -100,6 +100,7 @@ Actor SpecialTeleportFog : TeleportFog replaces TeleportFog {
 	}
 }
 
+actor PlayUp_Spawnshield_Cooldown	: Integer { Inventory.MaxAmount 5 }
 ACTOR PlayUp_Spawnshield_Power : PowerInvulnerable
 {
 	Powerup.Duration -10

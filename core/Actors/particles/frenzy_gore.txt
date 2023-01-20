@@ -59,14 +59,18 @@ ACTOR splatEmitter_Bloody
 	}
 }
 
-ACTOR splatEmitter_CFX
+ACTOR SparksEmitter_Deploy
 {
 	radius 32
 	height 32
+	//+ClientsideOnly
 	States
 	{
 		Spawn:
 			TNT1 A 0 A_PlaySound("c/build")
+			TNT1 A 1
+			TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0, 7)
+			TNT1 A 1
 			TNT1 A 0 A_SpawnDebris("splatCFX")
 			TNT1 A 0 A_SpawnDebris("splatCFX")
 			TNT1 A 0 A_SpawnDebris("splatCFX")
@@ -80,7 +84,7 @@ ACTOR splatEmitter_CFX
 	}
 }
 
-ACTOR splatEmitter_CFX2
+ACTOR SparksEmitter_Building
 {
 	radius 32
 	height 32

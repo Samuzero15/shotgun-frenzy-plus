@@ -15,7 +15,7 @@
 
 #include "zcommon.acs"
 
-script "SFPlus_ScreenFlash" (int style, int time, int all)
+script "SFPlus_ScreenFlash" (int style, int time, int all) CLIENTSIDE
 {
     sethudsize(64, 128, 0);
 

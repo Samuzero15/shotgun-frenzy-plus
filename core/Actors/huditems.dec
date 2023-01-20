@@ -28,11 +28,13 @@ Actor HUD_MechTime			: Integer {}
 Actor HUD_Commander			: Integer {}
 Actor HUD_RankNow			: Integer {}
 Actor HUD_KS				: Integer {}
+Actor HUD_Gametype 			: Integer {}
 
 Actor HUD_Sector 			: Integer {}
 Actor HUD_CoreHP 			: Integer {}
 
 Actor HUD_Gamemode 			: Integer {}
+Actor HUD_NukeLaunched 		: Integer {}
 Actor HUD_Spectating 		: Integer {}
 Actor HUD_Rank 				: Integer {}
 Actor HUD_Wave 				: Integer {}

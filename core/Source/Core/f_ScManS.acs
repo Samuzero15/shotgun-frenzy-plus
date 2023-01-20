@@ -158,18 +158,17 @@ script 100 OPEN
         acs_suspend(120, 0);
         
         // wait until most of the demons are dead
+        GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
+		GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
         while(1)
         {
-            GiveActorInventory(111, "MarkOnMap_ThisAsshole", 1);
-            GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
-		    GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
-		    GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
-		    GiveActorInventory(110, "MarkOnMap_ThisAsshole", 1);
-
             // recount
             l_RemainingMonsters = thingcount(0, 110) + thingcount(0, 111) + thingcount(0, 112) + thingcount(0, 113) + thingcount(0, 114);
             g_MonstersLeft = l_RemainingMonsters;
-			f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
+			//f_SmallTipPlain (strparam(s:"Monsters remaining: ", d:l_RemainingMonsters), CR_BRICK, 4);
 			
 			//log(s:"l_RemainingMonsters = ", d:l_RemainingMonsters);
             if (l_RemainingMonsters < 5)     break;

@@ -6,9 +6,9 @@ ACTOR Inventory_Soulsphere : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITM1 A 0 bright
-		goto Super::SpawnLoop
+	Spawn.Init:
+		ITM1 ABCDEFGH 2 bright
+		loop
 	MechSync:
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Mech")
 		goto Effect.Mech
@@ -44,9 +44,9 @@ ACTOR Inventory_Megasphere : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITM2 A 0 bright
-		goto Super::SpawnLoop
+	Spawn.Init:
+		ITM2 ABCDEFGH 2 bright
+		loop
 
 	PowUpUpgrade_Cond:
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
@@ -104,9 +104,9 @@ ACTOR Inventory_Godsphere : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITM3 A 0 bright
-		goto Super::SpawnLoop
+	Spawn.Init:
+		ITM3 ABCDEFGH 2 bright
+		loop
 	MechSync:
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
 		goto Effect
@@ -135,9 +135,9 @@ ACTOR Inventory_Berserk2 : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITM4 A 0 bright
-		goto Super::SpawnLoop
+	Spawn.Init:
+		ITM4 ABCDEFGH 2 bright
+		loop
 	MechSync: // Allows the use inside mechs.
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		goto Effect
@@ -170,9 +170,9 @@ ACTOR Inventory_AmmoGiver : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITM9 A 0 bright
-		goto Super::SpawnLoop.Frame1
+	Spawn.Init:
+		ITM9 A 2 bright
+		loop
 	PowUpUpgrade_Cond:
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		TNT1 A 1 A_Jump(256, "Effect")
@@ -221,9 +221,9 @@ ACTOR Inventory_HellTrigger : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITP4 A 0 bright
-		goto Super::SpawnLoop
+	Spawn.Init:
+		ITP4 ABCDEFGH 2 bright
+		loop
 	MechSync:
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		goto Effect
@@ -232,10 +232,12 @@ ACTOR Inventory_HellTrigger : Inventory_Powerup
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect
 	PowUpUpgrade.Attack:
+		TNT1 A 0 A_TakeInventory("Ammunition_InfiniteAmmo", 1)
 		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_FastFire_2", 1)
 		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_Infinity_2", 1)
 		goto Effect.Flash
 	Effect:
+		TNT1 A 0 A_TakeInventory("Ammunition_InfiniteAmmo", 1)
 		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_FastFire", 1)
 		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_Infinity", 1)
 		goto Effect.Flash
@@ -282,9 +284,9 @@ ACTOR Inventory_Greedsphere : Inventory_Powerup
 	
 	States
 	{
-	Spawn:
-		ITP3 A 0 bright
-		goto Super::SpawnLoop
+	Spawn.Init:
+		ITP3 ABCDEFGH 2 bright
+		loop
 	Effect:
 		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_Greed", 1)
 		goto Effect.Flash

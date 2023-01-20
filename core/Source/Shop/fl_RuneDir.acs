@@ -24,7 +24,7 @@ function void SFPlus_DefineRunes(void){
     int tier = 4;
 	Rune_Add ("Strength",       "StrengthRune",     "RBTN02", tier, "RuneDoubleDamage"); 
 	Rune_Add ("Rage",           "RageRune",         "RBTN08", tier, "RuneDoubleFiringSpeed");
-    Rune_Add ("Spread",         "SpreadRune",       "RBTN11", tier, "RuneSpread"); 
+    Rune_Add ("Spread",         "SpreadRune_Pickup",       "RBTN11", tier, "RuneSpread"); 
 	Rune_Add ("Resistance",     "ResistanceRune",   "RBTN10", tier, "RuneHalfDamage");
     Rune_Add ("Rampage",        "RampageRune",      "RBTN14", tier, "RuneRampage");
 
@@ -33,17 +33,17 @@ function void SFPlus_DefineRunes(void){
     Rune_Add ("Reflection",     "ReflectionRune",   "RBTN06", tier, "RuneReflection");
     Rune_Add ("Defense",        "DefenseRune",      "RBTN19", tier, "RuneDefense");
     Rune_Add ("Resurrection",   "ResurrectionRune", "RBTN01", tier, "RuneResurrection");
-    Rune_Add ("Soul",           "SoulRune",         "RBTN13", tier, "RuneSoul");
+    Rune_Add ("Soul",           "SoulRune_Pickup",         "RBTN13", tier, "RuneSoul");
 
     tier = 2;
     Rune_Add ("Prosperity",     "ProsperityRune",   "RBTN07", tier, "RuneProsperity");
     Rune_Add ("Blast",          "BlastRune",        "RBTN17", tier, "RuneBlast");
-    Rune_Add ("Ammunition",     "AmmunitionRune",   "RBTN16", tier, "RuneAmmunition");
+    Rune_Add ("Ammunition",     "AmmunitionRune_Pickup",   "RBTN16", tier, "RuneAmmunition");
     Rune_Add ("Fortune",        "FortuneRune",      "RBTN18", tier, "RuneFortune");
     Rune_Add ("Temperance",     "TemperanceRune",   "RBTN15", tier, "RuneTemperance");
 
     tier = 1;
-    Rune_Add ("Health",         "HealthRune",       "RBTN12", tier, "RuneHealth");
+    Rune_Add ("Health",         "HealthRune_Pickup",       "RBTN12", tier, "RuneHealth");
 	Rune_Add ("Regeneration",   "RegenerationRune", "RBTN09", tier, "RuneRegeneration");
 	Rune_Add ("High Jump",      "HighJumpRune",     "RBTN05", tier, "RuneHighJump");
 	Rune_Add ("Haste",          "HasteRune",        "RBTN04", tier, "RuneSpeed25");

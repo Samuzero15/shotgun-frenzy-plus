@@ -192,7 +192,7 @@ ACTOR MONSTEREDITED_MechPlayer : PlayerPawn
 		WARM H 5 //A_PlayerScream
 		WARM I 5 A_NoBlocking
 		WARM J 5
-		TNT1 A 1
+		TNT1 A -1
         Stop 
 				// you cant do that! It should freeze the skulltag!.. if you were that mech still
 				// [Samu] Zandronum fixed that, so fuck it.
@@ -206,20 +206,20 @@ ACTOR MONSTEREDITED_MechPlayer : PlayerPawn
 	FinishXDeath:
 		WARM H 5 //A_XScream
 		WARM I 5 A_NoBlocking
-		TNT1 A 1
+		TNT1 A -1
         Stop
 	AltSkinDeath:
 		WARM A 6
 		WARM A 6 A_PlayerScream
 		WARM A 6
 		WARM A 6 A_NoBlocking
-		WARM A 6
+		WARM A -1
 		Stop
 	AltSkinXDeath:
 		WARM A 5 A_PlayerScream
 		WARM A 5 A_NoBlocking
 		WARM A 5 A_SkullPop
-		WARM A 5
+		WARM A -1
 		Stop
 	}
 }

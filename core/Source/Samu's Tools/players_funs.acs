@@ -36,6 +36,19 @@ function void giveTipsToPlayers(int howmuch){
 	}
 }
 
+function void giveTipsToPlayers_Except(int howmuch, int who){
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i) && who != i){
+			SetActivatorToPlayer(i);
+			
+			sf_AddTips(howmuch, i);
+			
+			SetActivator(0);
+		}
+	}
+}
+
 function void giveUPToPlayers(int howmuch){
 	for(int i = 0; i < 32; i++)
 	{

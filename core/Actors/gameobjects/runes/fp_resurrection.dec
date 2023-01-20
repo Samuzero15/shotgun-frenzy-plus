@@ -15,7 +15,6 @@ ACTOR ResurrectionRune : RuneGiver {
 	States
 	{
 	Spawn:
-
 		RRES A 3 Bright A_SpawnItem("ResurrectionRune_GFX")
 		RRES A 3 Bright A_fadein(0.5)
 		RRES A 6 A_fadeout(0.5)

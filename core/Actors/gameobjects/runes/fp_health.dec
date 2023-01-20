@@ -18,6 +18,23 @@ ACTOR HealthRune : RuneGiver {
 	}
 }
 
+Actor HealthRune_Pickup : CustomInventory
+{
+	+NOGRAVITY
+	Inventory.PickupMessage "Health!"
+	Inventory.PickupSound "runes/health"
+	States
+	{
+	Spawn:
+		RHLT ABCD 4
+		Loop
+    Pickup:
+        TNT1 A 0 ACS_NamedExecuteAlways("RuneHealth_Effect", 0)
+        TNT1 A 0 A_GiveInventory("HealthRune", 1)
+        stop
+	}
+}
+
 Actor HealthRune_BloodDrip : Health {
 	Inventory.MaxAmount 200
 	Inventory.Amount 10 // 

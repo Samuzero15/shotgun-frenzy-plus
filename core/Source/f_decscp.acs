@@ -146,6 +146,36 @@ Script "Armor_CompleteTo" (int amount){
 	}
 }
 
+Script "Pickup_Fade" (int stay_seconds) {
+	str class = GetActorClass(0);
+	int last_seconds = 5;
+	while ((stay_seconds - last_seconds) > 0){
+		if(!(CheckActorClass(0, class) && CheckFlag(0, "SPECIAL")))	terminate;
+		stay_seconds--;
+		delay(35);
+	}
+	ACS_NamedExecuteAlways("Pickup_FadeGFX", 0, last_seconds);
+	while (last_seconds > 0){
+		if(!(CheckActorClass(0, class) && CheckFlag(0, "SPECIAL")))	terminate;
+		last_seconds--;
+		delay(35);
+	}
+	Thing_Remove(0);
+}
+
+Script "Pickup_FadeGFX" (int last_seconds) ClientSide {
+	int fade_tics = 0;
+	while(fade_tics <= last_seconds*35){
+		fade_tics += 4;
+		SetActorProperty(0, APROP_RenderStyle, STYLE_Normal);
+		delay(4);
+		fade_tics += 4;
+		SetActorProperty(0, APROP_Alpha, 0.5);
+		SetActorProperty(0, APROP_RenderStyle, STYLE_Translucent);
+		delay(4);
+	}
+}
+
 Script "Armor_ArmorShardsOnly" (void){
 	SetResultValue(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0);
 }
@@ -386,6 +416,19 @@ Script "GetUniqueTID" (void){
 	SetResultValue(UniqueTID());
 }
 
+Script "Marker_Script" (void) ClientSide {
+	int tid = UniqueTiD(), x = GetActorX(0), y = GetActorY(0), z = GetActorZ(0);
+	SpawnForced("Marker_enemy", x, y, z, tid);
+	while(GetActorProperty(0, APROP_Health) > 0){
+		if(x != GetActorX(0) || y != GetActorY(0)){
+			x = GetActorX(0); y = GetActorY(0); z = GetActorZ(0);
+			setactorposition(tid, x, y, z, 0);
+		}
+		delay(3);
+	}
+	Thing_Remove(tid);
+}
+
 Script "Turret_LinkBase" (int basetid){
 	int oldtid = ActivatorTID();
 	int tmptid = UniqueTID();
@@ -448,19 +491,26 @@ Script "Turret_States" (int height){
 	int bid = UniqueTID(4000);
 	int sid = UniqueTID(5000);
 	spawn("Turret_HealthBar", getactorx(0), getactory(0), getactorz(0) + z, bid);
-	spawn("Turret_LevelStars", getactorx(0), getactory(0), getactorz(0) + z*2, sid);
+	spawn("Turret_LevelStars", getactorx(0), getactory(0), getactorz(0) + z, sid);
 	//SetActorProperty(bid, APROP_RENDERSTYLE, STYLE_STENCIL);
+	Bar_State(bid, hp, max_hp);
+	Bar_Color(bid, hp, max_hp); 
+	setActorState(sid, Strparam(s:"LV", d:lvl));
 	while (hp > 0){
-		hp = GetActorProperty(0, APROP_HEALTH);
 		// Health display
-		setactorposition(bid, getactorx(0), getactory(0), getactorz(0) + z, 0);
-		Bar_State(bid, hp, max_hp);
-		//Bar_Color(bid, hp, max_hp); 
+		if(hp != GetActorProperty(0, APROP_HEALTH)){
+			hp = GetActorProperty(0, APROP_HEALTH);
+			Bar_State(bid, hp, max_hp);
+			Bar_Color(bid, hp, max_hp); 
+		}
 		// Level display
-		lvl = GetActorProperty(0, APROP_STAMINA);
-		setActorState(sid, Strparam(s:"LV", d:lvl));
+		if(lvl != GetActorProperty(0, APROP_STAMINA)){
+			lvl = GetActorProperty(0, APROP_STAMINA);
+			setActorState(sid, Strparam(s:"LV", d:lvl));
+		}
+		setactorposition(bid, getactorx(0), getactory(0), getactorz(0) + z, 0);
 		setactorposition(sid, getactorx(0), getactory(0), getactorz(0) + z, 0);
-		delay(1);
+		delay(5);
 	}
 	setActorState(bid, "HP_0");
 	setActorState(sid, "LV0");
@@ -471,7 +521,6 @@ Script "Turret_States" (int height){
 
 Script "Building_AggroLoop" (int tid) {
 	delay(5);
-	ACS_NamedExecuteAlways("Building_UpgradeStats", 0);
 	while(GetActorProperty(0, APROP_HEALTH) >= 1){
 		//log(s:"Aggroing");
 		TakeInventory("Building_GetRange", 0xFFFFFFFF);
@@ -490,35 +539,6 @@ Script "Building_AggroLoop" (int tid) {
 	}
 	//log(s:"Done aggroing");
 }
-
-Script "Building_UpgradeStats" (void){
-	int current_level = 0;
-	int health = GetActorProperty(0, APROP_HEALTH);
-	int heal_factor = 0;
-	int max_health = 0;
-	while(health >= 1){
-		health = GetActorProperty(0, APROP_HEALTH);
-		if(current_level != GetActorProperty(0, APROP_STAMINA)){ // Upgrade damage and damage factor.
-			SetActorProperty(0, APROP_DamageFactor, 1.0-(0.1)*current_level); // Armor up
-			SetActorProperty(0, APROP_DamageMultiplier, 1.0+(0.2)*current_level); // Damage up
-			current_level = GetActorProperty(0, APROP_STAMINA);
-			SetActorProperty(0, APROP_Health, max_health);// Fully heal it
-		}else {
-			max_health = GetActorProperty(0, APROP_SpawnHealth);
-			if(health < max_health && health >= 1 && current_level > 0){ // regen script
-				heal_factor = FixedMul(0.02*current_level, max_health*1.0) >> 16;
-				if((health + heal_factor) >= max_health){
-					SetActorProperty(0, APROP_Health, max_health);
-				}else{
-					SetActorProperty(0, APROP_Health, health + heal_factor);
-				}
-			}
-		}
-		
-		delay(35);
-	}
-}
-
 
 Script "Building_AttackThis" (void) {
 	if(CheckInventory("Building_AttackFirst")) Terminate;
