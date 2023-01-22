@@ -151,3 +151,25 @@
 ) Some attempts to prevent the desync.
 ) Fix on magnet for Credits and armor and health bonus.
 ) Added some clientside flags for many particles.
+
+///////// (v1.6) //////////
+
+!) Now causing burns is not guaranteed, and causing the fire chain is also reduced. There is a chance for triggering it.
+!) Flamers will launch a fire projectile that will not rip (and does more damage for the first target) along side of the ripper version.
+!) Helltrigger will give ammo regeneration, and ammo infinity but for only the first 2.5 seconds. (5 seconds with pow.up upgrade)
+) Lightbars will now be spawned by ACS when using powerups, and the champion effects (Like healing and emperor champions).
+) Touched the Altstates's delay and some few rewrites.
+) Some more optimizations on the scripts.
+) Now fading items will not be done by decorate but done now by an small ACS script.
+) Turrets will now add credits to it's owner.
+) Another attempt to call always the kill streak HUD.
+) Spread will always spend x3 Ammo. For the sake of a nerf.
+) Did some adjusts in the Enemy Marker actor. (Thanks Mr. Satan!)
+) Clientsided some other HUD scripts.
+) Patcher projectiles will now they activate as Hitscan projectiles!
+) Optimized the display code for the patcher turret checker.
+) Now, stealth champions will be actually traslucent up to 25% of alpha by the help of ACS. (they did'nt fade in server side)
+) Spawn shield will now call a 3 second cooldown timer after triggering its effects.
+) Some other code rewrites.
+) Marker Enemy is now clientsided, yay! (and now follows the enemies through an ACS script)
+) Changed the prices of the item shop turrets.

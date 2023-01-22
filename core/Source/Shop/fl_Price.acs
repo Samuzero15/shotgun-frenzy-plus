@@ -134,7 +134,7 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_p_megasphere", 		300);
 	Prices_add("pr_p_godsphere", 		8000);
 	Prices_add("pr_p_berserk2", 		7000);
-	Prices_add("pr_p_helltrigger", 		12000); // HEH
+	Prices_add("pr_p_helltrigger", 		6500);
 	Prices_add("pr_i_backpack", 		2850);
 	Prices_add("pr_i_mines", 			850);
 	Prices_add("pr_d_drone_saw", 		400);
@@ -142,12 +142,12 @@ script "SFPlus_DefinePrices" Open
 	Prices_add("pr_d_disp_health", 		500);
 	Prices_add("pr_d_disp_ammo", 		500);
 	Prices_add("pr_d_turret_bullet", 	650);
-	Prices_add("pr_d_turret_rocket", 	1500);
-	Prices_add("pr_d_turret_plasma", 	1700);
+	Prices_add("pr_d_turret_rocket", 	2150);
+	Prices_add("pr_d_turret_plasma", 	2400);
 	Prices_add("pr_d_turret_rail", 		1900);
-	Prices_add("pr_d_turret_flame", 	2300);
-	Prices_add("pr_d_turret_shotgun", 	1850);
-	Prices_add("pr_d_turret_chaingun", 	3000);
+	Prices_add("pr_d_turret_flame", 	3000);
+	Prices_add("pr_d_turret_shotgun", 	1350);
+	Prices_add("pr_d_turret_chaingun", 	1500);
 	
 	//Commander Prices
 	

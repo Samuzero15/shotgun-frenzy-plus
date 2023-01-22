@@ -221,16 +221,12 @@ ACTOR marker_enemy : MapMarker
     MK15 A 1 nodelay
     goto LoopMe
   LoopMe:
-    MK15 A 1 A_FadeIn(0.1)
-    MK15 A 1 A_FadeIn(0.1)
-    MK15 A 1 A_FadeIn(0.1)
-    MK15 A 1 A_FadeIn(0.1)
-    MK15 A 1 A_FadeIn(0.1)
-    MK15 A 1 A_FadeOut(0.1)
-    MK15 A 1 A_FadeOut(0.1)
-    MK15 A 1 A_FadeOut(0.1)
-    MK15 A 1 A_FadeOut(0.1)
-    MK15 A 1 A_FadeOut(0.1)
+    MK15 A 2 A_FadeIn(0.15)
+    MK15 A 2 A_FadeIn(0.15)
+    MK15 A 2 A_FadeIn(0.15)
+    MK15 A 2 A_FadeOut(0.15)
+    MK15 A 2 A_FadeOut(0.15)
+    MK15 A 2 A_FadeOut(0.15)
     loop
   Death:
     TNT1 A 1

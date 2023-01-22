@@ -47,7 +47,8 @@ Script "SFPlus_PowerupList" (void) CLIENTSIDE{
 		PowHud_Add("\cg-25% Atk", 		"ChampPoison_CurseDamage");
 		PowHud_Add("x4 Damage", 		"PowerQuadDamage");
 		PowHud_Add("x6 Damage", 		"PlayUp_PowUpUpgrade_6xDmg");
-		PowHud_Add("Fast Fire", 		"Inv_Power_Infinity");
+		PowHud_Add("Infinite Ammo", 	"Inv_Power_Infinity");
+		PowHud_Add("Helltrigger", 		"Inv_Power_AmmoRegeneration");
 		PowHud_Add("x2 Credits", 		"Inv_Power_Wealth");
 		PowHud_Add("Invurnerable", 		"PowerInvulnerable");
 		PowHud_Add("Prometeo x2 DMG", 	"PlayUp_Prometeo_Power_2xDmg");

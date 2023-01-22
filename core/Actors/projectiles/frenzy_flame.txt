@@ -5,7 +5,7 @@ actor FlamerShot
   Radius 13
   Height 8
   Speed 25
-  Damage (6)
+  Damage (10)
   Projectile
   +RANDOMIZE
   RenderStyle Add
@@ -32,9 +32,14 @@ actor FlamerShot
   }
 }
 
+actor FlamerShot_NoRip : FlamerShot { 
+  Damage 10
+  -Ripper
+  }
+
 actor FlamerShotS_tw : FlamerShot
 {
-  Damage (10)
+  Damage (25)
   Speed 30
   States
   {
@@ -43,6 +48,11 @@ actor FlamerShotS_tw : FlamerShot
     stop
   }
 }
+
+actor FlamerShotS_NoRip : FlamerShotS_tw { 
+  Damage 20
+  -Ripper 
+  }
 
 Actor FlamerRemainsSpawner{
   Radius 8

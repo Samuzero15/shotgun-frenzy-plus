@@ -85,6 +85,7 @@ ACTOR SpreadRune_Drop : RuneDrop
 			TNT1 A 0 A_SetArg(0, 2)
 		goto Super::Pickup
 		Pickup.Give:
+			TNT1 A 0 A_JumpIfInventory("RuneSpread", 1, "Null")
 			TNT1 A 0 A_GiveInventory("SpreadRune_Pickup", 1)
 		stop
 	}

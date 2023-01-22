@@ -1,0 +1,72 @@
+
+script "AltState_Burn" (void)
+{
+	If(CheckInventory("AltState_Burning") || 
+		CheckFlag(0, "Friendly") ||
+	 	CheckFlag(0, "DORMANT"))terminate;
+
+	GiveInventory("AltState_Burning", 1);
+	int fire_triggerburn = 
+		random(0, 99) < (20+5*sf_GetMonsterClass_Health());
+	if(!fire_triggerburn) Terminate;
+
+	int ischampion = CheckInventory("Champ_Type") > 1;
+	int monster_class = sf_GetMonsterClass_Health();
+
+	int x = GetActorX(0);
+	int y = GetActorY(0);
+	int z = GetActorZ(0) + 16.0;
+	int r = 32.0;
+	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_BurnTimer")){
+		//SetActorState (0, "Pain");
+		// Spawn a fire to harm itself.
+		x = GetActorX(0);
+	 	y = GetActorY(0);
+	 	z = GetActorZ(0) + 16.0;
+		Spawn("FlamerRemains", x, y, z, 0, 0);
+		SpawnForced("ParticleSmoke_Spawner", GetActorX(0), GetActorY(0), GetActorZ(0));
+		delay(17);
+	}
+	// 33% + 5%*Monster class of releasing chaining fire. - 5+Monster Class if it's a champion.
+	int fire_chainchance = 
+		random(0, 99) < ((35+5*monster_class) - (5 + monster_class)*ischampion);
+	if(GetActorProperty(0, APROP_HEALTH) <= 0 && fire_chainchance){
+		// Spread fire to burn adjacent monsters.
+		x = GetActorX(0);
+	 	y = GetActorY(0);
+	 	z = GetActorZ(0) + 16.0;
+		SpawnForced("ParticleSmoke_Spawner", GetActorX(0), GetActorY(0), GetActorZ(0));
+		Spawn("FlamerRemainsSpawner", x, y, z, 0, 0);
+	}
+	delay((35*monster_class)*(1+ischampion));
+	TakeInventory("AltState_Burning", 1);
+}
+
+script "AltState_Stun" (void)
+{
+	If(CheckInventory("AltState_Stunned") || 
+        CheckFlag(0, "Friendly") || 
+        CheckFlag(0, "DORMANT"))terminate;
+
+	GiveInventory("AltState_Stunned", 1);
+	int ischampion = CheckInventory("Champ_Type") > 1;
+	int monster_class = sf_GetMonsterClass_Health();
+
+	int ori_speed = GetActorProperty(0, APROP_SPEED);
+	SetActorProperty(0, APROP_SPEED, 0);
+	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
+		//SetActorState (0, "Pain");
+		Thing_Damage(0, 1, 0);
+		SetActorProperty(0, APROP_HEALTH, GetActorProperty(0, APROP_HEALTH) + 1);
+		SpawnForced("ParticleThunderBolt_Spawner", GetActorX(0), GetActorY(0), GetActorZ(0));
+		delay(6);
+	}
+	SetActorProperty(0, APROP_SPEED, ori_speed);
+	//SetActorState (0, "Spawn");
+	// Cooldown depends on the monster class and if its a champion.
+	// Duration is doubled if the monster is a champion.
+	// 2 seconds * class * 1+is champion?
+	//thing_hate(0, g_Status + 100, 4);
+	delay((35*monster_class)*(1+ischampion));
+	TakeInventory("AltState_Stunned", 1);
+}

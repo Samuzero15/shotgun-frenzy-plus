@@ -19,6 +19,7 @@
 #import "f_tip.acs"
 #include "samu_tools.acs"
 #include "wep_patcher.acs"
+#include "altstates.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -77,6 +78,35 @@ script "ParticleCheck" (int type) ClientSide{
 	if(!GetUserCVar(player_console, cvar)) {SetActorState(0, "NoSpawn");}	
 }
 
+Script "LightBarsSpawner" (int radius, int color) ClientSide{
+	str particle;
+	switch(color){
+		case 0: particle = "streak_red";	break;
+		case 1: particle = "streak_blue";	break;
+		case 2: particle = "streak_green";	break;
+		case 3: particle = "streak_yellow";	break;
+		case 4: particle = "streak_violet"; break;
+	}
+
+	int count = 3, x, y, z, a;
+	int grade_add = (1.0 / 16);
+	int tid;
+	int invert = random (0,1);
+	for(int i = 0; i < 16; i ++){
+		x = GetActorX(0); y = GetActorY(0); z = GetActorZ(0); a = GetActorAngle(0); tid = UniqueTID(0);
+		if(invert){
+			SpawnForced(particle, x + cos(a-grade_add*i)*radius, y + sin(a-grade_add*i)*radius, z,tid);
+			SpawnForced(particle, x - cos(a-grade_add*i)*radius, y - sin(a-grade_add*i)*radius, z,tid);
+		}
+		else {
+			SpawnForced(particle, x + cos(a+grade_add*i)*radius, y + sin(a+grade_add*i)*radius, z,tid);
+			SpawnForced(particle, x - cos(a+grade_add*i)*radius, y - sin(a+grade_add*i)*radius, z,tid);
+		}
+		SetActorVelocity(tid, 0, 0, 3.0+random(-1.5, 1.5), 0, 0);
+		delay(random(2,5));
+	}
+}
+
 
 function void AddAmmoCapacity (str ammo, int amount){
 	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
@@ -123,6 +153,24 @@ script "PersonalBP_Reset" (void) {
 	SetAmmoCapacity("GLauncher_Ammo", 	15);
 	SetAmmoCapacity("Flinger_Ammo", 	50);
 	SetAmmoCapacity("Gasoline", 		200);
+}
+
+Script "HellTriggerPower_AmmoRegeneration" (int upgraded){
+	TakeInventory("Inv_Power_AmmoRegeneration", 99999999);
+	int lessdelay = 0;
+	if(upgraded){
+		GiveInventory("Inv_PowerGiver_HellTrigger_AmmoRegeneration_2", 1);
+		lessdelay = 15;
+	}else {
+		GiveInventory("Inv_PowerGiver_HellTrigger_AmmoRegeneration", 1);
+	}
+	int tics = 0;
+	while(PlayerHealth() > 0 && CheckInventory("Inv_Power_AmmoRegeneration")){
+		if(tics % (35-lessdelay) == 0) 
+			GiveInventory("HellTrigger_AmmoSatchel", 1);
+		tics ++;
+		delay(1);
+	}
 }
 
 Script "Player_GetRank" (void){
@@ -240,63 +288,6 @@ Script "AltState_Particle_Activate" (void) {
 	Thing_Activate(0);
 }
 
-script "AltState_Burn" (void)
-{
-	If(CheckInventory("AltState_Burning") || 
-		CheckFlag(0, "Friendly") ||
-	 	CheckFlag(0, "DORMANT")){terminate;}
-
-	GiveInventory("AltState_Burning", 1);
-	int x = GetActorX(0);
-	int y = GetActorY(0);
-	int z = GetActorZ(0) + 16.0;
-	int r = 32.0;
-	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_BurnTimer")){
-		//SetActorState (0, "Pain");
-		// Spawn a fire to harm itself.
-		x = GetActorX(0);
-	 	y = GetActorY(0);
-	 	z = GetActorZ(0) + 16.0;
-		Spawn("FlamerRemains", x, y, z, 0, 0);
-		SpawnForced("ParticleSmoke_Spawner", GetActorX(0), GetActorY(0), GetActorZ(0));
-		delay(17);
-	}
-
-	if(GetActorProperty(0, APROP_HEALTH) <= 0){
-		// Spread fire to burn adjacent monsters.
-		x = GetActorX(0);
-	 	y = GetActorY(0);
-	 	z = GetActorZ(0) + 16.0;
-		SpawnForced("ParticleSmoke_Spawner", GetActorX(0), GetActorY(0), GetActorZ(0));
-		Spawn("FlamerRemainsSpawner", x, y, z, 0, 0);
-	}
-	delay((35*(sf_GetMonsterClass_Health()))*(1+CheckInventory("Champ_Type")));
-	TakeInventory("AltState_Burning", 1);
-}
-
-script "AltState_Stun" (void)
-{
-	If(CheckInventory("AltState_Stunned") || CheckFlag(0, "Friendly") || CheckFlag(0, "DORMANT")){terminate;}
-	GiveInventory("AltState_Stunned", 1);
-	int ori_speed = GetActorProperty(0, APROP_SPEED);
-	SetActorProperty(0, APROP_SPEED, 0);
-	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
-		//SetActorState (0, "Pain");
-		Thing_Damage(0, 1, 0);
-		SetActorProperty(0, APROP_HEALTH, GetActorProperty(0, APROP_HEALTH) + 1);
-		SpawnForced("ParticleThunderBolt_Spawner", GetActorX(0), GetActorY(0), GetActorZ(0));
-		delay(6);
-	}
-	SetActorProperty(0, APROP_SPEED, ori_speed);
-	//SetActorState (0, "Spawn");
-	// Cooldown depends on the monster class and if its a champion.
-	// Duration is doubled if the monster is a champion.
-	// 2 seconds * class * 1+is champion?
-	//thing_hate(0, g_Status + 100, 4);
-	delay((35*(sf_GetMonsterClass_Health()))*(1+CheckInventory("Champ_Type")));
-	TakeInventory("AltState_Stunned", 1);
-}
-
 #libdefine REPEATER_HEATAIM 0
 #libdefine REPEATER_BONUSDMG  1
 #libdefine REPEATER_FIRECHANCE 2
@@ -384,7 +375,7 @@ script "SF_SpawnADrone" (void){
 
 script "InfAmmoCheck" (void)
 {
-	setResultValue(GetCvar("sv_infiniteammo"));
+	setResultValue(GetCvar("sv_infiniteammo") || CheckInventory("PowerInfiniteAmmo") || CheckInventory("Inv_Power_Infinity"));
 }
 
 
@@ -494,14 +485,14 @@ Script "Turret_States" (int height){
 	spawn("Turret_LevelStars", getactorx(0), getactory(0), getactorz(0) + z, sid);
 	//SetActorProperty(bid, APROP_RENDERSTYLE, STYLE_STENCIL);
 	Bar_State(bid, hp, max_hp);
-	Bar_Color(bid, hp, max_hp); 
+	//Bar_Color(bid, hp, max_hp); 
 	setActorState(sid, Strparam(s:"LV", d:lvl));
 	while (hp > 0){
 		// Health display
 		if(hp != GetActorProperty(0, APROP_HEALTH)){
 			hp = GetActorProperty(0, APROP_HEALTH);
 			Bar_State(bid, hp, max_hp);
-			Bar_Color(bid, hp, max_hp); 
+			//Bar_Color(bid, hp, max_hp); 
 		}
 		// Level display
 		if(lvl != GetActorProperty(0, APROP_STAMINA)){

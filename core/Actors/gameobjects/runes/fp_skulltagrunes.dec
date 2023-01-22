@@ -9,6 +9,7 @@ Actor SpreadRune_Pickup : CustomInventory
 		SPRR ABCD 6
 		Loop
     Pickup:
+		TNT1 A 0 A_JumpIfInventory("RuneSpread", 1, "Null")
         TNT1 A 0 ACS_NamedExecuteAlways("RuneSpread_Effect", 0)
         TNT1 A 0 A_GiveInventory("SpreadRune", 1)
         stop

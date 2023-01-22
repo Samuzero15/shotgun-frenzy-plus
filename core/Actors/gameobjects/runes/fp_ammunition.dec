@@ -43,6 +43,7 @@ Actor AmmunitionRune_Satchel : Rune_Activation {
 			ADDU A -1
 		stop
 		Pickup:
+			TNT1 A 0 A_GiveInventory("ClipPistol", 25)
             TNT1 A 0 A_GiveInventory("Clip", 50)
 			TNT1 A 0 A_GiveInventory("Shell", 4)
 			TNT1 A 0 A_GiveInventory("RocketAmmo", 50)

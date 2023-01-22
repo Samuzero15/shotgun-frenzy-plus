@@ -24,9 +24,12 @@ ACTOR Flamer : Weapon
 			BLST A 0 A_Raise
 			goto Select
 		Fire:
+			TNT1 A 0 A_FireCustomMissile("FlamerShot_NoRip", 0, 0)
 			BLST B 5 A_FireCustomMissile("FlamerShot", 0)
 			TNT1 A 0 A_FireCustomMissile("FlamerShot", 5)
 			TNT1 A 0 A_FireCustomMissile("FlamerShot", -5)
+			TNT1 A 0 A_FireCustomMissile("FlamerShot_NoRip", 5, 0)
+			TNT1 A 0 A_FireCustomMissile("FlamerShot_NoRip", -5, 0)
 			BLST B 4 
 			BLST C 20 A_Refire
 			goto Ready
@@ -63,8 +66,13 @@ actor FlamerS : Flamer
                         BLST B 5 A_FireCustomMissile("FlamerShotS_tw", 0)
 						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", 5)
 						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -5)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 0, 0)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 5, 0)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", -5, 0)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 10, 0)
 						BLST B 2 A_FireCustomMissile("FlamerShotS_tw", 10, 0)
 						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -10, 0)
+						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", -10, 0)
 						BLST B 2 
                         BLST C 20 A_Refire
                         goto Ready

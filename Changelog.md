@@ -9,6 +9,17 @@
 
 ## v1 - The path of the damned...
 
+#### (21 / 1 / 2023) (v1.6 Release!) [Particle clientsiding, and some balances]
+	!*) Now causing burns is not guaranteed, and causing the fire chain is also reduced. There is a chance for triggering it.
+	!*) Flamers will launch a fire projectile that will not rip (and does more damage for the first target) along side of the ripper version.
+	!*) Helltrigger loses it's capability to give infinite ammo. Partially.
+	// Helltrigger will give ammo regeneration, and ammo infinity but for only the first 2.5 seconds. (5 seconds with pow.up upgrade)
+	// Fast fire is still intact.
+	// Hey, let's face it, the powerup asked for a nerf lol.
+	*) Lightbars will now be spawned by ACS when using powerups, and the champion effects (Like healing and emperor champions).
+	*) Touched the Altstates's delay and some few rewrites.
+	*) Changed the prices of the item shop turrets.
+
 #### (9 - 20 / 1 / 2023) [Optimizating stuff, and some fixes.]
 	*) Some more optimizations on the scripts.
 	*) Now fading items will not be done by decorate but done now by an small ACS script.
