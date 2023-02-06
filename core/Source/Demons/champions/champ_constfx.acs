@@ -48,8 +48,8 @@ Script "SFPlus_ChampHealing_Heal" (void){
 		GiveInventory("Monster_MaxHealth", health);
 		SpawnHealth = CheckInventory("Monster_MaxHealth");
 	}
-	if(Health == SpawnHealth || Champ_IsType(CHAMP_HEALING) || Champ_IsType(CHAMP_PRIDEFUL))
-	// Healings can't heal themselves. Pridefuls are not allowed too.
+	if(Health == SpawnHealth || Champ_IsType(CHAMP_HEALING) || Champ_IsType(CHAMP_PRIDEFUL) || CheckFlag(0,"FRIENDLY"))
+	// Healings can't heal themselves. Pridefuls are not allowed too. Cores and batteries are not allowed either lol.
 	{	SetResultValue(0);
 		terminate;}
 	
@@ -62,8 +62,9 @@ Script "SFPlus_ChampHealing_Heal" (void){
 }
 Script "SFPlus_ChampEmperor_Buff" (void){
 	//Buffs monsters temporally, like champions but with 50% of speed more for the monsters arround
-	if(CheckInventory("ChampBuff_NormalAtk") || Champ_IsType(CHAMP_EMPEROR) || Champ_IsType(CHAMP_PRIDEFUL))
-	// Emperors can't buff themselves. Pridefuls are not allowed too.
+	if(CheckInventory("ChampBuff_NormalAtk") 
+	|| Champ_IsType(CHAMP_EMPEROR) || Champ_IsType(CHAMP_PRIDEFUL) || CheckFlag(0,"FRIENDLY"))
+	// Healings can't heal themselves. Pridefuls are not allowed too. Cores and batteries are not allowed either lol.
 	// Only 1 instance of buff can be allowed.
 	{	SetResultValue(0);
 		terminate;}

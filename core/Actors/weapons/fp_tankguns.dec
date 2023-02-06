@@ -340,21 +340,21 @@ actor seekerRocket_ForAirstrike// : MageStaffFX2
 	+SEEKERMISSILE
 	//-RIPPER
 	DeathSound "DSQKLDTH"
-        explosionradius 600
-        explosiondamage 900
+    explosionradius 600
+    explosiondamage 900
 	renderstyle add
-  DamageType MarineFire
+  	DamageType MarineFire
 	States
 	{
 	Spawn:
 		QROK A 1 bright A_SeekerMissile(80,90)
 		NULL A 0 A_CustomMissile("seekerRockTrail",0,0,0,0)
 		QROK A 0 Bright A_LookEx(2,0,12,0,360,"See")
-	QROK A 0 Bright //A_MStaffTrack
+		QROK A 0 Bright //A_MStaffTrack
 	Goto Spawn
     See:
-	QROK A 0 Bright //A_MeleeAttack
-	QROK A 0 Bright A_Die
+		QROK A 0 Bright //A_MeleeAttack
+		QROK A 0 Bright A_Die
 	Death:
 		EXP3 A 2 Bright A_Explode
 		NULL A 0 A_SpawnItem("ExtraExplosion")

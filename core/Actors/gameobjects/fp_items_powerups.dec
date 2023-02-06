@@ -241,8 +241,6 @@ ACTOR Inventory_HellTrigger : Inventory_Powerup
 		TNT1 A 0 A_TakeInventory("Inv_Power_FastFire", 1)
 		TNT1 A 0 A_TakeInventory("Inv_Power_AmmoRegeneration", 1)
 		TNT1 A 0 A_TakeInventory("Ammunition_InfiniteAmmo", 1)
-		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_Infinity_2", 1)
-		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_FastFire_2", 1)
 		TNT1 A 0 ACS_NamedExecuteAlways("HellTriggerPower_AmmoRegeneration", 0, 1)
 		goto Effect.Flash
 	Effect:
@@ -250,8 +248,6 @@ ACTOR Inventory_HellTrigger : Inventory_Powerup
 		TNT1 A 0 A_TakeInventory("Inv_Power_FastFire", 1)
 		TNT1 A 0 A_TakeInventory("Inv_Power_AmmoRegeneration", 1)
 		TNT1 A 0 A_TakeInventory("Ammunition_InfiniteAmmo", 1)
-		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_FastFire", 1)
-		TNT1 A 0 A_GiveInventory("Inv_PowerGiver_HellTrigger_Infinity", 1)
 		TNT1 A 0 ACS_NamedExecuteAlways("HellTriggerPower_AmmoRegeneration", 0, 0)
 		goto Effect.Flash
 	Effect.Flash:

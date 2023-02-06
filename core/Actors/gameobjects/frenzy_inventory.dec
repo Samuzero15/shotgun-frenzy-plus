@@ -78,6 +78,7 @@ Actor Inventory_Powerup : Inventory_Item {
 #include "Actors/gameobjects/fp_items_powerups.dec"
 
 Actor P_Backpack : Boolean {}
+Actor G_Backpack : Boolean {}
 Actor GotTank : boolean  {}
 
 // Saw Drone
@@ -138,7 +139,7 @@ ACTOR Inventory_TeslaCoil : Inventory_Item
 		ITM8 ABCDEFGH 2 BRIGHT
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_TESLA)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_TESLA), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -159,7 +160,7 @@ ACTOR Inventory_TurretBullet : Inventory_Item
 
 	Effect:
 		TNT1 A 0 //A_SpawnItemEx("TurretBullet", 64, 0, 0, 0, 0, 0, 0, 0, 0, tid)
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_BULLET)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_BULLET), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -179,7 +180,7 @@ ACTOR Inventory_TurretRocket : Inventory_Item
 		loop
 	
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_ROCKET)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_ROCKET), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -197,7 +198,7 @@ ACTOR Inventory_TurretPlasma : Inventory_Item
 		ITMC A 2
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_PLASMA)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_PLASMA), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -233,7 +234,7 @@ ACTOR Inventory_TurretFlame : Inventory_Item
 		ITME A 2 bright
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_FLAME)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_FLAME), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -251,7 +252,7 @@ ACTOR Inventory_TurretShotgun : Inventory_Item
 		ITP2 ABCDEFGH 2 bright
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_SHOTGUN)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_SHOTGUN), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -269,7 +270,7 @@ ACTOR Inventory_TurretChaingun : Inventory_Item
 		ITP1 ABCDEFGH 2 bright
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_TURRET_CHAINGUN)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_TURRET_CHAINGUN), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -293,7 +294,7 @@ ACTOR Inventory_HealthDispenser : Inventory_Item
 		HDIS A 2 bright
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_DISPENSER_HEALTH)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_DISPENSER_HEALTH), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
@@ -312,7 +313,7 @@ ACTOR Inventory_AmmoDispenser : Inventory_Item
 		ADIS A 2 bright
 		loop
 	Effect:
-		TNT1 A 0 ACS_NamedExecuteAlways("SFPlus_DeployPlayerBuilding", 0, DEPLOY_DISPENSER_AMMO)
+		TNT1 A 0 A_JumpIf(!CallACS("SFPlus_DeployPlayerBuilding", DEPLOY_DISPENSER_AMMO), "Null")
 		TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}

@@ -82,11 +82,10 @@ script "SFPlus_DeployPlayerBuilding" (int which){
 			actor = "HealthDispenser"; item = "Inventory_HealthDispenser";
 		break;
 	}
-	
-	if(!Player_SpawnBuilding(actor, item, btid))
+	int spawned = Player_SpawnBuilding(actor, item, btid);
+	if(!spawned)
 		LocalAmbientSound("SamuTerm/Error", 128);
-	
-	
+	SetResultValue(spawned);
 }
 
 // Spawn something in the indicated position, minding the area
@@ -102,7 +101,7 @@ function bool Player_SpawnBuilding(str this, str or_deez, int sid){
 		return true;
 	}
 	//log(s:"Spawn failed, giving a ", s:or_deez);
-	GiveInventory(or_deez, 1);
+	//GiveInventory(or_deez, 1);
 	return false;
 }
 
@@ -143,17 +142,26 @@ function bool CMD_SpawnEX(str something, int tid, int owner_tid, int radius, int
 		zoff += 12.0;
 	}
 	thing_Remove(500);
-	int sucess = False;
+	int sucess = False, skip_messages = false;
 	bool valid_area = CMD_AreaCheck(y);
 	bool valid_floor = CMD_FloorCheck(500);
+	int turret_uid = UniqueTID();
 	if ((!sector_check && (free && valid_floor)) || (free && valid_area && valid_floor)){
-		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), tid, angle);
+		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), turret_uid, angle);
+		if(CheckActorClass(owner_tid, "FrenzyPlayer") && !CheckSight(owner_tid, turret_uid, CSF_NOBLOCKALL)){
+			sucess = false; skip_messages = true;
+			Thing_Remove(turret_uid);
+			f_SmallTip ("Deploy Error: Blocked by a wall!", CR_RED, 0);
+		}else{
+			Thing_ChangeTID(turret_uid, tid);
+		}
+		
 	}
-	if(sucess == false){
-		if		(sector_check && !valid_area) 	f_SmallTip ("Can't build in a lost sector!", CR_RED, 0);
+	if(sucess == false && !skip_messages){
+		if		(sector_check && !valid_area) 	f_SmallTip ("Deploy Error: Sector lost!", CR_RED, 0);
 		else if (!valid_floor)  
-								f_SmallTip ("Can't build over the liquids or void!", CR_RED, 0);
-		else if (!free) 		f_SmallTip ("The area is blocked or unstable for building!", CR_RED, 0);
+								f_SmallTip ("Deploy Error: Liquid ground!", CR_RED, 0);
+		else if (!free) 		f_SmallTip ("Deploy Error: Ground is unstable or blocked by something!", CR_RED, 0);
 		else f_SmallTip ("Ah crap, something went wrong goddamit.", CR_RED, 0);
 	}
 	

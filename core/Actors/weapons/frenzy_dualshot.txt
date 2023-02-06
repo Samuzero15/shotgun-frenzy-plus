@@ -32,7 +32,6 @@ ACTOR Dualshot : Weapon
 			X4E1 B 2
 			X4E1 C 2 A_PlaySound("w2/fire2", CHAN_WEAPON)
 			X4E1 D 0 A_FireCustomMissile("Dualshot_Nail", 0, 	1, -8)
-			
 			X4E1 D 0 A_FireCustomMissile("Dualshot_Nail", 0, 	1, 8)
 			X4E1 D 1
 			X4E1 E 1

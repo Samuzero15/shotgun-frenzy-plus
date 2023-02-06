@@ -258,7 +258,6 @@ Actor ChampEffect_Emperor : MonsterModifier {
     states{
         Use:
             TNT1 A 0 A_RadiusGive("ChampEffectOnMonster_Emperor", 256, RGF_MONSTERS)
-            TNT1 A 0 A_SpawnItemEx("ChampEffect_Emperor_ParticleEmmit")
             stop
     }
 }

@@ -24,6 +24,7 @@ int cmdpage_vars[500];
 #define CMDPAGE_LAYOUT_DEPLOY_TURRET 12
 #define CMDPAGE_LAYOUT_SUPPORT_AIRSTK 14
 #define CMDPAGE_LAYOUT_SUPPORT_CPULSE 15
+#define CMDPAGE_LAYOUT_NUKE 16
 
 
 function void CMDPage_Update(void){
@@ -112,112 +113,6 @@ function void CMDPage_Init(void){
 	CMDPage_MakeButtonSlot(11, 3, 4);
 
 	CMDPage_SetButtonLayout(CMDPAGE_LAYOUT_MAIN);
-	
-	/*
-	i = 11;
-	int m = 11;
-	int p = 0;
-	int cmd = STEXE_CLOSE;
-	//Main category
-	CMDPage_MakeLinkButton(i, 1, 1, FP_CB_BUILD, 	12);
-	CMDPage_MakeLinkButton(i, 1, 2, FP_CB_UPGRADE, 13);
-	CMDPage_MakeLinkButton(i, 1, 3, FP_CB_SUPPORT, 18);
-	CMDPage_MakeLinkButton(i, 1, 4, FP_CB_DEPLOY, 	20);
-	 //Nuke button!
-	 CMDPage_MakeLinkButton(i, 3, 1, FP_CB_NUKE, 22);
-		CMDPage_MakeButton(22, 3, 1, FP_CB_NUKE_IT_NOW);
-		CMDPage_MakeReturnButton(22, m);
-	CMDPAGE_MakeExitButton(i);
-	
-	i = 12;
-	//Build category
-	CMDPage_MakeButton(i, 1, 1, FP_CB_BUILD_GENLAB);
-	CMDPage_MakeButton(i, 1, 2, FP_CB_BUILD_ARMORY);
-	CMDPage_MakeButton(i, 1, 3, FP_CB_BUILD_MECHFA);
-	CMDPage_MakeButton(i, 1, 4, FP_CB_BUILD_REFINE);
-	CMDPage_MakeButton(i, 2, 1, FP_CB_BUILD_MARCOM);
-	CMDPage_MakeButton(i, 2, 2, FP_CB_BUILD_NUKESY);
-	CMDPage_MakeReturnButton(i, m);
-	
-	i = 13, p = 14;
-	//Research category
-	CMDPage_MakeLinkButton(i, 1, 1, FP_CB_UPGRADE_GENLAB, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_UPGRADE_GENLAB_HEALTH2);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_UPGRADE_GENLAB_HEALTH1);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_UPGRADE_GENLAB_SPEEDB);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_UPGRADE_GENLAB_ARMOR);
-		CMDPage_MakeButton(p, 1, 4, FP_CB_UPGRADE_GENLAB_RESISB);
-		CMDPage_MakeButton(p, 2, 1, FP_CB_UPGRADE_GENLAB_REGENB);
-		CMDPage_MakeReturnButton(p, i);
-	p = 15;
-	CMDPage_MakeLinkButton(i, 1, 2, FP_CB_UPGRADE_ARMORY, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_UPGRADE_ARMORY_ARMS2);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_UPGRADE_ARMORY_ARMS1);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_UPGRADE_ARMORY_BOOMRN);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_UPGRADE_ARMORY_AMMOBP);
-		CMDPage_MakeReturnButton(p, i);
-	//CMDPage_MakeButton(13, 1, 3, "CC03", STEXE_CLOSE, 0);
-	p = 16;
-	CMDPage_MakeLinkButton(i, 1, 3, FP_CB_UPGRADE_REFINE, p);
-		CMDPage_MakeButton(p, 1, 1,  FP_CB_UPGRADE_REFINE_PUMP1);
-		CMDPage_MakeButton(p, 1, 2,  FP_CB_UPGRADE_REFINE_PUMP2);
-		CMDPage_MakeReturnButton(p, i);
-	p = 17;
-	CMDPage_MakeLinkButton(i, 1, 4, FP_CB_UPGRADE_MARCOM, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_UPGRADE_MARCOM_ADVSYS);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_UPGRADE_MARCOM_AIRSUP);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_UPGRADE_MARCOM_IONCAN);
-		CMDPage_MakeButton(p, 1, 4, FP_CB_UPGRADE_MARCOM_CPULSE);
-		CMDPage_MakeButton(p, 2, 1, FP_CB_UPGRADE_MARCOM_VETMER);
-		CMDPage_MakeReturnButton(p, i);
-	CMDPage_MakeReturnButton(i, m);
-	
-	// Support Button
-	i = 18, p = 19;
-	CMDPage_MakeLinkButton(i, 1, 1, FP_CB_SUPPORT_AIRSTK, 25);
-		CMDPage_MakeButton(25, 1, 1, FP_CB_SUPPORT_AIRSTK_POINT);
-		CMDPage_MakeButton(25, 1, 2, FP_CB_SUPPORT_AIRSTK_LINE_1);
-		CMDPage_MakeButton(25, 1, 3, FP_CB_SUPPORT_AIRSTK_LINE_2);
-		CMDPage_MakeButton(25, 1, 4, FP_CB_SUPPORT_AIRSTK_WAVES_1);
-		CMDPage_MakeButton(25, 1, 4, FP_CB_SUPPORT_AIRSTK_WAVES_3);
-		CMDPage_MakeButton(25, 1, 4, FP_CB_SUPPORT_AIRSTK_WAVES_5);
-		CMDPage_MakeButton(25, 3, 1, FP_CB_SUPPORT_AIRSTK_EXE);
-		CMDPage_MakeButton(25, 3, 2, FP_CB_SUPPORT_AIRSTK_CLEAR);
-		CMDPage_MakeReturnButton(25, i);
-	CMDPage_MakeLinkButton(i, 1, 2, FP_CB_SUPPORT_CPULSE, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_SUPPORT_CPULSE_HEAL);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_SUPPORT_CPULSE_CRIPPLE);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_SUPPORT_CPULSE_HALT);
-		CMDPage_MakeReturnButton(p, i);
-	CMDPage_MakeButton(i, 1, 4, FP_CB_SUPPORT_IONCAN);
-	CMDPage_MakeButton(i, 2, 1, FP_CB_SUPPORT_DROPMONEY);
-	
-	CMDPage_MakeButton(i, 2, 2, FP_CB_SUPPORT_MARK_ATTACK);
-	CMDPage_MakeButton(i, 2, 3, FP_CB_SUPPORT_MARK_DEFEND);
-	CMDPage_MakeButton(i, 2, 4, FP_CB_SUPPORT_MARK_DEPLOY);
-	CMDPage_MakeButton(i, 3, 1, FP_CB_SUPPORT_MARK_REGROUP);
-	CMDPage_MakeButton(i, 3, 2, FP_CB_SUPPORT_MARK_CLEAR);
-	CMDPage_MakeReturnButton(i, m);
-	
-	//Deploy Button.
-	i = 20, p = 21;
-	CMDPage_MakeButton(i, 1, 1, FP_CB_DEPLOY_MINEFIELD);
-	CMDPage_MakeButton(i, 1, 2, FP_CB_DEPLOY_DISP_HEALTH);
-	CMDPage_MakeButton(i, 1, 3, FP_CB_DEPLOY_DISP_AMMO);
-	CMDPage_MakeButton(i, 1, 4, FP_CB_DEPLOY_BARRIER);
-	CMDPage_MakeLinkButton(i, 3, 1, FP_CB_DEPLOY_TURRET, p);
-		CMDPage_MakeButton(p, 1, 1, FP_CB_DEPLOY_TURRET_BULLET);
-		CMDPage_MakeButton(p, 1, 2, FP_CB_DEPLOY_TURRET_SHOTGUN);
-		CMDPage_MakeButton(p, 1, 3, FP_CB_DEPLOY_TURRET_ROCKET);
-		CMDPage_MakeButton(p, 1, 4, FP_CB_DEPLOY_TURRET_PLASMA);
-		CMDPage_MakeButton(p, 2, 1, FP_CB_DEPLOY_TURRET_CHAINGUN);
-		CMDPage_MakeButton(p, 2, 2, FP_CB_DEPLOY_TURRET_TESCOL);
-		CMDPage_MakeButton(p, 2, 3, FP_CB_DEPLOY_TURRET_FLAMER);
-		CMDPage_MakeButton(p, 2, 4, FP_CB_DEPLOY_TURRET_BFG);
-		
-		CMDPage_MakeReturnButton(p, i);
-	CMDPage_MakeReturnButton(i, m);
-	*/
 }
 
 
@@ -286,8 +181,14 @@ function void CMDPage_SetButtonLayout(int layout){
 			CMDPage_SetButtonInSlot_Link(1, FP_CB_UPGRADE, CMDPAGE_LAYOUT_UPGRADE);
 			CMDPage_SetButtonInSlot_Link(2, FP_CB_SUPPORT, CMDPAGE_LAYOUT_SUPPORT);
 			CMDPage_SetButtonInSlot_Link(3, FP_CB_DEPLOY, CMDPAGE_LAYOUT_DEPLOY);
-			CMDPage_SetButtonInSlot(8, FP_CB_NUKE);
+			CMDPage_SetButtonInSlot_Link(8, FP_CB_NUKE, CMDPAGE_LAYOUT_NUKE);
 			CMDPage_SetButtonInSlot_Exit(11, FP_CB_EXIT);
+		break;
+
+		case CMDPAGE_LAYOUT_NUKE:
+			CMDPage_SetButtonInSlot(8, FP_CB_NUKE_IT_NOW);
+			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
+			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_MAIN);
 		break;
 
 		case CMDPAGE_LAYOUT_BUILD:

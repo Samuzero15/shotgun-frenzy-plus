@@ -9,6 +9,24 @@
 
 ## v1 - The path of the damned...
 
+#### (26 - 29 / 1 / 2023) [Buffs, fixes and little map changes]
+	*) CF01 now in the first battery zone, a teleporter in front of the teleport destination has been placed in there, if you want to get to the other side of the room, where the battery is ubicated :)
+	// Oh and, the back side area, there is a "spiky surprise".
+	*) SF01's Sector 1 has been slightly changed, now there are 2 teleport destinations in each side of the outposts. With a pair of health and ammo dispensers. And now, the platforms should now lower properly.
+	*) CF04's Sector 1 has been slightly changed, now the area it's a little less cramped, and now you have a red barrier that protects you from the spawn killing caused by the crowd. Also moved the home teleport to the spawn area of Sector 1.
+	*) Dualshot nails will now bounce only once, and razor blade upgrade bounces up to 4 times. Buffed their damages too.
+	*) Repeaters damage has been buffed up. Now they take less time to overheat. Remember, overheating means less accuracy, but more damage.
+	*) Deployers will now instead of giving the item on failure. Will stop the deployer from consuming, which that removes the scrolling active items from the inventory bar.
+	*) Drones are also buffed too, and reduced the prices of them.
+	*) Flame turret price drops to 2750 credits.
+	*) BFG Overcharged upgrade will now consume 200 cells.
+	*) Rage rune will now not be overriden by the helltrigger powerup.
+	*) Ok now, personal backpack and global backpack should do their respective values in either order of picks.
+	*) Renamed a pair of visual inconvenient icons on the item shop from the armory.
+	*) Rampage and Health runes are now spawnable and pickable up again.
+	*) Rewritten and modified the Mech class.
+	*) Rampage rune's additive effect is now limited up to 10 seconds.
+
 #### (21 / 1 / 2023) (v1.6 Release!) [Particle clientsiding, and some balances]
 	!*) Now causing burns is not guaranteed, and causing the fire chain is also reduced. There is a chance for triggering it.
 	!*) Flamers will launch a fire projectile that will not rip (and does more damage for the first target) along side of the ripper version.

@@ -30,6 +30,7 @@ ACTOR Battery 30001
 	+FLOORCLIP
 	+NOBLOODDECALS
 	+NORADIUSDMG
+	+USEDAMAGEEVENTSCRIPT
 	// protect from marine damage
 	damagefactor "MarineFire", 0.0
 	damageFactor "MarineFire2", 0.0

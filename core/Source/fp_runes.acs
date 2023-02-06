@@ -220,14 +220,13 @@ Script "RuneDefense_Activate" (void){
 
 
 script "Runes_OnMonsterKill" (int ischamp){
-    if(checkinventory("RuneRampage")){
+    if(checkinventory("RuneRampage") && GetActorPowerupTics(0, "RampageRune_Damage") < 350){ // limited to 10 seconds.
         GiveInventory("RampageRune_Activate", 1);
     }
 
     if(checkinventory("RuneSoul")){
         if(ischamp) GiveInventory("SoulRune_ChampCounter", 1);
         else        GiveInventory("SoulRune_Counter", 1);
-        
     }
 }
 

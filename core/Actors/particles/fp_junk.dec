@@ -19,6 +19,33 @@ Actor Junk_Turret{
 	}
 }
 
+Actor Junk_Mech_Spawn {
+	states{
+		spawn:
+		TNT1 A 0
+		TNT1 A 0
+		TNT1 A 1 ACS_NamedExecuteAlways("ParticleCheck", 0 , 6)
+		TNT1 A 1
+		TNT1 A 0 A_SpawnDebris("Junk_Shard1")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard2")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard3")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard4")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard1")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard2")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard3")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard4")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard1")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard2")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard3")
+		TNT1 A 0 A_SpawnDebris("Junk_Shard4")
+		TNT1 A 1
+		stop
+		NoSpawn:
+		TNT1 A 1
+		stop
+	}
+}
+
 Actor Junk_Turret_Spawn {
 	states{
 		spawn:

@@ -132,7 +132,7 @@ script 53 ENTER
 	TakeInventory("PlayerKilledDemon", 0xFFFFFFF);
 	TakeInventory("P_Backpack", 0xFFFFFFF);
 	// Just in case
-	ACS_NamedExecuteAlways("PersonalBP_Reset", 0);
+	ACS_NamedExecuteAlways("Ammo_ResetCaps", 0);
     clearinventory();
 
     // give the player his/her boomstick and beretta
@@ -368,5 +368,5 @@ script 769 (void){
 
 // [Samu] Check if i am on a tank.
 script 781 (void){
-	SetResultValue(checkinventory("GotTank") || ((CheckInventory("TankGun") || CheckInventory("TankGunAdvanced")) && p_TankSlot[playernumber()] == 2));
+	SetResultValue(CheckActorClass(0,"MechPlayer") || ((CheckInventory("TankGun") || CheckInventory("TankGunAdvanced")) && p_TankSlot[playernumber()] == 2));
 }

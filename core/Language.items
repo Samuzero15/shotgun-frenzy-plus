@@ -40,17 +40,17 @@ ITDATA_N_PBACKPACK = "Personal Backpack";
 ITDATA_D_PBACKPACK = "Carry more ammo with you!";
 
 ITDATA_I_MARINEMINE = "IMIN0";
-ITDATA_B_MARINEMINE = "CM29";
+ITDATA_B_MARINEMINE = "CM77";
 ITDATA_N_MARINEMINE = "Personal Mines";
 ITDATA_D_MARINEMINE = "Set it on the floor, and let them come!";
 
 ITDATA_I_MINEDRONE = "ITEM06";
 ITDATA_B_MINEDRONE = "CM48";
-ITDATA_N_MINEDRONE = "Saw drone";
+ITDATA_N_MINEDRONE = "Mine drone";
 ITDATA_D_MINEDRONE = "Throw it and let it blow.";
 
 ITDATA_I_SAWDRONE = "ITEM05";
-ITDATA_B_SAWDRONE = "CM48";
+ITDATA_B_SAWDRONE = "CM52";
 ITDATA_N_SAWDRONE = "Saw drone";
 ITDATA_D_SAWDRONE = "Ready to find some meat.";
 

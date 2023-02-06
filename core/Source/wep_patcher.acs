@@ -120,14 +120,13 @@ script "Patcher_TurretScouter" (void){
 	TakeInventory("Patcher_Script", 1);
 }
 script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
-	//log(s:"arg2: ", s:arg2);
     if(type != GAMEEVENT_ACTOR_DAMAGED || !(
 		strcmp(arg2, "PriPatcherDmg") == 0 ||
 		strcmp(arg2, "AltPatcherDmg") == 0 ||
 		strcmp(arg2, "IdlePatcherDmg") == 0 
 	)) terminate;
 
-	if(!IsATurret(ActivatorTID()) || CheckActorClass(ActivatorTID(), "BatteryCore") || CheckActorClass(ActivatorTID(), "Battery")){
+	if(!IsATurret(ActivatorTID()) || (CheckActorClass(ActivatorTID(), "BatteryCore") || CheckActorClass(ActivatorTID(), "Battery"))){
 		SetResultValue(0);
 		terminate;
 	}

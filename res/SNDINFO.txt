@@ -1,13 +1,6 @@
 ////////////////////////////////////
 //	All the sounds are exported out of their wads.
 
-/////////// frenzy_vehicle.wad /////////////
-
-veh/tankpain		DSZTANKP
-veh/tankdrive		DSZTANK2
-veh/tankshutdown	DSZTANKD
-veh/tankstartup		DSZTANK1
-
 DSQKLDTH DSQKLDTH
 SEEKLAUNCH SEEKLAUN
 RPGOPN RPGOPN
@@ -230,11 +223,20 @@ beep			BEEP
 
 vehicle/mechleg		MLEG
 vehicle/mechupgrade	MUPG
+vehicle/death		DSZTANKX
 
 time			TIME
 attack			ATTACK
 
-
+$playeralias MechPlayer male   *pain100  veh/tankpain
+$playeralias MechPlayer male   *pain75   *pain100
+$playeralias MechPlayer male   *pain50   *pain100
+$playeralias MechPlayer male   *pain25   *pain100
+$playeralias MechPlayer male   *death    vehicle/death
+$playeralias MechPlayer male   *xdeath   *death
+$playeralias MechPlayer male   *gibbed   *death
+$playeralias MechPlayer male   *jump     SEEKLAUNCH
+$playeralias MechPlayer male   *land     vehicle/mechleg
 
 
 
@@ -353,6 +355,10 @@ g/ArmorPickup ArPickup
 
 misc/EclipseMineral	TYRMINPK
 $volume misc/EclipseMineral 0.8
+
+p/drone_saw2 SAWD2
+p/drone_saw1 SAWD1
+p/drone_saw3 SAWD3
 
 
 ////// Samu-term sounds

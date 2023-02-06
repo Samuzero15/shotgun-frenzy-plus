@@ -92,7 +92,7 @@ Script "LightBarsSpawner" (int radius, int color) ClientSide{
 	int grade_add = (1.0 / 16);
 	int tid;
 	int invert = random (0,1);
-	for(int i = 0; i < 16; i ++){
+	for(int i = 0; i < 16 && GetActorProperty(0, APROP_HEALTH); i ++){
 		x = GetActorX(0); y = GetActorY(0); z = GetActorZ(0); a = GetActorAngle(0); tid = UniqueTID(0);
 		if(invert){
 			SpawnForced(particle, x + cos(a-grade_add*i)*radius, y + sin(a-grade_add*i)*radius, z,tid);
@@ -112,36 +112,24 @@ function void AddAmmoCapacity (str ammo, int amount){
 	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
 }
 
-script "PersonalBP_Expand" (void) {
-	if(	getAmmoCapacity("Ammo_2BackpacksToken") == 3 && getAmmoCapacity("Ammo_PersonalBPToken") == 2 ||
-	  	!CheckInventory("P_Backpack")){
-			// Dont expand if already expanded (having the backpack or not) or if we don't have the item.
-			terminate; 
-		}
-	
-	if(GetAmmoCapacity("Ammo_2BackpacksToken") == 2){
-		AddAmmoCapacity("Ammo_2BackpacksToken", 1); // Set token.
-	}
-
-	if(GetAmmoCapacity("Ammo_PersonalBPToken") == 1){
-		AddAmmoCapacity("Clip", 			100);
-		AddAmmoCapacity("ClipPistol",		50);
-		AddAmmoCapacity("Shell", 			30);
-		AddAmmoCapacity("RocketAmmo", 		25);
-		AddAmmoCapacity("HeavyBullets", 	100);
-		AddAmmoCapacity("Dualshot_Ammo", 	50);
-		AddAmmoCapacity("Cell", 			200);
-		AddAmmoCapacity("GLauncher_Ammo", 	25);
-		AddAmmoCapacity("Flinger_Ammo", 	50);
-		AddAmmoCapacity("Gasoline",			50);
-
-		AddAmmoCapacity("Ammo_PersonalBPToken", 1); // Set token.
-	}
+script "Ammo_UpdateCaps" (void) {
+	int p_back = CheckInventory("p_Backpack");
+	int g_back = 1 + CheckInventory("g_Backpack");
+	SetAmmoCapacity("Clip", 			200*g_back + 100*p_back);
+	SetAmmoCapacity("ClipPistol",		50*g_back + 50*p_back);
+	SetAmmoCapacity("Shell", 			60*g_back + 30*p_back);
+	SetAmmoCapacity("RocketAmmo", 		50*g_back + 25*p_back);
+	SetAmmoCapacity("HeavyBullets", 	300*g_back + 100*p_back);
+	SetAmmoCapacity("Dualshot_Ammo",	200*g_back + 50*p_back);
+	SetAmmoCapacity("Cell", 			300*g_back + 200*p_back);
+	SetAmmoCapacity("GLauncher_Ammo", 	15*g_back + 5*p_back);
+	SetAmmoCapacity("Flinger_Ammo", 	50*g_back + 50*p_back);
+	SetAmmoCapacity("Gasoline", 		200*g_back + 50*p_back);
 }
 
-script "PersonalBP_Reset" (void) {
-	SetAmmoCapacity("Ammo_PersonalBPToken", 1); // Reset token.
-	SetAmmoCapacity("Ammo_2BackpacksToken", 1); // Reset token.
+script "Ammo_ResetCaps" (void) {
+	TakeInventory("p_Backpack", 1); // Reset token.
+	TakeInventory("g_Backpack", 1); // Reset token.
 
 	SetAmmoCapacity("Clip", 			200);
 	SetAmmoCapacity("ClipPistol",		50);
@@ -157,11 +145,15 @@ script "PersonalBP_Reset" (void) {
 
 Script "HellTriggerPower_AmmoRegeneration" (int upgraded){
 	TakeInventory("Inv_Power_AmmoRegeneration", 99999999);
-	int lessdelay = 0;
+	int lessdelay = 0, ragerune = CheckInventory("RuneDoubleFiringSpeed");
 	if(upgraded){
+		GiveInventory("Inv_PowerGiver_HellTrigger_Infinity_2", 1);
+		GiveInventory("Inv_PowerGiver_HellTrigger_FastFire_2", 1);
 		GiveInventory("Inv_PowerGiver_HellTrigger_AmmoRegeneration_2", 1);
 		lessdelay = 15;
 	}else {
+		GiveInventory("Inv_PowerGiver_HellTrigger_FastFire", 1);
+		GiveInventory("Inv_PowerGiver_HellTrigger_Infinity", 1);
 		GiveInventory("Inv_PowerGiver_HellTrigger_AmmoRegeneration", 1);
 	}
 	int tics = 0;
@@ -170,6 +162,12 @@ Script "HellTriggerPower_AmmoRegeneration" (int upgraded){
 			GiveInventory("HellTrigger_AmmoSatchel", 1);
 		tics ++;
 		delay(1);
+	}
+	
+	if(ragerune){ // Helltrigger overrides rage rune, recover rage rune if equipped.
+		TakeInventory("RuneDoubleFiringSpeed", 1);
+		delay(1);
+		GiveInventory("RageRune", 1);
 	}
 }
 
@@ -300,7 +298,7 @@ script "Repeater_HeatProp" (int prop, int base){
 		break;
 		case REPEATER_BONUSDMG:
 			if (base <= 5) base = 5; 
-			setResultValue((heat/20)*2 + base);
+			setResultValue((heat/10)*2 + base);
 		break;
 		case REPEATER_FIRECHANCE:
 			setResultValue(heat/40 + base);

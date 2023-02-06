@@ -102,8 +102,11 @@ ACTOR Boomstick_Full : Weapon
 			W2E2 AB 2 A_Saw("weapons/sawfull", "weapons/sawhit", 15, "Saw_Spread", 0, 90)
 			goto Ready
 		Flash:
+			TNT1 A 0 A_Saw("weapons/sawfull", "weapons/sawhit", 15, "Saw_Spread", 0, 90)
 			SHTF A 1 offset(1,32) bright A_Light1
+			TNT1 A 0 A_Saw("weapons/sawfull", "weapons/sawhit", 15, "Saw_Spread", 0, 90)
 			SHTF B 1 offset(0,0) Bright A_Light2
+			TNT1 A 0 A_Saw("weapons/sawfull", "weapons/sawhit", 15, "Saw_Spread", 0, 90)
 			SHTF A 1 offset(0,0) bright A_Light1
 			Goto LightDone
 

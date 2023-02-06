@@ -111,7 +111,7 @@ WEPS_COMMANDO_REPE_UP2_DESC = "Fires gauss bullets. Allowing you to rip enemies 
 
 WEPS_COMMANDO_NAIL_NAME =    "Nail Dualshot";
 WEPS_COMMANDO_NAIL_DESC =    "This gun can rip through enemies with the use of nails.\n"
-	                         "Slower than bullets, but they rip more from up close.";
+	                         "Slower than bullets, but they bounce a pair of times.";
 
 WEPS_COMMANDO_NAIL_UP1_NAME = "Razor Saw Dualshot";
 WEPS_COMMANDO_NAIL_UP1_DESC = "Fires Saw-bolts. They're heavier and the gravity affects them, but they cause more damage.";
@@ -218,4 +218,4 @@ WEPS_BFGL_BFG_DESC =    "Creates a big charged energy ball which it will explode
 WEPS_BFGL_BFG_UP1_NAME = "Splash-Spread BFG";
 WEPS_BFGL_BFG_UP1_DESC = "Rips through the horde, and blasts everything on its way. Alt-fire fires more projectiles and does AoD on travel.";
 WEPS_BFGL_BFG_UP2_NAME = "Overcharged BFG";
-WEPS_BFGL_BFG_UP2_DESC = "Fires a seeking, devastating, and incremental big ball. Up to 10 hits. Costs 300 cells per shot. Alt-fire shoots seeking projectiles, and the damage is increased.";
+WEPS_BFGL_BFG_UP2_DESC = "Fires a seeking, devastating, and incremental big ball. Up to 10 hits. Costs 200 cells per shot. Alt-fire shoots seeking projectiles, and the damage is increased.";

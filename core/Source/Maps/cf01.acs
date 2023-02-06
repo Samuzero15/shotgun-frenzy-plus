@@ -79,9 +79,15 @@ script 3 (void)
 // final boss
 script 90 (void)
 {
-    int ticker;
-    while(ticker < 5)
+    int ticker; int utid;
+	Door_Open(6, 128);
+	Floor_LowerToLowest(9, 128);
+    while(ticker < 5 + (PlayerCount() >= 3)*(PlayerCount() - 2)) // If more than 3 players, add some spawn ticks.
     {
+		utid = UniqueTID();
+		spawnspot("Cacodemon", 3, utid, 0);// The "spiky surprise :)"
+		ThrustThingZ(utid, 200, 0, 0);
+		Thing_ChangeTID(utid, 118);
         spawnspot("ArchVile", 115, 118, 0);
         ticker++;
         delay(35 * 2);

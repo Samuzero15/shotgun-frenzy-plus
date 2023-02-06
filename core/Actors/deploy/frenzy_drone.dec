@@ -34,12 +34,14 @@ Actor sf_Drone{
 ACTOR sf_SawDrone : sf_Drone
 {
 	hitobituary "%o was shaved by a Saw Drone"
-	health 30
-	painchance 180
+	health 50
+	painchance 120
 	speed 8
+	Damage 8
 	seesound "p/drone_saw1"
 	activesound "p/drone_saw2"
 	attacksound "p/drone_saw3"
+	deathsound "Flinger/Grenade/Booms"
 	Tag "Deploy a single saw drone. It will attack demons with their blades."
 	+NoGravity
 	+FLOAT
@@ -51,29 +53,33 @@ ACTOR sf_SawDrone : sf_Drone
 	states
 	{
 		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_PlaySound("p/drone_saw1", CHAN_VOICE)
+			SAWD ABABABABABAB 1
+		Spawn.Loop:
 			SAWD AB 4 A_Look
-			TNT1 A 0 //ACS_NamedExecute("SF_Checc",0)
 			goto See
 		See:
 			SAWD A 0 A_PlaySound("p/drone_saw2",CHAN_VOICE)
 			SAWD A 4 A_Chase
+			TNT1 A 0 A_Look
 			SAWD B 4 A_Chase
 			TNT1 A 0 A_Look
 			goto See
 		Missile:
-			SAWD A 2 BRIGHT A_FaceTarget
-			SAWD B 2 BRIGHT A_SkullAttack(30)
-			goto Missile
+			SAWD A 1 BRIGHT A_FaceTarget
+			SAWD B 1 BRIGHT A_SkullAttack(35)
+			goto See
 		Melee:
 			SAWD A 1 A_FaceTarget
-			SAWD B 1 A_SargAttack
+			SAWD B 1 A_CustomMeleeAttack(random(1, 20) * 8, "p/drone_saw1")
 			goto See
 		Pain:
 			SAWD A 1
 			SAWD B 1 A_Pain
 			goto See
 		Death:
-			MISL B 8 bright A_Explode(50,64)
+			MISL B 8 bright A_Explode(50,96)
 			MISL C 6 bright
 			MISL D 4 bright
 			stop
@@ -87,7 +93,7 @@ ACTOR sf_MineDrone : sf_Drone
 	speed 10
 	seesound "baby/sight"
 	painsound "baby/pain"
-	deathsound "baby/death"
+	deathsound "Flinger/Grenade/Booms"
 	activesound "baby/active"
 	Tag "Deploy a single mine drone. It will blow at the enemies with their cluster grenades."
 	states
@@ -114,7 +120,7 @@ ACTOR sf_MineDrone : sf_Drone
 			MIND B 1 A_Pain
 			goto See
 		Death:
-			MISL B 1 bright A_Explode(50,128,0,0,64)
+			MISL B 1 bright A_Explode(100,128,0,0,64)
 			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
 			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")
 			MISL B 1 bright A_SpawnDebris("Grenade_Expander_MiniGrenade")

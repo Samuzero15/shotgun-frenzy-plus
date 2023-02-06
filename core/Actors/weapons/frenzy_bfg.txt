@@ -179,7 +179,7 @@ actor BFG_Overcharge : BFG
 // The last hit is the most devastating. Absurdly powerful against one enemy. Like Cyberdemons.
 // The catch it's on it's projectile speed, and ammo cost, 2 shots with backpack.
   Tag "BFG Overcharge"
-  Weapon.AmmoUse 300
+  Weapon.AmmoUse 200
   Weapon.SlotPriority 2.0
   Weapon.SelectionOrder 2300
   States
@@ -244,6 +244,7 @@ actor BFGBall_Overcharge : sfBFGBall
   +BLOODLESSIMPACT
   +SEEKERMISSILE
   +NODAMAGETHRUST
+  DamageType MarineFire
   var int user_radiusgain;
   States
   {
@@ -611,6 +612,7 @@ ACTOR BFGPlasmaBall1 : PlasmaBall replaces PlasmaBall1
 	BounceFactor 1.0
   SeeSound ""
   Decal GreenPlasmaScorch
+  DamageType MarineFire
   +NODAMAGETHRUST
 	States
 	{
@@ -627,6 +629,7 @@ ACTOR BFGPlasmaBall1 : PlasmaBall replaces PlasmaBall1
 ACTOR BFGPlasmaBall2 : BFGPlasmaBall1 replaces PlasmaBall2
 {
   Decal RedPlasmaScorch
+  DamageType MarineFire
 	States
 	{
 	Spawn:
