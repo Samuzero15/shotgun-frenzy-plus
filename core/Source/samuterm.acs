@@ -56,12 +56,13 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	SFPlus_DefineWeapons();
 	SFPLUS_DefineItems();
 	SFPlus_DefineCMDButtons();
-	SFPlus_DefinePlayUps();
 	SFPlus_DefineMechUps();
-	SFPlus_DefineStimUps();
-	SFPlus_DefineRunes();
-		
-	
+
+	If(GameSkill() != 0){
+		SFPlus_DefinePlayUps();
+		SFPlus_DefineStimUps();
+		SFPlus_DefineRunes();
+	}
 	
 	pagetags[STTAGS_ALPHA] = alphatag;
 	//log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);

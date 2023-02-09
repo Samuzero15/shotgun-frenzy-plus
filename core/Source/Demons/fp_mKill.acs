@@ -61,7 +61,7 @@ Script "SFPlus_MonsterKill" Kill{
 				SpawnForced("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
 			
 			// Drop Health-Armor Bonuses
-			if(random(0, 100) < chance){
+			if(random(0, 100) < chance && GameSkill() != 0){
 				ItemDr_Spawn("HealthArmorBonusSplash");
 				spawn_sfx = true;
 			}

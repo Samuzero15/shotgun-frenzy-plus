@@ -15,7 +15,7 @@ function void giveCashToPlayers(int howmuch){
 	{
 		if(PlayerInGame(i)){
 			SetActivatorToPlayer(i);
-			
+
 			sf_AddCredits(howmuch, playerNumber());
 			
 			SetActivator(0);

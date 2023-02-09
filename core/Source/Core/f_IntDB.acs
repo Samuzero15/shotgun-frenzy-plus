@@ -120,14 +120,13 @@ int p_Streak[INTDB_MAXPLAYERS];
 int p_StreakHi[INTDB_MAXPLAYERS];
 int p_StreakLevel[INTDB_MAXPLAYERS];
 int p_EliteMode[INTDB_MAXPLAYERS];
+int p_DmgtoExp[INTDB_MAXPLAYERS];
 int p_KSHUD[INTDB_MAXPLAYERS];
 int p_TipQue[10];
 int p_TipProcess[10];// Timer signal (True if the tip is using a timed or process script)
 
 int p_TotalPlayerDeaths;
-int p_Combo[INTDB_MAXPLAYERS];
-int p_SplatCombo[INTDB_MAXPLAYERS];
-int p_UpgradeStack[INTDB_MAXPLAYERS];         // soon to be redundant
+//int p_Combo[INTDB_MAXPLAYERS]; Eh, ks are cooler :)
 int p_TankSlot[INTDB_MAXPLAYERS];             // player tank status
 int p_KickSlot[INTDB_MAXPLAYERS];
 int p_LastWeap[INTDB_MAXPLAYERS];//for the autowep switching feature
@@ -277,13 +276,17 @@ script "SFPlus_InitializeEverything" OPEN{
 	SFPlus_DefineWeapons();
 	SFPlus_DefineItems();
 	SFPlus_DefineTechs();
-	SFPlus_DefineStimUps();
-	SFPlus_DefineRunes();
-	
+
+	If(GameSkill() != 0){
+		SFPlus_DefineStimUps();
+		SFPlus_DefineRunes();
+		SFPlus_DefinePlayUps();
+	}
+	SFPlus_DefineMechUps();
 	ProgTip_Init();
 	delay(1); // give this tic to the map default variables.
-	SFPlus_DefineMechUps();
-	SFPlus_DefinePlayUps();
+	
+	
 	InitDB_ReadConsole(); // Read the console if the server needs customized variables.
 	g_Initialized = true;
 }

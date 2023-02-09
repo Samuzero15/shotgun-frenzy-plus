@@ -18,19 +18,16 @@ clearepisodes
 episode CF01
 {
 	name = "Combat Frenzy"
-	noskillmenu
 }
 
 episode SD01
 {
 	name = "Survival Defender"
-	noskillmenu
 }
 
 episode SF01
 {
 	name = "Shotgun Frenzy"
-	noskillmenu
 }
 
 
@@ -176,4 +173,95 @@ map TEST lookup "Testing map"
 	music = "LABHub"
 	intermusic = "Q4FINAL"
 	allowrespawn
+}
+
+/*
+0) Casual (Double ammo, more drop chance)
+1) Normal (SFPlus at it's full glory)
+2) Tough (Double Damage for demons)
+3) Veteran (Fast Move and x2 Damage for Demons)
+4) Masochist (Veteran + Less loot + Less drop chance)
+*/
+
+ClearSkills
+
+skill Classic {
+	ACSReturn = 0
+	MustConfirm = "S.F. unofficial patch 8f's / S.F.+ test versions classic dropset, that means no HP and AP bonuses, no extra loots, no runes, no upgrades (like stimpack & player ups), and no champions.  Are you sure?"
+	name = "Classic"
+	SpawnFilter = "Normal"
+	ReplaceActor = "UpgradeCard", ""
+	ReplaceActor = "Greedsphere", ""
+	ReplaceActor = "BigGem", ""
+	ReplaceActor = "SmallGem", ""
+	ReplaceActor = "Fading_Medikit", ""
+	ReplaceActor = "Fading_SteelPlatingArmor", ""
+	ReplaceActor = "Fading_TitaniumArmor", ""
+	ReplaceActor = "Fading_Medikit", ""
+	ReplaceActor = "Inventory_TurretShotgun", ""
+	ReplaceActor = "Inventory_TurretChaingun", ""
+}
+
+skill Normal {
+	ACSReturn = 1
+	MustConfirm = "Shotgun Frenzy Plus at it's full glory. Are you sure?"
+	name = "Normal"
+	SpawnFilter = "Normal"
+	DefaultSkill
+}
+
+skill Hard {
+	MustConfirm = "x2 damage taken from monsters, x2 monster HP. Are you sure?"
+	MonsterHealth = 2.0
+	DamageFactor = 2.0
+	ACSReturn = 2
+	name = "Hard"
+	SpawnFilter = "Normal"
+}
+
+skill Turbo {
+	MustConfirm = "Fast and 50% wilder monsters. Are you sure?"
+	FastMonsters
+	Aggressiveness = 0.5
+	ACSReturn = 3
+	name = "Turbo"
+	SpawnFilter = "Normal"
+}
+
+skill Misserable {
+	MustConfirm = "Less loot, 25% less money, prices are 25% inflated. Are you sure?"
+	ACSReturn = 4
+	name = "Miserable"
+	ReplaceActor = "BigGem", "InvisiblePuff"
+	ReplaceActor = "SmallGem", "InvisiblePuff"
+	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
+	ReplaceActor = "Fading_SteelPlatingArmor", "InvisiblePuff"
+	ReplaceActor = "Fading_TitaniumArmor", "InvisiblePuff"
+	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
+	ReplaceActor = "Inventory_Soulsphere", "InvisiblePuff"
+	ReplaceActor = "Inventory_TurretShotgun", "InvisiblePuff"
+	ReplaceActor = "Inventory_TurretChaingun", "InvisiblePuff"
+	SpawnFilter = "Normal"
+}
+
+skill Masochist {
+	MustConfirm = "Hard + Turbo + Disgraceful skill levels in a single skill because you hate yourself. Oh and, no Megasphere and Godsphere. Are you sure?"
+	MonsterHealth = 2.0
+	DamageFactor = 1.5
+	FastMonsters
+	Aggressiveness = 0.3
+	ACSReturn = 5
+	name = "Masochist"
+	SpawnFilter = "Normal"
+	ReplaceActor = "BigGem", "InvisiblePuff"
+	ReplaceActor = "SmallGem", "InvisiblePuff"
+	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
+	ReplaceActor = "Fading_SteelPlatingArmor", "InvisiblePuff"
+	ReplaceActor = "Fading_TitaniumArmor", "InvisiblePuff"
+	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
+	ReplaceActor = "Inventory_Soulsphere", "InvisiblePuff"
+	ReplaceActor = "Inventory_Megasphere", "InvisiblePuff"
+	ReplaceActor = "Inventory_Godsphere", "InvisiblePuff"
+	ReplaceActor = "Inventory_TurretShotgun", "InvisiblePuff"
+	ReplaceActor = "Inventory_TurretChaingun", "InvisiblePuff"
 }

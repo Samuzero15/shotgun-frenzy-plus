@@ -19,20 +19,32 @@ function bool IsActivatingClient(void){
 
 
 function void sf_AddCredits(int howMuch, int who){
+  if(GameSkill() == 4 || GameSkill() == 5){
+		howMuch = howMuch - ((howMuch*0.25)>>16);
+	}
 	p_Credits[who] += howMuch;
 	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_GOLD, 2);
 }
 
 function void sf_AddCredits_S(int howMuch, int who){
+  if(GameSkill() == 4 || GameSkill() == 5){
+		howMuch = howMuch - ((howMuch*0.25)>>16);
+	}
 	p_Credits[who] += howMuch;
 }
 
 function void sf_AddDroneTips(int howMuch, int who){
+  if(GameSkill() == 4 || GameSkill() == 5){
+		howMuch = howMuch - ((howMuch*0.25)>>16);
+	}
 	p_Credits[who] += howMuch;
 	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_BLUE, -1);
 }
 
 function void sf_AddTips(int howMuch, int who){
+  if(GameSkill() == 4 || GameSkill() == 5){
+		howMuch = howMuch - ((howMuch*0.25)>>16);
+	}
 	p_Credits[who] += howMuch;
 	ACS_NamedExecuteAlways("SF_CreditAddDisplay", 0, howmuch, CR_WHITE, -1);
 }
@@ -53,6 +65,9 @@ function void sf_RemoveCredits(int howMuch, int who){
 }
 
 function void sf_AddTeamCredits(int howMuch){
+  if(GameSkill() == 4 || GameSkill() == 5){
+		howMuch = howMuch - ((howMuch*0.25)>>16);
+	}
 	c_Credits += howMuch;
 }
 

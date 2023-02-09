@@ -147,7 +147,6 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	}
 		
 		
-    p_SplatCombo[playernumber()] += l_SplatCombo;
 	ACS_NamedExecuteAlways("SFPlus_StreakMilestone", 0);
 
   // increase rank

@@ -9,6 +9,20 @@
 
 ## v1 - The path of the damned...
 
+#### (6 - 9 / 2 / 2023) [Rune's buffs and Skill modifiers]
+	*) Now the temperance rune will give 100 AP upon each armor pickup.
+	*) Health rune will extend the user's health to 100 hp. Obeying the current techs.
+	*) Ammunition runes will extend the user's base ammo capacity to x2. Obeying backpack tech and personal backpack item.
+	*) CF02 map's certain linedef who caused a TID switch for the players has been changed now to change it for the monsters.
+	*) Some extra fixes on the armors.
+	!+) New skill levels are added! These skill levels change the game completly.
+	// Classic, the pre 1.0 version additions (like extra items and champions) are removed.
+	// Normal, SF+ with common settings.
+	// Hard, x2 Damage taken by monsters and x2 HP extra health for monsters.
+	// Turbo, Fast movement and aggresive monsters.
+	// Miserable, Less drops (specially gems, some turrets and armors/medikits), less money (25% less) and 25% of prices are increased.
+	// Masochist, Hard + Turbo + Miserable. And no Megasphere and Godsphere. 
+
 #### (26 - 29 / 1 / 2023) [Buffs, fixes and little map changes]
 	*) CF01 now in the first battery zone, a teleporter in front of the teleport destination has been placed in there, if you want to get to the other side of the room, where the battery is ubicated :)
 	// Oh and, the back side area, there is a "spiky surprise".
@@ -125,7 +139,7 @@
 	*) Refactored some rune drop scripts.
 	*) Fixed the limit of dropping the first 4 items.
 	*) Now the credits, health bonuses and armor shard drops chances will be dependant of the monster type and if it's a champion.
-	*) Now the stimpack upgrade "Hard Shell" wilnow grant extra 5% on the armor repair.
+	*) Now the stimpack upgrade "Hard Shell" will now grant extra 5% on the armor repair.
 	-) Nerfed a bit the Titanium armor. 45% damage absorbtion (+ 15% with the temperance).
 
 #### (10 - 11 / 12 / 2022) [Particle control, maunal picked runes, other fixes]

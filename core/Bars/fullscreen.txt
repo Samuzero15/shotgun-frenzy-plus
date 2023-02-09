@@ -32,7 +32,7 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 
 			//ammo
 			drawimage ammoicon1, -14, -4, centerbottom;
-			drawnumber 3, STATBIGSNums, untranslated, ammo1, drawshadow, -25, -26;
+			drawnumber 4, STATBIGSNums, untranslated, ammo1, drawshadow, -25, -26;
 			
 			isSelected "Repeater"{
 				drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  -110, -25;
@@ -61,7 +61,7 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 				usessecondaryammo
 				{
 					drawimage ammoicon2, -14, -22, centerbottom;
-					drawnumber 3, STATBIGS, untranslated, ammo2, drawshadow, -25, -40;
+					drawnumber 4, STATBIGS, untranslated, ammo2, drawshadow, -25, -40;
 					inventorybarnotvisible
 					{
 						drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -42, -26, -68, untranslated;

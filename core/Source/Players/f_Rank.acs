@@ -10,6 +10,7 @@
 #import "f_Tip.acs"
 #import "fl_techs.acs"
 #include "zcommon.acs"
+#include "acsutils.acs"
 
 int rank_titles[20] = {
     "Rookie",  
@@ -33,6 +34,48 @@ int rank_titles[20] = {
     "Commander", 
     "Ultimate Commander",  
 };
+
+Script "SFPlus_DamagePerExperience" (int type, int arg1, int arg2) EVENT
+{
+    if(GetCVar("sfp_damageperexp") && type != GAMEEVENT_ACTOR_DAMAGED && PlayerCount() >= 3){terminate;}
+
+    int play;
+    SetActivator(0, AAPTR_Damage_Source);
+		play = PlayerNumber();
+	if(play == -1) terminate;
+        int healthnow = GetActorProperty(0, APROP_HEALTH) - arg1;
+        int damagedealt = arg1;
+    if(healthnow < 0) damagedealt = arg1 - healthnow;
+
+    int expbydmg = Rank_ExpByDmgFormula(play);
+    p_DmgtoExp[play] += damagedealt;
+
+    if(p_DmgtoExp[play] >= expbydmg){
+        Rank_GrantEXP(play, 1);
+        p_DmgtoExp[play] = 0;
+    }
+    /*
+    log(s:"(DmgxExp) Effective damage= ", d:damagedealt);
+    log(s:"(DmgxExp) Damage x Experience limit= ", d:Rank_ExpByDmgFormula(play));
+    log(s:"(DmgxExp) Damaged caused by player= ", d:p_DmgtoExp[play]);
+    */
+}
+
+// Results given by formula because float numbers are limited.
+// Formula is: 100*sqrt(e^(rank + ksmilestone))
+
+int rank_expbydmg[30] = {
+    100, 164, 271, 448, 738,
+    1218, 2008, 3311, 5459, 9001,
+    14841, 24469, 40342, 66514, 109663, 
+    180804, 298095, 491476, 810308, 1335972,
+    2202646, 3631550, 5987414, 9871577, 16275479,
+    26833728, 44241339, 72941636, 120260428, 198275926
+};
+
+function int Rank_ExpByDmgFormula(int play){
+    return rank_expbydmg[p_Rank[play] + p_StreakLevel[play]];
+}
 
 function void Rank_GrantEXP(int who, int amount) {
 	int exp_boost; // Hm...

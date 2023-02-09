@@ -92,8 +92,8 @@ Script "LightBarsSpawner" (int radius, int color) ClientSide{
 	int grade_add = (1.0 / 16);
 	int tid;
 	int invert = random (0,1);
-	for(int i = 0; i < 16 && GetActorProperty(0, APROP_HEALTH); i ++){
-		x = GetActorX(0); y = GetActorY(0); z = GetActorZ(0); a = GetActorAngle(0); tid = UniqueTID(0);
+	for(int i = 0; i < 16 && GetActorProperty(0, APROP_HEALTH) >= 1; i ++){
+		x = GetActorX(0); y = GetActorY(0); z = GetActorZ(0); a = GetActorAngle(0); tid = UniqueTID();
 		if(invert){
 			SpawnForced(particle, x + cos(a-grade_add*i)*radius, y + sin(a-grade_add*i)*radius, z,tid);
 			SpawnForced(particle, x - cos(a-grade_add*i)*radius, y - sin(a-grade_add*i)*radius, z,tid);
@@ -105,6 +105,7 @@ Script "LightBarsSpawner" (int radius, int color) ClientSide{
 		SetActorVelocity(tid, 0, 0, 3.0+random(-1.5, 1.5), 0, 0);
 		delay(random(2,5));
 	}
+	Thing_Remove(tid);
 }
 
 
@@ -112,19 +113,36 @@ function void AddAmmoCapacity (str ammo, int amount){
 	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
 }
 
+function void AmmoTakeLeftOvers (str ammo){
+	if(getAmmoCapacity(ammo) < CheckInventory(ammo)){
+		TakeInventory(ammo, CheckInventory(ammo) - getAmmoCapacity(ammo));
+	}
+}
+
 script "Ammo_UpdateCaps" (void) {
 	int p_back = CheckInventory("p_Backpack");
 	int g_back = 1 + CheckInventory("g_Backpack");
-	SetAmmoCapacity("Clip", 			200*g_back + 100*p_back);
-	SetAmmoCapacity("ClipPistol",		50*g_back + 50*p_back);
-	SetAmmoCapacity("Shell", 			60*g_back + 30*p_back);
-	SetAmmoCapacity("RocketAmmo", 		50*g_back + 25*p_back);
-	SetAmmoCapacity("HeavyBullets", 	300*g_back + 100*p_back);
-	SetAmmoCapacity("Dualshot_Ammo",	200*g_back + 50*p_back);
-	SetAmmoCapacity("Cell", 			300*g_back + 200*p_back);
-	SetAmmoCapacity("GLauncher_Ammo", 	15*g_back + 5*p_back);
-	SetAmmoCapacity("Flinger_Ammo", 	50*g_back + 50*p_back);
-	SetAmmoCapacity("Gasoline", 		200*g_back + 50*p_back);
+	int ammo_rune = CheckInventory("RuneAmmunition");
+	SetAmmoCapacity("Clip", 			(200*(ammo_rune+g_back) + 100*p_back));
+	SetAmmoCapacity("ClipPistol",		(50*(ammo_rune+g_back) + 50*p_back));
+	SetAmmoCapacity("Shell", 			(60*(ammo_rune+g_back) + 30*p_back));
+	SetAmmoCapacity("RocketAmmo", 		(50*(ammo_rune+g_back) + 25*p_back));
+	SetAmmoCapacity("HeavyBullets", 	(300*(ammo_rune+g_back) + 100*p_back));
+	SetAmmoCapacity("Dualshot_Ammo",	(200*(ammo_rune+g_back) + 50*p_back));
+	SetAmmoCapacity("Cell", 			(300*(ammo_rune+g_back) + 200*p_back));
+	SetAmmoCapacity("GLauncher_Ammo", 	(15*(ammo_rune+g_back) + 5*p_back));
+	SetAmmoCapacity("Flinger_Ammo", 	(50*(ammo_rune+g_back) + 50*p_back));
+	SetAmmoCapacity("Gasoline", 		(200*(ammo_rune+g_back) + 50*p_back));
+	AmmoTakeLeftOvers ("Clip");
+	AmmoTakeLeftOvers ("ClipPistol");
+	AmmoTakeLeftOvers ("Shell");
+	AmmoTakeLeftOvers ("RocketAmmo");
+	AmmoTakeLeftOvers ("HeavyBullets");
+	AmmoTakeLeftOvers ("Dualshot_Ammo");
+	AmmoTakeLeftOvers ("Cell");
+	AmmoTakeLeftOvers ("GLauncher_Ammo");
+	AmmoTakeLeftOvers ("Flinger_Ammo");
+	AmmoTakeLeftOvers ("Gasoline");
 }
 
 script "Ammo_ResetCaps" (void) {
@@ -184,14 +202,6 @@ Script "MagneticPickup_TargetIsPlayer" (void) {
 	SetResultValue(CheckActorClass(0, "FrenzyPlayer"));
 }
 
-Script "Armor_CompleteTo" (int amount){
-	int armor_points = CheckInventory("BasicArmor");
-	if(armor_points < amount){
-		int diff = amount - armor_points;
-		GiveInventory("ArmorShard_One", diff);
-	}
-}
-
 Script "Pickup_Fade" (int stay_seconds) {
 	str class = GetActorClass(0);
 	int last_seconds = 5;
@@ -222,6 +232,37 @@ Script "Pickup_FadeGFX" (int last_seconds) ClientSide {
 	}
 }
 
+Script "Armor_TemperanceRune" (int armortype){
+	/*
+	log(s:"Temperance rune? ", d:CheckInventory("RuneTemperance"));
+	log(s:"Armor type: ", d:armortype);
+	log(s:"Current Armor: ", d:CheckInventory("BasicArmor"));
+	log(s:"Max Armor + temperance: ", d:((100*(armortype+1))+100));
+	*/
+	if(CheckInventory("RuneTemperance") && CheckInventory("BasicArmor") < ((100*(armortype+1))+100)){
+		// Simple, give some 100 AP extra for the current rune.
+		GiveInventory("ArmorShard_One", 100);
+	}
+}
+
+Script "Armor_CompleteTo" (int amount){
+	if(!CheckInventory("BasicArmor")){
+		TakeInventory("Flag_RedArmor", 1); 
+		TakeInventory("Flag_BlueArmor", 1);
+	}
+	int armor_points = CheckInventory("BasicArmor");
+	if(armor_points < amount){
+		int diff = amount - armor_points;
+		GiveInventory("ArmorShard_One", diff);
+	}
+}
+
+Script "Armor_FullCheck" (int armortype){
+	SetResultValue(
+		CheckInventory("BasicArmor") >= (100*(armortype+1))+(100*CheckInventory("RuneTemperance"))
+		&& stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") != 0);
+}
+
 Script "Armor_ArmorShardsOnly" (void){
 	SetResultValue(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0);
 }
@@ -230,6 +271,12 @@ Script "Armor_ReplaceShardsWithArmor" (int armortype){
 	// When picked a lot of armor shards, and pick any type of armor. 
 	// Replace the shards with the armor you picked up.
 	// The leftovers will be also added to your armor.
+
+	if(!CheckInventory("BasicArmor")){
+		TakeInventory("Flag_RedArmor", 1); 
+		TakeInventory("Flag_BlueArmor", 1);
+	}
+	
 	if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "ArmorShard") == 0){
 		int armor_points = CheckInventory("BasicArmor");
 		TakeInventory("BasicArmor", 9999999);
@@ -239,6 +286,9 @@ Script "Armor_ReplaceShardsWithArmor" (int armortype){
 				GiveInventory("SteelPlatingArmor", 1);
 			break;
 			case 1:
+				GiveInventory("MegasphereArmor", 1);
+			break;
+			case 2:
 				GiveInventory("TitaniumArmor", 1);
 			break;
 		}
@@ -249,6 +299,7 @@ Script "Armor_ReplaceShardsWithArmor" (int armortype){
 			GiveInventory("ArmorShard_One", diff);
 		}
 	}
+	ACS_NamedExecuteAlways("Armor_TemperanceRune", 0, armortype);
 }
 
 Script "UpgradeCard_PickMe" (void)
@@ -373,7 +424,7 @@ script "SF_SpawnADrone" (void){
 
 script "InfAmmoCheck" (void)
 {
-	setResultValue(GetCvar("sv_infiniteammo") || CheckInventory("PowerInfiniteAmmo") || CheckInventory("Inv_Power_Infinity"));
+	setResultValue(GetCvar("sv_infiniteammo") || CheckInventory("PowerInfiniteAmmo") || CheckInventory("Inv_Power_Infinity") || CheckInventory("Ammunition_InfiniteAmmo"));
 }
 
 

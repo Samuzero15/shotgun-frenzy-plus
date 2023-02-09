@@ -88,8 +88,13 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			//Apply da techs!
 			setactorproperty(0, APROP_SPEED, 1.0 + speedboost + 0.1*coffie*CheckInventory("StimUp_CaffeinePower"));  		
 			
-			setactorproperty(0, APROP_SpawnHealth, 100 + healthboost + 20*stimul*CheckInventory("StimUp_StimulantPower"));
-			giveinventory("Health", 100 + healthboost + 10*stimul*CheckInventory("StimUp_StimulantPower"));
+			
+			setactorproperty(0, APROP_SpawnHealth, 
+				100 + healthboost + 20*stimul*CheckInventory("StimUp_StimulantPower") + 100*CheckInventory("RuneHealth"));
+			giveinventory("Health", 
+				100 + healthboost + 20*stimul*CheckInventory("StimUp_StimulantPower") + 100*CheckInventory("RuneHealth"));
+			
+			
 			SetInventory("HUD_MaxHp", 1 + 1*health1 + 1*health2 + 3*bodyEnhance);
 			
 			setactorproperty(0, APROP_DamageFactor,1.0 - defenseboost);

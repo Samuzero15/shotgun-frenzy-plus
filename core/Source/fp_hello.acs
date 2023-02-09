@@ -71,7 +71,8 @@ Script "SFPlus_CCMDList" (void) NET
 		Hello_Log(Hello_CMD_R("sfp_maxmonsters", 				"50 - 500", 	"Set the maximum monster number to spawn in each game."));
 		Hello_Log(Hello_CMD("sfp_playerdmgmult", 			 	"1.0 - 200.0",  "On games with 3 and more players, grants an extra damage multipler to the players."));
 		Hello_Log(Hello_CMD("sfp_monsterhpmult", 				"1.0 - 200.0",  "On games with 3 and more players, grants an extra health multipler to all monsters."));
-		Hello_Log(Hello_CMD_R("sfp_autosaveitems", 			 		"0, 1", 		"Autosave items? (30 seconds per iteration)"));
+		Hello_Log(Hello_CMD_R("sfp_autosaveitems", 			 	"0, 1", 		"Autosave items? (30 seconds per iteration)"));
+		Hello_Log(Hello_CMD("sfp_damageperexp", 				"0, 1", 		"Toggle the Damage x Experience script."));
 
 		Hello_Log("\nUser commands:\n");
 		Hello_Log(Hello_CMD_R("sfp_autouse", 				 "0, 1", "Enable the autouse script for the healing items."));

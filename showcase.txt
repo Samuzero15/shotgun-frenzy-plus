@@ -21,3 +21,25 @@
 ) Changed the prices of the item shop turrets.
 
 ///////// (v1.7) //////////
+
+) CF01 now in the first battery zone, a teleporter in front of the teleport destination has been placed in there, if you want to get to the other side of the room, where the battery is ubicated :)
+) SF01's Sector 1 has been slightly changed, now there are 2 teleport destinations in each side of the outposts. With a pair of health and ammo dispensers. And now, the platforms should now lower properly.
+) CF04's Sector 1 has been slightly changed, now the area it's a little less cramped, and now you have a red barrier that protects you from the spawn killing caused by the crowd. Also moved the home teleport to the spawn area of Sector 1.
+) Dualshot nails will now bounce only once, and razor blade upgrade bounces up to 4 times. Buffed their damages too.
+) Repeaters damage has been buffed up. Now they take less time to overheat. Remember, overheating means less accuracy, but more damage.
+) Deployers will now instead of giving the item on failure. Will stop the deployer from consuming, which that removes the scrolling active items from the inventory bar.
+) Drones are also buffed too, and reduced the prices of them.
+) Flame turret price drops to 2750 credits.
+) BFG Overcharged upgrade will now consume 200 cells.
+) Rage rune will now not be overriden by the helltrigger powerup.
+) Ok now, personal backpack and global backpack should do their respective values in either order of picks.
+) Renamed a pair of visual inconvenient icons on the item shop from the armory.
+) Rampage and Health runes are now spawnable and pickable up again.
+) Rewritten and modified the Mech class.
+) Rampage rune's additive effect is now limited up to 10 seconds.
+) Now the temperance rune will give 100 AP upon each armor pickup.
+) Health rune will extend the user's health to 100 hp. Obeying the current techs.
+) Ammunition runes will extend the user's base ammo capacity to x2. Obeying backpack tech and personal backpack item.
+) CF02 map's certain linedef who caused a TID switch for the players has been changed now to change it for the monsters.
+) Some extra fixes on the armors.
+!) New skill levels are added! These skill levels change the game completly.

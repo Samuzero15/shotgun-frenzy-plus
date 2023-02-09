@@ -51,7 +51,12 @@ function void SFPlus_DefineItems(void){
 	Item_Add_Powerup("Inventory_Godsphere",   "godsphere",  	1, CR_WHITE, 	"GODSPHERE");
 	Item_Add_Powerup("Inventory_Berserk2",    "berserk2",   	1, CR_RED,		"BERSERK2");
 	Item_Add_Powerup("Inventory_AmmoGiver",   "berserk2",   	1, CR_GREEN,	"AMMOSPHERE");
-	Item_Add_Powerup("Inventory_Helltrigger", "helltrigger", 	1, CR_ORANGE,	"HELLTRIGGER");
+	
+	if(GameSkill() != 0){
+		Item_Add_Powerup("Inventory_Helltrigger", "helltrigger", 	1, CR_ORANGE,	"HELLTRIGGER");
+	}
+	
+	
 		
 	Item_Add_Inv_Hide("p_backpack", 				"backpack", 		1, 		"PBACKPACK");
 	Item_Add_Inv("Inventory_MarineMine", 			"mines", 			16, 	"MARINEMINE");
@@ -64,10 +69,14 @@ function void SFPlus_DefineItems(void){
 	Item_Add_deploy("Inventory_TurretPlasma", 		"turret_plasma", 	8,	 	"PLASTURRET");
 	Item_Add_deploy("Inventory_TurretRail", 		"turret_rail", 		8, 		"RAILTURRET");
 	Item_Add_deploy("Inventory_TurretFlame",		"turret_flame", 	8, 		"FLAMTURRET");
-	Item_Add_deploy("Inventory_TurretChaingun",		"turret_chaingun", 	8, 		"CHAITURRET");
-	Item_Add_deploy("Inventory_TurretShotgun",		"turret_shotgun", 	8, 		"SHOTTURRET");
+	if(GameSkill() != 0){
+		Item_Add_deploy("Inventory_TurretChaingun",		"turret_chaingun", 	8, 		"CHAITURRET");
+		Item_Add_deploy("Inventory_TurretShotgun",		"turret_shotgun", 	8, 		"SHOTTURRET");
+
+		Item_Add_Hidden("Inventory_GreedSphere", 	1, "GREEDSPHERE", true);
+	}
 	
-	Item_Add_Hidden("Inventory_GreedSphere", 	1, "GREEDSPHERE", true);
+	
 	Item_Add_Hidden("Inventory_TeslaCoil",		8, "TESLTURRET", true);
 	Item_Add_Hidden("Inventory_Stimpack", 		10, "STIMPACK", false);
 	

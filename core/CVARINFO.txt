@@ -53,6 +53,7 @@ user bool sfp_part_smoke = false;
 user bool sfp_part_casings = false;
 user bool sfp_part_junk = false;
 
+server bool sfp_damageperexp = true;
 
 // Champion cvars
 server int  sfp_champ_onbanned = 0;

@@ -430,7 +430,7 @@ script 125 (int l_Condition)
 			log(s:"Core protection Bonus: +", d:g_SkillScore, s:" %");
 		}
 		if(p_TotalPlayerDeaths == 0) log(s:"No deaths! +", d:30, s:"%");
-		else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:((p_TotalPlayerDeaths / n_players)*2), s:"%");
+		else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:(death_skill_discount), s:"%");
 		log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
 	} else {
 		g_FinalSkillScore = 0;

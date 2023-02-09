@@ -80,7 +80,7 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 		
 		//log(s:"Health adjusted.");
 	}
-	Champ_Make(); // Lookup champ_make.acs inside champions folder.
+	if(GameSkill() != 0)Champ_Make(); // Lookup champ_make.acs inside champions folder.
 	// After all the health modifications, set the max health, for champion effects pruposes.
 	GiveInventory("Monster_MaxHealth", getactorproperty(0, APROP_Health));
 	ACS_NamedExecuteAlways("SFPlus_AutoBalanceDmg", 0);

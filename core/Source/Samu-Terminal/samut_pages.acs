@@ -51,16 +51,21 @@ function void SamuTerm_InitPages(void){
 			i = Image_Add (0.0, 0.0, "TFRAME");
 			Image_SetShow(b, true);
 			make_menubutton(card, 1, 1, "BTN7");
-			make_menubutton(card, 2, 2, "BTN5");
-			make_menubutton(card, 3, 3, "SUBTN0");
-			make_menubutton(card, 4, 4, "HBTN08");
+			if(GameSkill() != 0){
+				make_menubutton(card, 2, 2, "BTN5");
+				make_menubutton(card, 3, 3, "SUBTN0");
+				make_menubutton(card, 4, 4, "HBTN08");
+			}
 			make_exitbutton(card, 5, "BTNEXIT2");
+			
 
 			setPageTitle_Alpha("Health Terminal", CR_CYAN);
 			InitPowBuyPage(1);
-			PlayUpPage_Init(2);
-			StimUpPage_Init(3);
-			RunePage_Init(4);
+			if(GameSkill() != 0){
+				PlayUpPage_Init(2);
+				StimUpPage_Init(3);
+				RunePage_Init(4);
+			}
 		break;
 		case ST_PAGEALPHA_ATE:
 			i = Image_Add (0.0, 0.0, "TFRAME");
@@ -96,9 +101,11 @@ function void UpdatePages(void){
 	if(pagetags[STTAGS_ALPHA] == 20){
 		updateWallet();
 		UpdatePowBuyPage(1);
-		PlayUpPage_Update(2);
-		StimUpPage_Update(3);
-		RunePage_Update(4);
+		if(GameSkill() != 0){
+			PlayUpPage_Update(2);
+			StimUpPage_Update(3);
+			RunePage_Update(4);
+		}
 	}else if(pageTags[STTAGS_ALPHA] == 30){
 		updateWallet();
 		MechUpPage_Update(pageTags[STTAGS_ALPHA]);

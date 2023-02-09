@@ -88,8 +88,8 @@ statusbar normal// Standard Doom Status bar
 				drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
 			}
 			
-			drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
-			drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
+			drawnumber 4, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
+			drawnumber 4, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
 			
 		 }
 		usessecondaryammo
@@ -97,12 +97,12 @@ statusbar normal// Standard Doom Status bar
 			//alpha 0.5{DrawImage ammoicon1, 305, 190, none, 10,10;}
 			//alpha 0.5{DrawImage ammoicon2, 305, 180, none, 10,10;}
 			
-			drawnumber 3, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
-			drawnumber 3, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520, 2, RED, 0;
+			drawnumber 4, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
+			drawnumber 4, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520, 2, RED, 0;
 
 				
-			drawnumber 3, VERVIBES, Brown, ammo2capacity, 775, 510;
-			drawnumber 3, StatBigsNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
+			drawnumber 4, VERVIBES, Brown, ammo2capacity, 775, 510;
+			drawnumber 4, StatBigsNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
 		 }
 		}	
 		

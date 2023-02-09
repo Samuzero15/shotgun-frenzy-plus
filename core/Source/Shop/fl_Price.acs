@@ -251,6 +251,10 @@ script "SFPlus_DefinePrices" Open
 }
 
 function void Prices_add(str inv, int price){
+	if(GameSkill() == 4 || GameSkill() == 5){
+		price = price + ((price*0.25)>>16);
+	}
+
 	fp_Price[fp_PriceStack][0] = inv;
 	fp_Price[fp_PriceStack][1] = price;
 	fp_PriceStack++;

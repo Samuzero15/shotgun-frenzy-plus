@@ -1,5 +1,6 @@
 #library "fp_runes"
 #include "zcommon.acs"
+#import "fl_techs.acs"
 #import "f_tip.acs"
 #import "fl_runeDir.acs"
 
@@ -20,6 +21,7 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
             // Temperance will now add extra percentages to the saving amount
             int dmg = arg1;
             int percent;
+            int direct_dmg;
             hpold = getActorProperty(0, APROP_HEALTH);
             hpnow = hpold - arg1;
 
@@ -34,6 +36,12 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
                 percent = 0.45 + 0.15 * checkinventory("RuneTemperance");
                 dmg = (arg1 * (1.0 - percent)) >> 16;
 
+               /*
+                if(GameSkill() == 2 || GameSkill() == 5){
+                    direct_dmg = (dmg*0.50) >> 16;
+                    Thing_Damage2(0, direct_dmg, 0);
+                }*/
+
                 ArmorHitSFX(dmg);
                 SetResultValue(dmg);
             }
@@ -42,6 +50,12 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
             if(stricmp(GetArmorInfo(ARMORINFO_CLASSNAME), "SteelPlatingArmor") == 0){
                 percent = 0.175 + 0.16 * checkinventory("RuneTemperance");
                 dmg = (arg1 * (1.0 - percent)) >> 16;
+
+               /*
+                if(GameSkill() == 2 || GameSkill() == 5){
+                    direct_dmg = (dmg*0.50) >> 16;
+                    Thing_Damage2(0, direct_dmg, 0);
+                }*/
 
                 ArmorHitSFX(dmg);
                 SetResultValue(dmg);
@@ -52,6 +66,11 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
                 percent = 0.30 + 0.20 * checkinventory("RuneTemperance");
                 dmg = (arg1 * (1.0 - percent)) >> 16;
 
+                /*
+                if(GameSkill() == 2 || GameSkill() == 5){
+                    direct_dmg = (dmg*0.50) >> 16;
+                    Thing_Damage2(0, direct_dmg, 0);
+                }*/
                 
                 ArmorHitSFX(dmg);
                 SetResultValue(dmg);
@@ -64,6 +83,8 @@ function void ArmorHitSFX(int dmg){
     if(CheckInventory("BasicArmor") <= dmg){
         LocalAmbientSound("runes/temperance/break", 127);
         GiveInventory("TemperanceRune_GuardBreak", 1);
+        TakeInventory("Flag_RedArmor", 1);
+        TakeInventory("Flag_BlueArmor", 1);
     }else {
         GiveInventory("TemperanceRune_GuardHit", 1);
         LocalAmbientSound("runes/temperance/hit", 127);
@@ -83,6 +104,7 @@ Script "RuneSoul_Effect" (void) {
 
 Script "RuneAmmunition_Effect" (void) {
     int tics;
+    ACS_NamedExecuteAlways("Ammo_UpdateCaps", 0);
     while(checkinventory("RuneAmmunition")){
         if(tics == 1 && random(0, 100) < 30 && !CheckInventory("Inv_Power_Infinity")){
             GiveInventory("AmmunitionRune_Activate", 1);
@@ -91,16 +113,26 @@ Script "RuneAmmunition_Effect" (void) {
         tics = (tics % 35) + 1;
         delay(1);
     }
+    ACS_NamedExecuteAlways("Ammo_UpdateCaps", 0);
 }
 
 Script "RuneHealth_Effect" (void) {
     // Spread's triple ammo consumption.
     int health = GetActorProperty(0,APROP_HEALTH);
-
+    bool bodyEnhance = CheckInventory("PlayUp_BodyEnhancement");
+	bool health1 = Tech_IsDone(TECH_GENLAB_HEALTH1);
+	bool health2 = Tech_IsDone(TECH_GENLAB_HEALTH2);
+    int healthboost = 20*health1 + 20*health2 + 60*bodyEnhance;
+    int stimul = CheckInventory("StimUp_Stimulant");
+    int maxhp_normal;
     while(checkinventory("RuneHealth")){
+        setactorproperty(0, APROP_SpawnHealth, maxhp_normal + 100);
         health = RuneEffect_ExtraHealth(health, 0.5); 
+        maxhp_normal = 100 + healthboost + 20*stimul*CheckInventory("StimUp_StimulantPower");
         delay(1);
     }
+    setactorproperty(0, APROP_SpawnHealth, maxhp_normal);
+    TakeInventory("Health", PlayerHealth() - maxhp_normal);
 }
 
 Script "RuneSpread_Effect" (void) {

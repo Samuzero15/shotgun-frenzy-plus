@@ -31,6 +31,24 @@ ListMenu "EpisodeMenu"
 	// items will be filled in by MAPINFO
 }
 
+ListMenu "SkillMenu"
+{
+	IfGame(Doom, Heretic, Hexen, Strife)
+	{
+		NetgameMessage "Disconnect first before starting a single player game."
+	}
+
+	IfGame(Doom, Chex)
+	{
+		Position 48, 63
+		Font "STATBIGS", "Cyan"
+		StaticText 54, 38, "Pick your Skill modifier"
+		
+	}
+	Font "DBIGFONT", "White", "Gold"
+	// items will be filled in by MAPINFO
+}
+
 OptionMenu "SFPlusOptions"{
 	Title "Shotgun Frenzy Plus Settings"
 	SubMenu "Game Options", "SFPlus_GameOptions"
@@ -66,6 +84,7 @@ OptionMenu SFPlus_GameOptions{
 	Slider "Monster's Extra HP % *", "sfp_monsterhpmult", 0.0, 200.0, 5.0, 0
 	Slider "Monster's Extra HP over Lv20", "sfp_monsolv20hpmult", 0.0, 200.0, 5.0, 0
 	Option "Allow AutoSave Items *", "sfp_autosaveitems", "Boolean"
+	Option "Damage per Experience", "sfp_damageperexp", "Boolean"
 	StaticText ""
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"

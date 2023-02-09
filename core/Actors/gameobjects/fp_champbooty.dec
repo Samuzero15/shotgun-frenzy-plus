@@ -37,11 +37,14 @@ Actor TitaniumArmor_Pickup : CustomInventory {
 			HEVA AB 6
 			loop
 		Pickup:
+			TNT1 A 0 A_JumpIf(CallACS("Armor_FullCheck", 2), "Null")
+			TNT1 A 0 A_TakeInventory("Flag_BlueArmor", 1)
             TNT1 A 0 A_GiveInventory("Flag_RedArmor", 1)
 			TNT1 A 0 A_JumpIf(CallACS("Armor_ArmorShardsOnly") != 1, "JustGiveArmor")
-			TNT1 A 0 ACS_NamedExecuteAlways("Armor_ReplaceShardsWithArmor", 0, 1)
+			TNT1 A 0 ACS_NamedExecuteAlways("Armor_ReplaceShardsWithArmor", 0, 2)
 			stop
 		JustGiveArmor:
+			TNT1 A 0 ACS_NamedExecuteAlways("Armor_TemperanceRune", 0, 2)
 			TNT1 A 0 A_GiveInventory("TitaniumArmor", 1)
 			stop
 	  }

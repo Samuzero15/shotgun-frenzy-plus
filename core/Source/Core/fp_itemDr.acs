@@ -255,6 +255,9 @@ function void ItemDr_MonsterDrop(int monsterClass)
 
 
 function int ItemDr_RuneDrops(str rune, str drop, int min, int max, int monsterClass) {
+
+    if(GameSkill() == 0) return 0;
+
     bool spawn_fx = 0;
     int chance = (5 + monsterClass*2) * 1.0;
     if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")){
