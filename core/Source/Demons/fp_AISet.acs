@@ -10,64 +10,119 @@
 #import "fa_SetList.acs"
 #include "zcommon.acs"
 
+#define AISET_MAX 50
+#define AISET_LEVELS 20
+
 // boss characters that appear per round
-int boss_levels[20];
-int boss_starting_level;
+
 
 // for survival mode only, the amount of spawns per round
-int demon_spawncount[20] = { 60, 60, 60, 80, 80, 80, 90, 90, 90, 100, 100, 100, 130, 130, 130, 160, 160, 180, 220, 500 };
+int demon_spawncount[AISET_LEVELS] = {
+	 60, 60, 60, 
+	 80, 80, 80, 
+	 90, 90, 90, 
+	 100, 100, 100, 
+	 130, 130, 130, 
+	 160, 160, 180, 220, 500 
+};
 
-int enemy_levels[3][20];
-str enemy_sets[3] = {"D", "R", "S"};
+int enemy_levels[AISET_MAX][AISET_LEVELS];
+int boss_levels[AISET_LEVELS];
+int boss_starting_level;
 
-Script "SFPlus_LoadDefaultEnemySet" Open
+str enemy_sets[AISET_MAX][3];
+int aiset_stack = 0;
+
+Script "SFPlus_LoadDefaultEnemySets" Open
 {
-	AISet_SetMonsterSet(GetCVar("sfp_monsterset"));
+	aiset_stack = 0;
+	AISet_Add("D", "Default", 6);
+	AISet_Add("R", "Rusher", 3);
+	AISet_Add("S", "Survival", 1);
+	AISet_Add("Z", "Zombies", 20);
 }
 
-function void AISet_SetMonsterSet(int i){
-	int boss_levels_on;
-	switch (i){
-		case 0: boss_levels_on = 6; break;
-		case 1: boss_levels_on = 3; break;
-		case 2: boss_levels_on = 1; break;
-		default: i = 0; boss_levels_on = 6;
+Script "AISet_Add" (int index, int name, int boss){
+	AISet_Add(index, name, boss);
+}
+
+Script "SFPlus_ListEnemySets" (void){
+	for(int i = 0; i < aiset_stack; i++){
+		log(d:i,s:") ",s:enemy_sets[i][1],
+		s:", Index: ",s:enemy_sets[i][0],
+		s:", Spawn bosses on level:", d:enemy_sets[i][2]);
 	}
-	AISet_SetSpawnList(enemy_sets[i]);
-	boss_starting_level = boss_levels_on;
 }
 
-function void AISet_SetSpawnList(str initial){
-		
-	str string;
+function void AISet_Add(str index, str name, int boss_level_start){
+	if(aiset_stack >= AISET_MAX) {
+		log(s:"(FP_AISET.acs):", s:" Monster set maxed out.");
+		return;
+	}  else{
+		if(boss_level_start == 0) boss_level_start = -1;
+		enemy_sets[aiset_stack][0] = index;
+		enemy_sets[aiset_stack][1] = name;
+		enemy_sets[aiset_stack][2] = boss_level_start;
+		aiset_stack ++;
+	}
 	
-	for(int i = 0; i < 4; i++){
-		for(int j = 1; j <=20; j++){
-			string = strparam(s:initial, s:AISet_GetMonsterDiff(i));
-			string = strparam(s:"FPSpawn_", s:string, d:j);
-			//log(s:string);
-			if(i == 3) 	MList_SetBoss	(j,  string);
-			else 		MList_SetSpawner (i, j, string);
-		}
-	}
 }
-
-function str AISet_GetMonsterSet(int index){
-	if(index < 0 || index >= 3){
-		log(s:"AISET: Index error. Default Set Selected.");
-		return enemy_sets[0];
-	} 
-	return enemy_sets[index];
-}
-
 
 function str AISet_GetMonsterSet_Name(int i){
+	/*
 	switch(i){
 		case 0: return "Default"; break;
 		case 1: return "Rusher"; break;
 		case 2: return "Survival"; break;
 	}
-	return "Not defined";
+	*/
+	if(enemy_sets[aiset_stack][1] == 0) return "Null";
+	return enemy_sets[aiset_stack][1];
+}
+
+
+function void AISet_SetMonsterSet(int i){
+	int boss_levels_on;
+	/*
+	switch (i){
+		case 0: boss_levels_on = 6; break;
+		case 1: boss_levels_on = 3; break;
+		case 2: boss_levels_on = 1; break;
+		default: i = 0; boss_levels_on = 6;
+	}*/
+	AISet_SetSpawnList(enemy_sets[i][0]);
+	SetCVarString("sfp_monstersetname", enemy_sets[i][1]);
+	boss_starting_level = enemy_sets[i][2];
+}
+
+function void AISet_SetSpawnList(str initial){
+	str string;
+	for(int i = 0; i < 4; i++){
+		for(int j = 1; j <=AISET_LEVELS; j++){
+			string = 
+				strparam(s:"FPSpawn_", s:initial, s:AISet_GetMonsterDiff(i), d:j);
+			log(s:string);
+			if(i == 3) 	AISet_SetBoss	 (j,    string);
+			else 		AISet_SetSpawner (i, j, string);
+		}
+	}
+}
+
+
+function void AISet_SetBoss(int lvl, str m){
+	boss_levels[lvl] = m;
+}
+
+function void AISet_SetSpawner(int diff, int lvl, str spawner){
+	enemy_levels[diff][lvl-1] = spawner;
+}
+
+function str AISet_GetMonsterSet(int index){
+	if(index < 0 || index >= 3){
+		log(s:"AISET: Index error. Default Set Selected.");
+		return enemy_sets[0][0];
+	} 
+	return enemy_sets[index][0];
 }
 
 function str AISet_GetSpawnActor(int set, int diff, int lvl){

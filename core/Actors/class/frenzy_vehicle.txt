@@ -8,6 +8,7 @@ ACTOR MechMorph : PowerupGiver 6969
  +FLOATBOB
  +INVENTORY.AUTOACTIVATE
  -INVENTORY.ALWAYSPICKUP
+ -INVENTORY.INVBAR
  scale 0.5
  States
  {
@@ -99,7 +100,7 @@ ACTOR MechPlayer : PlayerPawn
 		"####" "#" 50 A_Jump(256, "Spawn") 
 		goto Spawn
 	StopMove:
-		"####" "#" 1 A_Stop
+		"####" "#" 1 //A_Stop
 		"####" "#" 50 A_Jump(256, "Spawn") 
 		goto Spawn
 

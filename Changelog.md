@@ -9,6 +9,23 @@
 
 ## v1 - The path of the damned...
 
+#### (23 / 4 / 2023) [Alright, alright, let's commit some stuff]
+	*) Now the scripts for music and for showing sbarinfo data are now optimized and clientsided respectively, and that means less lag!
+	*) Updated pack-o-daemon and adapted the project.json to the current project settings.
+	*) Added a new map, the Map Hub!
+	// Now here you can choose what map or difficulty you want, you will get yourself teleported to the following map! (a cvar is there to help you out with that)
+	+) Now, it is possible to add custom waves and custom monster sets!
+	+) New cvar for the use of the damage per experience algorithm, and also added some achievement cvars for the server :)
+	*) Now the invulnerability granted by powerups or defense rune will be overriden to the last powerup used.
+	*) Now the rune messages will only appear when not using a mech
+	*) Added some invulnerability checks for tanks.
+	+) Added the "Monster Pressure" stat (the AIDir Level).
+	*) Some extra fixes in the AIDir scripts
+	*) Now, poison champions will not do it's aoe damage when invulnerable.
+	*) Mech upgrades, are now counted to the AIDir.
+	*) Simplified weapon language data. For an easier addition on weapons (Custom weapons soon)
+	*) Fixed some other stuff.
+
 #### (6 - 9 / 2 / 2023) [Rune's buffs and Skill modifiers]
 	*) Now the temperance rune will give 100 AP upon each armor pickup.
 	*) Health rune will extend the user's health to 100 hp. Obeying the current techs.

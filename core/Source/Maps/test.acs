@@ -263,7 +263,7 @@ script 10 (int fun, int arg){
 		
 		case 3:
 			next = rand_set + 1;
-			if(next > 2) next = 0;
+			if(next >= aiset_stack) next = 0;
 			rand_set = next;
 			print(s:"Monster set: \cj", 
 				s:AISet_GetMonsterSet_Name(rand_set), s:" (",s:AISet_GetMonsterSet(rand_set), s:")");

@@ -58,27 +58,44 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 
 	// get current attributes
 	int health = getactorproperty(0, APROP_Health);
+	if(health <= 0) terminate;
 	int alpha = getactorproperty(0, APROP_Alpha);
 	int damage_factor = 1.0;
 	//int adjustedCount = PlayerCount()/2;
 	int extrahealth = 0;
+	int percent = 0;
+	int player_treshold = PlayerCount() > 2;
+	int l_Level;
 	
 	// auto adjust monsters based on player count
-	if (alpha != 0.9 && PlayerCount() > 2){
+	if (alpha != 0.9 && player_treshold){
 		//log(s:"Adjusting health");
-		int l_Level = AIDir_CurrentLevel();
+		int player_diff = PlayerCount()-2;
+		l_Level = AIDir_CurrentLevel();
 
-		extrahealth = (health*((PlayerCount() - 2)*(fixedDiv(m_hpmult, 100.0))))>>16;
-		if(l_Level >= 20) extrahealth += (health*(l_Level - 19)*(fixedDiv(m_hpolv20, 100.0)))>>16;
-
-		damage_factor = 1.0 + (PlayerCount() - 2)*fixedDiv(p_dmgmult, 100.0);
-
+		percent = m_hpmult>>16;
+		extrahealth = (player_diff)*((health*percent)/100);
+		if(l_Level >= 20){
+			percent = m_hpolv20>>16;
+			extrahealth += (l_Level - 19)*(player_diff)*((health*percent)/100);
+			//log(s:"Extra health added after 20 levels = ",d:(l_Level - 19)*(player_diff)*((health*percent)/100));
+		} 
+		damage_factor = 1.0 + (player_diff)*fixedDiv(p_dmgmult, 100.0);
 		setactorproperty(0, APROP_Health, health + extrahealth);
 		setactorproperty(0, APROP_DamageFactor, damage_factor);
 		setactorproperty(0, APROP_Alpha, 0.9);
-		
-		
 		//log(s:"Health adjusted.");
+	}else if (alpha != 0.9){ 
+		// In almost single player games, add the extra health after level 20
+		l_Level = AIDir_CurrentLevel();
+		if(l_Level >= 20){
+			percent = m_hpolv20>>16;
+			extrahealth += (l_Level - 19)*((health*percent)/100);
+			//log(s:"Extra health added after 20 levels = ", d:(l_Level - 19)*((health*percent)/100));
+		} 
+		damage_factor = 1.0 + (player_diff)*fixedDiv(p_dmgmult, 100.0);
+		setactorproperty(0, APROP_Health, health + extrahealth);
+		setactorproperty(0, APROP_Alpha, 0.9);
 	}
 	if(GameSkill() != 0)Champ_Make(); // Lookup champ_make.acs inside champions folder.
 	// After all the health modifications, set the max health, for champion effects pruposes.

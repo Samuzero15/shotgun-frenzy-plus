@@ -10,6 +10,8 @@
 #import "f_IntDB.acs"
 #import "fl_WDir.acs"
 #import "fl_PupDir.acs"
+#import "fl_MupDir.acs"
+#import "fl_RuneDir.acs"
 #import "fp_AISet.acs"
 #include "zcommon.acs"
 
@@ -57,8 +59,11 @@ function int f_AIDir_Check (void)
 	//[Samu] The more and expensier upgrades, the harder it gets!
 	l_Score += UPTrack_GetScore();
 	l_Score += PUTrack_GetScore();
-    
-	l_Score -= aiSubtract;
+    l_Score += MechUp_GetScore();
+    l_Score += Rune_GetScore();
+
+    // Track the recap counter! the more you recap, the faster the wave.
+    l_Score += g_RecapCount*12; // Speed up upon recap!
 	//print(d:aiSubstract);
 	if (l_Score < 5){ l_Score = 30; }
 	
@@ -81,6 +86,8 @@ function int f_AIDir_Check (void)
 function int AIDir_AverageKPM(int num_players){
     // Average kills per minute. Considers player count and game length (+ guardian wave). Used for measuring the skill issue.
     int res;
+    int spawn_amount = m_AIDCap;
+
     if (f_Gametype == 5) { // In case of survival defender maps.
         res = m_AIDCap*(num_players)*(m_SurvivalWave);
     }else {
@@ -102,7 +109,7 @@ function int AIDir_CurrentLevel(void){
 }
 
 // the ai director debugger
-script 269 (void)//OPEN
+script 269 (void)
 {
 	str msg;
     while(1)
@@ -112,7 +119,10 @@ script 269 (void)//OPEN
 		s:"\nWDir Packs Score: ", d:WPTrack_GetScore(),
 		s:"\nWDir Upgrades Score: ", d:UpTrack_GetScore(),
 		s:"\nPupDir Upgrades Score: ", d:PUTrack_GetScore(),
-		s:"\nAI Director status: ", d:f_AIDir_Check(),
+        s:"\nRune Upgrades Score: ", d:Rune_GetScore(),
+        s:"\nMech Upgrades Score: ", d:MechUp_GetScore(),
+		s:"\nSector recapture score: ", d:(g_RecapCount*12),
+        s:"\nAI Director status: ", d:f_AIDir_Check(),
 		s:"\nAI Spawn Level: ", d:(AIDir_CurrentLevel() + 1),
         s:"\nAverage Kills per minute: ", d:AIDir_AverageKPM(Playercount()));
         hudmessagebold(s:msg;0, 66, cr_gold, 0.3, 0.2, 1.0);

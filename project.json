@@ -1,0 +1,106 @@
+{
+    "project_parts": {
+        "Core": {
+            "release": "v1.7a",
+            "filename": "sfplus_core",
+            "acscomp": true,
+            "sourcedir": "core",
+            "distdir": "dist",
+            "notxt": false
+        },
+        "Resources": {
+            "release": "v1.7",
+            "filename": "sfplus_res",
+            "acscomp": false,
+            "sourcedir": "res",
+            "distdir": "dist",
+            "notxt": false
+        },
+        "Music": {
+            "release": "v1.0",
+            "filename": "sfplus_mus",
+            "acscomp": false,
+            "sourcedir": "mus",
+            "distdir": "dist",
+            "notxt": true
+        }
+    },
+    "play_settings": {
+        "sourceport_path": "..\\tools\\zandronum\\zandronum.exe",
+        "pwads_before": [
+            "..\\tools\\pwads\\skulltag_content-3-0-beta01.pk3"
+        ],
+        "pwads_after": [],
+        "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
+        "map": "HUB",
+        "extra_params": ""
+    },
+    "build_settings": {
+        "name": "sfplus",
+        "tag": "v1.7a",
+        "build_dir": "",
+        "zip_compress_type": "",
+        "zip_dir": "dist\\packed",
+        "build_skip_files": [
+            ".backup1",
+            ".backup2",
+            ".backup3",
+            ".bak",
+            ".dbs"
+        ],
+        "build_add_files": [
+            "C:\\Users\\Usuario\\Desktop\\Samu Stuff\\Doom Stuff\\Projects\\shotgun-frenzy-plus\\Changelog.md"
+        ],
+        "build_flags": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            true,
+            true,
+            false
+        ],
+        "string_replacer": {
+            "strings_to_replace": {
+                "_DEV_": {
+                    "type": "tag",
+                    "content": "",
+                    "oneline": false
+                },
+                "_SHOWCASE_": {
+                    "type": "file",
+                    "content": "showcase.txt",
+                    "oneline": false
+                },
+                "_SHOWCASELANG_": {
+                    "type": "file",
+                    "content": "showcase.txt",
+                    "oneline": true
+                },
+                "XX/XX/XXXX": {
+                    "type": "date",
+                    "content": "%d/%m/%Y",
+                    "oneline": false
+                },
+                "x.x.x": {
+                    "type": "tag",
+                    "content": "",
+                    "oneline": false
+                }
+            },
+            "files_to_replace": [
+                "Language.txt",
+                "GAMEINFO.txt",
+                "changelog.md",
+                "MENUDEF.txt",
+                "buildinfo.txt"
+            ]
+        }
+    },
+    "acs_compilation": {
+        "type": "acc",
+        "executeable": "..\\tools\\acc\\acc64.exe",
+        "extra_params": ""
+    }
+}

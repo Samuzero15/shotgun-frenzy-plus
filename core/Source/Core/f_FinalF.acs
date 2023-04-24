@@ -319,6 +319,8 @@ Script "SFPlus_KillnEnd" (int reason){
 // 3 = Demonic Core destroyed
 // 4 = Marine Core destroyed
 
+int g_skillpercent = 0;
+
 script 125 (int l_Condition)
 {
     // define some local containers
@@ -396,19 +398,20 @@ script 125 (int l_Condition)
 	// collect final score
 	int average_kpm_percent;
 	int lastwave_percent;
+	int monster_pressure;
 	if(n_players != 0){
-		average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM(n_players)<<16), 70.0)>>16;
-		if(average_kpm_percent > 70) average_kpm_percent = 70;
-		
+		average_kpm_percent = FixedMul(FixedDiv(getlevelinfo(LEVELINFO_KILLED_MONSTERS)<<16, AIDir_AverageKPM(n_players)<<16), 50.0)>>16;
+		if(average_kpm_percent > 50) average_kpm_percent = 50;
+		monster_pressure = AIDir_CurrentLevel();
 		// 70% of skill score depends on the number of monsters killed, and 30% depending on the gametype.
 		// If any other game type (CF or SF) 10% per each surviving core.
 		// else (SD) 30% proportional to the last wave reached.
 
 		if(f_Gametype == 5){
 			lastwave_percent = FixedMul(FixedDiv(m_SurvivalWave<<16, f_SurvivalLastLevel<<16), 30.0)>>16;
-			g_FinalSkillScore = average_kpm_percent + lastwave_percent;
+			g_FinalSkillScore = average_kpm_percent + monster_pressure + lastwave_percent;
 		}else{
-			g_FinalSkillScore = average_kpm_percent + g_SkillScore + g_RecapCount*5;
+			g_FinalSkillScore = average_kpm_percent + monster_pressure + g_SkillScore + g_RecapCount*5;
 		}
 
 		int death_skill_discount = 0;
@@ -431,6 +434,7 @@ script 125 (int l_Condition)
 		}
 		if(p_TotalPlayerDeaths == 0) log(s:"No deaths! +", d:30, s:"%");
 		else log(s:"Players Died: ", d:p_TotalPlayerDeaths, s:" times. ", s:"-", d:(death_skill_discount), s:"%");
+		log(s:"Monster presure Level: ", d:monster_pressure, s:" / 20");
 		log(s:"Skill Percent: ", d:g_finalSkillScore, s:" %");
 	} else {
 		g_FinalSkillScore = 0;
@@ -440,6 +444,8 @@ script 125 (int l_Condition)
 	// check limits
     if (g_FinalSkillScore > 100)     g_FinalSkillScore = 100;
     if (g_FinalSkillScore < 0)       g_FinalSkillScore = 0;
+
+	ACS_NamedExecute("SFPlus_RegisterHiscores", 0);
     
     // display killed demons
     setfont("STATBIGS");
@@ -476,15 +482,21 @@ script 125 (int l_Condition)
 			FinalFight_ScoreString(2, "Protected", g_SkillScore/10, " \cgcores");
         delay(2);
     }
-	if(g_RecapCount){
+	if(g_RecapCount || monster_pressure){
 		delay(15);
 		int recap_counter = 0;
-		while(recap_counter < g_RecapCount)
+		int m_pressure_counter = 0;
+		while(recap_counter < g_RecapCount || m_pressure_counter < monster_pressure)
 		{
 			ambientsound("weapons/pistol", 20);
-			recap_counter++;
-			FinalFight_ClearString(0);
-			FinalFight_ScoreString(1, "Sector Recaptures", recap_counter, " \cgtimes");
+			
+			if(recap_counter < g_RecapCount){
+				recap_counter++;
+				FinalFight_ScoreString(1, "Sector Recaptures", recap_counter, " \cgtimes");
+			}
+			if(m_pressure_counter < monster_pressure)
+				m_pressure_counter++;
+			FinalFight_ScoreString(0, "M. Pressure Lv.", m_pressure_counter, "\cg / 20");
 			FinalFight_ClearString(2);
 			
 			delay(2);
@@ -502,7 +514,7 @@ script 125 (int l_Condition)
 		FinalFight_ScoreString(2, "Skill level: ", l_SkillLevel, "%");
         delay(2);
     }
-    
+    g_skillpercent = g_FinalSkillScore;
     delay(35 * 1);
 	setfont("confont");	
 	msg = "";
@@ -538,8 +550,74 @@ script 125 (int l_Condition)
 	
     delay(35 * 6);
 
+	if(GetCvar("sfp_hubaftergame")){
+		ChangeLevel ("HUB", 0, CHANGELEVEL_RESETINVENTORY);
+	}
     exit_normal(0);
 }
+
+Script "SFPlus_RegisterHiscores" (void) {
+
+	// Update the high kill count
+	str map = strparam(n:-2);
+	log(s:map);
+	str cvar = strparam(s:"sf_map_", s:map, s:"_hikills");
+	int before = GetCvar(cvar);
+	if(before < GetLevelInfo(LEVELINFO_KILLED_MONSTERS)){
+		log(s:"New Kill Record!");
+		SetCvar(cvar, GetLevelInfo(LEVELINFO_KILLED_MONSTERS));
+	}
+	
+
+	// Update the sector recaptures (if applicable)
+	cvar = strparam(s:"sf_map_", s:map, s:"_hirecaps");
+	before = GetCvar(cvar);
+	if(before < g_RecapCount){
+		log(s:"New Recap Record!");
+		SetCvar(cvar, g_RecapCount);
+	}
+	
+
+	// Update the monster pressure
+	cvar = strparam(s:"sf_map_", s:map, s:"_himonsterpressure");
+	before = GetCvar(cvar);
+	if(before < AIDir_CurrentLevel()){
+		log(s:"New Monster Pressure Record!");
+		SetCvar(cvar, AIDir_CurrentLevel());
+	}
+	
+
+	// Update the skill percent
+	cvar = strparam(s:"sf_map_", s:map, s:"_hiskillpercent");
+	before = GetCvar(cvar);
+	if(before < g_skillpercent){
+		log(s:"New Skill percent Record!");
+		SetCvar(cvar, g_skillpercent);
+	}
+	
+
+	// Update the high kill streak of the map, and the player name who did it.
+	cvar = strparam(s:"sf_map_", s:map, s:"_hikillstreak");
+	before = GetCvar(cvar);
+	int new_hi_killstreak = InitDB_getHighestKillstreak(0);
+	if(before < new_hi_killstreak){
+		log(s:"New Kill-streak Record!");
+		SetCvar(cvar, new_hi_killstreak);
+		cvar = strparam(s:"sf_map_", s:map, s:"_hikillstreak_player");
+		SetCvarString(cvar, strparam(n:InitDB_getHighestKillstreak(1)+1));
+	}
+
+	if(g_GameEnding != 4){
+		// If victory, Mark completed in this skill level.
+		cvar = strparam(s:"sf_map_", s:map, s:"_skillclear_", d:GameSkill());
+		before = GetCvar(cvar);
+		if(before == 0){
+			log(s:"Map cleared in skill level ", d:GameSkill());
+			SetCvar(cvar, 1);
+		}
+	}
+}
+
 
 function void FinalFight_ClearString(int id){
 	hudmessagebold(s:""; 0, 151+id, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 55.0 + 15.0*id, 0.0);

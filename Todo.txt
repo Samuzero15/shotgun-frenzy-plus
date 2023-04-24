@@ -2,9 +2,9 @@
 d) Done!
 w) Work in progres
 
-[w] Re-Make the SBarInfo
-	[w] Do some more touchs in the normal bar.
-	[ ] Rework the full screen bar.
+[d] Re-Make the SBarInfo
+	[d] Do some more touchs in the normal bar.
+	[d] Rework the full screen bar.
 [w] Get some more voices for Amy (Yeah that computer lady voice.)
 [d] Clientside the Acs HUD.
 [d] Add the powerups on the genetics terminal.
@@ -50,6 +50,6 @@ w) Work in progres
 [ ] Slove that issue un the spectatic freezing on commanding.
 [d] Add the BFG, Chaingun and Shotgun turrets.
 [d] Add the icons for the Chaingun, BFG and Shotgun Turrets.
-[ ] Make the Rune page terminal.
-[ ] Finish up champions
+[d] Make the Rune page terminal.
+[d] Finish up champions
 [ ] Implement the Elite Weapons

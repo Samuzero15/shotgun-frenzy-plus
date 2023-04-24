@@ -337,8 +337,8 @@ CBDATA_N_DEP_TURRET = "Deploy a turret...";
 CBDATA_D_DEP_TURRET = "Access to the turret menu.";
 
 CBDATA_I_DEP_TURRET_BULLET = "CM40";
-CBDATA_N_DEP_TURRET_BULLET = "Deploy a turret...";
-CBDATA_D_DEP_TURRET_BULLET = "Access to the turret menu.";
+CBDATA_N_DEP_TURRET_BULLET = "Deploy a Bullet Turret";
+CBDATA_D_DEP_TURRET_BULLET = "Deploys a cheap and fast firing turret. \nFires bullets and deploys pretty quickly.";
 
 CBDATA_I_DEP_TURRET_ROCKET = "CM41";
 CBDATA_N_DEP_TURRET_ROCKET = "Deploy a Rocket Turret"; 

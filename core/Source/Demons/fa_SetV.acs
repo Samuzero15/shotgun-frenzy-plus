@@ -39,28 +39,29 @@ Script "SFPlus_LoadDefaultEnemySet" Open
 			else if	(i == 2) string = strparam(s:string,s:"H");
 			string = strparam(s:"FPSpawn_", s:string, d:j);
 			//log(s:string);
-			MList_SetSpawner (i, j, string);
+			//AISet_SetSpawner (i, j, string);
 		}
 	}
-	
-	MList_SetBoss	(1,  "Cyberbaron");
-	MList_SetBoss	(2,  "Cyberbaron");
-	MList_SetBoss	(3,  "Cyberbaron");
-	MList_SetBoss	(4,  "Cyberbaron");
-	MList_SetBoss	(5,  "Cyberbaron");
-	MList_SetBoss	(6,  "Cyberbaron");
-	MList_SetBoss	(7,  "Cyberbaron");
-	MList_SetBoss	(8,  "Cyberbaron");
-	MList_SetBoss	(9,  "Cyberbaron");
-	MList_SetBoss	(10, "Cyberbaron");
-	MList_SetBoss	(11, "Cyberbaron");
-	MList_SetBoss	(12, "Cyberbaron");
-	MList_SetBoss	(13, "Cyberbaron");
-	MList_SetBoss	(14, "Cyberbaron");
-	MList_SetBoss	(15, "Cyberbaron");
-	MList_SetBoss	(16, "sfCyberdemon");
-	MList_SetBoss	(17, "sfCyberdemon");
-	MList_SetBoss	(18, "sfCyberdemon");
-	MList_SetBoss	(19, "sfCyberdemon");
-	MList_SetBoss	(20, "sfCyberdemon");
+	/*
+	AISet_SetBoss	(1,  "Cyberbaron");
+	AISet_SetBoss	(2,  "Cyberbaron");
+	AISet_SetBoss	(3,  "Cyberbaron");
+	AISet_SetBoss	(4,  "Cyberbaron");
+	AISet_SetBoss	(5,  "Cyberbaron");
+	AISet_SetBoss	(6,  "Cyberbaron");
+	AISet_SetBoss	(7,  "Cyberbaron");
+	AISet_SetBoss	(8,  "Cyberbaron");
+	AISet_SetBoss	(9,  "Cyberbaron");
+	AISet_SetBoss	(10, "Cyberbaron");
+	AISet_SetBoss	(11, "Cyberbaron");
+	AISet_SetBoss	(12, "Cyberbaron");
+	AISet_SetBoss	(13, "Cyberbaron");
+	AISet_SetBoss	(14, "Cyberbaron");
+	AISet_SetBoss	(15, "Cyberbaron");
+	AISet_SetBoss	(16, "sfCyberdemon");
+	AISet_SetBoss	(17, "sfCyberdemon");
+	AISet_SetBoss	(18, "sfCyberdemon");
+	AISet_SetBoss	(19, "sfCyberdemon");
+	AISet_SetBoss	(20, "sfCyberdemon");
+	*/
 }

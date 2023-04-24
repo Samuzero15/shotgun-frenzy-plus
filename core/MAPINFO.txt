@@ -15,6 +15,12 @@ Gameinfo
 // Episode setup
 clearepisodes
 
+episode HUB
+{
+	name = "Map HUB"
+	NoSkillMenu
+}
+
 episode CF01
 {
 	name = "Combat Frenzy"
@@ -175,13 +181,12 @@ map TEST lookup "Testing map"
 	allowrespawn
 }
 
-/*
-0) Casual (Double ammo, more drop chance)
-1) Normal (SFPlus at it's full glory)
-2) Tough (Double Damage for demons)
-3) Veteran (Fast Move and x2 Damage for Demons)
-4) Masochist (Veteran + Less loot + Less drop chance)
-*/
+map HUB lookup "Mission Select"
+{
+	music = "LABHub"
+	intermusic = "Q4FINAL"
+	allowrespawn
+}
 
 ClearSkills
 
@@ -190,16 +195,16 @@ skill Classic {
 	MustConfirm = "S.F. unofficial patch 8f's / S.F.+ test versions classic dropset, that means no HP and AP bonuses, no extra loots, no runes, no upgrades (like stimpack & player ups), and no champions.  Are you sure?"
 	name = "Classic"
 	SpawnFilter = "Normal"
-	ReplaceActor = "UpgradeCard", ""
-	ReplaceActor = "Greedsphere", ""
-	ReplaceActor = "BigGem", ""
-	ReplaceActor = "SmallGem", ""
-	ReplaceActor = "Fading_Medikit", ""
-	ReplaceActor = "Fading_SteelPlatingArmor", ""
-	ReplaceActor = "Fading_TitaniumArmor", ""
-	ReplaceActor = "Fading_Medikit", ""
-	ReplaceActor = "Inventory_TurretShotgun", ""
-	ReplaceActor = "Inventory_TurretChaingun", ""
+	ReplaceActor = "UpgradeCard", "InvisiblePuff"
+	ReplaceActor = "Greedsphere", "InvisiblePuff"
+	ReplaceActor = "BigGem", "InvisiblePuff"
+	ReplaceActor = "SmallGem", "InvisiblePuff"
+	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
+	ReplaceActor = "Fading_SteelPlatingArmor", "InvisiblePuff"
+	ReplaceActor = "Fading_TitaniumArmor", "InvisiblePuff"
+	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
+	ReplaceActor = "Inventory_TurretShotgun", "InvisiblePuff"
+	ReplaceActor = "Inventory_TurretChaingun", "InvisiblePuff"
 }
 
 skill Normal {
@@ -211,12 +216,14 @@ skill Normal {
 }
 
 skill Hard {
-	MustConfirm = "x2 damage taken from monsters, x2 monster HP. Are you sure?"
+	MustConfirm = "x2 damage taken from monsters, x2 monster HP. No Megaspheres. Medikits and Soulspheres are more common. Are you sure?"
 	MonsterHealth = 2.0
 	DamageFactor = 2.0
 	ACSReturn = 2
 	name = "Hard"
 	SpawnFilter = "Normal"
+	ReplaceActor = "Inventory_Soulsphere", "Fading_Medikit"
+	ReplaceActor = "Inventory_Megasphere", "Inventory_Soulsphere"
 }
 
 skill Turbo {
@@ -245,7 +252,7 @@ skill Misserable {
 }
 
 skill Masochist {
-	MustConfirm = "Hard + Turbo + Disgraceful skill levels in a single skill because you hate yourself. Oh and, no Megasphere and Godsphere. Are you sure?"
+	MustConfirm = "Hard + Turbo + Misserable skill levels in a single skill because you hate yourself. Oh and, no Megasphere and Godsphere. Are you sure?"
 	MonsterHealth = 2.0
 	DamageFactor = 1.5
 	FastMonsters
@@ -258,7 +265,6 @@ skill Masochist {
 	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
 	ReplaceActor = "Fading_SteelPlatingArmor", "InvisiblePuff"
 	ReplaceActor = "Fading_TitaniumArmor", "InvisiblePuff"
-	ReplaceActor = "Fading_Medikit", "InvisiblePuff"
 	ReplaceActor = "Inventory_Soulsphere", "InvisiblePuff"
 	ReplaceActor = "Inventory_Megasphere", "InvisiblePuff"
 	ReplaceActor = "Inventory_Godsphere", "InvisiblePuff"

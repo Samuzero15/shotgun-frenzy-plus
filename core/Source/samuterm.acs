@@ -51,18 +51,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	
 	//Sync it with client.
 	// To Sync the prices.
-	ACS_NamedExecuteAlways("SFPlus_DefinePrices", 0);
-	//ACS_NamedExecuteAlways("SFPlus_DefineWeapons", 0);
-	SFPlus_DefineWeapons();
-	SFPLUS_DefineItems();
-	SFPlus_DefineCMDButtons();
-	SFPlus_DefineMechUps();
-
-	If(GameSkill() != 0){
-		SFPlus_DefinePlayUps();
-		SFPlus_DefineStimUps();
-		SFPlus_DefineRunes();
-	}
+	IntDB_LoadStuff();
 	
 	pagetags[STTAGS_ALPHA] = alphatag;
 	//log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);

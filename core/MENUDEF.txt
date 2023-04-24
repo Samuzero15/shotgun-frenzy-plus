@@ -6,11 +6,14 @@ DefaultListMenu
 
 ListMenu "MainMenu"{
 
+	StaticPatch 94, -5, "M_DOOM"
 	
 	TextItem "New Game", "s", "PlayerclassMenu"
 	TextItem "SF+ Settings", "s", "SFPlusOptions"
 	TextItem "More Options", "o", "OptionsMenu"
 	TextItem "Quit", "q", "QuitMenu"
+	Font "CONFONT", "Cyan", "Orange"
+	StaticText 94, 50, "_DEV_"
 }
 
 ListMenu "EpisodeMenu"
@@ -50,6 +53,7 @@ ListMenu "SkillMenu"
 }
 
 OptionMenu "SFPlusOptions"{
+
 	Title "Shotgun Frenzy Plus Settings"
 	SubMenu "Game Options", "SFPlus_GameOptions"
 	SubMenu "Mod Hotkeys", "SFPlus_ItemHotkeys"
@@ -85,6 +89,8 @@ OptionMenu SFPlus_GameOptions{
 	Slider "Monster's Extra HP over Lv20", "sfp_monsolv20hpmult", 0.0, 200.0, 5.0, 0
 	Option "Allow AutoSave Items *", "sfp_autosaveitems", "Boolean"
 	Option "Damage per Experience", "sfp_damageperexp", "Boolean"
+	Option "Hub after game", "sfp_hubaftergame", "Boolean"
+	TextField "Monster set", "sfp_monstersetname", "cv_false"
 	StaticText ""
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
@@ -361,6 +367,22 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText "Increase this factor, and the monster will absorb more damage."
 	StaticText "Works only if the player count is greater than 3."
 	StaticText "The more players are in, the harder to kill they get!"
+	StaticText ""
+	StaticText "Monster's Extra Meat on LV20", 1
+	StaticText "Same as above. But applied after going to wave 20 and more."
+	StaticText "Except this applies with whatever players are in the game."
+	StaticText ""
+	StaticText "Damage per Experience", 1
+	StaticText "When 3 players or more are in the game, the monster health changes."
+	StaticText "It's good because they now resist more, but for the more recent players."
+	StaticText "They might find it hard to kill, so in order to counter this"
+	StaticText "The script will award experience depending on the effective damage"
+	StaticText "caused by the players to monsters."
+	StaticText ""
+	StaticText "Hub after game", 1
+	StaticText "After a game is finished, the players will go straight"
+	StaticText "to the hub map, where they can choose the next map."
+	StaticText "Disable this. And the map changes sequentially aftergame."
 	StaticText ""
 	StaticText "Allow Autosave items", 1
 	StaticText "This cvar will keep the items of every player in game."

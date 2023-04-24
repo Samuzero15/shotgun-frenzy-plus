@@ -37,7 +37,6 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	bool adrenaline = Tech_IsDone(TECH_GENLAB_SPEEDB);
 	bool resister = Tech_IsDone(TECH_GENLAB_RESISB);
 	bool armorTech = Tech_IsDone(TECH_GENLAB_ARMOR);
-	
     if ((l_Type == RESTOCK_HEALTHPAD && Tech_IsDone(TECH_GENLAB)) || (l_Type == RESTOCK_HEALTH))
     {
 		
@@ -69,7 +68,6 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 				}
 				// steel plating
 			}
-			//if (Tech_IsDone(TECH_GENLAB_RESISB))        giveinventory("Upgrade_Resister", 1);       // resister unit
 			if (Tech_IsDone(TECH_GENLAB_REGENB))        giveinventory("Upgrade_Asorber", 1);  // asorber unit
 			
 			

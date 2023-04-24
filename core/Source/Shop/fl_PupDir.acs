@@ -28,7 +28,6 @@ function void SFPlus_DefinePlayUps(void){
 	PlayUp_Add ("Offensive Powerup Upgrade",	"PowUpUpgrade_Attack", 	"HBTN07");
 	if(checkinventory("f_gametype") == 1 || f_GameType == 1)
 		PlayUp_Add ("Mech Syncronize",		"MechSync", 		"HBTN05");
-	//PlayUp_Add ("Rune Syncronize",		"RuneSync", 		"HBTN08");
 	PlayUp_Add ("Expansive Restock",	"ExpansiveRestock",	"HBTN03");
 	PlayUp_Add ("Body Enhancement",		"BodyEnhancement",	"HBTN02");
 	PlayUp_Add ("Armor Repair",			"ArmorRepair",		"HBTN01");
@@ -37,7 +36,7 @@ function void SFPlus_DefinePlayUps(void){
 	PlayUp_Add ("Prometeo Protocol",	"Prometeo",			"HBTN06");
 }
 
-function void PlayUp_Add (str name, str actor, str btnimg){
+function void PlayUp_Add(str name, str actor, str btnimg){
 	int upg = PlayUpTop;
 	
 	if(PlayUpTop >= FP_PLAYUP_MAX)
@@ -71,7 +70,7 @@ function int PUTrack_GetScore(void){
 		else break;
 	}
 	if(!players) return 0;
-	return score / players;
+	return (score * 2) / players;
 }
 
 script "SFPlus_DebugPlayUps" (void){

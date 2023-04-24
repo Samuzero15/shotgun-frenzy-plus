@@ -26,15 +26,15 @@ function void UpdateListUpPage(int pageTag){
 		bool ihaveup1, ihaveup2, ihavewep;
 		str titlecat;
 		int color;
-		if(listup_vars[5] == FP_BAS){ 
+		if(listup_vars[5] == WEAPON_SET_STANDARD){ 
 			titlecat = "Standard Set";
 			color = CR_GREEN;
 		}
-		else if(listup_vars[5] == FP_ADV){
+		else if(listup_vars[5] == WEAPON_SET_ADVANCED){
 			titlecat = "Advanced Set";
 			color = CR_CYAN;
 		}
-		else if(listup_vars[5] == FP_OP){ 
+		else if(listup_vars[5] == WEAPON_SET_OVERPOWERED){ 
 			titlecat = "Overpower Set";
 			color = CR_ORANGE;
 		}
@@ -95,9 +95,9 @@ function void ListUpPage_Update(int weapon){
 	int card = listup_vars[0];
 	int pos = listup_vars[6] + 1; 
 	// Set the original colors here.
-		if(Weapon_getCat(weapon) == FP_BAS) color = CR_GREEN;
-		else if(Weapon_getCat(weapon) == FP_ADV) color = CR_CYAN;
-		else if(Weapon_getCat(weapon) == FP_OP) color = CR_ORANGE;
+		if(Weapon_getCat(weapon) == WEAPON_SET_STANDARD) color = CR_GREEN;
+		else if(Weapon_getCat(weapon) == WEAPON_SET_ADVANCED) color = CR_CYAN;
+		else if(Weapon_getCat(weapon) == WEAPON_SET_OVERPOWERED) color = CR_ORANGE;
 	
 	//Not hovering?, reset the name and description.
 	if(comphover == -1 || comphover != btn1 || comphover != btn2) {
@@ -249,9 +249,9 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 	Label_setAligns			(title, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	
 	int color = CR_WHITE;
-	if(Weapon_getCat(weapon) == FP_BAS) color = CR_GREEN;
-	else if(Weapon_getCat(weapon) == FP_ADV) color = CR_CYAN;
-	else if(Weapon_getCat(weapon) == FP_OP) color = CR_ORANGE;
+	if(Weapon_getCat(weapon) == WEAPON_SET_STANDARD) color = CR_GREEN;
+	else if(Weapon_getCat(weapon) == WEAPON_SET_ADVANCED) color = CR_CYAN;
+	else if(Weapon_getCat(weapon) == WEAPON_SET_OVERPOWERED) color = CR_ORANGE;
 	Label_setColor(title, color);
 	ListUpPage_SaveGroup(weapon, 1, title);
 	

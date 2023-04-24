@@ -55,8 +55,9 @@ function void STExecute_getMechUpgrade(int which){
 	str actor = MechUp_getActor(which);
 	int payprice = MechUp_getPrice(which);
 	
-	
 	sf_RemoveCredits(payprice, PlayerNumber());
+
+	MechUpTrack ++; 
 	
 	SetActivatorToPlayer(PlayerNumber());
 	GiveInventory(actor, 1);

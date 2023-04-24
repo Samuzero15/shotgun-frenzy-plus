@@ -205,7 +205,7 @@ ACTOR HealthBonus_Pickup : MagneticPickup {
 	states{
 		Spawn.Init:
 			BON1 A 1
-			goto Super::SpawnLoop
+			goto Super::Spawn.Loop
 		Frame.A:
 			BON1 A 1 A_SpawnItemEx("Blur_HealthBonusA",0,0,2)
 			goto Frame.Action

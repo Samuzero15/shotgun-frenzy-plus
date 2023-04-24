@@ -16,6 +16,7 @@
 #define FP_Rune_MAX 20
 
 int RuneTop = 0;
+int RuneTrack = 0;
 int Rune_list[FP_Rune_MAX][7]; //[Amount][Props]
 int Rune_Saved[32];
 
@@ -86,6 +87,20 @@ function int Rune_getCurrent(void){
         }
     }
     return res;
+}
+
+function int Rune_GetScore(void){
+	int i;
+	int score = RuneTrack;
+	int players = 0;
+	
+	for(i = 0; i < 64; i++){
+		if(PlayerInGame(i)) players++;
+		else break;
+	}
+
+	if(!players) return 0;
+	return (score) / players;
 }
 
 function void Rune_SaveAndUnequip(void){ 

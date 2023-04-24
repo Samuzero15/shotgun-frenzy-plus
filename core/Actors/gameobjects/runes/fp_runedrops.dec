@@ -9,6 +9,7 @@ Actor RuneDrop : CustomInventory { // yes, the fading pickup code, i know, but w
 
 		Pickup:
 			TNT1 A 0
+			TNT1 A 0 A_JumpIf(CheckClass("MechPlayer"), "Null") // Do not allow pickup by mech users.
 			TNT1 A 0 A_JumpIfInventory("Input_Use", 1, "Pickup.Give")
 			TNT1 A 0 ACS_NamedExecuteAlways("Runes_PickMessage", 0, args[0])
 		fail

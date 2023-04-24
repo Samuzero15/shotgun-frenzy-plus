@@ -106,7 +106,10 @@ int CmdButStack = 0;
 
 Script "SFPlus_InitCMDButtons" OPEN {
 	SFPlus_DefineCMDButtons();
-	//CMDBut_UpdateConds();
+}
+
+Script "SFPlus_InitCMDButtons_clientside" OPEN ClientSide {
+	SFPlus_DefineCMDButtons();
 }
 
 function void SFPlus_DefineCMDButtons(void){

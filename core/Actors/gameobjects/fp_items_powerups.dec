@@ -124,9 +124,15 @@ ACTOR Inventory_Godsphere : Inventory_Powerup
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect
 	PowUpUpgrade.Defense:
+		TNT1 A 0 A_TakeInventory("CorePulse_Heal_Invul", 1)
+		TNT1 A 0 A_TakeInventory("PlayUp_Spawnshield_Power", 1)
+		TNT1 A 0 A_TakeInventory("DefenseRune_ShieldInvul", 1)
 		TNT1 A 0 A_GiveInventory("SuperInvulSphere", 1)
 		goto Effect.Flash
 	Effect:
+		TNT1 A 0 A_TakeInventory("CorePulse_Heal_Invul", 1)
+		TNT1 A 0 A_TakeInventory("PlayUp_Spawnshield_Power", 1)
+		TNT1 A 0 A_TakeInventory("DefenseRune_ShieldInvul", 1)
 		TNT1 A 0 A_GiveInventory("InvulnerabilitySphere", 1)
 		goto Effect.Flash
 	Effect.Flash:

@@ -80,9 +80,12 @@ Script "SFPlus_ChampEmperor_Buff" (void){
 }
 
 Script "SFPlus_ChampPoison_Damage" (void){
-	SetResultValue(!CheckInventory("ChampPoison_CurseArmor"));
+	bool poison_cond =
+	 !(CheckInventory("ChampPoison_CurseArmor") || 
+	 ACS_NamedExecuteWithResult("Invul_Check") || CheckActorClass(0, "MechPlayer"));
+	SetResultValue(poison_cond);
 
-	if(!CheckInventory("ChampPoison_CurseArmor")) {
+	if(poison_cond) {
 		GiveInventory("ChampPoison_CurseArmor", 1);
 		GiveInventory("ChampPoison_CurseDamage", 1);
 	}

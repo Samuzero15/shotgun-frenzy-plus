@@ -1,7 +1,7 @@
 [Enu default]
 PATCH_VERSION = "_DEV_";
 BUILD_DATE = "XX/XX/XXXX";
-CHANGES = "_SHOWCASE_";
+CHANGES = "_SHOWCASELANG_";
 
 
 STSTR_DQDON = "Invulnerable mode Activated";

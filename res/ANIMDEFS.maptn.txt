@@ -1,0 +1,116 @@
+texture TNCF011
+	pic TNCF011 tics 50
+	pic TNCF012 tics 50
+	pic TNCF013 tics 50
+	pic TNCF014 tics 50
+	pic TNCF015 tics 50
+	pic TNCF016 tics 50
+	pic TNCF017 tics 50
+	pic TNCF018 tics 50
+
+texture TNCF021
+	pic TNCF021 tics 50
+	pic TNCF022 tics 50
+	pic TNCF023 tics 50
+	pic TNCF024 tics 50
+	pic TNCF025 tics 50
+	pic TNCF026 tics 50
+	pic TNCF027 tics 50
+	pic TNCF028 tics 50
+	
+texture TNCF031
+	pic TNCF031 tics 50
+	pic TNCF032 tics 50
+	pic TNCF033 tics 50
+	pic TNCF034 tics 50
+	pic TNCF035 tics 50
+	pic TNCF036 tics 50
+	pic TNCF037 tics 50
+	pic TNCF038 tics 50
+	
+texture TNCF041
+	pic TNCF041 tics 50
+	pic TNCF042 tics 50
+	pic TNCF043 tics 50
+	pic TNCF044 tics 50
+	pic TNCF045 tics 50
+	pic TNCF046 tics 50
+	pic TNCF047 tics 50
+	pic TNCF048 tics 50
+	pic TNCF049 tics 50
+
+texture TNCF051
+	pic TNCF051 tics 50
+	pic TNCF052 tics 50
+	pic TNCF053 tics 50
+	pic TNCF054 tics 50
+	pic TNCF055 tics 50
+	pic TNCF056 tics 50
+	pic TNCF057 tics 50
+	pic TNCF058 tics 50
+
+texture TNSD011
+	pic TNSD011 tics 50
+	pic TNSD012 tics 50
+	pic TNSD013 tics 50
+	pic TNSD014 tics 50
+	pic TNSD015 tics 50
+	pic TNSD016 tics 50
+	
+texture TNSD021
+	pic TNSD021 tics 50
+	pic TNSD022 tics 50
+	pic TNSD023 tics 50
+	pic TNSD024 tics 50
+	pic TNSD025 tics 50
+	pic TNSD026 tics 50
+	pic TNSD027 tics 50
+	pic TNSD028 tics 50
+
+texture TNSF011
+	pic TNSF011 tics 50
+	pic TNSF012 tics 50
+	pic TNSF013 tics 50
+	pic TNSF014 tics 50
+	pic TNSF015 tics 50
+	pic TNSF016 tics 50
+	pic TNSF017 tics 50
+
+texture TNSF021
+	pic TNSF021 tics 50
+	pic TNSF022 tics 50
+	pic TNSF023 tics 50
+	pic TNSF024 tics 50
+	pic TNSF025 tics 50
+	pic TNSF026 tics 50
+	pic TNSF027 tics 50
+
+texture TNSF031
+	pic TNSF031 tics 50
+	pic TNSF032 tics 50
+	pic TNSF033 tics 50
+	pic TNSF034 tics 50
+	pic TNSF035 tics 50
+	pic TNSF036 tics 50
+	pic TNSF037 tics 50
+	
+texture TNSF041
+	pic TNSF041 tics 50
+	pic TNSF042 tics 50
+	pic TNSF043 tics 50
+	pic TNSF044 tics 50
+	pic TNSF045 tics 50
+	pic TNSF046 tics 50
+	pic TNSF047 tics 50
+	pic TNSF048 tics 50
+	pic TNSF049 tics 50
+
+texture TNSF051
+	pic TNSF051 tics 50
+	pic TNSF052 tics 50
+	pic TNSF053 tics 50
+	pic TNSF054 tics 50
+	pic TNSF055 tics 50
+	pic TNSF056 tics 50
+	pic TNSF057 tics 50
+	pic TNSF058 tics 50

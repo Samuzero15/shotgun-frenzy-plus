@@ -1,0 +1,205 @@
+
+
+Actor FPSpawn_ZE1 : RandomSpawner {
+    dropitem "FPSRSpot_ZombieScientist"
+}
+
+Actor FPSpawn_ZE3 : RandomSpawner {
+    dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_ZE5 : RandomSpawner {
+    dropitem "FPSSpot_SuicideBomber"
+    dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_ZE6 : RandomSpawner {
+    dropitem "FPSSpot_SuicideBomber"
+}
+
+Actor FPSpawn_ZE7 : RandomSpawner {
+    dropitem "FPSSpot_sfZombieman",      256, 4
+    dropitem "FPSSpot_ChainsawZombie",   256, 1
+}
+
+Actor FPSpawn_ZE8 : RandomSpawner {
+    dropitem "FPSSpot_sfZombieman",         256, 3
+    dropitem "FPSSpot_ChainsawZombie",      256, 1
+    dropitem "FPSSpot_sfShotgunGuy",        256, 1
+}
+
+Actor FPSpawn_ZE9 : RandomSpawner {
+    dropitem "FPSSpot_sfShotgunGuy",        256, 2
+    dropitem "FPSSpot_sfChaingunGuy",       256, 1
+}
+
+Actor FPSpawn_ZE10 : RandomSpawner {
+    dropitem "FPSSpot_sfDemon",         256, 2
+    dropitem "FPSSpot_sfChaingunGuy",   256, 2
+    dropitem "FPSSpot_ChaingunGuy2",    256, 1
+}
+
+Actor FPSpawn_ZE11 : RandomSpawner {
+    dropitem "FPSSpot_sfShotgunGuy",    256, 1
+    dropitem "FPSSpot_SSGZombie",       256, 2
+    dropitem "FPSSpot_ChaingunGuy2",    256, 2
+}
+
+Actor FPSpawn_ZE12 : RandomSpawner {
+    dropitem "FPSSpot_SSGZombie",       256, 2
+    dropitem "FPSSpot_ChaingunGuy2",    256, 3
+}
+
+Actor FPSpawn_ZE13 : RandomSpawner {
+    dropitem "FPSSpot_RepeaterZombie"
+}
+
+Actor FPSpawn_ZE14 : RandomSpawner {
+    dropitem "FPSSpot_sfDemon"
+}
+
+Actor FPSpawn_ZE15 : RandomSpawner {
+    dropitem "FPSSpot_NailBorg"
+}
+
+Actor FPSpawn_ZE16 : RandomSpawner {
+    dropitem "FPSSpot_sfDemon"
+}
+
+Actor FPSpawn_ZE17 : RandomSpawner {
+    dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_ZE18 : RandomSpawner {
+    dropitem "FPSSpot_NailBorgCommando"
+}
+
+Actor FPSpawn_ZE19 : RandomSpawner {
+    dropitem ""
+}
+Actor FPSpawn_ZE20 : RandomSpawner {
+    dropitem ""
+}
+
+//////////////////////////////////
+// (MEDI) Medium levels			//
+//////////////////////////////////
+
+
+Actor FPSpawn_ZM1 : RandomSpawner {
+    dropitem "FPSSpot_sfFastZombie", 	51
+}
+
+Actor FPSpawn_ZM2 : RandomSpawner {
+    dropitem "FPSSpot_sfFastZombie", 	102
+}
+
+Actor FPSpawn_ZM3 : RandomSpawner {
+    dropitem "FPSSpot_sfFastZombie"
+}
+
+Actor FPSpawn_ZM10 : RandomSpawner {
+    dropitem "FPSSpot_NailBorgCommando"
+}
+
+Actor FPSpawn_ZM14 : RandomSpawner {
+    dropitem "FPSSpot_Demon"
+}
+
+Actor FPSpawn_ZM15 : RandomSpawner {
+    dropitem "FPSSpot_NailBorg"
+}
+
+Actor FPSpawn_ZM16 : RandomSpawner {
+    dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_ZM17 : RandomSpawner {
+    dropitem "FPSSpot_NailBorgCommando"
+}
+
+Actor FPSpawn_ZM18 : RandomSpawner {
+    dropitem "FPSSpot_Cyberdemon", 	52
+}
+
+Actor FPSpawn_ZM19 : RandomSpawner {
+    dropitem "FPSSpot_Cyberdemon", 	102
+}
+
+Actor FPSpawn_ZM20 : RandomSpawner { 
+    dropitem "FPSSpot_Cyberdemon",  256
+}
+
+//////////////////////////////////
+// (HARD) Hard levels			//
+//////////////////////////////////
+
+Actor FPSpawn_ZH1 : RandomSpawner {
+    dropitem ""
+}
+
+Actor FPSpawn_ZH5 : RandomSpawner { 
+    dropitem "FPSSpot_sfDemon", 	52
+}
+
+Actor FPSpawn_ZH6 : RandomSpawner { 
+    dropitem "FPSSpot_sfDemon", 	104
+}
+
+Actor FPSpawn_ZH7 : RandomSpawner { 
+    dropitem "FPSSpot_sfDemon", 	156
+}
+
+Actor FPSpawn_ZH8 : RandomSpawner { 
+    dropitem "FPSSpot_sfDemon", 	208
+}
+
+Actor FPSpawn_ZH9 : RandomSpawner { 
+    dropitem "FPSSpot_sfDemon"
+}
+
+Actor FPSpawn_ZH10 : RandomSpawner { 
+    dropitem "FPSSpot_sfDemon"
+    dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_ZH11 : RandomSpawner { 
+    dropitem "FPSSpot_StoneDemon"
+}
+
+Actor FPSpawn_ZH14 : RandomSpawner { 
+    dropitem "FPSSpot_BloodDemonClone"
+}
+
+Actor FPSpawn_ZH15 : RandomSpawner { 
+    dropitem "FPSSpot_BloodFiend", 104
+}
+
+Actor FPSpawn_ZH17 : RandomSpawner { 
+    dropitem "FPSSpot_BloodFiend", 186
+}
+
+Actor FPSpawn_ZH18 : RandomSpawner { 
+    dropitem "FPSSpot_BloodFiend"
+}
+
+Actor FPSpawn_ZH20 : RandomSpawner {  
+    dropitem "FPSSpot_StoneDemon",          256
+}
+
+// These monsters will appear once.
+//////////////////////////////////
+// (BOSS) Boss levels			//
+//////////////////////////////////
+
+Actor FPSpawn_ZB1 : RandomSpawner { 
+    dropitem ""
+}
+
+Actor FPSpawn_ZB2 : RandomSpawner {
+    dropitem ""
+}
+
+Actor FPSpawn_ZB20 : RandomSpawner { 
+    dropitem "FPSSpot_Cyberdemon"
+}

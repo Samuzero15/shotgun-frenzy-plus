@@ -28,7 +28,13 @@ Actor HUD_MechTime			: Integer {}
 Actor HUD_Commander			: Integer {}
 Actor HUD_RankNow			: Integer {}
 Actor HUD_KS				: Integer {}
+Actor HUD_GuardianState 	: Integer {}
+Actor HUD_GameOver 			: Integer {}
+Actor HUD_GameEnding 		: Integer {}
 Actor HUD_Gametype 			: Integer {}
+Actor HUD_GameTimer 		: Integer {}
+Actor HUD_MonstersLeft 		: Integer {}
+Actor HUD_GuardianTimer		: Integer {}
 
 Actor HUD_Sector 			: Integer {}
 Actor HUD_CoreHP 			: Integer {}

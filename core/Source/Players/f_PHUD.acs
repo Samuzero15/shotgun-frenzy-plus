@@ -93,7 +93,79 @@ script 616 (void)
 	
 }
 
-Script "SFPlus_ShowForEveryone" OPEN
+Script "SFPlus_ShowForEveryone_Enter" Enter{
+	NamedExecuteClientScript("SFPlus_ShowForEveryone", PlayerNumber());
+}
+
+script "SFPlus_ShowForEveryone_Disconnect" (int player) DISCONNECT
+{
+	if (PlayerIsSpectator(player)){
+		SetActivatorToPlayer(player);
+		log(s:"Sex");
+		NamedExecuteClientScript("SFPlus_ShowForEveryone", PlayerNumber());
+	}	
+}
+
+Script "SFPlus_ShowForEveryone" OPEN ClientSide
+{
+	SetActivatorToPlayer(ConsolePlayerNumber());
+	int gametype_, kills, status, time_tics,
+		guardian_state, monsters_left, guardian_timer;
+	while(1){
+		gametype_ = CheckInventory("HUD_Gametype"),
+		kills = CheckInventory("HUD_Kills"),
+		status = CheckInventory("HUD_Sector"),
+		time_tics = CheckInventory("HUD_GameTimer"),
+		guardian_state = CheckInventory("HUD_GuardianState"),
+		monsters_left = CheckInventory("HUD_MonstersLeft"),
+		guardian_timer = CheckInventory("HUD_GuardianTimer");
+		/*
+		log(s:"gametype: ", d:gametype_);
+		log(s:"kills: ", d:kills);
+		log(s:"status: ", d:status);
+		log(s:"time_tics: ", d:time_tics);
+		log(s:"guardian_state: ", d:guardian_state);
+		log(s:"monsters_left: ", d:monsters_left);
+		log(s:"guardian_timer: ", d:guardian_timer);
+		*/
+		
+
+		if (f_UseScoreSystem == 1)
+			Acs_NamedExecuteAlways("HUD_ShowTeamScore", 0, kills);
+		
+		if(gametype_ == INTDB_GAMETYPE_COMBATFRENZY || gametype_ == INTDB_GAMETYPE_SHOTGUNFRENZY){
+			if(status != 0){
+				if(time_tics > 0)
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, time_tics);
+				else {
+					switch(guardian_state){
+						case INTDB_GUARDIANSTATE_STANDBY:
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, guardian_timer);
+						break;
+						case INTDB_GUARDIANSTATE_PREPARED: 
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
+						break;
+						case INTDB_GUARDIANSTATE_ATTACK: 
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 3);
+						break;
+						case INTDB_GUARDIANSTATE_DEFEAT:
+							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
+						break;
+					}	
+				}
+			}
+
+		}else if (gametype_ == INTDB_GAMETYPE_SURVIVALDEFENDER){
+			if(monsters_left > 0)
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
+			else if (monsters_left == -1)
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 4);
+		}
+		delay(3);
+	}
+}
+
+/*Script "SFPlus_ShowForEveryone" OPEN
 {
 	while(!g_GameOver){
 		if (f_UseScoreSystem == 1)
@@ -130,7 +202,7 @@ Script "SFPlus_ShowForEveryone" OPEN
 		delay(3);
 	}
 		//Acs_NamedExecuteAlways("HUD_ShowTimer", 0, g_GuardianTimer);
-}
+}*/
 
 
 script "HUD_ShowGameProgress" (int showtype, int value) clientside {
@@ -155,7 +227,18 @@ script "SFPlus_PlayerFullScreenHUD_Sync" ENTER
     while(playerInGame(PlayerNumber()))
     {
 		ACS_NamedExecuteAlways("SFPlus_SyncWithSBARINFO", 0, p_RankExp[p_Rank[playernumber()] + 1] - p_Exp[playernumber()]);
-		delay(35);
+		delay(20);
+    }
+}  
+
+script "SFPlus_PlayerTimers_Sync" ENTER
+{
+    // display loop
+    while(playerInGame(PlayerNumber()))
+    {
+		SetInventory("HUD_GameTimer", g_GameTimer);
+		SetInventory("HUD_GuardianTimer", g_GuardianTimer);
+		delay(3);
     }
 }  
 
@@ -270,7 +353,7 @@ script "Hud_ShowCoreHealth" (int which, int hp) clientside
 		}
 		setfont("Statbigs");	
 		percent = iceil(fixedDiv(hp, maxhp) * 100);
-		if(percent == 100) 						color = CR_CYAN;
+		if(percent >= 100) 						color = CR_CYAN;
 		else if(percent >= 75 && percent < 100) color = CR_GREEN;
 		else if(percent >= 50 && percent < 75)  color = CR_YELLOW;
 		else if(percent >= 25 && percent < 50) 	color = CR_ORANGE;
@@ -341,9 +424,11 @@ function str PlayHUD_MechStatus(int mech_tics){
 
 script "HUD_ShowTeamScore" (int points) clientside
 {
-	setfont("CONFONT");
-	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-	hudmessage(s:"Team score: ",d:points; 1, 256, CR_TAN, 400.0, 18.1, 7.0);
+	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
+		setfont("CONFONT");
+		sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
+		hudmessage(s:"Team score: ",d:points; 1, 256, CR_TAN, 400.0, 18.1, 7.0);
+	}
 }
 
 script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_tics) clientside

@@ -3,7 +3,7 @@
 //   a mod by Wad'a'Holic
 
 // f_AIDRL.acs
-// demon levels (can be customised)
+// demon levels (can be customised, in a diff way.)
 #library "f_AIDRL"
 
 #import "f_AIDir.acs"
@@ -25,289 +25,12 @@ int AIDirector_Demonlimit = 250; // 250 = default
 
 #libdefine AIDRL_REPEATLASTLEVELS 5
 
+int last_spawner[3]; 
+int spawnspot_in_map[3]; 
 
 // *NEW* boss level
 int g_BossLevel = 0;
 
-// AI spawning time
-/*
-//Process the clusterfuck of bit-packed string pointers
-function void copywave(int w00, int i0, int i1)
-{
-    int i2 = 0;
-    int iw00 = w00 & (0x0000003f);
-    Print(s:set_list[iw00]);
-    enemy_levels[i0][i1][i2++] = set_list[iw00];
-    int iw01 = w00 & (0x00000fc0);
-    iw01 >>= 6;
-    Print(s:set_list[iw01]);
-    enemy_levels[i0][i1][i2++] = set_list[iw01];
-    int iw02 = w00 & (0x0003f000);
-    iw02 >>= 12;
-    Print(s:set_list[iw02]);
-    enemy_levels[i0][i1][i2++] = set_list[iw02];
-    int iw03 = w00 & (0x00fc0000);
-    iw03 >>= 18;
-    Print(s:set_list[iw03]);
-    enemy_levels[i0][i1][i2++] = set_list[iw03];
-    int iw04 = w00 & (0x3f000000);
-    iw04 >>= 24;
-    Print(s:set_list[iw04]);
-    enemy_levels[i0][i1][i2++] = set_list[iw04];
-}
-
-//Read waves from console
-function void readwaves(void)
-{
-//Fucking hell...
-//Easy
-    int w00;
-    w00 = GetCVar("sf_easywave01");
-    if (w00) {
-        copywave(w00,0,0);
-    }
-    w00 = GetCVar("sf_easywave02");
-    if (w00) {
-        copywave(w00,0,1);
-    }
-    w00 = GetCVar("sf_easywave03");
-    if (w00) {
-        copywave(w00,0,2);
-    }
-    w00 = GetCVar("sf_easywave04");
-    if (w00) {
-        copywave(w00,0,3);
-    }
-    w00 = GetCVar("sf_easywave05");
-    if (w00) {
-        copywave(w00,0,4);
-    }
-    w00 = GetCVar("sf_easywave06");
-    if (w00) {
-        copywave(w00,0,5);
-    }
-    w00 = GetCVar("sf_easywave07");
-    if (w00) {
-        copywave(w00,0,6);
-    }
-    w00 = GetCVar("sf_easywave08");
-    if (w00) {
-        copywave(w00,0,7);
-    }
-    w00 = GetCVar("sf_easywave09");
-    if (w00) {
-        copywave(w00,0,8);
-    }
-    w00 = GetCVar("sf_easywave10");
-    if (w00) {
-        copywave(w00,0,9);
-    }
-    w00 = GetCVar("sf_easywave11");
-    if (w00) {
-        copywave(w00,0,10);
-    }
-    w00 = GetCVar("sf_easywave12");
-    if (w00) {
-        copywave(w00,0,11);
-    }
-    w00 = GetCVar("sf_easywave13");
-    if (w00) {
-        copywave(w00,0,12);
-    }
-    w00 = GetCVar("sf_easywave14");
-    if (w00) {
-        copywave(w00,0,13);
-    }
-    w00 = GetCVar("sf_easywave15");
-    if (w00) {
-        copywave(w00,0,14);
-    }
-    w00 = GetCVar("sf_easywave16");
-    if (w00) {
-        copywave(w00,0,15);
-    }
-    w00 = GetCVar("sf_easywave17");
-    if (w00) {
-        copywave(w00,0,16);
-    }
-    w00 = GetCVar("sf_easywave18");
-    if (w00) {
-        copywave(w00,0,17);
-    }
-    w00 = GetCVar("sf_easywave19");
-    if (w00) {
-        copywave(w00,0,18);
-    }
-    w00 = GetCVar("sf_easywave20");
-    if (w00) {
-        copywave(w00,0,19);
-    }
-
-//Medium
-    w00 = GetCVar("sf_medwave01");
-    if (w00) {
-        copywave(w00,1,0);
-    }
-    w00 = GetCVar("sf_medwave02");
-    if (w00) {
-        copywave(w00,1,1);
-    }
-    w00 = GetCVar("sf_medwave03");
-    if (w00) {
-        copywave(w00,1,2);
-    }
-    w00 = GetCVar("sf_medwave04");
-    if (w00) {
-        copywave(w00,1,3);
-    }
-    w00 = GetCVar("sf_medwave05");
-    if (w00) {
-        copywave(w00,1,4);
-    }
-    w00 = GetCVar("sf_medwave06");
-    if (w00) {
-        copywave(w00,1,5);
-    }
-    w00 = GetCVar("sf_medwave07");
-    if (w00) {
-        copywave(w00,1,6);
-    }
-    w00 = GetCVar("sf_medwave08");
-    if (w00) {
-        copywave(w00,1,7);
-    }
-    w00 = GetCVar("sf_medwave09");
-    if (w00) {
-        copywave(w00,1,8);
-    }
-    w00 = GetCVar("sf_medwave10");
-    if (w00) {
-        copywave(w00,1,9);
-    }
-    w00 = GetCVar("sf_medwave11");
-    if (w00) {
-        copywave(w00,1,10);
-    }
-    w00 = GetCVar("sf_medwave12");
-    if (w00) {
-        copywave(w00,1,11);
-    }
-    w00 = GetCVar("sf_medwave13");
-    if (w00) {
-        copywave(w00,1,12);
-    }
-    w00 = GetCVar("sf_medwave14");
-    if (w00) {
-        copywave(w00,1,13);
-    }
-    w00 = GetCVar("sf_medwave15");
-    if (w00) {
-        copywave(w00,1,14);
-    }
-    w00 = GetCVar("sf_medwave16");
-    if (w00) {
-        copywave(w00,1,15);
-    }
-    w00 = GetCVar("sf_medwave17");
-    if (w00) {
-        copywave(w00,1,16);
-    }
-    w00 = GetCVar("sf_medwave18");
-    if (w00) {
-        copywave(w00,1,17);
-    }
-    w00 = GetCVar("sf_medwave19");
-    if (w00) {
-        copywave(w00,1,18);
-    }
-    w00 = GetCVar("sf_medwave20");
-    if (w00) {
-        copywave(w00,1,19);
-    }
-
-//Hard
-    w00 = GetCVar("sf_hardwave01");
-    if (w00) {
-        copywave(w00,2,0);
-    }
-    w00 = GetCVar("sf_hardwave02");
-    if (w00) {
-        copywave(w00,2,1);
-    }
-    w00 = GetCVar("sf_hardwave03");
-    if (w00) {
-        copywave(w00,2,2);
-    }
-    w00 = GetCVar("sf_hardwave04");
-    if (w00) {
-        copywave(w00,2,3);
-    }
-    w00 = GetCVar("sf_hardwave05");
-    if (w00) {
-        copywave(w00,2,4);
-    }
-    w00 = GetCVar("sf_hardwave06");
-    if (w00) {
-        copywave(w00,2,5);
-    }
-    w00 = GetCVar("sf_hardwave07");
-    if (w00) {
-        copywave(w00,2,6);
-    }
-    w00 = GetCVar("sf_hardwave08");
-    if (w00) {
-        copywave(w00,2,7);
-    }
-    w00 = GetCVar("sf_hardwave09");
-    if (w00) {
-        copywave(w00,2,8);
-    }
-    w00 = GetCVar("sf_hardwave10");
-    if (w00) {
-        copywave(w00,2,9);
-    }
-    w00 = GetCVar("sf_hardwave11");
-    if (w00) {
-        copywave(w00,2,10);
-    }
-    w00 = GetCVar("sf_hardwave12");
-    if (w00) {
-        copywave(w00,2,11);
-    }
-    w00 = GetCVar("sf_hardwave13");
-    if (w00) {
-        copywave(w00,2,12);
-    }
-    w00 = GetCVar("sf_hardwave14");
-    if (w00) {
-        copywave(w00,2,13);
-    }
-    w00 = GetCVar("sf_hardwave15");
-    if (w00) {
-        copywave(w00,2,14);
-    }
-    w00 = GetCVar("sf_hardwave16");
-    if (w00) {
-        copywave(w00,2,15);
-    }
-    w00 = GetCVar("sf_hardwave17");
-    if (w00) {
-        copywave(w00,2,16);
-    }
-    w00 = GetCVar("sf_hardwave18");
-    if (w00) {
-        copywave(w00,2,17);
-    }
-    w00 = GetCVar("sf_hardwave19");
-    if (w00) {
-        copywave(w00,2,18);
-    }
-    w00 = GetCVar("sf_hardwave20");
-    if (w00) {
-        copywave(w00,2,19);
-    }
-}
-*/
 /*
 script "SFPlus_SpawnBossWave" (int l_Level) {
 	int btid = 3000;
@@ -325,8 +48,6 @@ script "SFPlus_SpawnBossWave" (int l_Level) {
 
 script 120 OPEN
 {
-    // define some local containers
-	
 	//[Samu] Same script, but refactorized, for readablity pruposes.
 	
 	int l_Level;
@@ -345,12 +66,30 @@ script 120 OPEN
 	int bhealth;
     int levelrepeater = AIDRL_REPEATLASTLEVELS;
 
-	//Check if the server wants modified waves
-    //readwaves();
-	
 	// Don't spawn anything if the game did'nt started.
 	while(g_Status == 0)
         delay(35);
+    
+    // Check the current set to use.
+    int cvar = GetCVar("sfp_monsterset");
+	if(cvar < -1 || cvar >= aiset_stack) AISet_SetMonsterSet(0);
+	if(cvar == -1) 	AISet_SetMonsterSet(random(0, aiset_stack-1));
+	else			AISet_SetMonsterSet(cvar);
+
+    // skip the spawning function for the difficulty if the thing count of the things spawned is 0.
+    spawnspot_in_map[DIFF_EASY] = ThingCount(0, 115) > 0;
+    spawnspot_in_map[DIFF_MED] = ThingCount(0, 116) > 0;
+    spawnspot_in_map[DIFF_HARD] = ThingCount(0, 117) > 0;
+
+    //Establish the last spawner.
+    last_spawner[DIFF_EASY] = AIDir_Spawn(DIFF_EASY, 0);
+    last_spawner[DIFF_MED] = AIDir_Spawn(DIFF_MED, 0);
+    last_spawner[DIFF_HARD] = AIDir_Spawn(DIFF_HARD, 0);
+
+    if(last_spawner[DIFF_EASY] == 0 || last_spawner[DIFF_MED] == 0 || last_spawner[DIFF_HARD] == 0){
+        log(s:"(AI_DIR): The first Spawner for easy, medium or hard is undefined, using default spawner.");
+        AISet_SetMonsterSet(0);
+    }
 	
 	AIDirector_Demonlimit = m_AIDCap; // Check the user's defined cap amount.
     while(l_GameStopped == 0)
@@ -363,7 +102,7 @@ script 120 OPEN
 	//print (d:l_MonDiff);
 		if (c_HaltSpawning == 0)
 		{
-			if(l_Level > 20){
+			if(l_Level >= 20){
                 if(levelrepeater == 0) levelrepeater = AIDRL_REPEATLASTLEVELS;
                 l_Level = 19 - levelrepeater;
                 levelrepeater--;
@@ -386,36 +125,36 @@ script 120 OPEN
 				}
 				if (f_AdaptiveSpawning <= 0 || g_Status < 2)
 				{
-					SpawnSpot(AIDir_Spawn(DIFF_EASY, l_Level), 		115, 110);
-					SpawnSpot(AIDir_Spawn(DIFF_MED,  l_Level), 		116, 110);
+					AIDir_SpawnSpot(DIFF_EASY, l_Level, 115, 110);
+					AIDir_SpawnSpot(DIFF_MED,  l_Level, 116, 110);
 					if (f_Cacodemons == 0)      
-						 SpawnSpot(AIDir_Spawn(DIFF_HARD, l_Level), 	117, 110);
+						 AIDir_SpawnSpot(DIFF_HARD, l_Level, 117, 110);
 					else SpawnSpot("sfCacodemon", 117, 110);
 				}
 				else if (f_AdaptiveSpawning == 1)
 				{    
 					if (g_Status == 2){
-						SpawnSpot(AIDir_Spawn(DIFF_EASY, l_Level), 		201, 109 + g_Status);
-						SpawnSpot(AIDir_Spawn(DIFF_MED,  l_Level), 		202, 109 + g_Status);
+						AIDir_SpawnSpot(DIFF_EASY, l_Level, 201, 109 + g_Status);
+						AIDir_SpawnSpot(DIFF_MED,  l_Level, 202, 109 + g_Status);
 						if (!l_CacoCond) 
-							 SpawnSpot(AIDir_Spawn(DIFF_HARD, l_Level), 	203, 109 + g_Status);
-						else SpawnSpot("sfCacodemon", 						203, 109 + g_Status); 
+							 AIDir_SpawnSpot(DIFF_HARD, l_Level, 203, 109 + g_Status);
+						else SpawnSpot("sfCacodemon", 	203, 109 + g_Status); 
 					}
 					
 					if (g_Status == 3){     
-						SpawnSpot(AIDir_Spawn(DIFF_EASY, l_Level), 		204, 109 + g_Status);
-						SpawnSpot(AIDir_Spawn(DIFF_MED,  l_Level), 		205, 109 + g_Status);
+						AIDir_SpawnSpot(DIFF_EASY, l_Level, 204, 109 + g_Status);
+						AIDir_SpawnSpot(DIFF_MED,  l_Level, 205, 109 + g_Status);
 						if (!l_CacoCond)      
-							 SpawnSpot(AIDir_Spawn(DIFF_HARD, l_Level), 	206, 109 + g_Status);
-						else SpawnSpot("sfCacodemon", 						206, 109 + g_Status); 
+							 AIDir_SpawnSpot(DIFF_HARD, l_Level, 206, 109 + g_Status);
+						else SpawnSpot("sfCacodemon", 	206, 109 + g_Status); 
 					}
 					
 					if (g_Status == 4){
-						SpawnSpot(AIDir_Spawn(DIFF_EASY, l_Level), 		207, 109 + g_Status);
-						SpawnSpot(AIDir_Spawn(DIFF_MED,  l_Level), 		208, 109 + g_Status);
+						AIDir_SpawnSpot(DIFF_EASY, l_Level, 207, 109 + g_Status);
+						AIDir_SpawnSpot(DIFF_MED,  l_Level, 208, 109 + g_Status);
 						if (!l_CacoCond)      
-							 SpawnSpot(AIDir_Spawn(DIFF_HARD, l_Level), 	209, 109 + g_Status);
-						else SpawnSpot("sfCacodemon", 						209, 109 + g_Status); 
+							 AIDir_SpawnSpot(DIFF_HARD, l_Level, 209, 109 + g_Status);
+						else SpawnSpot("sfCacodemon", 	209, 109 + g_Status); 
 					}
 				}
 			}
@@ -438,18 +177,26 @@ script 120 OPEN
     }
 }  
 
+function void AIDir_SpawnSpot(int diff, int lvl, int tag, int tid){
+    if(!spawnspot_in_map[diff]){
+        //log(s:"No spawnspot for difficulty:", d:diff);
+        return;
+    }
+    str spawn_actor = AIDir_Spawn(diff, lvl);
+    //log(s:"Spawning, ", s:spawn_actor);
+    int n_monsters = SpawnSpot(spawn_actor, tag, tid);
+    if(n_monsters == 0){
+        //log(s:"Spawn failed, spawning last spawner", s:last_spawner[diff]);
+        SpawnSpot(last_spawner[diff], tag, tid);
+    } else {
+        //log(s:"Spawn sucessful, last spawner updated");
+        last_spawner[diff] = spawn_actor;
+    }
+}
+
 function str AIDir_Spawn(int diff, int lvl){
 	return enemy_levels[diff][lvl]; 
 }
-
-function void MList_SetBoss(int lvl, str m){
-	boss_levels[lvl] = m;
-}
-
-function void MList_SetSpawner(int diff, int lvl, str spawner){
-	enemy_levels[diff][lvl-1] = spawner;
-}
-
 
 Script "Monster_HPBar" (int height){
 	// This is a health bar for the hard-boss monsters!

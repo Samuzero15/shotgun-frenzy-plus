@@ -17,6 +17,7 @@
 
 int MechUpTop = 0;
 int mechup_list[FP_MECHUP_MAX][5];
+int MechUpTrack = 0;
 
 function void SFPlus_DefineMechUps(void){
 	MechUpTop = 0;
@@ -43,7 +44,6 @@ function void SFPlus_DefineMechUps(void){
 	
 	MechUp_Add1Up("Efficiency", "MechUp_Efficiency", "efficiency",
 		"Repair, fire and reload more effectively!.");
-		
 }
 
 function void MechUp_Add1Up (str name, str actor, str price, str desc){
@@ -72,9 +72,22 @@ function str MechUp_getActor(int up){	return MechUp_List[up][2];}
 function int MechUp_getPrice(int up){	
 	int price = CheckInventory(MechUp_List[up][3]);
 	return price + ((price * CheckInventory(MechUp_getActor(up))) / 4);
-
 }
 function int MechUp_getMax(int up){		return MechUp_List[up][4];}
+
+function int MechUp_GetScore(void){
+	int i;
+	int score = MechUpTrack;
+	int players = 0;
+	
+	for(i = 0; i < 64; i++){
+		if(PlayerInGame(i)) players++;
+		else break;
+	}
+
+	if(!players) return 0;
+	return (score * 3) / players;
+}
 
 function str MechUp_ReportUps(bool colored){
 	str result = "Current stats";

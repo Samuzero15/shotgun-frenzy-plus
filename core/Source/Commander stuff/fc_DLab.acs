@@ -266,6 +266,12 @@ script FP_MCOM_CPULSE_SHOCK (int pslot)
 script FP_MCOM_CPULSE_REPAIR (void)
 {
 	int extrahealth = 300*Tech_isDone(TECH_MARCOM_CBOOST);
-	if (100 + g_Status != 104)       setactorproperty(100 + g_Status, APROP_Health, 750 + extrahealth);
-	else                             setactorproperty(100 + g_Status, APROP_Health, 1500 + extrahealth);
+	int core = 100 + g_Status;
+	if ( core != 104){
+		setactorproperty(core, APROP_Health, 750 + extrahealth);
+	}       
+	else {
+		setactorproperty(core, APROP_Health, 1500 + extrahealth);
+
+	}                            
 }

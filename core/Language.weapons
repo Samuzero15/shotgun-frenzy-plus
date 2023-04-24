@@ -27,10 +27,11 @@ WEPS_SHOTGUN_SSG_DESC =    "Your mighty double barreled shotgun."
 	                        "Pri. fire: 2 Barrel Fire (2 Shells)\n"
                             "Sec. Fire: 1 Barrel Fire (1 Shells)";
 
-WEPS_SHOTGUN_SSG_UP1_NAME = "Flame Super Shotgun";
-WEPS_SHOTGUN_SSG_UP1_DESC = "Your shells will explode and create fire to damage the hordes constantly.";
-WEPS_SHOTGUN_SSG_UP2_NAME = "Ricochet Super Shotgun";
-WEPS_SHOTGUN_SSG_UP2_DESC = "Allows you to fire faster, your pellets can bounce on floors and walls.";
+WEPS_SHOTGUN_SSG_UP1_NAME = "Ricochet Super Shotgun";
+WEPS_SHOTGUN_SSG_UP1_DESC = "Allows you to fire faster, your pellets can bounce on floors and walls.";
+
+WEPS_SHOTGUN_SSG_UP2_NAME = "Flame Super Shotgun";
+WEPS_SHOTGUN_SSG_UP2_DESC = "Your shells will explode and create fire to damage the hordes constantly.";
 
 WEPS_SHOTGUN_QUAD_NAME =    "Quadshot";
 WEPS_SHOTGUN_QUAD_DESC =    "This heavy machine can fire a powerful shell burst "

@@ -1,0 +1,162 @@
+#library "hub"
+
+#import "f_tip.acs"
+#include "zcommon.acs"
+
+int map_list[50][2];
+int map_list_stack = 0;
+int map_selected = 0;
+int skill_selected = 1;
+int exit_players = 0;
+
+int skill_levels[6] = {
+    "Classic", "Normal", "Hard", "Turbo", "Misserable", "Masochist"
+};
+
+function void HUB_addmap(str map_name){
+    map_list[map_list_stack][0]=map_name;
+    map_list_stack++;
+}
+
+Script 1 open {
+    HUB_addmap("CF01");
+    HUB_addmap("CF02");
+    HUB_addmap("CF03");
+    HUB_addmap("CF04");
+    HUB_addmap("CF05");
+
+    HUB_addmap("SD01");
+    HUB_addmap("SD02");
+
+    HUB_addmap("SF01");
+    HUB_addmap("SF02");
+    HUB_addmap("SF03");
+    HUB_addmap("SF04");
+    HUB_addmap("SF05");
+}
+
+Script 2 (int dir) {
+    map_selected += dir;
+    if(map_selected >= map_list_stack){
+        map_selected = 0;
+    }else if (map_selected < 0){
+        map_selected = map_list_stack-1;
+    }
+    /*
+    print(s:"Changing map... map id: ", d:map_selected);
+    log(s:"Map name: ",             s:map_list[map_selected][0]);
+    log(s:"Thumbnail textures: ",   s:map_list[map_selected][1]);
+    */
+    SetLineTexture(1, LINE_FRONT, SIDE_FRONT, strparam(s:"TN", s:map_list[map_selected][0], s:"1"));
+    SetLineTexture(1, LINE_FRONT, SIDE_BACK, strparam(s:"TN", s:map_list[map_selected][0], s:"1"));
+    SetLineTexture(1, LINE_BACK, SIDE_FRONT, strparam(s:"TN", s:map_list[map_selected][0], s:"1"));
+    SetLineTexture(1, LINE_BACK, SIDE_BACK, strparam(s:"TN", s:map_list[map_selected][0], s:"1"));
+
+    SetLineTexture(2, LINE_FRONT, SIDE_FRONT, strparam(s:"LMAP", s:map_list[map_selected][0]));
+    SetLineTexture(2, LINE_FRONT, SIDE_BACK, strparam(s:"LMAP", s:map_list[map_selected][0]));
+    SetLineTexture(2, LINE_BACK, SIDE_FRONT, strparam(s:"LMAP", s:map_list[map_selected][0]));
+    SetLineTexture(2, LINE_BACK, SIDE_BACK, strparam(s:"LMAP", s:map_list[map_selected][0]));
+
+    SetLineTexture(3, LINE_FRONT, SIDE_FRONT, strparam(s:"LMAN", s:map_list[map_selected][0]));
+    SetLineTexture(3, LINE_FRONT, SIDE_BACK, strparam(s:"LMAN", s:map_list[map_selected][0]));
+    SetLineTexture(3, LINE_BACK, SIDE_FRONT, strparam(s:"LMAN", s:map_list[map_selected][0]));
+    SetLineTexture(3, LINE_BACK, SIDE_BACK, strparam(s:"LMAN", s:map_list[map_selected][0]));
+}
+
+Script 3 (int change) {
+    exit_players += change;
+    if(change == 1){
+        Notify_Player("Is ready!", "PLAYER", TIP_NOTIFY_COLORSET_COMM);
+    }else{
+        Notify_Player("Is not ready yet", "PLAYER", TIP_NOTIFY_COLORSET_COMM);
+    }
+}
+
+Script 4 (int dir) {
+    skill_selected += dir;
+    if(skill_selected >= 6){
+        skill_selected = 0;
+    }else if (skill_selected < 0){
+        skill_selected = 5;
+    }
+
+    SetLineTexture(4, LINE_FRONT, SIDE_FRONT, strparam(s:"LASKILL", d:skill_selected));
+    SetLineTexture(4, LINE_FRONT, SIDE_BACK, strparam(s:"LASKILL", d:skill_selected));
+    SetLineTexture(4, LINE_BACK, SIDE_FRONT, strparam(s:"LASKILL", d:skill_selected));
+    SetLineTexture(4, LINE_BACK, SIDE_BACK, strparam(s:"LASKILL", d:skill_selected));
+}
+
+int countdown = 175;
+
+function str HUB_MapClearString(str map){
+    str stringme_again = 0;
+    int nclears = 0;
+    if(GetCvar(strparam(s:"sf_map_", s:map, s:"_skillclear_0")) == 1){
+        stringme_again = strparam(s:stringme_again, s:"C");
+        nclears++;
+    }
+    if(GetCvar(strparam(s:"sf_map_", s:map, s:"_skillclear_1")) == 1){
+        stringme_again = strparam(s:stringme_again, s:"N");
+        nclears++;
+    }
+    if(GetCvar(strparam(s:"sf_map_", s:map, s:"_skillclear_2")) == 1){
+        stringme_again = strparam(s:stringme_again, s:"H");
+        nclears++;
+    }
+    if(GetCvar(strparam(s:"sf_map_", s:map, s:"_skillclear_3")) == 1){
+        stringme_again = strparam(s:stringme_again, s:"T");
+        nclears++;
+    }
+    if(GetCvar(strparam(s:"sf_map_", s:map, s:"_skillclear_4")) == 1){
+        stringme_again = strparam(s:stringme_again, s:"$");
+        nclears++;
+    }
+    if(GetCvar(strparam(s:"sf_map_", s:map, s:"_skillclear_5")) == 1){
+        stringme_again = strparam(s:stringme_again, s:"M");
+        nclears++;
+    }
+
+    if (stringme_again == 0) return "";
+    if (nclears++ == 5) return " All clear!";
+
+    return strparam(s:" [", s:stringme_again, s:"]");
+}
+
+Script 5 open {
+    str map_destination = map_list[map_selected][0];
+    str stringme = "";
+    while (1){
+        map_destination = map_list[map_selected][0];
+        stringme = strparam(s:"Map: ", s:map_destination, s:HUB_MapClearString(map_destination),
+        s:"\nSkill level: ", s:skill_levels[skill_selected],
+        s:"\n\n        --(Highscores)--",
+        s:"\n        Kills: ", d:GetCvar(strparam(s:"sf_map_", s:map_destination, s:"_hikills")),
+        s:"\n     S.Recaps: ", d:GetCvar(strparam(s:"sf_map_", s:map_destination, s:"_hirecaps")),
+        s:"\n  M. Pressure: ", d:GetCvar(strparam(s:"sf_map_", s:map_destination, s:"_himonsterpressure")),
+        s:"\nSkill percent: ", d:GetCvar(strparam(s:"sf_map_", s:map_destination, s:"_hiskillpercent")),
+        s:"\n  Kill streak: ", d:GetCvar(strparam(s:"sf_map_", s:map_destination, s:"_hikillstreak")),
+        s:"\n", s:GetCVarString(strparam(s:"sf_map_", s:map_destination, s:"_hikillstreak_player")));
+        f_CenterTip (stringme);
+        if(exit_players > PlayerCount()/2){
+            //Printbold(s:"Map Destination: ", s:);
+            if(countdown == 0){
+                ChangeLevel(map_list[map_selected][0], 0, CHANGELEVEL_NOINTERMISSION | CHANGELEVEL_RESETINVENTORY);
+            }
+            stringme = strparam(s:"Mission will start in...", d:countdown);
+            f_QuickBigCenterTipBold (stringme, CR_CYAN);
+            countdown--;
+        } else {
+            if(countdown != 5){
+                f_QuickBigCenterTipBold ("Teleportation aborted!", CR_ORANGE);
+                countdown = 5;
+            }
+        }
+        delay(35);
+    }
+    
+}
+
+Script "Before i leave, I must change the skill because the people likes to go nuts. Yeah i have nothing else to say in this title i mean holy fuc a whole script just to make a stupid change on the skill level what a bullshit." unloading
+{
+    ChangeSkill(skill_selected);
+}

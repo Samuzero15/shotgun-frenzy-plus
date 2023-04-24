@@ -18,9 +18,11 @@
 #libdefine FP_WEAPONS 20
 #libdefine FP_WEPUPS 2
 
-#libdefine FP_BAS 1
-#libdefine FP_ADV 2
-#libdefine FP_OP 3
+#libdefine WEAPON_SET_HIDDEN -2
+#libdefine WEAPON_SET_BASIC -1
+#libdefine WEAPON_SET_STANDARD 1
+#libdefine WEAPON_SET_ADVANCED 2
+#libdefine WEAPON_SET_OVERPOWERED 3
 
 int fp_WpPacks[FP_WEP_PACKS][10];
 int fp_Wpns[FP_WEAPONS][10];
@@ -66,88 +68,88 @@ function void SFPlus_DefineWeapons (void){
 	fp_WeaponStack = 0;
 	
 	//Basic pack
-	wep = Weapon_AddLang("Beretta", -2, "", "BASIC_BRTT");
-	WeaponUpgrade_AddLangP("Beretta_Dual",		wep, 1, "", "BASIC_BRTT_UP1");
-	WeaponUpgrade_AddLangP("Beretta_SMG",		wep, 2, "", "BASIC_BRTT_UP2");
+	wep = Weapon_AddHidden("Beretta", "BASIC_BRTT");
+	WeaponUpgrade_AddEx("Beretta_Dual",		wep, 1, "");
+	WeaponUpgrade_AddEx("Beretta_SMG",		wep, 2, "");
 
-	wep = Weapon_AddLang("Boomstick", -1, "", "BASIC_BSTK");
-	WeaponUpgrade_AddLangP("Boomstick_Full",		wep, 0, "boomstick", "BASIC_BSTK_UP0");
+	wep = Weapon_AddBasic("Boomstick", "BASIC_BSTK");
+	WeaponUpgrade_AddEx("Boomstick_Full",		wep, 0, "boomstick");
 
 	//Shotgun pack
-	pack = WeaponPack_AddLang(FP_BAS, "shotgun", 2, "SHOTGUN");
+	pack = WeaponPack_Add(WEAPON_SET_STANDARD, "shotgun", 2, "SHOTGUN");
 
-	wep = Weapon_AddLang("SSG", pack, "ssg", "SHOTGUN_SSG");
-	WeaponUpgrade_AddLang("SSG_Explosive",		wep, 2, "SHOTGUN_SSG_UP1");
-	WeaponUpgrade_AddLang("SSG_Autoload",		wep, 1, "SHOTGUN_SSG_UP2");
+	wep = Weapon_Add("SSG", pack, "ssg", "SSG");
+	WeaponUpgrade_Add("SSG_Autoload",		wep, 1);
+	WeaponUpgrade_Add("SSG_Explosive",		wep, 2);
 		
-	wep = Weapon_AddLang("Quadshot", pack, "quadshot", "SHOTGUN_QUAD");
-	WeaponUpgrade_AddLang("Quadshot_Full",		wep, 0, "SHOTGUN_QUAD_UP0");
+	wep = Weapon_Add("Quadshot", pack, "quadshot", "QUAD");
+	WeaponUpgrade_Add("Quadshot_Full",		wep, 0);
 		
 	//Assault pack
-	pack = WeaponPack_AddLang(FP_BAS, "assault", 2, "ASSAULT");
+	pack = WeaponPack_Add(WEAPON_SET_STANDARD, "assault", 2, "ASSAULT");
 
-	wep = Weapon_AddLang("Spitter", pack, "spitter", "ASSAULT_SPIT");
-	WeaponUpgrade_AddLang("Spitter_SSG",		wep, 1, "ASSAULT_SPIT_UP1");
-	WeaponUpgrade_AddLang("Spitter_GLauncher",	wep, 2, "ASSAULT_SPIT_UP2");
+	wep = Weapon_Add("Spitter", pack, "spitter", "SPIT");
+	WeaponUpgrade_Add("Spitter_SSG",		wep, 1);
+	WeaponUpgrade_Add("Spitter_GLauncher",	wep, 2);
 
-	wep = Weapon_AddLang("Buckshot", pack, "buckshot", "ASSAULT_BUCK");
-	WeaponUpgrade_AddLang("Buckshot_Chamber",	wep, 1, "ASSAULT_BUCK_UP1");
-	WeaponUpgrade_AddLang("Buckshot_Explosive",	wep, 2, "ASSAULT_BUCK_UP2");
+	wep = Weapon_Add("Buckshot", pack, "buckshot", "BUCK");
+	WeaponUpgrade_Add("Buckshot_Chamber",	wep, 1);
+	WeaponUpgrade_Add("Buckshot_Explosive",	wep, 2);
 		
 	//Support pack
-	pack = WeaponPack_AddLang(FP_BAS, "support", 0, "SUPPORT");
+	pack = WeaponPack_Add(WEAPON_SET_STANDARD, "support", 0, "SUPPORT");
 
-	wep = Weapon_AddLang("Supplier", pack, "supplier", "SUPPORT_SUPP");
-	WeaponUpgrade_AddLang("Supplier_Big",		wep, 0, "SUPPORT_SUPP_UP0");
+	wep = Weapon_Add("Supplier", pack, "supplier", "SUPP");
+	WeaponUpgrade_Add("Supplier_Big",		wep, 0);
 
-	wep = Weapon_AddLang("Patcher", pack, "patcher", "SUPPORT_PTCH");
-	WeaponUpgrade_AddLang("Patcher_Advanced",	wep, 0, "SUPPORT_PTCH_UP0");
+	wep = Weapon_Add("Patcher", pack, "patcher", "PTCH");
+	WeaponUpgrade_Add("Patcher_Advanced",	wep, 0);
 		
 	//Commando pack
-	pack = WeaponPack_AddLang(FP_ADV, "commando", 5, "COMMANDO");
+	pack = WeaponPack_Add(WEAPON_SET_ADVANCED, "commando", 5, "COMMANDO");
 
-	wep = Weapon_AddLang("Repeater", pack, "repeater", "COMMANDO_REPE");
-	WeaponUpgrade_AddLang("Repeater_DoubleSpeed",	wep, 1, "COMMANDO_REPE_UP1");
-	WeaponUpgrade_AddLang("Repeater_BlastShells",	wep, 2, "COMMANDO_REPE_UP2");
+	wep = Weapon_Add("Repeater", pack, "repeater", "REPE");
+	WeaponUpgrade_Add("Repeater_DoubleSpeed",	wep, 1);
+	WeaponUpgrade_Add("Repeater_BlastShells",	wep, 2);
 
-	wep = Weapon_AddLang("Dualshot", pack, "dualshot", "COMMANDO_NAIL");
-	WeaponUpgrade_AddLang("Dualshot_Razor",			wep, 1, "COMMANDO_NAIL_UP1");
-	WeaponUpgrade_AddLang("Dualshot_FlakShells",	wep, 2, "COMMANDO_NAIL_UP2");
+	wep = Weapon_Add("Dualshot", pack, "dualshot", "NAIL");
+	WeaponUpgrade_Add("Dualshot_Razor",			wep, 1);
+	WeaponUpgrade_Add("Dualshot_FlakShells",	wep, 2);
 		
 	//Explosive pack
-	pack = WeaponPack_AddLang(FP_ADV, "heavy", 8, "EXPLOSIVE");
+	pack = WeaponPack_Add(WEAPON_SET_ADVANCED, "heavy", 8, "EXPLOSIVE");
 
-	wep = Weapon_AddLang("Launcher", pack, "launcher", "EXPLOSIVE_ROKT");
-	WeaponUpgrade_AddLang("Launcher_Exploder",	wep, 1, "EXPLOSIVE_ROKT_UP1");
-	WeaponUpgrade_AddLang("Launcher_Multi",		wep, 2, "EXPLOSIVE_ROKT_UP2");
+	wep = Weapon_Add("Launcher", pack, "launcher", "ROKT");
+	WeaponUpgrade_Add("Launcher_Exploder",	wep, 1);
+	WeaponUpgrade_Add("Launcher_Multi",		wep, 2);
 
-	wep = Weapon_AddLang("Flinger", pack, "flinger", "EXPLOSIVE_FLIN");
-	WeaponUpgrade_AddLang("Flinger_Expander",	wep, 1, "EXPLOSIVE_FLIN_UP1");
-	WeaponUpgrade_AddLang("Flinger_MinePlacer",	wep, 2, "EXPLOSIVE_FLIN_UP2");
+	wep = Weapon_Add("Flinger", pack, "flinger", "FLIN");
+	WeaponUpgrade_Add("Flinger_Expander",	wep, 1);
+	WeaponUpgrade_Add("Flinger_MinePlacer",	wep, 2);
 		
 	//Plasmatic pack
-	pack = WeaponPack_AddLang(FP_ADV, "plasma", 8, "PLASMA");
+	pack = WeaponPack_Add(WEAPON_SET_ADVANCED, "plasma", 8, "PLASMA");
 
-	wep = Weapon_AddLang("Plasmagun", pack, "plasmagun", "PLASMA_PLSG");
-	WeaponUpgrade_AddLang("Plasmagun_Spread",	wep, 1, "PLASMA_PLSG_UP1");
-	WeaponUpgrade_AddLang("Plasmagun_Advanced",	wep, 2, "PLASMA_PLSG_UP2");
+	wep = Weapon_Add("Plasmagun", pack, "plasmagun", "PLSG");
+	WeaponUpgrade_Add("Plasmagun_Spread",	wep, 1);
+	WeaponUpgrade_Add("Plasmagun_Advanced",	wep, 2);
 
-	wep = Weapon_AddLang("SF_Railgun", pack, "railgun", "PLASMA_RAIL");
-	WeaponUpgrade_AddLang("Railgun_Taser",		wep, 1, "PLASMA_RAIL_UP1");
-	WeaponUpgrade_AddLang("Railgun_Slug",		wep, 2, "PLASMA_RAIL_UP2");
+	wep = Weapon_Add("SF_Railgun", pack, "railgun", "RAIL");
+	WeaponUpgrade_Add("Railgun_Taser",		wep, 1);
+	WeaponUpgrade_Add("Railgun_Slug",		wep, 2);
 		
 	//Flamer pack
-	pack = WeaponPack_AddLang(FP_OP, "flamer", 12, "PYRO");
+	pack = WeaponPack_Add(WEAPON_SET_OVERPOWERED, "flamer", 12, "PYRO");
 
-	wep = Weapon_AddLang("Flamer", pack, "flamer", "PYRO_FLAM");
-	WeaponUpgrade_AddLang("FlamerS",		wep, 0, "PYRO_FLAM_UP0");
+	wep = Weapon_Add("Flamer", pack, "flamer", "FLAM");
+	WeaponUpgrade_Add("FlamerS",		wep, 0);
 		
 	//BFG pack
-	pack = WeaponPack_AddLang(FP_OP, "bfg", 15, "BFGL");
+	pack = WeaponPack_Add(WEAPON_SET_OVERPOWERED, "bfg", 15, "BFGL");
 
-	wep = Weapon_AddLang("BFG", pack, "bfg", "BFGL_BFG");
-	WeaponUpgrade_AddLang("BFG_Splash",		wep, 1, "BFGL_BFG_UP1");
-	WeaponUpgrade_AddLang("BFG_Overcharge",	wep, 2, "BFGL_BFG_UP2");
+	wep = Weapon_Add("BFG", pack, "bfg", "BFG");
+	WeaponUpgrade_Add("BFG_Splash",		wep, 1);
+	WeaponUpgrade_Add("BFG_Overcharge",	wep, 2);
 }
 
 function str Weapon_GetSameKind(int wid){
@@ -223,29 +225,18 @@ function void Weapon_Recycle(int wid, int upg, int play){
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
 
-function int Weapon_AddLang(str actor, str pack, str price, str lang){
-	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
-	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
-	return Weapon_Add(actor, strparam(l:name), pack, price, strparam(l:desc));
+function int Weapon_AddHidden(str actor, str lang){
+	return Weapon_Add(actor, WEAPON_SET_HIDDEN, "", lang);
 }
 
-function int WeaponUpgrade_AddLangP(str actor, str wep, int upnum, str price, str lang){
-	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
-	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
-	return WeaponUpgrade_Add(actor, strparam(l:name), wep, upnum, price, strparam(l:desc));
+function int Weapon_AddBasic(str actor, str lang){
+	return Weapon_Add(actor, WEAPON_SET_BASIC, "", lang);
 }
 
-function int WeaponUpgrade_AddLang(str actor, str wep, int upnum, str lang){
-	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
-	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
-	return WeaponUpgrade_Add(actor, strparam(l:name), wep, upnum, "", strparam(l:desc));
+function int WeaponUpgrade_Add(str actor, str wep, int upnum){
+	return WeaponUpgrade_AddEx(actor, wep, upnum, "");
 }
 
-function int WeaponPack_AddLang(int class, str price, int game_gain, str lang){
-	str name = strparam(s:"WEPS_", s:lang, s:"_NAME");
-	str desc = strparam(s:"WEPS_", s:lang, s:"_DESC");
-	return WeaponPack_Add(strparam(l:name), class, price, game_gain,strparam(l:desc));
-}
 function bool Weapon_OwnedSameKind(int asThis){
 	return 
 		checkinventory(Weapon_GetActor(asThis)) ||
@@ -317,11 +308,11 @@ function int UpTrack_GetScore(void){
 	return score / players;
 }
 
-function int WeaponUpgrade_Add(str actor, str name, int wpbase, int uptype, str pkey, str desc){
+function int WeaponUpgrade_AddEx(str actor, int wpbase, int uptype, str pkey){
 	int uid = fp_Wpns[wpbase][6];
 	fp_WpUps[wpbase][uid][0] = actor;
-	fp_WpUps[wpbase][uid][1] = name;
-	fp_WpUps[wpbase][uid][2] = desc;
+	fp_WpUps[wpbase][uid][1] = strparam(l:strparam(s:"WEPS_", s:fp_Wpns[wpbase][7], s:"_UP", d:uptype, s:"_NAME"));
+	fp_WpUps[wpbase][uid][2] = strparam(l:strparam(s:"WEPS_", s:fp_Wpns[wpbase][7], s:"_UP", d:uptype, s:"_DESC"));
 	fp_WpUps[wpbase][uid][5] = uptype;
 	
 	if(strlen(pkey) != 0){
@@ -347,14 +338,15 @@ function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return CheckInventory(
 function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return CheckInventory(fp_WpUps[wpb][uid][4]); }
 
 
-function int WeaponPack_Add(str name, int cat, str pkey, int game_gain, str desc){
+function int WeaponPack_Add(int cat, str pkey, int game_gain, str lang){
 	int wid = fp_WeaponPackStack;
-	fp_WpPacks[wid][0] = name;
+	fp_WpPacks[wid][0] = strparam(l:strparam(s:"WEPS_", s:lang, s:"_NAME"));
 	fp_WpPacks[wid][1] = cat;
-	fp_WpPacks[wid][2] = desc;
+	fp_WpPacks[wid][2] = strparam(l:strparam(s:"WEPS_", s:lang, s:"_DESC"));
 	fp_WpPacks[wid][3] = strparam(s:"pr_wb_", s:pkey);
 	fp_WpPacks[wid][4] = pkey;
 	fp_WpPacks[wid][5] = game_gain;
+	fp_WpPacks[wid][6] = lang;
 	fp_WeaponPackStack++;
 	return wid;
 }
@@ -375,12 +367,21 @@ function bool WeaponPack_isOwned(int wid){
 	return res;
 }
 
-function int Weapon_Add(str actor, str name, int pack, str pkey, str desc){
+function int Weapon_Add(str actor, int pack, str pkey, str lang){
 	int wid = fp_WeaponStack;
+	int full_lang = 0;
+	if(fp_WpPacks[pack][6] != 0 && pack >= 0){
+		full_lang = strparam(l:strparam(s:fp_WpPacks[pack][6], s:"_", s:lang));
+	}else {
+		full_lang = lang;
+	}
+	
+
 	fp_Wpns[wid][0] = actor;
-	fp_Wpns[wid][1] = name;
+	fp_Wpns[wid][1] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_NAME"));
 	fp_Wpns[wid][2] = pack;
-	fp_Wpns[wid][3] = desc;
+	fp_Wpns[wid][3] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_DESC"));
+	fp_Wpns[wid][7] = full_lang; // Language id
 	
 	if(strlen(pkey) != 0) {
 		fp_Wpns[wid][4] = strparam(s:"pr_wr_", s:pkey);

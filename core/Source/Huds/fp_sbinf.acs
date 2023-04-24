@@ -13,24 +13,13 @@
 
 #import "f_intdb.acs"
 
-Script "SFPlus_SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
+Script "SFPlus_SyncVariables" OPEN {// Thank You Mr.Satan!
 	int play = 0;
-	while(play < 32)
+	while(play <= GetPlayerTopIndex())
 	{
-		
 		SetActivatorToPlayer(play);
-
-		if(!PlayerIsSpectator(play) && !PlayerIngame(play)){ // Player is not on the game (as spectator or game player).
-			SetActivator(0,AAPTR_NULL);
-			play++;
-			continue;
-		}
-		// If the player is in the server considering
-		// 1) The player is in the game OR
-		// 2) The player is a spectator. dead or normal spectator (not 0)
 		// This will sync the spectator inventory for the sbar info.
-		SetInventory("HUD_Spectating", PlayerIsSpectator(play) == 1);
-		if(PlayerIsSpectator(play) == 1){
+		if(PlayerIsSpectator(play) >= 1){
 			SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
 			SetInventory("HUD_Deaths", p_TotalPlayerDeaths);
 			SetInventory("HUD_Sector", g_Status);
@@ -40,12 +29,24 @@ Script "SFPlus_SyncSBARForEveryone" OPEN {// Thank You Mr.Satan!
 				SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
 			if (f_Gametype == 1) SetInventory("HUD_TeamCredits", c_Credits);
 			if (f_GameType == 5) SetInventory("HUD_Wave", m_SurvivalWave);
+
+			SetInventory("HUD_Gametype", f_Gametype);
+			SetInventory("HUD_NukeLaunched", c_NukeLaunched);
+			SetInventory("HUD_GuardianState", g_GuardianState);
+			SetInventory("HUD_GameOver", g_GameOver);
+			SetInventory("HUD_GameEnding", g_GameEnding);
+			SetInventory("HUD_GameTimer", g_GameTimer);
+			SetInventory("HUD_GuardianTimer", g_GuardianTimer);
+		} else { // Player is not on the game (as spectator or game player).
+			SetActivator(0,AAPTR_NULL);
+			play++;
+			continue;
 		}
-		
+		SetInventory("HUD_Spectating", PlayerIsSpectator(play) == 1);
 		SetActivator(0,AAPTR_NULL);
 		play++;
 	}
-	delay(1);
+	delay(3);
 	restart;
 }
 
@@ -77,6 +78,10 @@ script "SFPlus_SyncWithSBARINFO" (int kills) {
 	SetInventory("HUD_Gametype", f_Gametype);
 	SetInventory("HUD_NukeLaunched", c_NukeLaunched);
 	SetInventory("HUD_KS", p_KSHUD[play]);
+	SetInventory("HUD_GuardianState", g_GuardianState);
+	SetInventory("HUD_GameOver", g_GameOver);
+	SetInventory("HUD_GameEnding", g_GameEnding);
+	SetInventory("HUD_MonstersLeft", g_MonstersLeft);
 
 	if(p_MechTimer[play] > 0){
 		SetInventory("Hud_MechTime_Min", ((p_MechTimer[play] + 35) / (35*60))%60);

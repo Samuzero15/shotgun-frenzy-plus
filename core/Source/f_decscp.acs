@@ -202,6 +202,14 @@ Script "MagneticPickup_TargetIsPlayer" (void) {
 	SetResultValue(CheckActorClass(0, "FrenzyPlayer"));
 }
 
+Script "Invul_Check" (void) {
+	SetResultValue(CheckInventory("PowerInvulnerable") || 
+		CheckInventory("PlayUp_Spawnshield_Power") || 
+		CheckInventory("CorePulse_Heal_Invul") || 
+		CheckInventory("DefenseRune_ShieldInvul") || 
+		CheckInventory("PlayUp_Prometeo_Power_Invul"));
+}
+
 Script "Pickup_Fade" (int stay_seconds) {
 	str class = GetActorClass(0);
 	int last_seconds = 5;

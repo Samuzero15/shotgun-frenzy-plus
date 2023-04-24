@@ -1,0 +1,128 @@
+So, you want to make your own waves? Good!
+// note, <value> is the value that you want, without the <>.
+
+Before doing this little mod, some knowledge.
+1) The max. waves levels are 20.
+2) The max. monster sets are 50.
+3) There are 4 spawn filters on monsters, Easy, Medium, Hard and Boss.
+	Boss spawn filter will only spawn in the first time the AIDir reaches to the desired level.
+
+With that out of the way, here you have the full recipe.
+
+I) Decorate
+
+1) Make a Decorate lump in your wad.
+2) Inside it, add this:
+=============
+/* the name of the actor is important. so do not mistake it!
+FPSpawn_<index letter of your set><difficulty 1st letter (E=Easy, M=Medium, H=Hard, B=Boss)><Wave number (1-20)>
+and the dropitem command must call any of the FPSSpot_<monster> actors 
+(refered in the fp_aidspawn_spot.dec file in the core>Actors>monsters>Spawners), 
+the random chance and the weight numbers are optional. More info about RandomSpawner here:
+https://zdoom.org/wiki/Classes:RandomSpawner
+
+If you want to call a new monster that is not defined in fp_aidspawn_spot.dec
+Copy this in the header of your decorate file (and make sure you define the new monster!)
+
+Actor FPSSpot_<your_monster_actor_name>{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("<your_monster_actor_name>",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Remember, the only wave you must add is the wave 1, the rest of the waves are optional too.
+If you don't define a wave, the script will use the last sucessful spawner.
+And if you don't add the first wave, the spawner will go back to the default spawner.
+*/
+Actor FPSpawn_<index letter of your set>E1 : RandomSpawner { // this is a must.
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+Actor FPSpawn_<index letter of your set>E2 : RandomSpawner { // optional
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+// The rest of them...
+
+Actor FPSpawn_<index letter of your set>E20 : RandomSpawner { // optional too, but this is the limit.
+	dropitem "FPSSpot_StoneDemon"			,256
+}
+
+//////////////////////////////////
+// (MEDI) Medium levels			//
+//////////////////////////////////
+
+Actor FPSpawn_<index letter of your set>M1 : RandomSpawner { // this is a must.
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+Actor FPSpawn_<index letter of your set>M2 : RandomSpawner { // optional
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+// The rest of them...
+
+Actor FPSpawn_<index letter of your set>M20 : RandomSpawner {  // optional too, but this is the limit.
+	dropitem "FPSSpot_StoneDemon"			,256
+}
+
+//////////////////////////////////
+// (HARD) Hard levels			//
+//////////////////////////////////
+
+Actor FPSpawn_<index letter of your set>H1 : RandomSpawner { // this is a must.
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+Actor FPSpawn_<index letter of your set>H2 : RandomSpawner { // optional
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+// The rest of them...
+
+Actor FPSpawn_<index letter of your set>H20 : RandomSpawner {  // optional too, but this is the limit.
+	dropitem "FPSSpot_StoneDemon"			,256
+}
+
+// These monsters will appear once.
+//////////////////////////////////
+// (BOSS) Boss levels			//
+//////////////////////////////////
+
+Actor FPSpawn_<index letter of your set>B1 : RandomSpawner { // this is a must.
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+Actor FPSpawn_<index letter of your set>B2 : RandomSpawner { // optional
+	dropitem "FPSRSpot_ZombieScientist", 	256, 5
+}
+
+// The rest of them...
+
+Actor FPSpawn_<index letter of your set>B20 : RandomSpawner {  // optional too, but this is the limit.
+	dropitem "FPSSpot_StoneDemon"			,256
+}
+=============
+II) ACS
+
+1)Make a lump or a new file, add this in it.
+=============
+#library "<libname>"
+#include "zcommon.acs"
+
+Script "<anything, no really anything>" OPEN
+{
+	ACS_NamedExecuteAlways("AISet_Add", 0, "<any_index_letter>", "<the_name_of_your_monster_set>", <the_wave_where_you_want_to_start_calling_the_boss_levels>);
+    //... add your sets here. 
+}
+=============
+2) If working in wad file, make sure the <libname> lump is inside of the A_Start and A_End.
+If in pk3, do not worry about it, slade can do it for you~.
+
+3) If you did'nt done it yet, make a LOADACS lump. And then put your library name called "<libname>" inside it.
+
+DONE! Now you can add your own custom waves with ease!
+
+III) Picking a monster set.
+
+1) In game console, rcon pukename "SFPlus_ListEnemySets". To see the registered waves.
+2) Now "rcon sfp_monsterset <number_of_the_desired_enemy_set>" and then restart the map. (you can also go rcon sfp_monsterset -1 for some random selections.)
+3) Done! Now spawners will start obeying your waves!

@@ -1,7 +1,7 @@
 
 function void STExecute_RuneBuy(int r){
     int price = Rune_getPrice(r);
-	log(s:Rune_getPowerActor(r));
+	//log(s:Rune_getPowerActor(r));
 	if(getPlayCredits() < price)
 	{	
 		Toaster_ShowToast("You don't have enough credits!",CR_RED);
@@ -62,6 +62,8 @@ function void STExecute_RuneTierBuy(void){
 
 function void STExecute_RuneTierGive(void){
 	int tierup = CheckInventory("RuneTier");
+	
+	RuneTrack++;
 	sf_RemoveUpPoints(Rune_getTierUnlockPrice(tierup+2), PlayerNumber());
 
 	SetActivatorToPlayer(PlayerNumber());

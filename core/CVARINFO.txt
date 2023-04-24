@@ -15,7 +15,7 @@ server bool acsutils_noerrors = false;
 //[Samu] Additional cvars!
 
 server int sf_doorholdtime = 20; 					// The delay time until the doors opens.
-server int sfp_monsterset = 0; // Default.  		// Which monster set do you want to use?
+
 server bool sfp_allowdropcredits = true; 			// Let the players drop money?
 server int sfp_dropcredits_delay = 5; 				// Modify the delay time between drops.
 server bool sfp_dropcredits_nostartcredits = true; 		// Only drop if the player credits - starter credits > 0 (Meant to reduce the exploit.)
@@ -25,6 +25,11 @@ server float sfp_playerdmgmult = 50.0;				// Player's extra oomph
 server float sfp_monsterhpmult = 50.0;				// Monster's extra meat
 server float sfp_monsolv20hpmult = 10.0;            // Monster's extra hp over the lv 20
 server bool sfp_autosaveitems = false;            // Save items in a span of 30 seconds? might reduce lag in online games when disabled.
+server bool sfp_damageperexp = true;
+server int sfp_monsterset = 0; // Default.  		// Which monster set do you want to use?
+server string sfp_monstersetname = "";
+server bool cv_false = false;
+server bool sfp_hubaftergame = true;
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;
@@ -53,8 +58,6 @@ user bool sfp_part_smoke = false;
 user bool sfp_part_casings = false;
 user bool sfp_part_junk = false;
 
-server bool sfp_damageperexp = true;
-
 // Champion cvars
 server int  sfp_champ_onbanned = 0;
 server bool sfp_champ_1 = false;
@@ -73,3 +76,162 @@ server bool sfp_champ_13 = false;
 server bool sfp_champ_14 = false;
 server bool sfp_champ_15 = false;
 server bool sfp_champ_16 = false;
+
+// Level statistics cvars (just for fun reasons lol)
+// I don't suggest you to change this, unless you want to self cheat yourself lol
+
+server bool sf_map_cf01_skillclear_0 = false;
+server bool sf_map_cf01_skillclear_1 = false;
+server bool sf_map_cf01_skillclear_2 = false;
+server bool sf_map_cf01_skillclear_3 = false;
+server bool sf_map_cf01_skillclear_4 = false;
+server bool sf_map_cf01_skillclear_5 = false;
+server int sf_map_cf01_hikills = 0;
+server int sf_map_cf01_hirecaps = 0;
+server int sf_map_cf01_himonsterpressure = 0;
+server int sf_map_cf01_hiskillpercent = 0;
+server int sf_map_cf01_hikillstreak = 0;
+server string sf_map_cf01_hikillstreak_player = "player";
+
+server bool sf_map_cf02_skillclear_0 = false;
+server bool sf_map_cf02_skillclear_1 = false;
+server bool sf_map_cf02_skillclear_2 = false;
+server bool sf_map_cf02_skillclear_3 = false;
+server bool sf_map_cf02_skillclear_4 = false;
+server bool sf_map_cf02_skillclear_5 = false;
+server int sf_map_cf02_hikills = 0;
+server int sf_map_cf02_hirecaps = 0;
+server int sf_map_cf02_himonsterpressure = 0;
+server int sf_map_cf02_hiskillpercent = 0;
+server int sf_map_cf02_hikillstreak = 0;
+server string sf_map_cf02_hikillstreak_player = "player";
+
+server bool sf_map_cf03_skillclear_0 = false;
+server bool sf_map_cf03_skillclear_1 = false;
+server bool sf_map_cf03_skillclear_2 = false;
+server bool sf_map_cf03_skillclear_3 = false;
+server bool sf_map_cf03_skillclear_4 = false;
+server bool sf_map_cf03_skillclear_5 = false;
+server int sf_map_cf03_hikills = 0;
+server int sf_map_cf03_hirecaps = 0;
+server int sf_map_cf03_himonsterpressure = 0;
+server int sf_map_cf03_hiskillpercent = 0;
+server int sf_map_cf03_hikillstreak = 0;
+server string sf_map_cf03_hikillstreak_player = "player";
+
+server bool sf_map_cf04_skillclear_0 = false;
+server bool sf_map_cf04_skillclear_1 = false;
+server bool sf_map_cf04_skillclear_2 = false;
+server bool sf_map_cf04_skillclear_3 = false;
+server bool sf_map_cf04_skillclear_4 = false;
+server bool sf_map_cf04_skillclear_5 = false;
+server int sf_map_cf04_hikills = 0;
+server int sf_map_cf04_hirecaps = 0;
+server int sf_map_cf04_himonsterpressure = 0;
+server int sf_map_cf04_hiskillpercent = 0;
+server int sf_map_cf04_hikillstreak = 0;
+server string sf_map_cf04_hikillstreak_player = "player";
+
+server bool sf_map_cf05_skillclear_0 = false;
+server bool sf_map_cf05_skillclear_1 = false;
+server bool sf_map_cf05_skillclear_2 = false;
+server bool sf_map_cf05_skillclear_3 = false;
+server bool sf_map_cf05_skillclear_4 = false;
+server bool sf_map_cf05_skillclear_5 = false;
+server int sf_map_cf05_hikills = 0;
+server int sf_map_cf05_hirecaps = 0;
+server int sf_map_cf05_himonsterpressure = 0;
+server int sf_map_cf05_hiskillpercent = 0;
+server int sf_map_cf05_hikillstreak = 0;
+server string sf_map_cf05_hikillstreak_player = "player";
+
+server bool sf_map_sd01_skillclear_0 = false;
+server bool sf_map_sd01_skillclear_1 = false;
+server bool sf_map_sd01_skillclear_2 = false;
+server bool sf_map_sd01_skillclear_3 = false;
+server bool sf_map_sd01_skillclear_4 = false;
+server bool sf_map_sd01_skillclear_5 = false;
+server int sf_map_sd01_hikills = 0;
+server int sf_map_sd01_hirecaps = 0;
+server int sf_map_sd01_himonsterpressure = 0;
+server int sf_map_sd01_hiskillpercent = 0;
+server int sf_map_sd01_hikillstreak = 0;
+server string sf_map_sd01_hikillstreak_player = "player";
+
+server bool sf_map_sd02_skillclear_0 = false;
+server bool sf_map_sd02_skillclear_1 = false;
+server bool sf_map_sd02_skillclear_2 = false;
+server bool sf_map_sd02_skillclear_3 = false;
+server bool sf_map_sd02_skillclear_4 = false;
+server bool sf_map_sd02_skillclear_5 = false;
+server int sf_map_sd02_hikills = 0;
+server int sf_map_sd02_hirecaps = 0;
+server int sf_map_sd02_himonsterpressure = 0;
+server int sf_map_sd02_hiskillpercent = 0;
+server int sf_map_sd02_hikillstreak = 0;
+server string sf_map_sd02_hikillstreak_player = "player";
+
+server bool sf_map_sf01_skillclear_0 = false;
+server bool sf_map_sf01_skillclear_1 = false;
+server bool sf_map_sf01_skillclear_2 = false;
+server bool sf_map_sf01_skillclear_3 = false;
+server bool sf_map_sf01_skillclear_4 = false;
+server bool sf_map_sf01_skillclear_5 = false;
+server int sf_map_sf01_hikills = 0;
+server int sf_map_sf01_hirecaps = 0;
+server int sf_map_sf01_himonsterpressure = 0;
+server int sf_map_sf01_hiskillpercent = 0;
+server int sf_map_sf01_hikillstreak = 0;
+server string sf_map_sf01_hikillstreak_player = "player";
+
+server bool sf_map_sf02_skillclear_0 = false;
+server bool sf_map_sf02_skillclear_1 = false;
+server bool sf_map_sf02_skillclear_2 = false;
+server bool sf_map_sf02_skillclear_3 = false;
+server bool sf_map_sf02_skillclear_4 = false;
+server bool sf_map_sf02_skillclear_5 = false;
+server int sf_map_sf02_hikills = 0;
+server int sf_map_sf02_hirecaps = 0;
+server int sf_map_sf02_himonsterpressure = 0;
+server int sf_map_sf02_hiskillpercent = 0;
+server int sf_map_sf02_hikillstreak = 0;
+server string sf_map_sf02_hikillstreak_player = "player";
+
+server bool sf_map_sf03_skillclear_0 = false;
+server bool sf_map_sf03_skillclear_1 = false;
+server bool sf_map_sf03_skillclear_2 = false;
+server bool sf_map_sf03_skillclear_3 = false;
+server bool sf_map_sf03_skillclear_4 = false;
+server bool sf_map_sf03_skillclear_5 = false;
+server int sf_map_sf03_hikills = 0;
+server int sf_map_sf03_hirecaps = 0;
+server int sf_map_sf03_himonsterpressure = 0;
+server int sf_map_sf03_hiskillpercent = 0;
+server int sf_map_sf03_hikillstreak = 0;
+server string sf_map_sf03_hikillstreak_player = "player";
+
+server bool sf_map_sf04_skillclear_0 = false;
+server bool sf_map_sf04_skillclear_1 = false;
+server bool sf_map_sf04_skillclear_2 = false;
+server bool sf_map_sf04_skillclear_3 = false;
+server bool sf_map_sf04_skillclear_4 = false;
+server bool sf_map_sf04_skillclear_5 = false;
+server int sf_map_sf04_hikills = 0;
+server int sf_map_sf04_hirecaps = 0;
+server int sf_map_sf04_himonsterpressure = 0;
+server int sf_map_sf04_hiskillpercent = 0;
+server int sf_map_sf04_hikillstreak = 0;
+server string sf_map_sf04_hikillstreak_player = "player";
+
+server bool sf_map_sf05_skillclear_0 = false;
+server bool sf_map_sf05_skillclear_1 = false;
+server bool sf_map_sf05_skillclear_2 = false;
+server bool sf_map_sf05_skillclear_3 = false;
+server bool sf_map_sf05_skillclear_4 = false;
+server bool sf_map_sf05_skillclear_5 = false;
+server int sf_map_sf05_hikills = 0;
+server int sf_map_sf05_hirecaps = 0;
+server int sf_map_sf05_himonsterpressure = 0;
+server int sf_map_sf05_hiskillpercent = 0;
+server int sf_map_sf05_hikillstreak = 0;
+server string sf_map_sf05_hikillstreak_player = "player";
