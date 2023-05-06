@@ -101,7 +101,6 @@ function void AISet_SetSpawnList(str initial){
 		for(int j = 1; j <=AISET_LEVELS; j++){
 			string = 
 				strparam(s:"FPSpawn_", s:initial, s:AISet_GetMonsterDiff(i), d:j);
-			log(s:string);
 			if(i == 3) 	AISet_SetBoss	 (j,    string);
 			else 		AISet_SetSpawner (i, j, string);
 		}

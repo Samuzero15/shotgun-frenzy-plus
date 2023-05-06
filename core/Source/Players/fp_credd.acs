@@ -90,7 +90,6 @@ Script "SFPlus_DropCredits" (int amount) NET
 	if(p_DropCredits[play] != amount)
 		ACS_NamedExecuteAlways("SF_CreditRemoveDisplay", 0, amount, CR_WHITE, 1);
 	p_DropCredits[play] = 0; // For the displayer.
-	
 	DropCredits_Log(Strparam(s:"\ck", d:amount ,s:"\c- credits dropped."));
 }
 

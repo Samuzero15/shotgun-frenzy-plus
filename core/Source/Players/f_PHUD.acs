@@ -101,7 +101,7 @@ script "SFPlus_ShowForEveryone_Disconnect" (int player) DISCONNECT
 {
 	if (PlayerIsSpectator(player)){
 		SetActivatorToPlayer(player);
-		log(s:"Sex");
+		//log(s:"Sex");
 		NamedExecuteClientScript("SFPlus_ShowForEveryone", PlayerNumber());
 	}	
 }
@@ -383,7 +383,7 @@ script "Hud_ShowPlayerStats_Streak" (int ksnow, int kshigh, int ms) clientside
 function str PlayHUD_Timer(int tics){
 	int min_i = ((tics + 35) / (35*60)) % 60;
 	int sec_i = ((tics + 35) / 35)		% 60;
-	str min_s = cond(min_i > 0, strparam(d:min_i, s:" m"), "");
+	str min_s = min_i > 0 ? strparam(d:min_i, s:" m") : "";
 	return StrParam(s:min_s,s:" ",d:sec_i, s:" s");
 }
 
@@ -391,9 +391,9 @@ function str PlayHUD_TimerEX(int tics){
 	int min_i = ((tics) / (35*60)) % 60;
 	int sec_i = ((tics) / 35)		% 60;
 	int milisecs = fixedMul(fixedDiv((tics%35)<<16, 35.0),10.0)>>16;
-	str min_s = cond(min_i > 0, strparam(d:min_i, s:" : "), "");
-	str tics_s = cond(min_i < 1, strparam(s:".", d:milisecs), "");
-	str sec_s = cond(sec_i < 10 && min_i >= 1, strparam(s:"0", d:sec_i), strparam(d:sec_i));
+	str min_s = min_i > 0 ? strparam(d:min_i, s:" : ") : "";
+	str tics_s = min_i < 1 ? strparam(s:".", d:milisecs) : "";
+	str sec_s = sec_i < 10 && min_i >= 1 ? strparam(s:"0", d:sec_i) : strparam(d:sec_i);
 	str color = "\cj";
 	if(min_i < 1){
 		color = "\cf";

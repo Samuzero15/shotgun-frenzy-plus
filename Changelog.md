@@ -9,6 +9,10 @@
 
 ## v1 - The path of the damned...
 
+#### (5 / 5 / 2023) [Some sprite reorganization]
+	*) Just moving the sprites in the resource part.
+	*) Now Samu-Terminal will only init the db once! Thank u Buu42!
+
 #### (23 / 4 / 2023) [Alright, alright, let's commit some stuff]
 	*) Now the scripts for music and for showing sbarinfo data are now optimized and clientsided respectively, and that means less lag!
 	*) Updated pack-o-daemon and adapted the project.json to the current project settings.
@@ -21,7 +25,7 @@
 	*) Added some invulnerability checks for tanks.
 	+) Added the "Monster Pressure" stat (the AIDir Level).
 	*) Some extra fixes in the AIDir scripts
-	*) Now, poison champions will not do it's aoe damage when invulnerable.
+	*) Now, poison champions will not do it's AOE damage when invulnerable.
 	*) Mech upgrades, are now counted to the AIDir.
 	*) Simplified weapon language data. For an easier addition on weapons (Custom weapons soon)
 	*) Fixed some other stuff.
@@ -40,7 +44,7 @@
 	// Miserable, Less drops (specially gems, some turrets and armors/medikits), less money (25% less) and 25% of prices are increased.
 	// Masochist, Hard + Turbo + Miserable. And no Megasphere and Godsphere. 
 
-#### (26 - 29 / 1 / 2023) [Buffs, fixes and little map changes]
+#### (26 - 29 / 1 / 2023) (v1.7 Release!) [Buffs, fixes and little map changes]
 	*) CF01 now in the first battery zone, a teleporter in front of the teleport destination has been placed in there, if you want to get to the other side of the room, where the battery is ubicated :)
 	// Oh and, the back side area, there is a "spiky surprise".
 	*) SF01's Sector 1 has been slightly changed, now there are 2 teleport destinations in each side of the outposts. With a pair of health and ammo dispensers. And now, the platforms should now lower properly.

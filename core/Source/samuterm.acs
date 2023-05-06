@@ -44,14 +44,16 @@ Script "SamuTerminal" (int homeTag, int hidestatusbar){
 	//print(s:"Statusbar hidden?: ", d:hidestatusbar);
 }	
 
+script "SamuTerminal_IntDB" OPEN ClientSide{
+	IntDB_LoadStuff();
+}
+
 script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	//Here is where the magic begins!
 	int play = playerNumber();
 	if(IsClient() && consolePlayerNumber() == play && PlayerInGame(PlayerNumber())){
 	
-	//Sync it with client.
-	// To Sync the prices.
-	IntDB_LoadStuff();
+	//No need to re-sync, already done with the open clientside script.
 	
 	pagetags[STTAGS_ALPHA] = alphatag;
 	//log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);

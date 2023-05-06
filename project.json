@@ -32,7 +32,7 @@
         ],
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
-        "map": "HUB",
+        "map": "TEST",
         "extra_params": ""
     },
     "build_settings": {
