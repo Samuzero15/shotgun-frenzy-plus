@@ -64,7 +64,7 @@ function void PowBuyPage_AddComps(int cell, int powerup){
 	
 	i = Label_AddCardOff(powpage_vars[1], cell, 100.0, 2.0);
 	Label_setText(i, powname);
-	Label_setFont(i, "StatBigs");
+	Label_setFont(i, "DBIGFONT");
 	Label_setColor(i, color);
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_setTag(i, powpage_vars[0]);
@@ -72,7 +72,7 @@ function void PowBuyPage_AddComps(int cell, int powerup){
 	
 	i = Label_DupCardOff(i, powpage_vars[1], cell, 100.0, 14.0);
 	Label_setText(i, powdesc);
-	Label_setFont(i, "confont");
+	Label_setFont(i, "SMALLFNT");
 	PowBuyPage_SaveToGroup(powerup, 3, i);
 	
 	i = Label_DupCardOff(i, powpage_vars[1], cell, 32.0, 25.0);

@@ -59,7 +59,7 @@ function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
     hudmessagebold(s:"a"; 1, l_ID, CR_CREAM, 16.1, l_Position, 3.0);
     
     // display text
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     
     switch (l_Type)
     {
@@ -102,7 +102,7 @@ function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
 function void f_CenterTipPatcher (str l_Tip)
 {
     // setup appearence
-    setfont("STATBIGS");
+    setfont("DBIGFONT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessage(s:l_Tip; 1, 696, CR_WHITE, 
 		FixedDiv(s_ScreenSize[0]*1.0, 2.0), FixedDiv(s_ScreenSize[1]*1.0, 2.0) + 0.1, 1.0);
@@ -111,7 +111,7 @@ function void f_CenterTipPatcher (str l_Tip)
 function void f_CenterTip (str l_Tip)
 {
     // setup appearence
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessage(s:l_Tip; 1, 78, CR_WHITE, 400.0, 400.1, 1.0);
 }
@@ -119,7 +119,7 @@ function void f_CenterTip (str l_Tip)
 function void f_BigCenterTip (str l_Tip, int color)
 {
     // setup appearence
-    setfont("STATBIGS");
+    setfont("DBIGFONT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessage(s:l_Tip; 1, 78, color, 400.0, 400.1, 2.0);
 }
@@ -127,7 +127,7 @@ function void f_BigCenterTip (str l_Tip, int color)
 function void f_BigCenterTipBold (str l_Tip, int color)
 {
     // setup appearence
-    setfont("STATBIGS");
+    setfont("DBIGFONT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessagebold(s:l_Tip; 1, 78, color, 400.0, 350.1, 2.0);
 }
@@ -135,7 +135,7 @@ function void f_BigCenterTipBold (str l_Tip, int color)
 function void f_QuickBigCenterTipBold (str l_Tip, int color)
 {
     // setup appearence
-    setfont("STATBIGS");
+    setfont("DBIGFONT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessagebold(s:l_Tip; 1, 667, color, 400.0, 380.1, 0.2, 0.5);
 }
@@ -143,7 +143,7 @@ function void f_QuickBigCenterTipBold (str l_Tip, int color)
 function void f_CenterTipQuick (str l_Tip)
 {
     // setup appearence
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     sethudsize(640, 480, s_ScreenSize[2]);
     hudmessage(s:l_Tip; 1, 78, CR_RED, 320.0, 330.1, 0.1);
 }
@@ -151,7 +151,7 @@ function void f_CenterTipQuick (str l_Tip)
 function void f_CenterTipBold (str l_Tip)
 {
     // setup appearence
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessageBold(s:l_Tip; 1, 78, CR_WHITE, 400.0, 400.1, 1.0);
 }
@@ -159,7 +159,7 @@ function void f_CenterTipBold (str l_Tip)
 function void f_SmallTip (str l_Tip, int color, int id)
 {
     // setup appearence
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessage(s:l_Tip; 1, 0, color, 400.0, 400.1+ 10.0*id, 0.5);
 }
@@ -167,7 +167,7 @@ function void f_SmallTip (str l_Tip, int color, int id)
 function void f_SmallTip_Runes (str l_Tip, int color, int id)
 {
     // setup appearence
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessage(s:l_Tip; 1, -69, color, 400.0, 400.1+ 10.0*id, 0.5);
 }
@@ -175,7 +175,7 @@ function void f_SmallTip_Runes (str l_Tip, int color, int id)
 function void f_SmallTipPlain(str l_Tip, int color, int id)
 {
     // setup appearence
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     hudmessage(s:l_Tip; 0, 666, color, 400.0, 400.1+ 10.0*id, 0.5);
 }
@@ -565,7 +565,7 @@ function void Notify_ShowEx(str msg1, str msg2, str img, int id, int pos, int se
 	if(bold)	hudmessagebold(s:"a"; 1, id, color1, 16.1, pos, 3.0);
 	else		hudmessage(s:"a"; 1, id, color1, 16.1, pos, 3.0);
         
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     if(bold)	hudmessagebold(s:msg1; 1, id + 1, color1, 64.1, pos, 3.0);
 	else		hudmessage(s:msg1; 1, id + 1, color1, 64.1, pos, 3.0);
 	SetHudClipRect(0, 0, 0, 0, 300);
@@ -629,7 +629,7 @@ script 129 (int l_TextType, int l_StartTime)
         setfont("INFO");
         hudmessagebold(s:"a"; HUDMSG_FADEOUT, 322, CR_WHITE, 300.0, 320.0, 2.0);
         ambientsound("beep", 125);
-        setfont("CONFONT");
+        setfont("SMALLFNT");
         switch(l_TextType){
             case 0:
                 hudmessagebold(d:l_StartTime, s:" second(s)"; HUDMSG_FADEOUT, 321, CR_WHITE, 400.0, 320.0, 2.0);    break;

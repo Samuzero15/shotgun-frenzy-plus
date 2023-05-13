@@ -35,13 +35,13 @@ function void PlayUpPage_Init(int pageTag){
 	int i = 0;
 		i = Label_Add		(320.0, 70.0);
 			Label_SetText	(i, "Remember!");
-			Label_SetFont	(i, "STATBIGS");
+			Label_SetFont	(i, "DBIGFONT");
 			Label_SetColor	(i, CR_CYAN);
 			Label_SetTag	(i, pagetag);
 			
 		i = Label_Add		(320.0, 80.0);
 			Label_SetText	(i, "Some upgrades needs to be initialized, get to the health pads to do it.");
-			Label_SetFont	(i, "confont");
+			Label_SetFont	(i, "SMALLFNT");
 			Label_SetColor	(i, CR_CYAN);
 			Label_SetTag	(i, pagetag);
 		
@@ -55,12 +55,12 @@ function void PlayUpPage_InitDetails(void){
 	int i = 0;
 	int i2;
 		i2 = Label_Add		(320.0, 110.0);
-			Label_SetFont	(i2, "STATBIGS");
+			Label_SetFont	(i2, "DBIGFONT");
 			Label_setColor  (i2, CR_CYAN);
 		playup_vars[1] = i2; // Name
 		
 		i = Label_Dup			(i2, 240.0, 190.0);
-			Label_SetFont		(i, "confont");
+			Label_SetFont		(i, "SMALLFNT");
 			Label_setAligns 	(i, HUD_ALIGN_LEFT, HUD_ALIGN_CENTER);
 			Label_setColor  (i, CR_WHITE);
 			Label_setWrapWidth	(i, 350);
@@ -116,7 +116,7 @@ function void PlayUpPage_AddButtons(int pageTag, int posx, int posy){
 		
 		i = Label_Dup		(i, posx, posy + 40.0);
 			Label_SetText	(i, "");
-			Label_SetFont	(i, "STATBIGS");
+			Label_SetFont	(i, "DBIGFONT");
 		playup_vars[0] = i; // Upgrade name.
 		
 	// Do all the button clip.

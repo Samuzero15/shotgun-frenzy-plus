@@ -35,13 +35,13 @@ function void SamuTerm_InitPages(void){
 
 	wallet[0] = Label_Add(60.0,452.0); 
 	Label_setText(wallet[0], "");
-	Label_setFont(wallet[0],"STATBIGS");
+	Label_setFont(wallet[0],"DBIGFONT");
 	Label_setColor(wallet[0],CR_gold);
 	Label_setShow(wallet[0], true);
 
 	wallet[1] = Label_Add(580.0,452.0); 
 	Label_setText(wallet[1], "");
-	Label_setFont(wallet[1],"STATBIGS");
+	Label_setFont(wallet[1],"DBIGFONT");
 	Label_setColor(wallet[1],CR_cyan);
 	Label_setShow(wallet[1], true);
 

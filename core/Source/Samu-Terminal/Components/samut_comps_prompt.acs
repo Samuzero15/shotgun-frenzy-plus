@@ -46,7 +46,7 @@ function void Prompt_Initialize (void){
 		(0.0,0.0, ST_COMPALIGN_North, rect);
 	Label_SetText(prompt_label,"This is a small message from the prompt.");
 	Label_SetColor(prompt_label, getPromptColor());
-	Label_SetFont(prompt_label,"CONFONT");
+	Label_SetFont(prompt_label,"SMALLFNT");
 	Label_SetShow(prompt_label, true);
 	Label_setHudID(prompt_label,ST_HID_PROMPT_LBL);
 	Label_setTag(prompt_label,-9999);

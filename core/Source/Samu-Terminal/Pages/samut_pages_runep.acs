@@ -72,13 +72,13 @@ function void RunePage_Init(int pageTag) {
 	// Title
 	runepage_vars[3] = Label_Add(320.0,348.0); 
 	Label_setText(runepage_vars[3], "");
-	Label_setFont(runepage_vars[3],"STATBIGS");
+	Label_setFont(runepage_vars[3],"DBIGFONT");
 	Label_setColor(runepage_vars[3],CR_CYAN);
 	Label_setTag(runepage_vars[3], runepage_vars[0]);
 
 	// Description
 	runepage_vars[4] = Label_Dup(runepage_vars[3],320.0,360.0); 
-	Label_setFont(runepage_vars[4],"CONFONT");
+	Label_setFont(runepage_vars[4],"SMALLFNT");
 	Label_setColor(runepage_vars[4],CR_WHITE);
 
 	runepage_vars[5] = StrButton_AddMid (500.0, 275.0, "Unlock Tier ");
@@ -91,7 +91,7 @@ function void RunePage_Init(int pageTag) {
 
 	runepage_vars[7] = Label_Dup(runepage_vars[6], 500.0,185.0); 
 	Label_setText(runepage_vars[7], "Linked Rune");
-	Label_setFont(runepage_vars[7],"STATBIGS");
+	Label_setFont(runepage_vars[7],"DBIGFONT");
 	Label_setColor(runepage_vars[7],CR_White);
 
 	runepage_vars[8] = Label_Dup(runepage_vars[7], 500.0,200.0); 
@@ -102,7 +102,7 @@ function void RunePage_Init(int pageTag) {
 		for(int k = 0; k < 4; k++){
 			runepage_vars[RUNEPAGE_TIERSTRINGS+k] = Label_AddCard(runepage_vars[2], k+1); 
 			Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k], strparam(s:"Tier ", d:k+1));
-			Label_setFont(runepage_vars[RUNEPAGE_TIERSTRINGS+k],"STATBIGS");
+			Label_setFont(runepage_vars[RUNEPAGE_TIERSTRINGS+k],"DBIGFONT");
 			Label_setTag(runepage_vars[RUNEPAGE_TIERSTRINGS+k], runepage_vars[0]);
 		}
 	}else{
@@ -111,7 +111,7 @@ function void RunePage_Init(int pageTag) {
 		i = Label_Add(320.0, 220.0);
 		Label_SetText(i, "ACCESS DENIED");
 		Label_SetTag(i, runepage_vars[0]);
-		Label_SetFont(i, "STATBIGS");
+		Label_SetFont(i, "DBIGFONT");
 		Label_SetColor(i, CR_BRICK);
 
 		i = Label_Dup(i,320.0, 235.0);
@@ -120,7 +120,7 @@ function void RunePage_Init(int pageTag) {
 
 		i = Label_Dup(i,320.0, 250.0);
 		Label_SetText(i, "This page is not available at the moment, come back later.");
-		Label_SetFont(i, "Confont");
+		Label_SetFont(i, "SMALLFNT");
 		Label_SetWrapWidth(i, 500);
 	}
 }

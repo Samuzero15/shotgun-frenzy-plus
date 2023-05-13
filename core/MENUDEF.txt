@@ -1,7 +1,7 @@
 DefaultListMenu
 {
 	Position 97, 68
-	Font "STATBIGS", "Cyan", "Orange"
+	Font "DBIGFONT", "White", "Cyan"
 }
 
 ListMenu "MainMenu"{
@@ -12,8 +12,8 @@ ListMenu "MainMenu"{
 	TextItem "SF+ Settings", "s", "SFPlusOptions"
 	TextItem "More Options", "o", "OptionsMenu"
 	TextItem "Quit", "q", "QuitMenu"
-	Font "CONFONT", "Cyan", "Orange"
-	StaticText 94, 50, "_DEV_"
+	Font "SMALLFNT", "White", "Cyan"
+	StaticText 94, 200, "_DEV_ - XX/XX/XXXX"
 }
 
 ListMenu "EpisodeMenu"
@@ -26,11 +26,11 @@ ListMenu "EpisodeMenu"
 	IfGame(Doom, Chex)
 	{
 		Position 48, 63
-		Font "STATBIGS", "Cyan"
+		Font "DBIGFONT", "Gold"
 		StaticText 54, 38, "Choose a Gamemode"
 		
 	}
-	Font "DBIGFONT", "White", "Gold"
+	Font "DBIGFONT", "White", "Cyan"
 	// items will be filled in by MAPINFO
 }
 
@@ -44,11 +44,11 @@ ListMenu "SkillMenu"
 	IfGame(Doom, Chex)
 	{
 		Position 48, 63
-		Font "STATBIGS", "Cyan"
+		Font "DBIGFONT", "Gold"
 		StaticText 54, 38, "Pick your Skill modifier"
 		
 	}
-	Font "DBIGFONT", "White", "Gold"
+	Font "DBIGFONT", "White", "Cyan"
 	// items will be filled in by MAPINFO
 }
 

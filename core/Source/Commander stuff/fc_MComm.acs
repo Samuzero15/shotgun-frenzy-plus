@@ -133,7 +133,7 @@ Script "SFPlus_MechHud" (int move_state) Clientside
 				img = "TANKH3";
 			break;
 			default:
-				img = "CONFONT";
+				img = "SMALLFNT";
 			break;
 		}
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
@@ -279,7 +279,7 @@ script 306 (void)
 			
 			
 			// display tank health and upgrades.
-			setfont("CONFONT");
+			setfont("SMALLFNT");
 			hudmessage(s:"Armor: \cv", d:getactorproperty(0, APROP_HEALTH), s:" / ", d:max_armor
 					,s:"\n\n\c-", s:MechUp_ReportUps(true); 0, 202, CR_lightBlue, 128.1, 300.1, 1.0);
 			delay(1);
@@ -288,7 +288,7 @@ script 306 (void)
 	}
 	else
 	{
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		print(s:"Cannot enter while Godsphere\nis in use!");
 	}
 }
@@ -308,7 +308,7 @@ script 309 (void){
     //f_TipShow("VEHIC", " War Mech State", "Has been destroyed!", 10);
 	Notify_PlayerEX(0, " Mech State", "Destroyed!", "VEHIC", 3);
     // purge
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     ACS_NamedExecuteAlways("SFPlus_MechHud", 0, 0);
 	
 	p_TankSlot[playernumber()] = 99;
@@ -334,7 +334,7 @@ script 309 (void){
 
     
     // purge
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
 }
 // exit tank

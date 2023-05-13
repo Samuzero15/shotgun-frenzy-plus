@@ -297,9 +297,9 @@ function void CmdEvent_Announce(int msg, int icon){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont("NEWR");
 		hudmessagebold(s:"a"; 1, -178, CR_Red, 0.1, 0.1, 3.0);
-		setfont("STATBIGS");
+		setfont("DBIGFONT");
 		hudmessagebold(s:"New tech available!"; 1, -179, CR_CYAN, 570.0, 290.1, 3.0);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		hudmessagebold(s:msg; 1, -180,  CR_CYAN, 480.1, 310.1, 3.0);
 		setfont(icon);
 		hudmessagebold(s:"a"; 1, -181, CR_Red, 422.0, 323.1, 3.0);

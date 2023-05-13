@@ -260,7 +260,7 @@ script 103 (void)
 		refreshPlayers();
 	//[Samu] Give a reward for everyone.
 		sethudsize(800, 600, 0);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		switch(g_Status){
 			case 1:
 			  msg = "\n+5000 Credits!\n+1 Berserk and Godsphere!\n+3 Megaspheres!\n+2 Upgrade Points!";
@@ -374,7 +374,7 @@ script 104 (int l_Type, int l_Bypass, int l_ExecuteAlways)
 				hudmessage(s:"a"; 2, 180, CR_Gold, 0.1, 0.1, 5.0);
 				setfont("BIGFONT");
 				hudmessage(s:"Teleporter Offline!"; 1, 178, CR_Gold, 570.0, 390.1, 5.0);
-				setfont("CONFONT");
+				setfont("SMALLFNT");
 				hudmessage(s:"The area is overrun!\nCannot teleport to sector"; 2, 179, CR_Gold, 580.0, 420.1, 1.0);
 			}
 			else {

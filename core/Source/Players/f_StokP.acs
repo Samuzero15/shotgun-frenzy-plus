@@ -363,13 +363,13 @@ function int Stock_RemindUpgrade(int show_stack, int show_color, bool condition,
 		int shineFlags = HUDMSG_FADEINOUT | HUDMSG_AddBlend;
 		
 		sethudsize(800, 600, s_ScreenSize[2]);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		hudmessage(s:string; shineFlags, 0, show_color, x, y, 0.2,0.15,0.15);
 		hudmessage(s:string; HUDMSG_FADEOUT, 2020 + show_stack, show_color, x, y, 3.0, 0.5);
 		return show_stack+1;
 	}
 	else {
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		hudmessage(s:""; 0, 2020 + show_stack, show_color, 600.1, 100.1 + offset, 2.0);
 	}
 	return show_stack;

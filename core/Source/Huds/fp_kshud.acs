@@ -164,17 +164,17 @@ function int KSHUD_CVarCheck(str which){
 
 function void KSHud_ShowText1(str msg, int color){
 	KSHud_Print(msg,
-			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T1, color, "STATBIGS", FP_KSHUD_ID2);
+			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T1, color, "DBIGFONT", FP_KSHUD_ID2);
 }
 
 function void KSHud_ShowText2(str msg,int color){
 	KSHud_Print(msg,
-			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T2, color, "Confont", FP_KSHUD_ID3);
+			0, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y_T2, color, "SMALLFNT", FP_KSHUD_ID3);
 }
 
 function void KSHud_ShowNumber(int value, int scale, int color, str pre, str suf){
 	KSHud_Print(strparam(s:pre, s:" ", d:value, s:" ", s:suf),
-	scale, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y, color, "STATBIGS", FP_KSHUD_ID1);
+	scale, FP_KSHUD_FACTOR_X, FP_KSHUD_FACTOR_Y, color, "DBIGFONT", FP_KSHUD_ID1);
 }
 
 function void KSHud_Print(str msg, int scale, int fx, int fy, int color, str font, int id){

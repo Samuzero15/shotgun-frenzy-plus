@@ -65,7 +65,7 @@ function void MechUpPage_Init(int pageTag){
 	
 	i = Label_Add(320.0, 280.0);
 	Label_setText(i, "$");
-	Label_setFont(i, "StatBigs");
+	Label_setFont(i, "DBIGFONT");
 	Label_setColor(i, CR_GOLD);
 	Label_setTag(i, pagetag);
 	mechpage_vars[3] = i;
@@ -78,7 +78,7 @@ function void MechUpPage_Init(int pageTag){
 	
 	i = Label_Add(320.0, 380.0);
 	Label_setText(i, "Still on Repairing Protocols...");
-	Label_setFont(i, "StatBigs");
+	Label_setFont(i, "DBIGFONT");
 	Label_setColor(i, CR_BRICK);
 	mechpage_vars[5] = i;
 	//PowBuyPage_SaveToGroup(powerup, 1, i);
@@ -89,7 +89,7 @@ function void MechUpPage_Init(int pageTag){
 	mechpage_vars[6] = i;
 	
 	i = Label_Add(50.0, 50.0);
-	Label_setFont(i, "Confont");
+	Label_setFont(i, "SMALLFNT");
 	Label_setColor(i, CR_Cream);
 	Label_setAligns(i, Hud_Align_Left, Hud_Align_TOP);
 	Component_Save(Label_getRect(i));
@@ -172,7 +172,7 @@ function void MechUpPage_AddComps(int upgrade,int cell){
 	i = Label_AddCardOff(mechpage_vars[1], cell, 40.0, 2.0);
 	if(maxup == 1)	Label_setText(i, "Upgrade name");
 	else			Label_setText(i, "Upgrade price");
-	Label_setFont(i, "StatBigs");
+	Label_setFont(i, "DBIGFONT");
 	Label_setTag(i, mechpage_vars[0]);
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_setColor(i, CR_WHITE);
@@ -185,7 +185,7 @@ function void MechUpPage_AddComps(int upgrade,int cell){
 	
 	i = Label_DupCardOff(i, mechpage_vars[1], cell, 40.0, 12.0);
 	Label_setText(i, desc);
-	Label_setFont(i, "Confont");
+	Label_setFont(i, "SMALLFNT");
 	MechUpPage_SaveToGroup(upgrade, 3, i);
 	
 }

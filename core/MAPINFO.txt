@@ -4,10 +4,13 @@ Gameinfo
 {
 	MenuFontColor_Title = "White"
 	MenuFontColor_Action = "LightBlue"
-	MenuFontColor_Label = "Orange"
-	MenuFontColor_Selection = "Gold"
-	MenuFontColor_Header = "Cyan"
-	MenuSliderColor = "Red"
+	MenuFontColor_Label = "Cream"
+	MenuFontColor_Selection = "Cyan"	
+	MenuFontColor_Header = "Gold"
+	MenuFontColor_Highlight = "Orange"
+	DimColor = "88 88 88"
+	InfoPage = "HELP1", "HELP2"
+
 	ForceKillScripts = True
 }
 

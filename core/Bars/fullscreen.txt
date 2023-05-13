@@ -8,31 +8,31 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 			
 			inInventory HUD_DangerHealth, 1
 			{
-				drawnumber 5, STATBIGSNums, RED, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, DBIGFONTNums, RED, health, drawshadow, alignment(left), 40, -26;
 			}else{ inInventory HUD_CriticHealth, 1 {
-				drawnumber 5, STATBIGSNums, ORANGE, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, DBIGFONTNums, ORANGE, health, drawshadow, alignment(left), 40, -26;
 			}else{ inInventory HUD_LowHealth, 1 {
-				drawnumber 5, STATBIGSNums, YELLOW, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, DBIGFONTNums, YELLOW, health, drawshadow, alignment(left), 40, -26;
 			}else{ inInventory HUD_OverHealth, 1 {
-				drawnumber 5, STATBIGSNums, CYAN, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, DBIGFONTNums, CYAN, health, drawshadow, alignment(left), 40, -26;
 			}else{ // Normal health
-				drawnumber 5, STATBIGSNums, GREEN, health, drawshadow, alignment(left), 40, -26;
+				drawnumber 5, DBIGFONTNums, GREEN, health, drawshadow, alignment(left), 40, -26;
 			}}}}
 
 			inInventory Inventory_Stimpack, 1 {
 				drawimage "ITEM10", 5, -80;
-				drawnumber 2, STATBIGS, GOLD, "Inventory_Stimpack", whennotzero, 35, -60;
+				drawnumber 2, DBIGFONT, GOLD, "Inventory_Stimpack", whennotzero, 35, -60;
 			}
 			drawimage runeicon, 150, -20, center;
 			
 
 			//armor
 			drawimage armoricon, 20, -24, centerbottom;
-			drawnumber 3, STATBIGS, BLUE, armor, drawshadow, whennotzero, 80, -40;
+			drawnumber 3, DBIGFONT, BLUE, armor, drawshadow, whennotzero, 80, -40;
 
 			//ammo
 			drawimage ammoicon1, -14, -4, centerbottom;
-			drawnumber 4, STATBIGSNums, untranslated, ammo1, drawshadow, -25, -26;
+			drawnumber 4, DBIGFONTNums, untranslated, ammo1, drawshadow, -25, -26;
 			
 			isSelected "Repeater"{
 				drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  -110, -25;
@@ -45,11 +45,11 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 			}
 			
 			isSelected "Buckshot"{
-				drawnumber 3, STATBIGS, white, "Buckshot_LoadedShells", drawshadow, -25, -40;
+				drawnumber 3, DBIGFONT, white, "Buckshot_LoadedShells", drawshadow, -25, -40;
 			}else{ isSelected "Buckshot_Chamber"{
-				drawnumber 3, STATBIGS, white, "Buckshot_Chamber_LoadedShells", drawshadow, -25, -40;
+				drawnumber 3, DBIGFONT, white, "Buckshot_Chamber_LoadedShells", drawshadow, -25, -40;
 			}else{ isSelected "Buckshot_Explosive"{
-				drawnumber 3, STATBIGS, white, "Buckshot_LoadedShells", drawshadow, -25, -40;
+				drawnumber 3, DBIGFONT, white, "Buckshot_LoadedShells", drawshadow, -25, -40;
 			}}}
 			
 			// [Samu] To show what powerups and stimpacks do you have.
@@ -61,10 +61,10 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 				usessecondaryammo
 				{
 					drawimage ammoicon2, -14, -22, centerbottom;
-					drawnumber 4, STATBIGS, untranslated, ammo2, drawshadow, -25, -40;
+					drawnumber 4, DBIGFONT, untranslated, ammo2, drawshadow, -25, -40;
 					inventorybarnotvisible
 					{
-						drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -42, -26, -68, untranslated;
+						drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, DBIGFONT, -14, -42, -26, -68, untranslated;
 					}
 				}
 				//no secondary ammo
@@ -73,13 +73,13 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 					inventorybarnotvisible
 					{
 						isSelected "Buckshot"{
-							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -44, -26, -68, untranslated;
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, DBIGFONT, -14, -44, -26, -68, untranslated;
 						}else{ isSelected "Buckshot_Chamber"{
-							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -44, -26, -68, untranslated;
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, DBIGFONT, -14, -44, -26, -68, untranslated;
 						}else{ isSelected "Buckshot_Explosive"{
-							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -44, -26, -68, untranslated;
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, DBIGFONT, -14, -44, -26, -68, untranslated;
 						}else{
-							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -20, -26, -48, untranslated;
+							drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, DBIGFONT, -14, -20, -26, -48, untranslated;
 						}}}
 					}
 				}
@@ -90,7 +90,7 @@ statusbar fullscreen, fullscreenoffsets // ZDoom HUD
 			{
 				inventorybarnotvisible
 				{
-					drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, STATBIGS, -14, -5, -26, -32, untranslated;
+					drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, DBIGFONT, -14, -5, -26, -32, untranslated;
 				}
 			}
 

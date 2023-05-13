@@ -146,7 +146,7 @@ script 6 (int l_Type)
     if(l_Type == 0)
     {
         giveinventory("NukeLauncher", 1);
-        setfont("CONFONT");
+        setfont("SMALLFNT");
         print(s:"Press '7' to use the Nuke Launcher");
     }
     if(l_Type == 1)

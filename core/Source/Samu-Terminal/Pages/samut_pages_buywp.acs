@@ -69,7 +69,7 @@ function void BuyWpnPage_Init(int pageTag){
 	
 	i = Label_add(440.0,315.0);
 	Label_setTag(i, pagetag);
-	Label_setFont(i, "Statbigs");
+	Label_setFont(i, "DBIGFONT");
 	Label_setText(i, "Cost Price.");
 	buywpn_vars[21] = i;
 	
@@ -227,20 +227,20 @@ function void BuyWpnPage_InitPackDetails(int card){
 
 	i = Label_Add(410.0, 65.0); // title
 		Label_SetText		(i, "");
-		Label_setFont		(i, "STATBIGS");
+		Label_setFont		(i, "DBIGFONT");
 		Label_setShow		(i, false);
 		Label_setTag		(i, buywpn_vars[3]);
 	buywpn_vars[9] = i;
 	
 	i = Label_Dup			(i, 410.0, 78.0); //Description
 		Label_SetText		(i, "");
-		Label_setFont		(i, "Confont");
+		Label_setFont		(i, "SMALLFNT");
 		Label_setWrapWidth	(i, 350);
 	buywpn_vars[10] = i;
 	
 	int i2;
 	i2 = Label_AddCard		(card, 1); // Weapon 1 desc
-		Label_setFont		(i2, "STATBIGS");
+		Label_setFont		(i2, "DBIGFONT");
 		Label_setText		(i2, "");
 		Label_setWrapWidth	(i2, 400);
 		Label_SetAligns		(i2, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
@@ -250,7 +250,7 @@ function void BuyWpnPage_InitPackDetails(int card){
 	
 	i = Label_DupCardOff	(i2, card, 1, -8.0, 16.0); // Weapon 1 name
 		Label_setText		(i, "");
-		Label_setFont		(i, "Confont");
+		Label_setFont		(i, "SMALLFNT");
 	buywpn_vars[12] = i;
 		
 	i = Label_DupCard		(i2, card, 2);// Weapon 2 name
@@ -259,7 +259,7 @@ function void BuyWpnPage_InitPackDetails(int card){
 	
 	i = Label_DupCardOff	(i2, card, 2, -8.0, 16.0);// Weapon 1 desc
 		Label_setText		(i, "");
-		Label_setFont		(i, "Confont");
+		Label_setFont		(i, "SMALLFNT");
 	buywpn_vars[14] = i;
 			
 }

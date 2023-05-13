@@ -90,7 +90,7 @@ function void ShowNumbersCrit(str pf, int howmuch, str sf, int color, int yoff, 
 	int shadowFlags = HUDMSG_FADEOUT;
 	int shineFlags = HUDMSG_FADEINOUT | HUDMSG_AddBlend;
 	str msg = StrParam(s:pf, d:howMuch, s:sf);
-	setFont("STATBIGS");
+	setFont("DBIGFONT");
 	int hudid1 = 1337 + id*4;
 	int hudid2 = 1338 + id*4;
 	int hudid3 = 1339 + id*4;
@@ -109,9 +109,9 @@ function void ShowNumbersCrit(str pf, int howmuch, str sf, int color, int yoff, 
 }
 
 function void ShowNumbersSmall(str pf, int howmuch, int color, int cvar){
-	ShowNumbers(pf, howmuch, "",color, "CONFONT", cvar);
+	ShowNumbers(pf, howmuch, "",color, "SMALLFNT", cvar);
 }
 
 function void ShowNumbersBig(str pf, int howmuch, int color, int cvar){
-	ShowNumbers(pf, howmuch, "",color, "STATBIGS", cvar);
+	ShowNumbers(pf, howmuch, "",color, "DBIGFONT", cvar);
 }

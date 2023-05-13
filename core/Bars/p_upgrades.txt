@@ -3,7 +3,7 @@ createpopup status, 800, 150, SlideInBottom, 20;
 statusbar popupstatus, fullscreenoffsets
 {
    inInventory Not SamuTInv_HideSBAR{
-   drawString STATBIGS, White, "Unit Upgrades", 20, -200, 0, alignment(left);
+   drawString DBIGFONT, White, "Unit Upgrades", 20, -200, 0, alignment(left);
    
    InInventory HUD_T_HEALTH2{
     DrawImage "CM13", 20,  -185;

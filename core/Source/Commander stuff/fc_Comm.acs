@@ -337,7 +337,7 @@ script 132 (void)
         p_KickSlot[playernumber()] = 1;
         c_KickVotes ++;
         
-        setfont("CONFONT");
+        setfont("SMALLFNT");
         printbold(s:"Votes: ", d:c_KickVotes, s:"/", d:playercount()/2);
         
         if (c_KickVotes >= playercount()/2)
@@ -361,7 +361,7 @@ script 969 (void)
 {
     while(1)
     {
-        setfont("CONFONT");
+        setfont("SMALLFNT");
         
         sethudsize(800, 600, 1);
         hudmessage(s:"Demon Count\n", s:"Sector 1: ", d:thingcount(0, 111), s:"\nSector 2: ", d:thingcount(0, 112), s:"\nSector 3: ", d:thingcount(0, 113), s:"\nBase: ", d:thingcount(0, 114); 1, 188, cr_white, 650.1, 400.1, 5.0);

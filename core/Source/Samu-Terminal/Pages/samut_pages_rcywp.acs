@@ -74,7 +74,7 @@ function void RcyWpnPage_Init(int pageTag){
 	// The scroller cero.
 	rcywpn_vars[6] = Label_Add	(100.0,120.0);
 	Label_setText	(rcywpn_vars[6], "O");
-	Label_setFont	(rcywpn_vars[6],"StatBigs"); 
+	Label_setFont	(rcywpn_vars[6],"DBIGFONT"); 
 	Label_setTag	(rcywpn_vars[6], pageTag);
 	Label_setAligns	(rcywpn_vars[6], HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	Label_setShow   (rcywpn_vars[6], false);
@@ -107,7 +107,7 @@ function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	
 	i = Label_Add	(0.0, 0.0); 
 	Label_setText	(i, stat0);
-	Label_setFont	(i,"StatBigs");
+	Label_setFont	(i,"DBIGFONT");
 	Label_setShow	(i, false);
 	Label_setAligns	(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_setTag	(i, pageTag);
@@ -116,7 +116,7 @@ function void RcyWpnPage_AddOptions(int pagetag, int wpn){
 	i = Label_Dup(i, 0.0, 0.0); 
 	Label_setText	(i,strparam(s:"+ ",d:stat2,s:" $"));
 	Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-	Label_setFont	(i, "confont");
+	Label_setFont	(i, "SMALLFNT");
 	RcyWpnPage_SaveGroup(wpn, 2, i);
 	
 	i = StrButton_Add	(0,0, "Recycle"); 

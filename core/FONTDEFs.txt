@@ -1,4 +1,4 @@
-StatBigsNums{
+DBIGFONTNums{
 	0 STATBN0
 	1 STATBN1
 	2 STATBN2

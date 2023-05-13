@@ -67,7 +67,7 @@ function void p_MenuReveal_Button (str l_Name, int l_ItemID, str l_SpecialNumber
 {
     // setup hud size and font
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     
     // set to slot
 	// [Samu] I belive, by the time they did'nt know something called CONSTANTS.
@@ -186,7 +186,7 @@ function void p_MenuReveal (int l_InputType, int l_Category)
     if (p_MenuSelection[playernumber()] == -1)      p_MenuSelection[playernumber()] = 0;
     
     // show pointer
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     hudmessage(s:">"; 0, 38, cr_Red, 240.1, f_MenuSlot_Y[p_MenuSelection[playernumber()]], f_MenuHold);
     
     // display background

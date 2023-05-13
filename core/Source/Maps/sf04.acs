@@ -133,7 +133,7 @@ script 61 (int l_TurretSpawn, int l_TurretReturn)
 {
     if (f_MapTurret_OnUse[l_TurretReturn] > 0)
 	{
-        setfont("CONFONT");
+        setfont("SMALLFNT");
         print(s:"Already in use...");
         terminate;
     }

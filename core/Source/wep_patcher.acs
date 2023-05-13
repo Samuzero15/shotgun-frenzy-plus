@@ -47,7 +47,7 @@ function void Patcher_ShowMsg(int msgid, int play, int value){
 script "Patcher_ShowHealth" (int hp, int maxhp) CLIENTSIDE
 {
 	SetHudSize(320, 240, 0);
-	Setfont("confont");
+	Setfont("SMALLFNT");
 	HudMessage(d:hp, s:"/", d:maxhp; HUDMSG_FADEOUT, PATCHER_HID_HEALTH, CR_WHITE, 320*0.5, 240*0.65, 0.2, 1.0);
 	SetHudSize(0, 0, 0);
 }
@@ -84,7 +84,7 @@ script "Patcher_ShowMsg" (int msg_num, int value) CLIENTSIDE
 
 script "Patcher_ShowCosts" (int price, int buff_price, int fix, int lvl) CLIENTSIDE {
 	SetHudSize(640, 480, 0);
-	Setfont("confont");
+	Setfont("SMALLFNT");
 	str stars = "[";
 	for (int i = 0; i < 5; i++){
 		if(i < lvl)  stars = strparam(s:stars, s:"\cf*");

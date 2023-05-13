@@ -15,9 +15,9 @@ Script "SFPlus_Welcome" Enter CLIENTSIDE
 {
 	if(PlayerNumber() == ConsolePlayerNumber()){
 		if(GetUserCVar(playernumber(), "sfp_welcome") && StrIcmp("titlemap", strparam(n:-2))!= 0 ){
-			SetFont("STATBIGS");
+			SetFont("DBIGFONT");
 				Hello_Print("Welcome to Shotgun Frenzy Plus!", 3000, 0.45);
-			SetFont("CONFONT");
+			SetFont("SMALLFNT");
 				Hello_Print(strparam(
 				s:"Some Console Commands to look at: \n",
 				s:"		\cvsfp_ccmdlist\c- for the command list!\n", 						

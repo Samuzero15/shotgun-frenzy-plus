@@ -97,7 +97,7 @@ function void initTitle(void){
 
 	ptitle = Label_Add(320.0,40.0); 
 	Label_setText(ptitle,"Title");
-	Label_setFont(ptitle,"STATBIGS");
+	Label_setFont(ptitle,"DBIGFONT");
 	Label_setColor(ptitle,CR_WHITE);
 	Label_setTag(ptitle, -1);
 	Label_setShow(ptitle, false);

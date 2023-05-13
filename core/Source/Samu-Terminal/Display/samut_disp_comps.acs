@@ -136,7 +136,7 @@ function void ShowStrButton (int sbid){
 	//HudSetAlign(HUD_ALIGN_Left, HUD_ALIGN_Top);
 	//HudSetAlignY(HUD_ALIGN_Center);
 	HUDSetPoint(xpos + fixedDiv(w, 2.0), ypos + fixedDiv(h, 2.0));
-	HUDSetFont("STATBIGS");
+	HUDSetFont("DBIGFONT");
 	HUDDrawText(hudid,text);
 	
 	//HudSetScale(0.5);
@@ -186,7 +186,7 @@ function void HiLightStrButton (int sbid){
 	HudSetAlignY(HUD_ALIGN_Center);
 	HUDSetPoint(xpos + (fixedDiv(w,2.0)), ypos + (fixedDiv(h,2.0)));
 	HudSetScaleXY(1.0, 1.5);
-	HUDSetFont("STATBIGS");
+	HUDSetFont("DBIGFONT");
 	HUDDrawText(ST_HID_SBTN1+sbid,text);
 	*/
 	HudSetBlendStyle(HUD_BLENDSTYLE_ADDITIVE);
@@ -216,7 +216,7 @@ function void ShowToast (void){
 	
 	HUDSetPoint(xpos,ypos);
 	//HudSetScaleXY(1.0, 1.5);
-	HUDSetFont("CONFONT");
+	HUDSetFont("SMALLFNT");
 	HUDDrawText(ST_HID_TOAST_TEXT,text);
 	
 	//HudSetScale(1.0);
@@ -246,7 +246,7 @@ function void ShowPrompt (void){
 	//HudSetToastSettings(color);
 	//HudSetAlign(HUD_ALIGN_Center,HUD_ALIgn_Center);
 	HUDSetPoint(xpos + fixedDiv(w,2.0) - 4.0,ypos);
-	HUDSetFont("STATBIGS");
+	HUDSetFont("DBIGFONT");
 	HUDDrawText(ST_HID_PROMPT_TITLE,title);
 	
 	//HudSetScale(1.0);

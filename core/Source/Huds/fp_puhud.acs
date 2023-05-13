@@ -207,7 +207,7 @@ function void PowHud_Show(int which) {
 		
 
 		SetHudSize(w, h, 1);
-		SetFont("STATBIGS");
+		SetFont("DBIGFONT");
 		HudMessage(s:msg; HUDMSG_PLAIN, 6100+index, CR_WHITE, x, y, 3.0);
 		puphud_stack++;
 	}

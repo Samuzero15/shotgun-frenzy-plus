@@ -165,7 +165,7 @@ function void p_IncreaseRank (void)
 }
 
 function void HudMsg_Rank(str string){
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     hudmessage(s:string; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
 }
 

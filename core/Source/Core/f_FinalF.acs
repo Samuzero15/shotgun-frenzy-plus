@@ -338,7 +338,7 @@ script 125 (int l_Condition)
 	g_GameEnding = l_Condition;
 	
     // display center message
-    setfont("STATBIGS");
+    setfont("DBIGFONT");
     sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
     
 	/*
@@ -448,7 +448,7 @@ script 125 (int l_Condition)
 	ACS_NamedExecute("SFPlus_RegisterHiscores", 0);
     
     // display killed demons
-    setfont("STATBIGS");
+    setfont("DBIGFONT");
 	hudmessagebold(s:msg; 0, 150, CR_WHITE, s_ScreenSize[0] * 0.5 + 10.0, s_ScreenSize[1] * 0.5 + 35.0, 0.0);
 
 	int LevelKilledMonsters = getlevelinfo(LEVELINFO_KILLED_MONSTERS);
@@ -507,7 +507,7 @@ script 125 (int l_Condition)
 	
 	while(l_SkillLevel < g_FinalSkillScore)
     {
-        setfont("STATBIGS");
+        setfont("DBIGFONT");
         ambientsound("weapons/pistol", 20);
         l_SkillLevel ++;
 		setfont("BIGFONT");
@@ -516,7 +516,7 @@ script 125 (int l_Condition)
     }
     g_skillpercent = g_FinalSkillScore;
     delay(35 * 1);
-	setfont("confont");	
+	setfont("SMALLFNT");	
 	msg = "";
 	//[Samu] I got bored lol.
 	if(l_Condition == 4){
@@ -625,7 +625,7 @@ function void FinalFight_ClearString(int id){
 }
 
 function void FinalFight_ScoreString(int id, str label, int number, str label_number){
-	setfont("STATBIGS");
+	setfont("DBIGFONT");
 	hudmessagebold(s:label; 0, 151+id, CR_RED, s_ScreenSize[0] * 0.5 - 150.1, s_ScreenSize[1] * 0.5 + 55.0 + 15.0*id, 0.0);
 	setfont("BIGFONT");
 	if(number != -1)

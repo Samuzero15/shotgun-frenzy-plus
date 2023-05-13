@@ -81,7 +81,7 @@ else{
 	hudmessage(s:"a"; 2, 180, CR_Gold, 0.1, 0.1, 5.0);
 	//setfont("BIGFONT");
 	//hudmessage(s:"You've been killed!"; 1, 178, CR_Red, 570.0, 370.1, 5.0);
-	setfont("CONFONT");
+	setfont("SMALLFNT");
 	hudmessage(s:"You have been killed!\nThe bodycount sits at ", d:getlevelinfo(LEVELINFO_KILLED_MONSTERS), s:" dead monsters!\nTotal player deaths is sitting at ", d:p_TotalPlayerDeaths; 2, 179, CR_Gold, 580.0, 420.1, 1.0);
 	*/
 

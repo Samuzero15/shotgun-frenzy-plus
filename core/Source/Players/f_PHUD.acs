@@ -32,7 +32,7 @@ script 604 (int l_Rank) clientside
 {
 	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		int x = 400.4;
 		int y = 73.4;
 		str rankTitle = "Rookie (1)";
@@ -77,7 +77,7 @@ script 616 (void)
 				hudmessagebold(s:"a"; 1, 180, CR_Red, 0.1, 0.1, 3.0);
 				setfont("BIGFONT");
 				hudmessagebold(s:"DEMONIC CORE"; 1, 178, CR_Red, 570.0, 390.1, 3.0);
-				setfont("CONFONT");
+				setfont("SMALLFNT");
 				hudmessagebold(s:"Core is invulnerable until\nall battery doors are down"; 1, 179, CR_White, 580.0, 420.1, 3.0);
 			}
 			else
@@ -87,7 +87,7 @@ script 616 (void)
 				hudmessagebold(s:"a"; 1, 180, CR_Red, 0.1, 0.1, 3.0);
 				setfont("BIGFONT");
 				hudmessagebold(s:"DEMONIC CORE"; 1, 178, CR_Red, 570.0, 390.1, 3.0);
-				setfont("CONFONT");
+				setfont("SMALLFNT");
 				hudmessagebold(s:"Taking damage!\n",d:GetActorProperty(109,APROP_Health),s:" Health remaining..."; 1, 179, CR_White, 580.0, 420.1, 3.0);
 			}
 	
@@ -207,7 +207,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 
 script "HUD_ShowGameProgress" (int showtype, int value) clientside {
 	//if(consolePlayerNumber() == PlayerNumber()){
-		setfont("STATBIGS");
+		setfont("DBIGFONT");
 		sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 		str string = "";
 		switch (showtype){
@@ -217,7 +217,7 @@ script "HUD_ShowGameProgress" (int showtype, int value) clientside {
 			case 4: string = "DONE";  break;
 		}
 		hudmessage(s:string; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 	//}
 }
 
@@ -293,7 +293,7 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
           kills = 0;
         
         // hud information
-        setfont("CONFONT");
+        setfont("SMALLFNT");
 		Acs_NamedExecuteAlways("Hud_ShowPlayerStats", 0, credits, ups, deaths);
 		Acs_NamedExecuteAlways("Hud_ShowPlayerStats_Streak", 0, streak, histreak, msstreak);
 
@@ -335,7 +335,7 @@ script "Hud_ShowCoreHealth" (int which, int hp) clientside
 {
 	if(which > 0){
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		int maxhp, percent, color;
 		if (hp < 0) hp = 0;
 		
@@ -351,7 +351,7 @@ script "Hud_ShowCoreHealth" (int which, int hp) clientside
 			hudmessage(s:"\nSector: ", d:which,s:"\nBattery: ", 
 					d:hp; 0, 88, CR_CREAM, 515.1, 10.1, 1.0);
 		}
-		setfont("Statbigs");	
+		setfont("DBIGFONT");	
 		percent = iceil(fixedDiv(hp, maxhp) * 100);
 		if(percent >= 100) 						color = CR_CYAN;
 		else if(percent >= 75 && percent < 100) color = CR_GREEN;
@@ -366,7 +366,7 @@ script "Hud_ShowCoreHealth" (int which, int hp) clientside
 script "Hud_ShowPlayerStats" (int credits, int exp, int deaths) clientside
 {
 	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		
 		hudmessage(s:"\nCredits: \cf", d:credits,
           s:"\c-\nUp. Pts: \cv", d:exp,
@@ -376,7 +376,7 @@ script "Hud_ShowPlayerStats" (int credits, int exp, int deaths) clientside
 script "Hud_ShowPlayerStats_Streak" (int ksnow, int kshigh, int ms) clientside
 {
 	sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-	setfont("CONFONT");
+	setfont("SMALLFNT");
 	hudmessage(s:"\n\n\n\nK. Streak:\ci ", d:ksnow, s:"\n\c-Hi:\ci ", d:kshigh, s:"\c- MS: \ci",d:ms; 0, 85, CR_CREAM, 164.1, 10.1, 1.0);
 } 
 
@@ -425,7 +425,7 @@ function str PlayHUD_MechStatus(int mech_tics){
 script "HUD_ShowTeamScore" (int points) clientside
 {
 	if(getCvar("screenblocks") == 11 && !CheckInventory("SamuTInv_UsingTerminal")){
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 		hudmessage(s:"Team score: ",d:points; 1, 256, CR_TAN, 400.0, 18.1, 7.0);
 	}
@@ -438,7 +438,7 @@ script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_
 						strparam(s:"\n Com: ", n:commander+1));
 
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-		setfont("CONFONT");
+		setfont("SMALLFNT");
 		hudmessage(s:"Team Credits: ", d:teamcredits, 
             s:com,s:"\n",
 			s:PlayHUD_MechStatus(Mech_tics); 0, 86, CR_CREAM, 400.4, 8.1, 1.0);
@@ -470,7 +470,7 @@ script "Hud_ShowExperienceBar" (int kills, int rankexp, int currentkills) client
 	else 								expbar = "EXP20";
 	setfont(expbar);
 	hudmessage(s:"a"; 0, 91, 0, 0.1, 0.1, 1.0);
-	setfont("CONFONT");
+	setfont("SMALLFNT");
 	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 	hudmessage(s:"< ",d:currentkills, s:" / ", d:rankexp,s:" >"; 0, 84, CR_CYAN, 400.4, 82.4, 1.0);
 }

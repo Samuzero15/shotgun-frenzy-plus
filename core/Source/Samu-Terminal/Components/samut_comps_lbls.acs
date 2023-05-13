@@ -224,7 +224,7 @@ function void Label_SetDefaultProps(int i){
 	//print(s:"Default props");
 		Label_setText(i,"This is a label");
 		Label_setShow(i, false);
-		Label_setFont(i, "CONFONT");
+		Label_setFont(i, "SMALLFNT");
 		Label_setColor(i, CR_WHITE);
 		Label_setAligns(i,HUD_ALIGN_CENTER,HUD_ALIGN_CENTER);
 		Label_setWrapWidth(i,0);

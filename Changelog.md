@@ -9,6 +9,12 @@
 
 ## v1 - The path of the damned...
 
+#### (13 / 5 / 2023) [Main menu, f1 screens and fonts]
+	*) Smallfont is now replaced with the confont graphics.
+	*) Bigfont now it is replaced by the Statbigs
+	*) Changed the colors and fonts for the menu, for the sake of consistency and readability.
+	*) Added a Conback, and a pair of f1 screens.
+
 #### (5 / 5 / 2023) [Some sprite reorganization]
 	*) Just moving the sprites in the resource part.
 	*) Now Samu-Terminal will only init the db once! Thank u Buu42!

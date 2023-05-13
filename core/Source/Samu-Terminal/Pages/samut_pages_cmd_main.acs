@@ -73,28 +73,28 @@ function void CMDPage_Init(void){
 	i = Label_Add(20.0, 420.0); // Button Title.
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
 	Label_setColor(i, CR_YELLOW);
-	Label_setFont(i, "STATBIGS");
+	Label_setFont(i, "DBIGFONT");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_Center);
 	cmdpage_vars[1] = i;
 	
 	i = Label_Add(20.0, 434.0); // Description
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
 	Label_setColor(i, CR_WHITE);
-	Label_setFont(i, "CONFONT");
+	Label_setFont(i, "SMALLFNT");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	cmdpage_vars[2] = i;
 	
 	i = Label_Add(490.0, 340.0); // Money counter.
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
 	Label_setColor(i, CR_WHITE);
-	Label_setFont(i, "STATBIGS");
+	Label_setFont(i, "DBIGFONT");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	cmdpage_vars[3] = i;
 	
 	i = Label_Add(490.0, 295.0); // Demon counter.
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
 	Label_setColor(i, CR_WHITE);
-	Label_setFont(i, "CONFONT");
+	Label_setFont(i, "SMALLFNT");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	cmdpage_vars[4] = i;
 

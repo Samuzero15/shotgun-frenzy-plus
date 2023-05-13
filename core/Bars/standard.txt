@@ -5,9 +5,9 @@ statusbar normal// Standard Doom Status bar
 	drawbar "EXPBL", "EXPBL0", Hud_EXP, horizontal, reverse, interpolate(15),  9, 570;
 	
 	inInventory not HUD_Spectating{
-		drawnumber 5, Confont, LightBlue, Hud_EXP, alignment(center), 380, 570;
-		drawString Confont, White, " / ",  400, 570, 0, alignment(center);
-		drawnumber 5, Confont, LightBlue, ammoCapacity hud_EXP, alignment(center), 420, 570;
+		drawnumber 5, SMALLFNT, LightBlue, Hud_EXP, alignment(center), 380, 570;
+		drawString SMALLFNT, White, " / ",  400, 570, 0, alignment(center);
+		drawnumber 5, SMALLFNT, LightBlue, ammoCapacity hud_EXP, alignment(center), 420, 570;
 	}
 	
 	drawimage "HUD2", 0, 487;
@@ -23,45 +23,45 @@ statusbar normal// Standard Doom Status bar
 	inInventory not HUD_OnMech{
 	
 		alpha 0.5{DrawImage "MEDIA0",  50,  520;}
-		drawString STATBIGS, White, "Health",  60, 550, 0, alignment(center);
+		drawString DBIGFONT, White, "Health",  60, 550, 0, alignment(center);
 		// Danger health
-		inInventory HUD_DangerHealth, 1 drawnumber 5, StatBigsNums, RED, health, alignment(center), 55, 520;
+		inInventory HUD_DangerHealth, 1 drawnumber 5, DBIGFONTNums, RED, health, alignment(center), 55, 520;
 		// Critic health
-		else inInventory HUD_CriticHealth, 1  drawnumber 5, StatBigsNums, ORANGE, health, alignment(center), 55, 520;
+		else inInventory HUD_CriticHealth, 1  drawnumber 5, DBIGFONTNums, ORANGE, health, alignment(center), 55, 520;
 		// Low health
-		else inInventory HUD_LowHealth, 1 drawnumber 5, StatBigsNums, YELLOW, health, alignment(center), 55, 520;
+		else inInventory HUD_LowHealth, 1 drawnumber 5, DBIGFONTNums, YELLOW, health, alignment(center), 55, 520;
 		// Over health
-		else inInventory HUD_OverHealth, 1 drawnumber 5, StatBigsNums, CYAN, health, alignment(center), 55, 520;
+		else inInventory HUD_OverHealth, 1 drawnumber 5, DBIGFONTNums, CYAN, health, alignment(center), 55, 520;
 		// Normal health
-		else drawnumber 5, StatBigsNums, GREEN, health, alignment(center), 55, 520;
+		else drawnumber 5, DBIGFONTNums, GREEN, health, alignment(center), 55, 520;
 		
 	}else {
-		drawString STATBIGS, White, "Mech Armor",  85, 550, 0, alignment(center);
+		drawString DBIGFONT, White, "Mech Armor",  85, 550, 0, alignment(center);
 		// Danger Health
-		inInventory HUD_DangerHealth, 1 drawnumber 4, StatBigsNums, RED, health, alignment(center), 80, 520;
+		inInventory HUD_DangerHealth, 1 drawnumber 4, DBIGFONTNums, RED, health, alignment(center), 80, 520;
 		// Critic health
-		else inInventory HUD_CriticHealth, 1 drawnumber 4, StatBigsNums, ORANGE, health, alignment(center), 80, 520;
+		else inInventory HUD_CriticHealth, 1 drawnumber 4, DBIGFONTNums, ORANGE, health, alignment(center), 80, 520;
 		// Low health
-		else inInventory HUD_LowHealth, 1 drawnumber 4, StatBigsNums, YELLOW, health, alignment(center), 80, 520;
+		else inInventory HUD_LowHealth, 1 drawnumber 4, DBIGFONTNums, YELLOW, health, alignment(center), 80, 520;
 		// Over health
-		else inInventory HUD_OverHealth, 1 drawnumber 4, StatBigsNums, CYAN, health, alignment(center), 80, 520;
+		else inInventory HUD_OverHealth, 1 drawnumber 4, DBIGFONTNums, CYAN, health, alignment(center), 80, 520;
 		// Normal health
-		else drawnumber 4, StatBigsNums, GREEN, health, alignment(center), 80, 520;
+		else drawnumber 4, DBIGFONTNums, GREEN, health, alignment(center), 80, 520;
 		
 	}
 	
 	inInventory not HUD_OnMech{
 	
-		drawString STATBIGS, White, "Armor",  157, 550, 0, alignment(center);
+		drawString DBIGFONT, White, "Armor",  157, 550, 0, alignment(center);
 		
 		inInventory BasicArmor, 1{
 			alpha 0.5{DrawImage armoricon, 150, 520;}
 			
-			drawnumber 3, StatBigsNums, GREEN, armor, whennotzero, alignment(center), 155, 520, 2, RED, 30, CYAN, 101;
+			drawnumber 3, DBIGFONTNums, GREEN, armor, whennotzero, alignment(center), 155, 520, 2, RED, 30, CYAN, 101;
 			
 		}
 		
-		drawString STATBIGS, White, "Ammo",  725, 550, 0, alignment(center);
+		drawString DBIGFONT, White, "Ammo",  725, 550, 0, alignment(center);
 		
 		usesammo{
 			isSelected "Repeater"{
@@ -79,17 +79,17 @@ statusbar normal// Standard Doom Status bar
 			//alpha 0.5{DrawImage ammoicon1, 308, 184, none, 10,10;}
 			
 			isSelected "Buckshot"{
-				drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
+				drawnumber 3, DBIGFONTNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
 			}
 			isSelected "Buckshot_Chamber"{
-				drawnumber 3, StatBigsNums, white, "Buckshot_Chamber_LoadedShells",alignment(center), drawshadow, 725, 490;
+				drawnumber 3, DBIGFONTNums, white, "Buckshot_Chamber_LoadedShells",alignment(center), drawshadow, 725, 490;
 			}
 			isSelected "Buckshot_Explosive"{
-				drawnumber 3, StatBigsNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
+				drawnumber 3, DBIGFONTNums, white, "Buckshot_LoadedShells",alignment(center), drawshadow, 725, 490;
 			}
 			
 			drawnumber 4, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
-			drawnumber 4, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
+			drawnumber 4, DBIGFONTNums, GREEN, ammo1,alignment(center), 725, 520,2, RED, 0;
 			
 		 }
 		usessecondaryammo
@@ -98,11 +98,11 @@ statusbar normal// Standard Doom Status bar
 			//alpha 0.5{DrawImage ammoicon2, 305, 180, none, 10,10;}
 			
 			drawnumber 4, VERVIBES, DARKGREEN, ammo1capacity, 775, 540;
-			drawnumber 4, StatBigsNums, GREEN, ammo1,alignment(center), 725, 520, 2, RED, 0;
+			drawnumber 4, DBIGFONTNums, GREEN, ammo1,alignment(center), 725, 520, 2, RED, 0;
 
 				
 			drawnumber 4, VERVIBES, Brown, ammo2capacity, 775, 510;
-			drawnumber 4, StatBigsNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
+			drawnumber 4, DBIGFONTNums, Orange, ammo2,alignment(center), 725, 490, 2, RED, 0;
 		 }
 		}	
 		
@@ -125,30 +125,30 @@ statusbar normal// Standard Doom Status bar
 		WeaponAmmo "Flinger_Ammo"{ 	drawbar "AC2_GREN", "AC0_GREN", Flinger_Ammo, vertical,		604, 527;}
 		WeaponAmmo "Gasoline"{ 		drawbar "AC2_GASL", "AC0_GASL", Gasoline, vertical,    		636, 527;}
 
-		drawnumber 3, confont, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 499;
-		drawnumber 3, confont, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 499;
-		drawnumber 3, confont, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 499;
-		drawnumber 3, confont, Gold, ammocapacity("Cell"), alignment(center), 			652, 499;
-		drawnumber 3, confont, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 531;
-		drawnumber 3, confont, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 531;
-		drawnumber 3, confont, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 531;
-		drawnumber 3, confont, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 531;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("Clip"), alignment(center), 	   	 	556, 499;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("Shell"), alignment(center), 	    	588, 499;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("RocketAmmo"), alignment(center), 	620, 499;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("Cell"), alignment(center), 			652, 499;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("HeavyBullets"), alignment(center), 	556, 531;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("Dualshot_Ammo"), alignment(center), 	588, 531;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("Flinger_Ammo"), alignment(center), 	620, 531;
+		drawnumber 3, SMALLFNT, Gold, ammocapacity("Gasoline"), alignment(center), 		652, 531;
 		
-		drawnumber 3, confont, White, ammo("Clip"), alignment(center), 	   	 			556, 515;
-		drawnumber 3, confont, White, ammo("Shell"), alignment(center), 	    		588, 515;
-		drawnumber 3, confont, White, ammo("RocketAmmo"), alignment(center), 			620, 515;
-		drawnumber 3, confont, White, ammo("Cell"), alignment(center), 					652, 515;
-		drawnumber 3, confont, White, ammo("HeavyBullets"), alignment(center), 			556, 547;
-		drawnumber 3, confont, White, ammo("Dualshot_Ammo"), alignment(center), 		588, 547;	
-		drawnumber 3, confont, White, ammo("Flinger_Ammo"), alignment(center), 			620, 547;
-		drawnumber 3, confont, White, ammo("Gasoline"), alignment(center), 				652, 547;
+		drawnumber 3, SMALLFNT, White, ammo("Clip"), alignment(center), 	   	 			556, 515;
+		drawnumber 3, SMALLFNT, White, ammo("Shell"), alignment(center), 	    		588, 515;
+		drawnumber 3, SMALLFNT, White, ammo("RocketAmmo"), alignment(center), 			620, 515;
+		drawnumber 3, SMALLFNT, White, ammo("Cell"), alignment(center), 					652, 515;
+		drawnumber 3, SMALLFNT, White, ammo("HeavyBullets"), alignment(center), 			556, 547;
+		drawnumber 3, SMALLFNT, White, ammo("Dualshot_Ammo"), alignment(center), 		588, 547;	
+		drawnumber 3, SMALLFNT, White, ammo("Flinger_Ammo"), alignment(center), 			620, 547;
+		drawnumber 3, SMALLFNT, White, ammo("Gasoline"), alignment(center), 				652, 547;
 		
 		// Ammo counters END
 	}
 	
 	drawselectedinventory center, artiflash, VerVibes, 250, 530, 260, 530;
 	
-	drawString STATBIGS, White, "ITEM", 250, 550, 0, alignment(center);
+	drawString DBIGFONT, White, "ITEM", 250, 550, 0, alignment(center);
 	
 	
 	// [Samu] Credits, Upgrade Points, Kills and Deaths.
@@ -156,15 +156,15 @@ statusbar normal// Standard Doom Status bar
 		drawimage "HUDCREIC", 16, 452;
 		
 		inInventory HUD_TeamCredits{
-			drawnumber 10,  STATBIGS, white,  HUD_TeamCredits,  alignment(left), whennotzero, 50, 456;
-			drawnumber 10,  STATBIGS,  gold,      HUD_Credits,  alignment(left), whennotzero, 50, 472;
+			drawnumber 10,  DBIGFONT, white,  HUD_TeamCredits,  alignment(left), whennotzero, 50, 456;
+			drawnumber 10,  DBIGFONT,  gold,      HUD_Credits,  alignment(left), whennotzero, 50, 472;
 		}else{
-			drawnumber 10,  STATBIGS,  gold,      HUD_Credits,  alignment(left), whennotzero, 50, 464;
+			drawnumber 10,  DBIGFONT,  gold,      HUD_Credits,  alignment(left), whennotzero, 50, 464;
 		}
 		
 		inInventory HUD_Ups{
 			drawimage "HUDUPGIC", 16, 422;
-			drawnumber 10, STATBIGSNums,  cyan, HUD_Ups,  alignment(left), whennotzero, 50, 425;
+			drawnumber 10, DBIGFONTNums,  cyan, HUD_Ups,  alignment(left), whennotzero, 50, 425;
 		}
 		
 		inInventory HUD_MechState {
@@ -181,57 +181,57 @@ statusbar normal// Standard Doom Status bar
 		inInventory HUD_MechTime_Sec || HUD_MechTime_Min{
 			// Mech cooldown.
 			//drawimage "HUDUPGIC", 16, 422;
-			drawnumber 2, STATBIGS,  white, HUD_MechTime_Min,  alignment(left), fillzeros, 50, 395;
-			drawstring STATBIGS, white, ":", 75, 395, 0, alignment(left);
-			drawnumber 2, STATBIGS,  white, HUD_MechTime_Sec,  alignment(left), fillzeros, 85, 395;
+			drawnumber 2, DBIGFONT,  white, HUD_MechTime_Min,  alignment(left), fillzeros, 50, 395;
+			drawstring DBIGFONT, white, ":", 75, 395, 0, alignment(left);
+			drawnumber 2, DBIGFONT,  white, HUD_MechTime_Sec,  alignment(left), fillzeros, 85, 395;
 		}
 	}
 	else{
 		inInventory HUD_TeamCredits{
 			drawimage "HUDCREIC", 16, 452;
-			drawnumber 10,  STATBIGS, white,  HUD_TeamCredits,  alignment(left), whennotzero, 50, 464;
+			drawnumber 10,  DBIGFONT, white,  HUD_TeamCredits,  alignment(left), whennotzero, 50, 464;
 		}
 	}
 	
 	drawimage "HUDKILIC", 752, 452;
 	inInventory HUD_Streak{
-			drawnumber 10,  STATBIGS,  brick,  	   kills,  alignment(right), 750, 456;
-			drawnumber 10,  STATBIGS,  orange, HUD_Streak,  alignment(right), whennotzero, 750, 472;
+			drawnumber 10,  DBIGFONT,  brick,  	   kills,  alignment(right), 750, 456;
+			drawnumber 10,  DBIGFONT,  orange, HUD_Streak,  alignment(right), whennotzero, 750, 472;
 		}else{
-			drawnumber 10,  STATBIGS,  brick,      kills,  alignment(right), 750, 464;
+			drawnumber 10,  DBIGFONT,  brick,      kills,  alignment(right), 750, 464;
 		}
 	
 	inInventory HUD_Deaths{
 		drawimage "HUDPDHIC", 752, 422;
-		drawnumber 3,  STATBIGSNums,  Red, HUD_Deaths,  alignment(right), 750, 425;
+		drawnumber 3,  DBIGFONTNums,  Red, HUD_Deaths,  alignment(right), 750, 425;
 	}
 	
 	
 	//[Samu] Sector and Wave reports.
 	
 	inInventory HUD_SECTOR, 225{
-		drawString Confont, RED, "Game over",  400, 550, 0, alignment(center);
-		drawString Confont, RED, "To the next map!",  400, 560, 0, alignment(center);
+		drawString SMALLFNT, RED, "Game over",  400, 550, 0, alignment(center);
+		drawString SMALLFNT, RED, "To the next map!",  400, 560, 0, alignment(center);
 	}else{
 		inInventory HUD_SECTOR, 4{
 			inInventory HUD_Wave{
-				drawnumber 1, Confont, White, HUD_Wave, alignment(center), prefix("", "Wave:\cg "),  400, 550;
+				drawnumber 1, SMALLFNT, White, HUD_Wave, alignment(center), prefix("", "Wave:\cg "),  400, 550;
 			}else{
-				drawString Confont, RED, "Base on risk!",  400, 550, 0, alignment(center);
+				drawString SMALLFNT, RED, "Base on risk!",  400, 550, 0, alignment(center);
 			}
 			inInventory HUD_CoreHP {
-				drawnumber 10, Confont, White, HUD_CoreHP, alignment(center), prefix("", "Core:\cd "),  whennotzero, 400, 560;
+				drawnumber 10, SMALLFNT, White, HUD_CoreHP, alignment(center), prefix("", "Core:\cd "),  whennotzero, 400, 560;
 			}else{
-				drawString confont, White, "Core \cgDestroyed!", 400, 560, 0, alignment(center);
+				drawString SMALLFNT, White, "Core \cgDestroyed!", 400, 560, 0, alignment(center);
 			}
 		
 		}else{
 			inInventory HUD_SECTOR{
-				drawnumber 10, Confont, LightBlue, HUD_Sector, alignment(center), prefix("", "Risking Sector "), whennotzero, 400, 550;
+				drawnumber 10, SMALLFNT, LightBlue, HUD_Sector, alignment(center), prefix("", "Risking Sector "), whennotzero, 400, 550;
 				inInventory HUD_CoreHP {
-					drawnumber 10, Confont, White, HUD_CoreHP, alignment(center), prefix("", "Core:\cd "),  whennotzero, 400, 560;
+					drawnumber 10, SMALLFNT, White, HUD_CoreHP, alignment(center), prefix("", "Core:\cd "),  whennotzero, 400, 560;
 				}else{
-					drawString confont, White, "Core \cgDestroyed!", 400, 560, 0, alignment(center);
+					drawString SMALLFNT, White, "Core \cgDestroyed!", 400, 560, 0, alignment(center);
 				}
 			}
 		}
@@ -239,26 +239,26 @@ statusbar normal// Standard Doom Status bar
 	
 	//[Samu] Ranks
 	inInventory HUD_Rank{
-		inInventory HUD_Rank, 20 drawString Confont, ORANGE, "Ult. Commander",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 19 drawString Confont, ORANGE, "Commander",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 18 drawString Confont, ORANGE, "Colonel Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 17 drawString Confont, ORANGE, "Major Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 16 drawString Confont, ORANGE, "Captain Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 15 drawString Confont, ORANGE, "Lieutenant Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 14 drawString Confont, ORANGE, "Sergeant Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 13 drawString Confont, ORANGE, "Corporal Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 12 drawString Confont, ORANGE, "Specialist Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 11 drawString Confont, ORANGE, "Private Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 10 drawString Confont, ORANGE, "Elite",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 9 drawString Confont, ORANGE, "Colonel",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 8 drawString Confont, ORANGE, "Major",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 7 drawString Confont, ORANGE, "Captain",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 6 drawString Confont, ORANGE, "Lieutenant",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 5 drawString Confont, ORANGE, "Sergeant",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 4 drawString Confont, ORANGE, "Corporal",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 3 drawString Confont, ORANGE, "Specialist",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 2 drawString Confont, ORANGE, "Private",  400, 540, 0, alignment(Center);
-		else inInventory HUD_Rank, 1 drawString Confont, ORANGE, "Rookie",  400, 540, 0, alignment(Center);
+		inInventory HUD_Rank, 20 drawString SMALLFNT, ORANGE, "Ult. Commander",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 19 drawString SMALLFNT, ORANGE, "Commander",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 18 drawString SMALLFNT, ORANGE, "Colonel Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 17 drawString SMALLFNT, ORANGE, "Major Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 16 drawString SMALLFNT, ORANGE, "Captain Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 15 drawString SMALLFNT, ORANGE, "Lieutenant Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 14 drawString SMALLFNT, ORANGE, "Sergeant Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 13 drawString SMALLFNT, ORANGE, "Corporal Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 12 drawString SMALLFNT, ORANGE, "Specialist Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 11 drawString SMALLFNT, ORANGE, "Private Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 10 drawString SMALLFNT, ORANGE, "Elite",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 9 drawString SMALLFNT, ORANGE, "Colonel",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 8 drawString SMALLFNT, ORANGE, "Major",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 7 drawString SMALLFNT, ORANGE, "Captain",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 6 drawString SMALLFNT, ORANGE, "Lieutenant",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 5 drawString SMALLFNT, ORANGE, "Sergeant",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 4 drawString SMALLFNT, ORANGE, "Corporal",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 3 drawString SMALLFNT, ORANGE, "Specialist",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 2 drawString SMALLFNT, ORANGE, "Private",  400, 540, 0, alignment(Center);
+		else inInventory HUD_Rank, 1 drawString SMALLFNT, ORANGE, "Rookie",  400, 540, 0, alignment(Center);
 
 		
 	}

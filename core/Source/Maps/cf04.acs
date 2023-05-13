@@ -93,7 +93,7 @@ script 11 (void)
 	tank_used = true;
 	thing_remove(11);
     // welcome message
-    setfont("CONFONT");
+    setfont("SMALLFNT");
     hudmessage(s:"Give em hell!"; 0, 0, 0, 0.5, 0.5, 6.0);
     
     // change flags
@@ -139,7 +139,7 @@ script 11 (void)
        setweapon("TankGun");
         
         // display tank health
-        setfont("CONFONT");
+        setfont("SMALLFNT");
         hudmessage(s:"Armor: ", d:getactorproperty(0, APROP_HEALTH) - 1000; 0, 202, CR_BLUE, 128.1, 300.1, 1.0);
         
         // destroyed?

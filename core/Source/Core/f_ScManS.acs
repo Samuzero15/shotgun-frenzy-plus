@@ -76,15 +76,15 @@ script 100 OPEN
 
         // print centerscreen message
         sethudsize(800, 600, 0);
-        setfont("STATBIGS");
+        setfont("DBIGFONT");
         if (f_SurvivalLastLevel == m_SurvivalWave) {
         	hudmessage(s:"FINAL WAVE"; 2, 0, cr_red, 400.0, 200.0, 5.0); 
-            setfont("CONFONT");
+            setfont("SMALLFNT");
             hudmessage(s:"Final Wave", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
         }
         else {
         	hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 0, cr_red, 400.0, 200.0, 5.0);
-            setfont("CONFONT");
+            setfont("SMALLFNT");
             hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
         }
         g_MonstersLeft = 0;

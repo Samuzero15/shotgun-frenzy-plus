@@ -63,7 +63,7 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	int i2;
 	i2 = Label_AddGridOff(grid, x, y, offx, 4.0); 
 	Label_setText	(i2, prop0);
-	Label_setFont	(i2,"StatBigs");
+	Label_setFont	(i2,"DBIGFONT");
 	Label_setAligns	(i2, align, HUD_ALIGN_TOP);
 	Label_setColor	(i2, color);
 	Label_setTag	(i2, pageTag);
@@ -71,18 +71,18 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 	
 	i = Label_DupGridOff(i2, grid, x, y, offx, 16.0); 
 	Label_setText(i, prop2);
-	Label_setFont(i,"Confont");
+	Label_setFont(i,"SMALLFNT");
 	Label_setWrapWidth(i, 250);
 	ArmItmPage_SaveGroup(itemId, 1, i);
 	
 	i = Label_DupGridOff(i2, grid, x, y, offx, 30.0); 
 	Label_setText(i, prop3);
-	Label_setFont(i,"Confont");
+	Label_setFont(i,"SMALLFNT");
 	Label_setColor(i, CR_GREEN);
 	ArmItmPage_SaveGroup(itemId, 2, i);
 	
 	i = Label_DupGridOff(i2, grid, x, y, 16.0, 30.0); 
-	Label_setFont(i,"Confont");
+	Label_setFont(i,"SMALLFNT");
 	Label_setText(i, prop4);
 	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
 	ArmItmPage_SaveGroup(itemId, 3, i);

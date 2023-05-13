@@ -188,7 +188,7 @@ function void InitListUpPage(int pageTag){
 	//		Title: Slot[2].
 	i = Label_Add(320.0, 60.0); 
 	Label_setText(i, "Standard Set");
-	Label_setFont(i,"StatBigs");
+	Label_setFont(i,"DBIGFONT");
 	Label_setTag (i, pagetag);
 	listup_vars[2] = i;
 	
@@ -199,7 +199,7 @@ function void InitListUpPage(int pageTag){
 	
 	// 		Notification 2 if no weapons. Slot[9]
 	i = Label_Dup(i, Vars_Mid_Wid(), Vars_Mid_Hei());
-	Label_setFont(i,"confont");
+	Label_setFont(i,"SMALLFNT");
 	Label_setText(i, "\n\n\n\nEither you upgraded all your guns, or you don't have the basic ones. \n                         Try it next time...");
 	listup_vars[9] = i;
 	
@@ -243,7 +243,7 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 	
 	title = Label_AddCardOff(layout, 1, 90.0, 0.0); 
 	Label_setText			(title,wepname);
-	Label_setFont			(title,"StatBigs");
+	Label_setFont			(title,"DBIGFONT");
 	Label_setTag			(title, pagetag);
 	Label_setShow			(title, false);
 	Label_setAligns			(title, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
@@ -257,7 +257,7 @@ function void ListUpPage_AddWeaponToUp(int weapon){
 	
 	desc = Label_DupCardOff	(title, layout, 1, 90.0, 12.0); 
 	Label_setText			(desc,"Hover to check the possible upgrades.");
-	Label_setFont			(desc,"Confont");
+	Label_setFont			(desc,"SMALLFNT");
 	Label_setWrapWidth		(desc, 400);
 	ListUpPage_SaveGroup(weapon, 2, desc);
 	

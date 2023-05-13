@@ -42,7 +42,7 @@ function str StrSfPfInt(str suffix, int value, int prefix){
 	return StrAdd(StrAddInt(suffix, value),prefix);
 }
 
-// Font measures for teh STATBIGS Font. (By jimmy of coruse :D)
+// Font measures for teh DBIGFONT Font. (By jimmy of coruse :D)
 
 function int StringWidth(str wut){
 	int res = 0;

@@ -117,7 +117,7 @@ script 17 (int modifier){
 		toggleIndicators(x4health, 11);
 	}
 	
-	SetFont("Confont");
+	SetFont("SMALLFNT");
 	HudMessage(s:msg; HUDMSG_FADEOUT, 2,  CR_WHITE, 0.5,0.75, 1.0, 0.5);
 	
 }
@@ -318,7 +318,7 @@ script 20 (int placeid){
 		case 0: msg = "Monster Spawner"; break;
 		case 1: msg = "Monster Randomizer"; break;
 	}
-	SetFont("STATBIGS");
+	SetFont("DBIGFONT");
 	HudMessage(s:msg; HUDMSG_FADEOUT, 1,  CR_WHITE, 0.5,0.8, 2.0, 0.5);
 }
 
