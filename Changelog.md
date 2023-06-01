@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (18 / 5 -  1 / 6 / 2023) [Panels, constant effects delays, and Readme edit]
+	*) Moved the custom monster set to a dedicated folder for addons, called addons. Duh.
+	*) The readme.md has been updated, with some more clearer build instructions.
+	*) Now the altered states, like burning or shocked, and the constant scripts for the turrets, like regeneration intervals will start off with a small delay, just to reduce the packet consumption online.
+	!*) Now samuterm is no longger limited to execute scripts with arguments with the 256 byte limitations.
+	!*) Panels in samu-terminal! Finally! (Expect an ammo/health terminal remake soon :>)
+
 #### (13 / 5 / 2023) [Main menu, f1 screens and fonts]
 	*) Smallfont is now replaced with the confont graphics.
 	*) Bigfont now it is replaced by the Statbigs

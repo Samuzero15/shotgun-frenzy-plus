@@ -65,4 +65,8 @@ WINFONT
 	   G WP7
 	   H WP8
 	   I WP9
+	   J WP10
+	   K WP11
+	   L WP12
+	   M WP13
 }

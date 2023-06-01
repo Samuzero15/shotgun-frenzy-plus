@@ -11,6 +11,7 @@ function void SamuTerm_Input(int play){
 		//hudmessage(s:"Waiting..."; HUDMSG_PLAIN, 0, 0, 0.5, 0.5, 1.0);
 		return;
 	}
+
 	if(PlayerKeyDown(play, FIRE1) && PlayerKeyPressed(play, FIRE1)){
 		if(!GetPromptState())
 			CheckClick();
@@ -23,7 +24,7 @@ function void SamuTerm_Input(int play){
 }
 
 function void CheckPromptClick(void){
-	int rect, i = 0;
+	int rect;
 	bool inputDone = false;
 	
 	inputDone = ExecuteOnClick_IBtn(prompt_ok);
@@ -38,15 +39,27 @@ function void CheckPromptClick(void){
 function bool ExecuteOnClick_IBtn(int i){
 	int sucess = false;
 	int rect =  ImgButton_getRect(i);
-	if(RectIsClicked(rect,FIRE1) && ImgButton_getShow(i) != ST_Disabled){
-		SamuTerm_CallOpExecute 
-			(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
-			ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
-		localAmbientSound("SamuTerm/Select",127);
-		sucess = true;
+	int panel = ImgButton_getParent(i);
+	if(ImgButton_getShow(i) != ST_Disabled){
+		
+		if(panel != -1){
+			//log(s:"click!");
+			if(Panel_ImgBtnIsClicked(panel, i, FIRE1) || (GetPromptState() && RectIsClicked(rect,FIRE1))){
+				SamuTerm_CallOpExecute 
+				(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
+				ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
+				localAmbientSound("SamuTerm/Select",127);
+				sucess = true;
+			}
+		}else if(RectIsClicked(rect,FIRE1)){
+			SamuTerm_CallOpExecute 
+				(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
+				ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
+			localAmbientSound("SamuTerm/Select",127);
+			sucess = true;
+		}
 	}
 	return sucess;
-	
 }
 
 function bool ExecuteOnHover_IBtn(int i){
@@ -66,14 +79,27 @@ function bool ExecuteOnHover_IBtn(int i){
 function bool ExecuteOnClick_sBtn(int i){
 	int sucess = false;
 	int rect = StrButton_getRect(i);
-	if(RectIsClicked(rect,FIRE1) && StrButton_getShow(i) != ST_Disabled){
-		SamuTerm_CallOpExecute 
-			(StrButton_getExecute(i), StrButton_getExeArg1(i),  
-			StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
-		//log(s:"You clicked a string button!");
-		localAmbientSound("SamuTerm/Select",127);
-		sucess = true;
+	int panel = StrButton_getParent(i);
+	if(StrButton_getShow(i) != ST_Disabled){
+		if(panel != -1){
+			//log(s:"click!");
+			if(Panel_StrBtnIsClicked(panel, i, FIRE1)){
+				SamuTerm_CallOpExecute 
+				(StrButton_getExecute(i), StrButton_getExeArg1(i),  
+				StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
+				localAmbientSound("SamuTerm/Select",127);
+				sucess = true;
+			}
+		}else if(RectIsClicked(rect,FIRE1)){
+			SamuTerm_CallOpExecute 
+				(StrButton_getExecute(i), StrButton_getExeArg1(i),  
+				StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
+			//log(s:"You clicked a string button!");
+			localAmbientSound("SamuTerm/Select",127);
+			sucess = true;
+		}
 	}
+		
 	return sucess;
 	
 }
@@ -91,7 +117,7 @@ function void CheckClick(void){
 }
 
 function void CheckHover(void){
-	int rect;
+	int rect, panel, i;
 	bool inputDone = false;
 	
 	bool nowHover = false;
@@ -99,21 +125,43 @@ function void CheckHover(void){
 	comphover = -1;
 	//log(s:"No Change. ", d:nowHover);
 	
-	for(int j = 0; j < comp_count[STCOMP_IBTN] && !inputDone; j++){
-		rect = ImgButton_getRect(j);
-		if(RectIsHovered(rect) && ImgButton_getShow(j) != ST_Disabled){
-			ExecuteOnHover_IBtn(j);
-			comphover = j;
-			inputDone = true;
-			break;
+	for(i = 0; i < comp_count[STCOMP_IBTN] && !inputDone; i++){
+		if(ImgButton_getShow(i) != ST_Disabled){
+			rect = ImgButton_getRect(i);
+			panel = ImgButton_GetParent(i);
+			if(panel != -1){
+				if(Panel_ImgBtnIsHovered(panel, i)){
+					ExecuteOnHover_IBtn(i);
+					comphover = i;
+					inputDone = true;
+					break;
+				}
+			} else {
+				if(RectIsHovered(rect)){
+					ExecuteOnHover_IBtn(i);
+					comphover = i;
+					inputDone = true;
+					break;
+				}
+			}
 		}
 	}
-	for(int i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
-		rect = StrButton_getRect(i);
-		if(RectIsHovered(rect) && StrButton_getShow(i) != ST_Disabled){
-			comphover = i;
-			inputDone = true;
-			break;
+	for(i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
+		if(StrButton_getShow(i) != ST_Disabled){
+			rect = StrButton_getRect(i);
+			panel = StrButton_GetParent(i);
+			if(panel != -1){
+				if(Panel_StrBtnIsHovered(panel, i)){
+					comphover = i;
+					inputDone = true;
+					break;
+				}
+				
+			} else if (RectIsHovered(rect)){
+				comphover = i;
+				inputDone = true;
+				break;
+			}
 		}
 	}
 	if(lasthover != comphover && (comphover != -1))

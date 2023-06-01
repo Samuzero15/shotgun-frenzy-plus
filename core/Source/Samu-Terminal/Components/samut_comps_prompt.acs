@@ -28,18 +28,21 @@ function void Prompt_Initialize (void){
 		
 	ImgButton_SetProperties(prompt_ok, "BTNOK", "Okay",false, STEXE_OKAY);
 	ImgButton_setHudID(prompt_ok,ST_HID_PROMPT_BTNOK);
+	ImgButton_setHoverImage(prompt_ok, "btnhov");
 	ImgButton_setShow(prompt_ok, false);
 
 	prompt_yes = ImgButton_Add_P(
 		-32.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
 		
 	ImgButton_SetProperties(prompt_yes, "BTNYES", "Accept",false, STEXE_YES);
+	ImgButton_setHoverImage(prompt_yes, "btnhov");
 	ImgButton_setHudID(prompt_yes, ST_HID_PROMPT_BTNYES);
 	
 	
 	prompt_no = ImgButton_Add_P(
 		32.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
 	ImgButton_SetProperties(prompt_no, "BTNNO", "Decline",false, STEXE_NO);
+	ImgButton_setHoverImage(prompt_no, "btnhov");
 	ImgButton_setHudID(prompt_no,ST_HID_PROMPT_BTNNO);
 	
 	prompt_label = Label_Add_P 
@@ -50,6 +53,7 @@ function void Prompt_Initialize (void){
 	Label_SetShow(prompt_label, true);
 	Label_setHudID(prompt_label,ST_HID_PROMPT_LBL);
 	Label_setTag(prompt_label,-9999);
+	Label_setWrapWidth(prompt_label, (fw-86.0)>>16);
 	
 	Prompt_ResetOptions();
 	
@@ -96,12 +100,45 @@ function void Prompt_Resize(int w, int h){
 	SetRectSize(getPromptRect(), fw, fh);
 	
 	//print(s:"After reposition: ",f:getPromptX());
-	StrButton_GenerateBack(w, h);
-	setPromptBack(tmp[2]);
+	Prompt_GenerateBack(w, h);
 	AdjustImgButton_P(prompt_yes,-32.0, 0.0, ST_COMPALIGN_South, getPromptRect());
 	AdjustImgButton_P(prompt_no,32.0, 0.0, ST_COMPALIGN_South, getPromptRect());
 	AdjustImgButton_P(prompt_ok, 0.0, 0.0, ST_COMPALIGN_South, getPromptRect());
 	AdjustLabel_P(prompt_label, 0.0, 0.0, ST_COMPALIGN_North, getPromptRect());
+}
+
+function void Prompt_GenerateBack(int w, int h){
+	str btnstring = "A";
+	
+	//print(s:"w: ", d:w, s:", h: ", d:h);
+	
+	if(w != 0){
+		for(int j = 0; j < w; j++){
+			btnstring = StrAdd(btnstring, "B");
+		}
+	}
+	btnstring = StrAdd(btnstring, "C");
+	
+	if(w != 0 && h != 0){
+		for(int y = 0; y < h; y++){
+		btnstring = StrAdd(btnstring, "\nD");
+			for(int x = 0; x < w; x++){
+				btnstring = StrAdd(btnstring, "E");
+			}
+		btnstring = StrAdd(btnstring, "F");
+		}
+	}
+	
+	btnstring = StrAdd(btnstring, "\nG");
+	if(w != 0){
+		for(int k = 0; k < w; k++){
+			btnstring = StrAdd(btnstring, "H");
+		}
+	}
+
+	btnstring = StrAdd(btnstring, "I");
+	
+	setPromptBack(btnstring);
 }
 
 function void Prompt_Ask(str title, str msg, str color){
@@ -148,7 +185,7 @@ function void Prompt_Notify(str title, str msg, str color){
 
 function void Prompt_SetProperties (str title,int color,int w,int h, bool state){
 
-		StrButton_generateBack(w, h);
+		Prompt_GenerateBack(w, h);
 		setPromptTitle(title);
 		setPromptState(state);
 		setPromptWindowId(1);

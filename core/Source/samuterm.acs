@@ -3,7 +3,7 @@
 // Includes:
 #include "zcommon.acs"
 
-#define ACSUTILS_RECTLIB_USERVARS 10 // user defined
+#define ACSUTILS_RECTLIB_USERVARS 30 // user defined
 
 //////SF Stuff////////
 #import "f_IntDB.acs"
@@ -40,6 +40,7 @@ Script "SamuTerminal" (int homeTag, int hidestatusbar){
 	if(TerminalInUse()) Terminate;
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
+	SetInventory("SamuTInv_Action2Key", 0);
 	SetInventory("SamuTInv_HideSBar", hidestatusbar);
 	//print(s:"Statusbar hidden?: ", d:hidestatusbar);
 }	

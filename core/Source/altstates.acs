@@ -17,6 +17,7 @@ script "AltState_Burn" (void)
 	int y = GetActorY(0);
 	int z = GetActorZ(0) + 16.0;
 	int r = 32.0;
+	delay(random(0,17));
 	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_BurnTimer")){
 		//SetActorState (0, "Pain");
 		// Spawn a fire to harm itself.
@@ -54,6 +55,7 @@ script "AltState_Stun" (void)
 
 	int ori_speed = GetActorProperty(0, APROP_SPEED);
 	SetActorProperty(0, APROP_SPEED, 0);
+	delay(random(0,17));
 	while(GetActorProperty(0, APROP_HEALTH) >= 1 && CheckInventory("AltState_StunTimer")){
 		//SetActorState (0, "Pain");
 		Thing_Damage(0, 1, 0);

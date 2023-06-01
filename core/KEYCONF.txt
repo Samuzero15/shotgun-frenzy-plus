@@ -2,22 +2,38 @@ clearplayerclasses
 addplayerclass FrenzyPlayer
 
 addkeysection "Shotgun Frenzy Item Hotkeys" sfItemHotkeys
+
 addmenukey "Use Godsphere" usegodsphere
 alias usegodsphere "use Inventory_Godsphere"
-addmenukey "Use Berserk 2.0" useberserk2
+defaultbind L usegodsphere
+
+addmenukey "Use Quad Damage" useberserk2
 alias useberserk2 "use Inventory_Berserk2"
+defaultbind K useberserk2
+
 addmenukey "Use Soulsphere" usesoulsphere
 alias usesoulsphere "use Inventory_Soulsphere"
+defaultbind H usesoulsphere
+
 addmenukey "Use Megasphere" usemegasphere
 alias usemegasphere "use Inventory_Megasphere"
+defaultbind J usemegasphere
+
 addmenukey "Use Stimpack" usestimpack
 alias usestimpack "use Inventory_Stimpack"
+defaultbind Q usestimpack
+
 addmenukey "Use Ammosphere" usebackpack
 alias usebackpack "use Inventory_AmmoGiver"
+defaultbind M usebackpack
+
 addmenukey "Use Hand Grenade" usegrenade
 alias usegrenade "use Inventory_HandGrenade"
+defaultbind G usegrenade
+
 addmenukey "Use Hell Trigger" usehelltrigger
 alias usehelltrigger "use Inventory_HellTrigger"
+defaultbind N usehelltrigger
 
 alias sfp_dropcredits "pukename SFPlus_DropCredits %1"
 alias sfp_ccmdlist "pukename SFPlus_CCmdList"

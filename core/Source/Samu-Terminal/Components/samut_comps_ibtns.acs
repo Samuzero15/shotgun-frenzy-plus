@@ -55,7 +55,7 @@ function int ImgButton_AddCardOff(int grid, int cell, int w, int h, int offx, in
 function int ImgButton_Dup(int x, int y, int w, int h){
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, ImgButton_getRect(id));
 	}
 	
 	return id;
@@ -67,7 +67,7 @@ function int ImgButton_DupGrid(int grid, int row, int col, int w, int h){
 	
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -78,7 +78,7 @@ function int ImgButton_DupCard(int grid, int cell, int w, int h){
 	
 	int id = Component_Allocate(STCOMP_IBTN, x, y, w, h);
 	if(id != -1){
-		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -89,7 +89,7 @@ function int ImgButton_DupGridOff(int grid, int row, int col, int w, int h, int 
 	
 	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
 	if(id != -1){
-		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -100,7 +100,7 @@ function int ImgButton_DupCardOff(int grid, int cell, int w, int h, int offx, in
 	
 	int id = Component_Allocate(STCOMP_IBTN, x + offx, y + offy, w, h);
 	if(id != -1){
-		Component_Load(id, STCOMP_IBTN, ImgButton_getRect(id));
+		Component_Load(id, ImgButton_getRect(id));
 	}
 	return id;
 }
@@ -251,47 +251,44 @@ function void ImgButton_SetProperties(int i,
 		ImgButton_setExecute(i, exe);	
 }
 
-function void ImgButtonProp_Parse(int i, str name,str value){
-
-	//Parsea todos los nombres de propiedades de un componente.
-	if(StrIEquals(name,  "image")){
-		ImgButton_setImage(i,      Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "hoverimage")){
-		ImgButton_setHoverImage(i, Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "tag")){
-		ImgButton_setTag(i,        Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "execute")){
-		ImgButton_setExecute(i,    Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "exe_a1")){
-		ImgButton_setArgs(i, 
-			Prop_Value(value),
-			ImgButton_getExeArg2(i),
-			ImgButton_getExeArg3(i));
-		return;
-	}if(StrIEquals(name, "exe_a2")){
-		ImgButton_setArgs(i, 
-			ImgButton_getExeArg1(i),
-			Prop_Value(value),
-			ImgButton_getExeArg3(i));
-		return;
-	}if(StrIEquals(name, "exe_a3")){
-		ImgButton_setArgs(i, 
-			ImgButton_getExeArg1(i),
-			ImgButton_getExeArg2(i),
-			Prop_Value(value));
-		return;
+function int ImgButton_AddToPanelAbs (int w, int h, int panel, int x, int y) {return ImgButton_AddToPanelEX (w, h, panel, -1, x, y, true);}
+function int ImgButton_AddToPanelOff (int w, int h, int panel, int offx, int offy) {return ImgButton_AddToPanelEX (w, h, panel, -1, offx, offy, false);}
+function int ImgButton_AddToPanelPos (int w, int h, int panel, int pos) 				{return ImgButton_AddToPanelEX (w, h, panel, pos, 0.0, 0.0, false);}
+function int ImgButton_AddToPanel (int w, int h, int panel) 							{return ImgButton_AddToPanelEX (w, h, panel, -1, 0.0, 0.0, false);}
+function int ImgButton_AddToPanelEX (int w, int h, int panel, int pos, int offx, int offy, int absolute){
+	int id = Component_Allocate(STCOMP_IBTN, 0.0, 0.0, w, h);
+	if(id != -1){
+		ImgButton_SetDefaultProps(id);
+		ImgButton_SetParent(id, panel);
+		
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_IBTN;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
+		Panel_AddCompEx(panel, ImgButton_getRect(id), pos, offx, offy, absolute);
+		//ImgButton_setAligns(id,alX,alY);
 	}
+	return id;
 }
 
-function void ImgButton_setProps(int id, str props){
-	Parser_Read(props);
-	
-	for(int j = 0; j < propb_top; j++){
-		ImgButtonProp_Parse(id, propb[j][0], propb[j][1]);
+function int ImgButton_DupToPanelAbs (int copy, int panel, int x, int y) {return ImgButton_DupToPanelEX (copy, panel, -1, x, y, true);}
+function int ImgButton_DupToPanelOff (int copy, int panel, int offx, int offy) {return ImgButton_DupToPanelEX (copy, panel, -1, offx, offy, false);}
+function int ImgButton_DupToPanelPos (int copy, int panel, int pos) 			  {return ImgButton_DupToPanelEX (copy, panel, pos, 0.0, 0.0, false);}
+function int ImgButton_DupToPanel (int copy, int panel) 						  {return ImgButton_DupToPanelEX (copy, panel, -1, 0.0, 0.0, false);}
+function int ImgButton_DupToPanelEX(int copy, int panel, int pos, int offx, int offy, int absolute){
+	int w = ImgButton_getWidth(copy);
+	int h = ImgButton_getHeight(copy);
+	int id = Component_Allocate(STCOMP_IBTN, 0.0, 0.0, w, h);
+	if(id != -1){
+		Component_Save(ImgButton_getRect(copy));
+		Component_Load(id, ImgButton_getRect(id));
+		ImgButton_SetParent(id, panel);
+
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_IBTN;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
+		Panel_AddCompEx(panel, ImgButton_getRect(id), pos, offx, offy, absolute);
 	}
-	
+	return id;
 }

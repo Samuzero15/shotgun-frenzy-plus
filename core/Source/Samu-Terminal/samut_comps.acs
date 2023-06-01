@@ -14,6 +14,7 @@
 #include "samut_comps_toast.acs"
 #include "samut_comps_prompt.acs"
 #include "samut_comps_cursor.acs"
+#include "samut_comps_panels.acs"
 
 
 function void SamuTerm_InitComps(void){
@@ -45,9 +46,11 @@ function void Component_Save(int comprect){
 	}
 }
 
-function void Component_Load(int id, int type, int rect){
+function void Component_Load(int id, int rect){
+	int type = 0;
 	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
 		SetRectUserData(rect, i, comp_propsave[i]);
+		if(i == 0) type = comp_propsave[i];
 	}
 
 	switch(type) {// Hud Id is overriden. Fix that with a redefining.
@@ -62,6 +65,7 @@ function int Component_Allocate(int comptype, int x, int y, int w, int h){
 	int id = comp_count[comptype];
 	if(id < ST_NCOMPS){
 		int rect = RectCreate(x,y,w,h);
+		SetRectUserData(rect, ST_CPROP0, comptype); // Remember the type of component here.
 		switch(comptype){
 			case STCOMP_IBTN:	ImgButton_setRect(id, rect); break;
 			case STCOMP_SBTN:	StrButton_setRect(id, rect); break;

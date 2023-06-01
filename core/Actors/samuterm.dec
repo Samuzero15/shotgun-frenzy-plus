@@ -4,6 +4,7 @@ Actor SamuTInv_Cooldown : Boolean {}
 Actor SamuTInv_LockInput : Boolean {}
 
 Actor SamuTInv_ActionKey : Integer {}
+Actor SamuTInv_Action2Key : Integer {}
 Actor SamuTInv_HideSBar : Boolean {}
 
 Actor p_Money : Integer {}

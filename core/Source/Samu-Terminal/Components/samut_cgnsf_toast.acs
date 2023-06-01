@@ -15,15 +15,15 @@ function int getToastY(void){
 }
 
 function str getToastString(void){ 
-	return RectGetUserData(getToastRect(), ST_CPROP1);
-}
-
-function int getToastColor(void){ 
 	return RectGetUserData(getToastRect(), ST_CPROP2);
 }
 
-function str getToastBack(void){ 
+function int getToastColor(void){ 
 	return RectGetUserData(getToastRect(), ST_CPROP3);
+}
+
+function str getToastBack(void){ 
+	return RectGetUserData(getToastRect(), ST_CPROP4);
 }
 
 ///////////////////////////////////////
@@ -39,13 +39,13 @@ function void Toast_setPosition(int x, int y){
 }
 
 function void setToastString(str string){ 
-	SetRectUserData(getToastRect(), ST_CPROP1, string);
+	SetRectUserData(getToastRect(), ST_CPROP2, string);
 }
 
 function void setToastColor(int color){ 
-	SetRectUserData(getToastRect(), ST_CPROP2, color);
+	SetRectUserData(getToastRect(), ST_CPROP3, color);
 }
 
 function void setToastBack(str back){ 
-	SetRectUserData(getToastRect(), ST_CPROP3, back);
+	SetRectUserData(getToastRect(), ST_CPROP4, back);
 }

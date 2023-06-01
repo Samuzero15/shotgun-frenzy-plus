@@ -1,0 +1,27 @@
+[Enu default]
+
+FP_PROTIP01 = "Armors will deplete first than your health.";
+FP_PROTIP02 = "Just don't get hit.";
+FP_PROTIP03 = "Turrets are great for defending positions, and the more, the better!";
+FP_PROTIP04 = "Rethreat is a strategy. Learn when to leave.";
+FP_PROTIP05 = "Your Boomstick works well in early and mid game when upgraded.";
+FP_PROTIP06 = "Buying weapons or upgrades will increase the monster pressure level. Except for stimpack upgrades.";
+FP_PROTIP07 = "Boomstick and Berettas will increase their damage/pellets with the rank.";
+FP_PROTIP08 = "Going for melee? Combat Boomstick, Spear-Taser Railgun & Flamethrower are great for close encounters.";
+FP_PROTIP09 = "Dispensers effects can be stacked up.";
+FP_PROTIP10 = "Don't forget to step in a restock pad.";
+FP_PROTIP11 = "Need some extra ammo cap? Take the Personal Backack with you.";
+FP_PROTIP12 = "After using a mech, they need to stay in maintanance in order to repair the damages. Take care of your ride.";
+FP_PROTIP13 = "First time in this mod? Press F1!";
+FP_PROTIP14 = "Protect the cores!, after the game timer is over they will reward you for your services!";
+FP_PROTIP15 = "Kill-Streaks are always active, so you can catch a breath for a second and keep increasing it!";
+FP_PROTIP16 = "The first waves are easy to handle, don't die too early in order to get a pair of early game UPs.";
+FP_PROTIP17 = "UPs are used on upgrading your weapons, mech, yourself and the rune tiers.";
+FP_PROTIP18 = "Credits are used on buying weapon packs, consumables like powerups and deployables, and upgrading your stimpacks.";
+FP_PROTIP19 = "Powerups can stack, do not hesitate on using 2 powerups at the same time.";
+FP_PROTIP20 = "Don't like a weapon? Then recycle it, and use the credits for a better weapon!";
+FP_PROTIP21 = "Megaspheres also grant blue armors, and remember, armor depletes first than health.";
+FP_PROTIP22 = "An use of the Hell-trigger powerup in the right time will let you fire a few projectiles for free.";
+FP_PROTIP23 = "Champions may drop runes, the higher class the monster is, the higher tier the rune spawns";
+FP_PROTIP24 = "Feeling supportive? A good supplier and the patcher gun will help.";
+FP_PROTIP25 = "Patcher and Suppliers can also grant experience! Slower than killing monster tho, but it's a consistent way to farm exp.";

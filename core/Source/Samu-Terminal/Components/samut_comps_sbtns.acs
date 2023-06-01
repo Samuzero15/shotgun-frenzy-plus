@@ -21,107 +21,86 @@ function int StrButton_Add(int x, int y, str string){
 
 function int StrButton_AddMid(int x, int y, str string){
 	StrButton_Setup (string);
-
-	int id = Component_Allocate(STCOMP_SBTN,
-		x - fixedDiv(tmp[0], 2.0) - 2.0, y - fixedDiv(tmp[1], 2.0) - 2.0, tmp[0], tmp[1]);
-	if(id != -1){
-		StrButton_SetDefaultProps(id);
-		StrButton_setText(id,string);
-		StrButton_setBack(id,tmp[2]);
-	}
-	
-	return id;
+	return StrButton_Add(x - (fixedDiv(tmp[0], 2.0) - 2.0), y - (fixedDiv(tmp[1], 2.0) - 2.0), string);
 }
 
 function int StrButton_AddGrid(int grid, int row, int col,str string){
-	StrButton_Setup (string);
-	
-	int x = Grid_GetX(grid, row, col);
-	int y = Grid_GetY(grid, row, col);
-	
-	int id = Component_Allocate(STCOMP_SBTN, x, y, tmp[0], tmp[1]);
-	if(id != -1){
-		StrButton_SetDefaultProps(id);
-		StrButton_setText(id,string);
-		StrButton_setBack(id,tmp[2]);
-	}
-	return id;
+	return StrButton_Add(Grid_GetX(grid, row, col), Grid_GetY(grid, row, col), string);
 }
 
 function int StrButton_AddCard(int card, int cell, str string){
-	StrButton_Setup (string);
-
-	int x = Card_GetX(card, cell);
-	int y = Card_GetY(card, cell);
-	
-	int id = Component_Allocate(STCOMP_SBTN, x, y, tmp[0], tmp[1]);
-	if(id != -1){
-		StrButton_SetDefaultProps(id);
-		StrButton_setText(id,string);
-		StrButton_setBack(id,tmp[2]);
-	}
-	return id;
+	return StrButton_Add(Card_GetX(card, cell), Card_GetY(card, cell), string);
 }
 
 function int StrButton_AddCardOff(int card, int cell, str string, int offx, int offy){
-	StrButton_Setup (string);
-
-	int x = Card_GetX(card, cell);
-	int y = Card_GetY(card, cell);
-	
-	int id = Component_Allocate(STCOMP_SBTN, x + offx, y + offy, tmp[0], tmp[1]);
-	if(id != -1){
-		StrButton_SetDefaultProps(id);
-		StrButton_setText(id,string);
-		StrButton_setBack(id,tmp[2]);
-	}
-	return id;
+	return StrButton_Add(Card_GetX(card, cell) + offx, Card_GetY(card, cell) + offy, string);
 }
 
 function int StrButton_AddGridOff(int card, int row, int col, str string, int offx, int offy){
-	StrButton_Setup (string);
+	return StrButton_Add(Grid_GetX(card, row, col) + offx, Grid_GetY(card, row, col) + offy, string);
+}
 
-	int x = Grid_GetX(card, row, col);
-	int y = Grid_GetY(card, row, col);
-	
-	int id = Component_Allocate(STCOMP_SBTN, x + offx, y + offy, tmp[0], tmp[1]);
+function int StrButton_Dup(int copy, int x, int y){
+	Component_Save(StrButton_getRect(copy));
+	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
 	if(id != -1){
+		Component_Load(id, StrButton_getRect(id));
+		StrButton_Setup(StrButton_getText(id));
+		StrButton_SetDimensions(id, tmp[0], tmp[1]);
+	}
+	return id;
+}
+
+function int StrButton_DupCard(int copy, int grid, int cell){
+	return StrButton_Dup(copy, Card_GetX(grid, cell), Card_GetY(grid, cell));
+}
+
+function int StrButton_AddToPanelAbs (str string, int panel, int x, int y) {return StrButton_AddToPanelEX (string, panel, -1, x, y, true);}
+function int StrButton_AddToPanelOff (str string, int panel, int offx, int offy) {return StrButton_AddToPanelEX (string, panel, -1, offx, offy, false);}
+function int StrButton_AddToPanelPos (str string, int panel, int pos) 		{return StrButton_AddToPanelEX (string, panel, pos, 0.0, 0.0, false);}
+function int StrButton_AddToPanel (str string, int panel) 					{return StrButton_AddToPanelEX (string, panel, -1, 0.0, 0.0, false);}
+function int StrButton_AddToPanelEX (str string, int panel, int pos, int offx, int offy, bool absolute){
+	int id = Component_Allocate(STCOMP_SBTN, 0.0, 0.0, 0.0, 0.0);
+	if(id != -1){
+		StrButton_Setup(string);
 		StrButton_SetDefaultProps(id);
+		StrButton_SetDimensions(id, tmp[0], tmp[1]);
+		StrButton_SetBack(id, tmp[2]);
 		StrButton_setText(id,string);
-		StrButton_setBack(id,tmp[2]);
+		StrButton_SetParent(id, panel);
+		
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_SBTN;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
+		Panel_AddCompEx(panel, StrButton_getRect(id), pos, offx, offy, absolute);
+		//StrButton_setAligns(id,alX,alY);
 	}
 	return id;
 }
 
-function int StrButton_Dup(int x, int y){
-	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
+function int StrButton_DupToPanelAbs (int copy, int panel, int x, int y) {return StrButton_DupToPanelEX (copy, panel, -1, x, y, true);}
+function int StrButton_DupToPanelOff (int copy, int panel, int offx, int offy) {return StrButton_DupToPanelEX (copy, panel, -1, offx, offy, false);}
+function int StrButton_DupToPanelPos (int copy, int panel, int pos) 	 {return StrButton_DupToPanelEX (copy, panel, pos, 0.0, 0.0, false);}
+function int StrButton_DupToPanel (int copy, int panel) 				  {return StrButton_DupToPanelEX (copy, panel, -1, 0.0, 0.0, false);}
+function int StrButton_DupToPanelEX(int copy, int panel, int pos, int offx, int offy, bool absolute){
+	Component_Save(StrButton_getRect(copy));
+	int id = Component_Allocate(STCOMP_SBTN, 0.0, 0.0, 0.0, 0.0);
 	if(id != -1){
-		Component_Load(id, STCOMP_SBTN, StrButton_GetRect(id));
-		str text = StrButton_getText(id);
-		StrButton_Setup(text);
+		Component_Load(id, StrButton_getRect(id));
+		StrButton_Setup(StrButton_getText(id));
 		StrButton_SetDimensions(id, tmp[0], tmp[1]);
-		StrButton_SetBack(id, tmp[02]);
-		StrButton_SetText(id, text);
+		StrButton_SetBack(id, tmp[2]);
+		StrButton_SetParent(id, panel);
+
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_SBTN;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
+		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
+		Panel_AddCompEx(panel, StrButton_getRect(id), pos, offx, offy, absolute);
 	}
 	return id;
 }
-
-function int StrButton_DupCard(int grid, int cell){
-	int x = Card_GetX(grid, cell);
-	int y = Card_GetY(grid, cell);
-	
-	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
-	if(id != -1){
-		Component_Load(id, STCOMP_SBTN, StrButton_GetRect(id));
-		str text = StrButton_getText(id);
-		StrButton_Setup(text);
-		StrButton_SetDimensions(id, tmp[0], tmp[1]);
-		StrButton_SetBack(id, tmp[02]);
-		StrButton_SetText(id, text);
-	}
-	return id;
-}
-
 
 function void StrButton_SetPosToGridOff(int i, int grid, int row, int col, int offx, int offy){
 	int x = Grid_GetX(grid, row, col);
@@ -158,6 +137,7 @@ function void StrButton_SetDefaultProps(int i){
 		StrButton_setExeArgs(i,0,0,0);
 		StrButton_setTag(i, -1);
 		StrButton_setHudId(i, ST_HID_SBTNF + i);
+		StrButton_setParent(i, -1);
 }
 
 function void StrButton_SetProperties(int i, 
@@ -172,7 +152,7 @@ function void StrButton_SetProperties(int i,
 function void StrButton_SetTextAdj(int id, str string){
 	StrButton_Setup(string);
 	StrButton_SetDimensions(id, tmp[0], tmp[1]);
-	StrButton_SetBack(id, tmp[02]);
+	StrButton_SetBack(id, tmp[2]);
 	StrButton_SetText(id, string);
 }
 

@@ -219,7 +219,7 @@ script 155 (int l_Category)
     // terminate if not researched
     if (l_Category == 10 && !Tech_IsDone(TECH_GENLAB) || l_Category == 1 && !Tech_IsDone(TECH_ARMORY) || l_Category == 20 && !Tech_IsDone(TECH_MECHFA))        terminate;
     
-	// [Samu] Im making an exeption.
+	// [Samu] I'm making an exeption.
 	// If it's the barricade or the teleporting selection, you can execute the old script.
 	if(l_Category == 51 || l_Category == 52); //print(d:l_Category, s:" This part is still in progress, sorry for the trouble.");
 	else {

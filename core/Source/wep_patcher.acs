@@ -273,6 +273,7 @@ Script "Building_UpgradeStats" (void){
 	int health = GetActorProperty(0, APROP_HEALTH);
 	int heal_factor = 0;
 	int max_health = GetActorProperty(0, APROP_SpawnHealth);
+	delay(random(0,35));
 	while(health >= 1){
 		health = GetActorProperty(0, APROP_HEALTH);
 		if(current_level != GetActorProperty(0, APROP_STAMINA)){ // Upgrade damage and damage factor.

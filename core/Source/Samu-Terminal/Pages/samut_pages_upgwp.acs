@@ -209,11 +209,10 @@ function void InitListUpPage(int pageTag){
 	StrButton_setTag    (i, pagetag);
 	StrButton_SetExecute(i, STEXE_UPGPAGECAT);
 	StrButton_SetExeArgs(i, 0, 0, 0);
-	Component_Save(StrButton_GetRect(i));
 	listup_vars[3] = i;
 	
 	//		Next: Slot[4].
-	i = StrButton_Dup   (148.0, 45.0);
+	i = StrButton_Dup   (i, 148.0, 45.0);
 	StrButton_SetText   (i, ">");
 	StrButton_SetExeArgs(i, 1, 0, 0);
 	listup_vars[4] = i;

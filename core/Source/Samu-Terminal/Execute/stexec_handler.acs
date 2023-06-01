@@ -72,7 +72,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		
 		case STEXE_ShowBuyPage: STExecute_ShowBuyPage(arg1); break;
 		*/
-		
+		case STEXE_PANEL_SCROLL: STExecute_PanelScroll(arg1, arg2, arg3); break;
 		case STEXE_HowKind: STExecute_AYesFun(); break;
 		case STEXE_HowRude: STExecute_ANoFun(); break;
 		case STEXE_YES: STExecute_YesAction(); break;

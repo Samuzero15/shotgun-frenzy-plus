@@ -544,6 +544,7 @@ Script "Turret_States" (int height){
 	Bar_State(bid, hp, max_hp);
 	//Bar_Color(bid, hp, max_hp); 
 	setActorState(sid, Strparam(s:"LV", d:lvl));
+	delay(random(0,35));
 	while (hp > 0){
 		// Health display
 		if(hp != GetActorProperty(0, APROP_HEALTH)){
@@ -568,7 +569,7 @@ Script "Turret_States" (int height){
 }
 
 Script "Building_AggroLoop" (int tid) {
-	delay(5);
+	delay(random(0,17));
 	while(GetActorProperty(0, APROP_HEALTH) >= 1){
 		//log(s:"Aggroing");
 		TakeInventory("Building_GetRange", 0xFFFFFFFF);

@@ -43,7 +43,26 @@ Loading order should be:
 
 ## Build setup
 
-Just run the pack-o-daemon.exe, and press the build and play buttons.
-Adjust the project.ini file to the zandronum path to make the play button work properly.
+To build from git, clone the repo or download the zip it to wherever you want. 
+Open project.json file and edit these lines here. Change these paths acordingly.
+
+    "sourceport_path": "..\\tools\\zandronum\\zandronum.exe", 
+    "pwads_before": [
+        "..\\tools\\pwads\\skulltag_content-3-0-beta01.pk3"
+    ],
+    "pwads_after": [],
+    "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
+
+If you need to compile acs in your own architecture, use 32 or 64 bits in here.
+
+    "acs_compilation": {
+        "type": "acc",
+        "executeable": "..\\tools\\acc\\acc64.exe",
+        "extra_params": ""
+    }
+
+And make sure the `Skip Acs Flag` is disabled in your first build. Check for that flag in the settings button.
+
+Now, Press the build and play buttons when you need them, and there you go!
 
 ## For all of changes made, read the changelog.md file!

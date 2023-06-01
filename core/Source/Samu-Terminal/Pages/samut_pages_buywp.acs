@@ -151,16 +151,15 @@ function void BuyWpnPage_InitCats(int card1){
 		StrButton_setShow (i, false);
 		StrButton_setExecute(i, STEXE_BUYWP_PSHOW);
 		StrButton_setExeArgs(i, 1,0,0);
-		Component_Save(StrButton_getRect(i));
 	buywpn_vars[5] = i;
 	
-	i = StrButton_DupCard(card1, 2);
+	i = StrButton_DupCard(i, card1, 2);
 		StrButton_setColor(i, CR_CYAN);
 		StrButton_setTextAdj(i, " Advanced ");
 		StrButton_setExeArgs(i, 2,0,0);
 	buywpn_vars[6] = i;
 	
-	i = StrButton_DupCard(card1, 3);
+	i = StrButton_DupCard(i, card1, 3);
 		StrButton_setColor(i, CR_ORANGE);
 		StrButton_setTextAdj(i, "Powerguns");
 		StrButton_setExeArgs(i, 3,0,0);
@@ -289,22 +288,21 @@ function void BuyWpnPage_InitPackButtons(int card2){
 	i = StrButton_addCard(card2, 1, " Pack A ");
 	StrButton_setExecute(i, STEXE_BUYWP_PDESC);
 	StrButton_setTag(i, buywpn_vars[3]);
-	Component_Save(StrButton_getRect(i));
 	buywpn_vars[15] = i;
 	
-	i = StrButton_DupCard(card2, 2);
+	i = StrButton_DupCard(i, card2, 2);
 	StrButton_setTextAdj (i, " Pack B ");
 	buywpn_vars[16] = i;
 	
-	i = StrButton_DupCard(card2, 3);
+	i = StrButton_DupCard(i, card2, 3);
 	StrButton_setTextAdj (i, " Pack C ");
 	buywpn_vars[17] = i;
 	
-	i = StrButton_DupCard(card2, 4);
+	i = StrButton_DupCard(i, card2, 4);
 	StrButton_setTextAdj (i, " Pack D ");
 	buywpn_vars[18] = i;
 	
-	i = StrButton_DupCard(card2, 4);
+	i = StrButton_DupCard(i, card2, 4);
 	StrButton_setTextAdj (i, " Pack E ");
 	buywpn_vars[19] = i;
 }

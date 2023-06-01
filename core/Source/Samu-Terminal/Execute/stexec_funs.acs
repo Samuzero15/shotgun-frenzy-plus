@@ -138,3 +138,17 @@ function void STExecute_Open(int taggy){
 	localambientsound("Amy/Welcome", 127);
 	lockPlayer(playernumber());
 }
+
+function void STExecute_PanelScroll(int panel, int scrollx, int scrolly){
+	
+	str text = strparam(s:"Scrolling panel, X: ", f:scrollx, s:", Y: ",f:scrolly);
+	int pan_offx = Panel_GetVirtualOffsetX(panel) + scrollx;
+	int pan_offy = Panel_GetVirtualOffsetY(panel) + scrolly;
+	if(pan_offx <= -Panel_GetVirtualWidth(panel)) pan_offx = -Panel_GetVirtualWidth(panel);
+	if(pan_offx > 0) 						     pan_offx = 0.0;
+	if(pan_offy <= -Panel_GetVirtualHeight(panel)) pan_offy = -Panel_GetVirtualHeight(panel);
+	if(pan_offy > 0) 						      pan_offy = 0.0;
+	Panel_SetVirtualOffset(panel, pan_offx, pan_offy);
+	Panel_UpdateScrollButtons(panel);
+	Toaster_ShowToast(text,CR_CYAN);
+}

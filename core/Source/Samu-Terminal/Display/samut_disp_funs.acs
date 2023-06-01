@@ -48,7 +48,8 @@ function void ShowBackground(void){
 				d:50, s:"iterations.");
 			}else HudDrawBackgroundLoop();
 		}else 
-		*/HudDrawBackground();
+		*/
+	HudDrawBackground();
 	HudPopState();
 }
 

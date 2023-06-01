@@ -52,14 +52,14 @@
             "C:\\Users\\Usuario\\Desktop\\Samu Stuff\\Doom Stuff\\Projects\\shotgun-frenzy-plus\\Changelog.md"
         ],
         "build_flags": [
-            true,
             false,
             false,
+            false,
             true,
             false,
             true,
             true,
-            true
+            false
         ],
         "string_replacer": {
             "strings_to_replace": {

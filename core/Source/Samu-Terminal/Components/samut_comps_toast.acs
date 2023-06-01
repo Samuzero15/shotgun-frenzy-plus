@@ -20,11 +20,8 @@ function void Toaster_ShowToast(str msg, str color){
 
 function void Toaster_SetProps (str string, int color){
 	setToastString(string);
-	
 	Toaster_Setup (string);
-	StrButton_GenerateBack(tmp[0], tmp[1]);
-		setToastColor(color);
-		setToastBack(tmp[2]);
+	setToastColor(color);
 }
 
 function void Toaster_Setup (str string){
@@ -34,6 +31,7 @@ function void Toaster_Setup (str string){
 	int charw = 0;
 	int charh = 0;
 	int chars = 0;
+	str btnstring = "A";
 	string = StripColorCodes(string);
 	for(int i = 0; i < StrLen(string); i++){
 		int c = GetChar(string, i);
@@ -49,8 +47,33 @@ function void Toaster_Setup (str string){
 	}
 	h = (charh/8);
 	if(charh%8 != 0) h++;
+
+	if(w != 0){
+		for(int j = 0; j < w; j++){
+			btnstring = StrAdd(btnstring, "B");
+		}
+	}
+	btnstring = StrAdd(btnstring, "C");
 	
-	tmp[0] = w;
-	tmp[1] = h;
+	if(w != 0 && h != 0){
+		for(int y = 0; y < h; y++){
+		btnstring = StrAdd(btnstring, "\nD");
+			for(int x = 0; x < w; x++){
+				btnstring = StrAdd(btnstring, "E");
+			}
+		btnstring = StrAdd(btnstring, "F");
+		}
+	}
+	
+	btnstring = StrAdd(btnstring, "\nG");
+	if(w != 0){
+		for(int k = 0; k < w; k++){
+			btnstring = StrAdd(btnstring, "H");
+		}
+	}
+
+	btnstring = StrAdd(btnstring, "I");
+	
+	setToastBack(btnstring);
 	
 }

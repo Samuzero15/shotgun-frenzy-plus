@@ -23,16 +23,16 @@ function int getCursorHeight(void){
 }
 
 function str getCursorIcon(void){ 
-	return RectGetUserData(getCursorRect(), ST_CPROP1);
+	return RectGetUserData(getCursorRect(), ST_CPROP2);
 }
 
 /*
 function int getCursorColor(void){ 
-	return RectGetUserData(getCursorRect(), ST_CPROP2);
+	return RectGetUserData(getCursorRect(), ST_CPROP3);
 }
 
 function str getCursorBack(void){ 
-	return RectGetUserData(getCursorRect(), ST_CPROP3);
+	return RectGetUserData(getCursorRect(), ST_CPROP4);
 }*/
 
 ///////////////////////////////////////
@@ -44,13 +44,13 @@ function void setCursorRect(int rect){
 }
 
 function void setCursorIcon(str icon){ 
-	SetRectUserData(getCursorRect(), ST_CPROP1, icon);
+	SetRectUserData(getCursorRect(), ST_CPROP2, icon);
 }
 /*
 function void setCursorColor(int color){ 
-	SetRectUserData(getCursorRect(), ST_CPROP2, color);
+	SetRectUserData(getCursorRect(), ST_CPROP3, color);
 }
 
 function void setCursorBack(str back){ 
-	SetRectUserData(getCursorRect(), ST_CPROP3, back);
+	SetRectUserData(getCursorRect(), ST_CPROP4, back);
 }*/

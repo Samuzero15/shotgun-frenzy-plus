@@ -24,7 +24,7 @@ scratch when you have this?
 -) Multiplayer Support!: Moused GUIs in multiplayer are sacred 
  things in the zandronum community, the only chance to see this
  was in Idiotic LMS. Hopefully, lets wait for more people to get
- the guts to implement this beauty. Also, the badwidth consuming
+ the guts to implement this beauty. Also, the bandwidth consuming
  for the server is almost null! all thanks for the Clientside 
  running loop!
  
