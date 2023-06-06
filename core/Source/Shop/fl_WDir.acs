@@ -152,27 +152,25 @@ function void SFPlus_DefineWeapons (void){
 	WeaponUpgrade_Add("BFG_Overcharge",	wep, 2);
 }
 
+Script "SFPlus_AddWeaponPack" (int set, int price, int mp_gain, int lang){
+	int pack = WeaponPack_Add(set, price, mp_gain, lang);
+	SetResultValue(pack);
+}
+
+Script "SFPlus_AddWeapon" (int pack, int actor, int price, int lang){
+	int wep = WeaponPack_Add(actor, pack, price, lang);
+	SetResultValue(wep);
+}
+
+Script "SFPlus_AddWeaponUpgrade" (int wep, int actor, int type){
+	WeaponUpgrade_Add(actor, wep, type);
+}
+
 function str Weapon_GetSameKind(int wid){
 	if (CheckInventory(Weapon_GetActor(wid))) return Weapon_GetActor(wid);
 	if (CheckInventory(WeaponUpgrade_getActor(wid, 0))) return WeaponUpgrade_getActor(wid, 0);
 	if (CheckInventory(WeaponUpgrade_getActor(wid, 1))) return WeaponUpgrade_getActor(wid, 1);
 	return 0;
-}
-
-script "SFPlus_WeaponSaveTest" (void){
-	Weapon_PlayerSave();
-}
-
-function void Weapon_PlayerSave(void) {
-	for (int i = 0; i < fp_WeaponStack; i++){
-		log(s:Weapon_GetSameKind(i));
-	}
-}
-
-function void Weapon_SwapWeapon(str this, str withThis){
-	TakeInventory(this,1);
-	GiveInventory(withThis,1);
-	setWeapon(withThis);
 }
 
 function void Weapon_Swap(str this, str withThis){
@@ -316,12 +314,13 @@ function int WeaponUpgrade_AddEx(str actor, int wpbase, int uptype, str pkey){
 	fp_WpUps[wpbase][uid][5] = uptype;
 	
 	if(strlen(pkey) != 0){
-		fp_WpUps[wpbase][uid][3] = strparam(s:"pr_wu_", s:pkey, s:"_up", d:uptype);
-		fp_WpUps[wpbase][uid][4] = strparam(s:"pr_wr_", s:pkey, s:"_up", d:uptype);
+		fp_WpUps[wpbase][uid][3] = GetCvar(strparam(s:"pr_wu_", s:pkey, s:"_up", d:uptype));
+		fp_WpUps[wpbase][uid][4] = GetCvar(strparam(s:"pr_wr_", s:pkey, s:"_up", d:uptype));
 	}
 	else if (wpbase > 0){
-		fp_WpUps[wpbase][uid][3] = strparam(s:"pr_wu_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype);
-		fp_WpUps[wpbase][uid][4] = strparam(s:"pr_wr_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype);
+		log(s:"Price: ", d:GetCvar(strparam(s:"pr_wu_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype)));
+		fp_WpUps[wpbase][uid][3] = GetCvar(strparam(s:"pr_wu_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype));
+		fp_WpUps[wpbase][uid][4] = GetCvar(strparam(s:"pr_wr_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype));
 	}
 	else{
 		fp_WpUps[wpbase][uid][3] = "null";
@@ -334,16 +333,15 @@ function int WeaponUpgrade_AddEx(str actor, int wpbase, int uptype, str pkey){
 function str WeaponUpgrade_GetActor(int wpb, int uid){return fp_WpUps[wpb][uid][0]; }
 function str WeaponUpgrade_GetName( int wpb, int uid){ return fp_WpUps[wpb][uid][1]; }
 function int WeaponUpgrade_GetDesc(int wpb, int uid){  return fp_WpUps[wpb][uid][2]; }
-function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return CheckInventory(fp_WpUps[wpb][uid][3]); }
-function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return CheckInventory(fp_WpUps[wpb][uid][4]); }
-
+function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][3]; }
+function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][4]; }
 
 function int WeaponPack_Add(int cat, str pkey, int game_gain, str lang){
 	int wid = fp_WeaponPackStack;
 	fp_WpPacks[wid][0] = strparam(l:strparam(s:"WEPS_", s:lang, s:"_NAME"));
 	fp_WpPacks[wid][1] = cat;
 	fp_WpPacks[wid][2] = strparam(l:strparam(s:"WEPS_", s:lang, s:"_DESC"));
-	fp_WpPacks[wid][3] = strparam(s:"pr_wb_", s:pkey);
+	fp_WpPacks[wid][3] = GetCvar(strparam(s:"pr_wb_", s:pkey));
 	fp_WpPacks[wid][4] = pkey;
 	fp_WpPacks[wid][5] = game_gain;
 	fp_WpPacks[wid][6] = lang;
@@ -355,7 +353,7 @@ function str WeaponPack_GetName(int wid){  return fp_WpPacks[wid][0]; }
 function int WeaponPack_GetCat(int wid){   return fp_WpPacks[wid][1]; }
 function int WeaponPack_GetScoreGain(int wid){   return fp_WpPacks[wid][5]; }
 function str WeaponPack_GetDesc(int wid){  return fp_WpPacks[wid][2]; }
-function int WeaponPack_GetPrice(int wid){ return CheckInventory(fp_WpPacks[wid][3]); }
+function int WeaponPack_GetPrice(int wid){ return fp_WpPacks[wid][3]; }
 function bool WeaponPack_isOwned(int wid){
 	bool res = false;
 		for (int i = 0; (i < fp_WeaponStack) && !res; i++){
@@ -376,7 +374,6 @@ function int Weapon_Add(str actor, int pack, str pkey, str lang){
 		full_lang = lang;
 	}
 	
-
 	fp_Wpns[wid][0] = actor;
 	fp_Wpns[wid][1] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_NAME"));
 	fp_Wpns[wid][2] = pack;
@@ -384,11 +381,11 @@ function int Weapon_Add(str actor, int pack, str pkey, str lang){
 	fp_Wpns[wid][7] = full_lang; // Language id
 	
 	if(strlen(pkey) != 0) {
-		fp_Wpns[wid][4] = strparam(s:"pr_wr_", s:pkey);
+		fp_Wpns[wid][4] = GetCvar(strparam(s:"pr_wr_", s:pkey));
 		fp_Wpns[wid][5] = pkey;
 		}
 	else if(pack > 0) {
-		fp_Wpns[wid][4] = strparam(s:"pr_wr_", s:fp_WpPacks[pack][4]);
+		fp_Wpns[wid][4] = GetCvar(strparam(s:"pr_wr_", s:fp_WpPacks[pack][4]));
 		fp_Wpns[wid][5] = fp_WpPacks[pack][4];
 		}
 	else{
@@ -411,4 +408,4 @@ function int Weapon_GetCat(int wid){
 }
 function int Weapon_getUpsNum(int wid){	 return fp_Wpns[wid][6]; }
 function int Weapon_GetDesc(int wid){    return fp_Wpns[wid][3]; }
-function int Weapon_GetPrice(int wid){   return CheckInventory(fp_Wpns[wid][4]); }
+function int Weapon_GetPrice(int wid){   return fp_Wpns[wid][4]; }

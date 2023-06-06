@@ -462,7 +462,7 @@ function str CMDBut_GetIcon(int w){		return CMDBut_List[w][2];}
 //The condition to be activable.
 function bool CMDBut_GetShowCond(int w){return CMDBut_List[w][4];} 
 //Condition for showing the button.
-function int CMDBut_GetPrice(int w){	return CheckInventory(CMDBut_List[w][5]);}
+function int CMDBut_GetPrice(int w){	return CMDBut_List[w][5];}
 function bool CMDBut_GetAccessCond(int w){		return CMDBut_List[w][3];}
 function bool CMDBut_GetIgnorePrice(int w){		return CMDBut_List[w][7];} 
 function bool CMDBut_GetNoAccessReason(int w){	return CMDBut_List[w][6];} 
@@ -487,7 +487,7 @@ function void CMDBut_Conds (int id, bool acond, bool scond, str price, str reaso
 	CMDBut_List[id][6] = reason;
 	if(strLen(price) == 0)
 		 CMDBut_List[id][5] = "null"; 
-	else CMDBut_List[id][5] = strparam(s:"pr_cmd_",s:price); 
+	else CMDBut_List[id][5] = GetCvar(strparam(s:"pr_cmd_",s:price)); 
 	// ^ It's already synched with the inventory gaven on the terminal.
 }
 

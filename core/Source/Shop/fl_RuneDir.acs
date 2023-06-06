@@ -75,7 +75,7 @@ function str Rune_getDesc(int up){	return Rune_List[up][1];}
 function str Rune_getActor(int up){	return Rune_List[up][2];}
 function str Rune_getIcon(int up){	return Rune_List[up][4];}
 function str Rune_getTier(int up){	return Rune_List[up][5];}
-function int Rune_getPrice(int up){	return CheckInventory(Rune_List[up][3]);}
+function int Rune_getPrice(int up){	return Rune_List[up][3];}
 function str Rune_getPowerActor(int up){ return Rune_List[up][6];}
 
 function int Rune_getCurrent(void){ 

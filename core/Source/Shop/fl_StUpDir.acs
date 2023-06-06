@@ -44,7 +44,7 @@ function void StimUp_Add (str name, str actor, str btnimg){
 	StimUp_List[upg][1] = strparam(l:strparam(s:"FP_SUD_",s:actor));
 	StimUp_List[upg][2] = strparam(s:"StimUp_",s:actor);
 	// Lookup fl_price.acs
-	StimUp_List[upg][3] = strparam(s:"pr_su_", s:actor); 
+	StimUp_List[upg][3] = GetCvar(strparam(s:"pr_su_", s:actor)); 
 	StimUp_List[upg][4] = btnimg;
 	StimUpTop++;
 }
@@ -54,7 +54,7 @@ function str StimUp_getDesc(int up){	return StimUp_List[up][1];}
 function str StimUp_getActor(int up){	return StimUp_List[up][2];}
 function str StimUp_getIcon(int up){	return StimUp_List[up][4];}
 function int StimUp_getPrice(int up){	
-    int price = CheckInventory(StimUp_List[up][3]);
+    int price = StimUp_List[up][3];
 	return price + ((price * CheckInventory(StimUp_getActor(up))) / 2);}
 
 script "SFPlus_DebugStimUps" (void){

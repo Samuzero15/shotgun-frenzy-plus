@@ -87,19 +87,19 @@ function void SFPlus_DefineItems(void){
 ////////////////////////////////////////////
 
 function void Item_Add_Deploy(str actor, str price, int max, str lang){
-	str pr = strparam(s:"pr_d_", s:price);
+	str pr = GetCvar(strparam(s:"pr_d_", s:price));
 	int it = Item_Add(FP_ITEM_T_DEPLOY, actor, max, pr, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
 }
 
 function void Item_Add_Powerup(str actor, str price, int max, int color, str lang){
-	str pr = strparam(s:"pr_p_", s:price);
+	str pr = GetCvar(strparam(s:"pr_p_", s:price));
 	int it = Item_Add_Color(FP_ITEM_T_POWERUP, actor, max, pr, color, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_HEALTH_POWERUP);
 }
 
 function void Item_Add_Inv(str actor, str price, int max, str lang){
-	str pr = strparam(s:"pr_i_", s:price);
+	str pr = GetCvar(strparam(s:"pr_i_", s:price));
 	int it = Item_Add(0, actor, max, pr, lang, true);
 	Item_AppendToShop(it, ITEMSHOP_ARMORY);
 }
@@ -155,7 +155,7 @@ function int Item_GetType(int it){	return fp_Items[it][0];}
 function int Item_GetActor(int it){	return fp_Items[it][1];}
 function int Item_GetMax(int it){	return fp_Items[it][2];}
 function int Item_GetPrice(int it){
-	return CheckInventory(fp_Items[it][3]);
+	return fp_Items[it][3];
 }
 function int Item_GetName(int it){	return fp_Items[it][4];}
 function int Item_GetIcon(int it){	return fp_Items[it][5];}

@@ -1,0 +1,268 @@
+OptionMenu "SFPlus_PriceEdit"{
+	Title "Price edit"
+	SubMenu "Weapon Packs", "SFPlus_PriceEdit_WepBuy"
+	SubMenu "Weapon Upgrades", "SFPlus_PriceEdit_WepUpg"
+	SubMenu "Weapon Recycle", "SFPlus_PriceEdit_WepRecy"
+	SubMenu "Items", "SFPlus_PriceEdit_Items"
+	SubMenu "Player Upgrades", "SFPlus_PriceEdit_PlayUp"
+	SubMenu "Mech Upgrades", "SFPlus_PriceEdit_MechUps"
+	SubMenu "Stimpack Upgrades", "SFPlus_PriceEdit_StimUps"
+	SubMenu "Rune Sync", "SFPlus_PriceEdit_RuneSync"
+	SubMenu "Commander", "SFPlus_PriceEdit_Cmd"
+	StaticText ""
+	SafeCommand "Reset to Default Prices", "sfp_resetdefaultprices"
+}
+
+OptionMenu "SFPlus_PriceEdit_WepBuy"{
+	Title "Price edit - Weapon Packs"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	StaticText "Weapon Packs", 1
+	//	Weapon pack prices
+	NumberField "Shotgun", "pr_wb_shotgun", 25, 20000, 25
+	NumberField "Assault", "pr_wb_assault", 25, 20000, 25
+	NumberField "Support", "pr_wb_support", 25, 20000, 25
+	NumberField "Commando", "pr_wb_commando", 25, 20000, 25
+	NumberField "Explosive", "pr_wb_heavy", 25, 20000, 25	
+	NumberField "Plasmatic", "pr_wb_plasma", 25, 20000, 25
+	NumberField "Pyromaniac", "pr_wb_flamer", 25, 20000, 25
+	NumberField "BFG", "pr_wb_bfg", 25, 20000, 25
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_WepUpg"{
+	Title "Price edit - Weapon Upgrade"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	//Price on upgrade (On U.P. Points!)
+	StaticText "Weapon Upgrading (U.P.)", 1
+	NumberField "Combat Boomstick", "pr_wu_boomstick_up0", 1, 20, 20
+	NumberField "Auto-Ricochet SSG", "pr_wu_ssg_up1", 1, 20
+	NumberField "Flame SSG", "pr_wu_ssg_up2", 1, 20
+	NumberField "Explosive Quadshot", "pr_wu_quadshot_up0", 1, 20
+	NumberField "Spread Spitter", "pr_wu_spitter_up1", 1, 20
+	NumberField "Assault Spitter", "pr_wu_spitter_up2", 1, 20
+	NumberField "Ricochet Buckshot", "pr_wu_buckshot_up1", 1, 20
+	NumberField "Flame Buckshot", "pr_wu_buckshot_up2", 1, 20
+	NumberField "Mega Supplier", "pr_wu_supplier_up0", 1, 20
+	NumberField "Advanced Patcher", "pr_wu_patcher_up0", 1, 20
+	NumberField "Speed Drift Repeater", "pr_wu_repeater_up1", 1, 20
+	NumberField "Gauss J. Repeater", "pr_wu_repeater_up2", 1, 20
+	NumberField "Flak Dualshot", "pr_wu_dualshot_up1", 1, 20
+	NumberField "Saw-Blade Dualshot", "pr_wu_dualshot_up2", 1, 20
+	NumberField "Exploder Launcher", "pr_wu_launcher_up1", 1, 20
+	NumberField "Multiple Launcher", "pr_wu_launcher_up2", 1, 20
+	NumberField "Expansive G. Flinger", "pr_wu_flinger_up1", 1, 20
+	NumberField "Mine-Placer G. Flinger", "pr_wu_flinger_up2", 1, 20
+	NumberField "Advanced Plasma Rifle", "pr_wu_plasmagun_up1", 1, 20
+	NumberField "Spread Plasma Rifle", "pr_wu_plasmagun_up2", 1, 20
+	NumberField "Spear-Taser Railgun", "pr_wu_railgun_up1", 1, 20
+	NumberField "Double Slug Railgun", "pr_wu_railgun_up2", 1, 20
+	NumberField "Super Flamer", "pr_wu_flamer_up0", 1, 20
+	NumberField "Spread BFG", "pr_wu_bfg_up1", 1, 20
+	NumberField "Overcharged BFG", "pr_wu_bfg_up2", 1, 20
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_WepRecy"{
+	Title "Price edit - Weapon Recycling"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	//Price on recycling.
+	StaticText "Weapon Recycling", 1
+	NumberField "SSG", "pr_wr_ssg", 25, 20000, 25
+	NumberField "Auto-Ricochet SSG", "pr_wr_ssg_up1", 25, 20000, 25
+	NumberField "Flame SSG", "pr_wr_ssg_up2", 25, 20000, 25
+	NumberField "Quadshot", "pr_wr_quadshot", 25, 20000, 25
+	NumberField "Explosive Quadshot", "pr_wr_quadshot_up0", 25, 20000, 25
+	NumberField "Spitter", "pr_wr_spitter", 25, 20000, 25
+	NumberField "Spread Spitter", "pr_wr_spitter_up1", 25, 20000, 25
+	NumberField "Assault Spitter", "pr_wr_spitter_up2", 25, 20000, 25
+	NumberField "Buckshot", "pr_wr_buckshot", 25, 20000, 25
+	NumberField "Ricochet Buckshot", "pr_wr_buckshot_up1", 25, 20000, 25
+	NumberField "Flame Buckshot", "pr_wr_buckshot_up2", 25, 20000, 25
+	NumberField "Supplier", "pr_wr_supplier", 25, 20000, 25
+	NumberField "Mega Supplier", "pr_wr_supplier_up0", 25, 20000, 25
+	NumberField "Patcher", "pr_wr_patcher", 25, 20000, 25
+	NumberField "Advanced Patcher", "pr_wr_patcher_up0", 25, 20000, 25
+	NumberField "Repeater", "pr_wr_repeater", 25, 20000, 25
+	NumberField "Speed Drift Repeater", "pr_wr_repeater_up1", 25, 20000, 25
+	NumberField "Gauss J. Repeater", "pr_wr_repeater_up2", 25, 20000, 25
+	NumberField "Dualshot", "pr_wr_dualshot", 25, 20000, 25
+	NumberField "Flak Dualshot", "pr_wr_dualshot_up1", 25, 20000, 25
+	NumberField "Saw-Blade Dualshot", "pr_wr_dualshot_up2", 25, 20000, 25
+	NumberField "R. Launcher", "pr_wr_launcher", 25, 20000, 25
+	NumberField "Exploder R. Launcher", "pr_wr_launcher_up1", 25, 20000, 25
+	NumberField "Multiple R. Launcher", "pr_wr_launcher_up2", 25, 20000, 25
+	NumberField "G. Flinger", "pr_wr_flinger", 25, 20000, 25
+	NumberField "Expansive G. Flinger", "pr_wr_flinger_up1", 25, 20000, 25
+	NumberField "Mine-Placer G. Flinger", "pr_wr_flinger_up2", 25, 20000, 25
+	NumberField "Plasma Rifle", "pr_wr_plasmagun", 25, 20000, 25
+	NumberField "Advanced Plasma Rifle", "pr_wr_plasmagun_up1", 25, 20000, 25
+	NumberField "Spread Plasma Rifle", "pr_wr_plasmagun_up2", 25, 20000, 25
+	NumberField "Railgun", "pr_wr_railgun", 25, 20000, 25
+	NumberField "Spear-Taser Railgun", "pr_wr_railgun_up1", 25, 20000, 25
+	NumberField "Double Slug Railgun", "pr_wr_railgun_up2", 25, 20000, 25
+	NumberField "Flamer", "pr_wr_flamer", 25, 20000, 25
+	NumberField "Super Flamer", "pr_wr_flamer_up0", 25, 20000, 25
+	NumberField "BFG 9000", "pr_wr_bfg", 25, 20000, 25
+	NumberField "Spread BFG", "pr_wr_bfg_up1", 25, 20000, 25
+	NumberField "Overcharged BFG", "pr_wr_bfg_up2", 25, 20000, 25
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_Items"{
+	Title "Price edit - Items"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+
+	//Item prices
+	StaticText "Items", 1
+	NumberField "Soulsphere", "pr_p_soulsphere", 25, 20000, 25
+	NumberField "Megasphere", "pr_p_megasphere", 25, 20000, 25
+	NumberField "Godsphere", "pr_p_godsphere", 25, 20000, 25
+	NumberField "Berserk", "pr_p_berserk2", 25, 20000, 25
+	NumberField "Helltrigger", "pr_p_helltrigger", 25, 20000, 25
+	NumberField "Personal Backpack", "pr_i_backpack", 25, 20000, 25
+	NumberField "Personal Mines", "pr_i_mines", 25, 20000, 25
+	NumberField "Saw Drones", "pr_d_drone_saw", 25, 20000, 25
+	NumberField "Mine Drones", "pr_d_drone_mine", 25, 20000, 25
+	NumberField "Health Dispenser", "pr_d_disp_health", 25, 20000, 25
+	NumberField "Ammo Dispenser", "pr_d_disp_ammo", 25, 20000, 25
+	NumberField "Bullet Turret", "pr_d_turret_bullet", 25, 20000, 25
+	NumberField "Rocket Turret", "pr_d_turret_rocket", 25, 20000, 25
+	NumberField "Plasma Turret", "pr_d_turret_plasma", 25, 20000, 25
+	NumberField "Rail Turret", "pr_d_turret_rail", 25, 20000, 25
+	NumberField "Flame Turret", "pr_d_turret_flame", 25, 20000, 25
+	NumberField "Shotgun Turret", "pr_d_turret_shotgun", 25, 20000, 25
+	NumberField "Chaingun Turret", "pr_d_turret_chaingun", 25, 20000, 25
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_Cmd"{
+	Title "Price edit - Commander"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	//Commander Prices
+
+	//Prices for researching/building
+	StaticText "Commander Build / Research", 1
+	NumberField "Genetics Lab", "pr_cmd_genlab", 25, 20000, 25
+	NumberField "Armory", "pr_cmd_armory", 25, 20000, 25
+	NumberField "Mech Factory", "pr_cmd_mechfa", 25, 20000, 25
+	NumberField "Refinery", "pr_cmd_refine", 25, 20000, 25
+	NumberField "Marine Command", "pr_cmd_marcom", 25, 20000, 25
+	NumberField "Nuke Silo", "pr_cmd_nukesy", 25, 20000, 25
+	//Gen-lab researches
+	NumberField "H. Engineering Phase 1 Tech", "pr_cmd_gl_health1", 25, 20000, 25
+	NumberField "H. Engineering Phase 2 Tech", "pr_cmd_gl_health2", 25, 20000, 25
+	NumberField "Steel Plating Tech", "pr_cmd_gl_armor1", 25, 20000, 25
+	NumberField "Resister Unit Tech", "pr_cmd_gl_resisb", 25, 20000, 25
+	NumberField "Adrenaline Tech", "pr_cmd_gl_speedb", 25, 20000, 25
+	NumberField "Absorber Unit Tech", "pr_cmd_gl_regenb", 25, 20000, 25
+	NumberField "Stimpack Tech", "pr_cmd_gl_stimpk", 25, 20000, 25
+	NumberField "Rune Sync Tech", "pr_cmd_gl_rusync", 25, 20000, 25
+	//Armory researches
+	NumberField " Phase 1 Tech", "pr_cmd_ar_arms1", 25, 20000, 25
+	NumberField " Phase 2 Tech", "pr_cmd_ar_arms2", 25, 20000, 25
+	NumberField " Tech", "pr_cmd_ar_boomrn", 25, 20000, 25
+	NumberField " Tech", "pr_cmd_ar_ammobp", 25, 20000, 25
+	NumberField " Tech", "pr_cmd_ar_gnades", 25, 20000, 25
+	//Refinery researches
+	NumberField "Processing Phase 1 Tech", "pr_cmd_rf_pump1", 25, 20000, 25
+	NumberField "Processing Phase 2 Tech", "pr_cmd_rf_pump2", 25, 20000, 25
+	NumberField "Engine Boost Tech", "pr_cmd_rf_engine", 25, 20000, 25
+	NumberField "Compensation Tech", "pr_cmd_rf_coinx5", 25, 20000, 25
+	//Marine command researches
+	NumberField "Advanced Systems Tech", "pr_cmd_mc_advsys", 25, 20000, 25
+	NumberField "Air Support Tech", "pr_cmd_mc_airsup", 25, 20000, 25
+	NumberField "Ion Cannon Tech", "pr_cmd_mc_ioncan", 25, 20000, 25
+	NumberField "Core Pulses Tech", "pr_cmd_mc_cpulse", 25, 20000, 25
+	NumberField "Core Optimizer Tech", "pr_cmd_mc_coptim", 25, 20000, 25
+	NumberField "Core Booster Tech", "pr_cmd_mc_cboost", 25, 20000, 25
+	StaticText ""
+
+	//Commander deploys / actions
+	StaticText "Commander Deploy / Actions", 1
+	NumberField "Bullet Turret", "pr_cmd_turret_bullet", 25, 20000, 25
+	NumberField "Rocket Turret", "pr_cmd_turret_rocket", 25, 20000, 25
+	NumberField "Plasma Turret", "pr_cmd_turret_plasma", 25, 20000, 25
+	NumberField "Flame Turret", "pr_cmd_turret_flame", 25, 20000, 25
+	NumberField "Tesla Turret", "pr_cmd_turret_tesla", 25, 20000, 25
+	NumberField "Chaingun Turret", "pr_cmd_turret_chaingun", 25, 20000, 25
+	NumberField "Shotgun Turret", "pr_cmd_turret_shotgun", 25, 20000, 25
+	//NumberField "Rail Turret", "pr_cmd_turret_rail", 25, 20000, 25 
+	NumberField "BFG Turret", "pr_cmd_turret_bfg", 25, 20000, 25
+	NumberField "Health Dispenser", "pr_cmd_disp_health", 25, 20000, 25
+	NumberField "Ammo Dispenser", "pr_cmd_disp_ammo", 25, 20000, 25
+	NumberField "Money Bag", "pr_cmd_moneybag", 25, 20000, 25
+	NumberField "Minefield", "pr_cmd_minefield", 25, 20000, 25
+	NumberField "Sandbags", "pr_cmd_sandbags", 25, 20000, 25
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_MechUps"{
+	Title "Price edit - Mech Upgrades"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	//Mech prices
+	StaticText "Mech Upgrades", 1
+	NumberField "Mech Buy", "pr_mech", 25, 20000, 25
+	NumberField "Nails", "pr_mu_nails", 25, 20000, 25
+	NumberField "Rockets", "pr_mu_rockets", 25, 20000, 25
+	NumberField "Armor", "pr_mu_armor", 25, 20000, 25
+	NumberField "Speed", "pr_mu_speed", 25, 20000, 25
+	NumberField "Life Saver", "pr_mu_life_save", 25, 20000, 25
+	NumberField "Self Destruct", "pr_mu_self_destruct", 25, 20000, 25
+	NumberField "Auto Repair", "pr_mu_auto_repair", 25, 20000, 25
+	NumberField "Efficiency", "pr_mu_efficiency", 25, 20000, 25
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_StimUps"{
+	Title "Price edit - Stimpack Upgrades"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	//Stimpack Up. prices
+	StaticText "Stimpack Upgrades", 1
+	NumberField "Overhealth", "pr_su_overhealth", 25, 20000, 25
+	NumberField "Amount", "pr_su_amount", 25, 20000, 25
+	NumberField "Extra Dosis", "pr_su_extradosis", 25, 20000, 25
+	NumberField "Hard Shell", "pr_su_hardshell", 25, 20000, 25
+	NumberField "Cicatrization", "pr_su_cicatrizate", 25, 20000, 25
+	NumberField "Caffeine", "pr_su_caffeine", 25, 20000, 25
+	NumberField "Stimulant", "pr_su_stimulant", 25, 20000, 25
+	StaticText ""
+}
+OptionMenu "SFPlus_PriceEdit_RuneSync"{
+	Title "Price edit - Rune Sync"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	StaticText "Rune Sync", 1
+	NumberField "Unlock Tier 4 (U.P.)", "pr_rt_u4", 1, 20
+	NumberField "Unlock Tier 3 (U.P.)", "pr_rt_u3", 1, 20
+	NumberField "Unlock Tier 2 (U.P.)", "pr_rt_u2", 1, 20 
+	NumberField "Tier 4 Rune", "pr_rt_4", 25, 20000, 25
+	NumberField "Tier 3 Rune", "pr_rt_3", 25, 20000, 25
+	NumberField "Tier 2 Rune", "pr_rt_2", 25, 20000, 25
+	NumberField "Tier 1, 20 Rune", "pr_rt_1", 25, 20000, 25
+	StaticText ""
+}
+
+OptionMenu "SFPlus_PriceEdit_PlayUp"{
+	Title "Price edit - Player Upgrades"
+	StaticText "Requires a restart to take effect"
+	StaticText ""
+	//Play Up. prices
+	StaticText "Player Upgrades (in U.P.)", 1
+	NumberField "Defensive Powerup Upgrade", "pr_pu_PowUpUpgrade_Defense", 1, 20
+	NumberField "Offensive Powerup Upgrade", "pr_pu_PowUpUpgrade_Attack", 1, 20
+	NumberField "Mech Sync", "pr_pu_mechsync", 1, 20
+	NumberField "Expansive Restock", "pr_pu_expansiverestock", 1, 20
+	NumberField "Body Enhancement", "pr_pu_bodyenhancement", 1, 20
+	NumberField "Armor Repair", "pr_pu_armorrepair", 1, 20
+	NumberField "Spawn Shield", "pr_pu_spawnshield", 1, 20
+	NumberField "Healing coins", "pr_pu_healcoins", 1, 20
+	NumberField "Prometeo Protocol", "pr_pu_prometeo", 1, 20
+	NumberField "Rune Sync", "pr_pu_runesync", 1, 20
+}

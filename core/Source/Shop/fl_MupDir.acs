@@ -61,7 +61,7 @@ function void MechUp_Add (str name, str actor, str price, int maxupgs, str desc)
 	MechUp_List[upg][0] = name;
 	MechUp_List[upg][1] = desc;
 	MechUp_List[upg][2] = actor;
-	MechUp_List[upg][3] = strparam(s:"pr_mu_", s:price); 
+	MechUp_List[upg][3] = GetCvar(strparam(s:"pr_mu_", s:price)); 
 	MechUp_List[upg][4] = maxupgs; 
 	MechUpTop++;
 }
@@ -70,7 +70,7 @@ function str MechUp_getName(int up){		return MechUp_List[up][0];}
 function str MechUp_getDesc(int up){		return MechUp_List[up][1];}
 function str MechUp_getActor(int up){	return MechUp_List[up][2];}
 function int MechUp_getPrice(int up){	
-	int price = CheckInventory(MechUp_List[up][3]);
+	int price = MechUp_List[up][3];
 	return price + ((price * CheckInventory(MechUp_getActor(up))) / 4);
 }
 function int MechUp_getMax(int up){		return MechUp_List[up][4];}

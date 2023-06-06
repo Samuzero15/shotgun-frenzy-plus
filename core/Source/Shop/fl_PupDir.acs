@@ -49,7 +49,7 @@ function void PlayUp_Add(str name, str actor, str btnimg){
 	PlayUp_List[upg][1] = strparam(l:strparam(s:"FP_PUD_",s:actor));
 	PlayUp_List[upg][2] = strparam(s:"PlayUp_",s:actor);
 	// Lookup fl_price.acs
-	PlayUp_List[upg][3] = strparam(s:"pr_pu_", s:actor); 
+	PlayUp_List[upg][3] = GetCvar(strparam(s:"pr_pu_", s:actor)); 
 	PlayUp_List[upg][4] = btnimg;
 	PlayUpTop++;
 }
@@ -58,7 +58,7 @@ function str PlayUp_getName(int up){	return PlayUp_List[up][0];}
 function str PlayUp_getDesc(int up){	return PlayUp_List[up][1];}
 function str PlayUp_getActor(int up){	return PlayUp_List[up][2];}
 function str PlayUp_getIcon(int up){	return PlayUp_List[up][4];}
-function int PlayUp_getPrice(int up){	return CheckInventory(PlayUp_List[up][3]);}
+function int PlayUp_getPrice(int up){	return PlayUp_List[up][3];}
 
 function int PUTrack_GetScore(void){
 	int i;

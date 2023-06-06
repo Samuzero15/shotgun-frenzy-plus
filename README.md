@@ -14,7 +14,7 @@ This is a fork for Shotgun Frenzy.
 ## How did you get in here Samu?
 Yet the development was'nt stopped at all, Greg339 (I think...) and T3h Player decided to launch a set of unoffical patches which it introduced some more fixes to the mod. Like the reducction of lag, balances on demons, cheaper prices, etc...
 
-One day, when we're playing the mod, Zanieon was pissed with some Cyber-Barons (a strong enemy on the mod) for the excess of damage output dealt against players, so he did some other balances more. And i've followed him, just to support the changes.
+One day, when we're playing the mod, Zanieon was pissed with some Cyber-Barons (a strong enemy on the mod) for the excess of damage output dealt against players, so he did some other balances more. And I've followed him, just to support the changes.
 
 And now the latest update for the patch was the unofficial v8f, it was intended to develop another patch, but for the unstability of the code, I've decided to make an entire fork to fix the problems from the roots.
 
@@ -25,13 +25,17 @@ And now the latest update for the patch was the unofficial v8f, it was intended 
 * New normal HUD and extra touches on the full-screen hud!
 * A brand new terminal fully clientsided!, Move the cursor with your mouse, and press the button!
 * Weapons are balanced and changed! Some of them have new alt-fires that actually makes them useful.
+* Kill streaks! Break milestones and earn extra U.Ps! 
 * Player Upgrades! Use your U.P. Points to gain private perks for the marines!
+* Runes to buy and use on the battlefield!
+* Champions! (Thanks TDRR and Mikk!) They are strong and unique, but they also drop good loot!
+* Stimpack upgrades for your recoveries anyplace, anytime!
 * A lot of Console Vars to customize your battles!
 
 ## Play setup
 
 To run this you need:
-* Zandronum 3.1
+* Zandronum 3.1 or higher.
 * A copy of Doom 2 or Freedoom 2.
 * The Skulltag Content wad.
 

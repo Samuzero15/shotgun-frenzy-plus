@@ -9,6 +9,18 @@
 
 ## v1 - The path of the damned...
 
+#### (4 - 5 / 6 / 2023) [SSG's reworks, Price Edit, Cvarified Prices]
+	!*) Now the prices will be checked by console vars!
+	+) A new Price Edit option menu.
+	*) Some re-ordering on menudef and cvar info just to separate the prices in their own files.
+	*) Testing an template addon for adding custom weapons, it's not in it's final stage so plz do not use it yet.
+
+#### (2 / 6 / 2023) 
+	*) Well, ssg has been reworked. Now you can deal more damage on close shots.
+	// Base SSG can create ricoshot bullets and explosive damage.
+	// Autoload SSG can spread more ricoshots, aside of firing more bullets.
+	// Explosive SSG can create a long standing fire in flesh hits (on demon hit) that stands for like 3-5 seconds.
+
 #### (18 / 5 -  1 / 6 / 2023) [Panels, constant effects delays, and Readme edit]
 	*) Moved the custom monster set to a dedicated folder for addons, called addons. Duh.
 	*) The readme.md has been updated, with some more clearer build instructions.

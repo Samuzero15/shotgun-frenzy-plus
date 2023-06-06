@@ -104,13 +104,13 @@ What is inside?
 		He did balanced some more things, and changed the Soundtrack from it.
 		Actually he made me to make this in the first place :v
 	
-	Kennon and pals:
+	Kennon and pals, Leaven:
 		For the private testing server in these dark times!
 	
 	Madcat:
 		Thanks for the turret sprites my man!
 		
-	Korshun, TDDR and Mr. Satan:
+	Korshun, TDRR, Buu42 and Mr. Satan:
 		They Helped me out with some acs questions :D
 		
 	WolfNexus:

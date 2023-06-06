@@ -34,7 +34,6 @@ actor InvisiblePuff { damagetype "MarineFire" }
 #include "Actors/acsutils.dec"
 
 #include "Actors/samuterm.dec"
-#include "Actors/prices.dec"
 #include "Actors/huditems.dec"
 
 #include "Actors/particles/fp_smoke.dec"

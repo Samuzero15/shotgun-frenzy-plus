@@ -1,0 +1,196 @@
+// Edit the prices through cvar! WOOO
+
+//	Weapon pack prices
+server noarchive int pr_wb_shotgun = 		2300;
+server noarchive int pr_wb_assault = 		2500;
+server noarchive int pr_wb_support = 		1200;
+server noarchive int pr_wb_commando = 		4500;
+server noarchive int pr_wb_heavy = 			5000;
+server noarchive int pr_wb_plasma = 		6000;
+server noarchive int pr_wb_flamer = 		15000;
+server noarchive int pr_wb_bfg = 			25000;
+
+//Price on upgrade (On U.P. Points!)
+server noarchive int pr_wu_boomstick_up0 =  	1;
+server noarchive int pr_wu_ssg_up1 =  		1;
+server noarchive int pr_wu_ssg_up2 =  		1;
+server noarchive int pr_wu_quadshot_up0 =  	2;
+server noarchive int pr_wu_spitter_up1 =  	1;
+server noarchive int pr_wu_spitter_up2 =  	1;
+server noarchive int pr_wu_buckshot_up1 =  	1;
+server noarchive int pr_wu_buckshot_up2 =  	2;
+server noarchive int pr_wu_supplier_up0 =  	1;
+server noarchive int pr_wu_patcher_up0 =  	3;
+server noarchive int pr_wu_repeater_up1 =  	2;
+server noarchive int pr_wu_repeater_up2 =  	2;
+server noarchive int pr_wu_dualshot_up1 =  	2;
+server noarchive int pr_wu_dualshot_up2 =  	2;
+server noarchive int pr_wu_launcher_up1 =  	1;
+server noarchive int pr_wu_launcher_up2 =  	2;
+server noarchive int pr_wu_flinger_up1 =  	1;
+server noarchive int pr_wu_flinger_up2 =  	2;
+server noarchive int pr_wu_plasmagun_up1 =  1;
+server noarchive int pr_wu_plasmagun_up2 =  2;
+server noarchive int pr_wu_railgun_up1 =  	1;
+server noarchive int pr_wu_railgun_up2 =  	2;
+server noarchive int pr_wu_flamer_up0 =  	2;
+server noarchive int pr_wu_bfg_up1 =  		4;
+server noarchive int pr_wu_bfg_up2 =  		6;
+
+//Price on recycling.
+server noarchive int pr_wr_ssg =  			700;
+server noarchive int pr_wr_ssg_up1 =  		1000;
+server noarchive int pr_wr_ssg_up2 =  		1250;
+server noarchive int pr_wr_quadshot =  		700;
+server noarchive int pr_wr_quadshot_up0 =  	3000;
+server noarchive int pr_wr_spitter =  		700;
+server noarchive int pr_wr_spitter_up1 =  	1000;
+server noarchive int pr_wr_spitter_up2 =  	1000;
+server noarchive int pr_wr_buckshot =  		700;
+server noarchive int pr_wr_buckshot_up1 =  	1200;
+server noarchive int pr_wr_buckshot_up2 =  	1800;
+server noarchive int pr_wr_supplier =  		500;
+server noarchive int pr_wr_supplier_up0 =  	1200;
+server noarchive int pr_wr_patcher =  		700;
+server noarchive int pr_wr_patcher_up0 =  	1400;
+server noarchive int pr_wr_repeater =  		2600;
+server noarchive int pr_wr_repeater_up1 =  	3200;
+server noarchive int pr_wr_repeater_up2 =  	3200;
+server noarchive int pr_wr_dualshot =  		2600;
+server noarchive int pr_wr_dualshot_up1 =  	3500;
+server noarchive int pr_wr_dualshot_up2 =  	3500;
+server noarchive int pr_wr_launcher =  		1500;
+server noarchive int pr_wr_launcher_up1 =  	2000;
+server noarchive int pr_wr_launcher_up2 =  	2000;
+server noarchive int pr_wr_flinger =  		1500;
+server noarchive int pr_wr_flinger_up1 =  	2000;
+server noarchive int pr_wr_flinger_up2 =  	2000;
+server noarchive int pr_wr_plasmagun =  	1500;
+server noarchive int pr_wr_plasmagun_up1 =  2000;
+server noarchive int pr_wr_plasmagun_up2 =  2000;
+server noarchive int pr_wr_railgun =  		1500;
+server noarchive int pr_wr_railgun_up1 =  	2000;
+server noarchive int pr_wr_railgun_up2 =  	2000;
+server noarchive int pr_wr_flamer =  		10000;
+server noarchive int pr_wr_flamer_up0 =  	15000;
+server noarchive int pr_wr_bfg =  			20000;
+server noarchive int pr_wr_bfg_up1 =  		30000;
+server noarchive int pr_wr_bfg_up2 =  		30000;
+
+//Item prices
+server noarchive int pr_p_soulsphere =  	150;
+server noarchive int pr_p_megasphere =  	300;
+server noarchive int pr_p_godsphere =  		8000;
+server noarchive int pr_p_berserk2 =  		7000;
+server noarchive int pr_p_helltrigger =  	6500;
+server noarchive int pr_i_backpack =  		2850;
+server noarchive int pr_i_mines =  			850;
+server noarchive int pr_d_drone_saw =  		200;
+server noarchive int pr_d_drone_mine =  	25;
+server noarchive int pr_d_disp_health =  	500;
+server noarchive int pr_d_disp_ammo =  		500;
+server noarchive int pr_d_turret_bullet =  	650;
+server noarchive int pr_d_turret_rocket =  	2150;
+server noarchive int pr_d_turret_plasma =  	2400;
+server noarchive int pr_d_turret_rail =  	1900;
+server noarchive int pr_d_turret_flame =  	2750;
+server noarchive int pr_d_turret_shotgun =  1350;
+server noarchive int pr_d_turret_chaingun = 1500;
+
+//Commander Prices
+
+//Prices for researching/building
+server noarchive int pr_cmd_genlab =  			2500;
+server noarchive int pr_cmd_armory =  			2500;
+server noarchive int pr_cmd_mechfa =  			8500;
+server noarchive int pr_cmd_refine =  			3500;
+server noarchive int pr_cmd_marcom = 			5500;
+server noarchive int pr_cmd_nukesy =  			15000;
+
+//Gen-lab researches
+server noarchive int pr_cmd_gl_health1 =  		1000;
+server noarchive int pr_cmd_gl_health2 =  		2000;
+server noarchive int pr_cmd_gl_armor1 =  		1500;
+server noarchive int pr_cmd_gl_resisb =   		2000;
+server noarchive int pr_cmd_gl_speedb =  		1500;
+server noarchive int pr_cmd_gl_regenb =  		2000;
+server noarchive int pr_cmd_gl_stimpk = 	  	1200;
+server noarchive int pr_cmd_gl_rusync = 	  	3500;
+
+//Armory researches
+server noarchive int pr_cmd_ar_arms1 =  		1500;
+server noarchive int pr_cmd_ar_arms2 =  		2000;
+server noarchive int pr_cmd_ar_boomrn = 		2000;
+server noarchive int pr_cmd_ar_ammobp = 	 	1500;
+server noarchive int pr_cmd_ar_gnades = 	  	2400;
+
+//Refinery researches
+server noarchive int pr_cmd_rf_pump1 =  		4500;
+server noarchive int pr_cmd_rf_pump2 =  		4500;
+server noarchive int pr_cmd_rf_engine =  		7000;
+server noarchive int pr_cmd_rf_coinx5 =  		7000;
+
+//Marine command researches
+server noarchive int pr_cmd_mc_advsys =  		1200;
+server noarchive int pr_cmd_mc_airsup =  		4000;
+server noarchive int pr_cmd_mc_ioncan =  		5000;
+server noarchive int pr_cmd_mc_cpulse =  		2000;
+server noarchive int pr_cmd_mc_coptim =  		5000;
+server noarchive int pr_cmd_mc_cboost =  		5000;
+
+//Commander deploys / actions
+server noarchive int pr_cmd_turret_bullet =  	600;
+server noarchive int pr_cmd_turret_rocket =  	1500;
+server noarchive int pr_cmd_turret_plasma =  	800;
+server noarchive int pr_cmd_turret_flame =  	2000;
+server noarchive int pr_cmd_turret_tesla =  	1800;
+server noarchive int pr_cmd_turret_chaingun =   2300;
+server noarchive int pr_cmd_turret_shotgun =    1000;
+server noarchive int pr_cmd_turret_rail =  	    1600;
+server noarchive int pr_cmd_turret_bfg =  	    20000;
+server noarchive int pr_cmd_disp_health =  	    600;
+server noarchive int pr_cmd_disp_ammo =  		600;
+//server noarchive int pr_cmd_airstrike =  		850;// Updateable price.
+server noarchive int pr_cmd_moneybag =  		3000;
+server noarchive int pr_cmd_minefield =  		750;
+server noarchive int pr_cmd_sandbags =  		200;
+
+//Mech prices
+server noarchive int pr_mech =  				12000;
+server noarchive int pr_mu_nails =  			2500;
+server noarchive int pr_mu_rockets =  		    5500;
+server noarchive int pr_mu_armor =  			5000;
+server noarchive int pr_mu_speed =  			3000;
+server noarchive int pr_mu_life_save =  		30000;
+server noarchive int pr_mu_self_destruct =  	8000;
+server noarchive int pr_mu_auto_repair =  	    4000;
+server noarchive int pr_mu_efficiency =  		15000;
+
+//Stimpack Up. prices
+server noarchive int pr_su_overhealth =  	250;
+server noarchive int pr_su_amount =  		100;
+server noarchive int pr_su_extradosis =  	400;
+server noarchive int pr_su_hardshell =  	150;
+server noarchive int pr_su_cicatrizate =    550;
+server noarchive int pr_su_caffeine =  	    525;
+server noarchive int pr_su_stimulant =  	600;
+
+server noarchive int pr_rt_u4 =  	3; // Unlock tier 4 (U.P)
+server noarchive int pr_rt_u3 =  	2; // Unlock tier 3 (U.P)
+server noarchive int pr_rt_u2 =  	1; // Unlock tier 2 (U.P)
+server noarchive int pr_rt_4 =  	3800;
+server noarchive int pr_rt_3 =  	2750;
+server noarchive int pr_rt_2 =  	1250;
+server noarchive int pr_rt_1 =  	500;
+
+//Play Up. prices
+server noarchive int pr_pu_PowUpUpgrade_Defense = 	3;
+server noarchive int pr_pu_PowUpUpgrade_Attack = 	3;
+server noarchive int pr_pu_mechsync = 			    10;
+server noarchive int pr_pu_expansiverestock = 	    2;
+server noarchive int pr_pu_bodyenhancement = 		3;
+server noarchive int pr_pu_armorrepair = 			3;
+server noarchive int pr_pu_spawnshield = 			2;
+server noarchive int pr_pu_healcoins = 			    2;
+server noarchive int pr_pu_prometeo = 			    4;
+server noarchive int pr_pu_runesync = 			    2;

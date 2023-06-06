@@ -45,6 +45,7 @@ function void SamuTerm_InitPages(void){
 	Label_setColor(wallet[1],CR_cyan);
 	Label_setShow(wallet[1], true);
 
+	/*
 	int panel = Panel_Add(80.0, 80.0, 20, 15);
 	Panel_SetVirtualSize(panel, 32.0, 32.0);
 	Panel_SetScrollAmount(panel, 4.0, 4.0);
