@@ -1,7 +1,7 @@
 
 
 function void StExecute_BuyMechTank(void){
-	if(GetPlayCredits() < CheckInventory("Mech_Buy")){
+	if(GetPlayCredits() < Mech_GetPrice()){
 		Toaster_ShowToast("Not enough credits!",CR_RED);
 	}else{
 		Toaster_ShowToast("The War Mech is your's to drive!",CR_GREEN);
@@ -10,7 +10,7 @@ function void StExecute_BuyMechTank(void){
 }
 
 function void STExecute_GetMechTank(void){
-	sf_RemoveCredits(CheckInventory("Mech_Buy"), PlayerNumber());
+	sf_RemoveCredits(Mech_GetPrice(), PlayerNumber());
 	
 	SetActivatorToPlayer(PlayerNumber());
 	Acs_ExecuteAlways(305, 0);

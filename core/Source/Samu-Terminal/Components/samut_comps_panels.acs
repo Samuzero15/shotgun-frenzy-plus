@@ -13,30 +13,24 @@ function int Panel_Add(int x, int y, int wx8, int hx8){
 		int rect = RectCreate(x,y,fw,fh);
 		Panel_setRect(i,rect);
 		Panel_SetDefaultProps(i);
-		Panel_GenerateBack(i);
-
 		panel_count++;
-	}else print(s:"No more panels to add!");
+	}else log(s:"No more panels to add!");
 	
 	return i;
 }
 
-function void Panel_AddCompOff(int p, int rect, int offx, int offy){ // Add some offset
-	Panel_AddCompEX(p, rect, -1, offx, offy, false);
-}
-
-function void Panel_AddCompPos(int p, int rect, int pos){ // Pick a specific position
-	Panel_AddCompEX(p, rect, pos, 0.0, 0.0, false);
-}
-
-function void Panel_AddComp(int p, int rect){ // Simple
-	Panel_AddCompEX(p, rect, -1, 0.0, 0.0, false);
-}
-
-function void Panel_AddCompEX(int p, int rect, int numb_pos, int offx, int offy,bool absolute){
+function void Panel_AddCompEX(int p, int type, int id, int numb_pos, int offx, int offy, bool absolute){
 	// The full function
 	//log(s:"Panel number of components: ", d:Panel_GetNumberOfComps(p));
-	int count = numb_pos <= -1 ? (Panel_GetNumberOfComps(p) - Panel_GetNumberOfCompsAbs(p)) : numb_pos;
+	int panel_comp_stack = Panel_GetNumberOfComps(p);
+	int rect = Component_getRect(type, id);
+	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_TYPE] = type;
+	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_ID] = id;
+	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_ISABSOLUTE] = absolute;
+	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_SHOWSTATUS] = false;
+	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_ISANCHORED] = (!absolute || (absolute && numb_pos > -1));
+
+	int count = numb_pos <= -1 ? (panel_comp_stack - Panel_GetNumberOfCompsAbs(p)) : numb_pos;
 	int pos[2];
 	pos[0] = Panel_getClipX1(p);
 	pos[1] = Panel_getClipY1(p); 
@@ -44,18 +38,20 @@ function void Panel_AddCompEX(int p, int rect, int numb_pos, int offx, int offy,
 	spacing[0] = Panel_GetSpacingX(p);
 	spacing[1] = Panel_GetSpacingY(p); 
 	int columns = Panel_GetColumns(p);
-	int anchors[2];
-	anchors[0] = Panel_getAnchorX(p);
-	anchors[1] = Panel_getAnchorY(p); 
-	
 	/*log(s:"Virtual size: (", f:virtual_size[0], s:", ", f:virtual_size[1], s:")");
 	log(s:"Spacing Anchored: (", f:spacing_anchored[0], s:", ", f:spacing_anchored[1], s:")");
 	log(s:"Component base position Anchored: (", f:comp_pos[0], s:", ", f:comp_pos[1], s:")");
 	*/
-
-	SetRectPosition(rect, 
-		pos[0] + (absolute ? offx : spacing[0]*(count%columns) + offx), 
-		pos[1] + (absolute ? offx : spacing[1]*(count/(columns)) + offy));
+	if(absolute){
+		if(numb_pos > -1)
+			SetRectPosition(rect, pos[0] + spacing[0]*(numb_pos%columns) + offx, pos[1] + spacing[1]*(numb_pos/columns) + offy);
+		else SetRectPosition(rect, pos[0] + offx, pos[1] + offy);
+	} else{
+		SetRectPosition(rect, 
+		pos[0] + spacing[0]*(count%columns) + offx, 
+		pos[1] + spacing[1]*(count/columns) + offy);
+	}
+	
 	Panel_AddCompNumber(p);
 	if(absolute) Panel_AddCompAbsNumber(p);
 }
@@ -64,8 +60,10 @@ function void Panel_SetDefaultProps(int i){
 	Panel_ResetCompNumber(i);
 	Panel_ResetCompAbsNumber(i);
 	Panel_setColor(i,CR_WHITE);
+	Panel_setShow(i, false);
 	Panel_setTag(i,0);
 	Panel_setHudId(i, ST_HID_PAN_BACKG + i);
+	Panel_SetTitleHudId(i, ST_HID_PAN_TITLE + i);
 	Panel_SetScrollAmount(i, 1.0, 1.0);
 	Panel_SetVirtualSize(i, 0.0, 0.0);
 	Panel_SetColumns(i, 1);
@@ -142,21 +140,88 @@ function bool Panel_ButtonIsClicked(int panel, int btnx1, int btny1, int btnx2, 
 	return res;
 }
 
+Function bool Panel_ContainsComponent(int panel, int btnx1, int btny1, int btnx2, int btny2){
+	int pan_clip[4] = { // Get the clipping points of the panel.
+		Panel_GetClipX1(panel),
+		Panel_GetClipY1(panel),
+		Panel_GetClipX2(panel),
+		Panel_GetClipY2(panel)
+	};
+	return pan_clip[2] >= btnx1 && pan_clip[0] <= btnx1 &&  
+	pan_clip[2] >= btnx2 && pan_clip[0] <= btnx2 &&  
+	pan_clip[3] >= btny1 && pan_clip[1] <= btny1 &&  
+	pan_clip[3] >= btny2 && pan_clip[1] <= btny2;
+}
+
+Function bool Panel_IntersectsImgButton (int panel, int ibtn){
+	return Panel_ContainsComponent(panel, Imgbutton_GetX1Offseted(ibtn), Imgbutton_GetY1Offseted(ibtn), 
+	Imgbutton_GetX2Offseted(ibtn), Imgbutton_GetY2Offseted(ibtn));
+}
+
+Function bool Panel_IntersectsStrButton (int panel, int ibtn){
+	return Panel_ContainsComponent(panel, Strbutton_GetX1Offseted(ibtn), Strbutton_GetY1Offseted(ibtn), 
+	Strbutton_GetX2Offseted(ibtn), Strbutton_GetY2Offseted(ibtn));
+}
+
+function void Panel_UpdateAnchorPoint(int pan){
+	int x = Panel_GetVirtualOffsetX(pan), y = Panel_GetVirtualOffsetY(pan);
+	int columns = Panel_GetColumns(pan) == 0 ? 1 : Panel_GetColumns(pan);
+	int spacing[2] = {Panel_GetSpacingX(pan), Panel_GetSpacingY(pan)};
+	int virtual_size[2] = {Panel_GetVirtualWidth(pan), Panel_GetVirtualHeight(pan)};
+	int clip_size[2] = {Panel_getClipWidth(pan), Panel_getClipHeight(pan)};
+	int count = Panel_GetNumberOfComps(pan) - Panel_GetNumberOfCompsAbs(pan);
+	int anchor_off[2] = {Panel_GetAnchorPointOffX(pan), Panel_GetAnchorPointOffY(pan)};
+	switch(Panel_GetAnchorX(pan)){
+		case STPANEL_ANCHOR_CENTER: 
+			x = x + (FixedDiv(virtual_size[0]+clip_size[0], 2.0)-(FixedDiv(spacing[0]*columns,2.0))) + anchor_off[0]; 
+			//log(s:"Position: (", f:x, s:", ", f:y, s:") ");
+		break;
+		case STPANEL_ANCHOR_LEFT: 
+			x = x + anchor_off[0];
+		break;
+		case STPANEL_ANCHOR_RIGHT: 
+			x = x + ((virtual_size[0]+clip_size[0])-(spacing[0]*columns)) + anchor_off[0];
+		break;
+	}
+	switch(Panel_GetAnchorY(pan)){
+		case STPANEL_ANCHOR_CENTER: 
+			y = y + (FixedDiv(virtual_size[1]+clip_size[1], 2.0)-(FixedDiv(spacing[1]*(count/(columns)),2.0))) + anchor_off[1]; 
+			//log(s:"Position: (", f:x, s:", ", f:y, s:") ");
+		break;
+		case STPANEL_ANCHOR_TOP: 
+			y = y + anchor_off[1];
+		break;
+		case STPANEL_ANCHOR_BOTTOM: 
+			y = y + ((virtual_size[1]+clip_size[1])-(spacing[1]*(count/(columns)))) + anchor_off[1];
+		break;
+	}
+	Panel_SetAnchorPoint(pan, x, y);
+}
+
 function void Panel_UpdateScrollButtons(int pan){
 	int btn_up = panels_scrollbuttons[pan][0];
 	int btn_down = panels_scrollbuttons[pan][1];
 	int btn_left = panels_scrollbuttons[pan][2];
 	int btn_right = panels_scrollbuttons[pan][3];
+	
 	int pan_show = Panel_getShow(pan);
-
+	int pan_color = Panel_getColor(pan);
 	ImgButton_setShow(btn_up, pan_show);
 	ImgButton_setShow(btn_down, pan_show);
 	ImgButton_setShow(btn_left, pan_show);
 	ImgButton_setShow(btn_right, pan_show);
 	if(!pan_show) return;
-	/*
 	
-	*/
+	int pan_tag = Panel_GetTag(pan);
+	ImgButton_setTag(btn_up, pan_tag);
+	ImgButton_setTag(btn_down, pan_tag);
+	ImgButton_setTag(btn_left, pan_tag);
+	ImgButton_setTag(btn_right, pan_tag);
+	ImgButton_setColor(btn_up, pan_color);
+	ImgButton_setColor(btn_down, pan_color);
+	ImgButton_setColor(btn_left, pan_color);
+	ImgButton_setColor(btn_right, pan_color);
+
 	int pan_x = Panel_getX(pan);
 	int pan_y = Panel_getY(pan);
 	int pan_h = Panel_getHeight(pan);
@@ -207,13 +272,13 @@ function str Panel_GenerateBack(int i){
 		for(int y = 0; y < h; y++){
 		if	(y == 0) {
 			//btnstring = StrAdd(btnstring, "\nJ");
-			log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
+			//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
 			Panel_MakeScrollButton(i, 0, xbtn, ybtn, 0, yscroll, "WP11");
 		}   
 		else if	(y == h-1){
 			//btnstring = StrAdd(btnstring, "\nK");
 			ybtn += 8.0*(h-1);
-			log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
+			//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
 			Panel_MakeScrollButton(i, 1, xbtn, ybtn,  0, -yscroll, "WP10");
 		}
 		btnstring = StrAdd(btnstring, "\nD");
@@ -232,13 +297,13 @@ function str Panel_GenerateBack(int i){
 			if (k == 0){
 				//btnstring = StrAdd(btnstring, "L");
 				xbtn += 8.0;
-				log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
+				//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
 				Panel_MakeScrollButton(i, 2, xbtn, ybtn, xscroll, 0, "WP12");
 			} 
 			else if (k == w-1){
 				//btnstring = StrAdd(btnstring, "M");
 				xbtn += 8.0*(w-1);
-				log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
+				//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
 				Panel_MakeScrollButton(i, 3, xbtn, ybtn, -xscroll, 0, "WP13");
 			}
 			btnstring = StrAdd(btnstring, "H");

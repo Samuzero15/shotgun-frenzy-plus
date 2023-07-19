@@ -9,12 +9,16 @@ function int StrButton_getX1(int bid){ return RectX1(StrButton_getRect(bid)); }
 function int StrButton_getX2(int bid){ return RectX2(StrButton_getRect(bid)); }
 function int StrButton_getY1(int bid){ return RectY1(StrButton_getRect(bid)); }
 function int StrButton_getY2(int bid){ return RectY2(StrButton_getRect(bid)); }
+function int StrButton_getXM(int bid) {return StrButton_getX1(bid) + FixedDiv(StrButton_getWidth(bid), 2.0);}
+function int StrButton_getYM(int bid) {return StrButton_getY1(bid) + FixedDiv(StrButton_getHeight(bid), 2.0);}
 function int StrButton_getOffsetX(int bid){return RectGetUserData(StrButton_getRect(bid), ST_CPROP14);}
 function int StrButton_getOffsetY(int bid){return RectGetUserData(StrButton_getRect(bid), ST_CPROP15);}
 function int Strbutton_GetX1Offseted(int bid){return StrButton_getX1(bid) + StrButton_getOffsetX(bid);}
 function int Strbutton_GetY1Offseted(int bid){return StrButton_getY1(bid) + StrButton_getOffsetY(bid);}
 function int Strbutton_GetX2Offseted(int bid){return StrButton_getX2(bid) + StrButton_getOffsetX(bid);}
 function int Strbutton_GetY2Offseted(int bid){return StrButton_getY2(bid) + StrButton_getOffsetY(bid);}
+function int Strbutton_GetXMOffseted(int bid){return StrButton_getXM(bid) + StrButton_getOffsetX(bid);}
+function int Strbutton_GetYMOffseted(int bid){return StrButton_getYM(bid) + StrButton_getOffsetY(bid);}
 function int StrButton_getWidth(int bid){ return RectWidth(StrButton_getRect(bid)); }
 function int StrButton_getHeight(int bid){ return RectHeight(StrButton_getRect(bid)); }
 function int StrButton_getTag(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP1);}
@@ -29,6 +33,7 @@ function int StrButton_getColor(int bid){ return RectGetUserData(StrButton_getRe
 function int StrButton_getHudId(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP8); }
 function int StrButton_getBack(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP9); }
 function int StrButton_getParent(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP10); }
+function int StrButton_getBackHudId(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP16); }
 
 ///////////////////////////////////////
 // Setters for the String Buttons!
@@ -92,6 +97,10 @@ function void StrButton_setColor(int bid, int color){
 
 function void StrButton_setHudId(int bid, int hudid){
 	SetRectUserData(StrButton_getRect(bid), ST_CPROP8, hudid);
+}
+
+function void StrButton_setBackHudId(int bid, int hudid){
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP16, hudid);
 }
 
 function void StrButton_setBack(int bid, str back){

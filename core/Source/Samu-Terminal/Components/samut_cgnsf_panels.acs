@@ -21,6 +21,7 @@ function int Panel_GetVirtualWidth(int pid){ return RectGetUserData(Panel_getRec
 function int Panel_GetVirtualHeight(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP9);}
 function int Panel_GetNumberOfComps(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP10);}
 function str Panel_GetTitle(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP11);}
+function int Panel_GetTitleHudId(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP26);}
 function int Panel_GetTitleAnchorX(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP17);}
 function int Panel_GetTitleAnchorY(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP18);}
 function int Panel_GetScrollX(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP12);}
@@ -37,6 +38,10 @@ function int Panel_GetClipY2(int pid){ return Panel_GetClipY1(pid) + Panel_GetCl
 function int Panel_GetNumberOfCompsAbs(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP23);}
 function int Panel_GetAnchorX(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP24);}
 function int Panel_GetAnchorY(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP25);}
+function int Panel_GetAnchorPointX(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP27);}
+function int Panel_GetAnchorPointY(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP28);}
+function int Panel_GetAnchorPointOffX(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP29);}
+function int Panel_GetAnchorPointOffY(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP30);}
 ///////////////////////////////////////
 // Setters for teh Panels!
 ///////////////////////////////////////
@@ -59,6 +64,7 @@ function void Panel_setBack(int pid, str back){
 
 function void Panel_setShow(int pid, bool show){ 
 	SetRectUserData(Panel_getRect(pid), ST_CPROP4, show);
+	Panel_UpdateScrollButtons(pid);
 }
 
 function void Panel_setHudId(int pid, int hid){ 
@@ -76,6 +82,11 @@ function void Panel_SetOffsetY(int pid, int yoff){
 function void Panel_SetVirtualOffset(int pid, int xoff, int yoff){ 
 	SetRectUserData(Panel_getRect(pid), ST_CPROP6, xoff);
 	SetRectUserData(Panel_getRect(pid), ST_CPROP7, yoff);
+}
+
+function void Panel_ResetVirtualOffset (int pid){
+	Panel_SetVirtualOffset(pid, 0.0, 0.0);
+	Panel_UpdateScrollButtons(pid);
 }
 
 function void Panel_SetVirtualSize(int pid, int w, int h){ 
@@ -120,6 +131,14 @@ function void Panel_SetClipRect(int pid, int x, int y, int w, int h){
 	SetRectUserData(Panel_getRect(pid), ST_CPROP22, h <= -1 ? Panel_GetHeight(pid)-16.0 : h);
 }
 
+function void Panel_SetClipWidth(int pid, int w){ 
+	SetRectUserData(Panel_getRect(pid), ST_CPROP21, w <= -1 ? Panel_GetWidth(pid)-16.0 : w);
+}
+
+function void Panel_SetClipHeight(int pid, int h){ 
+	SetRectUserData(Panel_getRect(pid), ST_CPROP22, h <= -1 ? Panel_GetHeight(pid)-16.0 : h);
+}
+
 function void Panel_ResetClipRect(int pid){ 
 	Panel_SetClipRect(pid, -1, -1, -1, -1);
 }
@@ -132,4 +151,18 @@ function void Panel_ApplyClipRect(int pid, int word_wrap_size){
 function void Panel_SetAnchors(int pid, int anchorx, int anchory){ 
 	SetRectUserData(Panel_getRect(pid), ST_CPROP24, anchorx);
 	SetRectUserData(Panel_getRect(pid), ST_CPROP25, anchory);
+}
+
+function void Panel_setTitleHudId(int pid, int hid){ 
+	SetRectUserData(Panel_getRect(pid), ST_CPROP26, hid);
+}
+
+function void Panel_SetAnchorPoint(int pid, int x, int y){ 
+	SetRectUserData(Panel_getRect(pid), ST_CPROP27, x);
+	SetRectUserData(Panel_getRect(pid), ST_CPROP28, y);
+}
+
+function void Panel_SetAnchorOffset(int pid, int x, int y){ 
+	SetRectUserData(Panel_getRect(pid), ST_CPROP29, x);
+	SetRectUserData(Panel_getRect(pid), ST_CPROP30, y);
 }

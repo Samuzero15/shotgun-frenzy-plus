@@ -17,10 +17,12 @@
 
 int MechUpTop = 0;
 int mechup_list[FP_MECHUP_MAX][5];
+int mech_buy = 0;
 int MechUpTrack = 0;
 
 function void SFPlus_DefineMechUps(void){
 	MechUpTop = 0;
+	mech_buy = GetCvar("pr_mech");
 	MechUp_Add ("Nails","MechUp_Nails", "nails", 5,
 		"Make them harder, make them better...");
 	
@@ -44,6 +46,10 @@ function void SFPlus_DefineMechUps(void){
 	
 	MechUp_Add1Up("Efficiency", "MechUp_Efficiency", "efficiency",
 		"Repair, fire and reload more effectively!.");
+}
+
+function int Mech_GetPrice(void){
+	return mech_buy;
 }
 
 function void MechUp_Add1Up (str name, str actor, str price, str desc){

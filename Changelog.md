@@ -9,6 +9,24 @@
 
 ## v1 - The path of the damned...
 
+#### (6 / 6 - 18 / 7 / 2023) [New SFWEPDEF Lump, Inputs on terminals]
+	// Heyo! another month of developing with some other changes!
+	*) Splitted the 3 terminal main functions (Draw, Input and Update) into 3 scripts for more processing. (and fool out the runaway errors!)
+	*) Prompt dialoge has been rewritten with the new Panels on Samu Terminal.
+	*) Done some refactoring in Samu-Terminal related to panels.
+	*) Now you can use your own input to select clickable components!
+	// Move with movement keys, use to click, alt-fire to close (controls still pending to mention)
+	!*) Now buy weapon page is now revamped, including the new panels!
+	!*) Now it is possible to add 50 packs per category, 3 weapons per pack, and 8 upgrades* per weapon through modding (and the new SFWEPDEF will help you with that!)
+	// *The upgrade weapon page still needs some work to be actually useful with the new incoming 8 upgrades per weapon.
+	!+) 3 wild SFWEPDEF lump file has appeared!
+	// SFWEPDEF? da hell is that? you might ask. That lump is not supported by Zdoom, or Zandronum in general, uuuh what?
+	// Well, since Zandronum 3.2 recent alpha (Look up Readme file for the link), I went full on experiment with some new TDRR functions for reading lumps.
+	// Thanks to that, it is now possible to simplify and make it accesible for everyone for adding new mods on SF+.
+	// You do not need to use ACS to recompile a script, now weapon addons are extremly easy to add! That's why SFWEPDEFs are there.
+	// But more about that later~ I'll update the docs for it, I Promise.
+	*) Fixed the cvar pricing for stimpacks, mechs and runes.
+
 #### (4 - 5 / 6 / 2023) [SSG's reworks, Price Edit, Cvarified Prices]
 	!*) Now the prices will be checked by console vars!
 	+) A new Price Edit option menu.

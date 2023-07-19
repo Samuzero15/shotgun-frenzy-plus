@@ -23,7 +23,8 @@ WEPS_SHOTGUN_SSG_NAME =    "SSG";
 WEPS_SHOTGUN_SSG_DESC =    "Your mighty double barreled shotgun."
                             "The weapon contains the sawed off functionality "
                             "letting you to fire 1 barrel at the time for a "
-                            "more controlled attack.\n\n"
+                            "more controlled attack.\n"
+                            "Close impacts will cause AoE damage, and more damage caused by the muzzle flash.\n\n"
 	                        "Pri. fire: 2 Barrel Fire (2 Shells)\n"
                             "Sec. Fire: 1 Barrel Fire (1 Shells)";
 
@@ -80,7 +81,7 @@ WEPS_SUPPORT_SUPP_DESC =    "Tool that drops ammo and health supplies for the ma
 	                        "Pri. Fire: Drop Ammo (1 Ammo Supplies)\n"
                             "Sec. Fire: Drop Health (1 Health Supplies)";
 
-WEPS_SUPPORT_SUPP_UP0_NAME = "Mega Supplier Restocker";
+WEPS_SUPPORT_SUPP_UP0_NAME = "Mega Supply Restocker";
 WEPS_SUPPORT_SUPP_UP0_DESC = "Supply more resources, and in a wider range. Supplying health can create 2 steel plating armors.";
 
 WEPS_SUPPORT_PTCH_NAME =    "Patcher Gun";
@@ -193,7 +194,7 @@ WEPS_CRYO_DESC = "Ice-Cold weapons, made for slowing down enemies.";
 WEPS_CRYO_IBOW_NAME =    "Icicle Bow";
 WEPS_CRYO_IBOW_DESC =    "Launches an explosive ice-shard bolt that does heavy damage."
                          "\nSlow firing, but cools enemies on impact, can froze them to death." 
-                         "\nfrozen enemies halves defense and can shatter and spread icicles.";
+                         "\ncooled enemies halves defense and can shatter and spread icicles.";
 WEPS_CRYO_IBOW_UP0_NAME = "Multi-Bolt Icicle Bow";
 WEPS_CRYO_IBOW_UP0_DESC = "2 Bolts more per fire, more Fire Ratio.";
 WEPS_CRYO_IBOW_UP1_NAME = "Heavy Icicle Bow";

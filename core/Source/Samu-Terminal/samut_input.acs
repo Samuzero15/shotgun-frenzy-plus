@@ -12,24 +12,107 @@ function void SamuTerm_Input(int play){
 		return;
 	}
 
+	for(int i = 0; i < input_bind_count; i++){
+		int input_key = input_bind[i][0];
+		if(PlayerKeyDown(play, input_key) && PlayerKeyPressed(play, input_key)) {
+			SamuTerm_CallOpExecute
+				(input_bind[i][1], input_bind[i][2], input_bind[i][3],  input_bind[i][4]);
+				localAmbientSound("SamuTerm/Select",127);
+		}
+	}
+
 	if(PlayerKeyDown(play, FIRE1) && PlayerKeyPressed(play, FIRE1)){
-		if(!GetPromptState())
+		if(!Prompt_GetState())
 			CheckClick();
 		else CheckPromptClick();
 	}
 	
-	if(!GetPromptState())
+	if(!Prompt_GetState())
 		CheckHover();
 	else CheckPromptHover();
+}
+
+function void Input_AddBind(int input, int execute, int exearg1, int exearg2, int exearg3){
+	input_bind[input_bind_count][0] = input;
+	input_bind[input_bind_count][1] = execute;
+	input_bind[input_bind_count][2] = exearg1;
+	input_bind[input_bind_count][3] = exearg2;
+	input_bind[input_bind_count][4] = exearg3;
+	//log(s:"Input: ", d:input, s:", binded with execute: ", d:execute);
+	input_bind_count++;
+}
+
+function int RectDistanceToPoint(int x1, int x2, int y1, int y2, int w, int h, int px, int py) {
+	int rx = FixedDiv((x1 + x2), 2.0);
+    int ry = FixedDiv((y1 + y2), 2.0);
+    int rwidth = w;
+    int rheight = h;
+
+    int dx = max(FixedDiv(abs(px - rx) - rwidth, 2.0), 0);
+    int dy = max(FixedDiv(abs(py - ry) - rheight, 2.0), 0);
+    return fpow(dx, 2) + fpow(dy, 2);
+}
+
+function void Input_AddSelectableComponent(int type, int comp){
+	input_selectcomp[input_selectcomp_count][0] = type;
+	input_selectcomp[input_selectcomp_count][1] = comp;
+
+	if(type == STCOMP_IBTN){
+		input_selectcomp[input_selectcomp_count][2] = 
+		RectDistanceToPoint(
+			ImgButton_GetX1Offseted(comp), ImgButton_GetX2Offseted(comp), ImgButton_GetY1Offseted(comp), ImgButton_GetY2Offseted(comp),
+			ImgButton_getWidth(comp), ImgButton_GetHeight(comp), CursorX(), CursorY());
+	}
+	else if(type == STCOMP_SBTN){
+		input_selectcomp[input_selectcomp_count][2] = RectDistanceToPoint(
+			StrButton_GetX1Offseted(comp), StrButton_GetX2Offseted(comp), StrButton_GetY1Offseted(comp), StrButton_GetY2Offseted(comp),
+			StrButton_getWidth(comp), StrButton_GetHeight(comp), CursorX(), CursorY());
+	}
+	//log(s:"Selectable input detected, type: ", d:type, s:", component: ", 
+	//d:comp, s:", distance between cursor: ", f:input_selectcomp[input_selectcomp_count][2]);
+	input_selectcomp_count++;
+}
+
+function void Input_ClearSelectableComps(void){
+	input_selectcomp_count = 0;
+	//log(s:"Selectable Component Cleared");
+	for(int i = 0; i < 50 ; i++){
+		input_selectcomp[i][0] = -1;
+		input_selectcomp[i][1] = -1;
+		input_selectcomp[i][2] = -1;
+	}
+}
+
+function void Input_ClearBinds(void){
+	input_bind_count = 0;
+	//log(s:"Inputs Cleared");
+	for(int i = 0; i < 20 ; i++){
+		input_bind[i][0] = -1;
+		input_bind[i][1] = -1;
+		input_bind[i][2] = -1;
+		input_bind[i][3] = -1;
+		input_bind[i][4] = -1;
+	}
+}
+
+Function void Input_BindDirections (void){
+	Input_AddBind(BT_MOVELEFT, STEXE_SELECT, 1, 0, 0);
+	Input_AddBind(BT_MOVERIGHT, STEXE_SELECT, 2, 0, 0);
+	Input_AddBind(BT_FORWARD, STEXE_SELECT, 4, 0, 0);
+	Input_AddBind(BT_BACK, STEXE_SELECT, 3, 0, 0);
 }
 
 function void CheckPromptClick(void){
 	int rect;
 	bool inputDone = false;
 	
-	inputDone = ExecuteOnClick_IBtn(prompt_ok);
-	if(!inputDone) inputDone = ExecuteOnClick_IBtn(prompt_yes); 
-	if(!inputDone) inputDone = ExecuteOnClick_IBtn(prompt_no);
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(prompt_data[STPROMPT_DATA_OKBTN]);
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(prompt_data[STPROMPT_DATA_YESBTN]); 
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(prompt_data[STPROMPT_DATA_NOBTN]);
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][0]);
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][1]);
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][2]);
+	if(!inputDone) inputDone = ExecuteOnClick_IBtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][3]);
 	
 	if(!inputDone){
 		localAmbientSound("SamuTerm/Error",127);
@@ -41,10 +124,9 @@ function bool ExecuteOnClick_IBtn(int i){
 	int rect =  ImgButton_getRect(i);
 	int panel = ImgButton_getParent(i);
 	if(ImgButton_getShow(i) != ST_Disabled){
-		
 		if(panel != -1){
 			//log(s:"click!");
-			if(Panel_ImgBtnIsClicked(panel, i, FIRE1) || (GetPromptState() && RectIsClicked(rect,FIRE1))){
+			if((Panel_GetShow(panel) && Panel_ImgBtnIsClicked(panel, i, FIRE1)) || (Prompt_GetState() && RectIsClicked(rect,FIRE1))){
 				SamuTerm_CallOpExecute 
 				(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
 				ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
@@ -83,7 +165,7 @@ function bool ExecuteOnClick_sBtn(int i){
 	if(StrButton_getShow(i) != ST_Disabled){
 		if(panel != -1){
 			//log(s:"click!");
-			if(Panel_StrBtnIsClicked(panel, i, FIRE1)){
+			if( Panel_GetShow(panel) && Panel_StrBtnIsClicked(panel, i, FIRE1)){
 				SamuTerm_CallOpExecute 
 				(StrButton_getExecute(i), StrButton_getExeArg1(i),  
 				StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
@@ -107,12 +189,13 @@ function bool ExecuteOnClick_sBtn(int i){
 function void CheckClick(void){
 	int rect, i = 0;
 	bool inputDone = false;
-	for(i = 0; i < comp_count[STCOMP_IBTN] && !inputDone; i++){
-		inputDone = ExecuteOnClick_IBtn(i);
-	}
-	for(i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
-		inputDone = ExecuteOnClick_SBtn(i);
-	}
+		for(i = 0; i < comp_count[STCOMP_IBTN] && !inputDone; i++){
+			inputDone = ExecuteOnClick_IBtn(i);
+		}
+		for(i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
+			inputDone = ExecuteOnClick_SBtn(i);
+		}
+	
 	//log(s:"Click!");
 }
 
@@ -123,16 +206,19 @@ function void CheckHover(void){
 	bool nowHover = false;
 	lasthover = comphover;
 	comphover = -1;
+	comptypehover = -1;
 	//log(s:"No Change. ", d:nowHover);
-	
+	//Input_ClearSelectableComps();
 	for(i = 0; i < comp_count[STCOMP_IBTN] && !inputDone; i++){
 		if(ImgButton_getShow(i) != ST_Disabled){
+			//Input_AddSelectableComponent(STCOMP_IBTN, i);
 			rect = ImgButton_getRect(i);
 			panel = ImgButton_GetParent(i);
 			if(panel != -1){
-				if(Panel_ImgBtnIsHovered(panel, i)){
+				if(Panel_GetShow(panel) && Panel_ImgBtnIsHovered(panel, i)){
 					ExecuteOnHover_IBtn(i);
 					comphover = i;
+					comptypehover = STCOMP_IBTN;
 					inputDone = true;
 					break;
 				}
@@ -140,6 +226,7 @@ function void CheckHover(void){
 				if(RectIsHovered(rect)){
 					ExecuteOnHover_IBtn(i);
 					comphover = i;
+					comptypehover = STCOMP_IBTN;
 					inputDone = true;
 					break;
 				}
@@ -148,17 +235,20 @@ function void CheckHover(void){
 	}
 	for(i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
 		if(StrButton_getShow(i) != ST_Disabled){
+			//Input_AddSelectableComponent(STCOMP_SBTN, i);
 			rect = StrButton_getRect(i);
 			panel = StrButton_GetParent(i);
 			if(panel != -1){
-				if(Panel_StrBtnIsHovered(panel, i)){
+				if(Panel_GetShow(panel) && Panel_StrBtnIsHovered(panel, i)){
 					comphover = i;
+					comptypehover = STCOMP_SBTN;
 					inputDone = true;
 					break;
 				}
 				
 			} else if (RectIsHovered(rect)){
 				comphover = i;
+				comptypehover = STCOMP_SBTN;
 				inputDone = true;
 				break;
 			}
@@ -171,21 +261,28 @@ function void CheckHover(void){
 
 function void CheckPromptHover(void){
 	int rect;
-	bool inputDone = false, nowhover;
-	
+	bool inputDone = false;
+
+	lasthover = comphover;
+	comphover = -1;
+	comptypehover = -1;
 	
 	//log(s:"No Change. ", d:nowHover);
-	inputDone = IsHovering_ibtn(prompt_ok);
-	if(!inputDone) inputDone = IsHovering_ibtn(prompt_yes); 
-	if(!inputDone) inputDone = IsHovering_ibtn(prompt_no);
+	inputDone = IsHovering_ibtn(prompt_data[STPROMPT_DATA_OKBTN]);
+	if(!inputDone) inputDone = IsHovering_ibtn(prompt_data[STPROMPT_DATA_YESBTN]); 
+	if(!inputDone) inputDone = IsHovering_ibtn(prompt_data[STPROMPT_DATA_NOBTN]);
+	if(!inputDone) inputDone = IsHovering_ibtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][0]);
+	if(!inputDone) inputDone = IsHovering_ibtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][1]);
+	if(!inputDone) inputDone = IsHovering_ibtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][2]);
+	if(!inputDone) inputDone = IsHovering_ibtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][3]);
 	
-	nowhover = inputDone;
+	if(inputDone){
+		comptypehover = STCOMP_IBTN;
+		comphover = inputDone;
+	} 
 	
-	if(nowHover && !onceHover){
+	if(lasthover != comphover && (comphover != -1))
 		localAmbientSound("SamuTerm/Hover",127);
-		oncehover = true;
-	}else if (!nowHover && onceHover) 
-		oncehover = false;
 	//log(s:"Click!");
 }
 

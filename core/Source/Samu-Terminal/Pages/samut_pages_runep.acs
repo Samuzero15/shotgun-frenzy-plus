@@ -20,7 +20,7 @@ function void RunePage_Update(int pageTag) {
 			}
 			
 			Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k], 
-			strparam(s:"Tier ", d:k+1, s:" - (",d:CheckInventory(strparam(s:"pr_rt_", d:(k+1))),s:" $)"));
+			strparam(s:"Tier ", d:k+1, s:" - (",d:Rune_getTierPrice(k), s:" $)"));
 		}
 
 		Label_setText(runepage_vars[3], "");

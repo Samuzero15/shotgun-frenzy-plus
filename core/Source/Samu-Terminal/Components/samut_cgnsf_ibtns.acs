@@ -9,12 +9,16 @@ function int ImgButton_getX1(int bid){return RectX1(ImgButton_getRect(bid));}
 function int ImgButton_getY1(int bid){return RectY1(ImgButton_getRect(bid));}
 function int ImgButton_getWidth(int bid){return RectWidth(ImgButton_getRect(bid));}
 function int ImgButton_getHeight(int bid){return RectHeight(ImgButton_getRect(bid));}
+function int ImgButton_getXM(int bid) {return ImgButton_getX1(bid) + FixedDiv(ImgButton_getWidth(bid), 2.0);}
+function int ImgButton_getYM(int bid) {return ImgButton_getY1(bid) + FixedDiv(ImgButton_getHeight(bid), 2.0);}
 function int ImgButton_getX2(int bid){return RectX2(ImgButton_getRect(bid));}
 function int ImgButton_getY2(int bid){return RectY2(ImgButton_getRect(bid));}
 function int Imgbutton_GetX1Offseted(int bid){return ImgButton_getX1(bid) + ImgButton_getOffsetX(bid);}
 function int Imgbutton_GetY1Offseted(int bid){return ImgButton_getY1(bid) + ImgButton_getOffsetY(bid);}
 function int Imgbutton_GetX2Offseted(int bid){return ImgButton_getX2(bid) + ImgButton_getOffsetX(bid);}
 function int Imgbutton_GetY2Offseted(int bid){return ImgButton_getY2(bid) + ImgButton_getOffsetY(bid);}
+function int Imgbutton_GetXMOffseted(int bid){return ImgButton_getXM(bid) + ImgButton_getOffsetX(bid);}
+function int Imgbutton_GetYMOffseted(int bid){return ImgButton_getYM(bid) + ImgButton_getOffsetY(bid);}
 function int ImgButton_getTag(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP1);}
 function str ImgButton_getImage(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP2);}
 function str ImgButton_getHoverImage(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP3);}
@@ -31,6 +35,7 @@ function int ImgButton_getHoverArg3(int bid){return RectGetUserData(ImgButton_ge
 function int ImgButton_getParent(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP10);}
 function int ImgButton_getOffsetX(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP6);}
 function int ImgButton_getOffsetY(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP17);}
+function int ImgButton_getColor(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP18);}
 
 ///////////////////////////////////////
 // Setters for teh Image Buttons!
@@ -106,4 +111,8 @@ function void ImgButton_setParent(int bid, int parent){
 function void ImgButton_setOffsets(int bid, int x, int y){
 	SetRectUserData(ImgButton_getRect(bid), ST_CPROP6, x);
 	SetRectUserData(ImgButton_getRect(bid), ST_CPROP17, y);
+}
+
+function void ImgButton_setColor(int bid, int color){
+	SetRectUserData(ImgButton_getRect(bid), ST_CPROP18, color);
 }

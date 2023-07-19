@@ -12,34 +12,21 @@ function void SamuTerm_Update(void){
 	//Here, change stuff before drawing!
 	// (Like, dunno, showing your money n stuff?)
 	
-		UpdateCursor();
-	UpdatePromptImgButtons();
-	UpdatePromptLabels();
+	UpdateCursor();
+	UpdatePrompt();
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
 	showByAlphaTag();
-	UpdatePanels();
 	UpdatePages();
-	//Label_setText(techs, StrParam(s:"Human engineering 1 Researched?: ", d:getTechFlag_C(TECH_HEALT1)));
-	//Label_setText(label1, StrAddInt("Money: ", CheckInventory("BasicArmor")));
 }
 
-Function void UpdatePromptLabels(void){
-	for (int i = 0; i < comp_count[STCOMP_LBL]; i++){
-		int parent = Label_getParent(i);
-		if(parent == getPromptRect()){
-			UpdateLabel(i, getPromptState());
-		}
-	}
-}
-
-Function void UpdatePromptImgButtons(void){
-	for (int i = 0; i < comp_count[STCOMP_IBTN]; i++){
-		int parent = ImgButton_getParent(i);
-		if(parent == getPromptRect()){
-			UpdateImgButton(i, getPromptState());
-		}
-	}
+Function void UpdatePrompt(void){
+	ImgButton_setShow(prompt_data[STPROMPT_DATA_OKBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_OKBTN])) && Prompt_GetState());
+	ImgButton_setShow(prompt_data[STPROMPT_DATA_YESBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_YESBTN])) && Prompt_GetState());
+	ImgButton_setShow(prompt_data[STPROMPT_DATA_NOBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_NOBTN])) && Prompt_GetState());
+	Label_setShow(prompt_data[STPROMPT_DATA_LABEL], Prompt_GetState());
+	Panel_setShow(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetState());
+	UpdatePanel(prompt_data[STPROMPT_DATA_PANEL]);
 }
 
 Function void ShowByAlphaTag(void){
@@ -50,8 +37,8 @@ Function void ShowByAlphaTag(void){
 
 Function void HideOrShowByTag(int tag, bool show){
 	int i, compTag;
-
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
+		if(i == prompt_data[STPROMPT_DATA_YESBTN] || i == prompt_data[STPROMPT_DATA_NOBTN] || i == prompt_data[STPROMPT_DATA_OKBTN]) continue;
 		comptag = ImgButton_getTag(i);
 		if(comptag == tag){
 			ImgButton_setShow(i, show);
@@ -66,6 +53,7 @@ Function void HideOrShowByTag(int tag, bool show){
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_LBL]; i++){
+		if(i == prompt_data[STPROMPT_DATA_LABEL]) continue;
 		comptag = Label_getTag(i);
 		if(comptag == tag){
 			Label_setShow(i, show);
@@ -78,76 +66,63 @@ Function void HideOrShowByTag(int tag, bool show){
 			Image_setShow(i, show);
 		}
 	}
+	UpdatePanels(tag, show);
 }
 
-function void UpdatePanels(void){
-	for (int pan = 0; pan < panel_count; pan++){
-		Panel_UpdateScrollButtons(pan);
-		for(int i = 0; i < Panel_GetNumberOfComps(pan); i++){
-			int component = panels_comps_index[pan][i][1];
-			int x = Panel_GetVirtualOffsetX(pan);
-			int y = Panel_GetVirtualOffsetY(pan);
-			int show = Panel_GetShow(pan);
-			int comp_show = panels_comps_index[pan][i][3];
-
-			int virtual_size[2];
-			virtual_size[0] = Panel_GetVirtualWidth(pan);
-			virtual_size[1] = Panel_GetVirtualHeight(pan);
-			int spacing_anchored[2];
-			int comp_pos[2];
-			int spacing[2];
-			spacing[0] = Panel_GetSpacingX(pan);
-			spacing[1] = Panel_GetSpacingY(pan); 
-			int columns = Panel_GetColumns(pan);
-
-			int count = Panel_GetNumberOfComps(pan) - Panel_GetNumberOfCompsAbs(pan);
-
-			switch(Panel_GetAnchorX(pan)){
-				case STPANEL_ANCHOR_CENTER: 
-					spacing_anchored[0] = FixedDiv(virtual_size[0]+Panel_getClipWidth(pan), 2.0)-(FixedDiv(spacing[0]*columns,2.0));
-					x = Panel_GetVirtualOffsetX(pan) + spacing_anchored[0]; 
-				break;
-				case STPANEL_ANCHOR_LEFT: x = Panel_GetVirtualOffsetX(pan); break;
-				case STPANEL_ANCHOR_RIGHT: break;
-			}
-			switch(Panel_GetAnchorY(pan)){
-				case STPANEL_ANCHOR_CENTER: 
-					spacing_anchored[1] = FixedDiv(virtual_size[1]+Panel_getClipHeight(pan), 2.0)-(FixedDiv(spacing[1]*(count/(columns)),2.0));
-					y = Panel_GetVirtualOffsetY(pan) + spacing_anchored[1]; 
-				break;
-				case STPANEL_ANCHOR_TOP: y = Panel_GetVirtualOffsetY(pan);  break;
-				case STPANEL_ANCHOR_BOTTOM: break;
-			}
-
-			// Check if the component is a label, a imgbutton, an img or a strbutton.
-			switch (panels_comps_index[pan][i][0]){
-				case STCOMP_IBTN:
-					if(ImgButton_GetParent(component) == pan){
-						ImgButton_setShowEx(component, !show ? false : comp_show, false);
+function void UpdatePanel(int pan){
+	Panel_UpdateScrollButtons(pan);
+	Panel_UpdateAnchorPoint(pan);
+	int x = Panel_GetAnchorPointX(pan);
+	int y = Panel_GetAnchorPointY(pan);
+	for(int i = 0; i < Panel_GetNumberOfComps(pan); i++){
+		int component = panels_comps_index[pan][i][STPANEL_COMPDATA_ID];
+		int panshow = Panel_GetShow(pan);
+		//int is_absolute = panels_comps_index[pan][i][STPANEL_COMPDATA_ISABSOLUTE];
+		int comp_show = panels_comps_index[pan][i][STPANEL_COMPDATA_SHOWSTATUS];
+		int is_anchored = panels_comps_index[pan][i][STPANEL_COMPDATA_ISANCHORED];
+		
+		// Check if the component is a label, a imgbutton, an img or a strbutton.
+		switch (panels_comps_index[pan][i][STPANEL_COMPDATA_TYPE]){
+			case STCOMP_IBTN:
+				if(ImgButton_GetParent(component) == pan){
+					ImgButton_setShowEx(component, panshow == false ? false : comp_show, false);
+					if(is_anchored) 
 						ImgButton_setOffsets(component, x, y);
-					}
-				break;
-				case STCOMP_LBL: 
-					if(Label_GetParent(component) == pan){
-						Label_setShowEx(component, !show ? false : comp_show, false);
+				}
+			break;
+			case STCOMP_LBL: 
+				if(Label_GetParent(component) == pan){
+					Label_setShowEx(component, !panshow ? false : comp_show, false);
+					if(is_anchored) 
 						Label_setOffsets(component, x, y);
-					}
-				break;
-				case STCOMP_IMG: 
-					if(Image_GetParent(component) == pan){
-						//log(s:"Panel show? ", d:show, s:" Image button, Component show? ", d:comp_show,  s:", Result? ",d:!show ? false : comp_show);
-						Image_setShowEx(component, !show ? false : comp_show, false);
+				}
+			break;
+			case STCOMP_IMG: 
+				if(Image_GetParent(component) == pan){
+					//log(s:"Panel show? ", d:show, s:" Image button, Component show? ", d:comp_show,  s:", Result? ",d:!show ? false : comp_show);
+					Image_setShowEx(component, !panshow ? false : comp_show, false);
+					if(is_anchored) 
 						Image_setOffsets(component, x, y);
-					}
-				break;
-				case STCOMP_SBTN: 
-					if(StrButton_GetParent(component) == pan){
-						StrButton_setShowEx(component, !show ? false : comp_show, false);
+				}
+			break;
+			case STCOMP_SBTN: 
+				if(StrButton_GetParent(component) == pan){
+					StrButton_setShowEx(component, !panshow ? false : comp_show, false);
+					if(is_anchored) 
 						StrButton_setOffsets(component, x, y);
-					}
-				break;
-			}
-				
+				}
+			break;
+		}
+	}
+	//log(s:"Panel Update Done");
+}
+
+function void UpdatePanels(int tag, int show){
+	for (int pan = 0; pan < panel_count; pan++){
+		int comptag = Panel_GetTag(pan);
+		if(comptag == tag){
+			Panel_SetShow(pan, show);
+			if(show) UpdatePanel(pan);
 		}
 	}
 }

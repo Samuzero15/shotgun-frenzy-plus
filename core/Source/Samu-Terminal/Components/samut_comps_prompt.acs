@@ -7,189 +7,176 @@
 #include "samut_cgnsf_prompt.acs"
 
 function void Prompt_Initialize (void){
-	
-	int w = 30, h = 20;
+
+	int w = 20, h = 12;
 	int fw = 16.0 + (8.0*w);
 	int fh = 16.0 + (8.0*h);
 	
 	int posx = FixedDiv(640.0, 2.0)-FixedDiv(fw, 2.0);
 	int posy = FixedDiv(480.0, 2.0)-FixedDiv(fh, 2.0);
-	
-	int rect = RectCreate(posx,posy, fw, fh);
-	setPromptRect(rect);
-	
-	Prompt_SetProperties ("A question",CR_GRAY,w,h, false);
-	setPromptTag(200);
-	
-	//log(s:" X: ", f:RectX2(rect), s:", Y: ", f:RectY2(rect));
-	
-	prompt_ok = ImgButton_Add_P(
-		0.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
-		
-	ImgButton_SetProperties(prompt_ok, "BTNOK", "Okay",false, STEXE_OKAY);
-	ImgButton_setHudID(prompt_ok,ST_HID_PROMPT_BTNOK);
-	ImgButton_setHoverImage(prompt_ok, "btnhov");
-	ImgButton_setShow(prompt_ok, false);
+	int rect = RectCreate(0, 0, 0, 0);
+	Prompt_SetRect(rect);
+	Prompt_SetDefaultProps();
+	Prompt_SetTag(200);
 
-	prompt_yes = ImgButton_Add_P(
-		-32.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
-		
-	ImgButton_SetProperties(prompt_yes, "BTNYES", "Accept",false, STEXE_YES);
-	ImgButton_setHoverImage(prompt_yes, "btnhov");
-	ImgButton_setHudID(prompt_yes, ST_HID_PROMPT_BTNYES);
-	
-	
-	prompt_no = ImgButton_Add_P(
-		32.0,0.0, 32.0, 32.0, ST_COMPALIGN_South, rect); 
-	ImgButton_SetProperties(prompt_no, "BTNNO", "Decline",false, STEXE_NO);
-	ImgButton_setHoverImage(prompt_no, "btnhov");
-	ImgButton_setHudID(prompt_no,ST_HID_PROMPT_BTNNO);
-	
-	prompt_label = Label_Add_P 
-		(0.0,0.0, ST_COMPALIGN_North, rect);
-	Label_SetText(prompt_label,"This is a small message from the prompt.");
-	Label_SetColor(prompt_label, getPromptColor());
-	Label_SetFont(prompt_label,"SMALLFNT");
-	Label_SetShow(prompt_label, true);
-	Label_setHudID(prompt_label,ST_HID_PROMPT_LBL);
-	Label_setTag(prompt_label,-9999);
-	Label_setWrapWidth(prompt_label, (fw-86.0)>>16);
-	
+	prompt_data[STPROMPT_DATA_PANEL] = Panel_Add(posx, posy, w, h);
+	Panel_SetAnchors(prompt_data[STPROMPT_DATA_PANEL], STPANEL_ANCHOR_CENTER, STPANEL_ANCHOR_TOP);
+	Panel_SetTag(prompt_data[STPROMPT_DATA_PANEL], 200);
+	Panel_SetTitle(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetTitle());
+	Panel_SetColor(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetColor());
+	Panel_SetHudId(prompt_data[STPROMPT_DATA_PANEL], ST_HID_PROMPT_BACK);
+	Panel_SetTitleHudId(prompt_data[STPROMPT_DATA_PANEL], ST_HID_PROMPT_TITLE);
+	Panel_SetClipHeight(prompt_data[STPROMPT_DATA_PANEL], fh - 24.0 - 32.0);
+
+	ImgButton_SetHudId(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][0], ST_HID_PROMPT_SCRBTN_LEFT);
+	ImgButton_SetHudId(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][1], ST_HID_PROMPT_SCRBTN_RIGHT);
+	ImgButton_SetHudId(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][2], ST_HID_PROMPT_SCRBTN_DOWN);
+	ImgButton_SetHudId(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][3], ST_HID_PROMPT_SCRBTN_UP);
+
+	prompt_data[STPROMPT_DATA_OKBTN] = ImgButton_AddToPanelAbs(32.0, 32.0, prompt_data[STPROMPT_DATA_PANEL], FixedDiv(fw, 2.0)-24.0, fh-(16.0)-(32.0)); 
+	ImgButton_SetImage(prompt_data[STPROMPT_DATA_OKBTN], "BTNOK");
+	ImgButton_SetExecute(prompt_data[STPROMPT_DATA_OKBTN], STEXE_OKAY);
+	ImgButton_setHudID(prompt_data[STPROMPT_DATA_OKBTN],ST_HID_PROMPT_BTNOK);
+	ImgButton_setHoverImage(prompt_data[STPROMPT_DATA_OKBTN], "btnhov");
+
+	prompt_data[STPROMPT_DATA_YESBTN] = ImgButton_DupToPanelAbs(prompt_data[STPROMPT_DATA_OKBTN], prompt_data[STPROMPT_DATA_PANEL], FixedDiv(fw, 2.0)-24.0-(48.0), fh-(16.0)-(32.0));
+	ImgButton_SetImage(prompt_data[STPROMPT_DATA_YESBTN], "BTNYES");
+	ImgButton_SetExecute(prompt_data[STPROMPT_DATA_YESBTN], STEXE_YES);
+	ImgButton_setHudID(prompt_data[STPROMPT_DATA_YESBTN],ST_HID_PROMPT_BTNYES);
+
+	prompt_data[STPROMPT_DATA_NOBTN] = ImgButton_DupToPanelAbs(prompt_data[STPROMPT_DATA_OKBTN], prompt_data[STPROMPT_DATA_PANEL], FixedDiv(fw, 2.0)-24.0+(48.0), fh-(16.0)-(32.0));
+	ImgButton_SetImage(prompt_data[STPROMPT_DATA_NOBTN], "BTNNO");
+	ImgButton_SetExecute(prompt_data[STPROMPT_DATA_NOBTN], STEXE_NO);
+	ImgButton_setHudID(prompt_data[STPROMPT_DATA_NOBTN],ST_HID_PROMPT_BTNNO);
+
+	prompt_data[STPROMPT_DATA_LABEL] = Label_AddToPanel(prompt_data[STPROMPT_DATA_PANEL]);
+	Label_SetText(prompt_data[STPROMPT_DATA_LABEL],"This is a small message from the prompt.");
+	Label_setAligns(prompt_data[STPROMPT_DATA_LABEL], HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
+	Label_SetColor(prompt_data[STPROMPT_DATA_LABEL], Prompt_GetColor());
+	Label_SetFont(prompt_data[STPROMPT_DATA_LABEL],"SMALLFNT");
+	Label_SetShow(prompt_data[STPROMPT_DATA_LABEL], true);
+	Label_setHudID(prompt_data[STPROMPT_DATA_LABEL],ST_HID_PROMPT_LBL);
+	Label_setTag(prompt_data[STPROMPT_DATA_LABEL],-9999);
+	Label_setWrapWidth(prompt_data[STPROMPT_DATA_LABEL], (fw-16.0)>>16);
+
 	Prompt_ResetOptions();
-	
 	Prompt_SetOptions(0);
-	setPromptState(false);
+	Prompt_SetState(false);
 }
 
 function void Prompt_SetOptions(int style)
 {
 	switch(style){
 		case 1: // Yes or not answer.
-			ImgButton_setTag(prompt_yes,getPromptTag());
-			ImgButton_setTag(prompt_no,getPromptTag());
-			ImgButton_setTag(prompt_ok,-9999);
+			ImgButton_setTag(prompt_data[STPROMPT_DATA_YESBTN],Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]));
+			ImgButton_setTag(prompt_data[STPROMPT_DATA_NOBTN],Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]));
+			//ImgButton_setShow(prompt_data[STPROMPT_DATA_YESBTN], true);
+			//ImgButton_setShow(prompt_data[STPROMPT_DATA_NOBTN], true);
+			ImgButton_setTag(prompt_data[STPROMPT_DATA_OKBTN],-9999);
 		break;
 		default: // Accept answer.
-			ImgButton_setTag(prompt_yes,-9999);
-			ImgButton_setTag(prompt_no,-9999);
-			ImgButton_setTag(prompt_ok,getPromptTag());
+			ImgButton_setTag(prompt_data[STPROMPT_DATA_YESBTN],-9999);
+			ImgButton_setTag(prompt_data[STPROMPT_DATA_NOBTN],-9999);
+			ImgButton_setTag(prompt_data[STPROMPT_DATA_OKBTN],Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]));
+			//ImgButton_setShow(prompt_data[STPROMPT_DATA_OKBTN], true);
 		break;
 	}
 }
 
 function void Prompt_ResetOptions(void)
 {
-	ImgButton_setShow(prompt_yes, false);
-	ImgButton_setShow(prompt_no, false);
-	ImgButton_setShow(prompt_ok, false);
-	ImgButton_setTag(prompt_yes,-9999);
-	ImgButton_setTag(prompt_no,-9999);
-	ImgButton_setTag(prompt_ok,-9999);
+	ImgButton_setShow(prompt_data[STPROMPT_DATA_YESBTN], false);
+	ImgButton_setShow(prompt_data[STPROMPT_DATA_NOBTN], false);
+	ImgButton_setShow(prompt_data[STPROMPT_DATA_OKBTN], false);
+	ImgButton_setTag(prompt_data[STPROMPT_DATA_YESBTN],-9999);
+	ImgButton_setTag(prompt_data[STPROMPT_DATA_NOBTN],-9999);
+	ImgButton_setTag(prompt_data[STPROMPT_DATA_OKBTN],-9999);
+	Panel_SetVirtualOffset(prompt_data[STPROMPT_DATA_PANEL], 0.0, 0.0);
 }
 
 function void Prompt_Resize(int w, int h){
+	return;
+	/*
 	int fw = 16.0 + (8.0*w);
 	int fh = 16.0 + (8.0*h);
 	
 	int posx = FixedDiv(640.0, 2.0)-FixedDiv(fw, 2.0);
 	int posy = FixedDiv(480.0, 2.0)-FixedDiv(fh, 2.0);
 	
-	//print(s:"Before reposition: ",f:getPromptX());
+	//print(s:"Before reposition: ",f:Prompt_GetX());
 	
-	SetRectPosition(getPromptRect(), posX, posY);
-	SetRectSize(getPromptRect(), fw, fh);
+	SetRectPosition(Prompt_GetRect(), posX, posY);
+	SetRectSize(Prompt_GetRect(), fw, fh);
 	
-	//print(s:"After reposition: ",f:getPromptX());
+	//print(s:"After reposition: ",f:Prompt_GetX());
 	Prompt_GenerateBack(w, h);
-	AdjustImgButton_P(prompt_yes,-32.0, 0.0, ST_COMPALIGN_South, getPromptRect());
-	AdjustImgButton_P(prompt_no,32.0, 0.0, ST_COMPALIGN_South, getPromptRect());
-	AdjustImgButton_P(prompt_ok, 0.0, 0.0, ST_COMPALIGN_South, getPromptRect());
-	AdjustLabel_P(prompt_label, 0.0, 0.0, ST_COMPALIGN_North, getPromptRect());
-}
-
-function void Prompt_GenerateBack(int w, int h){
-	str btnstring = "A";
-	
-	//print(s:"w: ", d:w, s:", h: ", d:h);
-	
-	if(w != 0){
-		for(int j = 0; j < w; j++){
-			btnstring = StrAdd(btnstring, "B");
-		}
-	}
-	btnstring = StrAdd(btnstring, "C");
-	
-	if(w != 0 && h != 0){
-		for(int y = 0; y < h; y++){
-		btnstring = StrAdd(btnstring, "\nD");
-			for(int x = 0; x < w; x++){
-				btnstring = StrAdd(btnstring, "E");
-			}
-		btnstring = StrAdd(btnstring, "F");
-		}
-	}
-	
-	btnstring = StrAdd(btnstring, "\nG");
-	if(w != 0){
-		for(int k = 0; k < w; k++){
-			btnstring = StrAdd(btnstring, "H");
-		}
-	}
-
-	btnstring = StrAdd(btnstring, "I");
-	
-	setPromptBack(btnstring);
+	AdjustImgButton_P(prompt_data[STPROMPT_DATA_YESBTN],-32.0, 0.0, ST_COMPALIGN_South, Prompt_GetRect());
+	AdjustImgButton_P(prompt_data[STPROMPT_DATA_NOBTN],32.0, 0.0, ST_COMPALIGN_South, Prompt_GetRect());
+	AdjustImgButton_P(prompt_data[STPROMPT_DATA_OKBTN], 0.0, 0.0, ST_COMPALIGN_South, Prompt_GetRect());
+	AdjustLabel_P(prompt_data[STPROMPT_DATA_LABEL], 0.0, 0.0, ST_COMPALIGN_North, Prompt_GetRect());
+	*/
 }
 
 function void Prompt_Ask(str title, str msg, str color){
+	Prompt_AskEx(title, msg, color, 0.0, 0.0);
+}
+
+function void Prompt_AskEx(str title, str msg, str color, int virt_w, int virt_h){
 	Prompt_ResetOptions();
-	setPromptTitle(title);
-	setPromptColor(color);
-	setPromptExecute_YesAction(0);
-	setPromptExecute_NoAction(0);
+	Panel_SetTitle(prompt_data[STPROMPT_DATA_PANEL], title);
+	Panel_SetColor(prompt_data[STPROMPT_DATA_PANEL], color);
+	Panel_SetVirtualSize(prompt_data[STPROMPT_DATA_PANEL], virt_w, virt_h);
+	Input_ClearBinds();
+	Prompt_SetExecute_YesAction(0);
+	Prompt_SetExecute_NoAction(0);
+	Input_AddBind(BT_USE, STEXE_YES,0,0,0);
+	Input_AddBind(BT_ALTATTACK, STEXE_NO,0,0,0);
+	Input_AddBind(BT_CROUCH, STEXE_NO,0,0,0);
 	
-	Label_setText(prompt_label, msg);
-	Label_setColor(prompt_label, color);
+	Label_setText(prompt_data[STPROMPT_DATA_LABEL], msg);
+	Label_setColor(prompt_data[STPROMPT_DATA_LABEL], color);
+	Label_setShow(prompt_data[STPROMPT_DATA_LABEL], true);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][0], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][1], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][2], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][3], color);
 	Prompt_SetOptions(1);
-	
-	// In case i was'nt clear enough.
-	ImgButton_setParent(prompt_ok, getPromptRect());
-	ImgButton_setParent(prompt_yes, getPromptRect());
-	ImgButton_setParent(prompt_no, getPromptRect());
-	
+
 	localAmbientSound("SamuTerm/HopIn",127);
-	setPromptState(true);
+	//SamuTerm_CallOpExecute(STEXE_GTCAT,Prompt_GetTag(),0,0);
+	Prompt_SetState(true);
 }
 
 function void Prompt_ExecuteOnTrue(int cmd, int arg1, int arg2, int arg3){
-	setPromptExecute_YesAction(cmd);
-	setPromptExeArgs_YesAction(arg1,arg2,arg3);
+	Prompt_SetExecute_YesAction(cmd);
+	Prompt_SetExeArgs_YesAction(arg1,arg2,arg3);
 }
 
 function void Prompt_ExecuteOnFalse(int cmd, int arg1, int arg2, int arg3){
-	setPromptExecute_NoAction(cmd);
-	setPromptExeArgs_NoAction(arg1,arg2,arg3);
+	Prompt_SetExecute_NoAction(cmd);
+	Prompt_SetExeArgs_NoAction(arg1,arg2,arg3);
 }
 
 function void Prompt_Notify(str title, str msg, str color){
 	Prompt_ResetOptions();
-	setPromptTitle(title);
-	setPromptColor(color);
-	
-	Label_setText(prompt_label, msg);
-	Label_setColor(prompt_label, color);
+	Panel_SetTitle(prompt_data[STPROMPT_DATA_PANEL], title);
+	Panel_SetColor(prompt_data[STPROMPT_DATA_PANEL], color);
+	Input_AddBind(BT_USE, STEXE_OKAY,0,0,0);
+
+	Label_setText(prompt_data[STPROMPT_DATA_LABEL], msg);
+	Label_setColor(prompt_data[STPROMPT_DATA_LABEL], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][0], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][1], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][2], color);
+	ImgButton_SetColor(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][3], color);
 	Prompt_SetOptions(0);
 	
-	setPromptState(true);
+	//SamuTerm_CallOpExecute(STEXE_GTCAT,Prompt_GetTag(),0,0);
+	Prompt_SetState(true);
 }
 
-function void Prompt_SetProperties (str title,int color,int w,int h, bool state){
-
-		Prompt_GenerateBack(w, h);
-		setPromptTitle(title);
-		setPromptState(state);
-		setPromptWindowId(1);
-		setPromptValue(0);
-		setPromptColor(color);
-		setPromptBack(tmp[2]);
+function void Prompt_SetDefaultProps (void){
+		Prompt_SetTitle("Prompt Title");
+		Prompt_SetState(false);
+		Prompt_SetColor(CR_BRICK);
 }

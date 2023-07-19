@@ -1,0 +1,213 @@
+
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// fl_lumpread.acs
+// The library for lump-reading, 
+// a new thing for Zandronum 3.2 that ease us the addon creation for mods, like this one!
+// TDRR, you absolute madlad.
+
+#library "fp_lumpread"
+#include "zcommon.acs"
+#include "acsutils.acs"
+#import "fl_WDir.acs"
+
+#define LUMPR_NTOKENS 50
+
+#libdefine LUMPR_VALUE_NULL     0
+#libdefine LUMPR_VALUE_INT      1
+#libdefine LUMPR_VALUE_FIXED    2
+#libdefine LUMPR_VALUE_STR      3
+#libdefine LUMPR_VALUE_BOOL     4
+#libdefine LUMPR_VALUE_LANGSTR  5
+
+int lumpread_tokenstack = 0;
+int lumpread_tokenlist[LUMPR_NTOKENS][2];
+int lumpread_commands[1000][2];
+int lumpread_commands_stack = 0;
+int lumpread_value_buffer[10000];
+
+function void LumpRead_AddToken(int tokenid, str token_str, int value_type){
+    if(tokenid >= LUMPR_NTOKENS){
+        log(s:"(LumpRead): Too much tokens, expand plz");
+        return;
+    }
+    lumpread_tokenlist[tokenid][0] = token_str;
+    lumpread_tokenlist[tokenid][1] = value_type;
+    lumpread_tokenstack++;
+}
+
+script "LumpRead_Execute" (int lump_name, int script_init_tokens, int script_process_lump){
+    //log(s:"lump_name: ", s:lump_name, s:" script_process_lump: ", s:script_process_lump);
+    //terminate;
+    LumpRead_ClearTokens();
+    while(ACS_NamedExecuteWithResult(script_init_tokens) != 1){
+        log(s:"Initializing tokens");
+        delay(1);
+    } 
+
+    int i = 0;
+    do {
+        i = LumpOpen(lump_name, i);
+        if(i != -1){
+            ACS_NamedExecuteAlways(script_process_lump, 0, i);
+        } else break;
+        delay(1);
+    } while (i != -1);
+    SetResultValue(true);
+}
+
+function void LumpRead_AddCommand (int command_tokenid, int expected_arg, str command_arg){
+    int value = LumpRead_ParseValue (command_arg, expected_arg);
+    lumpread_commands[lumpread_commands_stack][0] = command_tokenid;
+    lumpread_commands[lumpread_commands_stack][1] = value;
+    lumpread_commands_stack++;
+}
+
+function void LumpRead_ClearTokens (void){
+    for(int i = 0; i < lumpread_tokenstack; i++){
+        lumpread_tokenlist[i][0] = 0;
+        lumpread_tokenlist[i][1] = 0;
+    }
+    lumpread_tokenstack = 0;
+}
+
+function void LumpRead_TokenRead (int lump){
+    str text = LumpReadString(lump, 0);
+    text = StrAddChar(text, '\n'); // Add extra '\n' to process the last token
+    int len = StrLen(text);
+    int char_pos = 0;
+    int char_now = "";
+    int token = "";
+    int value = 0;
+    bool skip_write = false;
+    bool string_mode = false;
+    bool value_mode = false;
+    int command_tokenid = -1;
+    int command_arg = -1;
+    int expected_arg = 0;
+    int comment_state = 0;
+    bool multiline_comment = false;
+    bool multiline_comment_disable = false;
+    while(char_pos < len){
+        char_now = GetChar(text, char_pos);
+        //log(s:"Char read: ", c:char_now, s:"(", d:char_now,  s:")");
+        switch(char_now){
+            case '"': // "
+                string_mode = !string_mode;
+                if(!string_mode){
+                    skip_write = false;
+                }
+            break;
+            case '/':
+                if(multiline_comment && comment_state == 0){
+                    multiline_comment_disable = false;
+                    multiline_comment = false;
+                    //log(s:"Multiline comment stopped");
+                }else {
+                    comment_state++;
+                    //log(s:"Found a slash, possible comment? comment_state:", d:comment_state);
+                    //if(comment_state >= 2) log(s:"Single line comment detected, skipping until newline");
+                }
+                
+            break;
+            case '*':
+                //log(s:"Ok, got a star, it is a multiline comment? comment_state: ", d:comment_state);
+                if(multiline_comment && comment_state == 0){
+                    multiline_comment_disable = true;
+                }
+                else if(comment_state >= 1){
+                    multiline_comment = true;
+                    //log(s:"Multiline comment detected, skipping until, '*/'");
+                }
+                else token = strparam(s:token, c:char_now);
+            break;
+            case 13: // Carry return
+                if(string_mode) skip_write = true;
+            case '\n': case ' ': 
+                comment_state = 0;
+            case 9: // space, NL, HT
+                if(!string_mode){
+                    if(StrLen(token) > 0){
+                        //log(s:"Token read: ", s:token);
+                        int t = 0;
+                        for(t = 0; t < lumpread_tokenstack; t++){
+                            if(StrICmp(token, lumpread_tokenlist[t][0]) == 0 && !value_mode){
+                                command_tokenid = t;
+                                if(lumpread_tokenlist[t][1] >= LUMPR_VALUE_INT && lumpread_tokenlist[t][1] <= LUMPR_VALUE_LANGSTR){
+                                     //log(s:"Command detected, ", s:token, s:", expected value: ", d:lumpread_tokenlist[t][1]);
+                                     expected_arg = lumpread_tokenlist[t][1];
+                                     value_mode = true;
+                                }else{
+                                    //log(s:"Command detected, ", s:token, s:", no expected value: ");
+                                    LumpRead_AddCommand (command_tokenid, 0, 0);
+                                }
+                                break;
+                            }else if(value_mode){
+                                command_arg = token;
+                                LumpRead_AddCommand (command_tokenid, expected_arg, command_arg);
+                                value_mode = false;
+                                command_tokenid = -1;
+                                expected_arg = 0;
+                            }
+                        }
+                        
+                    } 
+                    token = "";
+                }
+                else{
+                    if(!skip_write && !(char_now == ' ' || char_now == 9 || char_now== '\n'))
+                        token = strparam(s:token, c:char_now);
+                }
+            break;
+            default:
+                if(string_mode) skip_write = false;
+                if(!skip_write && comment_state < 2 && !multiline_comment) 
+                    token = strparam(s:token, c:char_now);
+                /*else {
+                    log(s:"skippped Char: ", c:char_now, s:" (", d:char_now, s:")");
+                }*/
+            break;
+        }
+        char_pos++;
+    }
+}
+
+function bool LumpRead_ParseBool (str string){
+    bool res = false;
+    if(StrIEquals(string, "true") || StrIEquals(string, "1")) res = true;
+    else if (StrIEquals(string, "false") || StrIEquals(string, "0")) res = false;
+    return res;
+}
+
+function int LumpRead_ParseValue (str string_value, int value_type){
+    int value = -1;
+    switch(value_type){
+        case LUMPR_VALUE_INT:
+            value = atoi(string_value);
+        break;
+        case LUMPR_VALUE_FIXED:
+            value = atof(string_value);
+        break;
+        case LUMPR_VALUE_STR:
+            value = StrReplace(string_value, "\\n", strparam(c:'\n'));
+        break;
+        case LUMPR_VALUE_BOOL:
+            value = LumpRead_ParseBool(string_value);
+        break;
+        case LUMPR_VALUE_LANGSTR:
+            value = StrReplace(strparam(l:string_value), "\\n", strparam(c:'\n'));
+        break;
+        //default:
+            //log(s:"command: ", d:tokenid);
+    }
+    return value;
+}
+
+function void LumpRead_ClearData(void){
+    int k, l, n;
+    for(k = 0; k < 10000; k++){
+        lumpread_value_buffer[k] = 0;
+    }
+}

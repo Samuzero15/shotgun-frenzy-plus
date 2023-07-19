@@ -14,13 +14,24 @@
 //#include "samu_tools.acs"
 
 #define FP_Rune_MAX 20
+#define FP_RUNE_TIERS 4
 
 int RuneTop = 0;
 int RuneTrack = 0;
 int Rune_list[FP_Rune_MAX][7]; //[Amount][Props]
 int Rune_Saved[32];
+int Rune_TierUpPrices[FP_RUNE_TIERS];
+int Rune_TierPrices[FP_RUNE_TIERS];
 
 function void SFPlus_DefineRunes(void){
+    Rune_TierUpPrices[1] = GetCvar("pr_rt_u2");
+    Rune_TierUpPrices[2] = GetCvar("pr_rt_u3");
+    Rune_TierUpPrices[3] = GetCvar("pr_rt_u4");
+    Rune_TierPrices[0] = GetCvar("pr_rt_1");
+    Rune_TierPrices[1] = GetCvar("pr_rt_2");
+    Rune_TierPrices[2] = GetCvar("pr_rt_3");
+    Rune_TierPrices[3] = GetCvar("pr_rt_4");
+
     RuneTop = 0;
     int tier = 4;
 	Rune_Add ("Strength",       "StrengthRune",     "RBTN02", tier, "RuneDoubleDamage"); 
@@ -63,7 +74,8 @@ function void Rune_Add (str name, str actor, str btnimg, int tier, str poweracto
 	Rune_List[upg][1] = strparam(l:strparam(s:"FP_RD_",s:actor));
 	Rune_List[upg][2] = actor;
 	// Lookup fl_price.acs
-	Rune_List[upg][3] = strparam(s:"pr_rt_", d:tier); 
+	Rune_List[upg][3] = GetCvar(strparam(s:"pr_rt_", d:tier)); 
+    //log(s:"Rune price: ", d:GetCvar(strparam(s:"pr_rt_", d:tier)));
 	Rune_List[upg][4] = btnimg;
     Rune_List[upg][5] = tier;
     Rune_List[upg][6] = poweractor;
@@ -116,14 +128,11 @@ function void Rune_LoadAndEquip(void){
 }
 
 function int Rune_getTierUnlockPrice(int tier){ 
-    int res = 0;
-    switch(tier){
-        case 2: res = CheckInventory("pr_rt_u2"); break;
-        case 3: res = CheckInventory("pr_rt_u3"); break;
-        case 4: res = CheckInventory("pr_rt_u4"); break;
-        case 1: default: res = 0;
-    }
-    return res;
+    return Rune_TierUpPrices[tier-1];
+}
+
+function int Rune_getTierPrice(int tier){ 
+    return Rune_TierPrices[tier];
 }
 
 Script "SFPlus_RandomRune" (int arg) {

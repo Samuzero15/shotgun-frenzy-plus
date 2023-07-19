@@ -23,18 +23,23 @@
 //	just add a 0 on the right side, and do it for everyone.
 
 #LibDefine ST_NCOMPS 500
-#libDefine ST_HID_GLOBAL 2000
+#libDefine ST_HID_GLOBAL 10000
 
-#LibDefine ST_HID_BACK 			ST_HID_GLOBAL + 10000
-#LibDefine ST_HID_PAN_BACKG 		ST_HID_GLOBAL + 100*35
-#LibDefine ST_HID_PAN_TITLE 		ST_HID_GLOBAL + 100*30
-#LibDefine ST_HID_PAN_FOREG 		ST_HID_GLOBAL + 100*25
-#LibDefine ST_HID_IMG 			ST_HID_GLOBAL + 100*20
-#LibDefine ST_HID_SBTNF 		ST_HID_GLOBAL + 100*15
-#LibDefine ST_HID_IBTN 	 		ST_HID_GLOBAL + 100*10
-#LibDefine ST_HID_LBL 			ST_HID_GLOBAL + 100*5
+#LibDefine ST_HID_BACK 			ST_HID_GLOBAL*ST_HID_GLOBAL
+#LibDefine ST_HID_PAN_BACKG 		ST_HID_GLOBAL + ST_NCOMPS*40
+#LibDefine ST_HID_PAN_TITLE 		ST_HID_GLOBAL + ST_NCOMPS*35
+#LibDefine ST_HID_PAN_FOREG 		ST_HID_GLOBAL + ST_NCOMPS*30
+#LibDefine ST_HID_IMG 			ST_HID_GLOBAL + ST_NCOMPS*25
+#LibDefine ST_HID_SBTNB 		ST_HID_GLOBAL + ST_NCOMPS*20
+#LibDefine ST_HID_SBTNF 		ST_HID_GLOBAL + ST_NCOMPS*15
+#LibDefine ST_HID_IBTN 	 		ST_HID_GLOBAL + ST_NCOMPS*10
+#LibDefine ST_HID_LBL 			ST_HID_GLOBAL + ST_NCOMPS*5
 
-#LibDefine ST_HID_PROMPT 		ST_HID_GLOBAL + 17
+#LibDefine ST_HID_PROMPT_BACK 	ST_HID_GLOBAL + 21
+#LibDefine ST_HID_PROMPT_SCRBTN_DOWN 	ST_HID_GLOBAL + 20
+#LibDefine ST_HID_PROMPT_SCRBTN_UP 		ST_HID_GLOBAL + 19
+#LibDefine ST_HID_PROMPT_SCRBTN_RIGHT 	ST_HID_GLOBAL + 18
+#LibDefine ST_HID_PROMPT_SCRBTN_LEFT 	ST_HID_GLOBAL + 17
 #LibDefine ST_HID_PROMPT_TITLE  ST_HID_GLOBAL + 16
 #LibDefine ST_HID_PROMPT_BTNYES ST_HID_GLOBAL + 15
 #LibDefine ST_HID_PROMPT_BTNNO  ST_HID_GLOBAL + 14
@@ -120,6 +125,7 @@
 #libdefine STEXE_PLAYUP_SETDESC		46
 #libdefine STEXE_PLAYUP_BTNHOVER 	45
 
+#Libdefine STEXE_UPGPAGEWEPS 70
 #libdefine STEXE_UPGPAGECAT 42
 #libdefine STEXE_UPG1PAGEDESC 41
 #libdefine STEXE_UPG0PAGEDESC 40
@@ -158,6 +164,8 @@
 
 #libDefine STEXE_BUYWP_PDESC 8
 #libDefine STEXE_BUYWP_PSHOW 35
+#libDefine STEXE_BUYWP_MOVEWEP 60
+#libDefine STEXE_BUYWP_MOVEWPPAGE 61
 #libdefine STEXE_BUYWP 9
 #libdefine STEXE_GETWP 10
 #libdefine STEXE_GIVEWP -5
@@ -180,6 +188,7 @@
 #LibDefine STEXE_SYSOFF -3
 //DoNotTouch_End.
 #LibDefine STEXE_SAYHI -4
+#LibDefine STEXE_SELECT 99
 
 #libdefine FIRE1 BT_ATTACK
 #libdefine FIRE2 BT_ALTATTACK
@@ -251,12 +260,20 @@ int comp_rects_once[STVARS_COMPCOUNT1];
 #libdefine STPANEL_COUNT_CONTENT 100
 #libdefine STPANEL_COUNT_INDEX 50
 #libdefine STPANEL_COUNT_SCROLLBTNS 4
-#libdefine STPANEL_COUNT_PROPS 4
+#libdefine STPANEL_COUNT_PROPS 7
 #libdefine STPANEL_ANCHOR_CENTER 0
 #libdefine STPANEL_ANCHOR_TOP 1
 #libdefine STPANEL_ANCHOR_BOTTOM 2
 #libdefine STPANEL_ANCHOR_LEFT 3
 #libdefine STPANEL_ANCHOR_RIGHT 4
+
+#libdefine STPANEL_COMPDATA_TYPE 0
+#libdefine STPANEL_COMPDATA_ID 1
+#libdefine STPANEL_COMPDATA_ISABSOLUTE 2
+#libdefine STPANEL_COMPDATA_SHOWSTATUS 3
+#libdefine STPANEL_COMPDATA_ISANCHORED 4
+#libdefine STPANEL_COMPDATA_ANCHORX 5
+#libdefine STPANEL_COMPDATA_ANCHORY 6
 
 int panel_count = 0;
 int panels[STPANEL_COUNT_INDEX];
@@ -266,26 +283,35 @@ int panels_comps_index[STPANEL_COUNT_INDEX][STPANEL_COUNT_CONTENT][STPANEL_COUNT
 int pagetags[5];
 
 int comphover;
+int comptypehover;
 int lasthover;
 
-int CX, CY;
-
 //To do stuff with the components.
-int label1 = -1;
-int prompt_ok = -1;
-int prompt_yes = -1;
-int prompt_no = -1;
-int prompt_label = -1;
 
-int stexe_true = 0;
-int stexe_true_arg[3];
-int stexe_false = 0;
-int stexe_false_arg[3];
+// define these constants to clean out some space with the map variables.
+#libdefine STPROMPT_DATA_OKBTN 0
+#libdefine STPROMPT_DATA_YESBTN STPROMPT_DATA_OKBTN+1
+#libdefine STPROMPT_DATA_NOBTN STPROMPT_DATA_YESBTN+1
+#libdefine STPROMPT_DATA_LABEL STPROMPT_DATA_NOBTN+1
+#libdefine STPROMPT_DATA_PANEL STPROMPT_DATA_LABEL+1
+#libdefine STPROMPT_DATA_ONTRUE_EXECUTE STPROMPT_DATA_PANEL+1
+#libdefine STPROMPT_DATA_ONTRUE_EXEARG1 STPROMPT_DATA_ONTRUE_EXECUTE+1
+#libdefine STPROMPT_DATA_ONTRUE_EXEARG2 STPROMPT_DATA_ONTRUE_EXEARG1+1
+#libdefine STPROMPT_DATA_ONTRUE_EXEARG3 STPROMPT_DATA_ONTRUE_EXEARG2+1
+#libdefine STPROMPT_DATA_ONFALSE_EXECUTE STPROMPT_DATA_ONTRUE_EXEARG3+1
+#libdefine STPROMPT_DATA_ONFALSE_EXEARG1 STPROMPT_DATA_ONFALSE_EXECUTE+1
+#libdefine STPROMPT_DATA_ONFALSE_EXEARG2 STPROMPT_DATA_ONFALSE_EXEARG1+1
+#libdefine STPROMPT_DATA_ONFALSE_EXEARG3 STPROMPT_DATA_ONFALSE_EXEARG2+1
+#libdefine STPROMPT_DATA STPROMPT_DATA_ONFALSE_EXEARG3+1
+int prompt_data[STPROMPT_DATA];
+
+int input_bind_count = 0;
+int input_bind[20][6];
+int input_selectcomp_count = 0;
+int input_selectcomp_group = 0;
+int input_selectcomp[50][3];
 
 int wallet[2];
-int techs = 0;
-
-int pant = 0;
 
 int ptitle;
 //Other variables.
@@ -293,9 +319,6 @@ str imgbg = STSET_BACK;
 
 int exitResult = 0;
 bool onceHover = false;
-int callexit = 0;
-
-
 
 #LibDefine STMSGS_LOGIN 0
 #LibDefine STMSGS_LOGOUT 1
@@ -339,10 +362,13 @@ function void Vars_ClearCompCounts(void){
 			panels_scrollbuttons[i][j] = 0;
 		}
 		for (j = 0; j < STPANEL_COUNT_CONTENT; j++){
-			panels_comps_index[i][j][0] = -1;
-			panels_comps_index[i][j][1] = -1;
-			panels_comps_index[i][j][2] = -1;
-			panels_comps_index[i][j][3] = false;
+			panels_comps_index[i][j][STPANEL_COMPDATA_TYPE] = -1;
+			panels_comps_index[i][j][STPANEL_COMPDATA_ID] = -1;
+			panels_comps_index[i][j][STPANEL_COMPDATA_ISABSOLUTE] = -1;
+			panels_comps_index[i][j][STPANEL_COMPDATA_SHOWSTATUS] = false;
+			panels_comps_index[i][j][STPANEL_COMPDATA_ISANCHORED] = -1;
+			panels_comps_index[i][j][STPANEL_COMPDATA_ANCHORX] = -1;
+			panels_comps_index[i][j][STPANEL_COMPDATA_ANCHORY] = -1;
 		}
 	}
 }

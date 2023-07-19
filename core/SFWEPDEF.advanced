@@ -1,0 +1,158 @@
+defwpstart "WEPS_COMMANDO_NAME"
+    pack.desc "WEPS_COMMANDO_DESC"
+    pack.price_cvar "pr_wb_commando"
+    pack.monsterpressureadd 5
+    pack.category 1
+
+    addwpnstart "Repeater"
+        wep.name "WEPS_COMMANDO_REPE_NAME"
+        wep.desc "WEPS_COMMANDO_REPE_DESC"
+        wep.rcy_price_cvar "pr_wr_repeater"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Repeater_DoubleSpeed"
+            wepup.name "WEPS_COMMANDO_REPE_UP1_NAME"
+            wepup.desc "WEPS_COMMANDO_REPE_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_repeater_up1"
+            wepup.recy_price_cvar "pr_wr_repeater_up1"
+        addwpupend
+
+        addwpupstart "Repeater_BlastShells"
+            wepup.name "WEPS_COMMANDO_REPE_UP2_NAME"
+            wepup.desc "WEPS_COMMANDO_REPE_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_repeater_up2"
+            wepup.recy_price_cvar "pr_wr_repeater_up2"
+        addwpupend
+    addwpnend
+
+    addwpnstart "Dualshot"
+        wep.name "WEPS_COMMANDO_NAIL_NAME"
+        wep.desc "WEPS_COMMANDO_NAIL_DESC"
+        wep.rcy_price_cvar "pr_wr_repeater"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Dualshot_FlakShells"
+            wepup.name "WEPS_COMMANDO_NAIL_UP1_NAME"
+            wepup.desc "WEPS_COMMANDO_NAIL_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_dualshot_up1"
+            wepup.recy_price_cvar "pr_wr_dualshot_up1"
+        addwpupend
+
+        addwpupstart "Dualshot_Razor"
+            wepup.name "WEPS_COMMANDO_NAIL_UP2_NAME"
+            wepup.desc "WEPS_COMMANDO_NAIL_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_dualshot_up2"
+            wepup.recy_price_cvar "pr_wr_dualshot_up2"
+        addwpupend
+    addwpnend
+defwpend
+
+defwpstart "WEPS_EXPLOSIVE_NAME"
+    pack.desc "WEPS_EXPLOSIVE_DESC"
+    pack.price_cvar "pr_wr_launcher"
+    pack.monsterpressureadd 8
+    pack.category 1
+
+    addwpnstart "Launcher"
+        wep.name "WEPS_EXPLOSIVE_ROKT_NAME"
+        wep.desc "WEPS_EXPLOSIVE_ROKT_DESC"
+        wep.rcy_price_cvar "pr_wr_launcher"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Launcher_Exploder"
+            wepup.name "WEPS_EXPLOSIVE_ROKT_UP1_NAME"
+            wepup.desc "WEPS_EXPLOSIVE_ROKT_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_launcher_up1"
+            wepup.recy_price_cvar "pr_wr_launcher_up1"
+        addwpupend
+
+        addwpupstart "Launcher_Multi"
+            wepup.name "WEPS_EXPLOSIVE_ROKT_UP2_NAME"
+            wepup.desc "WEPS_EXPLOSIVE_ROKT_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_launcher_up2"
+            wepup.recy_price_cvar "pr_wr_launcher_up2"
+        addwpupend
+    addwpnend
+
+    addwpnstart "Flinger"
+        wep.name "WEPS_EXPLOSIVE_FLIN_NAME"
+        wep.desc "WEPS_EXPLOSIVE_FLIN_DESC"
+        wep.rcy_price_cvar "pr_wr_flinger"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Flinger_Expander"
+            wepup.name "WEPS_EXPLOSIVE_FLIN_UP1_NAME"
+            wepup.desc "WEPS_EXPLOSIVE_FLIN_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_flinger_up1"
+            wepup.recy_price_cvar "pr_wr_flinger_up1"
+        addwpupend
+
+        addwpupstart "Flinger_MinePlacer"
+            wepup.name "WEPS_EXPLOSIVE_FLIN_UP2_NAME"
+            wepup.desc "WEPS_EXPLOSIVE_FLIN_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_flinger_up2"
+            wepup.recy_price_cvar "pr_wr_flinger_up2"
+        addwpupend
+    addwpnend
+defwpend
+
+defwpstart "WEPS_PLASMA_NAME"
+    pack.desc "WEPS_PLASMA_DESC"
+    pack.price_cvar "pr_wb_plasma"
+    pack.monsterpressureadd 8
+    pack.category 1
+
+    addwpnstart "PlasmaGun"
+        wep.name "WEPS_PLASMA_PLSG_NAME"
+        wep.desc "WEPS_PLASMA_PLSG_DESC"
+        wep.rcy_price_cvar "pr_wr_plasmagun"
+        wep.icon "SHT2A0"
+
+        addwpupstart "PlasmaGun_Spread"
+            wepup.name "WEPS_PLASMA_PLSG_UP1_NAME"
+            wepup.desc "WEPS_PLASMA_PLSG_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_plasmagun_up2"
+            wepup.recy_price_cvar "pr_wr_plasmagun_up1"
+        addwpupend
+
+        addwpupstart "PlasmaGun_Advanced"
+            wepup.name "WEPS_PLASMA_PLSG_UP2_NAME"
+            wepup.desc "WEPS_PLASMA_PLSG_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_plasmagun_up1"
+            wepup.recy_price_cvar "pr_wr_plasmagun_up2"
+        addwpupend
+    addwpnend
+
+    addwpnstart "SF_Railgun"
+        wep.name "WEPS_PLASMA_RAIL_NAME"
+        wep.desc "WEPS_PLASMA_RAIL_DESC"
+        wep.rcy_price_cvar "pr_wr_repeater"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Railgun_Taser"
+            wepup.name "WEPS_PLASMA_RAIL_UP1_NAME"
+            wepup.desc "WEPS_PLASMA_RAIL_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_railgun_up1"
+            wepup.recy_price_cvar "pr_wr_railgun_up1"
+        addwpupend
+
+        addwpupstart "Railgun_Slug"
+            wepup.name "WEPS_PLASMA_RAIL_UP2_NAME"
+            wepup.desc "WEPS_PLASMA_RAIL_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_railgun_up2"
+            wepup.recy_price_cvar "pr_wr_railgun_up2"
+        addwpupend
+    addwpnend
+defwpend

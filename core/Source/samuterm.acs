@@ -3,7 +3,7 @@
 // Includes:
 #include "zcommon.acs"
 
-#define ACSUTILS_RECTLIB_USERVARS 30 // user defined
+#define ACSUTILS_RECTLIB_USERVARS 35 // user defined
 
 //////SF Stuff////////
 #import "f_IntDB.acs"
@@ -54,8 +54,6 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	int play = playerNumber();
 	if(IsClient() && consolePlayerNumber() == play && PlayerInGame(PlayerNumber())){
 	
-	//No need to re-sync, already done with the open clientside script.
-	
 	pagetags[STTAGS_ALPHA] = alphatag;
 	//log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);
 	switch(pagetags[STTAGS_ALPHA]){
@@ -96,19 +94,25 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	int chasecam_state = GetPlayerChasecam(play);
 	
 	SamuTerm_InitComps();
-	//Component_PrintCount();
+	delay(1); // Since the background generation takes a big chunk of function calls, enough to runaway error. Give it a extra tic and...
+	SamuTerm_InitComps_Back(); // Make their backgrounds aside.
+	Component_PrintCount();
+	//Samuterm_HelloPrompt();
+	Input_BindDirections();
 	SamuTerm_Say(msgs[STMSGS_LOGIN]);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
 	PlaySound(1000+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
+
+	// Split the big bad bois. THIS should mitigate that gae ass Runaway script.
+	ACS_NamedExecuteAlways("SamuTerm_UpdateLoop", 0);
+	ACS_NamedExecuteAlways("SamuTerm_InputLoop", 0);
+	ACS_NamedExecuteAlways("SamuTerm_DisplayLoop", 0);
 		while(TerminalInUse())
-		{
+		{// Loopy.
 			if(GetPlayerChasecam(play) == true) SetPlayerChasecam(play, 0);// I must keep you from abusing the chasecam.
-			SamuTerm_Update();
-			SamuTerm_Input(play);
-			SamuTerm_Display();
 			if(CheckInventory("SamuTInv_ForcedExit"))
 				STExecute_Shutdown();
-			//debug();
+			debug();
 			Delay(1);
 		}
 	SetPlayerChasecam(play, chasecam_state);
@@ -122,6 +126,39 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	Delay(5);
 	NamedRequestScriptPuke("SamuTerm_FreePlayer", ConsolePlayerNumber());
 	}
+}
+
+Script "SamuTerm_UpdateLoop" (void) Clientside {
+	while(TerminalInUse())
+		{
+			SamuTerm_Update();
+			if(CheckInventory("SamuTInv_ForcedExit"))
+				STExecute_Shutdown();
+			//debug();
+			Delay(1);
+		}
+}
+
+Script "SamuTerm_InputLoop" (void) Clientside {
+	int play = playerNumber();
+	while(TerminalInUse()){
+			SamuTerm_Input(play);
+			if(CheckInventory("SamuTInv_ForcedExit"))
+				STExecute_Shutdown();
+			//debug();
+			Delay(1);
+	}
+}
+
+Script "SamuTerm_DisplayLoop" (void) Clientside {
+	while(TerminalInUse())
+		{
+			SamuTerm_Display();
+			if(CheckInventory("SamuTInv_ForcedExit"))
+				STExecute_Shutdown();
+			//debug();
+			Delay(1);
+		}
 }
 
 Script "SamuTerm_VariableSync" ENTER{

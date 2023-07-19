@@ -33,7 +33,7 @@ ITDATA_D_AMMOSPHERE = "Fully Restocks your ammo!";
 
 ITDATA_I_HELLTRIGGER = "ITEMP4";
 ITDATA_N_HELLTRIGGER = "Hell Trigger";
-ITDATA_D_HELLTRIGGER = "Fire twice as fast and regens your ammo!.";
+ITDATA_D_HELLTRIGGER = "Fire twice as fast \nand regens your ammo!.";
 
 ITDATA_B_PBACKPACK = "CM29";
 ITDATA_N_PBACKPACK = "Personal Backpack";

@@ -169,7 +169,9 @@ function int Label_Add_P (int coffx, int coffy, int align, int parent){
 	return id;
 }
 
+function int Label_AddToPanelAbsPos (int panel, int pos, int x, int y) {return Label_AddToPanelEX (panel, pos, x, y, true);}
 function int Label_AddToPanelAbs (int panel, int x, int y) {return Label_AddToPanelEX (panel, -1, x, y, true);}
+function int Label_AddToPanelPosOff (int panel, int pos, int offx, int offy) {return Label_AddToPanelEX (panel, pos, offx, offy, false);}
 function int Label_AddToPanelOff (int panel, int offx, int offy) {return Label_AddToPanelEX (panel, -1, offx, offy, false);}
 function int Label_AddToPanelPos (int panel, int pos) 				{return Label_AddToPanelEX (panel, pos, 0.0, 0.0, false);}
 function int Label_AddToPanel (int panel) 							{return Label_AddToPanelEX (panel, -1, 0.0, 0.0, false);}
@@ -179,17 +181,15 @@ function int Label_AddToPanelEX (int panel, int pos, int offx, int offy, bool ab
 		Label_SetDefaultProps(id);
 		Label_SetParent(id, panel);
 		
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_LBL;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
-		Panel_AddCompEx(panel, Label_getRect(id), pos, offx, offy, absolute);
+		Panel_AddCompEx(panel, STCOMP_LBL, id, pos, offx, offy, absolute);
 		//Label_setAligns(id,alX,alY);
 	}
 	return id;
 }
+function int Label_DupToPanelAbsPos (int copy, int panel, int pos, int x, int y) {return Label_AddToPanelEX (panel, pos, x, y, true);}
 function int Label_DupToPanelAbs (int copy, int panel, int x, int y) {return Label_AddToPanelEX (panel, -1, x, y, true);}
-function int Label_DupToPanelOff (int copy, int panel, int offx, int offy) {return Label_DupToPanelEX (copy, panel, -1, offx, offy, false);}
+function int Label_DupToPanelOff (int copy, int panel, int pos, int offx, int offy) {return Label_DupToPanelEX (copy, panel, pos, offx, offy, false);}
+function int Label_DupToPanelPosOff (int copy, int panel, int offx, int offy) {return Label_DupToPanelEX (copy, panel, -1, offx, offy, false);}
 function int Label_DupToPanelPos (int copy, int panel, int pos) 			  {return Label_DupToPanelEX (copy, panel, pos, 0.0, 0.0, false);}
 function int Label_DupToPanel (int copy, int panel) 						  {return Label_DupToPanelEX (copy, panel, -1, 0.0, 0.0, false);}
 function int Label_DupToPanelEX(int copy, int panel, int pos, int offx, int offy, bool absolute){
@@ -199,11 +199,7 @@ function int Label_DupToPanelEX(int copy, int panel, int pos, int offx, int offy
 		Component_Load(id, Label_getRect(id));
 		Label_SetParent(id, panel);
 
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_LBL;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
-		Panel_AddCompEx(panel, Label_getRect(id), pos, offx, offy, absolute);
+		Panel_AddCompEx(panel, STCOMP_LBL, id, pos, offx, offy, absolute);
 	}
 	return id;
 }
@@ -250,12 +246,6 @@ function void AdjustLabel_P (int lid, int coffx, int coffy, int align, int paren
 	}
 	Label_setAligns(lid,alX,alY);
 	Label_setPosition(lid, posX, posY);
-}
-
-function void UpdateLabel(int bid, int condit){
-	if(Label_getParent(bid) > -1){
-		Label_setShow(bid, condit);
-	}
 }
 
 function void Label_SetDefaultProps(int i){

@@ -6,27 +6,56 @@
 // item directory
 
 // Here it lays all of the weapons on the game.
-// For the prices, take a look at fl_price.
+// For the prices, take a look at cvarinfo.prices lump.
 
 #library "fl_WDir"
 #import "f_intDB.acs"
 #import "fl_techs.acs"
+#import "fp_lumpread.acs"
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
-#libdefine FP_WEP_PACKS 10
-#libdefine FP_WEAPONS 20
-#libdefine FP_WEPUPS 2
-
+#libdefine WEAPON_SET_CATEGORIES 3
 #libdefine WEAPON_SET_HIDDEN -2
 #libdefine WEAPON_SET_BASIC -1
-#libdefine WEAPON_SET_STANDARD 1
-#libdefine WEAPON_SET_ADVANCED 2
-#libdefine WEAPON_SET_OVERPOWERED 3
+#libdefine WEAPON_SET_STANDARD 0
+#libdefine WEAPON_SET_ADVANCED 1
+#libdefine WEAPON_SET_OVERPOWERED 2
+#libdefine WEAPON_SET_ELITE 3
+
+#libdefine FP_WEP_PACKS_PER_CATEGORY 50
+#libdefine FP_WEP_PACKS FP_WEP_PACKS_PER_CATEGORY*WEAPON_SET_CATEGORIES
+#libdefine FP_WEAPONS 150*WEAPON_SET_CATEGORIES
+#libdefine FP_WEAPONS_PER_PACK 3
+#libdefine FP_WEPUPS 8
+
+#libdefine FP_WDIR_WPPACK_NAME 0
+#libdefine FP_WDIR_WPPACK_CATEGORY 1
+#libdefine FP_WDIR_WPPACK_DESCRIPTION 2
+#libdefine FP_WDIR_WPPACK_PRICE 3
+#libdefine FP_WDIR_WPPACK_MONSPRESS 4
+#libdefine FP_WDIR_WPPACK_WPSNUM 5
+
+#libdefine FP_WDIR_WEPUPG_ACTOR 0
+#libdefine FP_WDIR_WEPUPG_NAME 1
+#libdefine FP_WDIR_WEPUPG_DESCRIPTION 2
+#libdefine FP_WDIR_WEPUPG_UPGRPRICE 3
+#libdefine FP_WDIR_WEPUPG_RECYPRICE 4
+#libdefine FP_WDIR_WEPUPG_UPTYPE 5
+
+#libdefine FP_WDIR_WEAPON_ACTOR 0
+#libdefine FP_WDIR_WEAPON_NAME 1
+#libdefine FP_WDIR_WEAPON_PACK 2
+#libdefine FP_WDIR_WEAPON_DESCRIPTION 3
+#libdefine FP_WDIR_WEAPON_PRICE 4
+#libdefine FP_WDIR_WEAPON_UPSNUM 5
 
 int fp_WpPacks[FP_WEP_PACKS][10];
 int fp_Wpns[FP_WEAPONS][10];
 int fp_WpUps[FP_WEAPONS][FP_WEPUPS][10];
+
+int fp_WpCategory[WEAPON_SET_CATEGORIES][50];
+int fp_WpCategoryStack[WEAPON_SET_CATEGORIES];
 
 // Weapon pack tracker. For difficulty increasing.
 int fp_WpTrack[FP_WEP_PACKS];
@@ -35,8 +64,28 @@ int fp_UpTrack;
 // Saved weapons per each player.
 int fp_WpnsPerPlayer[32][FP_WEAPONS];
 
-int fp_WeaponPackStack = 0;
+int fp_WeaponPackStack;
 int fp_WeaponStack = 0;
+
+#define SFWEPDEF_TK_defwpstart 0
+#define SFWEPDEF_TK_pack_desc 1
+#define SFWEPDEF_TK_pack_price_cvar 2
+#define SFWEPDEF_TK_pack_mpadd 3
+#define SFWEPDEF_TK_pack_category 4
+#define SFWEPDEF_TK_addwpnstart 5
+#define SFWEPDEF_TK_wep_desc 6
+#define SFWEPDEF_TK_wep_rcprice_cvar 7
+#define SFWEPDEF_TK_wep_icon 8
+#define SFWEPDEF_TK_wep_name 9
+#define SFWEPDEF_TK_addwpupstart 10
+#define SFWEPDEF_TK_wepup_uptype 11
+#define SFWEPDEF_TK_wepup_desc 12
+#define SFWEPDEF_TK_wepup_upprice_cvar 13
+#define SFWEPDEF_TK_wepup_rcprice_cvar 14
+#define SFWEPDEF_TK_wepup_name 15
+#define SFWEPDEF_TK_addwpupend 16
+#define SFWEPDEF_TK_addwpnend 17
+#define SFWEPDEF_TK_defwpend 18
 
 // fp_WeaponPacks
 //	Pack name
@@ -66,25 +115,28 @@ function void SFPlus_DefineWeapons (void){
 	
 	fp_WeaponPackStack = 0;
 	fp_WeaponStack = 0;
-	
+	fp_WpCategoryStack[0] = 0;
+	fp_WpCategoryStack[1] = 0;
+	fp_WpCategoryStack[2] = 0;
+
 	//Basic pack
+	/*
 	wep = Weapon_AddHidden("Beretta", "BASIC_BRTT");
 	WeaponUpgrade_AddEx("Beretta_Dual",		wep, 1, "");
 	WeaponUpgrade_AddEx("Beretta_SMG",		wep, 2, "");
 
 	wep = Weapon_AddBasic("Boomstick", "BASIC_BSTK");
 	WeaponUpgrade_AddEx("Boomstick_Full",		wep, 0, "boomstick");
-
 	//Shotgun pack
+	
 	pack = WeaponPack_Add(WEAPON_SET_STANDARD, "shotgun", 2, "SHOTGUN");
-
+	
 	wep = Weapon_Add("SSG", pack, "ssg", "SSG");
 	WeaponUpgrade_Add("SSG_Autoload",		wep, 1);
 	WeaponUpgrade_Add("SSG_Explosive",		wep, 2);
 		
 	wep = Weapon_Add("Quadshot", pack, "quadshot", "QUAD");
 	WeaponUpgrade_Add("Quadshot_Full",		wep, 0);
-		
 	//Assault pack
 	pack = WeaponPack_Add(WEAPON_SET_STANDARD, "assault", 2, "ASSAULT");
 
@@ -104,7 +156,7 @@ function void SFPlus_DefineWeapons (void){
 
 	wep = Weapon_Add("Patcher", pack, "patcher", "PTCH");
 	WeaponUpgrade_Add("Patcher_Advanced",	wep, 0);
-		
+	
 	//Commando pack
 	pack = WeaponPack_Add(WEAPON_SET_ADVANCED, "commando", 5, "COMMANDO");
 
@@ -137,7 +189,6 @@ function void SFPlus_DefineWeapons (void){
 	wep = Weapon_Add("SF_Railgun", pack, "railgun", "RAIL");
 	WeaponUpgrade_Add("Railgun_Taser",		wep, 1);
 	WeaponUpgrade_Add("Railgun_Slug",		wep, 2);
-		
 	//Flamer pack
 	pack = WeaponPack_Add(WEAPON_SET_OVERPOWERED, "flamer", 12, "PYRO");
 
@@ -150,20 +201,152 @@ function void SFPlus_DefineWeapons (void){
 	wep = Weapon_Add("BFG", pack, "bfg", "BFG");
 	WeaponUpgrade_Add("BFG_Splash",		wep, 1);
 	WeaponUpgrade_Add("BFG_Overcharge",	wep, 2);
+	*/	
 }
 
-Script "SFPlus_AddWeaponPack" (int set, int price, int mp_gain, int lang){
-	int pack = WeaponPack_Add(set, price, mp_gain, lang);
-	SetResultValue(pack);
+script "SFPlus_Wdir_ReadLumps" Open {
+    WDir_ReadSFWEPDEF();
 }
 
-Script "SFPlus_AddWeapon" (int pack, int actor, int price, int lang){
-	int wep = WeaponPack_Add(actor, pack, price, lang);
-	SetResultValue(wep);
+
+script "SFPlus_Wdir_ReadLumps_Clientside" Open Clientside{
+    if(GameType() != GAME_SINGLE_PLAYER){
+        WDir_ReadSFWEPDEF();
+    }
 }
 
-Script "SFPlus_AddWeaponUpgrade" (int wep, int actor, int type){
-	WeaponUpgrade_Add(actor, wep, type);
+function void WDir_ReadSFWEPDEF(void){
+	ACS_NamedExecuteWithResult("LumpRead_Execute", "SFWEPDEF", "SFPlus_Wdir_InitSFWEPDEF", "SFPlus_Wdir_ProcessLump");
+}
+
+Script "SFPlus_Wdir_InitSFWEPDEF" (void){
+    LumpRead_addToken(SFWEPDEF_TK_defwpstart,           "defwpstart",               LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_pack_desc,            "pack.desc",                LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_pack_price_cvar,      "pack.price_cvar",          LUMPR_VALUE_STR);
+    LumpRead_addToken(SFWEPDEF_TK_pack_mpadd,           "pack.monsterpressureadd",  LUMPR_VALUE_INT);
+    LumpRead_addToken(SFWEPDEF_TK_pack_category,        "pack.category",            LUMPR_VALUE_INT);
+    LumpRead_addToken(SFWEPDEF_TK_addwpnstart,          "addwpnstart",              LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_wep_desc,             "wep.desc",                 LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_wep_rcprice_cvar,     "wep.rcy_price_cvar",       LUMPR_VALUE_STR);
+    LumpRead_addToken(SFWEPDEF_TK_wep_icon,             "wep.icon",                 LUMPR_VALUE_STR);
+    LumpRead_addToken(SFWEPDEF_TK_wep_name,             "wep.name",                 LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_addwpupstart,         "addwpupstart",             LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_wepup_uptype,         "wepup.uptype",             LUMPR_VALUE_INT);
+    LumpRead_addToken(SFWEPDEF_TK_wepup_desc,           "wepup.desc",               LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_wepup_upprice_cvar,   "wepup.up_price_cvar",      LUMPR_VALUE_STR);
+    LumpRead_addToken(SFWEPDEF_TK_wepup_rcprice_cvar,   "wepup.recy_price_cvar",    LUMPR_VALUE_STR);
+    LumpRead_addToken(SFWEPDEF_TK_wepup_name,           "wepup.name",               LUMPR_VALUE_LANGSTR);
+    LumpRead_addToken(SFWEPDEF_TK_addwpupend,           "addwpupend",               LUMPR_VALUE_NULL);
+    LumpRead_addToken(SFWEPDEF_TK_addwpnend,            "addwpnend",                LUMPR_VALUE_NULL);
+    LumpRead_addToken(SFWEPDEF_TK_defwpend,             "defwpend",                 LUMPR_VALUE_NULL);
+    SetResultValue(1);
+}
+
+Script "SFPlus_Wdir_ProcessLump" (int lump){
+    if(LumpSize(lump) > 0){
+        LumpRead_TokenRead(lump);
+		
+        for(int i = 0; i < lumpread_commands_stack; i++){
+            WDir_ProcessCommand (lumpread_commands[i][0], lumpread_commands[i][1]);
+            
+            /*log(s:"lumpread_command, 1:", d:lumpread_commands[i][0], 
+            s:", 2:", d:lumpread_commands[i][1], s:" (", s:lumpread_commands[i][1], s:")");*/
+            
+            lumpread_commands[i][0] = 0;
+            lumpread_commands[i][1] = 0;
+        }
+        lumpread_commands_stack = 0;
+		
+    }
+    
+    //LumpRead_TokenProcess (command_tokenid, 0, 0);
+}
+
+function void WDir_ProcessCommand (str tokenid, int value){
+    int wep_id = lumpread_value_buffer[6];
+    int wepup_id = lumpread_value_buffer[Wdir_ID_Wep(wep_id, 5)];
+    switch(tokenid){
+        case SFWEPDEF_TK_defwpstart:
+            lumpread_value_buffer[0] = fp_WeaponPackStack;
+            lumpread_value_buffer[1] = value;
+        break;
+
+        case SFWEPDEF_TK_pack_desc:         lumpread_value_buffer[2] = value; break;
+        case SFWEPDEF_TK_pack_price_cvar:   lumpread_value_buffer[3] = value; break;
+        case SFWEPDEF_TK_pack_mpadd:        lumpread_value_buffer[4] = value; break;
+        case SFWEPDEF_TK_pack_category:     lumpread_value_buffer[5] = value; break;
+
+        case SFWEPDEF_TK_addwpnstart:       lumpread_value_buffer[Wdir_ID_Wep(wep_id, 0)] = value; break;
+        case SFWEPDEF_TK_wep_name:          lumpread_value_buffer[Wdir_ID_Wep(wep_id, 1)] = value; break;
+        case SFWEPDEF_TK_wep_desc:          lumpread_value_buffer[Wdir_ID_Wep(wep_id, 2)] = value; break;
+        case SFWEPDEF_TK_wep_rcprice_cvar:  lumpread_value_buffer[Wdir_ID_Wep(wep_id, 3)] = value; break;
+        case SFWEPDEF_TK_wep_icon:          lumpread_value_buffer[Wdir_ID_Wep(wep_id, 4)] = value; break;
+        
+        case SFWEPDEF_TK_addwpupstart:          lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 0)] = value; break;
+        case SFWEPDEF_TK_wepup_name:            lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 1)] = value; break;
+        case SFWEPDEF_TK_wepup_desc:            lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 2)] = value; break;
+        case SFWEPDEF_TK_wepup_uptype:          lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 3)] = value; break;
+        case SFWEPDEF_TK_wepup_upprice_cvar:    lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 4)] = value; break;
+        case SFWEPDEF_TK_wepup_rcprice_cvar:    lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 5)] = value; break;
+
+        case SFWEPDEF_TK_addwpupend:
+            lumpread_value_buffer[Wdir_ID_Wep(wep_id, 5)]++;
+        break;
+        case SFWEPDEF_TK_addwpnend:
+            lumpread_value_buffer[6]++;
+        break;
+        case SFWEPDEF_TK_defwpend:
+            WDir_CommitInsert();
+            LumpRead_ClearData();
+        break;
+    }
+}
+
+function bool WDir_CommitInsert(void){
+    int cat = lumpread_value_buffer[5];
+    if(fp_WpCategoryStack[cat] >= FP_WEP_PACKS_PER_CATEGORY){
+		log(s:"(FL_WDIR.acs) Can't add more weapon packs in this category, ", d:FP_WEP_PACKS_PER_CATEGORY, s:" Limit reached.");
+		return false;
+	}
+
+	int wid = lumpread_value_buffer[0];
+	fp_WpCategory[cat][fp_WpCategoryStack[cat]] = wid;
+	fp_WpCategoryStack[cat]++;
+    //log(s:"Category stack: ", d:fp_WpCategoryStack[cat]);
+
+	fp_WpPacks[wid][FP_WDIR_WPPACK_NAME] = lumpread_value_buffer[1];
+	fp_WpPacks[wid][FP_WDIR_WPPACK_CATEGORY] = cat;
+	fp_WpPacks[wid][FP_WDIR_WPPACK_DESCRIPTION] = lumpread_value_buffer[2];
+	fp_WpPacks[wid][FP_WDIR_WPPACK_PRICE] = GetCvar(lumpread_value_buffer[3]);
+	fp_WpPacks[wid][FP_WDIR_WPPACK_MONSPRESS] = lumpread_value_buffer[4];
+    fp_WeaponPackStack++;
+    for(int i = 0; i < lumpread_value_buffer[6]; i++){
+        int wepid = fp_WeaponStack;
+        fp_Wpns[wepid][FP_WDIR_WEAPON_ACTOR] = lumpread_value_buffer[Wdir_ID_Wep(i, 0)];
+        fp_Wpns[wepid][FP_WDIR_WEAPON_NAME] = lumpread_value_buffer[Wdir_ID_Wep(i, 1)];
+        fp_Wpns[wepid][FP_WDIR_WEAPON_PACK] = wid;
+        fp_Wpns[wepid][FP_WDIR_WEAPON_DESCRIPTION] = lumpread_value_buffer[Wdir_ID_Wep(i, 2)];
+        fp_Wpns[wepid][FP_WDIR_WEAPON_PRICE] = GetCvar(lumpread_value_buffer[Wdir_ID_Wep(i, 3)]);
+        fp_Wpns[wepid][FP_WDIR_WEAPON_UPSNUM] = lumpread_value_buffer[Wdir_ID_Wep(i, 5)]; 
+        fp_WeaponStack++;
+        for(int j = 0; j < lumpread_value_buffer[Wdir_ID_Wep(i, 5)]; j++){
+            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_ACTOR] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 0)];
+            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_NAME] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 1)];
+            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_DESCRIPTION] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 2)];
+            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_UPTYPE] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 3)];
+            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_UPGRPRICE] = GetCvar(lumpread_value_buffer[Wdir_ID_WpUp(i, j, 4)]);
+            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_RECYPRICE] = GetCvar(lumpread_value_buffer[Wdir_ID_WpUp(i, j, 5)]);
+        }
+    }
+    return true;
+}
+
+function int Wdir_ID_Wep(int wep, int index){
+    return 10+(10*wep)+index;
+}
+
+function int Wdir_ID_WpUp(int wep, int up, int index){
+    return 100+(10*wep)+(100*up)+index;
 }
 
 function str Weapon_GetSameKind(int wid){
@@ -223,18 +406,6 @@ function void Weapon_Recycle(int wid, int upg, int play){
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
 
-function int Weapon_AddHidden(str actor, str lang){
-	return Weapon_Add(actor, WEAPON_SET_HIDDEN, "", lang);
-}
-
-function int Weapon_AddBasic(str actor, str lang){
-	return Weapon_Add(actor, WEAPON_SET_BASIC, "", lang);
-}
-
-function int WeaponUpgrade_Add(str actor, str wep, int upnum){
-	return WeaponUpgrade_AddEx(actor, wep, upnum, "");
-}
-
 function bool Weapon_OwnedSameKind(int asThis){
 	return 
 		checkinventory(Weapon_GetActor(asThis)) ||
@@ -271,19 +442,22 @@ function void Weapon_LoadLastUsed(int which){
 }
 
 function void WPTrack_Increase(int wp){
+	int cat = WeaponPack_GetCat(wp);
 	fp_WPTrack[wp] = fp_WPTrack[wp] + WeaponPack_GetScoreGain(wp);
 }
 
 function void WPTrack_Decrease(int wp){
+	int cat = WeaponPack_GetCat(wp);
 	fp_WPTrack[wp] = fp_WPTrack[wp] - WeaponPack_GetScoreGain(wp);
 }
 
 function int WPTrack_GetScore(void){
-	int i;
+	int i, c;
 	int score = 0;
 	for(i = 0; i < fp_WeaponPAckStack; i++){
 		score = score + fp_WPTrack[i];
 	}
+	
 	int players = 0;
 	for(i = 0; i < 64; i++){
 		if(PlayerInGame(i)) players++;
@@ -306,59 +480,24 @@ function int UpTrack_GetScore(void){
 	return score / players;
 }
 
-function int WeaponUpgrade_AddEx(str actor, int wpbase, int uptype, str pkey){
-	int uid = fp_Wpns[wpbase][6];
-	fp_WpUps[wpbase][uid][0] = actor;
-	fp_WpUps[wpbase][uid][1] = strparam(l:strparam(s:"WEPS_", s:fp_Wpns[wpbase][7], s:"_UP", d:uptype, s:"_NAME"));
-	fp_WpUps[wpbase][uid][2] = strparam(l:strparam(s:"WEPS_", s:fp_Wpns[wpbase][7], s:"_UP", d:uptype, s:"_DESC"));
-	fp_WpUps[wpbase][uid][5] = uptype;
-	
-	if(strlen(pkey) != 0){
-		fp_WpUps[wpbase][uid][3] = GetCvar(strparam(s:"pr_wu_", s:pkey, s:"_up", d:uptype));
-		fp_WpUps[wpbase][uid][4] = GetCvar(strparam(s:"pr_wr_", s:pkey, s:"_up", d:uptype));
-	}
-	else if (wpbase > 0){
-		log(s:"Price: ", d:GetCvar(strparam(s:"pr_wu_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype)));
-		fp_WpUps[wpbase][uid][3] = GetCvar(strparam(s:"pr_wu_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype));
-		fp_WpUps[wpbase][uid][4] = GetCvar(strparam(s:"pr_wr_", s:fp_Wpns[wpbase][5], s:"_up", d:uptype));
-	}
-	else{
-		fp_WpUps[wpbase][uid][3] = "null";
-		fp_WpUps[wpbase][uid][4] = "null";
-	}
-	fp_Wpns[wpbase][6]++; //Add one upgrade.
-	return uid;
-}
+function str WeaponUpgrade_GetActor(int wpb, int uid){return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_ACTOR]; }
+function str WeaponUpgrade_GetName( int wpb, int uid){ return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_NAME]; }
+function int WeaponUpgrade_GetDesc(int wpb, int uid){  return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_DESCRIPTION]; }
+function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_UPGRPRICE]; }
+function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_RECYPRICE]; }
+function int WeaponUpgrade_GetUpType(int wpb, int uid){ return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_UPTYPE]; }
 
-function str WeaponUpgrade_GetActor(int wpb, int uid){return fp_WpUps[wpb][uid][0]; }
-function str WeaponUpgrade_GetName( int wpb, int uid){ return fp_WpUps[wpb][uid][1]; }
-function int WeaponUpgrade_GetDesc(int wpb, int uid){  return fp_WpUps[wpb][uid][2]; }
-function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][3]; }
-function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][4]; }
 
-function int WeaponPack_Add(int cat, str pkey, int game_gain, str lang){
-	int wid = fp_WeaponPackStack;
-	fp_WpPacks[wid][0] = strparam(l:strparam(s:"WEPS_", s:lang, s:"_NAME"));
-	fp_WpPacks[wid][1] = cat;
-	fp_WpPacks[wid][2] = strparam(l:strparam(s:"WEPS_", s:lang, s:"_DESC"));
-	fp_WpPacks[wid][3] = GetCvar(strparam(s:"pr_wb_", s:pkey));
-	fp_WpPacks[wid][4] = pkey;
-	fp_WpPacks[wid][5] = game_gain;
-	fp_WpPacks[wid][6] = lang;
-	fp_WeaponPackStack++;
-	return wid;
-}
-
-function str WeaponPack_GetName(int wid){  return fp_WpPacks[wid][0]; }
-function int WeaponPack_GetCat(int wid){   return fp_WpPacks[wid][1]; }
-function int WeaponPack_GetScoreGain(int wid){   return fp_WpPacks[wid][5]; }
-function str WeaponPack_GetDesc(int wid){  return fp_WpPacks[wid][2]; }
-function int WeaponPack_GetPrice(int wid){ return fp_WpPacks[wid][3]; }
+function str WeaponPack_GetName(int wid){  return fp_WpPacks[wid][FP_WDIR_WPPACK_NAME]; }
+// Where should i find the category hmmm?
+function int WeaponPack_GetCat(int wid){  return fp_WpPacks[wid][FP_WDIR_WPPACK_CATEGORY]; }
+function int WeaponPack_GetScoreGain(int wid){   return fp_WpPacks[wid][FP_WDIR_WPPACK_MONSPRESS]; }
+function str WeaponPack_GetDesc(int wid){  return fp_WpPacks[wid][FP_WDIR_WPPACK_DESCRIPTION]; }
+function int WeaponPack_GetPrice(int wid){ return fp_WpPacks[wid][FP_WDIR_WPPACK_PRICE]; }
 function bool WeaponPack_isOwned(int wid){
 	bool res = false;
 		for (int i = 0; (i < fp_WeaponStack) && !res; i++){
 			if(Weapon_getWepPack(i) == wid){
-				
 				res = Weapon_OwnedSameKind(i);
 			}
 		}
@@ -374,38 +513,37 @@ function int Weapon_Add(str actor, int pack, str pkey, str lang){
 		full_lang = lang;
 	}
 	
-	fp_Wpns[wid][0] = actor;
-	fp_Wpns[wid][1] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_NAME"));
-	fp_Wpns[wid][2] = pack;
-	fp_Wpns[wid][3] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_DESC"));
+	fp_Wpns[wid][FP_WDIR_WEAPON_ACTOR] = actor;
+	fp_Wpns[wid][FP_WDIR_WEAPON_NAME] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_NAME"));
+	fp_Wpns[wid][FP_WDIR_WEAPON_PACK] = pack;
+	fp_Wpns[wid][FP_WDIR_WEAPON_DESCRIPTION] = strparam(l:strparam(s:"WEPS_", s:full_lang, s:"_DESC"));
+	fp_Wpns[wid][FP_WDIR_WEAPON_UPSNUM] = 0; 
+
 	fp_Wpns[wid][7] = full_lang; // Language id
 	
 	if(strlen(pkey) != 0) {
-		fp_Wpns[wid][4] = GetCvar(strparam(s:"pr_wr_", s:pkey));
-		fp_Wpns[wid][5] = pkey;
+		fp_Wpns[wid][FP_WDIR_WEAPON_PRICE] = GetCvar(strparam(s:"pr_wr_", s:pkey));
+		fp_Wpns[wid][6] = pkey;
 		}
 	else if(pack > 0) {
-		fp_Wpns[wid][4] = GetCvar(strparam(s:"pr_wr_", s:fp_WpPacks[pack][4]));
-		fp_Wpns[wid][5] = fp_WpPacks[pack][4];
+		fp_Wpns[wid][FP_WDIR_WEAPON_PRICE] = GetCvar(strparam(s:"pr_wr_", s:fp_WpPacks[pack][4]));
+		fp_Wpns[wid][6] = fp_WpPacks[pack][4];
 		}
 	else{
-		fp_Wpns[wid][4] = "null";
-		fp_Wpns[wid][5] = "null";
+		fp_Wpns[wid][FP_WDIR_WEAPON_PRICE] = "null";
+		fp_Wpns[wid][6] = "null";
 		}
-	
 	// Initialize upgrades.
-	fp_Wpns[wid][6] = 0; 
-	
 	fp_WeaponStack++;
 	return wid;
 }
 
-function str Weapon_GetActor(int wid){   return fp_Wpns[wid][0]; }
-function str Weapon_GetName(int wid){    return fp_Wpns[wid][1]; }
-function int Weapon_GetWepPack(int wid){ return fp_Wpns[wid][2]; }
+function str Weapon_GetActor(int wid){   return fp_Wpns[wid][FP_WDIR_WEAPON_ACTOR]; }
+function str Weapon_GetName(int wid){    return fp_Wpns[wid][FP_WDIR_WEAPON_NAME]; }
+function int Weapon_GetWepPack(int wid){ return fp_Wpns[wid][FP_WDIR_WEAPON_PACK]; }
 function int Weapon_GetCat(int wid){
 	return WeaponPack_GetCat(Weapon_GetWepPack(wid));
 }
-function int Weapon_getUpsNum(int wid){	 return fp_Wpns[wid][6]; }
-function int Weapon_GetDesc(int wid){    return fp_Wpns[wid][3]; }
-function int Weapon_GetPrice(int wid){   return fp_Wpns[wid][4]; }
+function int Weapon_getUpsNum(int wid){	 return fp_Wpns[wid][FP_WDIR_WEAPON_UPSNUM]; }
+function int Weapon_GetDesc(int wid){    return fp_Wpns[wid][FP_WDIR_WEAPON_DESCRIPTION]; }
+function int Weapon_GetPrice(int wid){   return fp_Wpns[wid][FP_WDIR_WEAPON_PRICE]; }

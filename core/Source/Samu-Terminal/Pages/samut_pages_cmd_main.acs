@@ -330,11 +330,11 @@ function void CMDPage_SetButtonInSlot(int slot, int btndata){
 }
 
 function void CMDPage_SaveGroup(int up, int id, int comp){
-	cmdpage_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)] = comp;
+	cmdpage_vars[7 * up + 15 + (id-1)] = comp;
 }
 
 function int CMDPage_LoadGroup(int up, int id){
-	return cmdpage_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)];
+	return cmdpage_vars[7 * up + 15 + (id-1)];
 }
 
 /*

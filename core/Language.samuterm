@@ -7,6 +7,14 @@ SAMUT_HEALTERM_BYE1 = "Watch yourself, %p";
 SAMUT_HEALTERM_BYE2 = "Stay healthy %p, don't get shot";
 SAMUT_HEALTERM_BYE3 = "Go get them, %p";
 
+SAMUT_ARMSTERM_NOACCESS_TITLE = "Upgrades not avilable.";
+SAMUT_ARMSTERM_NOACCESS_LABEL =  "\n\n\n\nEither you upgraded all your guns, or you don't have the basic ones. "
+                                 "\n                         Try it next time...";
+
+SAMUT_HEALTERM_NOACCESS_TITLE = "Access Denied";
+SAMUT_HEALTERM_NOACCESS_LABEL1 = "Stimpacks are not researched yet";
+SAMUT_HEALTERM_NOACCESS_LABEL2 = "This page is not available at the moment, come back later.";
+
 SAMUT_AMMOTERM_HI1 = "Ammo Terminal online, Make it quick, %p";
 SAMUT_AMMOTERM_HI2 = "Ammo Terminal online, Pick your weapons, %p";
 SAMUT_AMMOTERM_HI3 = "Ammo Terminal online, Pack your heat %p";

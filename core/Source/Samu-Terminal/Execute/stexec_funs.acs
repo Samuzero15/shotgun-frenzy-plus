@@ -21,11 +21,27 @@
 
 function void STExecute_OkayAction(void){
 	localAmbientSound("SamuTerm/HopOut",127);
-	setPromptState(false);
+	Prompt_SetState(false);
+	Input_ClearBinds();
+	Input_BindDirections();
+}
+
+function void Samuterm_HelloPrompt(void){
+	//Prompt_Resize(40,20);
+
+	Panel_setVirtualSize(prompt_data[STPROMPT_DATA_PANEL],0.0,64.0);
+	Panel_SetScrollAmount(prompt_data[STPROMPT_DATA_PANEL],0.0,8.0);
+	Prompt_Notify("Something new!", 
+	"Now, on prompts, you can \ciaccept or dismiss\c- this message with  the \cguse \c-key, and \cidecline or cancel\c- with either the \cgalt-fire or crouch\c- key!\n\n Try dismissing this message with the use key."
+	, CR_GREEN);
+	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
 }
 
 function void STExecute_SayHi(void){
-	Prompt_Resize(40,20);
+	//Prompt_Resize(40,20);
+
+	Panel_setVirtualSize(prompt_data[STPROMPT_DATA_PANEL],0.0,128.0);
+	Panel_SetScrollAmount(prompt_data[STPROMPT_DATA_PANEL],0.0,8.0);
 	Prompt_Notify("Greetings", 
 	" I am Amy, your computarizated voice, and welcome to the Systemic Advanced Monitored User-frendly Terminal. S.A.M.U. Terminal for short.\n\n My duty is to serve you for any needings you'd wish.\n\n Try interacting with the \cgPrimary Click \c-button to gain acesss for many functions for you.\n\n Now, tell me, what do you need this time?"
 	, CR_GREEN);
@@ -78,12 +94,14 @@ function void STExecute_ANoFun(void){
 }
 
 function void STExecute_YesAction(void){
-	setPromptValue(true);
-	setPromptState(false);
-	int cmd = getPromptExecute_YesAction();
-	int arg1 = getPromptExeArg1_YesAction();
-	int arg2 = getPromptExeArg2_YesAction();
-	int arg3 = getPromptExeArg3_YesAction();
+	Prompt_SetValue(true);
+	Prompt_SetState(false);
+	Input_ClearBinds();
+	Input_BindDirections();
+	int cmd = Prompt_GetExecute_YesAction();
+	int arg1 = Prompt_GetExeArg1_YesAction();
+	int arg2 = Prompt_GetExeArg2_YesAction();
+	int arg3 = Prompt_GetExeArg3_YesAction();
 	//print(d:arg1);
 	
 	SamuTerm_CallOpExecute(cmd,arg1,arg2,arg3);
@@ -94,12 +112,14 @@ function void STExecute_YesAction(void){
 }
 
 function void STExecute_NoAction(void){
-	setPromptValue(false);
-	setPromptState(false);
-	int cmd = getPromptExecute_NoAction();
-	int arg1 = getPromptExeArg1_NoAction();
-	int arg2 = getPromptExeArg2_NoAction();
-	int arg3 = getPromptExeArg3_NoAction();
+	Prompt_SetValue(false);
+	Prompt_SetState(false);
+	Input_ClearBinds();
+	Input_BindDirections();
+	int cmd = Prompt_GetExecute_NoAction();
+	int arg1 = Prompt_GetExeArg1_NoAction();
+	int arg2 = Prompt_GetExeArg2_NoAction();
+	int arg3 = Prompt_GetExeArg3_NoAction();
 	
 	SamuTerm_CallOpExecute(cmd,arg1,arg2,arg3);
 	localAmbientSound("SamuTerm/HopOut",127);
@@ -115,6 +135,7 @@ function void STExecute_Shutdown(void){
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
 	comphover = -1;
+	comptypehover = -1;
 	lasthover = -2;
 	exitResult = -1;
 }
@@ -127,6 +148,7 @@ function void STExecute_Close(void){
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
 	comphover = -1;
+	comptypehover = -1;
 	lasthover = -2;
 	exitResult = 0;
 	localambientsound("Amy/Farewell", 127);
@@ -140,8 +162,6 @@ function void STExecute_Open(int taggy){
 }
 
 function void STExecute_PanelScroll(int panel, int scrollx, int scrolly){
-	
-	str text = strparam(s:"Scrolling panel, X: ", f:scrollx, s:", Y: ",f:scrolly);
 	int pan_offx = Panel_GetVirtualOffsetX(panel) + scrollx;
 	int pan_offy = Panel_GetVirtualOffsetY(panel) + scrolly;
 	if(pan_offx <= -Panel_GetVirtualWidth(panel)) pan_offx = -Panel_GetVirtualWidth(panel);
@@ -150,5 +170,107 @@ function void STExecute_PanelScroll(int panel, int scrollx, int scrolly){
 	if(pan_offy > 0) 						      pan_offy = 0.0;
 	Panel_SetVirtualOffset(panel, pan_offx, pan_offy);
 	Panel_UpdateScrollButtons(panel);
-	Toaster_ShowToast(text,CR_CYAN);
+}
+
+function void StExecute_SelectComponent(int selectDirection, int y){
+	Input_ClearSelectableComps();
+	int i, p;
+	// pick all the selectionable components, the ImgButton and StrButton.
+	// Also calculate the distances between cursor and component.
+	for(i = 0; i < comp_count[STCOMP_IBTN]; i++){
+		p = ImgButton_GetParent(i);
+		if(p!= -1){
+			if(ImgButton_GetShow(i) && Panel_IntersectsImgButton(p, i)){
+				Input_AddSelectableComponent(STCOMP_IBTN, i);
+			}
+		}else{
+			if(ImgButton_GetShow(i)){
+				Input_AddSelectableComponent(STCOMP_IBTN, i);
+			}
+		}
+	}
+	for(i = 0; i < comp_count[STCOMP_SBTN]; i++){
+		p = StrButton_GetParent(i);
+		if(p!= -1){
+			if(StrButton_GetShow(i) && Panel_IntersectsStrButton(p, i)){
+				Input_AddSelectableComponent(STCOMP_SBTN, i);
+			}
+		}else{
+			if(StrButton_GetShow(i)){
+				Input_AddSelectableComponent(STCOMP_SBTN, i);
+			}
+		}
+	}
+	// Now, get the current component position. If no component, then take the cursor position.
+	// Take the center point of component.
+	int hoveredcomp[2];
+	hoveredcomp[0] = CursorX(); hoveredcomp[1] = CursorY(); 
+	if(comphover != -1){
+		if(comptypehover == STCOMP_IBTN) {
+			hoveredcomp[0] = ImgButton_GetXMOffseted(comphover);
+			hoveredcomp[1] = ImgButton_GetYMOffseted(comphover); 
+		}else if(comptypehover == STCOMP_SBTN) {
+			hoveredcomp[0] = StrButton_GetXMOffseted(comphover); 
+			hoveredcomp[1] = StrButton_GetYMOffseted(comphover); 
+		}
+	}
+	
+	int comppos_selected[3];
+	int pos_tomove[2];
+	pos_tomove[0] = -1;
+	pos_tomove[1] = -1;
+	// Now Pick the closest component, depending on the orientation of the input.
+	// 1) Check if the distance is shorter
+	// 2) Check if the coordinate to check by input is less or more than what it's requested.
+	// 3) Check if it's not the same component.
+	// Buu 342: You want the distance of a rectangle (a menu item) to a point (the mouse x,y coordinate)
+	// Alright got a formula for that. (Check second code).
+	if(input_selectcomp[0][0] == STCOMP_IBTN) {
+		pos_tomove[0] = ImgButton_GetXMOffseted(input_selectcomp[0][1]);
+		pos_tomove[1] = ImgButton_GetYMOffseted(input_selectcomp[0][1]); 
+	}else if(input_selectcomp[0][0] == STCOMP_SBTN) {
+		pos_tomove[0] = StrButton_GetXMOffseted(input_selectcomp[0][1]); 
+		pos_tomove[1] = StrButton_GetYMOffseted(input_selectcomp[0][1]); 
+	}
+	int distance_check = FIXED_MAX; // max float point.
+	for(i = 0; i < input_selectcomp_count; i++){
+		if(input_selectcomp[i][0] == STCOMP_IBTN) {
+			comppos_selected[0] = ImgButton_GetXMOffseted(input_selectcomp[i][1]);
+			comppos_selected[1] = ImgButton_GetYMOffseted(input_selectcomp[i][1]); 
+		}else if(input_selectcomp[i][0] == STCOMP_SBTN) {
+			comppos_selected[0] = StrButton_GetXMOffseted(input_selectcomp[i][1]); 
+			comppos_selected[1] = StrButton_GetYMOffseted(input_selectcomp[i][1]); 
+		}
+		//log(s:"for button ", s:comppos_selected[2], s:", the distance is: ", f: input_selectcomp[i][2]);
+		if(input_selectcomp[i][2] >= 0.0 && (distance_check > input_selectcomp[i][2])){ // The calcules will overflow, so, take only the positive results.
+			if(selectDirection == 1 && (hoveredcomp[0] > comppos_selected[0])){
+				pos_tomove[0] = comppos_selected[0];
+				pos_tomove[1] = comppos_selected[1];
+				distance_check = input_selectcomp[i][2];
+			}
+			if(selectDirection == 2 && (hoveredcomp[0] < comppos_selected[0])){
+				pos_tomove[0] = comppos_selected[0];
+				pos_tomove[1] = comppos_selected[1];
+				distance_check = input_selectcomp[i][2];
+			}
+			if(selectDirection == 3 && (hoveredcomp[1] < comppos_selected[1])){
+				pos_tomove[0] = comppos_selected[0];
+				pos_tomove[1] = comppos_selected[1];
+				distance_check = input_selectcomp[i][2];
+			}
+			if(selectDirection == 4 && (hoveredcomp[1] > comppos_selected[1])){
+				pos_tomove[0] = comppos_selected[0];
+				pos_tomove[1] = comppos_selected[1];
+				distance_check = input_selectcomp[i][2];
+			}
+			/*log(s:"cursor: (", f:hoveredcomp[0], s:", ", f:hoveredcomp[1],
+		 s:"), item ", d:i, s:", Comp. number: ", d:input_selectcomp[i][1], s:", Pos: (", f:comppos_selected[0], s:", ", f:comppos_selected[1], s:") ",
+		 s:"shortest distance: ", f:distance_check, s:" Text: ", s:comppos_selected[2]);//*/
+		 
+		}
+	}
+	// Now, move the cursor to that button.
+	if(pos_tomove[0] != -1 && pos_tomove[1] != -1) {
+		SetCursorPosition(pos_tomove[0], pos_tomove[1]);
+	}
 }

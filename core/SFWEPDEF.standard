@@ -1,0 +1,135 @@
+
+defwpstart "WEPS_SHOTGUN_NAME"
+    pack.desc "WEPS_SHOTGUN_DESC"
+    pack.price_cvar "pr_wb_shotgun"
+    pack.monsterpressureadd 2
+    pack.category 0
+
+    addwpnstart "SSG"
+        wep.desc "WEPS_SHOTGUN_SSG_DESC"
+        wep.rcy_price_cvar "pr_wr_ssg"
+        wep.icon "SHT2A0"
+        wep.name "WEPS_SHOTGUN_SSG_NAME"
+
+        addwpupstart "SSG_Autoload"
+            wepup.name "WEPS_SHOTGUN_SSG_UP1_NAME"
+            wepup.desc "WEPS_SHOTGUN_SSG_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_ssg_up1"
+            wepup.recy_price_cvar "pr_wr_ssg_up1"
+        addwpupend
+
+        addwpupstart "SSG_Explosive"
+            wepup.name "WEPS_SHOTGUN_SSG_UP2_NAME"
+            wepup.desc "WEPS_SHOTGUN_SSG_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_ssg_up2"
+            wepup.recy_price_cvar "pr_wr_ssg_up2"
+        addwpupend
+    addwpnend
+
+    addwpnstart "Quadshot"
+        wep.name "WEPS_SHOTGUN_QUAD_NAME"
+        wep.desc "WEPS_SHOTGUN_QUAD_DESC"
+        wep.rcy_price_cvar "pr_wr_quadshot"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Quadshot_Full"
+            wepup.name "WEPS_SHOTGUN_QUAD_UP0_NAME"
+            wepup.desc "WEPS_SHOTGUN_QUAD_UP0_DESC"
+            wepup.uptype 0
+            wepup.up_price_cvar "pr_wu_quadshot_up0"
+            wepup.recy_price_cvar "pr_wr_quadshot_up0"
+        addwpupend
+    addwpnend
+defwpend
+
+defwpstart "WEPS_ASSAULT_NAME"
+    pack.desc "WEPS_ASSAULT_DESC"
+    pack.price_cvar "pr_wb_assault"
+    pack.monsterpressureadd 2
+    pack.category 0
+
+    addwpnstart "Spitter"
+        wep.name "WEPS_ASSAULT_SPIT_NAME"
+        wep.desc "WEPS_ASSAULT_SPIT_DESC"
+        wep.rcy_price_cvar "pr_wr_spitter"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Spitter_SSG"
+            wepup.name "WEPS_ASSAULT_SPIT_UP1_NAME"
+            wepup.desc "WEPS_ASSAULT_SPIT_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_spitter_up1"
+            wepup.recy_price_cvar "pr_wr_spitter_up1"
+        addwpupend
+
+        addwpupstart "Spitter_GLauncher"
+            wepup.name "WEPS_ASSAULT_SPIT_UP2_NAME"
+            wepup.desc "WEPS_ASSAULT_SPIT_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_spitter_up2"
+            wepup.recy_price_cvar "pr_wr_spitter_up2"
+        addwpupend
+    addwpnend
+
+    addwpnstart "Buckshot"
+        wep.name "WEPS_ASSAULT_BUCK_NAME"
+        wep.desc "WEPS_ASSAULT_BUCK_DESC"
+        wep.rcy_price_cvar "pr_wr_buckshot"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Buckshot_Chamber"
+            wepup.name "WEPS_ASSAULT_BUCK_UP1_NAME"
+            wepup.desc "WEPS_ASSAULT_BUCK_UP1_DESC"
+            wepup.uptype 1
+            wepup.up_price_cvar "pr_wu_buckshot_up1"
+            wepup.recy_price_cvar "pr_wr_buckshot_up1"
+        addwpupend
+
+        addwpupstart "Buckshot_Explosive"
+            wepup.name "WEPS_ASSAULT_BUCK_UP2_NAME"
+            wepup.desc "WEPS_ASSAULT_BUCK_UP2_DESC"
+            wepup.uptype 2
+            wepup.up_price_cvar "pr_wu_buckshot_up2"
+            wepup.recy_price_cvar "pr_wr_buckshot_up2"
+        addwpupend
+    addwpnend
+defwpend
+
+defwpstart "WEPS_SUPPORT_NAME"
+    pack.desc "WEPS_SUPPORT_DESC"
+    pack.price_cvar "pr_wb_support"
+    pack.monsterpressureadd 0
+    pack.category 0
+
+    addwpnstart "Supplier"
+        wep.name "WEPS_SUPPORT_SUPP_NAME"
+        wep.desc "WEPS_SUPPORT_SUPP_DESC"
+        wep.rcy_price_cvar "pr_wr_supplier"
+        wep.icon "SHT2A0"
+
+        addwpupstart "SSG_Autoload"
+            wepup.name "WEPS_SUPPORT_SUPP_UP0_NAME"
+            wepup.desc "WEPS_SUPPORT_SUPP_UP0_DESC"
+            wepup.uptype 0
+            wepup.up_price_cvar "pr_wu_supplier_up0"
+            wepup.recy_price_cvar "pr_wr_supplier_up0"
+        addwpupend
+    addwpnend
+
+    addwpnstart "Patcher"
+        wep.name "WEPS_SUPPORT_PTCH_NAME"
+        wep.desc "WEPS_SUPPORT_PTCH_DESC"
+        wep.rcy_price_cvar "pr_wr_patcher"
+        wep.icon "SHT2A0"
+
+        addwpupstart "Quadshot_Full"
+            wepup.name "WEPS_SUPPORT_PTCH_UP0_NAME"
+            wepup.desc "WEPS_SUPPORT_PTCH_UP0_DESC"
+            wepup.uptype 0
+            wepup.up_price_cvar "pr_wu_patcher_up0"
+            wepup.recy_price_cvar "pr_wr_patcher_up0"
+        addwpupend
+    addwpnend
+defwpend

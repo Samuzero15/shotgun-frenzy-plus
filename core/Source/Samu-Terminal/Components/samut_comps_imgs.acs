@@ -124,11 +124,7 @@ function int Image_AddToPanelEX (str file, int panel, int pos, int offx, int off
 		Image_SetParent(id, panel);
 		Image_setFile(id,file);
 		
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_IMG;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
-		Panel_AddCompEx(panel, Image_getRect(id), pos, offx, offy, absolute);
+		Panel_AddCompEx(panel, STCOMP_IMG, id, pos, offx, offy, absolute);
 		//Image_setAligns(id,alX,alY);
 	}
 	return id;
@@ -145,11 +141,7 @@ function int Image_DupToPanelEX(int copy, int panel, int pos, int offx, int offy
 		Component_Load(id, Image_getRect(id));
 		Image_SetParent(id, panel);
 
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_IMG;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
-		Panel_AddCompEx(panel, Image_getRect(id), pos, offx, offy, absolute);
+		Panel_AddCompEx(panel, STCOMP_IMG, id, pos, offx, offy, absolute);
 	}
 	return id;
 }

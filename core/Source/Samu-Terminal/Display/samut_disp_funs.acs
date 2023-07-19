@@ -39,16 +39,6 @@ function void HudDrawBackground(void){
 function void ShowBackground(void){
 	HudPushState();
 	HudResetState();
-		/*if(STSET_BGCYCLE){
-			if(iter > 50){
-				log(s:"Extensive process ahead, draw will fail.");
-				print(s:"It is recommended to use a single scale BG of: ",
-				f:STSET_WIDTH,s:" X ", f:STSET_WIDTH,
-				s:" pixels. Or try a bigger size that covers less than",
-				d:50, s:"iterations.");
-			}else HudDrawBackgroundLoop();
-		}else 
-		*/
 	HudDrawBackground();
 	HudPopState();
 }

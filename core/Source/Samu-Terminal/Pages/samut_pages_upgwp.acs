@@ -43,9 +43,9 @@ function void UpdateListUpPage(int pageTag){
 		Label_setText(listup_vars[2], titlecat);
 		Label_setColor(listup_vars[2], color);
 		
-		listup_vars[7] = 1 + Tech_IsDoneC(TECH_ARMORY_ARMS1) + Tech_IsDoneC(TECH_ARMORY_ARMS2);
+		listup_vars[7] = 0 + Tech_IsDoneC(TECH_ARMORY_ARMS1) + Tech_IsDoneC(TECH_ARMORY_ARMS2);
 		
-		if(listup_vars[7] == 1) ListUpPage_ShowNavs(false);
+		if(listup_vars[7] == 0) ListUpPage_ShowNavs(false);
 		else ListUpPage_ShowNavs(true);
 		
 		for(int i = 0; i < fp_WeaponStack; i++){
@@ -57,7 +57,7 @@ function void UpdateListUpPage(int pageTag){
 				ihaveup2 = checkinventory(WeaponUpgrade_getActor(i, 1));
 				showit = !(ihaveup1 || ihaveup2) && ihavewep;
 			}
-			if(Weapon_GetWepPack(i) == -1 && listup_vars[5] == 1){
+			if(Weapon_GetWepPack(i) == -1 && listup_vars[5] == 0){
 				// In case of the boomstick, put it on the standard category.
 				ListUpPage_ShowUpgrade(i, showit);
 				ListUpPage_Update(i);
@@ -217,7 +217,7 @@ function void InitListUpPage(int pageTag){
 	StrButton_SetExeArgs(i, 1, 0, 0);
 	listup_vars[4] = i;
 	//		Actual Category: var[5].
-	listup_vars[5] = 1;
+	listup_vars[5] = 0;
 	//		Stack Counter, to make the stack effect.: var[6].
 	listup_vars[6] = 0;
 	

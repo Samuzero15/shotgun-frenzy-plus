@@ -12,34 +12,35 @@ function void SamuTerm_Display(void){
 	
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
 		if(ImgButton_getShow(i)){
-			ShowImgButton(i, 0);		
+			ShowImgButton(i);		
 		}
 	}
 
 	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
 		if(StrButton_getShow(i))
-			ShowStrButton(i, 0);
+			ShowStrButton(i);
 		
 	}
 	
 	
 	for (i = 0; i < comp_count[STCOMP_LBL]; i++){
 			if(Label_getShow(i))
-			ShowLabel(i, 0);
+			ShowLabel(i);
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
 			if(Image_getShow(i))
-			ShowImage(i, 0);
+			ShowImage(i);
 	}
 	
 	for(i = 0; i < panel_count; i++){
 		if(Panel_getShow(i))
-			ShowPanels(i);
+			ShowPanel(i);
 	}
 	
-	if(getPromptState()) ShowPrompt();
-	
+	//if(Prompt_GetState()) ShowPrompt();
+	if(Prompt_GetState()) if(Panel_getShow(prompt_data[STPROMPT_DATA_PANEL])) ShowPanel(prompt_data[STPROMPT_DATA_PANEL]);
+
 	ShowCursor();
 	
 }

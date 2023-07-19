@@ -30,6 +30,19 @@ function void SamuTerm_InitComps(void){
 	SamuTerm_InitPages();
 }
 
+function void SamuTerm_InitComps_Back(void){
+	int i;
+	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
+		StrButton_Setup (StrButton_GetText(i));
+		StrButton_SetDimensions(i, tmp[0], tmp[1]);
+		StrButton_setBack(i,tmp[2]);
+	}
+
+	for (i = 0; i < panel_count; i++){
+		Panel_GenerateBack(i);
+	}
+}
+
 function void Components_Clear(void){
 	RectsDelete(0);
 	Vars_ClearCompCounts();
@@ -46,6 +59,17 @@ function void Component_Save(int comprect){
 	}
 }
 
+function int Component_GetRect(int type, int id){
+	int res;
+	switch(type) {// Hud Id is overriden. Fix that with a redefining.
+		case STCOMP_IBTN:	res = ImgButton_GetRect(id); break;
+		case STCOMP_SBTN:	res = StrButton_GetRect(id); break;
+		case STCOMP_IMG:	res = Image_GetRect(id); break;
+		case STCOMP_LBL:	res = Label_GetRect(id); break;
+	}
+	return res;
+}
+
 function void Component_Load(int id, int rect){
 	int type = 0;
 	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
@@ -55,7 +79,7 @@ function void Component_Load(int id, int rect){
 
 	switch(type) {// Hud Id is overriden. Fix that with a redefining.
 		case STCOMP_IBTN:	ImgButton_setHudId(id, ST_HID_IBTN + id); break;
-		case STCOMP_SBTN:	StrButton_setHudId(id, ST_HID_SBTNF + id); break;
+		case STCOMP_SBTN:	StrButton_setHudId(id, ST_HID_SBTNF + id); StrButton_setBackHudId(id, ST_HID_SBTNB + id); break;
 		case STCOMP_IMG:	Image_setHudId	(id, ST_HID_IMG + id); break;
 		case STCOMP_LBL:	Label_setHudId	(id, ST_HID_LBL + id); break;
 	}

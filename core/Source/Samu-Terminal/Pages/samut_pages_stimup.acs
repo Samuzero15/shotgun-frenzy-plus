@@ -44,17 +44,17 @@ function void StimUpPage_Init(int pageTag) {
 		}
 	}else{
 		i = Label_Add(320.0, 220.0);
-		Label_SetText(i, "ACCESS DENIED");
+		Label_SetText(i, langstring("SAMUT_HEALTERM_NOACCESS_TITLE", 0));
 		Label_SetTag(i, stimpage_vars[0]);
 		Label_SetFont(i, "DBIGFONT");
 		Label_SetColor(i, CR_BRICK);
 
 		i = Label_Dup(i,320.0, 235.0);
-		Label_SetText(i, "Stimpacks are not researched yet");
+		Label_SetText(i, langstring("SAMUT_HEALTERM_NOACCESS_LABEL1", 0));
 		Label_SetColor(i, CR_WHITE);
 
 		i = Label_Dup(i,320.0, 250.0);
-		Label_SetText(i, "This page is not available at the moment, come back later.");
+		Label_SetText(i, langstring("SAMUT_HEALTERM_NOACCESS_LABEL2", 0));
 		Label_SetFont(i, "SMALLFNT");
 		Label_SetWrapWidth(i, 500);
 	}

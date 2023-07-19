@@ -297,9 +297,12 @@ script "SFPlus_InitializeEverything" OPEN{
 }
 
 function void IntDB_LoadStuff(void){
-	Acs_NamedExecuteAlways("SfPlus_DefinePrices", 0);
+	//Acs_NamedExecuteAlways("SfPlus_DefinePrices", 0);
+	
 	SFPlus_DefineWeapons();
+	//log(s:"weapons loaded");
 	SFPlus_DefineItems();
+	//log(s:"items loaded");
 	
 	If(GameSkill() != 0){
 		SFPlus_DefineStimUps();

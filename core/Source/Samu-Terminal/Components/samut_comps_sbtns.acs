@@ -45,14 +45,17 @@ function int StrButton_Dup(int copy, int x, int y){
 	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
 	if(id != -1){
 		Component_Load(id, StrButton_getRect(id));
-		StrButton_Setup(StrButton_getText(id));
-		StrButton_SetDimensions(id, tmp[0], tmp[1]);
+		//StrButton_Setup(StrButton_getText(id));
+		//StrButton_SetDimensions(id, tmp[0], tmp[1]);
 	}
 	return id;
 }
 
 function int StrButton_DupCard(int copy, int grid, int cell){
 	return StrButton_Dup(copy, Card_GetX(grid, cell), Card_GetY(grid, cell));
+}
+function int StrButton_DupMid(int copy, int x, int y){
+	return StrButton_Dup(copy, x - FixedDiv(StrButton_GetWidth(copy), 2.0), y - FixedDiv(StrButton_GetHeight(copy), 2.0));
 }
 
 function int StrButton_AddToPanelAbs (str string, int panel, int x, int y) {return StrButton_AddToPanelEX (string, panel, -1, x, y, true);}
@@ -62,18 +65,14 @@ function int StrButton_AddToPanel (str string, int panel) 					{return StrButton
 function int StrButton_AddToPanelEX (str string, int panel, int pos, int offx, int offy, bool absolute){
 	int id = Component_Allocate(STCOMP_SBTN, 0.0, 0.0, 0.0, 0.0);
 	if(id != -1){
-		StrButton_Setup(string);
+		//StrButton_Setup(string);
 		StrButton_SetDefaultProps(id);
-		StrButton_SetDimensions(id, tmp[0], tmp[1]);
-		StrButton_SetBack(id, tmp[2]);
+		//StrButton_SetDimensions(id, tmp[0], tmp[1]);
+		//StrButton_SetBack(id, tmp[2]);
 		StrButton_setText(id,string);
 		StrButton_SetParent(id, panel);
 		
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_SBTN;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
-		Panel_AddCompEx(panel, StrButton_getRect(id), pos, offx, offy, absolute);
+		Panel_AddCompEx(panel, STCOMP_SBTN, id, pos, offx, offy, absolute);
 		//StrButton_setAligns(id,alX,alY);
 	}
 	return id;
@@ -88,16 +87,11 @@ function int StrButton_DupToPanelEX(int copy, int panel, int pos, int offx, int 
 	int id = Component_Allocate(STCOMP_SBTN, 0.0, 0.0, 0.0, 0.0);
 	if(id != -1){
 		Component_Load(id, StrButton_getRect(id));
-		StrButton_Setup(StrButton_getText(id));
-		StrButton_SetDimensions(id, tmp[0], tmp[1]);
-		StrButton_SetBack(id, tmp[2]);
+		//StrButton_Setup(StrButton_getText(id));
+		//StrButton_SetDimensions(id, tmp[0], tmp[1]);
+		//StrButton_SetBack(id, tmp[2]);
 		StrButton_SetParent(id, panel);
-
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][0] = STCOMP_SBTN;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][1] = id;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][2] = absolute;
-		panels_comps_index[panel][Panel_GetNumberOfComps(panel)][3] = false;
-		Panel_AddCompEx(panel, StrButton_getRect(id), pos, offx, offy, absolute);
+		Panel_AddCompEx(panel, STCOMP_SBTN, id, pos, offx, offy, absolute);
 	}
 	return id;
 }
@@ -137,16 +131,8 @@ function void StrButton_SetDefaultProps(int i){
 		StrButton_setExeArgs(i,0,0,0);
 		StrButton_setTag(i, -1);
 		StrButton_setHudId(i, ST_HID_SBTNF + i);
+		StrButton_setBackHudId(i, ST_HID_SBTNB + i);
 		StrButton_setParent(i, -1);
-}
-
-function void StrButton_SetProperties(int i, 
-	str string, str desc, int show, int exe, str back){
-		StrButton_setText(i,string);
-		StrButton_setDescription(i, desc);
-		StrButton_setShow(i, show);
-		StrButton_setExecute(i, exe);	
-		StrButton_setBack(i,back);
 }
 
 function void StrButton_SetTextAdj(int id, str string){

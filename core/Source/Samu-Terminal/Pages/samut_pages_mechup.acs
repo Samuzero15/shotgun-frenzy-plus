@@ -25,7 +25,7 @@ function void MechUpPage_Update(int pageTag){
 		}
 	
 		if(!CheckInventory("Mech_State")){
-			Label_setText(mechpage_vars[3], strparam(s:"Cost: ", d:checkInventory("Mech_Buy"), s:" $") );
+			Label_setText(mechpage_vars[3], strparam(s:"Cost: ", d:Mech_GetPrice(), s:" $") );
 			StrButton_setShow(mechpage_vars[4], false);
 			Image_setFile(mechpage_vars[6], "MECHANO");
 		}else{
