@@ -100,7 +100,7 @@ function void ListUpPage_Update(int weapon){
 		else if(Weapon_getCat(weapon) == WEAPON_SET_OVERPOWERED) color = CR_ORANGE;
 	
 	//Not hovering?, reset the name and description.
-	if(comphover == -1 || comphover != btn1 || comphover != btn2) {
+	if(comphover == -1) {
 		Label_setText(lbl_desc, "Hover to check the possible upgrades.");
 		Label_setText(lbl_name, Weapon_getName(weapon));
 	}

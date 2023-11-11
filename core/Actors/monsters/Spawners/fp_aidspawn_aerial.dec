@@ -1,0 +1,163 @@
+
+//////////////////////////////////
+// (D_EASY) Easy levels			//
+//////////////////////////////////
+
+Actor FPSpawn_AE1 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar", 256, 3
+	dropitem "FPSRSpot_BigBat", 	256, 1
+}
+
+Actor FPSpawn_AE2 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar", 256, 2
+	dropitem "FPSRSpot_BigBat", 	256, 1
+}
+
+Actor FPSpawn_AE3 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_Bad"
+}
+
+Actor FPSpawn_AE4 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_Bad"
+}
+
+Actor FPSpawn_AE5 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_Bad"
+	dropitem "FPSSpot_sfLostSoul"
+}
+
+Actor FPSpawn_AE6 : RandomSpawner {
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_Bad"
+	dropitem "FPSSpot_sfLostSoul"
+}
+
+Actor FPSpawn_AE7 : RandomSpawner {
+	dropitem "FPSSpot_Bad"
+	dropitem "FPSSpot_sfLostSoul"
+}
+
+Actor FPSpawn_AE10 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSSpot_sfLostSoul"
+}
+
+Actor FPSpawn_AM12 : RandomSpawner {
+	dropitem "FPSSpot_sfCacodemon"
+} 
+
+Actor FPSpawn_AM15 : RandomSpawner {
+	dropitem "FPSSpot_Aracnorb"
+} 
+            
+Actor FPSpawn_AE20 : RandomSpawner {
+	dropitem ""
+}
+
+//////////////////////////////////
+// (D_MEDI) Medium levels		//
+//////////////////////////////////
+
+Actor FPSpawn_AM1 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSSpot_Bad"
+}
+
+Actor FPSpawn_AM2 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_Bad"
+}
+
+Actor FPSpawn_AM3 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar",	256, 1
+	dropitem "FPSSpot_Bad",			256, 2
+	dropitem "FPSSpot_sfLostSoul", 	256, 1
+}
+
+Actor FPSpawn_AM4 : RandomSpawner {
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_BatFamiliar"
+	dropitem "FPSSpot_sfLostSoul"
+	dropitem "FPSSpot_Bad"
+}
+
+Actor FPSpawn_AM5 : RandomSpawner {
+	dropitem "FPSSpot_BatFamiliar",	256, 1
+	dropitem "FPSSpot_Bad",			256, 2
+	dropitem "FPSSpot_sfLostSoul", 	256, 3
+}
+
+Actor FPSpawn_AM6 : RandomSpawner {
+	dropitem "FPSSpot_sfCacodemon", 128, 1
+	dropitem "FPSSpot_sfLostSoul",  256, 3
+} 
+
+Actor FPSpawn_AM10 : RandomSpawner {
+	dropitem "FPSSpot_Aracnorb"
+} 
+
+Actor FPSpawn_AM20 : RandomSpawner {
+	dropitem ""
+}
+
+//////////////////////////////////
+// (D_HARD) Hard levels			//
+//////////////////////////////////
+
+Actor FPSpawn_AH1 : RandomSpawner {
+	dropitem "FPSRSpot_BigBat",		256, 1
+	dropitem "FPSSpot_Bad",		 	256, 2
+	dropitem "FPSSpot_sfLostSoul",	256, 1
+}
+
+Actor FPSpawn_AH2 : RandomSpawner {
+	dropitem "FPSRSpot_BigBat"
+	dropitem "FPSSpot_Bad"		 	
+	dropitem "FPSSpot_sfLostSoul"	
+}
+
+Actor FPSpawn_AH3 : RandomSpawner {
+	dropitem "FPSSpot_Bad",		 	256, 1
+	dropitem "FPSSpot_sfLostSoul",	256, 2
+}
+
+Actor FPSpawn_AH4 : RandomSpawner {
+	dropitem "FPSSpot_sfCacodemon" 128, 1
+} 
+
+Actor FPSpawn_AH4 : RandomSpawner {
+	dropitem "FPSSpot_sfCacodemon" 
+} 
+
+Actor FPSpawn_AH8 : RandomSpawner {
+	dropitem "FPSSpot_Aracnorb"
+} 
+
+Actor FPSpawn_AH12 : RandomSpawner {
+	dropitem "FPSSpot_Afrit"
+} 
+
+Actor FPSpawn_AH20 : RandomSpawner {
+	dropitem ""
+}
+
+
+// These monsters will appear once.
+//////////////////////////////////
+// (BOSS) Boss levels			//
+//////////////////////////////////
+
+Actor FPSpawn_AB1 : RandomSpawner {
+	dropitem ""
+}
+
+Actor FPSpawn_AB20 : RandomSpawner {
+	dropitem ""
+}

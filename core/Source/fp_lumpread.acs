@@ -27,6 +27,8 @@ int lumpread_tokenlist[LUMPR_NTOKENS][2];
 int lumpread_commands[1000][2];
 int lumpread_commands_stack = 0;
 int lumpread_value_buffer[10000];
+int lumpread_consts[10000][2];
+int lumpread_constantstack = 0;
 
 function void LumpRead_AddToken(int tokenid, str token_str, int value_type){
     if(tokenid >= LUMPR_NTOKENS){
@@ -38,16 +40,36 @@ function void LumpRead_AddToken(int tokenid, str token_str, int value_type){
     lumpread_tokenstack++;
 }
 
+function void LumpRead_AddConstant(str constant_str, str constant_value){
+    if(lumpread_constantstack >= 10000){
+        log(s:"(LumpRead): Too much constants, expand plz");
+        return;
+    }
+   lumpread_consts[lumpread_constantstack][0] = constant_str;
+   lumpread_consts[lumpread_constantstack][1] = constant_value;
+   lumpread_constantstack++;
+}
+
 script "LumpRead_Execute" (int lump_name, int script_init_tokens, int script_process_lump){
     //log(s:"lump_name: ", s:lump_name, s:" script_process_lump: ", s:script_process_lump);
     //terminate;
     LumpRead_ClearTokens();
+    LumpRead_ClearCommands();
+    LumpRead_ClearData();
     while(ACS_NamedExecuteWithResult(script_init_tokens) != 1){
-        log(s:"Initializing tokens");
         delay(1);
     } 
 
+   
     int i = 0;
+     /*
+    for(i = 0; i < lumpread_tokenstack; i++){
+        log(s:"lumpread_tokenlist[",d:i,s:"][0] = ", s:lumpread_tokenlist[i][0]);
+    }
+    i = 0;
+    */
+
+    
     do {
         i = LumpOpen(lump_name, i);
         if(i != -1){
@@ -63,6 +85,14 @@ function void LumpRead_AddCommand (int command_tokenid, int expected_arg, str co
     lumpread_commands[lumpread_commands_stack][0] = command_tokenid;
     lumpread_commands[lumpread_commands_stack][1] = value;
     lumpread_commands_stack++;
+}
+
+function void LumpRead_ClearCommands(void){
+    for(int i = 0; i < lumpread_commands_stack; i++){
+        lumpread_commands[i][0] = 0;
+        lumpread_commands[i][1] = 0;
+    }
+    lumpread_commands_stack = 0;
 }
 
 function void LumpRead_ClearTokens (void){
@@ -84,12 +114,16 @@ function void LumpRead_TokenRead (int lump){
     bool skip_write = false;
     bool string_mode = false;
     bool value_mode = false;
+    bool const_mode = false;
+    str const_token;
+    str const_value;
     int command_tokenid = -1;
     int command_arg = -1;
     int expected_arg = 0;
     int comment_state = 0;
     bool multiline_comment = false;
     bool multiline_comment_disable = false;
+    
     while(char_pos < len){
         char_now = GetChar(text, char_pos);
         //log(s:"Char read: ", c:char_now, s:"(", d:char_now,  s:")");
@@ -104,22 +138,17 @@ function void LumpRead_TokenRead (int lump){
                 if(multiline_comment && comment_state == 0){
                     multiline_comment_disable = false;
                     multiline_comment = false;
-                    //log(s:"Multiline comment stopped");
                 }else {
                     comment_state++;
-                    //log(s:"Found a slash, possible comment? comment_state:", d:comment_state);
-                    //if(comment_state >= 2) log(s:"Single line comment detected, skipping until newline");
                 }
                 
             break;
             case '*':
-                //log(s:"Ok, got a star, it is a multiline comment? comment_state: ", d:comment_state);
                 if(multiline_comment && comment_state == 0){
                     multiline_comment_disable = true;
                 }
                 else if(comment_state >= 1){
                     multiline_comment = true;
-                    //log(s:"Multiline comment detected, skipping until, '*/'");
                 }
                 else token = strparam(s:token, c:char_now);
             break;
@@ -130,29 +159,40 @@ function void LumpRead_TokenRead (int lump){
             case 9: // space, NL, HT
                 if(!string_mode){
                     if(StrLen(token) > 0){
-                        //log(s:"Token read: ", s:token);
-                        int t = 0;
-                        for(t = 0; t < lumpread_tokenstack; t++){
-                            if(StrICmp(token, lumpread_tokenlist[t][0]) == 0 && !value_mode){
-                                command_tokenid = t;
-                                if(lumpread_tokenlist[t][1] >= LUMPR_VALUE_INT && lumpread_tokenlist[t][1] <= LUMPR_VALUE_LANGSTR){
-                                     //log(s:"Command detected, ", s:token, s:", expected value: ", d:lumpread_tokenlist[t][1]);
-                                     expected_arg = lumpread_tokenlist[t][1];
-                                     value_mode = true;
-                                }else{
-                                    //log(s:"Command detected, ", s:token, s:", no expected value: ");
-                                    LumpRead_AddCommand (command_tokenid, 0, 0);
+                        if(StrICmp(token, "define") == 0 && !value_mode){
+                            const_mode = true;
+                        }else if (const_mode && value_mode){
+                            const_value = token;
+                            //log(s:"Constant read: ", s:"const_token=", s:const_token, s:" const_value=", s:const_value);
+                            LumpRead_AddConstant(const_token, const_value);
+                            value_mode = false;
+                            const_mode = false;
+                        }else if (const_mode){
+                            const_token = token;
+                            value_mode = true;
+                        } else {
+                            int t = 0;
+                            for(t = 0; t < lumpread_tokenstack; t++){
+                                if(StrICmp(token, lumpread_tokenlist[t][0]) == 0 && !value_mode){
+                                    command_tokenid = t;
+                                    if(lumpread_tokenlist[t][1] >= LUMPR_VALUE_INT && lumpread_tokenlist[t][1] <= LUMPR_VALUE_LANGSTR){
+                                        //log(s:"Command detected, ", s:token, s:", expected value: ", d:lumpread_tokenlist[t][1]);
+                                        expected_arg = lumpread_tokenlist[t][1];
+                                        value_mode = true;
+                                    }else{
+                                        //log(s:"Command detected, ", s:token, s:", no expected value: ");
+                                        LumpRead_AddCommand (command_tokenid, 0, 0);
+                                    }
+                                    break;
+                                }else if(value_mode){
+                                    command_arg = token;
+                                    LumpRead_AddCommand (command_tokenid, expected_arg, command_arg);
+                                    value_mode = false;
+                                    command_tokenid = -1;
+                                    expected_arg = 0;
                                 }
-                                break;
-                            }else if(value_mode){
-                                command_arg = token;
-                                LumpRead_AddCommand (command_tokenid, expected_arg, command_arg);
-                                value_mode = false;
-                                command_tokenid = -1;
-                                expected_arg = 0;
                             }
                         }
-                        
                     } 
                     token = "";
                 }
@@ -185,29 +225,179 @@ function int LumpRead_ParseValue (str string_value, int value_type){
     int value = -1;
     switch(value_type){
         case LUMPR_VALUE_INT:
-            value = atoi(string_value);
+            if(LumpRead_IsConstantValue(string_value))
+                    value = atoi(LumpRead_GetConstantValue(string_value));
+            else    value = atoi(string_value);
         break;
         case LUMPR_VALUE_FIXED:
-            value = atof(string_value);
+            if(LumpRead_IsConstantValue(string_value))
+                    value = atof(LumpRead_GetConstantValue(string_value));
+            else    value = atof(string_value);
         break;
         case LUMPR_VALUE_STR:
-            value = StrReplace(string_value, "\\n", strparam(c:'\n'));
+            if(LumpRead_IsConstantValue(string_value))
+                    value = StrReplace(LumpRead_GetConstantValue(string_value), "\\n", strparam(c:'\n'));
+            else    value = StrReplace(string_value, "\\n", strparam(c:'\n'));
         break;
         case LUMPR_VALUE_BOOL:
-            value = LumpRead_ParseBool(string_value);
+            if(LumpRead_IsConstantValue(string_value))
+                    value = LumpRead_ParseBool(LumpRead_IsConstantValue(string_value));
+            else    value = LumpRead_ParseBool(string_value);
         break;
         case LUMPR_VALUE_LANGSTR:
-            value = StrReplace(strparam(l:string_value), "\\n", strparam(c:'\n'));
+            if(LumpRead_IsConstantValue(string_value)) 
+                    value = StrReplace(strparam(l:LumpRead_IsConstantValue(string_value)), "\\n", strparam(c:'\n'));
+            else    value = StrReplace(strparam(l:string_value), "\\n", strparam(c:'\n'));
         break;
-        //default:
+        default:
             //log(s:"command: ", d:tokenid);
     }
     return value;
 }
 
 function void LumpRead_ClearData(void){
-    int k, l, n;
+    int k;
     for(k = 0; k < 10000; k++){
         lumpread_value_buffer[k] = 0;
+        lumpread_consts[k][0] = 0;
+        lumpread_consts[k][1] = 0;
     }
+    lumpread_constantstack = 0;
+}
+
+function int LumpRead_IsConstantValue(int string_value){
+    int k;
+    bool res = false;
+    
+    for(k = 0; k < lumpread_constantstack; k++){
+        if(StrCMP(string_value, lumpread_consts[k][0]) == 0){
+            res = true;
+            break;
+        }
+    }
+    return res;
+}
+
+function int LumpRead_GetConstantValue(int string_value){
+    int k;
+    int res = 0;
+    for(k = 0; k < lumpread_constantstack; k++){
+        if(StrCMP(string_value, lumpread_consts[k][0]) == 0){
+            res = lumpread_consts[k][1];
+            break;
+        }
+    }
+    return res;
+}
+int res1, res2;
+
+Script "LumpRead_LoadFile" (int lumpfile, int lineread_script) {
+    // Took from my FDM map, whee!
+	int file_delayer = 0;
+	int lump = 0;
+	while (lump != -1){
+		lump = LumpOpen(lumpfile, lump);
+		if(lump == -1) terminate;
+		str file_text = LumpReadString(lump, 0);
+		int tex_len = StrLen(file_text);
+		int next_newline = StrFindFrom(file_text, "\n", 0) ;
+		next_newline = next_newline != -1 ? next_newline : tex_len;
+		int next_comment;
+		int next_comment1;
+		int next_comment2;
+		int next_comment_multiline[2] = {-1, -1};
+		int line_size;
+		int pos = 0;
+		int delayer = 0;
+		do{
+			//log(s:, s:"=> Pos = ", d:pos, s:", next_newline = ", d:next_newline);
+			next_comment_multiline[0] = StrFindFrom(file_text, "/*", pos);
+			if(next_comment_multiline[0] != -1){
+				next_comment_multiline[1] = StrFindFrom(file_text, "*/", pos) != -1 ? StrFindFrom(file_text, "*/", pos) : tex_len;
+				
+				if(pos >= next_comment_multiline[0] && pos < next_comment_multiline[1]){
+					pos = next_comment_multiline[1]+2;
+					next_newline = StrFindFrom(file_text, "\n", pos);
+					if(pos == tex_len) terminate;
+				}
+			}
+			str line = StrSlice(file_text, pos, next_newline);
+			next_comment = -1;
+			next_comment1 = StrFindFrom(line, "//", 0);
+			next_comment2 = StrFindFrom(line, "/*", 0);
+			if(next_comment1 != -1 && next_comment2 != -1) next_comment = min(next_comment1, next_comment2);
+			else if(next_comment1 == -1 && next_comment2 != -1) next_comment = next_comment2;
+			else if(next_comment2 == -1 && next_comment1 != -1) next_comment = next_comment1;
+			line = StrRemoveCR(line);
+			line_size = StrLen(line);
+			line = StrSlice(line, 0, line_size - (line_size - next_comment)*(next_comment != -1));
+			line_size = StrLen(line);
+			//log(s:"Pos= (", d:pos, s:"), line=(", s:line, s:")");
+			//log(s:line, s:" => Pos = ", d:pos, s:", next_newline = ", d:next_newline, s:", next_comment = ", d:next_comment, s:", line_size = ", d:line_size);
+			if(line_size != 0){
+				res1 = 0; res2 = 0;
+				ACS_NamedExecuteWithResult(lineread_script, line);
+			}
+			pos = next_newline+1;
+			next_newline = StrFindFrom(file_text, "\n", pos);
+			next_newline = next_newline != -1 ? next_newline : tex_len;
+			delayer++;
+			if(delayer % 5 == 0){
+				delay(1);
+			} 
+		}while(pos-1 != tex_len);
+		file_delayer++;
+		if(file_delayer % 5 == 0){
+			delay(1);
+		} 
+	}
+}
+
+function void LumpRead_StrNextArg(str line){
+	int nextcoma = StrFindFrom(line, ",", res2);
+	if(nextcoma == -1) nextcoma = strlen(line);
+	res1 = StrSlice(line, res2, nextcoma);
+	res1 = StrRemoveCR(res1);
+    res1 = StrTrim(res1);
+    res1 = StrRemove(res1, "\"");
+	res2 = nextcoma+1;
+}
+
+function str StrTrim(str string){
+    int len = StrLen(string);
+    str newstring;
+    int i;
+    int leftchar;
+    int rightchar;
+    for(i = 0; i < len; i++){
+        if(GetChar(string, i) != ' '){
+            leftchar = i;
+            break;
+        }
+    }
+    newstring = StrSlice(string, leftchar, len);
+    len = StrLen(newstring);
+    for(i = len-1; i >= 0; i--){
+        if(GetChar(newstring, i) != ' '){
+            rightchar = i;
+            break;
+        }
+    }
+    newstring = StrSlice(newstring, 0, rightchar+1);
+    return newstring;
+}
+
+function int StrCharCount(str string, int check){
+    int len = StrLen(string);
+    int res = 0;
+    for(int i = 0; i < len; i++){
+        if(GetChar(string, i) == check){
+            res++;
+        }
+    }
+    return res;
+}
+
+function str StrRemoveCR(str string){
+	return GetChar(string, StrLen(string)-1) == 13 ? StrSlice(string, 0, StrLen(string)-1) : string;
 }

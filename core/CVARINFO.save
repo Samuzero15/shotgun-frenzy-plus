@@ -1,0 +1,7 @@
+user int sfp_save_checksum_client = 0;
+user string sfp_save_stats = "";
+user string sfp_save_weapons = "";
+user string sfp_save_items = "";
+user string sfp_save_playups = "";
+user string sfp_save_mechups = "";
+user string sfp_save_stimups = "";

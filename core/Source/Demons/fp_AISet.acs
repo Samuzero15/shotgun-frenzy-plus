@@ -8,7 +8,9 @@
 #library "fp_AISet"
 #import "f_AIDRL.acs"
 #import "fa_SetList.acs"
+#import "fp_lumpread.acs"
 #include "zcommon.acs"
+#include "acsutils.acs"
 
 #define AISET_MAX 50
 #define AISET_LEVELS 20
@@ -36,22 +38,46 @@ int aiset_stack = 0;
 Script "SFPlus_LoadDefaultEnemySets" Open
 {
 	aiset_stack = 0;
-	AISet_Add("D", "Default", 6);
+	/*AISet_Add("D", "Default", 6);
 	AISet_Add("R", "Rusher", 3);
 	AISet_Add("S", "Survival", 1);
 	AISet_Add("Z", "Zombies", 20);
+	*/
+	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFMWAVES", "SFPlus_AISet_SFMWAVESReadLine");
 }
 
 Script "AISet_Add" (int index, int name, int boss){
 	AISet_Add(index, name, boss);
 }
 
-Script "SFPlus_ListEnemySets" (void){
+Script "SFPlus_ListEnemySetsClientsided" (int set) CLIENTSIDE{
+	int selected = set;
+	AISet_Log("\cfRemember: sfp_monsterset <index> to change the monster set, and it requires a restart to take effect.");
+	str string;
 	for(int i = 0; i < aiset_stack; i++){
-		log(d:i,s:") ",s:enemy_sets[i][1],
+		str string_setentry = strparam(d:i,s:") ",s:enemy_sets[i][1],
 		s:", Index: ",s:enemy_sets[i][0],
 		s:", Spawn bosses on level:", d:enemy_sets[i][2]);
+		if(selected == i){
+			string = strparam(s:string, s:"\n", s:"\cf", s:string_setentry);
+			continue;
+		} 
+		string = strparam(s:string, s:"\n", s:"\c-", s:string_setentry);
 	}
+	AISet_Log(string);
+}
+
+Script "SFPlus_ListEnemySets" (void){
+	NamedExecuteClientScript("SFPlus_ListEnemySetsClientsided", PlayerNumber(), GetCvar("sfp_monsterset"));
+}
+
+Script "SFPlus_AISet_SFMWAVESReadLine" (int line) {
+	//log(s:"\"", s:line, s:"\"");
+	LumpRead_StrNextArg(line); str index = 				LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	LumpRead_StrNextArg(line); str name = 				LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	LumpRead_StrNextArg(line); str boss_level_start = 	LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+	boss_level_start = clamp(boss_level_start, 0, 20);
+	AISet_Add(index, name, boss_level_start);
 }
 
 function void AISet_Add(str index, str name, int boss_level_start){
@@ -107,6 +133,9 @@ function void AISet_SetSpawnList(str initial){
 	}
 }
 
+function void AISet_Log(str what){
+	HudMessage(s:what; HUDMSG_LOG | HUDMSG_PLAIN | HUDMSG_NOTWITH3DVIEW | HUDMSG_NOTWITHFULLMAP | HUDMSG_NOTWITHOVERLAYMAP, 0, CR_WHITE, 0.0, 0.0, 0.1);
+}
 
 function void AISet_SetBoss(int lvl, str m){
 	boss_levels[lvl] = m;

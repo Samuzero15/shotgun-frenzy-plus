@@ -160,7 +160,14 @@ script 53 ENTER
 	p_StreakLevel[play] = 0;
 	p_Mechtimer[play] = -2;
 	p_StreakHi[play] = 0; // Reset the High score kill-streak.
-	
+	ResetCustomDataToDefault("$$$", play);
+	ResetCustomDataToDefault("UPs", play);
+	ResetCustomDataToDefault("K.S.", play);
+	ResetCustomDataToDefault("OnMechCol", play);
+	ResetCustomDataToDefault("RankCol", play);
+	SetCustomPlayerValue("$$$", play, p_Credits[play]);
+	SetCustomPlayerValue("UPs", play, p_Exp_Points[play]);
+	SetCustomPlayerValue("RankCol", play, p_Rank[play] + 1);
     Notify_Player_Enter();
 	
 	//Save the name for disconnect cases.
@@ -178,6 +185,7 @@ script 54 RESPAWN
 {
 	
     // give players the 'player' tid
+	thing_changetid(990+PlayerNumber(), 0);
     thing_changetid(0, 990+PlayerNumber());
 	// Set the max health upon spawn.
 	

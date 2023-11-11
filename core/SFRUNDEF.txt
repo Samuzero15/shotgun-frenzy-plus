@@ -1,0 +1,23 @@
+
+4,  "RampageRune",          "RuneRampage",              "Rampage",      "RBTN14"
+4,  "RageRune",             "RuneDoubleFiringSpeed",    "Rage",         "RBTN08"
+4,  "StrengthRune",         "RuneDoubleDamage",         "Strength",     "RBTN02"
+4,  "SpreadRune_Pickup",    "RuneSpread",               "Spread",       "RBTN11"
+4,	"ResistanceRune",       "RuneHalfDamage",           "Resistance",   "RBTN10"
+
+3,	"DrainRune",        "RuneDrain",        "Drain",        "RBTN03"
+3,  "ReflectionRune",   "RuneReflection",   "Reflection",   "RBTN06"
+3,  "DefenseRune",      "RuneDefense",      "Defense",      "RBTN19"
+3,  "ResurrectionRune", "RuneResurrection", "Resurrection", "RBTN01"
+3,  "SoulRune_Pickup",  "RuneSoul",         "Soul",         "RBTN13"
+
+2,  "ProsperityRune",           "RuneProsperity",   "Prosperity",   "RBTN07"  
+2,  "BlastRune",                "RuneBlast",        "Blast",        "RBTN17"  
+2,  "AmmunitionRune_Pickup",    "RuneAmmunition",   "Ammunition",   "RBTN16"  
+2,  "FortuneRune",              "RuneFortune",      "Fortune",      "RBTN18" 
+2,  "TemperanceRune",           "RuneTemperance",   "Temperance",   "RBTN15"  
+
+1,  "HealthRune_Pickup",    "RuneHealth",        "Health",          "RBTN12"  
+1,	"RegenerationRune",     "RuneRegeneration",  "Regeneration",    "RBTN09"  
+1,	"HighJumpRune",         "RuneHighJump",      "HighJump",        "RBTN05"
+1,	"HasteRune",            "RuneSpeed25",       "Haste",           "RBTN04"

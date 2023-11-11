@@ -38,6 +38,10 @@ Actor FPSSpot_FemaleZScientist2{states{Spawn:
 	TNT1 A 0 NoDelay A_SpawnItemEx("FemaleZScientist2",0,0,0,0,0,0,0,0,0,tid)  
 stop}}
 
+Actor FPSSpot_sfLostSoul{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfLostSoul",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
 Actor FPSSpot_FemaleZScientist3{states{Spawn: 
 	TNT1 A 0 NoDelay A_SpawnItemEx("FemaleZScientist3",0,0,0,0,0,0,0,0,0,tid)  
 stop}}
@@ -60,6 +64,10 @@ stop}}
 
 Actor FPSSpot_Chaingunguy2{states{Spawn: 
 	TNT1 A 0 NoDelay A_SpawnItemEx("Chaingunguy2",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_sfCacodemon{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("sfCacodemon",0,0,0,0,0,0,0,0,0,tid)  
 stop}}
 
 Actor FPSSpot_sfDoomimp{states{Spawn: 
@@ -163,4 +171,28 @@ stop}}
 
 Actor FPSSpot_Demolisher{states{Spawn: 
 			TNT1 A 0 NoDelay A_SpawnItemEx("Demolisher",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_BatFamiliar{states{Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("BatFamiliar",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_Afrit{states{Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Afrit",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_Aracnorb{states{Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Aracnorb",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_Bad{states{Spawn: 
+			TNT1 A 0 NoDelay A_SpawnItemEx("Bad",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_GiantBat{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("GiantBat",0,0,0,0,0,0,0,0,0,tid)  
+stop}}
+
+Actor FPSSpot_ImpBat{states{Spawn: 
+	TNT1 A 0 NoDelay A_SpawnItemEx("ImpBat",0,0,0,0,0,0,0,0,0,tid)  
 stop}}

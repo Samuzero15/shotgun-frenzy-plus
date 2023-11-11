@@ -7,6 +7,7 @@ spawnid 236
     Height 24
     Speed 14
     PainChance 200
+    accuracy -1 // Never make it champion.
     MONSTER 
     +NOGRAVITY
     +FLOAT

@@ -13,6 +13,7 @@
 #import "fl_techs.acs"
 #import "fp_lumpread.acs"
 #include "zcommon.acs"
+#include "acsutils.acs"
 #include "samu_tools.acs"
 
 #libdefine WEAPON_SET_CATEGORIES 3
@@ -118,7 +119,7 @@ function void SFPlus_DefineWeapons (void){
 	fp_WpCategoryStack[0] = 0;
 	fp_WpCategoryStack[1] = 0;
 	fp_WpCategoryStack[2] = 0;
-
+	WDir_ReadSFWEPDEF();
 	//Basic pack
 	/*
 	wep = Weapon_AddHidden("Beretta", "BASIC_BRTT");
@@ -204,141 +205,72 @@ function void SFPlus_DefineWeapons (void){
 	*/	
 }
 
+/*
 script "SFPlus_Wdir_ReadLumps" Open {
     WDir_ReadSFWEPDEF();
 }
-
 
 script "SFPlus_Wdir_ReadLumps_Clientside" Open Clientside{
     if(GameType() != GAME_SINGLE_PLAYER){
         WDir_ReadSFWEPDEF();
     }
 }
-
+*/
 function void WDir_ReadSFWEPDEF(void){
-	ACS_NamedExecuteWithResult("LumpRead_Execute", "SFWEPDEF", "SFPlus_Wdir_InitSFWEPDEF", "SFPlus_Wdir_ProcessLump");
+	//ACS_NamedExecuteWithResult("LumpRead_Execute", "SFWEPDEF", "SFPlus_Wdir_InitSFWEPDEF", "SFPlus_Wdir_ProcessLump");
+	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFWEPDEF", "SFPlus_WDir_SFWEPDEFReadLine");
 }
 
-Script "SFPlus_Wdir_InitSFWEPDEF" (void){
-    LumpRead_addToken(SFWEPDEF_TK_defwpstart,           "defwpstart",               LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_pack_desc,            "pack.desc",                LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_pack_price_cvar,      "pack.price_cvar",          LUMPR_VALUE_STR);
-    LumpRead_addToken(SFWEPDEF_TK_pack_mpadd,           "pack.monsterpressureadd",  LUMPR_VALUE_INT);
-    LumpRead_addToken(SFWEPDEF_TK_pack_category,        "pack.category",            LUMPR_VALUE_INT);
-    LumpRead_addToken(SFWEPDEF_TK_addwpnstart,          "addwpnstart",              LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_wep_desc,             "wep.desc",                 LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_wep_rcprice_cvar,     "wep.rcy_price_cvar",       LUMPR_VALUE_STR);
-    LumpRead_addToken(SFWEPDEF_TK_wep_icon,             "wep.icon",                 LUMPR_VALUE_STR);
-    LumpRead_addToken(SFWEPDEF_TK_wep_name,             "wep.name",                 LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_addwpupstart,         "addwpupstart",             LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_wepup_uptype,         "wepup.uptype",             LUMPR_VALUE_INT);
-    LumpRead_addToken(SFWEPDEF_TK_wepup_desc,           "wepup.desc",               LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_wepup_upprice_cvar,   "wepup.up_price_cvar",      LUMPR_VALUE_STR);
-    LumpRead_addToken(SFWEPDEF_TK_wepup_rcprice_cvar,   "wepup.recy_price_cvar",    LUMPR_VALUE_STR);
-    LumpRead_addToken(SFWEPDEF_TK_wepup_name,           "wepup.name",               LUMPR_VALUE_LANGSTR);
-    LumpRead_addToken(SFWEPDEF_TK_addwpupend,           "addwpupend",               LUMPR_VALUE_NULL);
-    LumpRead_addToken(SFWEPDEF_TK_addwpnend,            "addwpnend",                LUMPR_VALUE_NULL);
-    LumpRead_addToken(SFWEPDEF_TK_defwpend,             "defwpend",                 LUMPR_VALUE_NULL);
-    SetResultValue(1);
-}
+int file_wpid;
+int file_wepid;
 
-Script "SFPlus_Wdir_ProcessLump" (int lump){
-    if(LumpSize(lump) > 0){
-        LumpRead_TokenRead(lump);
-		
-        for(int i = 0; i < lumpread_commands_stack; i++){
-            WDir_ProcessCommand (lumpread_commands[i][0], lumpread_commands[i][1]);
-            
-            /*log(s:"lumpread_command, 1:", d:lumpread_commands[i][0], 
-            s:", 2:", d:lumpread_commands[i][1], s:" (", s:lumpread_commands[i][1], s:")");*/
-            
-            lumpread_commands[i][0] = 0;
-            lumpread_commands[i][1] = 0;
-        }
-        lumpread_commands_stack = 0;
-		
-    }
-    
-    //LumpRead_TokenProcess (command_tokenid, 0, 0);
-}
+Script "SFPlus_WDir_SFWEPDEFReadLine" (int line) {
+	//log(s:"\"", s:line, s:"\"");
+	LumpRead_StrNextArg(line); str op = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	//log(s:"OP: ", s:op);
+	int argcount = StrCharCount(line, ",")+1;
+	if(StrIEquals(op, "AddWeaponPack")){
+		LumpRead_StrNextArg(line); int cat = LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+		if(fp_WpCategoryStack[cat] >= FP_WEP_PACKS_PER_CATEGORY){
+			log(s:"(FL_WDIR.acs) Can't add more weapon packs in this category, ", d:FP_WEP_PACKS_PER_CATEGORY, s:" Limit reached.");
+			terminate;
+		}
+		file_wpid = fp_WeaponPackStack;
 
-function void WDir_ProcessCommand (str tokenid, int value){
-    int wep_id = lumpread_value_buffer[6];
-    int wepup_id = lumpread_value_buffer[Wdir_ID_Wep(wep_id, 5)];
-    switch(tokenid){
-        case SFWEPDEF_TK_defwpstart:
-            lumpread_value_buffer[0] = fp_WeaponPackStack;
-            lumpread_value_buffer[1] = value;
-        break;
+		//int wid = lumpread_value_buffer[0];
+		fp_WpCategory[cat][fp_WpCategoryStack[cat]] = file_wpid;
+		fp_WpCategoryStack[cat]++;
+		//log(s:"Category stack: ", d:fp_WpCategoryStack[cat]);
 
-        case SFWEPDEF_TK_pack_desc:         lumpread_value_buffer[2] = value; break;
-        case SFWEPDEF_TK_pack_price_cvar:   lumpread_value_buffer[3] = value; break;
-        case SFWEPDEF_TK_pack_mpadd:        lumpread_value_buffer[4] = value; break;
-        case SFWEPDEF_TK_pack_category:     lumpread_value_buffer[5] = value; break;
-
-        case SFWEPDEF_TK_addwpnstart:       lumpread_value_buffer[Wdir_ID_Wep(wep_id, 0)] = value; break;
-        case SFWEPDEF_TK_wep_name:          lumpread_value_buffer[Wdir_ID_Wep(wep_id, 1)] = value; break;
-        case SFWEPDEF_TK_wep_desc:          lumpread_value_buffer[Wdir_ID_Wep(wep_id, 2)] = value; break;
-        case SFWEPDEF_TK_wep_rcprice_cvar:  lumpread_value_buffer[Wdir_ID_Wep(wep_id, 3)] = value; break;
-        case SFWEPDEF_TK_wep_icon:          lumpread_value_buffer[Wdir_ID_Wep(wep_id, 4)] = value; break;
-        
-        case SFWEPDEF_TK_addwpupstart:          lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 0)] = value; break;
-        case SFWEPDEF_TK_wepup_name:            lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 1)] = value; break;
-        case SFWEPDEF_TK_wepup_desc:            lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 2)] = value; break;
-        case SFWEPDEF_TK_wepup_uptype:          lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 3)] = value; break;
-        case SFWEPDEF_TK_wepup_upprice_cvar:    lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 4)] = value; break;
-        case SFWEPDEF_TK_wepup_rcprice_cvar:    lumpread_value_buffer[Wdir_ID_WpUp(wep_id, wepup_id, 5)] = value; break;
-
-        case SFWEPDEF_TK_addwpupend:
-            lumpread_value_buffer[Wdir_ID_Wep(wep_id, 5)]++;
-        break;
-        case SFWEPDEF_TK_addwpnend:
-            lumpread_value_buffer[6]++;
-        break;
-        case SFWEPDEF_TK_defwpend:
-            WDir_CommitInsert();
-            LumpRead_ClearData();
-        break;
-    }
-}
-
-function bool WDir_CommitInsert(void){
-    int cat = lumpread_value_buffer[5];
-    if(fp_WpCategoryStack[cat] >= FP_WEP_PACKS_PER_CATEGORY){
-		log(s:"(FL_WDIR.acs) Can't add more weapon packs in this category, ", d:FP_WEP_PACKS_PER_CATEGORY, s:" Limit reached.");
-		return false;
+		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_NAME] = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_CATEGORY] = 	cat;
+		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_DESCRIPTION] = 	LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_PRICE] = 		GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
+		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_MONSPRESS] = 	LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+		fp_WeaponPackStack++;
+	}else if(StrIEquals(op, "AddWeapon")){
+		file_wepid = fp_WeaponStack;
+		LumpRead_StrNextArg(line); fp_Wpns[file_wepid][FP_WDIR_WEAPON_ACTOR] = LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+        LumpRead_StrNextArg(line); fp_Wpns[file_wepid][FP_WDIR_WEAPON_NAME] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+        fp_Wpns[file_wepid][FP_WDIR_WEAPON_PACK] = file_wpid;
+        LumpRead_StrNextArg(line); fp_Wpns[file_wepid][FP_WDIR_WEAPON_DESCRIPTION] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+        LumpRead_StrNextArg(line); LumpRead_StrNextArg(line);  // Ignoring Icon argument for now.
+		fp_Wpns[file_wepid][FP_WDIR_WEAPON_PRICE] = GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
+		fp_WeaponStack++;
+	}else if(StrIEquals(op, "AddWeaponUp")){
+		int wepup_count = fp_Wpns[file_wepid][FP_WDIR_WEAPON_UPSNUM];
+		LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_UPTYPE] = LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+		LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_ACTOR] = LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+        LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_NAME] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+        LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_DESCRIPTION] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+        //log(s:"Description: ", s:fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_DESCRIPTION]);
+		LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_UPGRPRICE] = GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
+        LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_RECYPRICE] = GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
+		fp_Wpns[file_wepid][FP_WDIR_WEAPON_UPSNUM]++;
 	}
-
-	int wid = lumpread_value_buffer[0];
-	fp_WpCategory[cat][fp_WpCategoryStack[cat]] = wid;
-	fp_WpCategoryStack[cat]++;
-    //log(s:"Category stack: ", d:fp_WpCategoryStack[cat]);
-
-	fp_WpPacks[wid][FP_WDIR_WPPACK_NAME] = lumpread_value_buffer[1];
-	fp_WpPacks[wid][FP_WDIR_WPPACK_CATEGORY] = cat;
-	fp_WpPacks[wid][FP_WDIR_WPPACK_DESCRIPTION] = lumpread_value_buffer[2];
-	fp_WpPacks[wid][FP_WDIR_WPPACK_PRICE] = GetCvar(lumpread_value_buffer[3]);
-	fp_WpPacks[wid][FP_WDIR_WPPACK_MONSPRESS] = lumpread_value_buffer[4];
-    fp_WeaponPackStack++;
-    for(int i = 0; i < lumpread_value_buffer[6]; i++){
-        int wepid = fp_WeaponStack;
-        fp_Wpns[wepid][FP_WDIR_WEAPON_ACTOR] = lumpread_value_buffer[Wdir_ID_Wep(i, 0)];
-        fp_Wpns[wepid][FP_WDIR_WEAPON_NAME] = lumpread_value_buffer[Wdir_ID_Wep(i, 1)];
-        fp_Wpns[wepid][FP_WDIR_WEAPON_PACK] = wid;
-        fp_Wpns[wepid][FP_WDIR_WEAPON_DESCRIPTION] = lumpread_value_buffer[Wdir_ID_Wep(i, 2)];
-        fp_Wpns[wepid][FP_WDIR_WEAPON_PRICE] = GetCvar(lumpread_value_buffer[Wdir_ID_Wep(i, 3)]);
-        fp_Wpns[wepid][FP_WDIR_WEAPON_UPSNUM] = lumpread_value_buffer[Wdir_ID_Wep(i, 5)]; 
-        fp_WeaponStack++;
-        for(int j = 0; j < lumpread_value_buffer[Wdir_ID_Wep(i, 5)]; j++){
-            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_ACTOR] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 0)];
-            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_NAME] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 1)];
-            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_DESCRIPTION] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 2)];
-            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_UPTYPE] = lumpread_value_buffer[Wdir_ID_WpUp(i, j, 3)];
-            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_UPGRPRICE] = GetCvar(lumpread_value_buffer[Wdir_ID_WpUp(i, j, 4)]);
-            fp_WpUps[wepid][j][FP_WDIR_WEPUPG_RECYPRICE] = GetCvar(lumpread_value_buffer[Wdir_ID_WpUp(i, j, 5)]);
-        }
-    }
-    return true;
+	else {
+		log(s:"fl_WDir: Invalid command");
+	}
 }
 
 function int Wdir_ID_Wep(int wep, int index){

@@ -162,3 +162,18 @@ suicide/sit dssusit
 
 //// Harvester
 harvester/scream shfbscrm
+
+//// Bad
+bad/attack			dsfirsht
+bad/shotx			dsfirxpl
+bad/active			dsdmact
+bad/death			dsskedth
+
+//// Big Bats
+DSBATDI1	DSBATDI1
+DSBATDI2	DSBATDI2
+DSBATDI3	DSBATDI3
+$random Bat/Death	{ DSBATDI1 DSBATDI2 DSBATDI3 }
+Bat/Splat	DSBATPOP
+Bat/Sight	DSBATSEE
+Bat/Active	DSBATACT

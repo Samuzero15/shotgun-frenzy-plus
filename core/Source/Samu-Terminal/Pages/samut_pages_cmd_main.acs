@@ -46,7 +46,7 @@ function void CMDPage_Update(void){
 		s:"\nMain base: ", d:thingcount(0, 114)));
 	
 	for(int i = 0; i < 12; i++){
-		CMDPage_UpdateButton2(i);
+		CMDPage_UpdateButton(i);
 	}
 	/*
 	CMDBut_UpdateConds();
@@ -134,7 +134,7 @@ function int CMDPage_MakeButtonSlot(int id, int row, int col)
 	return i;
 }
 
-function void CMDPage_UpdateButton2(int slot){
+function void CMDPage_UpdateButton(int slot){
 	int comp 	= CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_ID);
 	int btndata = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA);
 	int btnarg = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDARG);
@@ -336,58 +336,3 @@ function void CMDPage_SaveGroup(int up, int id, int comp){
 function int CMDPage_LoadGroup(int up, int id){
 	return cmdpage_vars[7 * up + 15 + (id-1)];
 }
-
-/*
-function void CMDPage_MakeLinkButton(int tag, int row, int col, int btndata, int destTag){
-	CMDPage_MakeButtonEX(tag, row, col, btndata, STEXE_CMDCAT, destTag);
-}
-
-function void CMDPage_MakeExitButton(int tag){
-	CMDPage_MakeButtonEX(tag, 3, 4, FP_CB_EXIT, STEXE_CMDEXIT, 0);
-}
-
-function void CMDPage_MakeReturnButtonExe(int tag, int returntag, int exe_return, int exe_exit){
-	CMDPage_MakeButtonEX(tag, 3, 4, FP_CB_RETURN, exe_return, returntag);
-	CMDPage_MakeButtonEX(tag, 3, 3, FP_CB_EXIT, exe_exit, 0);
-}
-
-function void CMDPage_MakeReturnButton(int tag, int returntag){
-	CMDPage_MakeButtonEX(tag, 3, 4, FP_CB_RETURN, STEXE_GTCAT, returntag);
-	CMDPage_MakeButtonEX(tag, 3, 3, FP_CB_EXIT, STEXE_CMDEXIT, 0);
-}
-
-function void CMDPage_MakeButton(int tag, int row, int col, int btndata){
-	CMDPage_MakeButtonEX(tag, row,  col,  btndata, STEXE_CMDEVENT_CHECK, 0);
-}
-
-function void CMDPage_MakeButtonEX(int tag, int row, int col, int btndata, int exe, int arg)
-{
-	//Check on cmdbut_list.acs on Samu-Tools to see the respective properties.
-	str icon = CMDBut_getIcon(btndata);
-
-	int i = ImgButton_AddGrid(cmdpage_vars[0], row, col, 31.0, 31.0);
-	ImgButton_setImage		(i, icon);
-	ImgButton_setHoverImage	(i, "BUTTONS");
-	ImgButton_setExecute	(i, exe);
-	ImgButton_setArgs		(i, arg, btndata, 0);
-	ImgButton_setTag		(i, tag);
-	ImgButton_setExeHover	(i, STEXE_CMDBTNDESC);
-	ImgButton_setArgsHover	(i, cmdpage_vars[1],cmdpage_vars[2],btndata);
-	
-	CMDPage_SaveGroup(btndata, 1, i);
-	CMDPage_SaveGroup(btndata, 2, tag);
-}
-
-function void CMDPage_UpdateButton(int btndata){
-	int comp = CMDPage_LoadGroup(btndata, 1);
-	int tag = CMDPage_LoadGroup(btndata, 2);
-
-	if(pagetags[STTAGS_NOW] == tag){
-		IMGButton_SetShow(comp, CMDBut_GetShowCond(btndata));
-	}else{
-		IMGButton_SetShow(comp, false);
-	}
-	
-	ImgButton_setImage(comp, cond(CMDBut_GetAccessCond(btndata), CMDBut_getIcon(btndata), "CG00"));
-}
-*/

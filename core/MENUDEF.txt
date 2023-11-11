@@ -149,6 +149,14 @@ OptionMenu SFPlus_UserOptions{
 	Option "Overflow Color", "sfp_killstreakhud_color3", "Color"
 	Option "Shutdown Color", "sfp_killstreakhud_color4", "Color"
 	StaticText ""
+	StaticText "Item HUD settings"
+	StaticText ""
+	Slider "X Position", "sfp_itemhud_x" , 0.0, 100.0, 50.0, 0
+	Slider "Y Position", "sfp_itemhud_y" , 0.0, 100.0, 75.0, 0
+	Slider "Items per Rows", "sfp_itemhud_items_per_row" , 1, 16, 16, 0
+	Slider "Alpha", "sfp_itemhud_alpha" , 0.0, 100.0, 80.0, 0
+	Option "Orientation", "sfp_itemhud_orientation", "ItemHud_Orientation"
+	StaticText ""
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 }
@@ -179,6 +187,12 @@ OptionMenu SFPlus_ChampionBanlist{
 	Option "On Banned Champion", 		"sfp_champ_onbanned", 	"OnBanBoolean"
 	StaticText ""
 	SubMenu "About Champions", "SFPlusChampionsAbout"
+}
+
+OptionValue "ItemHud_Orientation"
+{
+	0, "Horizontal"
+	1, "Vertical"
 }
 
 OptionValue "Color"

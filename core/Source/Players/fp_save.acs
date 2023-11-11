@@ -7,6 +7,7 @@
 
 #library "fp_save"
 #include "zcommon.acs"
+#include "acsutils.acs"
 #import "f_intdb.acs"
 #import "fl_mupdir.acs"
 #import "fl_pupdir.acs"
@@ -19,9 +20,19 @@ int save_player_count = 0;
 int save_player_dict[99]; // Hold's the name, which it should be unique.
 int save_player_stats[99][99]; 
 bool save_cvar = 0;
-// After getting the index, the second parameter holds the variable that should be saved. 
-// This might be anything, like if this guy had an item, a weapon, the mech, the rune. 
-// You call it.
+int save_checksum = 0;
+bool save_init = false;
+
+#define SAVEDATA_CHAR 0
+#define SAVEDATA_SHORT 1
+#define SAVEDATA_INT 2
+
+#define SAVEDATA_CVAR_STATS "sfp_save_stats"
+#define SAVEDATA_CVAR_WEAPONS "sfp_save_weapons"
+#define SAVEDATA_CVAR_ITEMS "sfp_save_items"
+#define SAVEDATA_CVAR_PLAYUPS "sfp_save_playups"
+#define SAVEDATA_CVAR_MECHUPS "sfp_save_mechups"
+#define SAVEDATA_CVAR_STIMUPS "sfp_save_stimups"
 
 Script "SaveLoad_Initialize" OPEN {
 // Reset the save slots per each map.
@@ -29,20 +40,28 @@ Script "SaveLoad_Initialize" OPEN {
 		save_cvar = true;
 	} else terminate;
 
-	int i,j;
-	for (i = 0; i < save_player_count; i++){
-		save_player_dict[i] = "";
-		for (j = 0; j < 99; j++){
-			save_player_stats[i][j] = 0;
+	save_checksum = random(1000000, 9999999); // A random number that everybody will sync when starting the game.
+	SetActivator(AAPTR_NULL);
+	int player;
+
+	// Sync the server checksum with player's checksum.
+	for(player = 0; player < PlayerCount(); player++){
+		if(!PlayerInGame(player) || PlayerIsSpectator(player)){ 
+			delay(1);
+			continue;
 		}
+		SetActivatorToPlayer(player);
+		SetUserCVar(player, "sfp_save_checksum_client", save_checksum);
+		PlayStats_Clear(player);
+		delay(1);
 	}
-	save_player_count = 0;
-	//log(s:"Save-load slots initialized");
-	
+	save_init = true;
+
+	// Now, the update loop.
 	while (true){
 		SetActivator(AAPTR_NULL);
-		delay(35*30); // Each 30 seconds, save the stats.
-		for(int player = 0; player < PlayerCount(); player++){
+		delay(35*5); // Each 30 seconds, save the stats.
+		for(player = 0; player < PlayerCount(); player++){
 			if(!PlayerInGame(player) || PlayerIsSpectator(player)){ 
 				delay(1);
 				continue;
@@ -50,55 +69,41 @@ Script "SaveLoad_Initialize" OPEN {
 			
 			SetActivatorToPlayer(player);
 			//log(s:"Saving player: ", d:player, s:" Spectating? ", d:PlayerIsSpectator(player));
-			i = 0;
-			int id = -1;
-			str player_name = strparam(n:0);
-			for(i = 0; i < save_player_count; i++){
-				if (StrCmp(save_player_dict[i], player_name) == 0){
-					id = i;
-					break;
-				}
-			}
-			if(id == -1){// Allocate a space for him
-				id = save_player_count;
-				save_player_dict[id] = player_name;
-				save_player_count++;
-				//log(s:"Slot ", d:id, s:" allocated for ",s:player_name);
-			}
 
 			//PlayStats_Update(id);
-			ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0, id);
+			ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0);
 			delay(1);
 		}
 	}
 }
 
+function void PlayStats_Clear(int player){
+	SetUserCVarString(player, SAVEDATA_CVAR_STATS, "");
+	SetUserCVarString(player, SAVEDATA_CVAR_ITEMS, "");
+	SetUserCVarString(player, SAVEDATA_CVAR_WEAPONS, "");
+	SetUserCVarString(player, SAVEDATA_CVAR_PLAYUPS, "");
+	SetUserCVarString(player, SAVEDATA_CVAR_MECHUPS, "");
+	SetUserCVarString(player, SAVEDATA_CVAR_STIMUPS, "");
+}
+
 Script "SFPlus_StatsLoad" (void) {
-	// If this player did'nt joined in this map, then add it to the dictionary.
-	// Else, return the index returned by the dictionary.
-	// If you change the name in the game, and not spectating, the dictionary updates the key name.
-	// But not when you do it on spectator mode, so I suggest you to keep your name for the sake of your inventory.
 	if(!save_cvar) terminate; 
-	int i = 0;
-	int id = -1;
-	str player_name = strparam(n:0);
-	for(i = 0; i < save_player_count; i++){
-		if (StrCmp(save_player_dict[i], player_name) == 0){
-			id = i;
-			break;
-		}
-	}
-	//log(s:"Retrived id:", d:id);
-	if(id == -1){// Allocate a space for him
-		id = save_player_count;
-		save_player_dict[id] = player_name;
-		save_player_count++;
-		//log(s:"Slot ", d:id, s:" allocated for ",s:player_name);
-		ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0, id);
-	}else{// Load
-		//log(s:"Loading Slot ", d:id, s:" for ", s:player_name);
-		PlayStats_Load(id);
-	}
+	int player = PlayerNumber();
+	
+	bool valid = GetUserCVar(player, "sfp_save_checksum_client") == save_checksum;
+	/*
+	printbold(
+		s:"Player Checksum: ", d:GetUserCVar(player, "sfp_save_checksum_client"), s:"\n",
+		s:"Server Checksum: ", d:save_checksum, s:"\n",
+		s:"valid?         : ", d:valid);
+		*/
+
+	if(valid) {PlayStats_Load(); terminate;}
+	// Different checksum check, clear everything, and update stats.
+	PlayStats_Clear(player);
+	ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0);
+	SetUserCVar(player, "sfp_save_checksum_client", save_checksum);
+	
 }
 
 // So, what can be saved?
@@ -111,96 +116,119 @@ Script "SFPlus_StatsLoad" (void) {
 // Anything else, can not be saved in the map.
 // And remember, this is only valid, on the CURRENT MAP.
 
-function void PlayStats_Load(int id){
+function void PlayStats_Load(void){
+	// Update me.
 	int play = playernumber();
-	int i, j = 0;
-	int savedelay = 4;
+	str bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_STATS);
 
-	p_Credits[play] = 		save_player_stats[id][0];
-	p_Rank[play] = 			save_player_stats[id][1];
-    p_Exp_Points[play] = 	save_player_stats[id][2];
-    p_Exp[play] = 			save_player_stats[id][3];
-    p_Streak[play] = 		save_player_stats[id][4];
-    p_StreakHi[play] = 		save_player_stats[id][5];
-    p_StreakLevel[play] = 	save_player_stats[id][6];
-	p_TankSlot[play] =		save_player_stats[id][7];
-	i = 8;
+	p_Credits[play] = 		catoi(bytedata, 0);
+	p_Rank[play] = 			catoi(bytedata, 4);
+    p_Exp_Points[play] = 	catoi(bytedata, 8);
+    p_Exp[play] = 			catoi(bytedata, 12);
+    p_Streak[play] = 		catoi(bytedata, 16);
+    p_StreakHi[play] = 		catoi(bytedata, 20);
+    p_StreakLevel[play] = 	catoi(bytedata, 24);
+	p_TankSlot[play] =		catoi(bytedata, 28);
+
+	bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_WEAPONS);
+	int i, j = 0;
 	for (j = 0; j < fp_weaponStack; j++){ // Weapons & upgraded weapons.
-		GiveInventory(Weapon_GetActor(j), save_player_stats[id][i]); i++;
-		GiveInventory(WeaponUpgrade_GetActor(j, 0), save_player_stats[id][i]); i++;
-		GiveInventory(WeaponUpgrade_GetActor(j, 1), save_player_stats[id][i]); i++;
+		GiveInventory(Weapon_GetActor(j), GetChar(bytedata,i)-1); i++;
+		GiveInventory(WeaponUpgrade_GetActor(j, 0), GetChar(bytedata,i)-1); i++;
+		GiveInventory(WeaponUpgrade_GetActor(j, 1), GetChar(bytedata,i)-1); i++;
 	}
+
+	bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_ITEMS);
+	i = 0;
 	for (j = 0; j < fp_LastItem; j++){ // Items
-		GiveInventory(Item_GetActor(j), save_player_stats[id][i]);
+		GiveInventory(Item_GetActor(j), GetChar(bytedata,i)-1);
 		i++;
 	}
+
+	bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_PLAYUPS); i = 0;
 	for (j = 0; j < PlayUpTop; j++){ // Player Upgrades
-		GiveInventory(PlayUp_GetActor(j), save_player_stats[id][i]);
+		GiveInventory(PlayUp_GetActor(j), GetChar(bytedata,i)-1);
 		i++;
 	}
+
+	bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_MECHUPS); i = 0;
 	for (j = 0; j < MechUpTop; j++){ // Mech Upgrades
-		GiveInventory(MechUp_GetActor(j), save_player_stats[id][i]);
+		GiveInventory(MechUp_GetActor(j), GetChar(bytedata,i)-1);
 		i++;
 	}
+
+	bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_STIMUPS); i = 0;
 	for (j = 0; j < StimUpTop; j++){ // Stimpack upgades
-		GiveInventory(StimUp_GetActor(j), save_player_stats[id][i]);
+		GiveInventory(StimUp_GetActor(j), GetChar(bytedata,i)-1);
 		i++;
 	}
-	//log(s:"Loading rune ", d:save_player_stats[id][i]);
-	if((save_player_stats[id][i]-1) != -1){ // The current rune.
-		GiveInventory(Rune_GetActor(save_player_stats[id][i]-1), 1);
+
+	bytedata = GetUserCVarString(PlayerNumber(), SAVEDATA_CVAR_STATS); i = 32;
+	int have_rune = GetChar(bytedata,i)-1;
+	if(have_rune-1 != 0){
+		GiveInventory(Rune_GetActor( have_rune-1), 1);
 	}
-	i++;
-	//log(s:"States Loaded");
 }
 
-script  "SFPlus_UpdateSaves" (int id){
-	int savedelay = 4;
+script  "SFPlus_UpdateSaves" (void){
 	int play = playernumber();
-	int i, j = 0;
-	PlayStats_Save(p_Credits[play], 	id, 0);
-	PlayStats_Save(p_Rank[play], 		id, 1);
-	PlayStats_Save(p_Exp_Points[play],  id, 2);
-	PlayStats_Save(p_Exp[play], 		id, 3);
-	PlayStats_Save(p_Streak[play], 		id, 4);
-	PlayStats_Save(p_StreakHi[play], 	id, 5);
-	PlayStats_Save(p_StreakLevel[play], id, 6);
-	PlayStats_Save(p_TankSlot[play],    id, 7);
-	delay(savedelay);
-	i = 8;
+	PlayStats_Clear(play);
+	int i, j;
+	PlayStats_Save(p_Credits[play],		SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_Rank[play],		SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_Exp_Points[play],	SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_Exp[play],			SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_Streak[play],		SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_StreakHi[play],	SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_StreakLevel[play],	SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+	PlayStats_Save(p_TankSlot[play],	SAVEDATA_INT, SAVEDATA_CVAR_STATS);
+
 	for (j = 0; j < fp_weaponStack; j++){ // Weapons & upgraded weapons.
-		PlayStats_Save(CheckInventory(Weapon_GetActor(j)),  id, i); i++;
-		PlayStats_Save(CheckInventory(WeaponUpgrade_GetActor(j, 0)),  id, i); i++;
-		PlayStats_Save(CheckInventory(WeaponUpgrade_GetActor(j, 1)),  id, i); i++;
+		PlayStats_Save(CheckInventory(Weapon_GetActor(j)), 			 SAVEDATA_CHAR, SAVEDATA_CVAR_WEAPONS);
+		PlayStats_Save(CheckInventory(WeaponUpgrade_GetActor(j, 0)), SAVEDATA_CHAR, SAVEDATA_CVAR_WEAPONS);
+		PlayStats_Save(CheckInventory(WeaponUpgrade_GetActor(j, 1)), SAVEDATA_CHAR, SAVEDATA_CVAR_WEAPONS);
 	}
-	delay(savedelay);
+	
 	for (j = 0; j < fp_LastItem; j++){ // Items
-		PlayStats_Save(CheckInventory(Item_GetActor(j)),    id, i);
-		i++;
+		PlayStats_Save(CheckInventory(Item_GetActor(j)), SAVEDATA_CHAR, SAVEDATA_CVAR_ITEMS);
 	}
-	delay(savedelay);
 	for (j = 0; j < PlayUpTop; j++){ // Player upgrades
-		PlayStats_Save(CheckInventory(PlayUp_GetActor(j)), 	id, i);
-		i++;
+		PlayStats_Save(CheckInventory(PlayUp_GetActor(j)), SAVEDATA_CHAR,  SAVEDATA_CVAR_PLAYUPS);
 	}
-	delay(savedelay);
 	for (j = 0; j < MechUpTop; j++){ // Mech upgrades
-		PlayStats_Save(CheckInventory(MechUp_GetActor(j)), 	id, i);
-		i++;
+		PlayStats_Save(CheckInventory(MechUp_GetActor(j)), SAVEDATA_CHAR,  SAVEDATA_CVAR_MECHUPS);
 	}
-	delay(savedelay);
 	for (j = 0; j < StimUpTop; j++){ // Stimpack upgrades
-		PlayStats_Save(CheckInventory(StimUp_getActor(j)), 	id, i);
-		i++;
+		PlayStats_Save(CheckInventory(StimUp_getActor(j)), SAVEDATA_CHAR,  SAVEDATA_CVAR_STIMUPS);
 	}
-	delay(savedelay);
 	// the current rune
-	PlayStats_Save(Rune_getCurrent()+1, 	id, i);
-	i++;
-	//log(s:"States Updated");
+	PlayStats_Save(strparam(d:Rune_getCurrent()+1), SAVEDATA_CHAR, SAVEDATA_CVAR_STATS);
 }
 
-function void PlayStats_Save(int var, int id, int stat){
-	if(var != save_player_stats[id][stat]) // Saves only if updated.
-		save_player_stats[id][stat] = var;
+function void PlayStats_Save(str var, int data_type, int cvar){
+	int cvar_string = GetUserCVarString(PlayerNumber(), cvar);
+	
+	switch(data_type){
+		case SAVEDATA_INT:
+			SetUserCvarString(PlayerNumber(), cvar, strparam(s:cvar_string, s:itoca(var)));
+		break;
+		case SAVEDATA_CHAR:
+			SetUserCvarString(PlayerNumber(), cvar, strparam(s:cvar_string, c:var+1));
+		break;
+	}
+}
+
+function str itoca (int value) {
+	return strparam(c:(value >> 24)+1, c:(value >> 16)+1, c:(value >> 8)+1, c:(value)+1);
+}
+
+function int catoi (int string, int pos){
+	return (ctoi_us(GetChar(string, pos)-1 << 24) |
+			ctoi_us(GetChar(string, pos+1)-1 << 16) |
+			ctoi_us(GetChar(string, pos+2)-1 << 8) |
+			ctoi_us(GetChar(string, pos+3)-1));
+}
+
+function int ctoi_us(int c){
+	return c < 0 ? c + 256 : c;
 }

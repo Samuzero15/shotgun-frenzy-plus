@@ -35,6 +35,8 @@ function void STExecute_RuneGive(int r){
 }
 
 function void STExecute_RuneDesc(int r){
+	log(s:Rune_GetName(r));
+	log(s:Rune_GetDesc(r));
     Label_setText(runepage_vars[3], Rune_GetName(r));
 	Label_setText(runepage_vars[4], Rune_GetDesc(r));
 }

@@ -1,0 +1,8 @@
+
+// Defines new monster waves.
+// Remember, there are 20 waves, and each wave are separated in four difficulty classes (easy, normal, hard and boss).
+"D", "Default", 6
+"R", "Rusher", 3
+"S", "S.D. Set", 1
+"Z", "Zombie", 20
+"A", "Aerial", 4

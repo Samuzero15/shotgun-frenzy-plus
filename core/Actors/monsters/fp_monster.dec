@@ -7,10 +7,13 @@ Actor FPMToken_Boss : Boolean {} // This enemy is a boss (granting a lot of expe
 
 /*
 	Quick Monster Addition guide:
-	1) Replace Death, xdeath and Raise states to monDeath, monXDeath, and MonRaise.
-	2) In the last frame from the Death and XDeath States, do NOT use the -1 tic, change it to 1 tic if you do. 
+	0) By default depending on the health, the monster will belong to the respective class (the tankier it is the higher class it belongs, and that means more profit)
+	   So if for any reason you need a weak in power, but slightly tanky monster, add the "stamina" actor property and change it to any class you need. (0-6)
+	1) Inherit FPlus_Monster class.
+	2) Replace Death, xdeath and Raise states to monDeath, monXDeath, and MonRaise.
+	3) In the last frame from the Death and XDeath States, do NOT use the -1 tic, change it to 1 tic if you do. 
 	   That will keep the monster forever, and it won't be auto-removed.
-	3) Instead of stop, after the last state from death and xdeath states, replace it with:
+	4) Instead of stop, after the last state from death and xdeath states, replace it with:
 		"goto FadeOut" if this monster contains a raise state.
 		"goto FadeOut.NoRaise" if this monster does not need a raise state.
 */
@@ -19,6 +22,8 @@ Actor FPlus_Monster {
 	health 10
 	species "DemonSide"
 	DamageFactor "DemonFire", 0.0
+	stamina -1 // Defines the monster class manually, -1 means "assign class by health", -2 means minimal profit.
+	accuracy 0 // Tells if this monster can be championized. -1 = no, 0 = yes (default), 1 = always.
 	MONSTER
 	+MTHRUSPECIES
 	+USEDAMAGEEVENTSCRIPT

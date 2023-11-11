@@ -9,11 +9,12 @@
 
 #library "fl_runeDir"
 #import "f_intdb.acs"
+#import "fp_lumpread.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
 //#include "samu_tools.acs"
 
-#define FP_Rune_MAX 20
+#define FP_Rune_MAX 50
 #define FP_RUNE_TIERS 4
 
 int RuneTop = 0;
@@ -33,35 +34,27 @@ function void SFPlus_DefineRunes(void){
     Rune_TierPrices[3] = GetCvar("pr_rt_4");
 
     RuneTop = 0;
-    int tier = 4;
-	Rune_Add ("Strength",       "StrengthRune",     "RBTN02", tier, "RuneDoubleDamage"); 
-	Rune_Add ("Rage",           "RageRune",         "RBTN08", tier, "RuneDoubleFiringSpeed");
-    Rune_Add ("Spread",         "SpreadRune_Pickup",       "RBTN11", tier, "RuneSpread"); 
-	Rune_Add ("Resistance",     "ResistanceRune",   "RBTN10", tier, "RuneHalfDamage");
-    Rune_Add ("Rampage",        "RampageRune",      "RBTN14", tier, "RuneRampage");
 
-    tier = 3;
-	Rune_Add ("Drain",          "DrainRune",        "RBTN03", tier, "RuneDrain");
-    Rune_Add ("Reflection",     "ReflectionRune",   "RBTN06", tier, "RuneReflection");
-    Rune_Add ("Defense",        "DefenseRune",      "RBTN19", tier, "RuneDefense");
-    Rune_Add ("Resurrection",   "ResurrectionRune", "RBTN01", tier, "RuneResurrection");
-    Rune_Add ("Soul",           "SoulRune_Pickup",         "RBTN13", tier, "RuneSoul");
-
-    tier = 2;
-    Rune_Add ("Prosperity",     "ProsperityRune",   "RBTN07", tier, "RuneProsperity");
-    Rune_Add ("Blast",          "BlastRune",        "RBTN17", tier, "RuneBlast");
-    Rune_Add ("Ammunition",     "AmmunitionRune_Pickup",   "RBTN16", tier, "RuneAmmunition");
-    Rune_Add ("Fortune",        "FortuneRune",      "RBTN18", tier, "RuneFortune");
-    Rune_Add ("Temperance",     "TemperanceRune",   "RBTN15", tier, "RuneTemperance");
-
-    tier = 1;
-    Rune_Add ("Health",         "HealthRune_Pickup",       "RBTN12", tier, "RuneHealth");
-	Rune_Add ("Regeneration",   "RegenerationRune", "RBTN09", tier, "RuneRegeneration");
-	Rune_Add ("High Jump",      "HighJumpRune",     "RBTN05", tier, "RuneHighJump");
-	Rune_Add ("Haste",          "HasteRune",        "RBTN04", tier, "RuneSpeed25");
+    RuneDir_ReadSFRUNDEF();
 }
 
-function void Rune_Add (str name, str actor, str btnimg, int tier, str poweractor){
+
+function void RuneDir_ReadSFRUNDEF(void){
+	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFRUNDEF", "SFPlus_IDir_SFRUNDEFReadLine");
+}
+
+Script "SFPlus_IDir_SFRUNDEFReadLine" (int line) {
+	//log(s:"\"", s:line, s:"\"");
+	LumpRead_StrNextArg(line); int tier = 		    LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+	LumpRead_StrNextArg(line); str actor = 		    LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	LumpRead_StrNextArg(line); str poweractor = 	LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+    LumpRead_StrNextArg(line); str langdata = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	LumpRead_StrNextArg(line); str btnimg = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	
+	Rune_Add (tier, actor, poweractor, langdata, btnimg);
+}
+
+function void Rune_Add (int tier, str actor, str poweractor, str langdata, str btnimg){
 	int upg = RuneTop;
 	
 	if(RuneTop >= FP_Rune_MAX)
@@ -70,8 +63,8 @@ function void Rune_Add (str name, str actor, str btnimg, int tier, str poweracto
 		return;
 	}
 	// Look up language.txt
-	Rune_List[upg][0] = name;
-	Rune_List[upg][1] = strparam(l:strparam(s:"FP_RD_",s:actor));
+	Rune_List[upg][0] = StrParam(l:strparam(s:"FP_RN_", s:langdata));
+	Rune_List[upg][1] = StrParam(l:strparam(s:"FP_RD_", s:langdata));
 	Rune_List[upg][2] = actor;
 	// Lookup fl_price.acs
 	Rune_List[upg][3] = GetCvar(strparam(s:"pr_rt_", d:tier)); 
@@ -81,6 +74,8 @@ function void Rune_Add (str name, str actor, str btnimg, int tier, str poweracto
     Rune_List[upg][6] = poweractor;
 	RuneTop++;
 }
+
+
 
 function str Rune_getName(int up){	return Rune_List[up][0];}
 function str Rune_getDesc(int up){	return Rune_List[up][1];}
@@ -137,7 +132,7 @@ function int Rune_getTierPrice(int tier){
 
 Script "SFPlus_RandomRune" (int arg) {
     int pick = Rune_Pick(arg);
-    print(d:pick,s:") ", s:Rune_getName(pick));
+    //print(d:pick,s:") ", s:Rune_getName(pick));
 }
 
 function int Rune_Pick(int tier){

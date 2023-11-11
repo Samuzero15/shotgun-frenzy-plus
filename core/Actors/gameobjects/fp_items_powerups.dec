@@ -197,6 +197,7 @@ ACTOR Inventory_AmmoGiver : Inventory_Powerup
 	PowUpUpgrade_Attack:
 		TNT1 A 0 A_Jump(128,"Effect") // ~ 50 % Chance to activate the effect, but without wasting the item.
 		TNT1 A 0 A_GiveInventory("Backpack", 1)
+		TNT1 A 0 ACS_NamedExecuteAlways("LightBarsSpawner", 0, radius, 2)
 		TNT1 A 0 ACS_Execute(106, 0, -4)
 		TNT1 A 1 A_Print("This powerup refuses to be depleted!.\n\n You can re-activate it again.")
 		fail

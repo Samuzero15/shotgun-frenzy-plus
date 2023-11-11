@@ -30,7 +30,7 @@ Script "SFPlus_MonsterKill" Kill{
 	  //if(flag_boss)log(s:"This monster is a Hard monster");
 	  //if(CheckFlag(0, "NOPAIN"))log(s:"This monster goes painless.");
 		 // monster class
-	  int monsterClass = sf_GetMonsterClass_Health();
+	  int monsterClass = sf_GetMonsterClass();
 	  int ischamp = CheckInventory("Champ_Type");
 	  int splat = flag_gibbed;
 	  int noprofit = flag_NoCount;

@@ -1,0 +1,82 @@
+actor Bad : FPlus_Monster 17636
+{
+  radius 8
+  height 16
+  speed 10
+  health 30
+  mass 100
+  painchance 0
+  accuracy -1 // Never make it champion.
+  Monster
+  +Nogravity
+  +Float
+  +Noblood
+  DeathSound "bad/death"
+  ActiveSound "bad/active"
+  Obituary "%o was killed by a Bad."
+  states
+  {
+  Spawn:
+    BAD1 ABCB 3 A_Look
+    loop
+  See:
+    BAD1 ABCB 3 A_Chase
+    loop
+  Missile:
+    BAD1 D 3 bright A_FaceTarget
+    BAD1 D 0 bright A_CustomMissile ("BadShot", 4, 4, 0)
+    BAD1 D 3 bright A_CustomMissile ("BadShot", 4, -4, 0)
+    goto Spawn
+  MonDeath:
+    BAD1 E 8
+    BAD1 F 8 A_Scream
+    BAD1 G 1
+    goto FadeOut
+  MonRaise:
+    BAD1 GFE 8
+    goto See
+  }
+}
+
+actor BadShot
+{
+  Radius 2
+  Height 4
+  Speed 25
+  Damage 1
+  Projectile
+  +Randomize
+  +MTHRUSPECIES
+  RenderStyle Add
+  Alpha 0.6
+  Scale 0.25
+  SeeSound "bad/attack"
+  DeathSound "bad/shotx"
+  States
+  {
+  Spawn:
+    BDST AAAABBBB 1 bright A_SpawnItemEx ("BadShotTrail", 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    loop
+  Death:
+    BDST CDE 6 bright
+    stop
+  }
+}
+
+actor BadShotTrail
+{
+  Radius 2
+  Height 4
+  +Nogravity
+  +Randomize
+  +Nointeraction
+  RenderStyle Add
+  Alpha 0.6
+  Scale 0.25
+  States
+  {
+  Spawn:
+    BDST AB 3 bright A_FadeOut
+    loop
+  }
+}

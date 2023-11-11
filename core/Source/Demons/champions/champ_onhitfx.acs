@@ -10,7 +10,7 @@ Script "SFPlus_ChampionHit" (int type, int arg1, int arg2) Event
 		
 		terminate;
 	}*/
-	int mon_class = sf_GetMonsterClass_Health();
+	int mon_class = sf_GetMonsterClass();
 	switch(Champ_GetType()){
 		case CHAMP_GOLDEN: // The player will lose money for the lost health, done by this champion
 		SetActivator(0, AAPTR_Damage_Target);

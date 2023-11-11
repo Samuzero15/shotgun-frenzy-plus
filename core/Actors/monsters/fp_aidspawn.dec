@@ -14,3 +14,6 @@
 
 // Zombie set 
 #include "Actors/monsters/Spawners/fp_aidspawn_zombies.dec"
+
+// Aerial set
+#include "Actors/monsters/Spawners/fp_aidspawn_aerial.dec"

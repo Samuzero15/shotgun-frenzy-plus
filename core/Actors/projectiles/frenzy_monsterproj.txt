@@ -153,3 +153,9 @@ Actor Mon_DoomImpBall : DoomImpBall replaces DoomImpBall {
 	DamageType "DemonFire"
    speed 12
 }
+
+Actor Mon_CacodemonBall : CacodemonBall replaces CacodemonBall {
+   +MTHRUSPECIES
+   DamageType "DemonFire"
+   speed 15
+}

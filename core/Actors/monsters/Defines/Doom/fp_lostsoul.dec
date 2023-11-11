@@ -8,10 +8,11 @@ ACTOR sfLostSoul : FPlus_Monster replaces LostSoul
 	radius 16
 	height 56
 	mass 50
-	speed 8
+	speed 12
 	damage 3
 	painchance 256
 	renderstyle SoulTrans
+	stamina 0
 	attacksound "skull/melee"
 	painsound "skull/pain"
 	deathsound "skull/death"
@@ -21,6 +22,7 @@ ACTOR sfLostSoul : FPlus_Monster replaces LostSoul
 	+NOICEDEATH
 	+MISSILEMORE
 	+DONTFALL
+	+ThruSpecies
 	states
 	{
 		Spawn:

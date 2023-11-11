@@ -183,6 +183,7 @@ script 306 (void)
 		CheckInventory("CorePulse_Heal_Invul") ||
 		CheckInventory("DefenseRune_ShieldInvul") || 
 		CheckInventory("PlayUp_Prometeo_Power_Invul")) == 0) {
+		
 		// teleport to new location
 		teleport(142, 0, 0);
 		// change skin and class
@@ -198,6 +199,7 @@ script 306 (void)
 		// change flags
 		p_TankSlot[playernumber()] = 2;
 		p_MechTimer[playernumber()] = -1;// Initialize timer.
+		SetCustomPlayerValue("OnMechCol", playernumber(), true);
 		
 		Rune_SaveAndUnequip();
 
@@ -291,6 +293,7 @@ script 306 (void)
 		setfont("SMALLFNT");
 		print(s:"Cannot enter while Godsphere\nis in use!");
 	}
+	SetCustomPlayerValue("OnMechCol", playernumber(), false);
 }
 
 Script "SFPlus_MechHeal" (int amount) {

@@ -3,8 +3,10 @@
 *.bak
 *d.pk3
 dist/
+tools/pwads/
 tools/zandronum/
 tools/pwads/*.*
+tools/acc/acscomp_tmp
 *.dbs
 *.wad.backup*
 *bak.acs

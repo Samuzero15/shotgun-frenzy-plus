@@ -1,0 +1,195 @@
+
+
+Column "Kills"
+{
+	DisplayName="K"
+	ShortName = "K"
+}
+
+Column "Deaths"
+{
+	DisplayName="D"
+	ShortName = "D"
+}
+
+
+Column "K.S."
+{
+	AddFlag NOSPECTATORS
+	AddFlag ALWAYSUSESHORTESTWIDTH
+
+	Alignment = Right
+	ShortName = "KS"
+	Size = 8
+}
+
+Column "$$$"
+{
+	AddFlag NOSPECTATORS
+	AddFlag ALWAYSUSESHORTESTWIDTH
+
+	Alignment = Right
+	ShortName = "$$$"
+	Size = 8
+}
+
+Column "UPs"
+{
+	AddFlag NOSPECTATORS
+	AddFlag ALWAYSUSESHORTESTWIDTH
+
+	Alignment = Right
+	ShortName = "UPs"
+	Size = 8
+}
+
+Column "OnMechCol"
+{
+    AddFlag DONTSHOWHEADER
+	AddFlag NOSPECTATORS
+	AddFlag ALWAYSUSESHORTESTWIDTH
+
+	FalseText = " "
+	TrueText = "(Mech)"
+	Alignment = Left
+	ShortName = "Mech"
+	CVar = "sfp_scorshow_mechs"
+	Size = 8
+}
+
+/*
+Column "SectorCol"
+{
+    AddFlag DONTSHOWHEADER
+	AddFlag NOSPECTATORS
+	AddFlag ALWAYSUSESHORTESTWIDTH
+
+	Alignment = left
+	DisplayName = "Sector"
+	Prefix = "Sct "
+	ShortName = "Sec"
+	CVar = "sfp_scorshow_sector"
+	Size = 8
+}*/
+
+Column "RankCol"
+{
+    AddFlag DONTSHOWHEADER
+	AddFlag NOSPECTATORS
+	AddFlag ALWAYSUSESHORTESTWIDTH
+
+	Alignment = left
+	DisplayName = "Rank"
+	Prefix = "Rnk "
+	ShortName = "Rnk"
+	Size = 8
+}
+
+CompositeColumn "StatusCompCol"
+{
+    AddFlag DONTSHOWHEADER
+	AddFlag ALWAYSUSESHORTESTWIDTH
+	AddFlag NOINTERMISSION
+
+	DisplayName = "Status"
+	Columns = "OnMechCol", "RankCol"
+	GapBetweenColumns = 2
+}
+
+
+Scoreboard
+{
+	MainHeader
+	{
+		MultiLineBlock( horizontalalign = center )
+		{
+			DrawString( value = "Rankings", font = "BigFont", textcolor = "Cyan", bottompadding = 6 )
+
+			// [AK] Draw the name of the server if we're in an online game.
+			IfOnlineGame( true )
+			{
+				DrawString( value = cvar( sv_hostname ), textcolor = "Grey", bottompadding = 1 )
+			}
+
+			// [AK] Draw the name of the current game mode and level.
+			DrawString( value = gamemode + " - " + levellump + ": " + levelname, textcolor = "Gold", bottompadding = 1 )
+
+			// Draw the time, frags, points, or kills we have left until the level ends.
+			DrawString( value = limitstrings, textcolor = "Grey", bottompadding = 1 )
+			
+			
+
+            IfIntermission( false )
+            {
+				// [Samu] SF+'s scoreboard data
+				IfCvar(sfp_scordata_timemin != 0 ){
+					IfCVar(sfp_scordata_timesec >= 10 ){
+						DrawString( value = "Time: " + cvar(sfp_scordata_timemin) + ":" + cvar(sfp_scordata_timesec) + " Remaining", font = "confont", textcolor = "Cyan", bottompadding = 6 )
+					}Else {
+						DrawString( value = "Time: " + cvar(sfp_scordata_timemin) + ":0" + cvar(sfp_scordata_timesec) + " Remaining", font = "confont", textcolor = "Cyan", bottompadding = 6 )
+				}} Else {
+					IfCVar(sfp_scordata_timesec >= 10 ){
+						DrawString( value = "Time: 00:" + cvar(sfp_scordata_timesec) + " Remaining", font = "confont", textcolor = "Cyan", bottompadding = 6 )
+					}Else {
+						IfCVar(sfp_scordata_timesec > 0 ){
+							DrawString( value = "Time: 00:0" + cvar(sfp_scordata_timesec) + " Remaining", font = "confont", textcolor = "Cyan", bottompadding = 6 )
+						}
+					}
+				}
+				IfCvar(sfp_scordata_status != "none")
+				{
+					DrawString( value = "Game status: " + cvar(sfp_scordata_status), font = "confont", textcolor = "Cyan", bottompadding = 6 )
+				}
+            }
+
+			// [JS] Intermission countdown display.
+			IfIntermission( true )
+			{
+				IfOnlineGame( true )
+				{
+					IfCVar( cl_intermissiontimer == true )
+					{
+						DrawString( value = "Entering " + nextlevellump + ": " + nextlevelname + " in " + intermissiontimeleft + " second(s)", textcolor = "Green" )
+					}
+				}
+			}
+		}
+	}
+
+	SpectatorHeader
+	{
+		MultiLineBlock( verticalalign = center )
+		{
+			DrawString( value = "Spectators (" + spectatorcount + ")", textcolor = "Grey", bottompadding = 1 )
+
+			// [AK] Use a width of INT_MAX to ensure this color box stretches across the entire margin.
+			DrawColor( value = "DD DD DD", width = 2147483648, height = 1, bottompadding = 2 )
+		}
+	}
+
+	HeaderFont = "SmallFont"
+	RowFont = "SmallFont"
+	HeaderColor = "Grey"
+	RowColor = "Grey"
+	LocalRowColor = "Green"
+	LocalRowDemoColor = "Gold"
+	BackgroundColor = "00 00 00"
+	BackgroundAmount = 0.5
+	BackgroundBorderSize = 4
+	LightRowBackgroundColor = "40 40 40"
+	DarkRowBackgroundColor = "20 20 20"
+	LocalRowBackgroundColor = "80 80 80"
+	RowBackgroundAmount = 0.65
+	DeadPlayerTextAlpha = 0.35
+	DeadPlayerRowBackgroundAmount = 0
+	GapBetweenHeaderAndRows = 2
+	GapBetweenColumns = 2
+	GapBetweenRows = 2
+	ColumnPadding = 1
+	HeaderHeight = -2
+	RowHeight = -2
+	ColumnOrder = "BotSkillIcon", "Index", "ReadyToGoAndStatusIcons", "ArtifactIcon", "PlayerIcon", "CountryFlag", "Player", "Vote", "StatusCompCol", "K.S.", "Kills", "$$$", "UPs", "Deaths", "Time", "Ping"
+	RankOrder =  "K.S.", "Kills", "UPs", "$$$", "Deaths"
+
+	AddFlag UseHeaderColorForBorders
+}

@@ -1,0 +1,174 @@
+ACTOR GiantBat : FPlus_Monster 14772
+{
+	//$Title Giant Bat
+	//$Category Monsters
+
+	Health 80
+	Radius 12
+	Height 40
+	Mass 50
+	Speed 8
+    Accuracy -1
+	Monster
+	+FLOAT
+	+NOGRAVITY
+	//+DONTTHRUST
+	+FLOATBOB
+	+NOTARGET
+	+SPAWNFLOAT
+	+DONTOVERLAP
+	SeeSound "Bat/Sight"
+	ActiveSound "Bat/Active"
+	DeathSound "Bat/Death"
+	Damage 3
+    MeleeDamage 2
+
+	Obituary "%o was bitten by a giant bat."
+  
+		States
+		{
+			Spawn:
+				BATH BCDEC 2 A_Look
+				Loop
+			ResetSee:
+				BATH B 0 A_TakeInventory ("BatAttackToken", 30)
+			See:
+				BATH BCDEC 2 A_Chase
+				Loop
+			
+			Missile:
+				BATH B 0 A_Jump (160, "See") // Reduce chance of skull attack
+				BATH B 0 A_PlaySound ("Bat/Sight")
+				BATH BCDECBCDECBCDECB 1 A_FaceTarget
+				BATH B 0 A_SkullAttack
+			AttackSwoop: // loop animation until token limit reached
+				BATH B 0 A_GiveInventory ("BatAttackToken", 1)
+				BATH BCDEC 1
+				BATH B 0 A_JumpIfInventory ("BatAttackToken", 10, "ResetSee")
+				Loop
+            Melee:
+                BATH BC 2 A_FaceTarget
+                BATH D 2 A_MeleeAttack
+                BATH EC 2 A_FaceTarget
+                Goto ResetSee
+			MonDeath:
+				BATH F 0 ThrustThingZ (0, 16, 0, 1)
+				BATH F 0 A_ChangeFlag ("FLOATBOB", 0)
+				BATH F 3 A_ScreamAndUnblock
+			Fall:
+				BATH GGGHHHIIIJJJ 1 A_CheckFloor ("Splat")
+			Fall2:
+				BATH K 1 A_CheckFloor ("Splat")
+				Loop
+			Splat:
+				BATH L 0 A_Stop
+				BATH L 0 A_PlaySound ("Bat/Splat")
+				BATH L 1
+				goto FadeOut.NoRaise
+		}
+}
+
+ACTOR SleepingGiantBat : GiantBat 14773
+{
+	//$Title Giant Bat (Sleeping)
+	//$Category Monsters
+
+	-SPAWNFLOAT
+	-DONTOVERLAP
+	-FLOATBOB
+	+SPAWNCEILING
+
+		States
+		{
+			Spawn:
+				BATH A 10 A_LookEx (0, 0, 192, 256)
+				Loop
+			Idle:
+				BATH BCDEC 2 A_Look
+				Loop
+			See:
+				BATH B 0 A_ChangeFlag ("SPAWNCEILING", 0)
+				BATH B 0 A_ChangeFlag ("FLOATBOB", 1)
+			See2:
+				BATH BCDEC 2 A_Chase
+				Loop
+		}
+}
+
+ACTOR ImpBat : GiantBat 14770 
+{
+	//$Title Imp Bat
+	//$Category Monsters
+	Obituary "%o was bitten by an imp bat."
+		States
+		{
+			Spawn:
+				IBAT BCDEC 2 A_Look
+				Loop
+			ResetSee:
+				IBAT B 0 A_TakeInventory ("BatAttackToken", 30)
+			See:
+				IBAT BCDEC 2 A_Chase
+				Loop
+			Missile:
+				IBAT B 0 A_Jump (160, "See") // Reduce chance of skull attack
+				IBAT B 0 A_PlaySound ("Bat/Sight")
+				IBAT BCDECBCDECBCDECB 1 A_FaceTarget
+				BATH B 0 A_SkullAttack
+				AttackSwoop: // loop animation until token limit reached
+				IBAT B 0 A_GiveInventory ("BatAttackToken", 1)
+				IBAT BCDEC 1 A_SkullAttack
+				IBAT B 0 A_JumpIfInventory ("BatAttackToken", 10, "ResetSee")
+				Loop
+            Melee:
+                IBAT BC 2 A_FaceTarget
+                IBAT D 2 A_MeleeAttack
+                IBAT EC 2 A_FaceTarget
+                Goto ResetSee
+			MonDeath:
+				IBAT F 0 ThrustThingZ (0, 16, 0, 1)
+				IBAT F 0 A_ChangeFlag ("FLOATBOB", 0)
+				IBAT F 3 A_ScreamAndUnblock
+			Fall:
+				IBAT GGGHHHIIIJJJ 1 A_CheckFloor ("Splat")
+			Fall2:
+				IBAT K 1 A_CheckFloor ("Splat")
+				Loop
+			Splat:
+				IBAT L 0 A_Stop
+				IBAT L 0 A_PlaySound ("Bat/Splat")
+				IBAT L 1
+				goto FadeOut.NoRaise
+		}
+}
+
+ACTOR SleepingImpBat : ImpBat 14771
+{
+	//$Title Imp Bat (Sleeping)
+	//$Category Monsters
+
+	-SPAWNFLOAT
+	-DONTOVERLAP
+	-FLOATBOB
+	+SPAWNCEILING
+
+		States
+		{
+			Spawn:
+				IBAT A 10 A_LookEx (0, 0, 192, 256)
+				Loop
+			Idle:
+				IBAT BCDEC 2 A_Look
+				Loop
+			See:
+				IBAT B 0 A_ChangeFlag ("SPAWNCEILING", 0)
+				IBAT B 0 A_ChangeFlag ("FLOATBOB", 1)
+			See2:
+				IBAT BCDEC 2 A_Chase
+				Loop
+		}
+}
+
+Actor BatAttackToken : Inventory 
+{ 
+}

@@ -103,6 +103,9 @@ function void p_IncreaseRank (void)
     p_Exp_Points[play] ++;
     p_Exp[play] = p_Exp[play] - exp_cost;
     
+    SetCustomPlayerValue("RankCol", play, p_Rank[play]+1);
+    ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0);
+
     // message
     //f_CenterTip("You have been promoted!");
     Spawn("RankUpFx", GetActorX(0), GetActorY(0), GetActorZ(0));

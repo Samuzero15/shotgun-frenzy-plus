@@ -9,6 +9,24 @@
 
 ## v1 - The path of the damned...
 
+#### (11 / 11 / 2023) [New custom Lumps, monster waves, and improvements]
+	// 4 weeks with no commits?! Shiet. Let's fix that.
+	*) Updated Pack-o-daemon
+	*) Sprite re-organization on the resources part, specally adding folders on each monster sprite.
+	*) Some new sprites for both SSGs. Courtesy of Sonik.k.o (ThatSonicFan).
+	+) A new monster wave is being added! The Aerial wave!
+	// Airbone monsters will come to attack from the sky! Let's hope you dont have Quiroptophobia, because Bats will be the first of your problems, not for their health, but actually for the sheer numbers.
+	+) Speaking of bats, added Giant Bats, a bad (skulled bat), and re-added the bat familiar.
+	!+) To celebrate the addition of the SCORINFO lump, the scoreboard is now modified for showing the credits, upgrade points, kills, kill-streaks, deaths and of course the players in the game!
+	!+) Now the Item Hud is now customizable! Change the position, alpha (transpaency), and the orientation of the item bar! On SF+ Settings > User Options.
+	*) Reworked the lump reading scripts, shorter and straight to the point.
+	!+) Added the SFRUNDEF, SFMWAVES and SFITMDEF lumps, also refactored the SFWEPDEF lump for easier addition and readability!
+	// SFRUNDEF defines the runes, SFITMDEF defines the items, SFMWAVES defines the monster waves! Cool additions for the modders to play around!
+	!*) The Autosave feature has been reworked and now it's lagless, and smart! (although, again, needs some testing)
+	+) Now monster's stamina (in decorate), will hardcode the class which a monster belongs to.
+	+) Also the monster's accuracy (in decorate), will tell if the monster can be championized (-1=no, 0=yes, 1=always).
+	*) Some small fixes on the Samu Terminal
+
 #### (6 / 6 - 18 / 7 / 2023) [New SFWEPDEF Lump, Inputs on terminals]
 	// Heyo! another month of developing with some other changes!
 	*) Splitted the 3 terminal main functions (Draw, Input and Update) into 3 scripts for more processing. (and fool out the runaway errors!)
@@ -22,7 +40,7 @@
 	!+) 3 wild SFWEPDEF lump file has appeared!
 	// SFWEPDEF? da hell is that? you might ask. That lump is not supported by Zdoom, or Zandronum in general, uuuh what?
 	// Well, since Zandronum 3.2 recent alpha (Look up Readme file for the link), I went full on experiment with some new TDRR functions for reading lumps.
-	// Thanks to that, it is now possible to simplify and make it accesible for everyone for adding new mods on SF+.
+	// Thanks to that, it is now possible to simplify and make it accesible for everyone in adding new mods on SF+.
 	// You do not need to use ACS to recompile a script, now weapon addons are extremly easy to add! That's why SFWEPDEFs are there.
 	// But more about that later~ I'll update the docs for it, I Promise.
 	*) Fixed the cvar pricing for stimpacks, mechs and runes.

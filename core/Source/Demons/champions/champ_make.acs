@@ -1,13 +1,16 @@
 
 function void Champ_Make(void) {
 	int health;
-    int make_champion = !champion_nospawn && (f_PercentFast > random(0,100) || champion_forcespawn > 0);
+	int monsterChampionSetting = GetActorAccuracy(0);
+    int make_champion = !champion_nospawn && (monsterChampionSetting != -1) && 
+						(f_PercentFast > random(0,100) || champion_forcespawn > 0 || monsterChampionSetting == 1);
 	int champ = Champ_Dice();
 	if(Champ_IsBanned(champ)){
 		if(champion_onbanned == 1){
 			champ = Champ_RerollToValid();
 		}
 	}
+
 	if (make_champion && !Champ_IsBanned(champ)) { 
 		// Make a champion enemy! (Only if he is not banned of course!)
 		GiveInventory("ChampBuff_Normal", 1); 

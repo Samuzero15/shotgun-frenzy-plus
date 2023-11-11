@@ -37,6 +37,8 @@ script 107 OPEN
 	//log(d:35 * 60 * f_GameLength, s:" tics");
 	g_GameTimer = 35 * 60 * f_GameLength;
 	g_GuardianTimer = 35 * 60 * f_GuardianLength;
+	SetCvar("sfp_scordata_timemin", ((g_Gametimer) / (35*60))%60);
+	SetCvar("sfp_scordata_timesec", ((g_Gametimer) / 35)%60);
 	//InitDB_Debug();
     
     if(f_Gametype == 5){ // survival?
@@ -46,22 +48,33 @@ script 107 OPEN
     {
         // wait desired time minutes
         //log(d:g_GameTimer, s:" tics");
+		SetCvarString("sfp_scordata_status", "On fight");
 		while(g_GameTimer > 0){ // [Samu] Here it is the game timer.
 			delay(1);
 			g_GameTimer--;
+			if((g_GameTimer) % 35 == 0){
+				SetCvar("sfp_scordata_timemin", ((g_Gametimer) / (35*60))%60);
+				SetCvar("sfp_scordata_timesec", ((g_Gametimer) / 35)%60);
+			}
 		}
         
         // guardian time warning
 		Notify_Message("GUARDIAN WAVE", strparam(s:"Incoming in ",d:f_GuardianLength, s:" minutes!"), "DEMONT", 0);
 		g_GuardianState = INTDB_GUARDIANSTATE_STANDBY;
 		
-        
+        SetCvarString("sfp_scordata_status", "On Fight, prior to Guardian wave");
         // wait guardian length minutes
         while(g_GuardianTimer > 0){ // [Samu] Here it is the game timer.
+			if((g_GuardianTimer / 35) %  10 == 0){
+				SetCvar("sfp_scordata_timemin", ((g_GuardianTimer) / (35*60))%60);
+				SetCvar("sfp_scordata_timesec", ((g_GuardianTimer) / 35)%60);
+			}
 			delay(1);
 			g_GuardianTimer--;
 		}			// [Samu] Here it is the guardian timer.
     }
+	SetCvar("sfp_scordata_timemin", 0);
+	SetCvar("sfp_scordata_timesec", 0);
 	g_GuardianState = INTDB_GUARDIANSTATE_PREPARED;
     
     acs_execute(108, 0, l_RemainingMonsters, 0, 0);
@@ -183,7 +196,9 @@ script 108 (int l_RemainingMonsters)
 	GiveActorInventory(112, "MarkOnMap_ThisAsshole", 1);
 	GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
 	GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
-
+	SetCvar("sfp_scordata_timemin", 0);
+	SetCvar("sfp_scordata_timesec", 0);
+	SetCvarString("sfp_scordata_status", "Cleaning up, preparing to Guardian wave");
     while(1)
     {
 		/**/
@@ -219,7 +234,7 @@ script 108 (int l_RemainingMonsters)
     // display message
 	Notify_Message("GUARDIAN WAVE", "Incoming!", "DEMONT", 0);
 	g_GuardianState = INTDB_GUARDIANSTATE_ATTACK;
-	
+	SetCvarString("sfp_scordata_status", "On Guardian wave");
 	g_Status = 4;
 	
     // spawn boss script
@@ -265,6 +280,7 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 	GiveActorInventory(113, "MarkOnMap_ThisAsshole", 1);
 	GiveActorInventory(114, "MarkOnMap_ThisAsshole", 1);
 
+	SetCvarString("sfp_scordata_status", "Finishing guardian wave");
     while(GuardianWave_LoopCond(surv) && timeout > 0){
        //[Samu] Zandronum is dumb counting monsters.
 		
@@ -324,6 +340,7 @@ int g_skillpercent = 0;
 script 125 (int l_Condition)
 {
     // define some local containers
+	SetCvarString("sfp_scordata_status", "Game Over");
     int l_MonstersKilled = -1;
     int l_PlayerDeaths = -1;
     int l_SkillLevel = -1;

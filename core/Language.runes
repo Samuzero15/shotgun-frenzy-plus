@@ -1,22 +1,61 @@
 [Enu default]
 
-FP_RD_RESISTANCERUNE    = "Hard Body. (25% Defense UP)";
-FP_RD_REGENERATIONRUNE  = "Stich yourself. (5 tic, 5 HP)";
-FP_RD_PROSPERITYRUNE    = "Longer Life. (450 Max HP / AP)";
-FP_RD_RAGERUNE          = "Trigger fingers. (x2 Fire Ratio)";
-FP_RD_STRENGTHRUNE      = "Stronger Fire Power. (x2 Damage UP)";
-FP_RD_SPREADRUNE        = "Triple-Projectiles. (Triple Shot & Ammo Consumption)";
-FP_RD_HighJumpRUNE      = "Bigger Leg Impulse. (Jump Height Up)";
-FP_RD_DRAINRUNE         = "Gain from Pain. (Steal HP)";
-FP_RD_REFLECTIONRUNE    = "Return to sender. (Mirror Damage)";
-FP_RD_HasteRUNE         = "Quick Feet. (Speed up)";
-FP_RD_HEALTHRUNE        = "Bloody health. (Blood drips drops, +50% heal, +100 MaxHP)";
-FP_RD_AMMUNITIONRUNE    = "Lot'sa ammo. (Satchels drops, P. Ammo Infinity, Extra ammo cap.)";
-FP_RD_FORTUNERUNE       = "Lucky bastard. (More Credits & Items drops)";
-FP_RD_BLASTRUNE         = "Push them off. (Counter Push)";
-FP_RD_DEFENSERUNE       = "En Garde. (Counter Shield)";
-FP_RD_RAMPAGERUNE       = "Kill'em all. (Shield + x1.5 DMG UP)";
-FP_RD_SOULRUNE          = "Anima Harvester. (100 Kills = 1 Soulsphere)";
-FP_RD_RESURRECTIONRUNE  = "No time to rest. (1 Time Extra-Life)";
-FP_RD_TEMPERANCERUNE    = "Harder Shell. (Armor Shard drops, armor defense up, +100 AP upon armor pickup)";
-FP_RD_GHOSTRUNE         = "Stealthy Camo. (Partial Invisibility, Never targeted.)";
+FP_RN_RESISTANCE    = "Resistance";
+FP_RD_RESISTANCE    = "Hard Body. (25% Defense UP)";
+
+FP_RN_REGENERATION  = "Regeneration";
+FP_RD_REGENERATION  = "Stich yourself. (5 tic, 5 HP)";
+
+FP_RN_PROSPERITY    = "Prosperity";
+FP_RD_PROSPERITY    = "Longer Life. (450 Max HP / AP)";
+
+FP_RN_RAGE          = "Rage";
+FP_RD_RAGE          = "Trigger fingers. (x2 Fire Ratio)";
+
+FP_RN_STRENGTH      = "Strength";
+FP_RD_STRENGTH      = "Stronger Fire Power. (x2 Damage UP)";
+
+FP_RN_SPREAD        = "Spread";
+FP_RD_SPREAD        = "Triple-Projectiles. (Triple Shot & Ammo Consumption)";
+
+FP_RN_HighJump      = "High Jump";
+FP_RD_HighJump      = "Bigger Leg Impulse. (Jump Height Up)";
+
+FP_RN_DRAIN         = "Drain";
+FP_RD_DRAIN         = "Gain from Pain. (Steal HP)";
+
+FP_RN_REFLECTION    = "Reflection";
+FP_RD_REFLECTION    = "Return to sender. (Mirror Damage)";
+
+FP_RN_Haste         = "Haste";
+FP_RD_Haste         = "Quick Feet. (Speed up)";
+
+FP_RN_HEALTH        = "Health";
+FP_RD_HEALTH        = "Bloody health. (Blood drips drops, +50% heal, +100 MaxHP)";
+
+FP_RN_AMMUNITION    = "Ammunition";
+FP_RD_AMMUNITION    = "Lot'sa ammo. (Satchels drops, P. Ammo Infinity, Extra ammo cap.)";
+
+FP_RN_FORTUNE       = "Fortune";
+FP_RD_FORTUNE       = "Lucky bastard. (More Credits & Items drops)";
+
+FP_RN_BLAST         = "Blast";
+FP_RD_BLAST         = "Push them off. (Counter Push)";
+
+FP_RN_DEFENSE       = "Defense";
+FP_RD_DEFENSE       = "En Garde. (Counter Shield)";
+
+FP_RN_RAMPAGE       = "Rampage";
+FP_RD_RAMPAGE       = "Kill'em all. (Shield + x1.5 DMG UP)";
+
+FP_RN_SOUL          = "Soul";
+FP_RD_SOUL          = "Anima Harvester. (100 Kills = 1 Soulsphere)";
+
+FP_RN_RESURRECTION  = "Resurrection";
+FP_RD_RESURRECTION  = "No time to rest. (1 Time Extra-Life)";
+
+FP_RN_TEMPERANCE    = "Temperance";
+FP_RD_TEMPERANCE    = "Harder Shell. (Armor Shard drops, armor defense up, +100 AP upon armor pickup)";
+
+FP_RN_GHOST         = "Ghost";
+FP_RD_GHOST         = "Stealthy Camo. (Partial Invisibility, Never targeted.)";

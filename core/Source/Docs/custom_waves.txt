@@ -101,23 +101,12 @@ Actor FPSpawn_<index letter of your set>B20 : RandomSpawner {  // optional too, 
 	dropitem "FPSSpot_StoneDemon"			,256
 }
 =============
-II) ACS
+II) Registering a new monster set.
 
-1)Make a lump or a new file, add this in it.
-=============
-#library "<libname>"
-#include "zcommon.acs"
+1)Make a new lump called "SFMWAVES", and inside it write this in a single line.
+"<index_letter_of_your_set>, <name_of_monster_set>, <boss_wave_start>"
 
-Script "<anything, no really anything>" OPEN
-{
-	ACS_NamedExecuteAlways("AISet_Add", 0, "<any_index_letter>", "<the_name_of_your_monster_set>", <the_wave_where_you_want_to_start_calling_the_boss_levels>);
-    //... add your sets here. 
-}
-=============
-2) If working in wad file, make sure the <libname> lump is inside of the A_Start and A_End.
-If in pk3, do not worry about it, slade can do it for you~.
-
-3) If you did'nt done it yet, make a LOADACS lump. And then put your library name called "<libname>" inside it.
+2) If you want to add more monster waves, just make a new line and register them in the same way you just did.
 
 DONE! Now you can add your own custom waves with ease!
 

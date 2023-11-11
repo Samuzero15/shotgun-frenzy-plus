@@ -12,9 +12,10 @@
 
 #import "f_intdb.acs"
 #import "fl_techs.acs"
+#import "fp_lumpread.acs"
 #include "zcommon.acs"
+#include "acsutils.acs"
 #include "samu_tools.acs"
-
 
 #libdefine FP_ITEM_NUM 255
 
@@ -41,11 +42,18 @@ int fp_LastItem = 0;
 // 2) Item Max amount
 
 function void SFPlus_DefineItems(void){
+	/*
+	fp_LastItem = 0;
+	fp_itemshop_last[ITEMSHOP_ARMORY] = 0;
+	fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP] = 0;
+	fp_itemshop_last[ITEMSHOP_HEALTH_MISC] = 0;*/
+	IDir_ReadSFITMDEF();
+	/*
 	fp_LastItem = 0;
 	fp_itemshop_last[ITEMSHOP_ARMORY] = 0;
 	fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP] = 0;
 	fp_itemshop_last[ITEMSHOP_HEALTH_MISC] = 0;
-	
+	/*
 	Item_Add_Powerup("Inventory_Soulsphere",  "soulsphere", 	3, CR_BLUE,  	"SOULSPHERE");
 	Item_Add_Powerup("Inventory_Megasphere",  "megasphere", 	3, CR_CYAN,  	"MEGASPHERE");
 	Item_Add_Powerup("Inventory_Godsphere",   "godsphere",  	1, CR_WHITE, 	"GODSPHERE");
@@ -56,8 +64,6 @@ function void SFPlus_DefineItems(void){
 		Item_Add_Powerup("Inventory_Helltrigger", "helltrigger", 	1, CR_ORANGE,	"HELLTRIGGER");
 	}
 	
-	
-		
 	Item_Add_Inv_Hide("p_backpack", 				"backpack", 		1, 		"PBACKPACK");
 	Item_Add_Inv("Inventory_MarineMine", 			"mines", 			16, 	"MARINEMINE");
 	Item_Add_Deploy("Inventory_MineDrone", 			"drone_mine", 		8, 		"MINEDRONE");
@@ -72,48 +78,76 @@ function void SFPlus_DefineItems(void){
 	if(GameSkill() != 0){
 		Item_Add_deploy("Inventory_TurretChaingun",		"turret_chaingun", 	8, 		"CHAITURRET");
 		Item_Add_deploy("Inventory_TurretShotgun",		"turret_shotgun", 	8, 		"SHOTTURRET");
-
 		Item_Add_Hidden("Inventory_GreedSphere", 	1, "GREEDSPHERE", true);
 	}
-	
-	
 	Item_Add_Hidden("Inventory_TeslaCoil",		8, "TESLTURRET", true);
 	Item_Add_Hidden("Inventory_Stimpack", 		10, "STIMPACK", false);
-	
+	*/
 }
 
 
 //Definers
 ////////////////////////////////////////////
 
-function void Item_Add_Deploy(str actor, str price, int max, str lang){
-	str pr = GetCvar(strparam(s:"pr_d_", s:price));
-	int it = Item_Add(FP_ITEM_T_DEPLOY, actor, max, pr, lang, true);
-	Item_AppendToShop(it, ITEMSHOP_ARMORY);
+function void IDir_ReadSFITMDEF(void){
+	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFITMDEF", "SFPlus_IDir_SFITMDEFReadLine");
 }
 
-function void Item_Add_Powerup(str actor, str price, int max, int color, str lang){
-	str pr = GetCvar(strparam(s:"pr_p_", s:price));
-	int it = Item_Add_Color(FP_ITEM_T_POWERUP, actor, max, pr, color, lang, true);
-	Item_AppendToShop(it, ITEMSHOP_HEALTH_POWERUP);
+Script "SFPlus_IDir_SFITMDEFReadLine" (int line) {
+	//log(s:"\"", s:line, s:"\"");
+	LumpRead_StrNextArg(line); str type = 		LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+	LumpRead_StrNextArg(line); str actor = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	LumpRead_StrNextArg(line); str maxamount = 	LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+	LumpRead_StrNextArg(line); str price = 		GetCVar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
+	LumpRead_StrNextArg(line); str name = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+	LumpRead_StrNextArg(line); str desc = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+	LumpRead_StrNextArg(line); str icon = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+	int ibtn;
+	if(type == FP_ITEM_T_POWERUP){
+		// Color
+		LumpRead_StrNextArg(line); ibtn = 		LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+	}else{
+		// Image button.
+		LumpRead_StrNextArg(line); ibtn = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+	}
+	
+	LumpRead_StrNextArg(line); str showinhud = 	LumpRead_ParseValue (res1, LUMPR_VALUE_BOOL);
+	//log(s:"\"", s:actor, s:"\"");
+
+	LumpRead_StrNextArg(line);
+	if(LumpRead_ParseValue (res1, LUMPR_VALUE_BOOL)){
+		if(GameSkill() == 0){
+			//log(s:"Actor ", s:actor, s:" is disabled for the classic skill level.");
+			terminate;
+		}
+	} // This item is excluded from the classic skill mode.
+	
+	fp_Items[fp_LastItem][0] = type;
+	fp_Items[fp_LastItem][1] = actor;
+	fp_Items[fp_LastItem][2] = maxamount;
+	fp_Items[fp_LastItem][3] = price;
+	fp_Items[fp_LastItem][4] = name;
+	fp_Items[fp_LastItem][5] = icon;
+	fp_Items[fp_LastItem][6] = desc;
+	fp_Items[fp_LastItem][7] = ibtn;
+	fp_Items[fp_LastItem][8] = showinhud;
+	fp_LastItem++;
+
+	switch(type){
+		case FP_ITEM_T_POWERUP:
+			Item_AppendToShop(fp_LastItem, ITEMSHOP_HEALTH_POWERUP);
+			//log(s:"Health Powerup items: ", d:fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP]);
+		break;
+		case FP_ITEM_T_DEPLOY:
+		case FP_ITEM_T_DEFAULT:
+			Item_AppendToShop(fp_LastItem, ITEMSHOP_ARMORY);
+		break;
+		case FP_ITEM_T_HIDDEN: break;
+		default: log(s:"(fl_IDir.acs) Unknown Type number.");
+	}
 }
 
-function void Item_Add_Inv(str actor, str price, int max, str lang){
-	str pr = GetCvar(strparam(s:"pr_i_", s:price));
-	int it = Item_Add(0, actor, max, pr, lang, true);
-	Item_AppendToShop(it, ITEMSHOP_ARMORY);
-}
-
-function void Item_Add_Inv_Hide(str actor, str price, int max, str lang){
-	Item_Add_Inv(actor, price, max, lang);
-	fp_Items[fp_LastItem-1][8] = false;
-}
-
-function void Item_Add_Hidden(str actor, int max, str lang, int showinihud){
-	int it = Item_Add(-1, actor, max, 0, lang, showinihud);
-}
-
-function int Item_Add(int type, str actor, int max, int price, str lang, bool showinhud){
+function int Item_Add(int type, str actor, int maxamount, int price, str lang, bool showinhud){
 	str name = strparam(l:strparam(s:"ITDATA_N_",s:lang)); 
 	str icon = strparam(l:strparam(s:"ITDATA_I_",s:lang)); 
 	str desc = strparam(l:strparam(s:"ITDATA_D_",s:lang));
@@ -121,7 +155,7 @@ function int Item_Add(int type, str actor, int max, int price, str lang, bool sh
 
 	fp_Items[fp_LastItem][0] = type;
 	fp_Items[fp_LastItem][1] = actor;
-	fp_Items[fp_LastItem][2] = max;
+	fp_Items[fp_LastItem][2] = maxamount;
 	fp_Items[fp_LastItem][3] = price;
 	fp_Items[fp_LastItem][4] = name;
 	fp_Items[fp_LastItem][5] = icon;
@@ -132,14 +166,14 @@ function int Item_Add(int type, str actor, int max, int price, str lang, bool sh
 	fp_LastItem++;
 	return fp_LastItem;
 }
-function int Item_Add_Color(int type, str actor, int max, int price, int color, str lang, bool showinhud){
+function int Item_Add_Color(int type, str actor, int maxamount, int price, int color, str lang, bool showinhud){
 	str name = strparam(l:strparam(s:"ITDATA_N_",s:lang)); 
 	str icon = strparam(l:strparam(s:"ITDATA_I_",s:lang)); 
 	str desc = strparam(l:strparam(s:"ITDATA_D_",s:lang));
 
 	fp_Items[fp_LastItem][0] = type;
 	fp_Items[fp_LastItem][1] = actor;
-	fp_Items[fp_LastItem][2] = max;
+	fp_Items[fp_LastItem][2] = maxamount;
 	fp_Items[fp_LastItem][3] = price;
 	fp_Items[fp_LastItem][4] = name;
 	fp_Items[fp_LastItem][5] = icon;

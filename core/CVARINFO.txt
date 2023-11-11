@@ -47,6 +47,11 @@ user int sfp_killstreakhud_color2 = 9;
 user int sfp_killstreakhud_color3 = 5;
 user int sfp_killstreakhud_color4 = 0;
 user float sfp_killstreakhud_alpha = 1.0;
+user float sfp_itemhud_x = 50.0;
+user float sfp_itemhud_y = 75.0;
+user int sfp_itemhud_items_per_row = 16;
+user float sfp_itemhud_alpha = 80.0;
+user bool sfp_itemhud_orientation = false;
 user bool sfp_mechmsg = true;
 
 user bool sfp_part_sparks = false;
@@ -76,6 +81,13 @@ server bool sfp_champ_13 = false;
 server bool sfp_champ_14 = false;
 server bool sfp_champ_15 = false;
 server bool sfp_champ_16 = false;
+
+server noarchive bool sfp_scorshow_mechs = false;
+server noarchive bool sfp_scorshow_sector = false;
+server noarchive int sfp_scordata_timesec = 0;
+server noarchive int sfp_scordata_timemin = 0;
+server noarchive string sfp_scordata_status = "";
+server noarchive string sfp_scordata_corerisk = "";
 
 // Level statistics cvars (just for fun reasons lol)
 // I don't suggest you to change this, unless you want to self cheat yourself lol

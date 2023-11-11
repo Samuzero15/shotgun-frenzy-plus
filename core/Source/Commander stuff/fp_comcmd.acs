@@ -475,7 +475,7 @@ function void CMDBut_Add (int id, int evt, str lang){
 	CMDBut_List[id][2] = strparam(l:strparam(s:"CBDATA_I_", s:lang)); // CHECK AT THE LANGUAGE FILE.
 	CMDBut_List[id][3] = true;
 	CMDBut_List[id][4] = true;
-	CMDBut_List[id][5] = "null";
+	CMDBut_List[id][5] = 0;
 	CMDBut_List[id][6] = "You need x tech before this.";
 	CMDBut_List[id][7] = false;
 	CMDBut_List[id][8] = evt; // Command to do
@@ -501,11 +501,11 @@ function void CMDBut_SetShowCond(int id, bool cond){
 
 function void CMDBut_SetPrice(int id, int pricekey){
 	if(strLen(pricekey) == 0){
-		 CMDBut_List[id][5] = "null"; 
+		 CMDBut_List[id][5] = 0; 
 		 CMDBut_List[id][7] = true;
 	}
 	else{
-		CMDBut_List[id][5] = strparam(s:"pr_cmd_",s:pricekey); 
+		CMDBut_List[id][5] = GetCvar(strparam(s:"pr_cmd_",s:pricekey)); 
 		CMDBut_List[id][7] = false;
 	}
 }

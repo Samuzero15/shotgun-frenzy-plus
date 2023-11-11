@@ -23,8 +23,10 @@ function void RunePage_Update(int pageTag) {
 			strparam(s:"Tier ", d:k+1, s:" - (",d:Rune_getTierPrice(k), s:" $)"));
 		}
 
-		Label_setText(runepage_vars[3], "");
-		Label_setText(runepage_vars[4], "");
+		if(comphover == -1) {
+			Label_setText(runepage_vars[3], "");
+			Label_setText(runepage_vars[4], "");
+		}
 
 		for(int j = 0; j < RuneTop; j++){
 			RunePage_UpdateComps(j);

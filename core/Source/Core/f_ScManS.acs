@@ -81,11 +81,17 @@ script 100 OPEN
         	hudmessage(s:"FINAL WAVE"; 2, 0, cr_red, 400.0, 200.0, 5.0); 
             setfont("SMALLFNT");
             hudmessage(s:"Final Wave", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
+            SetCvar("sfp_scordata_timemin", 0);
+	        SetCvar("sfp_scordata_timesec", 0);
+            SetCvarString("sfp_scordata_status", "Final Wave");
         }
         else {
         	hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 0, cr_red, 400.0, 200.0, 5.0);
             setfont("SMALLFNT");
             hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
+            SetCvar("sfp_scordata_timemin", 0);
+	        SetCvar("sfp_scordata_timesec", 0);
+            SetCvarString("sfp_scordata_status", strparam(s:"Wave ", d:m_SurvivalWave, s:"/", d:f_SurvivalLastLevel));
         }
         g_MonstersLeft = 0;
 
@@ -199,4 +205,4 @@ script 100 OPEN
                 m_SurvivalWave ++;
         }
     }
-}    
+}

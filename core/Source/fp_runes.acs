@@ -270,7 +270,7 @@ script "Runes_PickMessage" (int type){
 }
 
 script "Runes_ShowPickMessage" (int type) CLIENTSIDE{
-    SFPlus_DefineRunes();
+    //SFPlus_DefineRunes();
     f_SmallTip_Runes (Strparam(s:"Hold \ci",k:"+use",s:"\c- to link the \cj",s:Rune_getName(type),s:" \c-rune!"), CR_CYAN, 0);
 }
 

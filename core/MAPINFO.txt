@@ -11,6 +11,11 @@ Gameinfo
 	DimColor = "88 88 88"
 	InfoPage = "HELP1", "HELP2"
 
+	AddCustomData = "K.S.", "int", 0
+	AddCustomData = "$$$", "int", 0
+	AddCustomData = "UPs", "int", 0
+	AddCustomData = "OnMechCol", "bool", 0
+	AddCustomData = "RankCol", "int", 1
 	ForceKillScripts = True
 }
 

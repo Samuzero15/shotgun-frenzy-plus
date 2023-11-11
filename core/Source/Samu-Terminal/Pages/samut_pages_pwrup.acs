@@ -18,7 +18,7 @@ function void InitPowBuyPage(int pageTag){
 	Card_SetStep(32.0);
 	Card_SetVerticalOri(true);
 	powpage_vars[1] = Card_Generate();
-	
+
 	for(i = 0; i < fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP]; i++){
 		PowBuyPage_AddComps(i+1, fp_itemshop[ITEMSHOP_HEALTH_POWERUP][i]);
 	}

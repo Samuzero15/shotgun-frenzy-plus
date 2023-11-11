@@ -1,0 +1,17 @@
+Information:
+Name: Giant Bat and Imp Bat
+Difficulty: Very Easy
+Connections: None
+Summon: GiantBat, SleepingGiantBat, ImpBat, SleepingImpBat
+Melee: Yes
+Distance: No
+Type: Demon, Animal
+Brightmaps: None
+Actor modification: None
+ACS: None
+
+Description:
+	A giant bloodthirsty bat. Swoops towards player to attack like a lost soul.
+	Can sometimes be found sleeping on the ceiling. Will wake up and attack when
+	the player gets close. Includes a variant with an Imp's head straight out
+	of Hell.

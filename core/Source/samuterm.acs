@@ -43,10 +43,14 @@ Script "SamuTerminal" (int homeTag, int hidestatusbar){
 	SetInventory("SamuTInv_Action2Key", 0);
 	SetInventory("SamuTInv_HideSBar", hidestatusbar);
 	//print(s:"Statusbar hidden?: ", d:hidestatusbar);
+	while(TerminalInUse()){delay(5);}
+	ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0);
 }	
 
 script "SamuTerminal_IntDB" OPEN ClientSide{
-	IntDB_LoadStuff();
+	if(GameType() != GAME_SINGLE_PLAYER){
+        IntDB_LoadStuff();
+    }
 }
 
 script "TerminalLoop" (int alphatag) CLIENTSIDE {

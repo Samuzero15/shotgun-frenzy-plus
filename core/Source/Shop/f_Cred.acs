@@ -77,12 +77,12 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(Human() && 
 		(CheckActorClass(ActivatorTID(), "FrenzyPlayer") 
 		|| CheckActorClass(ActivatorTID(), "MONSTEREDITED_MechPlayer"))){
-
+	int play = playernumber();
 		
-	if(GetUserCvar(PlayerNumber(), "sfp_hitmarksnd"))
+	if(GetUserCvar(play, "sfp_hitmarksnd"))
 		localambientsound("p/kill", 125);
 
-	l_Amount = p_MonsterCredits[monsterClass] + playercount();
+	l_Amount = p_MonsterCredits[monsterClass] + (playercount()-1);
 	l_amount_copy = l_amount;
 	// increase credit
 	
@@ -111,11 +111,11 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 
 	if(!noProfit){
 		if(bossmon || hardmon){
-			sf_AddCredits_S(l_Amount, playerNumber());
-			NamedExecuteClientScript("SF_CreditAddDisplay", playerNumber(), l_Amount, color, 1);
+			sf_AddCredits_S(l_Amount, play);
+			NamedExecuteClientScript("SF_CreditAddDisplay", play, l_Amount, color, 1);
 		}else{
-			sf_AddCredits_S(l_Amount, playerNumber());
-			NamedExecuteClientScript("SF_CreditAddDisplay", playerNumber(), l_Amount, color);
+			sf_AddCredits_S(l_Amount,play);
+			NamedExecuteClientScript("SF_CreditAddDisplay", play, l_Amount, color);
 		}
 	}//else log(s:"Did'nt count!");
 	
@@ -139,13 +139,15 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(monsterClass < 0){ return; }
 	
 	// increase exp and streak
-	Rank_GrantEXP(playernumber(), 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
+	Rank_GrantEXP(play, 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
 	if(GetActorProperty(0, APROP_HEALTH) > 1){
-		p_Streak[playernumber()] ++;
-		NamedExecuteClientScript("SFPlus_KillStreakHud", PlayerNumber(), 
-			p_Streak[playernumber()], p_StreakHi[PlayerNumber()], getNextStreakMilestone());
+		p_Streak[play] ++;
+		if(p_Streak[play] >= p_StreakHi[play]){
+			SetCustomPlayerValue("K.S.", play, p_Streak[play]);
+		}
+		NamedExecuteClientScript("SFPlus_KillStreakHud", play, 
+			p_Streak[play], p_StreakHi[play], getNextStreakMilestone());
 	}
-		
 		
 	ACS_NamedExecuteAlways("SFPlus_StreakMilestone", 0);
 

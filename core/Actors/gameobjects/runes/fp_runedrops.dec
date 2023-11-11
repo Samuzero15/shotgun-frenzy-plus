@@ -1,3 +1,24 @@
+// Numbers are sorted in the same order of the SFRUNDEF from top to down.
+const int RUNE_RAMPAGE = 0;
+const int RUNE_RAGE = 1;
+const int RUNE_STRENGTH = 2;
+const int RUNE_SPREAD = 3;
+const int RUNE_RESISTANCE = 4;
+const int RUNE_DRAIN = 5;
+const int RUNE_REFLECTION = 6;
+const int RUNE_DEFENSE = 7;
+const int RUNE_RESURRECTION = 8;
+const int RUNE_SOUL = 9;
+const int RUNE_PROSPERITY = 10;
+const int RUNE_BLAST = 11;
+const int RUNE_AMMUNITION = 12;
+const int RUNE_FORTUNE = 13;
+const int RUNE_TEMPERANCE = 14;
+const int RUNE_HEALTH = 15;
+const int RUNE_REGENERATION = 16;
+const int RUNE_HIGHJUMP = 17;
+const int RUNE_HASTE = 18;
+
 Actor RuneDrop : CustomInventory { // yes, the fading pickup code, i know, but with a small difference.
 	// A fading pickup that must be took between the time limit before it disappears.
 	Inventory.PickupSound "misc/p_pkup"
@@ -29,7 +50,7 @@ Actor RageRune_Drop : RuneDrop {
 			RAGR ABCDEFGH 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 1)
+			TNT1 A 0 A_SetArg(0, RUNE_RAGE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("RageRune", 1)
@@ -45,7 +66,7 @@ Actor StrengthRune_Drop : RuneDrop {
 			STRR ABCD 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 0)
+			TNT1 A 0 A_SetArg(0, RUNE_STRENGTH)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("StrengthRune", 1)
@@ -63,7 +84,7 @@ ACTOR DrainRune_Drop : RuneDrop
 			DRAR ABCD 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 5)
+			TNT1 A 0 A_SetArg(0, RUNE_DRAIN)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("DrainRune", 1)
@@ -83,7 +104,7 @@ ACTOR SpreadRune_Drop : RuneDrop
 			SPRR ABCD 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 2)
+			TNT1 A 0 A_SetArg(0, RUNE_SPREAD)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_JumpIfInventory("RuneSpread", 1, "Null")
@@ -103,7 +124,7 @@ ACTOR ResistanceRune_Drop : RuneDrop
 			RESR ABCDEFGH 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 3)
+			TNT1 A 0 A_SetArg(0, RUNE_RESISTANCE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ResistanceRune", 1)
@@ -123,7 +144,7 @@ ACTOR RegenerationRune_Drop : RuneDrop
 			REGR AB 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 16)
+			TNT1 A 0 A_SetArg(0, RUNE_REGENERATION)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("RegenerationRune", 1)
@@ -142,7 +163,7 @@ ACTOR ProsperityRune_Drop : RuneDrop
 			PRSR ABCD 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 10)
+			TNT1 A 0 A_SetArg(0, RUNE_PROSPERITY)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ProsperityRune", 1)
@@ -163,7 +184,7 @@ ACTOR ReflectionRune_Drop : RuneDrop
 			REFR AB 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 6)
+			TNT1 A 0 A_SetArg(0, RUNE_REFLECTION)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("ReflectionRune", 1)
@@ -182,7 +203,7 @@ ACTOR HighJumpRune_Drop : RuneDrop
 			HIJR ABCD 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 17)
+			TNT1 A 0 A_SetArg(0, RUNE_HIGHJUMP)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("HighJumpRune", 1)
@@ -202,7 +223,7 @@ ACTOR HasteRune_Drop : RuneDrop
 			HASR ABCD 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 18)
+			TNT1 A 0 A_SetArg(0, RUNE_HASTE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("HasteRune", 1)
@@ -222,7 +243,7 @@ ACTOR AmmunitionRune_Drop : RuneDrop
 			RAMO ABCDE 5
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 12)
+			TNT1 A 0 A_SetArg(0, RUNE_AMMUNITION)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("AmmunitionRune_Pickup", 1)
@@ -241,7 +262,7 @@ ACTOR BlastRune_Drop : RuneDrop
 			RBST ABCB 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 11)
+			TNT1 A 0 A_SetArg(0, RUNE_BLAST)
 		goto Super::Pickup
 
 		Pickup.Give:
@@ -264,7 +285,7 @@ ACTOR DefenseRune_Drop : RuneDrop
 		loop
 
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 7)
+			TNT1 A 0 A_SetArg(0, RUNE_DEFENSE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("DefenseRune", 1)
@@ -283,7 +304,7 @@ ACTOR FortuneRune_Drop : RuneDrop
 			RFOR T 8 A_SpawnItemEx("Blood", random(-2,2), random(-2,2), 8)
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 13)
+			TNT1 A 0 A_SetArg(0, RUNE_FORTUNE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("FortuneRune", 1)
@@ -301,7 +322,7 @@ ACTOR TemperanceRune_Drop : RuneDrop {
 			RTMP ABCDEFGH 4
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 14)
+			TNT1 A 0 A_SetArg(0, RUNE_TEMPERANCE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("TemperanceRune", 1)
@@ -320,7 +341,7 @@ ACTOR SoulRune_Drop : RuneDrop {
 			RSOU ABCDCB 6
 		Loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 9)
+			TNT1 A 0 A_SetArg(0, RUNE_SOUL)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("SoulRune_Pickup", 1)
@@ -339,7 +360,7 @@ ACTOR RampageRune_Drop : RuneDrop {
             RRMP ABCB 6
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 4)
+			TNT1 A 0 A_SetArg(0, RUNE_RAMPAGE)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("RampageRune", 1)
@@ -358,7 +379,7 @@ ACTOR HealthRune_Drop : RuneDrop {
 			RHLT ABCD 4
 		loop
 		Pickup:
-			TNT1 A 0 A_SetArg(0, 15)
+			TNT1 A 0 A_SetArg(0, RUNE_HEALTH)
 		goto Super::Pickup
 		Pickup.Give:
 			TNT1 A 0 A_GiveInventory("HealthRune_Pickup", 1)

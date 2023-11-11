@@ -285,7 +285,9 @@ function int InitDB_Clamp(int var, int min_v, int max_v, int def){
 
 bool g_Initialized = false;
 script "SFPlus_InitializeEverything" OPEN{
-	
+	SetCvarString("sfp_scordata_status", "none");
+	SetCvar("sfp_scordata_timemin", 0);
+	SetCvar("sfp_scordata_timesec", 0);
 	SFPlus_DefineTechs();
 	IntDB_LoadStuff();
 	ProgTip_Init();
@@ -299,11 +301,8 @@ script "SFPlus_InitializeEverything" OPEN{
 function void IntDB_LoadStuff(void){
 	//Acs_NamedExecuteAlways("SfPlus_DefinePrices", 0);
 	
-	SFPlus_DefineWeapons();
-	//log(s:"weapons loaded");
-	SFPlus_DefineItems();
-	//log(s:"items loaded");
-	
+	SFPlus_DefineWeapons(); //log(s:"weapons loaded");
+	SFPlus_DefineItems(); //log(s:"items loaded");
 	If(GameSkill() != 0){
 		SFPlus_DefineStimUps();
 		SFPlus_DefineRunes();

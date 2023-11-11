@@ -10,3 +10,9 @@ Actor FPSRSpot_ZombieScientist : RandomSpawner
 	dropitem "FPSSpot_FemaleZScientist3"
 	dropitem "FPSSpot_FemaleZScientist4"
 }
+
+Actor FPSRSpot_BigBat : RandomSpawner
+{
+	dropitem "FPSSpot_GiantBat"
+	dropitem "FPSSpot_ImpBat"
+}

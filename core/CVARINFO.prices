@@ -82,6 +82,7 @@ server noarchive int pr_p_soulsphere =  	150;
 server noarchive int pr_p_megasphere =  	300;
 server noarchive int pr_p_godsphere =  		8000;
 server noarchive int pr_p_berserk2 =  		7000;
+server noarchive int pr_p_ammosphere =  	7000;
 server noarchive int pr_p_helltrigger =  	6500;
 server noarchive int pr_i_backpack =  		2850;
 server noarchive int pr_i_mines =  			850;

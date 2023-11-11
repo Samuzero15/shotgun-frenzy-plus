@@ -20,6 +20,8 @@
 int itemhud_stack = 0;
 int itemhud_caretx;
 int itemhud_carety;
+int itemhud_caret_numx;
+int itemhud_caret_numy;
 
 script "SFPlus_InventoryList_Enter" ENTER{
 	NamedExecuteClientScript("SFPlus_InventoryList", PlayerNumber());
@@ -31,7 +33,6 @@ script "SFPlus_InventoryList_Respawn" RESPAWN{
 
 Script "SFPlus_InventoryList" (void) Clientside{
 	if(ConsolePlayerNumber() == Playernumber()){
-		SFPlus_DefineItems();
 		while(PlayerInGame(PlayerNumber())){
 			for (int i = 0; i < fp_LastItem; i++){
 				ItemHud_ShowItem(i);
@@ -58,10 +59,24 @@ function void ItemHud_Clear(void){
 	itemhud_stack = 0;
 }
 
+#libdefine ITEMHUD_W 640
+#libdefine ITEMHUD_H 480
+#libdefine ITEMHUD_SPACING 32.0
+
 function void ItemHud_Adjust(int items){
-	int w = 800, h = 640;
-	itemhud_caretx = w*0.5  - (32.0*(min(items-1, 16)))/2;
-	itemhud_carety = h*0.75 - (32.0*((items-1)/16))/2;
+	int w = ITEMHUD_W, h = ITEMHUD_H;
+	int cvarx = fixedDiv(GetUserCvar(PlayerNumber(), "sfp_itemhud_x"), 100.0);
+	int cvary = fixedDiv(GetUserCvar(PlayerNumber(), "sfp_itemhud_y"), 100.0);
+	int items_per_row = GetUserCvar(PlayerNumber(), "sfp_itemhud_items_per_row");
+	int vertical_ori = GetUserCvar(PlayerNumber(), "sfp_itemhud_orientation");
+	if(vertical_ori){
+		itemhud_caretx = w*(cvarx) - (ITEMHUD_SPACING*((items-1)/items_per_row))/2;
+		itemhud_carety = h*(cvary) - (ITEMHUD_SPACING*(min(items-1, items_per_row)))/2;
+	}else{
+		itemhud_caretx = w*(cvarx) - (ITEMHUD_SPACING*(min(items-1, items_per_row)))/2;
+		itemhud_carety = h*(cvary) - (ITEMHUD_SPACING*((items-1)/items_per_row))/2;
+	}
+	
 }
 
 function void ItemHud_ShowItem(int itemid) {
@@ -69,30 +84,34 @@ function void ItemHud_ShowItem(int itemid) {
 	int num = CheckInventory(Item_GetActor(itemid));
 	int max_num = Item_GetMax(itemid);
 	str img = Item_GetIcon(itemid);
-	
 	// Set position
-	if(num > 0 && img != 0 && !CheckInventory("SamuTInv_UsingTerminal") && Item_GetShowInHud(itemid)) {
+	if(num > 0 && img != 0 && !CheckInventory("SamuTInv_UsingTerminal") && Item_GetShowInHud(itemid) && getCvar("screenblocks") != 12) {
 	
 	int index = itemhud_stack;
-	int w = 800, h = 640;
-	int x, y, y_num, space = index*16.0;
-	
-		if(getCvar("screenblocks") == 11) {
-			x = itemhud_caretx + (index%16)*32.0; 
-			y = itemhud_carety + (index/16)*32.0;
-			
-		}else if (getCvar("screenblocks") < 11){
-			x = itemhud_caretx + (index%16)*32.0; 
-			y = itemhud_carety + (index/16)*32.0;
-			
+	int w = ITEMHUD_W, h = ITEMHUD_H;
+	int x, y, x_num, y_num, space = index*16.0;
+	int alpha = fixedDiv(GetUserCvar(PlayerNumber(), "sfp_itemhud_alpha"), 100.0);
+	int items_per_row = GetUserCvar(PlayerNumber(), "sfp_itemhud_items_per_row");
+	int vertical_ori = GetUserCvar(PlayerNumber(), "sfp_itemhud_orientation");
+		if (vertical_ori){
+			x = itemhud_caretx + (index/items_per_row)*32.0; 
+			y = itemhud_carety + (index%items_per_row)*32.0;
 		}
+		else {
+			x = itemhud_caretx + (index%items_per_row)*32.0; 
+			y = itemhud_carety + (index/items_per_row)*32.0;
+		}
+		
+		x_num = x+20.0; 
+		y_num = y+20.0;
+
 		SetHudSize(w, h, 1);
 		SetFont(img);
-		HudMessage(s:"A"; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_IMG+index, CR_WHITE, x, y, 3.0, 0.5);
+		HudMessage(s:"A"; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_IMG+index, CR_WHITE, x+0.1, y+0.1, 3.0, alpha);
 		
 		if(max_num > 1){
-			SetFont("VERVIBES");
-			HudMessage(s:cond(num == max_num, "\ci", "\cj"), d:num; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_NUM+index, CR_WHITE, x, y, 3.0, 0.9);
+			SetFont("SMALFONT");
+			HudMessage(s:cond(num == max_num, "\ci", "\cj"), d:num; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_NUM+index, CR_WHITE, x_num+0.1, y_num+0.1, 3.0, alpha);
 		}
 		itemhud_stack++;
 	}

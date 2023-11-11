@@ -122,6 +122,7 @@ OptionMenu "SFPlus_PriceEdit_Items"{
 	NumberField "Megasphere", "pr_p_megasphere", 25, 20000, 25
 	NumberField "Godsphere", "pr_p_godsphere", 25, 20000, 25
 	NumberField "Berserk", "pr_p_berserk2", 25, 20000, 25
+	NumberField "Ammosphere", "pr_p_ammosphere", 25, 20000, 25
 	NumberField "Helltrigger", "pr_p_helltrigger", 25, 20000, 25
 	NumberField "Personal Backpack", "pr_i_backpack", 25, 20000, 25
 	NumberField "Personal Mines", "pr_i_mines", 25, 20000, 25
