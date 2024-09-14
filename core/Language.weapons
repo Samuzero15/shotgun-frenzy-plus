@@ -51,16 +51,17 @@ WEPS_ASSAULT_DESC = "Weapon set for quick assault operations.";
 
 WEPS_ASSAULT_SPIT_NAME =    "Spitter";
 WEPS_ASSAULT_SPIT_DESC =    "Nifty machine to attack weaker demons, thanks for it's firing speed.\n"
-	                        "It's perfect to deal with the rushing waves at the start.";
+	                        "It's perfect to deal with the rushing waves at the start.\n\n"
+                            "A grenade launcher is attached to the gun for some crowd control. Shoot the grenade for a greater explosion range.";
 
 WEPS_ASSAULT_SPIT_UP1_NAME = "Spread Spitter + Shell Grenades";
-WEPS_ASSAULT_SPIT_UP1_DESC = "Fires 3 bullets per shot in a spreaider way, and also you can launch shell grenades.";
-WEPS_ASSAULT_SPIT_UP2_NAME = "Auto Spitter + Gas Grenades";
-WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster, no breaks. Throws N.Gas grenades, they cause stun and poison to the horde. Uses less ammo.";
+WEPS_ASSAULT_SPIT_UP1_DESC = "Fires 3 bullets per shot in a spreaider way, launches shell grenades.";
+WEPS_ASSAULT_SPIT_UP2_NAME = "Auto Spitter + N.Gas Grenades";
+WEPS_ASSAULT_SPIT_UP2_DESC = "Fires faster, no breaks. Throws N.Gas grenades, they cause stun and poison to the horde. Uses less clip ammo.";
 
 WEPS_ASSAULT_BUCK_NAME =    "Buckshot";
 WEPS_ASSAULT_BUCK_DESC =    "Powerful shotgun that packes 10 shells in the chamber,  "
-	                        "Shoots fast, but needs to be recharged manually."
+	                        "Shoots fast, but it needs to be recharged manually."
 	                        "Just use this if the spitter does'nt deal enough damage.\n\n"
                             "Sec. Fire: Reload chamber (2 Shells)";
 
@@ -77,7 +78,7 @@ WEPS_SUPPORT_DESC = "Set of tools for an aid in the battlefield";
 WEPS_SUPPORT_SUPP_NAME =    "Supply Restocker";
 WEPS_SUPPORT_SUPP_DESC =    "Tool that drops ammo and health supplies for the marines.\n"
                             "This tool can't be restocked by dispensers, so your best refill "
-	                        "is on your base, in the ammunition pad.\n\n"
+	                        "is on your base, or in the ammunition pad.\n\n"
 	                        "Pri. Fire: Drop Ammo (1 Ammo Supplies)\n"
                             "Sec. Fire: Drop Health (1 Health Supplies)";
 
@@ -89,7 +90,8 @@ WEPS_SUPPORT_PTCH_DESC =    "Repairs and Upgrades Turrets and Dispensers. \n"
 	                        "Harmless against monsters, limited to 5 Levels per building.\n "
                             "Uses credits as repair material. Aim to a building to show it's stats.\n\n"
                             "Pri-Fire: Repairs buildings (Gains 1 Exp Point)\n"
-                            "Alt-fire: Upgrades buildings (Gains 5 Exp Points)";
+                            "Alt-fire: \cvUpgrades\c-, \cdMoves\c-, and \cgRecycles Turrets\c-.\n"
+                            "Reload: Switch between Patcher modes.";
 
 WEPS_SUPPORT_PTCH_UP0_NAME = "Advanced Patcher Gun";
 WEPS_SUPPORT_PTCH_UP0_DESC = "Fire faster, and in a larger range. Repair Prices are 50% off discounted.";

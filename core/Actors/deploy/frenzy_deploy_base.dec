@@ -825,6 +825,13 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 			"####" "#" 50 A_Jump(256, "See")
 			goto See
 		
+		Death.Sold:
+			"####" "#" 0 A_NoBlocking
+			TNT1 A 0 A_PlaySound("plats/pt1_strt", CHAN_AUTO)
+			TBLD ABABABAB 4 A_SpawnItemEx("SparksEmitter_Building", 0, 0, 8)
+			TNT1 A 1 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
+			stop
+
 		XDeath:
 		Death:
 			"####" "#" 1

@@ -37,7 +37,12 @@ int rank_titles[20] = {
 
 Script "SFPlus_DamagePerExperience" (int type, int arg1, int arg2) EVENT
 {
-    if(GetCVar("sfp_damageperexp") && type != GAMEEVENT_ACTOR_DAMAGED && PlayerCount() >= 3){terminate;}
+    if(type != GAMEEVENT_ACTOR_DAMAGED || 
+        (GetCVar("sfp_damageperexp") && PlayerCount() <= 3) ||
+        (strcmp(arg2, "PriPatcherDmg") == 0 || 
+        strcmp(arg2, "AltPatcherDmg") == 0 || 
+        strcmp(arg2, "IdlePatcherDmg") == 0)){terminate;}
+    //log(s:arg2);
 
     int play;
     SetActivator(0, AAPTR_Damage_Source);
@@ -82,20 +87,19 @@ function void Rank_GrantEXP(int who, int amount) {
     if(Tech_IsDone(TECH_MARCOM_VETMER) && p_Rank[playernumber()] < 4) amount *= 3;
     else if (Tech_IsDone(TECH_MARCOM_VETMER) && p_Rank[playernumber()] < 7) amount *= 2;
 	p_Exp[who] += amount;
-
 	if (p_Exp[who] > 0)
 		for (int i = 0; i < INTDB_NUM_RANKS; i++){
             if (p_RankExp[i] <= p_Exp[who] && p_RankExp[i] >= p_RankExp[p_Rank[who]+1]){
-                p_IncreaseRank();
+                p_IncreaseRank(who);
                 break;
             }
         }
 		  
 }
 
-function void p_IncreaseRank (void)
+function void p_IncreaseRank (int play)
 {
-    int play = playernumber();
+    //log(s:"p_IncreaseRank to player: ", d:play);
     if (p_Rank[play] < INTDB_NUM_RANKS-2){
     // increase rank and give upgrade points
     int exp_cost = p_RankExp[p_Rank[play]+1];
@@ -108,7 +112,8 @@ function void p_IncreaseRank (void)
 
     // message
     //f_CenterTip("You have been promoted!");
-    Spawn("RankUpFx", GetActorX(0), GetActorY(0), GetActorZ(0));
+    int playtid = 990+play;
+    Spawn("RankUpFx", GetActorX(playtid), GetActorY(playtid), GetActorZ(playtid));
     
     sethudsize(800, 600, 0);
     setfont("MED01");
@@ -119,49 +124,50 @@ function void p_IncreaseRank (void)
     // play sound
     //localambientsound("p/promotion", 125);
     
-    f_TipShow("PLAYER", "", strparam(s:"Has been promoted to ", s:rank_titles[p_Rank[playernumber()]] ,s:"!"), 10);
+   // f_TipShow("PLAYER", "", strparam(s:"Has been promoted to ", s:rank_titles[p_Rank[playernumber()]] ,s:"!"), 10);
 
-    switch(p_Rank[playernumber()])
+    Notify_PlayerEX(play+1, "", strparam(s:"Has been promoted to ", s:rank_titles[p_Rank[playernumber()]] ,s:"!"), "PLAYER", TIP_NOTIFY_COLORSET_GOOD);
+    switch(p_Rank[play])
     {
         case 1:
             HudMsg_Rank("+200 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 200;
+            p_Credits[play] += 200;
             break;
         case 2:
             HudMsg_Rank("+400 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 400;
+            p_Credits[play] += 400;
             break;
         case 3:
             HudMsg_Rank("+900 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 900;
+            p_Credits[play] += 900;
             break;
         case 4:
-            p_IncreaseRank_Grant(1);
+            p_IncreaseRank_Grant(1, play);
             HudMsg_Rank("+Dual Pistols\n+1600 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 1600;
+            p_Credits[play] += 1600;
             break;
         case 5:
             HudMsg_Rank("+2500 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 2500;
+            p_Credits[play] += 2500;
             break;
         case 6:
             HudMsg_Rank("+3600 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 3600;
+            p_Credits[play] += 3600;
             break;
         case 7:
-            p_IncreaseRank_Grant(2);
+            p_IncreaseRank_Grant(2, play);
             HudMsg_Rank("+SMG Pistol\n+4900 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 4900;
+            p_Credits[play] += 4900;
             break;
         case 8:
             HudMsg_Rank("+6400 Credits\n+1 Upgrade point");
-            p_Credits[playernumber()] += 6400;
+            p_Credits[play] += 6400;
             break;
         case 9:
             HudMsg_Rank("+8100 Credits\n+1 Upgrade point");
-            p_EliteMode[playernumber()] = true;
+            p_EliteMode[play] = true;
             f_CenterTip("\cjElite \cfAccess Granted!");
-            p_Credits[playernumber()] += 8100;
+            p_Credits[play] += 8100;
             break;
         }
     }
@@ -172,8 +178,9 @@ function void HudMsg_Rank(str string){
     hudmessage(s:string; 2, 6, cr_Blue, 400.0, 480.1, 6.0);
 }
 
-function void p_IncreaseRank_Grant (int l_Type)
+function void p_IncreaseRank_Grant (int l_Type, int who)
 {
+    SetActivator(990+who);
     switch(l_Type)
     {
         case 1:

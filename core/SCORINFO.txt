@@ -53,7 +53,7 @@ Column "OnMechCol"
 	TrueText = "(Mech)"
 	Alignment = Left
 	ShortName = "Mech"
-	CVar = "sfp_scorshow_mechs"
+	CVar = sfp_scorshow_mechs
 	Size = 8
 }
 
@@ -68,7 +68,7 @@ Column "SectorCol"
 	DisplayName = "Sector"
 	Prefix = "Sct "
 	ShortName = "Sec"
-	CVar = "sfp_scorshow_sector"
+	CVar = sfp_scorshow_sector
 	Size = 8
 }*/
 

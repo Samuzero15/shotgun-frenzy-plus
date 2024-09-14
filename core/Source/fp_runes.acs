@@ -16,7 +16,7 @@ script "Rune_Events" (int type, int arg1, int arg2) Event {
                 SetResultValue(ACS_NamedExecuteWithResult("Runes_OnPlayerDamage", arg1, hpnow <= 0));
             }
         break;
-        case GAMEEVENT_ACTOR_ARMORDAMAGED:
+        case GAMEEVENT_ACTOR_DAMAGED_PREMOD:
         //if(GetArmorInfo(ARMORINFO_CLASSNAME))log(s:GetArmorInfo(ARMORINFO_CLASSNAME));
             // Temperance will now add extra percentages to the saving amount
             int dmg = arg1;

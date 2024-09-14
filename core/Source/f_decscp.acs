@@ -40,6 +40,9 @@ script "ItemInputs" ENTER
 
 	if (buttons & BT_USE)		GiveInventory("Input_Use", 1);
 	else						TakeInventory("Input_Use", 1);
+
+	if (buttons & BT_RELOAD)	GiveInventory("Input_Reload", 1);
+	else						TakeInventory("Input_Reload", 1);
    delay(1);
  }
 }
@@ -131,6 +134,7 @@ script "Ammo_UpdateCaps" (void) {
 	SetAmmoCapacity("Dualshot_Ammo",	(200*(ammo_rune+g_back) + 50*p_back));
 	SetAmmoCapacity("Cell", 			(300*(ammo_rune+g_back) + 200*p_back));
 	SetAmmoCapacity("GLauncher_Ammo", 	(15*(ammo_rune+g_back) + 5*p_back));
+	SetAmmoCapacity("GLauncher_Ammo2", 	(5*(ammo_rune+g_back) + 5*p_back));
 	SetAmmoCapacity("Flinger_Ammo", 	(50*(ammo_rune+g_back) + 50*p_back));
 	SetAmmoCapacity("Gasoline", 		(200*(ammo_rune+g_back) + 50*p_back));
 	AmmoTakeLeftOvers ("Clip");
@@ -141,6 +145,7 @@ script "Ammo_UpdateCaps" (void) {
 	AmmoTakeLeftOvers ("Dualshot_Ammo");
 	AmmoTakeLeftOvers ("Cell");
 	AmmoTakeLeftOvers ("GLauncher_Ammo");
+	AmmoTakeLeftOvers ("GLauncher_Ammo2");
 	AmmoTakeLeftOvers ("Flinger_Ammo");
 	AmmoTakeLeftOvers ("Gasoline");
 }
@@ -157,6 +162,7 @@ script "Ammo_ResetCaps" (void) {
 	SetAmmoCapacity("Dualshot_Ammo",	200);
 	SetAmmoCapacity("Cell", 			300);
 	SetAmmoCapacity("GLauncher_Ammo", 	15);
+	SetAmmoCapacity("GLauncher_Ammo2", 	5);
 	SetAmmoCapacity("Flinger_Ammo", 	50);
 	SetAmmoCapacity("Gasoline", 		200);
 }
@@ -372,7 +378,10 @@ script "PlayerId" (void){
 
 #define PATCHER_UPGRADEABLES 11
 
-function bool IsATurret(int tid){
+#define PATCHER_TURRETS 9
+#define PATCHER_DISPENSERS 2
+
+function bool IsAUpgradeableBuilding(int tid){
 	str turrets[PATCHER_UPGRADEABLES] ={
 		"TurretBullet_HEAD",
 		"TurretShotgun_Head",
@@ -397,8 +406,49 @@ function bool IsATurret(int tid){
 	return false;
 }
 
+function int GetBuildingType(int tid){
+	// 1= Turret, 2= Dispenser, 0 = None
+	str turrets[PATCHER_TURRETS] ={
+		"TurretBullet_HEAD",
+		"TurretShotgun_Head",
+		"TurretChaingun_Head",
+		"TurretRocket_Head",
+		"TurretPlasma_Head",
+		"TurretFlame_HEAD",
+		"TurretTesla_Head",
+		"TurretBase_Head",
+		"TurretBFG_Head",
+	};
+	str dispensers[PATCHER_DISPENSERS] = {
+		"HealthDispenser_Base",
+		"AmmoDispenser_Base"
+	};
+	int i = 0;
+		//log(s:GetActorClass(tid));
+	for(i = 0; i < PATCHER_TURRETS; i ++){
+		if(CheckActorClass(tid, turrets[i])) return 1;
+	}
+	for(i = 0; i < PATCHER_DISPENSERS; i ++){
+		if(CheckActorClass(tid, dispensers[i])){
+			 return 2;
+		}
+	}
+		
+	return 0;
+}
+
+function str GetBuildingTypeName(int type){
+	int str_langs[3] = {
+		"None",
+		"FP_BUILDTYPE_TURRET",
+		"FP_BUILDTYPE_DISPENSER"
+	};
+
+	return strparam(l:str_langs[type]);
+}
+
 script "IAmATurret" (void){
-	SetResultValue(IsATurret(ActivatorTID()));
+	SetResultValue(IsAUpgradeableBuilding(ActivatorTID()));
 }
 
 function str cond_str (int c){
@@ -491,17 +541,21 @@ Script "Deploy_TID" (int tid, int type) {
 	// Assuming the players are the only ones spawning turrets.
 	int play = tid - 990;
 	int dtid;
+	
 	if(play >= 0 && play < 32){
 		switch(type){
 			case 0: dtid = 11000+play; break;
 			case 1: dtid = 15000+play; break;
 			case 2: dtid = 10000+play; break;
 		}
-		//log(s:"Owner: ", d:play, s:" TID:", d:dtid);
+		log(s:"Owner: ", d:play, s:" TID:", d:dtid);
 		SetResultValue(dtid);
 		terminate;
-	}else 
-	SetResultValue(UniqueTID(15200));
+	}else {
+		log(s:"No owner found.");
+		SetResultValue(UniqueTID(15200));
+	}
+	
 }
 
 Script "Deploy_Count" (int tid, int type){

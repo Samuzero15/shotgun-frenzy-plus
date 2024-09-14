@@ -6,6 +6,7 @@ Actor PlayerNumber : Integer {Inventory.MAxAmount 33}
 
 Actor Hud_Killstreak : Boolean {}
 Actor Input_Use : Boolean {}
+Actor Input_Reload : Boolean {}
 
 const int DEPLOY_TURRET_BULLET = 0;
 const int DEPLOY_TURRET_SHOTGUN = 1;

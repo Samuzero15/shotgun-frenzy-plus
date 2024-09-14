@@ -203,3 +203,36 @@ ACTOR ClipPistol : Ammo
 			stop
 	}
 }
+
+ACTOR GLauncher_Ammo : Ammo
+{
+	Inventory.Icon "GRNSA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 15
+	
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 30
+	
+	States
+	{
+		Spawn:
+			GRNS A -1
+			stop
+	}
+}
+
+ACTOR GLauncher_Ammo2 : Ammo {
+	Inventory.Icon "GRNSA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 5
+	
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 10
+	
+	States
+	{
+		Spawn:
+			GRNS A -1
+			stop
+	}
+}

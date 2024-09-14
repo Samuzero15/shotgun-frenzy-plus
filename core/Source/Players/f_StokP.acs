@@ -246,6 +246,7 @@ function void Stock_FillAmmo(bool full){
 		GiveMaxInventory("Shell");
 		GiveMaxInventory("RocketAmmo");
 		GiveMaxInventory("GLauncher_Ammo");
+		GiveMaxInventory("GLauncher_Ammo2");
 		GiveMaxInventory("Flinger_Ammo"); 
 		GiveMaxInventory("Cell"); 
 		GiveMaxInventory("Dualshot_Ammo"); 
@@ -264,6 +265,7 @@ function void Stock_FillAmmo(bool full){
 		GiveInventory("Shell",				2*extra_ammo);
 		GiveInventory("RocketAmmo",			2*extra_ammo);
 		GiveInventory("GLauncher_Ammo",		2*extra_ammo);
+		GiveInventory("GLauncher_Ammo2",	1*extra_ammo);
 		GiveInventory("Flinger_Ammo",		2*extra_ammo); 
 		GiveInventory("Cell",				20*extra_ammo); 
 		GiveInventory("Dualshot_Ammo",		15*extra_ammo); 

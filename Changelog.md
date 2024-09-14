@@ -9,6 +9,23 @@
 
 ## v1 - The path of the damned...
 
+#### (14 / 9 / 2024) [Spitters shootable grenades, Patcher's Move and Recycle modes & Sprite Repleacements]
+	// 'Sup! how is it going?
+	// Yeah I got no excuse for not doing any progress since like 10 months with no activity on the repository.
+	// I'm finally graduated as a Informatics Engineer. And i've been goofing arround with some of my closest friends. Not to mention also the tense situation of my country (yes, i'm venezuelan, the electoral fraud really pissed us all), and also my lack of motivation to continue doing some updates on SF+, but you know what? Screw it. I'll keep doing what I love to do. Doing some more shotgun frenzy stuff :D.
+	// So, what did i done this time?
+	!*) Some sprite replacements on the Spitter and the Beretta + Variants, specially adding those black cool gloves to the weapons.
+	!*) Now the base spitter gun will have an attached grenade launcher, with 5 grenades as base ammuniton.
+	*) The animation after launching a grenade with the spitter can be cancelled with the primary fire.
+	*) The grenades thrown by spitters can be shot for a greater radius AoD.
+	!+) The patcher now can do some extra functions, move, and recycle turrets and dispensers!
+	// Switch between modes with the Reload key. Yeah, sounds ridiculous, the reload key used ONLY for the Patcher. However, I MIGHT give it some other uses with other weapons.
+	// Move mode can move turrets and dispensers, aim to a building and fire with the alt-fire, hold the altfire to the place where you want to move your turret, the release the trigger and voalá!, your building is teleported from spot A to spot B. The price depends on how far you're planning to move your building.
+	// Sell mode can dismount buildings for some extra coins. Aim to a building and fire with the alt-fire, release the trigger to sell the building. The price depends on how advanced and how expensive is the upgrade price.
+	*) Cleanup and optimization on the lumpread.acs file.
+	*) Now the terminals will not open until the game has started.
+	// Also added a new branch, the dev branch. Just to play arround with branch developing.
+
 #### (11 / 11 / 2023) [New custom Lumps, monster waves, and improvements]
 	// 4 weeks with no commits?! Shiet. Let's fix that.
 	*) Updated Pack-o-daemon

@@ -3,7 +3,7 @@ ACTOR AmmoDispenser : Deploy_Building
 	States
 	{
 		Deploy:
-			NULL A 1 A_SpawnItemEx("AmmoDispenser_Base", 0, 0, 0, 0, 0, 0, 0, SXF_SETMASTER, 0, CallACS("Deploy_TID", tid, 1))
+			NULL A 1 A_SpawnItemEx("AmmoDispenser_Base", 0, 0, 0, 0, 0, 0, 0, 0, 0, args[2])
 			stop
 	}
 }

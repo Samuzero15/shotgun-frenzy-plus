@@ -5,6 +5,7 @@
 dist/
 tools/pwads/
 tools/zandronum/
+tools/zandronum_test/
 tools/pwads/*.*
 tools/acc/acscomp_tmp
 *.dbs

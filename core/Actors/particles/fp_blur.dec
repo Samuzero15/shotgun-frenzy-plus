@@ -188,3 +188,115 @@ actor Blur_FlakC : Blur
 		goto Super::Loopme
 	}
 }
+
+actor Blur_TurretBullet : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		BTRT A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_TurretShotgun : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		STRT A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_TurretChaingun : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		CTRT A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_TurretRocket : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		RTRT A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_TurretFlame : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		FTRT A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_TurretPlasma : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		PTRT A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_TurretBFG : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		BFGT A 1
+		goto Super::Loopme
+	}
+}
+
+
+actor Blur_TurretTesla : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		TTRT A 1
+		goto Super::Loopme
+	}
+}
+
+
+actor Blur_AmmoDispenser : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		DEAM A 1
+		goto Super::Loopme
+	}
+}
+
+actor Blur_HealthDispenser : Blur 
+{
+	scale 0.5
+	States
+	{
+		Frame:
+		DEHP A 1
+		goto Super::Loopme
+	}
+}

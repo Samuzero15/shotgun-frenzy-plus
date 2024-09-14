@@ -3,13 +3,41 @@ PATCH_VERSION = "_DEV_";
 BUILD_DATE = "XX/XX/XXXX";
 CHANGES = "_SHOWCASELANG_";
 
-
 STSTR_DQDON = "Invulnerable mode Activated";
 STSTR_DQDOFF = "Invulnerable mode Deactivated";
 STSTR_FAADDED = "Lock and load!";
 STSTR_KFAADDED = "Lock and load! (+ keys)";
 STSTR_NCON	= "Phasing-walls Activated";
 STSTR_NCOFF	= "Phasing-walls Dectivated";
+
+// Patcher string messages
+FP_PATCHER_MSG_FIX = "Repaired \cd %1 \c- HP!";
+FP_PATCHER_MSG_FULLHP = "\cgFull HP";
+FP_PATCHER_MSG_NOMONEY = "\cgNot enough credits!";
+FP_PATCHER_MSG_UPGRADED = "Upgraded to \cfLevel %1!";
+FP_PATCHER_MSG_MAXUPGRADED = "\cvFully repaired!";
+FP_PATCHER_MSG_MODE_MOVE = "Switched to \cdMove \c-mode";
+FP_PATCHER_MSG_MOVE_SUCCESS = "\cdBuilding Moved";
+FP_PATCHER_MSG_MOVE_FAILED = "\cgCould'nt move, area is obstructed.";
+FP_PATCHER_MSG_MODE_UPGRADE = "Switched to \cvUpgrade \c-mode";
+FP_PATCHER_MSG_MODE_SELL = "Switched to \cgRecycle \c-mode";
+FP_PATCHER_MSG_SELL_NOTYOURS = "\cgThis is not your %1.";
+FP_PATCHER_MSG_SELL_SUCCESS = "%1 \cdSuccessfully recycled.";
+
+FP_PATCHER_ABR_FIX = "%1 HP";
+FP_PATCHER_ABR_MAXHP = "MAX HP";
+FP_PATCHER_ABR_LVLUP = "LVL UP";
+FP_PATCHER_ABR_MOVE = "MOVE";
+FP_PATCHER_ABR_SELL = "SELL";
+
+FP_PATCHER_MOVEMSG_MOVING = "Moving...";
+FP_PATCHER_MOVEMSG_MOVECOST = "Move Cost: %1 Credits";
+
+FP_BUILDTYPE_NONE = "None";
+FP_BUILDTYPE_TURRET = "Turret";
+FP_BUILDTYPE_DISPENSER = "Dispenser";
+FP_BUILDOWNER_YOURS = "It's your %1.";
+FP_BUILDOWNER_SOMEELSE = "%1 Placed by:\n %2";
 
 // Stimpack upgrade descriptions
 FP_SUD_Overhealth 	=	"A 10% of your stimpack heal factor can overheal you.";
@@ -79,5 +107,3 @@ FP_PUD_Prometeo  		=	"The prometeo protocol consists on a special system "
 							"\n-) x2 DMG multipler for 20 seconds"
 							"\n-) Max HP is set to 50 (restorable in health pads)."
 							"\n\nThis effect works only once per life. And it doesn't work in mechs.";
-
-// All weapon descriptions.

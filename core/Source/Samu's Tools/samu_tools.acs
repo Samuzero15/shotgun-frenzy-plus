@@ -17,7 +17,6 @@ function bool IsActivatingClient(void){
 	return ConsolePlayerNumber() == PlayerNumber(); 
 }
 
-
 function void sf_AddCredits(int howMuch, int who){
   if(GameSkill() == 4 || GameSkill() == 5){
 		howMuch = howMuch - ((howMuch*0.25)>>16);

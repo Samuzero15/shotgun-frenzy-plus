@@ -23,7 +23,6 @@
 #import "fp_save.acs" // Saving data from maps
 #import "fp_aquse.acs" // Auto use and quick use scripts
 #import "fp_runes.acs" // Testing stuff..
-#import "fp_lumpread.acs" // Something new for the zand 3.2 alpha! Lump reading!
 //#import "f_TMap.acs" <- intresting stuff...
 
 script "SFPlus_ClearSector" (int sector){

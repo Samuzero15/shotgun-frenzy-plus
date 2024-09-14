@@ -37,7 +37,7 @@
 #include "samut_disp.acs"
 
 Script "SamuTerminal" (int homeTag, int hidestatusbar){
-	if(TerminalInUse()) Terminate;
+	if(TerminalInUse() || g_Initialized == False) Terminate;
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
 	SetInventory("SamuTInv_Action2Key", 0);

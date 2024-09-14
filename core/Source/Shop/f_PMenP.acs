@@ -184,7 +184,8 @@ script 696 (void)
 {// [Samu] For debug pruposes. (and cheating, heheheh.)
 	p_Credits[playernumber()] += 100000;
 	p_Exp_Points[playernumber()] += 100;
-	c_Credits += 200000;
+	/*c_Credits += 200000;
+    */
 	GiveInventory("SSG",1);
 	GiveInventory("QuadShot",1);
 	GiveInventory("Spitter",1);

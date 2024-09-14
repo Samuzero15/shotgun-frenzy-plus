@@ -165,7 +165,9 @@ ACTOR Grenade_NerveGas // Hm...
 	Speed				40
 	Gravity				1.0
 	Mass				100
-	DamageType			MarineFire2
+	DamageType			MarineFire
+	DamageFactor 		"MarineFire2", 0.0
+	Health				1
 	
 	Obituary			"%0 smell the ass of %k's gas nade."
 	
@@ -177,6 +179,14 @@ ACTOR Grenade_NerveGas // Hm...
 	+DOOMBOUNCE
 	+MTHRUSPECIES
 	+ThRUACTORS
+	+ThruSPECIES
+	+NODAMAGETHRUST
+
+	+SHOOTABLE
+	+NOBLOOD
+	-NOBLOCKMAP
+	+NOTARGETSWITCH
+
 	bouncecount 16
 	
 	SeeSound "w9/fire1"
@@ -212,8 +222,10 @@ ACTOR Grenade_NerveGas // Hm...
 			TNT1 A 0 a_SpawnItem("NerveGas_GFX")
 			
 			TNT1 A 0 A_ChangeFlag("ThruActors",false)
+			
 			goto Spawn
 		Death:
+			TNT1 A 1 A_JumpIf(Health <= 0, "Death.Shot")
 			GRE1 A 3 bright 
 			GRE1 C 2 bright A_PlaySound("w9/fire2")
 			GRE1 A 3 bright 
@@ -223,6 +235,28 @@ ACTOR Grenade_NerveGas // Hm...
 			TNT1 A 0 A_Explode(30,64,0,0,64)
 			GRNS A 0 A_SpawnItemEX("NerveGas_Hurt", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 			TNT1 A 0 a_playSound("Flinger/Grenade/NerveGas")
+			goto GasPasser
+
+		Death.Shot:
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", True)
+			GRE1 AD 3 A_PlaySound("w9/fire2")
+			TNT1 A 0 A_Scream
+			TNT1 A 0 A_Explode(30,128,0,0,128)
+			MISL B 4 bright
+			MISL C 3 bright A_Fadeout(0.66)
+			MISL D 2 bright A_Fadeout(0.33)
+			TNT1 A 0 A_SpawnItemEX("NerveGas_Hurt_AirShot", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+			TNT1 A 0 a_playSound("Flinger/Grenade/NerveGas")
+			goto GasPasserX
+
+		GasPasserX:
+			TNT1 A 0 bright a_SpawnItem("NerveGas_GFX_Air")
+			TNT1 A 0 bright a_SpawnItem("NerveGas_GFX_Air")
+			TNT1 A 4 bright 
+			TNT1 A 0 A_SetArg(1, args[1] + 1)
+			TNT1 A 0 A_JumpIf(args[1] > 35, "Gone")
+			loop
+
 		GasPasser:
 			TNT1 A 0 bright a_SpawnItem("NerveGas_GFX")
 			GRE1 D 4 bright 
@@ -232,6 +266,31 @@ ACTOR Grenade_NerveGas // Hm...
 		IDontFeelSoGood:
 			GRE1 A 4 bright a_fadeout(0.1)
 			loop
+		
+		Gone:
+			TNT1 A 1
+			Stop
+	}
+}
+
+const int NERVEGAS_RANGE = 64;
+
+Actor NerveGas_GFX_Air
+{
+	states{
+		Spawn:
+		TNT1 A 1
+		TNT1 A 0
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_SteamUp",frandom(3.0,NERVEGAS_RANGE*1.0),frandom(3.0,NERVEGAS_RANGE*1.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_SteamUp",frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(3.0,NERVEGAS_RANGE*1.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_SteamUp",frandom(3.0,NERVEGAS_RANGE*1.0),frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_SteamUp",frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_Fog",frandom(3.0,NERVEGAS_RANGE*1.0),frandom(3.0,NERVEGAS_RANGE*1.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_Fog",frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(3.0,NERVEGAS_RANGE*1.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_Fog",frandom(3.0,NERVEGAS_RANGE*1.0),frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+		TNT1 A 0 bright a_SpawnItemEx("NerveGas_Fog",frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(-NERVEGAS_RANGE*1.0,-3.0),frandom(-NERVEGAS_RANGE*1.0,NERVEGAS_RANGE*1.0),0,0,0)
+
+		stop
 	}
 }
 
@@ -334,8 +393,26 @@ Actor NerveGas_Hurt
 	}
 }
 
+Actor NerveGas_Hurt_AirShot : NerveGas_Hurt
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_Explode(10, NERVEGAS_RANGE + args[0], 0, true, NERVEGAS_RANGE + args[0])
+		TNT1 A 0 A_SetArg(0, args[0] + 2)
+		TNT1 A 0 A_SetArg(1, args[1] + 1)
+		TNT1 A 4 A_JumpIf(args[1] > 35, "Death")
+		loop
+	Death:
+		TNT1 A 1
+		Stop
+	}
+}
+
+
 Actor NerveGas_HurtQuick : NerveGas_Hurt
 {
+	DamageType MarineFire2
 	States
 	{
 	Spawn:
@@ -347,6 +424,7 @@ Actor NerveGas_HurtQuick : NerveGas_Hurt
 		goto SUPER::DEATH
 	}
 }
+
 
 ACTOR Grenade_MinePlacer
 {
@@ -493,18 +571,15 @@ ACTOR Grenade_Mine_GoBoom
 ACTOR Grenade_GLauncher
 {
 	Radius				16
-	Height				8
-	
+	Height				16
+	Health 1
 	Speed				40
 	Damage				50
 	Gravity				1.0
 	Mass				100
-	
 	Obituary			"%0 was blowen to bits by %k's Grenade Launcher."
-	
 	DamageType			MarineFire
-	
-	+NOBLOCKMAP
+
 	+DROPOFF
 	+MISSILE
 	+ACTIVATEIMPACT
@@ -512,7 +587,14 @@ ACTOR Grenade_GLauncher
 	+DOOMBOUNCE
 	+FORCERADIUSDMG
 	+NODAMAGETHRUST
+	+ThruSPECIES
 	+MTHRUSPECIES
+
+	+SHOOTABLE
+	+NOBLOOD
+	-NOBLOCKMAP
+	+NOTARGETSWITCH
+
 	bouncecount 16
 	
 	SeeSound "w9/fire1"
@@ -523,12 +605,25 @@ ACTOR Grenade_GLauncher
 		Spawn:
 			GRNS ABA 3 bright
 			GRNS B 3 bright A_PlaySound("w9/fire2")
-			goto Spawn
+			loop
+		Pain:
+			TNT1 A 1
+			Goto XDeath
 		Death:
-			MISL B 8 bright A_Explode(250,128,0,0,16)
-			MISL C 6 bright
-			MISL D 4 bright
-			stop
+			TNT1 A 0 A_ChangeFlag("NOGRAVITY", True)
+			TNT1 A 0 A_JumpIf(Health <= 0, "Death.Shot")
+			TNT1 A 0 A_Explode(250,128,0,0,32)
+			goto Rest
+		Death.Shot:
+			TNT1 AAAAA 0 A_SpawnItem("BulletPuff_Standard")
+			TNT1 A 0 A_Explode(250,164,0,0,96)
+			goto Rest
+		Rest:
+			MISL B 4 bright
+			MISL C 3 bright
+		Gone:
+			MISL D 1 bright A_Fadeout(0.1)
+			loop
 	}
 }
 
@@ -537,8 +632,9 @@ ACTOR Grenade_GLauncher
 //////
 
 Actor Grenade_ShellBlast {
-	Radius				16
-	Height				8
+	Radius				8
+	Height				16
+	Health 1
 	
 	Speed				40
 	Gravity				1.0
@@ -549,14 +645,19 @@ Actor Grenade_ShellBlast {
 	Obituary			"%o got a lot of lead by %k's shell grenade."
 	
 	Projectile
-	+NOBLOCKMAP
+	-NOBLOCKMAP
 	+DROPOFF
 	+MISSILE
 	+ACTIVATEIMPACT
 	+ACTIVATEPCROSS
+	+MTHRUSPECIES
+	+ThruSPECIES
 	+DOOMBOUNCE
 	-NOGRAVITY
 	+DONTGIB
+	+SHOOTABLE
+	+NoBLOOD
+
 	bouncecount 16
 	
 	DeathSound "w2/fire"
@@ -568,11 +669,20 @@ Actor Grenade_ShellBlast {
 			GRE2 B 3 bright A_PlaySound("w9/fire2")
 			goto Spawn
 		Death:
-			PUFF B 1 A_Explode(30,64,0,0,16)
+			TNT1 A 0 A_ChangeFlag("NoGRAVITY", True)
+			TNT1 A 1 A_JumpIf(Health <= 0, "Death.Shot")
+			PUFF B 1 A_Explode(30,108,0,0,64)
 			TNT1 A 0 a_setScale(1.5, 1.5)
 			PUFF B 1 A_SetArg(3, 0)
-		RelaseThePeels:
-			TNT1 A 1 A_Jumpif(args[3] >= 5, "ChangeTheWorld_MyFinalMessage_Goodbye")
+			goto ReleaseThePeels 
+		Death.Shot:
+			PUFF B 1 A_Explode(50,192,0,0,96)
+			TNT1 A 0 a_setScale(1.5, 1.5)
+			PUFF B 1 A_SetArg(3, 0)
+			PUFF B 1 A_SetArg(2, 5)
+			goto ReleaseThePeels_Y 
+		ReleaseThePeels:
+			TNT1 A 1 A_Jumpif(args[3] >= 5 + args[2], "ChangeTheWorld_MyFinalMessage_Goodbye")
 			TNT1 A 0 A_SetArg(3, args[3] + 1)
 			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
 			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
@@ -580,8 +690,17 @@ Actor Grenade_ShellBlast {
 			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
 			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
 			loop
+		ReleaseThePeels_Y:
+			TNT1 A 1 A_Jumpif(args[3] >= 5 + args[2], "ChangeTheWorld_MyFinalMessage_Goodbye")
+			TNT1 A 0 A_SetArg(3, args[3] + 1)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			loop
 		ChangeTheWorld_MyFinalMessage_Goodbye:
-			PUFF B 6 bright 
+			PUFF B 6 bright A_Scream
 			PUFF C 6 bright
 			PUFF D 4 bright
 			stop
@@ -597,7 +716,7 @@ ACTOR ShellBlast_PelletSpawner : BulletPuff_Standard
 		TNT1 A 0
 		TNT1 A 0 A_SetArg(0, (frandom(29.0,60.0)) * (2*random(0,1) - 1))
 		TNT1 A 0 A_SetArg(1, (frandom(29.0,60.0)) * (2*random(0,1) - 1))
-		TNT1 A 0 A_SetArg(2, cos(angle) * (frandom(0.0,60.0)) * (2*random(0,1) - 1))
+		TNT1 A 0 A_SetArg(2, cos(angle) * (frandom(5.0,60.0)) * (2*random(0,1) - 1))
 		TNT1 A 1 A_JumpIf((args[0] == 29.0) && (args[1] == 29.0), "Spawn.NorXY")
 		goto Spawn.Pellet
 	Spawn.NorXY:
@@ -608,9 +727,23 @@ ACTOR ShellBlast_PelletSpawner : BulletPuff_Standard
 		goto Spawn.Pellet
 
 	Spawn.Pellet:
-		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, args[0],args[1],args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, args[0],args[1], 5.0 + args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
 		TNT1 A 0
-		Goto Super::Spawn+1
+		Goto Super::Spawn
+	}
+}
+
+ACTOR ShellBlast_PelletSpawner_x4 : ShellBlast_PelletSpawner
+{
+	states
+	{
+	Spawn.Pellet:
+		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, -args[0],-args[1],- (5.0 + args[2]), 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, -args[0],args[1],- (5.0 + args[2]), 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, args[0],args[1], 5.0 + args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0 A_SpawnitemEx("ShellBlast_Pellet", 0, 0, 0, args[0],-args[1], 5.0 + args[2], 0,SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE | SXF_TransferPointers)
+		TNT1 A 0
+		Goto Super::Spawn
 	}
 }
 
