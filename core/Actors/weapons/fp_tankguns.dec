@@ -1,7 +1,8 @@
 
 
-Actor Akimbo_Fire1 : Inventory { Inventory.MaxAmount 1}
-Actor Akimbo_Fire2 : Inventory { Inventory.MaxAmount 1}
+Actor Fire_Pri : Inventory { Inventory.MaxAmount 1}
+Actor Fire_Alt : Inventory { Inventory.MaxAmount 1}
+Actor Fire_JustPressed : Inventory { Inventory.MaxAmount 1}
 
 Actor Nailfire : Inventory { Inventory.MaxAmount 1}
 
@@ -36,7 +37,7 @@ actor TankGun : Weapon // With some upgrades, hell yea!
   ReadyToFire:
 	TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_DISABLESWITCH)
 	//TNT1 A 0 A_JumpIfInventory("TankGunFireNails")
-	TNT1 A 0 A_JumpIfInventory("Akimbo_Fire1", 1, "FireNails")
+	TNT1 A 0 A_JumpIfInventory("Fire_Pri", 1, "FireNails")
 	TNT1 A 0 A_TakeInventory("NailFire", 1)
   loop
   ImStillFirin:
@@ -87,7 +88,7 @@ actor TankGun : Weapon // With some upgrades, hell yea!
   Break1:
     NULL A 1 Bright 
 	NULL A 1 Bright 
-	NULL AAAAAA 1 Bright A_JumpIfInventory("Akimbo_Fire1", 1, "FireNails")
+	NULL AAAAAA 1 Bright A_JumpIfInventory("Fire_Pri", 1, "FireNails")
 	goto ReadyToFire
 	
   Rest:
@@ -112,7 +113,7 @@ actor TankGun : Weapon // With some upgrades, hell yea!
 		P2W1 A 1
 		TNT1 A 0 A_JumpIfInventory("TankGun", 1, 1)
 		goto LightDone
-		TNT1 A 0 A_JumpIfInventory("Akimbo_Fire2", 1, "FireRockets")
+		TNT1 A 0 A_JumpIfInventory("Fire_Alt", 1, "FireRockets")
 		//P2W1 A 1
 		goto Flash
 	

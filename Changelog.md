@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (15 / 9 / 2024) [Weapon Quick-Switch on the works]
+	*) Renamed all the weapon decorate files with the .dec extension, just for easier readability with visual studio code.
+	+) Added a new Decorate file, "frenzy_weapon.dec". Which it holds all the weapons that exists in the game.
+	*) Generalized the boomstick and beretta into the frenzy_weapon actor, now these guns can quick-switch between them!
+	// Fire when raising a weapon to instantly fire, no need to wait for the raising animation to work.
+	// To be implemented in the rest of weapons.
+
 #### (14 / 9 / 2024) [Spitters shootable grenades, Patcher's Move and Recycle modes & Sprite Repleacements]
 	// 'Sup! how is it going?
 	// Yeah I got no excuse for not doing any progress since like 10 months with no activity on the repository.

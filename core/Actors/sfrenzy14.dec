@@ -49,21 +49,7 @@
 #include "Actors/projectiles/frenzy_saw.txt"
 
 // weapons
-#include "Actors/weapons/frenzy_boomstick.txt"
-#include "Actors/weapons/frenzy_buckshot.txt"
-#include "Actors/weapons/frenzy_extra.txt"
-#include "Actors/weapons/frenzy_flamer.txt"
-#include "Actors/weapons/frenzy_flinger.txt"
-#include "Actors/weapons/frenzy_launcher.txt"
-#include "Actors/weapons/frenzy_pistol.txt"
-#include "Actors/weapons/frenzy_plasmagun.txt"
-#include "Actors/weapons/frenzy_quadshot.txt"
-#include "Actors/weapons/frenzy_railgun.txt"
-#include "Actors/weapons/frenzy_spitter.txt"
-#include "Actors/weapons/frenzy_ssg.txt"
-#include "Actors/weapons/frenzy_repeater.txt"
-#include "Actors/weapons/frenzy_dualshot.txt"
-#include "Actors/weapons/frenzy_bfg.txt"
+// Moved to DECORATE.dec file.
 
 // deployables
 #include "Actors/deploy/frenzy_deploy_base.dec"

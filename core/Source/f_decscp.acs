@@ -32,17 +32,24 @@ script "ItemInputs" ENTER
  {
    buttons = GetPlayerInput(-1, INPUT_BUTTONS);
    
-	if (buttons & BT_ALTATTACK)	GiveInventory("Akimbo_Fire2", 1);
-	else 						TakeInventory("Akimbo_Fire2", 1);
+	if (buttons & BT_ALTATTACK)	GiveInventory("Fire_Alt", 1);
+	else 						TakeInventory("Fire_Alt", 1);
 
-	if (buttons & BT_ATTACK)	GiveInventory("Akimbo_Fire1", 1);
-	else						TakeInventory("Akimbo_Fire1", 1);
+	if (buttons & BT_ATTACK)	GiveInventory("Fire_Pri", 1);
+	else						TakeInventory("Fire_Pri", 1);
 
 	if (buttons & BT_USE)		GiveInventory("Input_Use", 1);
 	else						TakeInventory("Input_Use", 1);
 
 	if (buttons & BT_RELOAD)	GiveInventory("Input_Reload", 1);
 	else						TakeInventory("Input_Reload", 1);
+
+	TakeInventory("Fire_JustPressed", 1);
+	if(CheckInventory("Fire_Pri") && KeyToggled(BT_ATTACK)){
+		GiveInventory("Fire_JustPressed", 1);
+	}
+	log(s:"Fire Just pressed: ", d:CheckInventory("Fire_JustPressed"));
+
    delay(1);
  }
 }

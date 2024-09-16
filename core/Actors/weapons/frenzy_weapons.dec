@@ -1,0 +1,73 @@
+
+Actor WeaponToken_Rised : Boolean {}
+// Here it lies some common states for all weapons.
+Actor FrenzyWeapon : Weapon {
+    +NOAUTOFIRE
+    states {
+        // InstaRise and insta lower
+        Select:
+        "####" "#" 0 A_Raise
+        wait
+
+        Deselect:
+        "####" "#" 0 A_TakeInventory("WeaponToken_Rised", 1)
+        "####" "#" 0 A_Lower
+        wait
+
+        Ready: 
+            // Now here it is where we can do some raise animation 
+            "####" "#" 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Gun")
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,82)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,76) 
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,68)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,60)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,52) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,46) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,42) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,38) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,34) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
+            "####" "#" 1 offset (0,33) A_WeaponReady(WRF_NOBOB)
+
+            // The last offset.
+        Ready.DoneRising:
+            "####" "#" 0 offset (0,32) A_GiveInventory("WeaponToken_Rised", 1)
+        Ready.Main:
+            "####" "#" 10 A_Jump(256, "Ready.Gun")
+        goto Ready.Gun
+
+        Fire: // Stabilize offset after rising your gun.
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 10 A_Jump(256, "Fire.Gun")
+        goto Fire.Gun
+    }
+}
+
+#include "Actors/weapons/frenzy_boomstick.dec"
+#include "Actors/weapons/frenzy_buckshot.dec"
+#include "Actors/weapons/frenzy_extra.dec"
+#include "Actors/weapons/frenzy_flamer.dec"
+#include "Actors/weapons/frenzy_flinger.dec"
+#include "Actors/weapons/frenzy_launcher.dec"
+#include "Actors/weapons/frenzy_pistol.dec"
+#include "Actors/weapons/frenzy_plasmagun.dec"
+#include "Actors/weapons/frenzy_quadshot.dec"
+#include "Actors/weapons/frenzy_railgun.dec"
+#include "Actors/weapons/frenzy_spitter.dec"
+#include "Actors/weapons/frenzy_ssg.dec"
+#include "Actors/weapons/frenzy_repeater.dec"
+#include "Actors/weapons/frenzy_dualshot.dec"
+#include "Actors/weapons/frenzy_bfg.dec"
+
+#include "Actors/weapons/frenzy_healnstock.dec"
+#include "Actors/weapons/fp_tankguns.dec"
+#include "Actors/weapons/fp_patcher.dec"

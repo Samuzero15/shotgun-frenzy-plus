@@ -2,7 +2,7 @@
 
 Actor Beretta_DamageRiser : Integer {}
 
-ACTOR Beretta : Weapon
+ACTOR Beretta : FrenzyWeapon
 {
 	Weapon.AmmoUse 1
 	Weapon.AmmoGive 20
@@ -19,17 +19,26 @@ ACTOR Beretta : Weapon
 	States
 	{
 		Ready:
-		PISG A 1 A_WeaponReady
-		goto Ready
+			PISG A 0
+			goto Super::Ready
+		
 		Deselect:
-		PISG A 1 A_Lower
-		PISG A 0 A_Lower
-		goto Deselect
+			PISG A 1 A_Lower
+		goto Super::Deselect
+
 		Select:
-		PISG A 1 A_Raise
-		PISG A 0 A_Raise
-		goto Select
+			PISG A 1 A_Raise
+		goto Super::Select
+
 		Fire:
+			TNT1 A 0 
+		goto Super::Fire
+
+		Ready.Gun:
+			PISG A 1 A_WeaponReady(WRF_NOSECONDARY)
+		loop
+
+		Fire.Gun:
 			PISG B 1 
 			PISG A 0 A_FireCustomMissile("splatBulletCasing", 45 + random(-8,8), 0, 2, 3)
 			PISG B 2 A_GunFlash
