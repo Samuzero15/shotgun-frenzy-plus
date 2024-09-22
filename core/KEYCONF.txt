@@ -28,8 +28,14 @@ alias usebackpack "use Inventory_AmmoGiver"
 defaultbind M usebackpack
 
 addmenukey "Use Hand Grenade" usegrenade
-alias usegrenade "use Inventory_HandGrenade"
+alias usegrenade "use Input_GrenadeItem"
 defaultbind G usegrenade
+
+addmenukey "Melee" +usemelee
+defaultbind F +usemelee
+alias -usemelee "use Input_MeleeItemOff"
+alias +usemelee "use Input_MeleeItem"
+
 
 addmenukey "Use Hell Trigger" usehelltrigger
 alias usehelltrigger "use Inventory_HellTrigger"

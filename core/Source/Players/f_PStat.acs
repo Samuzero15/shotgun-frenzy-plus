@@ -138,6 +138,11 @@ script 53 ENTER
     // give the player his/her boomstick and beretta
     giveinventory("Beretta", 1);
     giveinventory("Boomstick", 1);
+
+	// [Samu] Give the Input_GrenadeItem and Input_Melee, to enable the grenade inputs!
+	GiveInventory("Input_GrenadeItem", 1);
+	GiveInventory("Input_MeleeItem", 1);
+	GiveInventory("Input_MeleeItemOff", 1);
     setweapon("Boomstick");
 
     int creditmult = GetCVar("sf_creditcorrection");

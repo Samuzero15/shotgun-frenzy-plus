@@ -55,7 +55,7 @@
             "C:\\Users\\Usuario\\Desktop\\Samu Stuff\\Doom Stuff\\Projects\\shotgun-frenzy-plus\\Changelog.md"
         ],
         "build_flags": [
-            false,
+            true,
             false,
             false,
             true,

@@ -20,7 +20,7 @@ ACTOR Beretta : FrenzyWeapon
 	{
 		Ready:
 			PISG A 0
-			goto Super::Ready
+		goto Super::Ready
 		
 		Deselect:
 			PISG A 1 A_Lower
@@ -35,8 +35,8 @@ ACTOR Beretta : FrenzyWeapon
 		goto Super::Fire
 
 		Ready.Gun:
-			PISG A 1 A_WeaponReady(WRF_NOSECONDARY)
-		loop
+			PISG A 1 A_WeaponReady
+		goto Super::Ready.Main
 
 		Fire.Gun:
 			PISG B 1 
@@ -53,7 +53,7 @@ ACTOR Beretta : FrenzyWeapon
 			PISF A 1 Bright A_Light0
 		Goto LightDone
 		Spawn:
-		PIST A -1
+			PIST A -1
 		Stop
 	}
 }

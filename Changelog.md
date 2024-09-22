@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (22 / 9 / 2024) [Fisting, Grenade Throwing and new keys]
+	+) (For the base Beretta and base Boomstick) Now these weapons can be able to throw grenades and fist up foes!
+	*) Now using idkfa or idfa will give the normal backpack ammo capacity and will not be overriden by the ammo pad.
+	+) Added some hand sprites for throwing and punching.
+	*) Fixed the Soul Rune pickup sprite.
+	*) De-harcoded the stay time of the pickups spawned by the supplier.
+
 #### (15 / 9 / 2024) [Weapon Quick-Switch on the works]
 	*) Renamed all the weapon decorate files with the .dec extension, just for easier readability with visual studio code.
 	+) Added a new Decorate file, "frenzy_weapon.dec". Which it holds all the weapons that exists in the game.

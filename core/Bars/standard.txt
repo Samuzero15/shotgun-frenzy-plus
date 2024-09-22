@@ -17,7 +17,6 @@ statusbar normal// Standard Doom Status bar
     //[Samu] If use secondary ammo...
 	
 	
-	
 	//[Samu] Health depending on the upgrades.
 	
 	inInventory not HUD_OnMech{
@@ -63,7 +62,7 @@ statusbar normal// Standard Doom Status bar
 		
 		drawString DBIGFONT, White, "Ammo",  725, 550, 0, alignment(center);
 		
-		usesammo{
+		usesammo {
 			isSelected "Repeater"{
 			drawbar "R_HEAT1", "R_HEAT0", Rep_Heat, vertical, interpolate(5),  675, 520;
 			}
@@ -144,6 +143,11 @@ statusbar normal// Standard Doom Status bar
 		drawnumber 3, SMALLFNT, White, ammo("Gasoline"), alignment(center), 				652, 547;
 		
 		// Ammo counters END
+
+		inInventory "HandGrenade_Ammo" , 1{
+			drawnumber 3, DBIGFONTNums, white, "HandGrenade_Ammo",alignment(center), drawshadow, 500, 520;
+			drawString SMALLFNT, White, "H.NADES", 500, 550, 0, alignment(center);
+		}
 	}
 	
 	drawselectedinventory center, artiflash, VerVibes, 250, 530, 260, 530;
@@ -259,71 +263,6 @@ statusbar normal// Standard Doom Status bar
 		else inInventory HUD_Rank, 3 drawString SMALLFNT, ORANGE, "Specialist",  400, 540, 0, alignment(Center);
 		else inInventory HUD_Rank, 2 drawString SMALLFNT, ORANGE, "Private",  400, 540, 0, alignment(Center);
 		else inInventory HUD_Rank, 1 drawString SMALLFNT, ORANGE, "Rookie",  400, 540, 0, alignment(Center);
-
-		
-	}
-	
-	/*
-	alpha 0.7
-	{// [Samu] INVENTORY ITEMS list start
-	drawswitchableimage "Inventory_Stimpack", "10HPSI_0", "10HPSI_1", 180, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_Stimpack", whennotzero, 196, 590;
-	
-	drawswitchableimage "Inventory_Soulsphere", "100HPI_0", "100HPI_1", 200, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_Soulsphere", whennotzero, 216, 590;
-	
-	drawswitchableimage "Inventory_Megasphere", "MEGASI_0", "MEGASI_1", 220, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_Megasphere", whennotzero, 236, 590;
-	
-	drawswitchableimage "Inventory_Berserk2", "BERSKI_0", "BERSKI_1", 240, 585;
-	
-	drawswitchableimage "Inventory_Godsphere", "INVULI_0", "INVULI_1", 260, 585;
-	
-	drawswitchableimage "Inventory_AmmoGiver", "AMMOSI_0", "AMMOSI_1", 280, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_AmmoGiver", whennotzero, 296, 590;
-	
-	drawswitchableimage "Inventory_TurretBullet", "BULLTI_0", "BULLTI_1", 300, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretBullet", whennotzero, 316, 590;
-	
-	drawswitchableimage "Inventory_TurretShotgun", "SHOTTI_0", "SHOTTI_1", 320, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretShotgun", whennotzero, 336, 590;
-	
-	drawswitchableimage "Inventory_TurretChaingun", "CHAITI_0", "CHAITI_1", 340, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretChaingun", whennotzero, 356, 590;
-	
-	drawswitchableimage "Inventory_TurretRocket", "ROCKTI_0", "ROCKTI_1", 360, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretRocket", whennotzero, 376, 590;
-	
-	drawswitchableimage "Inventory_TurretPlasma", "PLASTI_0", "PLASTI_1", 380, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretPlasma", whennotzero, 396, 590;
-	
-	drawswitchableimage "Inventory_TurretFlame", "FLAMTI_0", "FLAMTI_1", 400, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretFlame", whennotzero, 416, 590;
-	
-	drawswitchableimage "Inventory_TeslaCoil", "TESLTI_0", "TESLTI_1", 420, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TeslaCoil", whennotzero, 436, 590;
-	
-	drawswitchableimage "Inventory_TurretRail", "RAILTI_0", "RAILTI_1", 440, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_TurretRail", whennotzero, 456, 590;
-	
-	drawswitchableimage "Inventory_HealthDispenser", "HPDISI_0", "HPDISI_1", 460, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_HealthDispenser", whennotzero, 476, 590;
-	
-	drawswitchableimage "Inventory_AmmoDispenser", "AMDISI_0", "AMDISI_1", 480, 585;
-	drawnumber 3, VerVibes, GOLD,"Inventory_AmmoDispenser", whennotzero, 496, 590;
-	
-	drawswitchableimage "Inventory_MarineMine", "MINESI_0", "MINESI_1", 500, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_MarineMine", whennotzero, 516, 590;
-	
-	drawswitchableimage "Inventory_SawDrone", "SAWDRI_0", "SAWDRI_1", 520, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_SawDrone", whennotzero, 536, 590;
-	
-	drawswitchableimage "Inventory_MineDrone", "MINDRI_0", "MINDRI_1", 540, 585;
-	drawnumber 3, VerVibes, GOLD, "Inventory_MineDrone", whennotzero, 556, 590;
-	
-	drawswitchableimage "Inventory_GreedSphere", "GREEDI_0", "GREEDI_1", 560, 585;
-	
-	}// INVENTORY ITEMS list end
-	*/
+		}
 	}
 }

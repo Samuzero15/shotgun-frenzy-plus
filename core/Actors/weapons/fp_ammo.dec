@@ -236,3 +236,19 @@ ACTOR GLauncher_Ammo2 : Ammo {
 			stop
 	}
 }
+
+ACTOR Cheat_Ammo : Ammo {
+	//Only obtainable by idkfa-idfa cheats.
+	Inventory.Amount 1
+	Inventory.MaxAmount 1
+	
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 1
+	
+	States
+	{
+		Spawn:
+			MEDI A -1
+			stop
+	}
+}

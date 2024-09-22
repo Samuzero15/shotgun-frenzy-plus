@@ -1,49 +1,225 @@
 
 Actor WeaponToken_Rised : Boolean {}
+Actor Input_Grenade : Boolean {}
+Actor Input_Melee : Boolean {}
 // Here it lies some common states for all weapons.
+
+Actor InputCustomItem : CustomInventory {
+    inventory.maxamount 1
+	-Inventory.INVBAR
+    +Inventory.UNDROPPABLE
+
+    States
+	{
+	Spawn:
+		STIM A 2 bright
+		loop
+	Use:
+		TNT1 A 0
+		fail
+	}
+}
+
+ACTOR Input_GrenadeItem : InputCustomItem
+{
+inventory.pickupmessage "The input of a hand grenade action!"
+	States
+	{
+	Use:
+		TNT1 A 0 A_GiveInventory("Input_Grenade")
+		fail
+	}
+}
+
+ACTOR Input_MeleeItem : InputCustomItem
+{
+inventory.pickupmessage "The input of a melee action!"
+
+	States
+	{
+	Use:
+        TNT1 A 0 A_GiveInventory("Input_Melee")
+		fail
+	}
+}
+
+ACTOR Input_MeleeItemOff : InputCustomItem
+{
+inventory.pickupmessage "The input of a melee action!"
+	States
+	{
+	Use:
+        TNT1 A 0 A_TakeInventory("Input_Melee")
+		fail
+	}
+}
+
+
+ACTOR HandGrenade_Ammo : Ammo
+{
+	Inventory.Icon "GRNSA0"
+	Inventory.Amount 1
+	Inventory.MaxAmount 5
+	
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 10
+	
+	States
+	{
+		Spawn:
+			GRNS A -1
+			stop
+	}
+}
+
+ACTOR MeleeAttack : FastProjectile
+{
+	Radius 6
+	Height 6
+	Projectile 
+	+FORCEXYBILLBOARD
+	+NOEXTREMEDEATH
+	+MTHRUSPECIES
+	-BLOODLESSIMPACT
+	+BLOODSPLATTER
+	RenderStyle Add
+	Alpha 0.6
+    Damage 9
+    Speed 32
+	SeeSound "none"
+	DeathSound "none"
+	Decal "none"
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		TNT1 A 1 BRIGHT
+		Stop
+	Death:
+		PUFF A 3 A_PlaySound("*fist")
+		PUFF BCD 3
+		Stop
+	Crash:
+		PUFF A 3 A_PlaySound("*fist")
+		PUFF BCD 3
+		Stop
+	}
+}
+
 Actor FrenzyWeapon : Weapon {
-    +NOAUTOFIRE
+    //+NOAUTOFIRE
+    +Weapon.NoAutoAim
     states {
         // InstaRise and insta lower
         Select:
-        "####" "#" 0 A_Raise
+            "####" "#" 0 A_Raise
         wait
 
         Deselect:
-        "####" "#" 0 A_TakeInventory("WeaponToken_Rised", 1)
-        "####" "#" 0 A_Lower
+            "####" "#" 0 A_TakeInventory("WeaponToken_Rised", 1)
+            "####" "#" 1 offset(0, 38)
+            "####" "#" 1 offset(0, 48)
+            "####" "#" 1 offset(0, 64)
+            "####" "#" 1 offset(0, 90)
+            "####" "#" 0 A_Lower
         wait
 
         Ready: 
             // Now here it is where we can do some raise animation 
             "####" "#" 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Gun")
+            "####" "#" 1 offset (0,82) 
+            "####" "#" 1 offset (0,76) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,82)
+            "####" "#" 1 offset (0,68) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,76) 
+            "####" "#" 1 offset (0,60) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,68)
+            "####" "#" 1 offset (0,52) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,60)
+            "####" "#" 1 offset (0,46) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,52) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset (0,42) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,46) A_WeaponReady(WRF_NOBOB)
-            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,42) A_WeaponReady(WRF_NOBOB)
-            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,38) A_WeaponReady(WRF_NOBOB)
-            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,34) A_WeaponReady(WRF_NOBOB)
-            "####" "#" 0 A_JumpIfInventory("Fire_JustPressed", 1, "Fire")
-            "####" "#" 1 offset (0,33) A_WeaponReady(WRF_NOBOB)
-
+            "####" "#" 1 offset (0,38) A_WeaponReady(WRF_NOBOB | WRF_NOPRIMARY | WRF_NOSECONDARY)
             // The last offset.
         Ready.DoneRising:
             "####" "#" 0 offset (0,32) A_GiveInventory("WeaponToken_Rised", 1)
         Ready.Main:
+            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            "####" "#" 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
             "####" "#" 10 A_Jump(256, "Ready.Gun")
         goto Ready.Gun
+
+        
+
+        Grenade:
+            "####" "#" 0 A_TakeInventory("Input_Grenade", 1)
+            "####" "#" 0 A_JumpIfInventory("HandGrenade_Ammo", 1, 1)
+        goto Ready.Main
+            "####" "#" 0 A_TakeInventory("HandGrenade_Ammo", 1)
+            "####" "#" 1 offset(0, 38)
+            "####" "#" 1 offset(0, 46)
+            "####" "#" 1 offset(0, 60)
+            "####" "#" 1 offset(0, 82)
+        Grenade.Fire:
+            "####" "#" 5 A_Gunflash("Throw")
+            "####" "#" 0 A_FireCustomMissile("Grenade_ShellBlast", 0, 0)
+            
+            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade.Again")
+            "####" "#" 1 A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade.Again")
+            "####" "#" 1 A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade.Again")
+            "####" "#" 1 A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade.Again")
+            "####" "#" 1 A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade.Again")
+            "####" "#" 1 A_WeaponReady(WRF_NOBOB)
+        goto Raise.Again
+
+        Grenade.Again:
+            "####" "#" 0 A_TakeInventory("Input_Grenade", 1)
+            "####" "#" 0 A_JumpIfInventory("HandGrenade_Ammo", 1, 1)
+        goto Raise.Again
+            "####" "#" 0 A_TakeInventory("HandGrenade_Ammo", 1)
+        goto Grenade.Fire
+
+        Raise.Again:
+            "####" "#" 0 A_TakeInventory("Input_Grenade", 1)
+            "####" "#" 1 offset(0, 82) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset(0, 60) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset(0, 46) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset(0, 38) A_WeaponReady(WRF_NOBOB)
+        goto Ready.Main
+
+        Melee:
+            "####" "#" 1 offset(0, 38) 
+            "####" "#" 1 offset(0, 46)
+            "####" "#" 1 offset(0, 60)
+            "####" "#" 1 offset(0, 82)
+            "####" "#" 0 A_Gunflash("Punch")
+            "####" "#" 6 A_FireCustomMissile("MeleeAttack", 0, 0, 0)
+            "####" "#" 4 A_WeaponReady(WRF_NOBOB)
+            "####" "#" 0 A_JumpIfInventory("Input_Melee", 1, "Melee.Again")
+            "####" "#" 1 offset(0, 82) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset(0, 60) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset(0, 46) A_WeaponReady(WRF_NOBOB)
+            "####" "#" 1 offset(0, 38) A_WeaponReady(WRF_NOBOB)
+        goto Ready.Main
+
+        Melee.Again:
+            "####" "#" 0 
+            Goto Melee+4
+
+        Throw:
+            HAND ABCDE 1
+            goto LightDone
+        
+        Punch:
+            PUCH BCD 2
+            PUCH CB 2 A_JumpIfInventory("Fire_JustPressed", 1, "LightDone")
+            goto LightDone
+
 
         Fire: // Stabilize offset after rising your gun.
             "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)

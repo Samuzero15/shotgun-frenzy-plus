@@ -48,7 +48,7 @@ script "ItemInputs" ENTER
 	if(CheckInventory("Fire_Pri") && KeyToggled(BT_ATTACK)){
 		GiveInventory("Fire_JustPressed", 1);
 	}
-	log(s:"Fire Just pressed: ", d:CheckInventory("Fire_JustPressed"));
+	//log(s:"Fire Just pressed: ", d:CheckInventory("Fire_JustPressed"));
 
    delay(1);
  }
@@ -131,7 +131,7 @@ function void AmmoTakeLeftOvers (str ammo){
 
 script "Ammo_UpdateCaps" (void) {
 	int p_back = CheckInventory("p_Backpack");
-	int g_back = 1 + CheckInventory("g_Backpack");
+	int g_back = 1 + (CheckInventory("g_Backpack") || CheckInventory("Cheat_Ammo"));
 	int ammo_rune = CheckInventory("RuneAmmunition");
 	SetAmmoCapacity("Clip", 			(200*(ammo_rune+g_back) + 100*p_back));
 	SetAmmoCapacity("ClipPistol",		(50*(ammo_rune+g_back) + 50*p_back));
@@ -226,15 +226,11 @@ Script "Invul_Check" (void) {
 Script "Pickup_Fade" (int stay_seconds) {
 	str class = GetActorClass(0);
 	int last_seconds = 5;
-	while ((stay_seconds - last_seconds) > 0){
+	if(stay_seconds < last_seconds) stay_seconds = last_seconds;
+	while (stay_seconds > 0){
 		if(!(CheckActorClass(0, class) && CheckFlag(0, "SPECIAL")))	terminate;
+		if(stay_seconds == last_seconds) ACS_NamedExecuteAlways("Pickup_FadeGFX", 0, last_seconds);
 		stay_seconds--;
-		delay(35);
-	}
-	ACS_NamedExecuteAlways("Pickup_FadeGFX", 0, last_seconds);
-	while (last_seconds > 0){
-		if(!(CheckActorClass(0, class) && CheckFlag(0, "SPECIAL")))	terminate;
-		last_seconds--;
 		delay(35);
 	}
 	Thing_Remove(0);
@@ -456,11 +452,6 @@ function str GetBuildingTypeName(int type){
 
 script "IAmATurret" (void){
 	SetResultValue(IsAUpgradeableBuilding(ActivatorTID()));
-}
-
-function str cond_str (int c){
-	if(c) return strparam(s:"yes");
-	return strparam(s:"no");
 }
 
 script "MinesGoBoom" (int tid) {

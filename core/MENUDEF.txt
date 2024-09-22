@@ -110,6 +110,7 @@ OptionMenu SFPlus_ItemHotkeys{
 	Control "Hell Trigger", "usehelltrigger"
 	Control "Stimpack", "usestimpack"
 	Control "Hand Grenade", "usegrenade"
+	Control "Melee", "+usemelee"
 	StaticText ""
 	StaticTextSwitchable "Backspace -> Clear, Enter -> Bind a key", "Press a key. (ESC to cancel)", "ControlMessage", 1
 	//SafeCommand "Clear Hotkeys", "sfp_fuckMyBinds"

@@ -1,4 +1,3 @@
-
 Actor Sup_HealMode : Inventory {Inventory.MaxAmount 1}
 
 ACTOR Supplier : Weapon
@@ -148,11 +147,13 @@ ACTOR Supplier_Big : Supplier
 	}
 }
 
+const int SUPPLIER_ITEMSTAYSECONDS = 120;
+
 Actor Fading_ClipBox : ClipBox { 
 	Inventory.PickupSound "g/reloading"
  States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -160,7 +161,7 @@ Actor Fading_ShellBox : ShellBox {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -168,7 +169,7 @@ Actor Fading_RocketBox : RocketBox {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -176,7 +177,7 @@ Actor Fading_CellPack : CellPack {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -184,7 +185,7 @@ Actor Fading_ClipPistol : ClipPistol {
 	Inventory.PickupSound "g/reloading"
  States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -192,7 +193,7 @@ Actor Fading_FlingerAmmo : Flinger_Ammo {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -200,7 +201,7 @@ Actor Fading_DualshotAmmo : Dualshot_Ammo {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -208,7 +209,7 @@ Actor Fading_Gasoline : Gasoline {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -216,7 +217,7 @@ Actor Fading_HeavyBullets : HeavyBullets {
 	Inventory.PickupSound "g/reloading"
 	States {
 		Spawn:
-			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -226,7 +227,7 @@ ACTOR Fading_Medikit : Medikit
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+		TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}
 
@@ -234,6 +235,6 @@ Actor Fading_SteelPlatingArmor : SteelPlatingArmor_Pickup {
 	Inventory.PickupSound "g/ArmorPickup"
 	States {
 		Spawn:
-		TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 120)
+		TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, SUPPLIER_ITEMSTAYSECONDS)
 		goto Super::Spawn
 }}

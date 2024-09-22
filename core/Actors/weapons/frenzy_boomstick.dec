@@ -32,7 +32,7 @@ ACTOR Boomstick : FrenzyWeapon
 
 		Ready.Gun:
 			W2E1 A 1 A_WeaponReady(WRF_NOSECONDARY)
-		loop
+		goto Super::Ready.Main
 		
 		Fire.Gun:
 			W2E1 A 3 A_GunFlash
