@@ -1,3 +1,7 @@
+// Basic Weapons 
+addweaponnopack, "Boomstick", "WEPS_BASIC_BSTK_NAME", "WEPS_BASIC_BSTK_DESC", "SHT2A0"
+addweaponup, 0, "Boomstick_Full", "WEPS_BASIC_BSTK_UP0_NAME", "WEPS_BASIC_BSTK_UP0_DESC", "pr_wu_boomstick_up0", ""
+
 
 // Standard Weapons
 addWeaponPack, 0, "WEPS_SHOTGUN_NAME", "WEPS_SHOTGUN_DESC", "pr_wb_shotgun", 2

@@ -30,12 +30,18 @@ function void StExecute_UpgPageWeps(int dir){
 }
 
 function void StExecute_UpgPageCat(int dir){
-	/*
-	listup_vars[5] = clamp(listup_vars[5] + dir, WEAPON_SET_STANDARD, WEAPON_SET_OVERPOWERED);
 	
-	if(listup_vars[5] > listup_vars[7]) listup_vars[5] = WEAPON_SET_STANDARD;
-	else if(listup_vars[5] < WEAPON_SET_STANDARD) listup_vars[5] = listup_vars[7];
+	/*
+	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = 
+	clamp(listup_vars[UWPAGE_VAR_CURRENTCATEGORY] + dir, , WEAPON_SET_OVERPOWERED);
 	*/
+	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] += dir;
+	if(listup_vars[UWPAGE_VAR_CURRENTCATEGORY] > listup_vars[UWPAGE_VAR_MAXCATEGORY]) 
+		listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = WEAPON_SET_STANDARD;
+	else if(listup_vars[UWPAGE_VAR_CURRENTCATEGORY] < WEAPON_SET_STANDARD) 
+		listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = listup_vars[UWPAGE_VAR_MAXCATEGORY];
+	
+	/*
 	int d;
 	if(dir == 0) d = -1;
 	else if(dir == 1) d = 1;
@@ -43,6 +49,7 @@ function void StExecute_UpgPageCat(int dir){
 	
 	if(listup_vars[5] > listup_vars[7]) listup_vars[5] = 0;
 	else if(listup_vars[5] < 0) listup_vars[5] = listup_vars[7];
+	*/
 }
 
 function void STExecute_UpgradeWeapon(int which, int type){

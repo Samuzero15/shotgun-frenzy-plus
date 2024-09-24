@@ -1,308 +1,332 @@
 
 // It's Time to revamp this.
 
-int listup_vars[200];
+#define UWPAGE_TAG 0
+#define UWPAGE_TITLE 				UWPAGE_TAG+1
+#define UWPAGE_NOACCESS_TITLE 		UWPAGE_TITLE+1
+#define UWPAGE_NOACCESS_LABEL 		UWPAGE_NOACCESS_TITLE+1
+#define UWPAGE_BUTTONS_PREVCAT 		UWPAGE_NOACCESS_LABEL+1
+#define UWPAGE_BUTTONS_NEXTCAT 		UWPAGE_BUTTONS_PREVCAT+1
+#define UWPAGE_VAR_CURRENTCATEGORY 	UWPAGE_BUTTONS_NEXTCAT+1
+#define UWPAGE_VAR_MAXCATEGORY 		UWPAGE_VAR_CURRENTCATEGORY+1
+#define UWPAGE_VAR_STACK 			UWPAGE_VAR_MAXCATEGORY+1
+#define UWPAGE_VAR_CATWEAPONSTACK 	UWPAGE_VAR_STACK+1
+#define UWPAGE_VAR_SKIPNUMWEPS		UWPAGE_VAR_CATWEAPONSTACK+1
+#define UWPAGE_PANEL_WEAPONLIST 	UWPAGE_VAR_SKIPNUMWEPS+1
+#define UWPAGE_PANEL_UPGRADES		UWPAGE_PANEL_WEAPONLIST+1
+#define UWPAGE_PANEL_UPDESCRIPTION 	UWPAGE_PANEL_UPGRADES+1
+#define UWPAGE_BUTTONS_PREVPAGE 	UWPAGE_PANEL_UPDESCRIPTION+1
+#define UWPAGE_BUTTONS_NEXTPAGE 	UWPAGE_BUTTONS_PREVPAGE+1
+#define UWPAGE_LABEL_CURRPAGE		UWPAGE_BUTTONS_NEXTPAGE+1
+#define UWPAGE_LABEL_WEAPONNAME 	UWPAGE_LABEL_CURRPAGE+1
+#define UWPAGE_LABEL_WEAPONDESC 	UWPAGE_LABEL_WEAPONNAME+1
 
-#define LISTUPPAGE_NCOMPGROUP 7
-#define LISTUPPAGE_NPRIVARS 15
+#define UWPAGE_CONST_UPS_PER_PAGE 7
 
-function void ListUpPage_SaveGroup(int up, int id, int comp){
-	listup_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)] = comp;
-}
+#define UWPAGE_WEPUP_WEPNAME 0
+#define UWPAGE_WEPUP_BUTTON 1
 
-function int ListUpPage_LoadGroup(int up, int id){
-	return listup_vars[LISTUPPAGE_NCOMPGROUP * up + LISTUPPAGE_NPRIVARS + (id-1)];
-}
+#define UWPAGE_UPGRADE_BUTTON 0
+#define UWPAGE_UPGRADE_LABELCOST 1
+
+#define UWPAGE_UPGRADES_MAX 8
+
+int listup_vars[UWPAGE_LABEL_WEAPONDESC];
+int listup_weplist[UWPAGE_CONST_UPS_PER_PAGE][2];
+//int listup_upgrades[UWPAGE_CONST_UPS_PER_PAGE][UWPAGE_WEPUP_LABEL_TITLE];
+int listup_upbuttons[UWPAGE_UPGRADES_MAX][2];
 
 function void UpdateListUpPage(int pageTag){
 	setPageTitle(pageTag, "Upgrade weapons", CR_CYAN);
 	
 	if(IsOnTheSamePage(pagetag)){
-		/*
-			Update script
-		*/
-		//Reset the stack.
-		listup_vars[6] = 0;
-		bool ihaveup1, ihaveup2, ihavewep;
-		str titlecat;
-		int color;
-		if(listup_vars[5] == WEAPON_SET_STANDARD){ 
-			titlecat = "Standard Set";
-			color = CR_GREEN;
+		int category = listup_vars[UWPAGE_VAR_CURRENTCATEGORY];
+			//
+			/*
+			
+			
+			ListUpPage_UpdateUpTypes(category, 0);
+			ListUpPage_UpdateUpDesc(category, 0);
+			
+			*/
+		
+		ListUpPage_UpdateUpWeapons(category);
+	}
+
+}
+
+
+/////////////////////////
+// Update functions
+/////////////////////////
+
+function void ListUpPage_UpdateNoAccess(int category, int show){
+	Label_SetShow(listup_vars[UWPAGE_NOACCESS_TITLE], show);
+	Label_SetShow(listup_vars[UWPAGE_NOACCESS_LABEL], show);
+}
+
+function void ListUpPage_UpdateNavButtons(int category, int show){
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_PREVCAT], show);
+	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_NEXTCAT], show);
+	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_PREVPAGE], show);
+	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_NEXTPAGE], show);
+	if(!show) return;
+
+	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_NEXTPAGE], color_cat); 
+	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_PREVPAGE], color_cat); 
+	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_PREVCAT], color_cat); 
+	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_NEXTCAT], color_cat);
+
+	Label_SetShow   (listup_vars[UWPAGE_LABEL_CURRPAGE], true);
+	Label_SetText	(listup_vars[UWPAGE_TITLE], term_catStyle[category][TERM_CATSTYLE_TEXT]);
+	Label_SetColor	(listup_vars[UWPAGE_TITLE], color_cat);
+}
+
+function void ListUpPage_UpdateUpWeapons(int category){
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	Panel_SetShow(listup_vars[UWPAGE_PANEL_WEAPONLIST], true);
+	Panel_SetColor(listup_vars[UWPAGE_PANEL_WEAPONLIST], color_cat);
+	int ihavewep = false;
+	listup_vars[UWPAGE_VAR_CATWEAPONSTACK] = 0;
+	int stack_slot = 0;
+	int page_min_limit = listup_vars[UWPAGE_VAR_SKIPNUMWEPS]*UWPAGE_CONST_UPS_PER_PAGE;
+	int page_max_limit = (listup_vars[UWPAGE_VAR_SKIPNUMWEPS]+1)*UWPAGE_CONST_UPS_PER_PAGE;
+	
+	ListUpPage_UpdateNavButtons(category, true);
+	
+	//Check for all weapons, and stop if the stack did'nt reached for the max page limit.
+	for(int i = 0; i < fp_WeaponStack && listup_vars[UWPAGE_VAR_CATWEAPONSTACK] < page_max_limit; i++){
+		if(Weapon_GetCat(i) != category) continue; // Skip if not the category
+		ihavewep = Weapon_IsNotUpgraded(i);
+		if(!ihavewep) continue; // Skip if you don't have the weapon.
+		listup_vars[UWPAGE_VAR_CATWEAPONSTACK]++;
+		// If outside of limits, skip.
+		if(!(listup_vars[UWPAGE_VAR_CATWEAPONSTACK] >= page_min_limit 
+			&& listup_vars[UWPAGE_VAR_CATWEAPONSTACK] < page_max_limit)) continue;
+		// Finally, add 1 to the stack slot and update.
+		ListUpPage_UpdateUpWepSlot(category, stack_slot, i, true);
+		stack_slot++;
+	}
+	// If there are remaining slots, hide them.
+	if (stack_slot < UWPAGE_CONST_UPS_PER_PAGE){
+		for(int j = stack_slot; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
+			ListUpPage_UpdateUpWepSlot(category, j, -1, false);
 		}
-		else if(listup_vars[5] == WEAPON_SET_ADVANCED){
-			titlecat = "Advanced Set";
-			color = CR_CYAN;
-		}
-		else if(listup_vars[5] == WEAPON_SET_OVERPOWERED){ 
-			titlecat = "Overpower Set";
-			color = CR_ORANGE;
-		}
-		
-		
-		Label_setText(listup_vars[2], titlecat);
-		Label_setColor(listup_vars[2], color);
-		
-		listup_vars[7] = 0 + Tech_IsDoneC(TECH_ARMORY_ARMS1) + Tech_IsDoneC(TECH_ARMORY_ARMS2);
-		
-		if(listup_vars[7] == 0) ListUpPage_ShowNavs(false);
-		else ListUpPage_ShowNavs(true);
-		
-		for(int i = 0; i < fp_WeaponStack; i++){
-			bool showit; // The showing condition for each weapon.
-			ihaveup1 = checkinventory(WeaponUpgrade_getActor(i, 0));
-			ihavewep = checkInventory(Weapon_GetActor(i));
-			if(Weapon_getUpsNum(i) == 1) showit = !ihaveup1 && ihavewep;
-			else{
-				ihaveup2 = checkinventory(WeaponUpgrade_getActor(i, 1));
-				showit = !(ihaveup1 || ihaveup2) && ihavewep;
-			}
-			if(Weapon_GetWepPack(i) == -1 && listup_vars[5] == 0){
-				// In case of the boomstick, put it on the standard category.
-				ListUpPage_ShowUpgrade(i, showit);
-				ListUpPage_Update(i);
-				if(showit) listup_vars[6]++;
-			}else{
-				// For the rest of them, place them on their respective categories.
-				if(Weapon_GetCat(i) != listup_vars[5]){
-					ListUpPage_ShowUpgrade(i, false);
-				}else{
-					ListUpPage_ShowUpgrade(i, showit);
-					ListUpPage_Update(i);
-					if(showit) listup_vars[6]++;
-					
-				}
-			}
-		}
-		
-		Label_setShow(Listup_vars[8], cond(!listup_vars[6], true, false));
-		Label_setShow(Listup_vars[9], cond(!listup_vars[6], true, false));
+	}
+	ListUpPage_UpdateNoAccess(category, listup_vars[UWPAGE_VAR_CATWEAPONSTACK] == 0);
+
+	/*
+	for(int j = 0; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
+		ListUpPage_UpdateUpWepSlot(category, j, show);
+	}*/
+}
+
+function void ListUpPage_UpdateUpWepSlot(int category, int slot, int wep, int show){
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	ImgButton_SetShow(listup_weplist[slot][UWPAGE_WEPUP_BUTTON], show);
+	Label_SetShow(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], show);
+	if(!show) {return;}
+	Label_SetColor(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], color_cat);
+	Label_SetText(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], Weapon_GetName(wep));
+}
+
+function void ListUpPage_UpdateUpDesc(int category, int wep, int show){
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], true);
+	Label_SetShow(listup_vars[UWPAGE_LABEL_WEAPONNAME], true);
+	Label_SetShow(listup_vars[UWPAGE_LABEL_WEAPONDESC], true);
+	Panel_SetColor(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], color_cat);
+	Label_SetColor(listup_vars[UWPAGE_LABEL_WEAPONDESC], color_cat);
+	Label_SetColor(listup_vars[UWPAGE_LABEL_WEAPONNAME], color_cat);
+}
+
+function void ListUpPage_UpdateUpTypes(int category, int wep, int show){
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPGRADES], show);
+	Panel_SetColor(listup_vars[UWPAGE_PANEL_UPGRADES], color_cat);
+
+	for(int j = 0; j < UWPAGE_UPGRADES_MAX; j++){
+		ListUpPage_UpdateUpButton(category, j, wep);
 	}
 }
 
-function void ListUpPage_Update(int weapon){
-	// Updates the weapon to be recreated
-	int lbl_name = ListUpPage_LoadGroup(weapon, 1);
-	int lbl_desc = ListUpPage_LoadGroup(weapon, 2);
-	int lbtn1 = ListUpPage_LoadGroup(weapon, 3);
-	int btn1 = ListUpPage_LoadGroup(weapon, 4);
-	int lbtn2 = ListUpPage_LoadGroup(weapon, 5);
-	int btn2 = ListUpPage_LoadGroup(weapon, 6);
-	int color = CR_WHITE;
-	int noup = 0;
-	bool condit;
-	
-	int card = listup_vars[0];
-	int pos = listup_vars[6] + 1; 
-	// Set the original colors here.
-		if(Weapon_getCat(weapon) == WEAPON_SET_STANDARD) color = CR_GREEN;
-		else if(Weapon_getCat(weapon) == WEAPON_SET_ADVANCED) color = CR_CYAN;
-		else if(Weapon_getCat(weapon) == WEAPON_SET_OVERPOWERED) color = CR_ORANGE;
-	
-	//Not hovering?, reset the name and description.
-	if(comphover == -1) {
-		Label_setText(lbl_desc, "Hover to check the possible upgrades.");
-		Label_setText(lbl_name, Weapon_getName(weapon));
-	}
-	// Repositionate the name and the upgrade.
-	Label_SetPosToCardOff(lbl_name, card, pos, 90.0, 0.0);
-	Label_SetPosToCardOff(lbl_desc, card, pos, 90.0, 12.0);
-	
-	// Display the locked buttons if not enough upgrade points.
-	if(Weapon_getUpsNum(weapon) == 1){
-		// Case Unique upgrade
-		condit = GetPlayUpts() < WeaponUpgrade_GetUpgPrice(weapon,0);
-		Label_setColor	  (lbtn1, cond(condit, CR_RED, color));
-		ImgButton_SetImage(btn1,  cond(condit, "BTNDEN", "BTUP00"));
-			if(condit) noup++;
-			
-		//Restore Natural color if you can afford this upgrade.
-		Label_setColor(lbl_desc, cond(noup == 1, CR_RED, color));
-		Label_setColor(lbl_name, cond(noup == 1, CR_RED, color));
-		
-		// Repositionate this little group.
-		Label_SetPosToCardOff(lbtn1, card, pos, 40.0, 18.0);
-		ImgButton_SetPosToCardOff(btn1, card, pos, 24.0, 0.0);
-		
-	}else{ // Case 2 Upgrades.
-		condit = GetPlayUpts() < WeaponUpgrade_GetUpgPrice(weapon,0);
-		Label_setColor	  (lbtn1, cond(condit, CR_RED, color));
-		ImgButton_SetImage(btn1,  cond(condit, "BTNDEN", "BTUP01"));
-			if(condit) noup++;
-			
-		condit = GetPlayUpts() < WeaponUpgrade_GetUpgPrice(weapon,1);
-		Label_setColor	  (lbtn2, cond(condit, CR_RED, color));
-		ImgButton_SetImage(btn2,  cond(condit, "BTNDEN", "BTUP02"));
-			if(condit) noup++;
-			
-		//Restore Natural color if you can afford any of these upgrades.
-		Label_setColor(lbl_desc, cond(noup == 2, CR_RED, color));
-		Label_setColor(lbl_name, cond(noup == 2, CR_RED, color));
-		
-		// Repositionate this little group.
-		Label_SetPosToCardOff	 (lbtn1, card, pos, 16.0, 18.0);
-		Label_SetPosToCardOff	 (lbtn2, card, pos, 64.0, 18.0);
-		ImgButton_SetPosToCard	 (btn1, card, pos);
-		ImgButton_SetPosToCardOff(btn2, card, pos, 48.0, 0.0);
-	}
+function void ListUpPage_UpdateUpButton(int category, int slot, int wep){
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	ImgButton_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_BUTTON], true);
+	Label_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], true);
+	Label_SetColor(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], color_cat);
 }
 
-function void ListupPage_ShowNavs(bool condit){
-	StrButton_SetShow(listup_vars[3], condit);
-	StrButton_SetShow(listup_vars[4], condit);
-}
-
-function void ListUpPage_ShowUpgrade(int weapon, bool switchme){
-	// Show the weapon groups, depending on a condition.
-	int lbl_name = ListUpPage_LoadGroup(weapon, 1);
-	int lbl_desc = ListUpPage_LoadGroup(weapon, 2);
-	int lbtn1 = ListUpPage_LoadGroup(weapon, 3);
-	int btn1 = ListUpPage_LoadGroup(weapon, 4);
-	int lbtn2 = ListUpPage_LoadGroup(weapon, 5);
-	int btn2 = ListUpPage_LoadGroup(weapon, 6);
-	
-	Label_setShow(lbl_name, switchme);
-	Label_setShow(lbl_desc, switchme);
-	Label_setShow(lbtn1, switchme);
-	ImgButton_setShow(btn1, switchme);
-	
-	if(Weapon_getUpsNum(weapon) != 1){
-		Label_setShow(lbtn2, switchme);
-		ImgButton_setShow(btn2, switchme);
-	}
-}
+/////////////////////////
+// Init functions
+/////////////////////////
 
 function void InitListUpPage(int pageTag){
 	int i = 0;
-	int layout = 0;
 	
 	// Define the layout.
-	Card_setPosition(100.0, 80.0);
-	Card_setCells(10);
-	Card_setVerticalOri(true);
-	Card_setStep(40.0);
-	listup_vars[0] = Card_Generate();
-	listup_vars[1] = pageTag;
+	listup_vars[UWPAGE_TAG] = pageTag;
 	
 	// Create the unique components.
 	//		Title: Slot[2].
 	i = Label_Add(320.0, 60.0); 
-	Label_setText(i, "Standard Set");
+	Label_setText(i, "Set Title");
 	Label_setFont(i,"DBIGFONT");
 	Label_setTag (i, pagetag);
-	listup_vars[2] = i;
+	listup_vars[UWPAGE_TITLE] = i;
 	
-	// 		Notification 1 if no weapons. Slot[8]
-	i = Label_Dup(i, Vars_Mid_Wid(), Vars_Mid_Hei());
-	Label_setText(i, "Upgrades not avilable.");
-	listup_vars[8] = i;
+	ListUpPage_MakeNoAccessLabels();
+	ListUpPage_MakeNavButtons();
+	ListUpPage_MakeUpWeapons();
+	ListUpPage_MakeUpgradeTypes();
+	ListUpPage_MakeUpDescription();
+
+	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = WEAPON_SET_STANDARD;
+	listup_vars[UWPAGE_VAR_MAXCATEGORY] = WEAPON_SET_OVERPOWERED;
+	listup_vars[UWPAGE_VAR_STACK] = 0;
+}
+
+function void ListUpPage_MakeNoAccessLabels(void){
+	int i;
+	int noaccess_x = Vars_Mid_Wid();
+	int noaccess_y = Vars_Mid_Hei() - 30.00;
+
+	i = Label_Add(noaccess_x, noaccess_y);
+	Label_setFont(i,"DBIGFONT");
+	Label_setTag (i, listup_vars[UWPAGE_TAG]);
+	Label_setText(i, langstring("SAMUT_ARMSTERM_NOACCESS_TITLE",0));
+	listup_vars[UWPAGE_NOACCESS_TITLE] = i;
 	
 	// 		Notification 2 if no weapons. Slot[9]
-	i = Label_Dup(i, Vars_Mid_Wid(), Vars_Mid_Hei());
+	i = Label_Dup(i, noaccess_x, noaccess_y);
 	Label_setFont(i,"SMALLFNT");
-	Label_setText(i, "\n\n\n\nEither you upgraded all your guns, or you don't have the basic ones. \n                         Try it next time...");
-	listup_vars[9] = i;
-	
+	Label_setText(i, langstring("SAMUT_ARMSTERM_NOACCESS_LABEL",0));
+	listup_vars[UWPAGE_NOACCESS_LABEL] = i;
+}
+
+function void ListUpPage_MakeNavButtons(void){
+	int btn_dist = 60.0;
+	int base_x = 80.0;
+	int btn_dist_navs = 60.0;
+	int base_x_navs = 375.0;
+	int i;
 	//		Previous: Slot[3].
-	i = strbutton_add   (100.0, 45.0, "<");
-	StrButton_SetColor  (i, cr_BLUE);
-	StrButton_setTag    (i, pagetag);
+	i = strbutton_add   (base_x, 45.0, "<");
+	StrButton_SetColor  (i, cr_WHITE);
+	StrButton_setTag    (i, listup_vars[UWPAGE_TAG]);
 	StrButton_SetExecute(i, STEXE_UPGPAGECAT);
-	StrButton_SetExeArgs(i, 0, 0, 0);
-	listup_vars[3] = i;
+	StrButton_SetExeArgs(i, -1, 0, 0);
+	listup_vars[UWPAGE_BUTTONS_PREVCAT] = i;
 	
 	//		Next: Slot[4].
-	i = StrButton_Dup   (i, 148.0, 45.0);
+	i = StrButton_Dup   (i, base_x + btn_dist, 45.0);
 	StrButton_SetText   (i, ">");
 	StrButton_SetExeArgs(i, 1, 0, 0);
-	listup_vars[4] = i;
-	//		Actual Category: var[5].
-	listup_vars[5] = 0;
-	//		Stack Counter, to make the stack effect.: var[6].
-	listup_vars[6] = 0;
-	
-	// Welp, create all the components.
-	for(int j = 0; j < fp_WeaponStack; j++){
-		ListUpPage_AddWeaponToUp(j);
+	listup_vars[UWPAGE_BUTTONS_NEXTCAT] = i;
+
+	i = StrButton_DupMid   (i, base_x_navs, 350.0);
+	StrButton_SetText   (i, "<");
+	StrButton_SetExecute(i, STEXE_UPGPAGEWEPS);
+	StrButton_SetExeArgs(i, -1, 0, 0);
+	listup_vars[UWPAGE_BUTTONS_PREVPAGE] = i;
+
+	i = StrButton_DupMid  (i, base_x_navs + btn_dist_navs*2, 350.0);
+	StrButton_SetText   (i, ">");
+	StrButton_SetExeArgs(i, 1, 0, 0);
+	listup_vars[UWPAGE_BUTTONS_NEXTPAGE] = i;
+
+	i = Label_Add(base_x_navs + btn_dist_navs + 16.0, 366.0);
+	Label_setFont(i,"DBIGFONT");
+	Label_setText(i, "n / m");
+	Label_setTag (i, listup_vars[UWPAGE_TAG]);
+	listup_vars[UWPAGE_LABEL_CURRPAGE] = i;
+}
+
+function void ListUpPage_MakeUpWeapons(void){
+	int i;
+	i = Panel_Add (320.0, 80.0, 30, 32);
+	Panel_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Panel_SetTitle(i, "Weapons");
+	Panel_SetColumns(i, 2);
+	Panel_SetSpacing(i, 48.0, 36.0);
+	listup_vars[UWPAGE_PANEL_WEAPONLIST] = i;
+
+	int j = 0;
+	for(j = 0; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
+		ListUpPage_AddWepUpSlot(j);
 	}
 }
 
-function void ListUpPage_AddWeaponToUp(int weapon){
-	//Creates a group of components to be updateable.
-	int i;
-	int layout = listup_vars[0];
-	int pagetag = listup_vars[1];
-	
-	str wepname = Weapon_getName(weapon);
-	str wepdesc = Weapon_getDesc(weapon);
-	str wepup1 = WeaponUpgrade_getUpgPrice(weapon, 0);
-	str wepup2 = WeaponUpgrade_getUpgPrice(weapon, 1);
-	
-	int title, desc;
-	
-	title = Label_AddCardOff(layout, 1, 90.0, 0.0); 
-	Label_setText			(title,wepname);
-	Label_setFont			(title,"DBIGFONT");
-	Label_setTag			(title, pagetag);
-	Label_setShow			(title, false);
-	Label_setAligns			(title, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
-	
-	int color = CR_WHITE;
-	if(Weapon_getCat(weapon) == WEAPON_SET_STANDARD) color = CR_GREEN;
-	else if(Weapon_getCat(weapon) == WEAPON_SET_ADVANCED) color = CR_CYAN;
-	else if(Weapon_getCat(weapon) == WEAPON_SET_OVERPOWERED) color = CR_ORANGE;
-	Label_setColor(title, color);
-	ListUpPage_SaveGroup(weapon, 1, title);
-	
-	desc = Label_DupCardOff	(title, layout, 1, 90.0, 12.0); 
-	Label_setText			(desc,"Hover to check the possible upgrades.");
-	Label_setFont			(desc,"SMALLFNT");
-	Label_setWrapWidth		(desc, 400);
-	ListUpPage_SaveGroup(weapon, 2, desc);
-	
-	if(Weapon_getUpsNum(Weapon) == 1){
-		// The weapon contains an unique upgrade.
-		i = Label_DupCardOff(title, layout, 1, 40.0, 18.0); 
-		Label_setText		(i,strparam(d:wepup1, s:" UP"));
-		Label_setAligns		(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-		ListUpPage_SaveGroup(weapon, 3, i);
-		
-		i = ImgButton_AddCardOff(layout, 1, 32.0, 32.0, 24.0, 0.0);
-		ImgButton_SetImage		(i, "BTUP00");
-		ImgButton_SetHoverImage	(i, "BTNHOV");
-		ImgButton_SetTag		(i, pagetag);
-		ImgButton_SetExeHover	(i, STEXE_UPG0PAGEDESC);
-		ImgButton_SetArgsHover	(i, weapon, desc, title);
-		ImgButton_SetExecute	(i, STEXE_ASKUP);
-		ImgButton_SetArgs		(i, weapon, 1, 0);
-		ListUpPage_SaveGroup(weapon, 4, i);
-	} else {
-		// The weapon contains 2 upgrades.
-		i = Label_DupCardOff(title, layout, 1, 16.0, 18.0); 
-		Label_setText	(i,strparam(d:wepup1, s:" UP"));
-		Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-		ListUpPage_SaveGroup(weapon, 3, i);
-	
-		i = Label_DupCardOff(title, layout, 1, 64.0, 18.0); 
-		Label_setText	(i,strparam(d:wepup2, s:" UP"));
-		Label_setAligns	(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-		ListUpPage_SaveGroup(weapon, 5, i);
-		
-		i = ImgButton_AddCard(layout, 1, 32.0, 32.0);
-		ImgButton_SetImage		(i, "BTUP01");
-		ImgButton_SetHoverImage	(i, "BTNHOV");
-		ImgButton_SetExeHover	(i, STEXE_UPG0PAGEDESC);
-		ImgButton_SetArgsHover	(i, weapon, desc, title);
-		ImgButton_SetTag		(i, pagetag);
-		ImgButton_SetExecute	(i, STEXE_ASKUP);
-		ImgButton_SetArgs		(i, weapon, 1, 0);
-		Component_Save(ImgButton_getRect(i));
-		ListUpPage_SaveGroup(weapon, 4, i);
-	
-		i = ImgButton_DupCardOff(layout, 1, 32.0, 32.0, 48.0, 0.0);
-		ImgButton_SetImage(i, "BTUP02");
-		ImgButton_SetExeHover(i, STEXE_UPG1PAGEDESC);
-		ImgButton_SetArgs		(i, weapon, 2, 0);
-		ListUpPage_SaveGroup(weapon, 6, i);
+function void ListUpPage_AddWepUpSlot(int weapon_slot){
+	int p = listup_vars[UWPAGE_PANEL_WEAPONLIST];
+	int i = ImgButton_AddToPanel(32.0, 32.0, p);
+	ImgButton_SetImage(i, "BTUP00");
+	ImgButton_SetTag(i, listup_vars[UWPAGE_TAG]);
+	listup_weplist[weapon_slot][UWPAGE_WEPUP_BUTTON] = i;
+
+	i = Label_AddToPanelOff(p, 0.0, 16.0);
+	Label_SetText(i, strparam(s:"Weapon ", d:weapon_slot));
+	Label_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Label_SetAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_CENTER);
+	Label_SetFont(i, "DBIGFONT");
+	listup_weplist[weapon_slot][UWPAGE_WEPUP_WEPNAME] = i;
+}
+
+function void ListUpPage_MakeUpgradeTypes(void){
+	int i, j;
+	i = Panel_Add (60.0, 80.0, 29, 11);
+	Panel_SetTitle(i, "Upgrades");
+	Panel_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Panel_SetAnchors(i, STPANEL_ANCHOR_CENTER, STPANEL_ANCHOR_CENTER);
+	Panel_SetColumns(i, 4);
+	Panel_SetSpacing(i, 55.0, 36.0);
+	Panel_SetAnchorOffset(i, 8.0, 0.0);
+	listup_vars[UWPAGE_PANEL_UPGRADES] = i;
+
+	for(j = 0; j < UWPAGE_UPGRADES_MAX; j++){
+		ListUpPage_AddUpButton(j);
 	}
+}
+
+function void ListUpPage_AddUpButton(int slot){
+	int p = listup_vars[UWPAGE_PANEL_UPGRADES];
+	int btn_dims[2] = {32.0, 32.0};
+
+	int i = ImgButton_AddToPanelPosOff(btn_dims[0], btn_dims[1], p, slot, 0.0, 0.0);
+	ImgButton_SetImage(i, "BTUP00");
+	ImgButton_SetTag(i, listup_vars[UWPAGE_TAG]);
+	listup_upbuttons[slot][UWPAGE_UPGRADE_BUTTON] = i;
+
+	i = Label_AddToPanelAbsPos(p, slot, 16.0, 16.0);
+	Label_SetText(i, strparam(s:"UP ", d:slot));
+	Label_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Label_SetAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+	Label_SetFont(i, "DBIGFONT");
+	listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST] = i;
+}
+
+function void ListUpPage_MakeUpDescription(void){
+	int i;
+	i = Panel_Add (60.0, 200.0, 29, 17);
+	Panel_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Panel_SetTitle(i, "Description");
+	listup_vars[UWPAGE_PANEL_UPDESCRIPTION] = i;
+	// Welp, create all the components.
+
+	i = Label_AddToPanelAbs(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], 0.0, 5.0);
+	Label_SetText(i, "Weapon name"); 
+	Label_SetFont(i, "DBIGFONT");
+	Label_SetAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Label_SetWrapWidth(i, 200);
+	listup_vars[UWPAGE_LABEL_WEAPONNAME] = i;
+
+	i = Label_AddToPanelOff(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], 0.0, 32.0);
+	Label_SetText(i, "Weapon description LOREM IPSUM DOLOR SIT AT MET"); 
+	Label_SetFont(i, "SMALFONT");
+	Label_SetAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_SetTag(i, listup_vars[UWPAGE_TAG]);
+	Label_SetWrapWidth(i, 200);
+	listup_vars[UWPAGE_LABEL_WEAPONDESC] = i;
 }

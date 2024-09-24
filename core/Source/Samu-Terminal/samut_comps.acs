@@ -109,6 +109,7 @@ function int Component_Allocate(int comptype, int x, int y, int w, int h){
 
 function void Component_PrintCount(void){
 	str type_str;
+	int rect_count;
 	log(s:"Component cap: \cg", d:ST_NCOMPS);
 	for (int i = 0; i < STVARS_COMPCOUNT; i++){
 		switch(i){
@@ -118,6 +119,13 @@ function void Component_PrintCount(void){
 			case 3: type_str = "STR BUTTON"; break;
 		}
 		log(s:type_str, s:", \cd", d:comp_count[i]);
+	}
+	log(s:"PANELS:", s:", \cd", d:panel_count);
+	log(s:"TOAST:", s:", \cd", d:1);
+	log(s:"CURSOR:", s:", \cd", d:1);
+	log(s:"Rects used: \cf", d:numrects, s:" / ", d:ACSUTILS_RECTLIB_SAVEDSTATES);
+	if(rect_count > ACSUTILS_RECTLIB_SAVEDSTATES){
+		log(s:"\cgACSRect overflow! Expand the \cf'ACSUTILS_RECTLIB_SAVEDSTATES'\cg Constant in \cfacsrect.acs\cg.");
 	}
 }
 

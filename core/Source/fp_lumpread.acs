@@ -140,6 +140,11 @@ function void LumpRead_StrNextArg(str line){
 	res2 = nextcoma+1;
 }
 
+function int LumpRead_NextArg(str line, int value_type) {
+    LumpRead_StrNextArg(line);
+    return LumpRead_ParseValue (res1, value_type);
+}
+
 function str StrTrim(str string){
     int len = StrLen(string);
     str newstring;
