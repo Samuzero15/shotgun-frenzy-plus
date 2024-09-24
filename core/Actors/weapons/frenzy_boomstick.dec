@@ -62,7 +62,7 @@ ACTOR Boomstick : FrenzyWeapon
 	}
 }
 
-ACTOR Boomstick_Full : Weapon
+ACTOR Boomstick_Full : FrenzyWeapon
 {
 	Weapon.AmmoUse 			1
 	Weapon.AmmoGive 		8
@@ -80,19 +80,55 @@ ACTOR Boomstick_Full : Weapon
 	Tag "Combat Boomstick Shotgun"
 	
 	States
-	{
+	{		
 		Ready:
-			W2E2 AB 5 A_WeaponReady
-			goto Ready
+			W2E2 A 0
+		goto Super::Ready
+		
 		Deselect:
 			W2E2 A 1 A_Lower
-			W2E2 A 0 A_Lower
-			goto Deselect
+		goto Super::Deselect
+
 		Select:
 			W2E2 A 1 A_Raise
-			W2E2 A 0 A_Raise
-			goto Select
+		goto Super::Select
+
 		Fire:
+			TNT1 A 0 
+		goto Super::Fire
+
+		Ready.Gun: // I don't like this ;(
+			W2E2 A 1 A_WeaponReady
+			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 A 1 A_WeaponReady
+			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 A 1 A_WeaponReady
+			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 A 1 A_WeaponReady
+			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 A 1 A_WeaponReady
+			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 B 1 A_WeaponReady
+			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 B 1 A_WeaponReady
+			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 B 1 A_WeaponReady
+			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 B 1 A_WeaponReady
+			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
+            W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			W2E2 B 1 A_WeaponReady
+		goto Super::Ready.Main
+
+		Fire.Gun:
 			W2E2 A 3 A_GunFlash
 			W2E2 A 0 A_FireBullets(7, 7, 7 + CallACS("Player_GetRank", 0), 18 + 3*CallACS("Player_GetRank", 0), "BulletPuff_Explosive")
 			W2E2 A 1 offset (0,37)

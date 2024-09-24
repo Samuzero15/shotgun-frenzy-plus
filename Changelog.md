@@ -9,6 +9,9 @@
 
 ## v1 - The path of the damned...
 
+#### (24 / 9 / 2024) [Combat boomstick now works with grenades and fist]
+	*) What says in the title, still WIP
+
 #### (22 / 9 / 2024) [Fisting, Grenade Throwing and new keys]
 	+) (For the base Beretta and base Boomstick) Now these weapons can be able to throw grenades and fist up foes!
 	*) Now using idkfa or idfa will give the normal backpack ammo capacity and will not be overriden by the ammo pad.
