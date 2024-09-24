@@ -9,6 +9,11 @@
 
 ## v1 - The path of the damned...
 
+#### (23 / 9 / 2024) [Recovering the new Upgrade Page]
+	*) Expanded the ACSRect's values from 256 to 1024. And that means more Components for the Samu-Terminal!
+	*) Managed to return the new code for the Upgrade Page in the Ammo terminal after dealing with that stack overflow.
+	*) Compacted down the argument reading in the lump reading lump, all thanks with the new function LumpRead_NextArg.
+
 #### (22 / 9 / 2024) [Fisting, Grenade Throwing and new keys]
 	+) (For the base Beretta and base Boomstick) Now these weapons can be able to throw grenades and fist up foes!
 	*) Now using idkfa or idfa will give the normal backpack ammo capacity and will not be overriden by the ammo pad.

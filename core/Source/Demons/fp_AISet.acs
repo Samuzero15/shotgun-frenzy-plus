@@ -73,9 +73,9 @@ Script "SFPlus_ListEnemySets" (void){
 
 Script "SFPlus_AISet_SFMWAVESReadLine" (int line) {
 	//log(s:"\"", s:line, s:"\"");
-	LumpRead_StrNextArg(line); str index = 				LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-	LumpRead_StrNextArg(line); str name = 				LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-	LumpRead_StrNextArg(line); str boss_level_start = 	LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+	str index = LumpRead_NextArg (line,LUMPR_VALUE_STR);
+	str name = 	LumpRead_NextArg (line,LUMPR_VALUE_STR);
+	str boss_level_start = 	LumpRead_NextArg (line, LUMPR_VALUE_INT);
 	boss_level_start = clamp(boss_level_start, 0, 20);
 	AISet_Add(index, name, boss_level_start);
 }

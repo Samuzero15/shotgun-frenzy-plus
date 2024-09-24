@@ -45,11 +45,11 @@ function void RuneDir_ReadSFRUNDEF(void){
 
 Script "SFPlus_IDir_SFRUNDEFReadLine" (int line) {
 	//log(s:"\"", s:line, s:"\"");
-	LumpRead_StrNextArg(line); int tier = 		    LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
-	LumpRead_StrNextArg(line); str actor = 		    LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-	LumpRead_StrNextArg(line); str poweractor = 	LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-    LumpRead_StrNextArg(line); str langdata = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-	LumpRead_StrNextArg(line); str btnimg = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	int tier = 		    LumpRead_NextArg (line,LUMPR_VALUE_INT);
+	str actor = 		    LumpRead_NextArg (line,LUMPR_VALUE_STR);
+	str poweractor = 	LumpRead_NextArg (line,LUMPR_VALUE_STR);
+    str langdata = 		LumpRead_NextArg (line,LUMPR_VALUE_STR);
+	str btnimg = 		LumpRead_NextArg (line,LUMPR_VALUE_STR);
 	
 	Rune_Add (tier, actor, poweractor, langdata, btnimg);
 }

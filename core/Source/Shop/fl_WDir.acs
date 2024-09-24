@@ -58,6 +58,11 @@ int fp_WpUps[FP_WEAPONS][FP_WEPUPS][10];
 int fp_WpCategory[WEAPON_SET_CATEGORIES][50];
 int fp_WpCategoryStack[WEAPON_SET_CATEGORIES];
 
+int term_catStyle[WEAPON_SET_CATEGORIES][2];
+
+#libdefine TERM_CATSTYLE_TEXT 0
+#libdefine TERM_CATSTYLE_COLOR 1
+
 // Weapon pack tracker. For difficulty increasing.
 int fp_WpTrack[FP_WEP_PACKS];
 int fp_UpTrack;
@@ -119,6 +124,14 @@ function void SFPlus_DefineWeapons (void){
 	fp_WpCategoryStack[0] = 0;
 	fp_WpCategoryStack[1] = 0;
 	fp_WpCategoryStack[2] = 0;
+
+	term_catStyle[WEAPON_SET_STANDARD][TERM_CATSTYLE_COLOR] = CR_GREEN;
+	term_catStyle[WEAPON_SET_STANDARD][TERM_CATSTYLE_TEXT] = "Standard";
+	term_catStyle[WEAPON_SET_ADVANCED][TERM_CATSTYLE_COLOR] = CR_CYAN;
+	term_catStyle[WEAPON_SET_ADVANCED][TERM_CATSTYLE_TEXT] = "Advanced";
+	term_catStyle[WEAPON_SET_OVERPOWERED][TERM_CATSTYLE_COLOR] = CR_ORANGE;
+	term_catStyle[WEAPON_SET_OVERPOWERED][TERM_CATSTYLE_TEXT] = "Overpowered";
+
 	WDir_ReadSFWEPDEF();
 	//Basic pack
 	/*
@@ -226,11 +239,11 @@ int file_wepid;
 
 Script "SFPlus_WDir_SFWEPDEFReadLine" (int line) {
 	//log(s:"\"", s:line, s:"\"");
-	LumpRead_StrNextArg(line); str op = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
+	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	//log(s:"OP: ", s:op);
 	int argcount = StrCharCount(line, ",")+1;
 	if(StrIEquals(op, "AddWeaponPack")){
-		LumpRead_StrNextArg(line); int cat = LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+		int cat = LumpRead_NextArg (line, LUMPR_VALUE_INT);
 		if(fp_WpCategoryStack[cat] >= FP_WEP_PACKS_PER_CATEGORY){
 			log(s:"(FL_WDIR.acs) Can't add more weapon packs in this category, ", d:FP_WEP_PACKS_PER_CATEGORY, s:" Limit reached.");
 			terminate;
@@ -242,35 +255,46 @@ Script "SFPlus_WDir_SFWEPDEFReadLine" (int line) {
 		fp_WpCategoryStack[cat]++;
 		//log(s:"Category stack: ", d:fp_WpCategoryStack[cat]);
 
-		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_NAME] = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_CATEGORY] = 	cat;
-		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_DESCRIPTION] = 	LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_PRICE] = 		GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
-		LumpRead_StrNextArg(line); fp_WpPacks[file_wpid][FP_WDIR_WPPACK_MONSPRESS] = 	LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_NAME] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_CATEGORY] = cat;
+		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_DESCRIPTION] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_PRICE] = GetCvar(LumpRead_NextArg (line, LUMPR_VALUE_STR));
+		fp_WpPacks[file_wpid][FP_WDIR_WPPACK_MONSPRESS] = LumpRead_NextArg (line, LUMPR_VALUE_INT);
 		fp_WeaponPackStack++;
 	}else if(StrIEquals(op, "AddWeapon")){
-		file_wepid = fp_WeaponStack;
-		LumpRead_StrNextArg(line); fp_Wpns[file_wepid][FP_WDIR_WEAPON_ACTOR] = LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-        LumpRead_StrNextArg(line); fp_Wpns[file_wepid][FP_WDIR_WEAPON_NAME] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-        fp_Wpns[file_wepid][FP_WDIR_WEAPON_PACK] = file_wpid;
-        LumpRead_StrNextArg(line); fp_Wpns[file_wepid][FP_WDIR_WEAPON_DESCRIPTION] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-        LumpRead_StrNextArg(line); LumpRead_StrNextArg(line);  // Ignoring Icon argument for now.
-		fp_Wpns[file_wepid][FP_WDIR_WEAPON_PRICE] = GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
-		fp_WeaponStack++;
+		SFWEPDEF_AddWeapon(line, file_wpid);
+	}else if(StrIEquals(op, "AddWeaponNoPack")){
+		SFWEPDEF_AddWeapon(line, -1);
 	}else if(StrIEquals(op, "AddWeaponUp")){
-		int wepup_count = fp_Wpns[file_wepid][FP_WDIR_WEAPON_UPSNUM];
-		LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_UPTYPE] = LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
-		LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_ACTOR] = LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-        LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_NAME] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-        LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_DESCRIPTION] = LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-        //log(s:"Description: ", s:fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_DESCRIPTION]);
-		LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_UPGRPRICE] = GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
-        LumpRead_StrNextArg(line); fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_RECYPRICE] = GetCvar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
-		fp_Wpns[file_wepid][FP_WDIR_WEAPON_UPSNUM]++;
+		SFWEPDEF_AddWeaponUpgrade(line, file_wepid);
 	}
 	else {
 		log(s:"fl_WDir: Invalid command");
 	}
+}
+
+function void SFWEPDEF_AddWeapon (int line, int weapon_pack_id) {
+	file_wepid = fp_WeaponStack;
+	fp_Wpns[file_wepid][FP_WDIR_WEAPON_ACTOR] = LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	fp_Wpns[file_wepid][FP_WDIR_WEAPON_NAME] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+	fp_Wpns[file_wepid][FP_WDIR_WEAPON_PACK] = weapon_pack_id;
+	fp_Wpns[file_wepid][FP_WDIR_WEAPON_DESCRIPTION] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+	 // Ignoring Icon argument for now.
+	if(weapon_pack_id >= 0) 
+		fp_Wpns[file_wepid][FP_WDIR_WEAPON_PRICE] = GetCvar(LumpRead_NextArg (line, LUMPR_VALUE_STR));
+	fp_WeaponStack++;
+}
+
+function void SFWEPDEF_AddWeaponUpgrade(int line, int weapon_id){
+	int wepup_count = fp_Wpns[weapon_id][FP_WDIR_WEAPON_UPSNUM];
+	fp_WpUps[weapon_id][wepup_count][FP_WDIR_WEPUPG_UPTYPE] = LumpRead_NextArg (line, LUMPR_VALUE_INT);
+	fp_WpUps[weapon_id][wepup_count][FP_WDIR_WEPUPG_ACTOR] = LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	fp_WpUps[weapon_id][wepup_count][FP_WDIR_WEPUPG_NAME] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+	fp_WpUps[weapon_id][wepup_count][FP_WDIR_WEPUPG_DESCRIPTION] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+	//log(s:"Description: ", s:fp_WpUps[file_wepid][wepup_count][FP_WDIR_WEPUPG_DESCRIPTION]);
+	fp_WpUps[weapon_id][wepup_count][FP_WDIR_WEPUPG_UPGRPRICE] = GetCvar(LumpRead_NextArg (line, LUMPR_VALUE_STR));
+	fp_WpUps[weapon_id][wepup_count][FP_WDIR_WEPUPG_RECYPRICE] = GetCvar(LumpRead_NextArg (line, LUMPR_VALUE_STR));
+	fp_Wpns[weapon_id][FP_WDIR_WEAPON_UPSNUM]++;
 }
 
 function int Wdir_ID_Wep(int wep, int index){
@@ -338,6 +362,15 @@ function void Weapon_Recycle(int wid, int upg, int play){
 // Definers.
 ///////////////////////////////////////////////////////////////////////////////
 
+function bool Weapon_IsNotUpgraded(int asThis){
+	int ihavebaseweapon = checkinventory(Weapon_GetActor(asThis));
+	int ihaveanyupgrade = false;
+	for(int i = 0; i < Weapon_getUpsNum(asThis) && !ihaveanyupgrade; i++){
+		ihaveanyupgrade = checkinventory(WeaponUpgrade_getActor(asThis, i));
+	}
+	return ihavebaseweapon && !ihaveanyupgrade;
+}
+
 function bool Weapon_OwnedSameKind(int asThis){
 	return 
 		checkinventory(Weapon_GetActor(asThis)) ||
@@ -345,17 +378,10 @@ function bool Weapon_OwnedSameKind(int asThis){
 		checkinventory(WeaponUpgrade_getActor(asThis, 1));
 }
 
-function bool Weapon_IsHoldingSameKind(int asThis){
-	return 
-		checkweapon(Weapon_GetActor(asThis)) 			||
-		checkweapon(WeaponUpgrade_getActor(asThis, 0))  ||
-		checkWeapon(WeaponUpgrade_getActor(asThis, 1));
-}
-
 function int Weapon_SaveLastUsed(void){
 	int res = -1;
 	for(int i = 0; i < fp_weaponStack; i++){
-		if(Weapon_IsHoldingSameKind(i)){
+		if(Weapon_OwnedSameKind(i)){
 			res = i;
 			break;
 		}

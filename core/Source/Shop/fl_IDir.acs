@@ -95,27 +95,27 @@ function void IDir_ReadSFITMDEF(void){
 
 Script "SFPlus_IDir_SFITMDEFReadLine" (int line) {
 	//log(s:"\"", s:line, s:"\"");
-	LumpRead_StrNextArg(line); str type = 		LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
-	LumpRead_StrNextArg(line); str actor = 		LumpRead_ParseValue (res1, LUMPR_VALUE_STR);
-	LumpRead_StrNextArg(line); str maxamount = 	LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
-	LumpRead_StrNextArg(line); str price = 		GetCVar(LumpRead_ParseValue (res1, LUMPR_VALUE_STR));
-	LumpRead_StrNextArg(line); str name = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-	LumpRead_StrNextArg(line); str desc = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
-	LumpRead_StrNextArg(line); str icon = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+	str type = 	LumpRead_NextArg (line, LUMPR_VALUE_INT);
+	str actor = LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	str maxamount = LumpRead_NextArg (line, LUMPR_VALUE_INT);
+	str price = GetCVar(LumpRead_NextArg (line, LUMPR_VALUE_STR));
+	str name = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+	str desc = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
+	str icon = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
 	int ibtn;
 	if(type == FP_ITEM_T_POWERUP){
 		// Color
-		LumpRead_StrNextArg(line); ibtn = 		LumpRead_ParseValue (res1, LUMPR_VALUE_INT);
+		ibtn = LumpRead_NextArg (line, LUMPR_VALUE_INT);
 	}else{
 		// Image button.
-		LumpRead_StrNextArg(line); ibtn = 		LumpRead_ParseValue (res1, LUMPR_VALUE_LANGSTR);
+		ibtn = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
 	}
 	
-	LumpRead_StrNextArg(line); str showinhud = 	LumpRead_ParseValue (res1, LUMPR_VALUE_BOOL);
+	str showinhud = LumpRead_NextArg (line, LUMPR_VALUE_BOOL);
 	//log(s:"\"", s:actor, s:"\"");
 
 	LumpRead_StrNextArg(line);
-	if(LumpRead_ParseValue (res1, LUMPR_VALUE_BOOL)){
+	if(LumpRead_NextArg (line, LUMPR_VALUE_BOOL)){
 		if(GameSkill() == 0){
 			//log(s:"Actor ", s:actor, s:" is disabled for the classic skill level.");
 			terminate;
