@@ -3,7 +3,7 @@
 // Includes:
 #include "zcommon.acs"
 
-#define ACSUTILS_RECTLIB_USERVARS 35 // user defined
+#define ACSUTILS_RECTLIB_USERVARS 40 // Max amount of properties.
 
 //////SF Stuff////////
 #import "f_IntDB.acs"

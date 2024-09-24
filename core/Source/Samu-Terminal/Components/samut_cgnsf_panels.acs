@@ -42,6 +42,10 @@ function int Panel_GetAnchorPointX(int pid){ return RectGetUserData(Panel_getRec
 function int Panel_GetAnchorPointY(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP28);}
 function int Panel_GetAnchorPointOffX(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP29);}
 function int Panel_GetAnchorPointOffY(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP30);}
+function int Panel_GetScrollSpace(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP31);}
+function int Panel_GetScrollSpeedDiv(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP32);}
+function int Panel_GetScrollSpeedCap(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP33);}
+function int Panel_GetScrollAutomove(int pid){ return RectGetUserData(Panel_getRect(pid), ST_CPROP34);}
 ///////////////////////////////////////
 // Setters for teh Panels!
 ///////////////////////////////////////
@@ -165,4 +169,20 @@ function void Panel_SetAnchorPoint(int pid, int x, int y){
 function void Panel_SetAnchorOffset(int pid, int x, int y){ 
 	SetRectUserData(Panel_getRect(pid), ST_CPROP29, x);
 	SetRectUserData(Panel_getRect(pid), ST_CPROP30, y);
+}
+
+function void Panel_SetScrollSpace(int pid, int scrollspace){
+	SetRectUserData(Panel_getRect(pid), ST_CPROP31, scrollspace);
+}
+
+function void Panel_SetScrollSpeedDiv(int pid, int speeddiv){
+	SetRectUserData(Panel_getRect(pid), ST_CPROP32, speeddiv);
+}
+
+function void Panel_SetScrollSpeedCap(int pid, int speedcap){
+	SetRectUserData(Panel_getRect(pid), ST_CPROP33, speedcap);
+}
+
+function void Panel_SetScrollAutomove(int pid, int automove){
+	SetRectUserData(Panel_getRect(pid), ST_CPROP34, automove);
 }

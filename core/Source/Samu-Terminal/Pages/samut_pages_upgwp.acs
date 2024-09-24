@@ -9,8 +9,8 @@
 #define UWPAGE_BUTTONS_NEXTCAT 		UWPAGE_BUTTONS_PREVCAT+1
 #define UWPAGE_VAR_CURRENTCATEGORY 	UWPAGE_BUTTONS_NEXTCAT+1
 #define UWPAGE_VAR_MAXCATEGORY 		UWPAGE_VAR_CURRENTCATEGORY+1
-#define UWPAGE_VAR_STACK 			UWPAGE_VAR_MAXCATEGORY+1
-#define UWPAGE_VAR_CATWEAPONSTACK 	UWPAGE_VAR_STACK+1
+#define UWPAGE_VAR_SELECTEDWEP 		UWPAGE_VAR_MAXCATEGORY+1
+#define UWPAGE_VAR_CATWEAPONSTACK 	UWPAGE_VAR_SELECTEDWEP+1
 #define UWPAGE_VAR_SKIPNUMWEPS		UWPAGE_VAR_CATWEAPONSTACK+1
 #define UWPAGE_PANEL_WEAPONLIST 	UWPAGE_VAR_SKIPNUMWEPS+1
 #define UWPAGE_PANEL_UPGRADES		UWPAGE_PANEL_WEAPONLIST+1
@@ -41,18 +41,8 @@ function void UpdateListUpPage(int pageTag){
 	
 	if(IsOnTheSamePage(pagetag)){
 		int category = listup_vars[UWPAGE_VAR_CURRENTCATEGORY];
-			//
-			/*
-			
-			
-			ListUpPage_UpdateUpTypes(category, 0);
-			ListUpPage_UpdateUpDesc(category, 0);
-			
-			*/
-		
 		ListUpPage_UpdateUpWeapons(category);
 	}
-
 }
 
 
@@ -85,7 +75,6 @@ function void ListUpPage_UpdateNavButtons(int category, int show){
 
 function void ListUpPage_UpdateUpWeapons(int category){
 	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
-	Panel_SetShow(listup_vars[UWPAGE_PANEL_WEAPONLIST], true);
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_WEAPONLIST], color_cat);
 	int ihavewep = false;
 	listup_vars[UWPAGE_VAR_CATWEAPONSTACK] = 0;
@@ -108,13 +97,21 @@ function void ListUpPage_UpdateUpWeapons(int category){
 		ListUpPage_UpdateUpWepSlot(category, stack_slot, i, true);
 		stack_slot++;
 	}
+	if(listup_vars[UWPAGE_VAR_CATWEAPONSTACK] == 0){
+		ListUpPage_UpdateNoAccess(category, true);
+		Panel_SetShow(listup_vars[UWPAGE_PANEL_WEAPONLIST], false);
+		ListUpPage_UpdateUpDesc(category, -1, false);
+		ListUpPage_UpdateUpTypes(category, -1, false);
+		return;
+	}
+	ListUpPage_UpdateNoAccess(category, false);
+	Panel_SetShow(listup_vars[UWPAGE_PANEL_WEAPONLIST], true);
 	// If there are remaining slots, hide them.
 	if (stack_slot < UWPAGE_CONST_UPS_PER_PAGE){
 		for(int j = stack_slot; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
 			ListUpPage_UpdateUpWepSlot(category, j, -1, false);
 		}
 	}
-	ListUpPage_UpdateNoAccess(category, listup_vars[UWPAGE_VAR_CATWEAPONSTACK] == 0);
 
 	/*
 	for(int j = 0; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
@@ -123,38 +120,42 @@ function void ListUpPage_UpdateUpWeapons(int category){
 }
 
 function void ListUpPage_UpdateUpWepSlot(int category, int slot, int wep, int show){
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
 	ImgButton_SetShow(listup_weplist[slot][UWPAGE_WEPUP_BUTTON], show);
 	Label_SetShow(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], show);
-	if(!show) {return;}
+	if(!show) return;
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
 	Label_SetColor(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], color_cat);
 	Label_SetText(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], Weapon_GetName(wep));
 }
 
 function void ListUpPage_UpdateUpDesc(int category, int wep, int show){
+	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], show);
+	if(!show) return;
 	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
-	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], true);
-	Label_SetShow(listup_vars[UWPAGE_LABEL_WEAPONNAME], true);
-	Label_SetShow(listup_vars[UWPAGE_LABEL_WEAPONDESC], true);
+	
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], color_cat);
 	Label_SetColor(listup_vars[UWPAGE_LABEL_WEAPONDESC], color_cat);
 	Label_SetColor(listup_vars[UWPAGE_LABEL_WEAPONNAME], color_cat);
 }
 
 function void ListUpPage_UpdateUpTypes(int category, int wep, int show){
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
 	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPGRADES], show);
+	if(!show) return;
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_UPGRADES], color_cat);
 
 	for(int j = 0; j < UWPAGE_UPGRADES_MAX; j++){
-		ListUpPage_UpdateUpButton(category, j, wep);
+		ListUpPage_UpdateUpButton(category, j, wep, true);
 	}
 }
 
-function void ListUpPage_UpdateUpButton(int category, int slot, int wep){
+function void ListUpPage_UpdateUpButton(int category, int slot, int wep, int show){
+	ImgButton_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_BUTTON], show);
+	Label_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], show);
+	if(!show) return;
+
 	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
-	ImgButton_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_BUTTON], true);
-	Label_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], true);
 	Label_SetColor(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], color_cat);
 }
 
@@ -184,7 +185,6 @@ function void InitListUpPage(int pageTag){
 
 	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = WEAPON_SET_STANDARD;
 	listup_vars[UWPAGE_VAR_MAXCATEGORY] = WEAPON_SET_OVERPOWERED;
-	listup_vars[UWPAGE_VAR_STACK] = 0;
 }
 
 function void ListUpPage_MakeNoAccessLabels(void){

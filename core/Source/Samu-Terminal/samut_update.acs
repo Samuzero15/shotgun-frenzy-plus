@@ -26,7 +26,7 @@ Function void UpdatePrompt(void){
 	ImgButton_setShow(prompt_data[STPROMPT_DATA_NOBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_NOBTN])) && Prompt_GetState());
 	Label_setShow(prompt_data[STPROMPT_DATA_LABEL], Prompt_GetState());
 	Panel_setShow(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetState());
-	UpdatePanel(prompt_data[STPROMPT_DATA_PANEL]);
+	UpdatePanel(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetState());
 }
 
 Function void ShowByAlphaTag(void){
@@ -69,7 +69,12 @@ Function void HideOrShowByTag(int tag, bool show){
 	UpdatePanels(tag, show);
 }
 
-function void UpdatePanel(int pan){
+function void UpdatePanel(int pan,int show){
+	Panel_SetShow(pan, show);
+	if(!show) return;
+
+	// Handle Autoscrolling.
+	Panel_UpdateScrollAutomove(pan);
 	Panel_UpdateScrollButtons(pan);
 	Panel_UpdateAnchorPoint(pan);
 	int x = Panel_GetAnchorPointX(pan);
@@ -121,8 +126,7 @@ function void UpdatePanels(int tag, int show){
 	for (int pan = 0; pan < panel_count; pan++){
 		int comptag = Panel_GetTag(pan);
 		if(comptag == tag){
-			Panel_SetShow(pan, show);
-			if(show) UpdatePanel(pan);
+			UpdatePanel(pan, show);
 		}
 	}
 }

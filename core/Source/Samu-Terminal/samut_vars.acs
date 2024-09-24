@@ -85,6 +85,15 @@
 #LibDefine ST_CPROP28 28
 #LibDefine ST_CPROP29 29
 #LibDefine ST_CPROP30 30
+#LibDefine ST_CPROP31 31
+#LibDefine ST_CPROP32 32
+#LibDefine ST_CPROP33 33
+#LibDefine ST_CPROP34 34
+#LibDefine ST_CPROP35 35
+#LibDefine ST_CPROP36 36
+#LibDefine ST_CPROP37 37
+#LibDefine ST_CPROP38 38
+#LibDefine ST_CPROP39 39
 
 #libdefine ST_PSTR_STR 0
 #libdefine ST_PSTR_INT 1

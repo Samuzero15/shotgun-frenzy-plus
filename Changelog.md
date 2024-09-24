@@ -9,6 +9,10 @@
 
 ## v1 - The path of the damned...
 
+#### [Panel Autoscrolling!]
+	+) New properties for the Panel, with some smooth Autoscrolling!
+	*) Expanded the component property count for the SamuTerminal from 35 to 40.
+
 #### (24 / 9 / 2024) [Combat boomstick now works with grenades and fist]
 	*) What says in the title, still WIP
 	

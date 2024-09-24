@@ -70,6 +70,9 @@ function void Panel_SetDefaultProps(int i){
 	Panel_SetTitleAnchors(i, STPANEL_ANCHOR_CENTER, STPANEL_ANCHOR_TOP);
 	Panel_SetAnchors(i, STPANEL_ANCHOR_LEFT, STPANEL_ANCHOR_TOP);
 	Panel_SetClipRect(i, -1, -1, -1, -1);
+	Panel_SetScrollSpace(i, 24.0);
+	Panel_SetScrollSpeedDiv(i, 6.0);
+	Panel_SetScrollSpeedCap(i, 4.0);
 }
 
 function void Panel_MakeScrollButton(int i, int id, int x, int y, int scrollx, int scrolly, int img){
@@ -315,4 +318,65 @@ function str Panel_GenerateBack(int i){
 	Panel_setBack(i, btnstring);
 	Panel_UpdateScrollButtons(i);
 	return btnstring;
+}
+
+function bool RectContainsPoint (int x, int y, int rx1, int rx2, int ry1, int ry2){
+	bool contains = x >= rx1 && x <= rx2 && y >= ry1 && y <= ry2;
+	/*log(s:"rx1=",f:rx1, s:", rx2=", f:rx2, s:", ry1=", f:ry1, s:", ry2=", f:ry2,
+	 s:"; x=", f:x, s:", y=", f:y, s:", Cointains? ",d:contains);
+	 */
+	return contains;
+}
+
+function int Panel_CalcScrollSpeed(int pan, int cursor_point, int axis_point){
+	int divider = Panel_GetScrollSpeedDiv(pan);
+	int cap = Panel_GetScrollSpeedCap(pan);
+	int scrollspeed = FixedDiv(max(cursor_point, axis_point)-min(cursor_point, axis_point), divider);
+	if(cap <= 0.0){
+		return scrollspeed;
+	}
+	return clamp(scrollspeed, 0.0, cap);
+}
+
+function void Panel_UpdateScrollAutomove(int pan){
+	if(!Panel_GetScrollAutomove(pan)) return;
+	int pan_rect = Panel_GetRect(pan);
+	if(!RectIsHovered(pan_rect)) return;
+	int scroll_pan[2] = {0.0, 0.0};
+		//log(s:"Y1 = ",f:RectY1(pan_rect), s:", Y1+8.0 = ", f:(RectY1(pan_rect) + 24.0), s:", Cursor = ", f:CursorY());
+	int cursor[2] = {CursorX(),CursorY()};
+	int padding = 8.0;
+	int scrollzone = padding + Panel_GetScrollSpace(pan);
+	int rects_threshold[4][4] ={
+		{RectX1(pan_rect) + padding, RectX1(pan_rect) + scrollzone, RectY1(pan_rect) + padding, RectY2(pan_rect) - padding},
+		{RectX2(pan_rect) - scrollzone, RectX2(pan_rect) - padding, RectY1(pan_rect) + padding, RectY2(pan_rect) - padding},
+		{RectX1(pan_rect) + padding, RectX2(pan_rect) - padding, RectY1(pan_rect) + padding, RectY1(pan_rect) + scrollzone},
+		{RectX1(pan_rect) + padding, RectX2(pan_rect) - padding, RectY2(pan_rect) - scrollzone, RectY2(pan_rect) - padding},
+	};
+
+	if(RectContainsPoint (cursor[0], cursor[1], 
+		rects_threshold[0][0], rects_threshold[0][1],
+		rects_threshold[0][2], rects_threshold[0][3])){
+		//log(s:"Oh hey! I am scrolling left!");
+		scroll_pan[0] += Panel_CalcScrollSpeed(pan, cursor[0], rects_threshold[0][1]);
+	}else if(RectContainsPoint (cursor[0], cursor[1], 
+		rects_threshold[1][0], rects_threshold[1][1],
+		rects_threshold[1][2], rects_threshold[1][3])){
+		scroll_pan[0] -= Panel_CalcScrollSpeed(pan, cursor[0], rects_threshold[1][0]);
+		//STExecute_PanelScroll(pan, 0.0, 0.05);
+	}
+
+	if(RectContainsPoint (cursor[0], cursor[1], 
+		rects_threshold[2][0], rects_threshold[2][1],
+		rects_threshold[2][2], rects_threshold[2][3])){
+		//log(s:"Oh hey! I am scrolling up!");
+		scroll_pan[1] += Panel_CalcScrollSpeed(pan, cursor[1], rects_threshold[2][3]);
+	}else if(RectContainsPoint (cursor[0], cursor[1], 
+		rects_threshold[3][0], rects_threshold[3][1],
+		rects_threshold[3][2], rects_threshold[3][3])){
+		//log(s:"Oh hey! I am scrolling down!");
+		scroll_pan[1] -= Panel_CalcScrollSpeed(pan, cursor[1], rects_threshold[3][2]);
+		//STExecute_PanelScroll(pan, 0.0, 0.05);
+	}
+	STExecute_PanelScroll(pan, scroll_pan[0], scroll_pan[1]);
 }
