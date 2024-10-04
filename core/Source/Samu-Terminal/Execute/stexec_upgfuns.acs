@@ -1,32 +1,27 @@
 
-function void StExecute_Upg0PageDesc(int weapon, int label_desc, int label_title)
+function void StExecute_UpgPageDesc(int weapon, int uptype)
 {
-	str textd = WeaponUpgrade_GetDesc(weapon, 0);
-	str textt = WeaponUpgrade_GetName(weapon, 0);
+	str textd = WeaponUpgrade_GetDesc(weapon, uptype);
+	str textt = WeaponUpgrade_GetName(weapon, uptype);
 	/*
 	log(s:"Weapon: \"", d:weapon, s:"\"");
 	log(s:"Name: \"", s:textt, s:"\"");
 	log(s:"Description: \"", s:textd, s:"\"");
 	*/
-	Label_setText(label_desc, textd);
-	Label_setText(label_title, textt);
-}
-
-function void StExecute_Upg1PageDesc(int weapon, int label_desc, int label_title)
-{
-	str textd = WeaponUpgrade_GetDesc(weapon, 1);
-	str textt = WeaponUpgrade_GetName(weapon, 1);
-	/*
-	log(s:"Weapon: \"", d:weapon, s:"\"");
-	log(s:"Name: \"", s:textt, s:"\"");
-	log(s:"Description: \"", s:textd, s:"\"");
-	*/
-	Label_setText(label_desc, textd);
-	Label_setText(label_title, textt);
+	
+	Label_setText(listup_vars[UWPAGE_LABEL_WEAPONNAME], textt);
+	Label_setText(listup_vars[UWPAGE_LABEL_WEAPONDESC], textd);
+	listup_vars[UWPAGE_VAR_HOVEREDUPTYPE] = uptype;
 }
 
 function void StExecute_UpgPageWeps(int dir){
 	// TODO
+	listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] += dir;
+	int last_page = listup_vars[UWPAGE_VAR_CATWEAPONSTACK]/UWPAGE_CONST_UPS_PER_PAGE;
+	if(listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] > last_page) 
+		listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] = last_page;
+	else if(listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] < WEAPON_SET_STANDARD) 
+		listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] = 0;
 }
 
 function void StExecute_UpgPageCat(int dir){
@@ -41,6 +36,9 @@ function void StExecute_UpgPageCat(int dir){
 	else if(listup_vars[UWPAGE_VAR_CURRENTCATEGORY] < WEAPON_SET_STANDARD) 
 		listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = listup_vars[UWPAGE_VAR_MAXCATEGORY];
 	
+	listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] = 0;
+	listup_vars[UWPAGE_VAR_SELECTEDWEP] = -1;
+	listup_vars[UWPAGE_VAR_HOVEREDUPTYPE] = -1;
 	/*
 	int d;
 	if(dir == 0) d = -1;
@@ -52,12 +50,12 @@ function void StExecute_UpgPageCat(int dir){
 	*/
 }
 
+function void StExecute_UpPageOpenUps(int wep){
+	listup_vars[UWPAGE_VAR_SELECTEDWEP] = wep;
+}
+
 function void STExecute_UpgradeWeapon(int which, int type){
-	int payprice;
-	
-	if(type == 1){
-		payprice = WeaponUpgrade_getUpgPrice(which, 0);
-	}else if (type == 2){payprice = WeaponUpgrade_getUpgPrice(which, 1);}
+	int payprice = WeaponUpgrade_getUpgPrice(which, type);
 	
 	sf_RemoveUpPoints(payprice, PlayerNumber());
 	//Yes, even when upgrading, will crank up the difficulty too.
@@ -67,24 +65,23 @@ function void STExecute_UpgradeWeapon(int which, int type){
 }
 
 function void STExecute_UpgradeAccepted(int which, int type){
+	listup_vars[UWPAGE_VAR_SELECTEDWEP] = -1;
+	listup_vars[UWPAGE_VAR_HOVEREDUPTYPE] = -1;
 	SamuTerm_CallOpExecute(STEXE_GETUP, which, type, 0);
-	Toaster_ShowToast("Upgrade implemented sucessfully!", CR_GOLD);
+	Toaster_ShowToastLog("Upgrade implemented sucessfully!", CR_GOLD);
 	LocalAmbientSound("p/upgrade",128);
 }
 
 function void STExecute_AskForUpgrade(int which, int type){
-	int price;
-	if(type == 1) price = WeaponUpgrade_getUpgPrice(which, 0);
-	else if (type == 2)	price = WeaponUpgrade_getUpgPrice(which, 1);
+	int price = WeaponUpgrade_getUpgPrice(which, type);
 	
 	if(getPlayUPts() < price){
-		Toaster_ShowToast("You need more \cgUpgrade Points\c-!",CR_RED);
+		Toaster_ShowToastLog("You need more \cgUpgrade Points\c-!",CR_RED);
 		localAmbientSound("SamuTerm/Error",127);
-		}
-	else{
+		} else {
 		Prompt_Resize(20,8);
 		Prompt_Ask("Conf. Upgrade", 
 			"Are you sure you want to apply this upgrade to your weapon?", CR_GREEN);
-		Prompt_ExecuteOnTrue(STEXE_GETUP, which, type, 0);
+		Prompt_ExecuteOnTrue(STEXE_MSGUP, which, type, 0);
 	}
 }

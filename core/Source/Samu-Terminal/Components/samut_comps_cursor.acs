@@ -8,16 +8,26 @@
 
 function void Cursor_Initialize(int w, int h){
 	int rect = RectCreate(CursorX(),CursorY(),w,h);
-	setCursorRect(rect);
+	Cursor_setRect(rect);
 	Cursor_SetDefaultProps();
 }
 
 function void Cursor_SetDefaultProps (void){
-	setCursorIcon("PNTR");
+	Cursor_setIcon("PNTR");
 }
 
 function void Cursor_UpdatePosition(void){
+	Cursor_MoveToPoint(CursorX(), CursorY());
+}
+
+function void Cursor_MoveToRect(int rect){
+	Cursor_MoveToPoint(
+		RectX1(rect) + FixedDiv(RectWidth(rect), 2.0),
+		RectY1(rect) + FixedDiv(RectHeight(rect), 2.0));
+}
+
+function void Cursor_MoveToPoint(int x, int y){
 	UpdateCursor();
-	setCursorPosition(CursorX(),CursorY());
-	setRectPosition(getCursorRect(), CursorX(), CursorY());
+	setCursorPosition(x, y);
+	setRectPosition(getCursorRect(), x, y);
 }

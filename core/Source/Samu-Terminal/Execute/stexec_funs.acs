@@ -134,9 +134,9 @@ function void STExecute_Shutdown(void){
 	pagetags[STTAGS_ALPHA] = 0;
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
-	comphover = -1;
-	comptypehover = -1;
-	lasthover = -2;
+	cursor_hover[STCURSOR_HOVER_COMP] = -1;
+	cursor_hover[STCURSOR_HOVER_COMPTYPE] = -1;
+	cursor_hover[STCURSOR_HOVER_LAST] = -2;
 	exitResult = -1;
 }
 
@@ -147,9 +147,9 @@ function void STExecute_Close(void){
 	pagetags[STTAGS_ALPHA] = 0;
 	pagetags[STTAGS_LAST] = 0;
 	pagetags[STTAGS_NOW] = 0;
-	comphover = -1;
-	comptypehover = -1;
-	lasthover = -2;
+	cursor_hover[STCURSOR_HOVER_COMP] = -1;
+	cursor_hover[STCURSOR_HOVER_COMPTYPE] = -1;
+	cursor_hover[STCURSOR_HOVER_LAST] = -2;
 	exitResult = 0;
 	localambientsound("Amy/Farewell", 127);
 }
@@ -180,7 +180,7 @@ function void StExecute_SelectComponent(int selectDirection, int y){
 	for(i = 0; i < comp_count[STCOMP_IBTN]; i++){
 		p = ImgButton_GetParent(i);
 		if(p!= -1){
-			if(ImgButton_GetShow(i) && Panel_IntersectsImgButton(p, i)){
+			if(ImgButton_GetShow(i) && Panel_IntersectsImgButton(p, i) && Panel_GetShow(p)){
 				Input_AddSelectableComponent(STCOMP_IBTN, i);
 			}
 		}else{
@@ -192,7 +192,7 @@ function void StExecute_SelectComponent(int selectDirection, int y){
 	for(i = 0; i < comp_count[STCOMP_SBTN]; i++){
 		p = StrButton_GetParent(i);
 		if(p!= -1){
-			if(StrButton_GetShow(i) && Panel_IntersectsStrButton(p, i)){
+			if(StrButton_GetShow(i) && Panel_IntersectsStrButton(p, i) && Panel_GetShow(p)){
 				Input_AddSelectableComponent(STCOMP_SBTN, i);
 			}
 		}else{
@@ -205,13 +205,13 @@ function void StExecute_SelectComponent(int selectDirection, int y){
 	// Take the center point of component.
 	int hoveredcomp[2];
 	hoveredcomp[0] = CursorX(); hoveredcomp[1] = CursorY(); 
-	if(comphover != -1){
-		if(comptypehover == STCOMP_IBTN) {
-			hoveredcomp[0] = ImgButton_GetXMOffseted(comphover);
-			hoveredcomp[1] = ImgButton_GetYMOffseted(comphover); 
-		}else if(comptypehover == STCOMP_SBTN) {
-			hoveredcomp[0] = StrButton_GetXMOffseted(comphover); 
-			hoveredcomp[1] = StrButton_GetYMOffseted(comphover); 
+	if(cursor_hover[STCURSOR_HOVER_COMP] != -1){
+		if(cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN) {
+			hoveredcomp[0] = ImgButton_GetXMOffseted(cursor_hover[STCURSOR_HOVER_COMP]);
+			hoveredcomp[1] = ImgButton_GetYMOffseted(cursor_hover[STCURSOR_HOVER_COMP]); 
+		}else if(cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_SBTN) {
+			hoveredcomp[0] = StrButton_GetXMOffseted(cursor_hover[STCURSOR_HOVER_COMP]); 
+			hoveredcomp[1] = StrButton_GetYMOffseted(cursor_hover[STCURSOR_HOVER_COMP]); 
 		}
 	}
 	

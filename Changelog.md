@@ -9,6 +9,17 @@
 
 ## v1 - The path of the damned...
 
+#### (4 / 10 / 2024) [New Upgrade page, and some terminal additions]
+	!*) The new upgrade page from the ammo terminal is done!
+	*) Some bit of a cleanup on the Samu terminal code, by renaming variables and packing them down to a array format.  (Just to reduce the variable map counter and to reduce the hardcoded variables)
+	+) Tooltips on Image buttons!, now the cursor can show a little message when hovering a img button.
+	*) Now the panel scroll buttons can be colored with the current panel color.
+	+) New autoscrolling on panels! Move our mouse down to the extremes of a panel to scroll down the contents of the page.
+	*) Now the color properties of each component can recieve string values, which it means, the components can now be painted with custom TEXTCOLOr lump definitions. (So the new textcolors done by FuzzballFox works in the terminal!)
+	*) There is also a lil' drag feature over there for the ImgButtons, but it's not ready yet.
+	*) When drawing a img button, you can switch the display mode between font and default mode, when drawing in font mode, you can use colors and draw a specific character. Useful to paint a button, like a scrolling panel button. Keep in mind you need to define the font with the graphic tied with a character in order to display the button in this mode.
+	+) Now the cursor can automove after clicking to the prompt pop up.
+
 #### [Panel Autoscrolling!]
 	+) New properties for the Panel, with some smooth Autoscrolling!
 	*) Expanded the component property count for the SamuTerminal from 35 to 40.

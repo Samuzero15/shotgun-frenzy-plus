@@ -2,50 +2,58 @@
 // Getters from Toast!
 ////////////////////////////////////////
 
-function int getToastRect(void){ 
+function int Toast_getRect(void){ 
 	return comp_rects_once[STCOMP_TOAST];
 }
 
-function int getToastX(void){
-	return RectX1(getToastRect());
+function int Toast_getX(void){
+	return RectX1(Toast_getRect());
 }
 
-function int getToastY(void){
-	return RectY1(getToastRect());
+function int Toast_getY(void){
+	return RectY1(Toast_getRect());
 }
 
-function str getToastString(void){ 
-	return RectGetUserData(getToastRect(), ST_CPROP2);
+function str Toast_getString(void){ 
+	return RectGetUserData(Toast_getRect(), ST_CPROP2);
 }
 
-function int getToastColor(void){ 
-	return RectGetUserData(getToastRect(), ST_CPROP3);
+function int Toast_getColor(void){ 
+	return RectGetUserData(Toast_getRect(), ST_CPROP3);
 }
 
-function str getToastBack(void){ 
-	return RectGetUserData(getToastRect(), ST_CPROP4);
+function str Toast_getBack(void){ 
+	return RectGetUserData(Toast_getRect(), ST_CPROP4);
+}
+
+function bool Toast_GetLogMessage(void){ 
+	return RectGetUserData(Toast_getRect(), ST_CPROP5);
 }
 
 ///////////////////////////////////////
 // Setters for teh Toast!
 ///////////////////////////////////////
 
-function void setToastRect(int rect){ 
+function void Toast_SetRect(int rect){ 
 	comp_rects_once[STCOMP_TOAST] = rect;
 }
 
 function void Toast_setPosition(int x, int y){
-	SetRectPosition(getToastRect(), x, y);
+	SetRectPosition(Toast_getRect(), x, y);
 }
 
-function void setToastString(str string){ 
-	SetRectUserData(getToastRect(), ST_CPROP2, string);
+function void Toast_SetString(str string){ 
+	SetRectUserData(Toast_getRect(), ST_CPROP2, string);
 }
 
-function void setToastColor(int color){ 
-	SetRectUserData(getToastRect(), ST_CPROP3, color);
+function void Toast_SetColor(int color){ 
+	SetRectUserData(Toast_getRect(), ST_CPROP3, color);
 }
 
-function void setToastBack(str back){ 
-	SetRectUserData(getToastRect(), ST_CPROP4, back);
+function void Toast_SetBack(str back){ 
+	SetRectUserData(Toast_getRect(), ST_CPROP4, back);
+}
+
+function void Toast_SetLogMessage(str logmsg){ 
+	SetRectUserData(Toast_getRect(), ST_CPROP5, logmsg);
 }

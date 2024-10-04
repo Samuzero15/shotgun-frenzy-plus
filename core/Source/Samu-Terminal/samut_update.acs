@@ -17,6 +17,7 @@ function void SamuTerm_Update(void){
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
 	showByAlphaTag();
+	//UpdateDragBtns();
 	UpdatePages();
 }
 
@@ -35,36 +36,34 @@ Function void ShowByAlphaTag(void){
 	HideOrShowByTag(pagetags[STTAGS_ALPHA], true);
 }
 
+function void UpdateDragBtns(void){
+	for (int i = 0; i < comp_count[STCOMP_IBTN]; i++){
+		if(ImgButton_getGrabState(i) == false) continue;
+		if(CursorDeltaX() == 0.0 && CursorDeltaY() == 0.0) continue;
+
+		RectFollowCursor(ImgButton_getRect(i));
+	}
+}
+
 Function void HideOrShowByTag(int tag, bool show){
 	int i, compTag;
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
 		if(i == prompt_data[STPROMPT_DATA_YESBTN] || i == prompt_data[STPROMPT_DATA_NOBTN] || i == prompt_data[STPROMPT_DATA_OKBTN]) continue;
-		comptag = ImgButton_getTag(i);
-		if(comptag == tag){
-			ImgButton_setShow(i, show);
-		}
+		if(ImgButton_getTag(i) == tag) ImgButton_setShow(i, show);
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
-		comptag = StrButton_getTag(i);
-		if(comptag == tag){
-			StrButton_setShow(i, show);
-		}
+		if(StrButton_getTag(i) == tag) StrButton_setShow(i, show);
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_LBL]; i++){
 		if(i == prompt_data[STPROMPT_DATA_LABEL]) continue;
-		comptag = Label_getTag(i);
-		if(comptag == tag){
-			Label_setShow(i, show);
-		}
+		if(Label_getTag(i) == tag) Label_setShow(i, show);
+		
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
-		comptag = Image_getTag(i);
-		if(comptag == tag){
-			Image_setShow(i, show);
-		}
+		if(Image_getTag(i) == tag) Image_setShow(i, show);
 	}
 	UpdatePanels(tag, show);
 }
@@ -74,7 +73,7 @@ function void UpdatePanel(int pan,int show){
 	if(!show) return;
 
 	// Handle Autoscrolling.
-	Panel_UpdateScrollAutomove(pan);
+	Panel_UpdateAutoscroll(pan);
 	Panel_UpdateScrollButtons(pan);
 	Panel_UpdateAnchorPoint(pan);
 	int x = Panel_GetAnchorPointX(pan);

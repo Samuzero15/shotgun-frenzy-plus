@@ -36,6 +36,11 @@ function int ImgButton_getParent(int bid){return RectGetUserData(ImgButton_getRe
 function int ImgButton_getOffsetX(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP6);}
 function int ImgButton_getOffsetY(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP17);}
 function int ImgButton_getColor(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP18);}
+function int ImgButton_getGrabable(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP19);}
+function int ImgButton_getGrabState(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP20);}
+function int ImgButton_getTooltip(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP21);}
+function int ImgButton_getDrawMode(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP22);}
+function int ImgButton_getDispCharacter(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP23);}
 
 ///////////////////////////////////////
 // Setters for teh Image Buttons!
@@ -115,4 +120,24 @@ function void ImgButton_setOffsets(int bid, int x, int y){
 
 function void ImgButton_setColor(int bid, int color){
 	SetRectUserData(ImgButton_getRect(bid), ST_CPROP18, color);
+}
+
+function void ImgButton_setGrabable(int bid, int state){
+	SetRectUserData(ImgButton_getRect(bid), ST_CPROP19, state);
+}
+
+function void ImgButton_setGrabState(int bid, int state){
+	SetRectUserData(ImgButton_getRect(bid), ST_CPROP20, state);
+}
+
+function void ImgButton_setTooltip(int bid, str stringme){
+	SetRectUserData(ImgButton_getRect(bid), ST_CPROP21, stringme);
+}
+
+function void ImgButton_setDrawMode(int bid, int mode){
+	SetRectUserData(ImgButton_getRect(bid), ST_CPROP22, mode);
+}
+
+function void ImgButton_setDispCharacter(int bid, str character){
+	SetRectUserData(ImgButton_getRect(bid), ST_CPROP23, character);
 }

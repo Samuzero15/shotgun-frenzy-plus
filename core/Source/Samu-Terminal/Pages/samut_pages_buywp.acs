@@ -314,7 +314,7 @@ function void BuyWpnPage_InitPackPanelList(void){
 	Panel_SetVirtualSize(p, 0.0, 32.0*3);
 	Panel_SetScrollAmount(p, 0.0, 32.0);
 	Panel_SetSpacing(p, 0.0, 32.0);
-	Panel_SetScrollAutomove(p, true);
+	Panel_SetAutoscroll(p, true);
 	Panel_SetTag(p, buywpn_vars[BWPAGE_TAG]);
 	buywpn_vars[BWPAGE_WPPACK_LISTPANEL] = p;
 	// Limited to 10 weapons packs per category, but, if this part is paginated, can grab more. 

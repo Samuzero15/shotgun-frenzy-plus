@@ -33,17 +33,17 @@ function void SamuTerm_InitPages(void){
 	Card_SetCells(5);
 	card = Card_Generate();
 
-	wallet[0] = Label_Add(60.0,452.0); 
-	Label_setText(wallet[0], "");
-	Label_setFont(wallet[0],"DBIGFONT");
-	Label_setColor(wallet[0],CR_gold);
-	Label_setShow(wallet[0], true);
+	sfpcomps[SF_SFCOMPS_WALLET_CREDITS] = Label_Add(60.0,452.0); 
+	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_CREDITS], "");
+	Label_setFont(sfpcomps[SF_SFCOMPS_WALLET_CREDITS],"DBIGFONT");
+	Label_setColor(sfpcomps[SF_SFCOMPS_WALLET_CREDITS],CR_gold);
+	Label_setShow(sfpcomps[SF_SFCOMPS_WALLET_CREDITS], true);
 
-	wallet[1] = Label_Add(580.0,452.0); 
-	Label_setText(wallet[1], "");
-	Label_setFont(wallet[1],"DBIGFONT");
-	Label_setColor(wallet[1],CR_cyan);
-	Label_setShow(wallet[1], true);
+	sfpcomps[SF_SFCOMPS_WALLET_UPS] = Label_Add(580.0,452.0); 
+	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_UPS], "");
+	Label_setFont(sfpcomps[SF_SFCOMPS_WALLET_UPS],"DBIGFONT");
+	Label_setColor(sfpcomps[SF_SFCOMPS_WALLET_UPS],CR_cyan);
+	Label_setShow(sfpcomps[SF_SFCOMPS_WALLET_UPS], true);
 
 	/*
 	int panel = Panel_Add(80.0, 80.0, 20, 15);
@@ -79,11 +79,11 @@ function void SamuTerm_InitPages(void){
 		case ST_PAGEALPHA_HTE:
 			i = Image_Add (0.0, 0.0, "TFRAME");
 			Image_SetShow(i, true);
-			make_menubutton(card, 1, 1, "BTN7");
+			make_menubutton(card, 1, 1, "BTN7", "Buy Powerups");
 			if(GameSkill() != 0){
-				make_menubutton(card, 2, 2, "BTN5");
-				make_menubutton(card, 3, 3, "SUBTN0");
-				make_menubutton(card, 4, 4, "HBTN08");
+				make_menubutton(card, 2, 2, "BTN5", "Player Upgrades");
+				make_menubutton(card, 3, 3, "SUBTN0", "Stimpack Upgrades");
+				make_menubutton(card, 4, 4, "HBTN08", "Rune-Sync");
 			}
 			make_exitbutton(card, 5, "BTNEXIT2");
 			
@@ -99,11 +99,20 @@ function void SamuTerm_InitPages(void){
 		case ST_PAGEALPHA_ATE:
 			i = Image_Add (0.0, 0.0, "TFRAME");
 			Image_SetShow(i, true);
-			make_menubutton(card, 1, 1, "BTN1");
-			make_menubutton(card, 2, 2, "BTN2");
-			make_menubutton(card, 3, 3, "BTN3");
-			make_menubutton(card, 4, 4, "BTNOK");
+			make_menubutton(card, 1, 1, "BTN1", "Buy Weapons");
+			make_menubutton(card, 2, 2, "BTN2", "Upgrade Weapons");
+			make_menubutton(card, 3, 3, "BTN3", "Recycle Weapons");
+			make_menubutton(card, 4, 4, "BTNOK", "Extra Items");
 			make_exitbutton(card, 5, "BTNEXIT");
+
+			/*
+			b = ImgButton_Add(50.0, 50.0, 32.0, 32.0);
+			log(s:"Dummy button: ", d:b);
+			ImgButton_SetImage		(b, "BTN1");
+			ImgButton_SetHoverImage	(b, "BTNHOV");
+			ImgButton_SetTag		(b, pagetags[STTAGS_ALPHA]);
+			ImgButton_SetGrabable	(b, true);
+			*/
 
 			setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
 			BuyWpnPage_Init(1);
@@ -146,42 +155,42 @@ function void UpdatePages(void){
 		RcyWpnPage_Update(3);
 		ArmItmPage_Update(4);
 		UpdateListUPPage(2);
-		
 		//Label_setText(wallet, StrParam(s:"Price of p_key: ", d:Prices_getValue_K("pr_wb_bfg")));
 	}
 }
 
-function int make_menubutton(int card, int cell, int cat, int img) {
+function int make_menubutton(int card, int cell, int cat, int img, int tooltip) {
 	int b = ImgButton_AddCard(card, cell, 32.0, 32.0);
 			ImgButton_SetImage		(b, img);
 			ImgButton_SetHoverImage	(b, "BTNHOV");
 			ImgButton_SetTag		(b, pagetags[STTAGS_ALPHA]);
 			ImgButton_SetExecute	(b, STEXE_GTCAT);
 			ImgButton_SetArgs		(b, cat, 0, 0);
+			ImgButton_SetTooltip	(b, tooltip);
 	return b;
 }
 
 function void make_exitbutton(int card, int cell, int img) {
-	int b = make_menubutton(card, cell, 0, img);
+	int b = make_menubutton(card, cell, 0, img, "Exit Terminal");
 	ImgButton_SetExecute	(b, STEXE_CLOSE);
 }
 
 function void updateWallet(void){
-	Label_setText(wallet[0], StrParam(d:getPlayCredits(), s:"$"));
-	Label_setText(wallet[1], StrParam(d:getPlayUPts(), s:" U.P"));
+	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_CREDITS], StrParam(d:getPlayCredits(), s:"$"));
+	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_UPS], StrParam(d:getPlayUPts(), s:" U.P"));
 }
 
 function void setPageTitle_Alpha(str title, int color){
 		setTitleText(title);
 		setTitleColor(color);
-		Label_setTag(ptitle, pagetags[STTAGS_ALPHA]);
+		Label_setTag(sfpcomps[SF_SFCOMPS_TITLE], pagetags[STTAGS_ALPHA]);
 }
 
 function void setPageTitle(int pageTag, str title, int color){
 	if(isOnTheSamePage(pageTag)){
 		setTitleText(title);
 		setTitleColor(color);
-		Label_setTag(ptitle, pagetags[STTAGS_ALPHA]);
+		Label_setTag(sfpcomps[SF_SFCOMPS_TITLE], pagetags[STTAGS_ALPHA]);
 	}
 }
 

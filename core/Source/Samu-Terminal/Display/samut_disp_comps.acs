@@ -11,14 +11,17 @@ function void ShowImgButton (int bid){
 	int rect = ImgButton_getRect(bid);
 	str hover = ImgButton_getHoverImage(bid);
 	bool hilight = false;
+	str char = ImgButton_getDispCharacter(bid);
+	int color = ImgButton_getColor(bid);
+	int drawmode = ImgButton_getDrawMode(bid);
 
 	if(!Prompt_GetState()){
 		if(p != -1){
-			if (Panel_ImgBtnIsHovered(p, bid) && (comphover != -1)){
+			if (Panel_ImgBtnIsHovered(p, bid) && (cursor_hover[STCURSOR_HOVER_COMP] != -1)){
 				hilight = true;
 			}
 		}
-		else if (RectIsHovered(rect) && (comphover != -1)){
+		else if (RectIsHovered(rect) && (cursor_hover[STCURSOR_HOVER_COMP] != -1)){
 			hilight = true;
 		}
 	} else {
@@ -32,7 +35,7 @@ function void ShowImgButton (int bid){
 		 ) hilight = true;
 	}
 
-	if(hilight && comphover != -1){
+	if(hilight && cursor_hover[STCURSOR_HOVER_COMP] != -1){
 		HudPushState();
     	HudResetState();
 		HUDSetHiliTimes();
@@ -42,10 +45,16 @@ function void ShowImgButton (int bid){
 			HUDSetTextColor(CR_WHITE);
 			HudSetBlendStyle(HUD_BLENDSTYLE_ADDITIVE);
 			HudSetAlpha(0.5);
-			HudPrintImage(x, y, ST_HID_HILI, img);
+			if(drawmode == 1)
+				HudPrintText(x, y, ST_HID_HILI, char, img, color);
+			else 
+				HudPrintImage(x, y, ST_HID_HILI, img);
 		}else{
 			//Custom hovering image.
-			HudPrintImage(x, y, ST_HID_HILI, hover);
+			if(drawmode == 1)
+				HudPrintText(x, y, ST_HID_HILI, char, hover, color);
+			else 
+				HudPrintImage(x, y, ST_HID_HILI, hover);
 			//HudPrintImage(x, y, ST_HID_HILI, "BTN7");
 		}
     	HudPopState();
@@ -54,7 +63,12 @@ function void ShowImgButton (int bid){
 	HudPushState();
     HudResetState();
 	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
-	HudPrintImage(x, y, hid, img);
+
+	if(drawmode == 1)
+		HudPrintText(x, y, hid, char, img, color);
+	else 
+		HudPrintImage(x, y, hid, img);
+	
     HudPopState();
 }
 
@@ -111,8 +125,6 @@ function void ShowImage (int iid){
     HudResetState();
 	HudSetAlign(alignx,aligny);
 	HudSetScaleXY(scalex, scaley);
-	
-	
 	HudPrintImage(x, y, hid, img);
 	HudPopState();
 }
@@ -142,16 +154,16 @@ function void ShowStrButton (int sbid){
 
 	if(!Prompt_GetState()){
 		if(p != -1){
-			if (Panel_StrBtnIsHovered(p, sbid) && (comphover != -1)){
+			if (Panel_StrBtnIsHovered(p, sbid) && (cursor_hover[STCURSOR_HOVER_COMP] != -1)){
 				hilight = true;
 			}
 		}
-		else if (RectIsHovered(rect) && (comphover != -1)){
+		else if (RectIsHovered(rect) && (cursor_hover[STCURSOR_HOVER_COMP] != -1)){
 			hilight = true;
 		}
 	}
 
-	if(hilight && comphover != -1){
+	if(hilight && cursor_hover[STCURSOR_HOVER_COMP] != -1){
 		HudPushState();
     	HudResetState();
 		HUDSetHiliTimes();
@@ -168,7 +180,8 @@ function void ShowStrButton (int sbid){
 	HudPushState();
     HudResetState();
 	HUDSetTimes();
-	HUDSetTextColor(color);
+	if(color > 25)	HUDSetTextColorString(color);
+	else 			HUDSetTextColor(color);
 	HUDSetPoint(xpos + fixedDiv(w, 2.0), ypos + fixedDiv(h, 2.0));
 	HudSetAlign(HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	HUDSetFont("DBIGFONT");
@@ -184,12 +197,15 @@ function void ShowStrButton (int sbid){
 
 function void ShowToast (void){
 	
-	int xpos = getToastX();
-	int ypos = getToastY();
-	str text = getToastString();
+	int xpos = Toast_getX();
+	int ypos = Toast_getY();
+	str text = Toast_getString();
 	//print(f:xpos);
-	str back = getToastBack();
-	int color = getToastColor();
+	str back = Toast_getBack();
+	int color = Toast_getColor();
+	int logmessage = Toast_getLogMessage();
+
+	if(logmessage) log(s:text);
 	
 	HudPushState();
     HudResetState();
@@ -213,14 +229,25 @@ function void ShowCursor(void){
 	int x = getCursorX();
 	int y = getCursorY();
 	int icon = getCursorIcon();
+	int tooltip = 0;
+	if(cursor_hover[STCURSOR_HOVER_COMP] != -1 
+		&& cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN){
+		tooltip = ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_COMP]);
+	}
 	
 	//print(s:icon);
 	
 	HudPushState();
     HudResetState();
-		HudSetAlignX(HUD_ALIGN_LEFT);
-		HudSetAlignY(HUD_ALIGN_TOP);
-		HudPrintImage(x, y, ST_HID_CURSOR,icon);
+	HudSetAlignX(HUD_ALIGN_LEFT);
+	HudSetAlignY(HUD_ALIGN_TOP);
+	HudPrintImage(x, y, ST_HID_CURSOR,icon);
+	if(tooltip != 0){ // Tooltip
+		HudSetAlignX(HUD_ALIGN_CENTER);
+		HudSetAlignY(HUD_ALIGN_BOTTOM);
+		HUDSetPoint(x, y - 16.0);
+		HUDDrawText(ST_HID_TOOLTIP,tooltip);
+	}
     HudPopState();
 	//log(s:"Cursor HID: ", d:ST_HID_CURSOR);
 }
@@ -231,15 +258,15 @@ function void ShowPanel (int pid){
 	int ypos = Panel_getY(pid);
 	int width = Panel_getWidth(pid);
 	int height = Panel_getHeight(pid);
-	//str text = getToastString();
+	//str text = Toast_getString();
 	//print(f:xpos);
 	str back = Panel_getBack(pid);
 	int color = Panel_getColor(pid);
+	int backfont = Panel_GetBackFont(pid);
 	//log(s:"Panel Showing: ", d:pid);
 	
 	HudPushState();
     HudResetState();
-	
 	HudSetTimes();
 
 	int anchors[2] = {Panel_GetTitleAnchorX(pid), Panel_GetTitleAnchorY(pid)};
@@ -271,7 +298,7 @@ function void ShowPanel (int pid){
 	HUDSetPoint(xpos,ypos);
 	HudSetAlignX(HUD_ALIGN_LEFT);
 	HudSetAlignY(HUD_ALIGN_TOP);
-	HUDSetFont("WINFONT");
+	HUDSetFont(backfont);
 	HUDDrawText(Panel_getHudId(pid),back);
 	
 	for(int i = 0; i < Panel_GetNumberOfComps(pid); i++){

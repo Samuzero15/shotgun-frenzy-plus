@@ -131,18 +131,18 @@ function void Component_PrintCount(void){
 
 function void initTitle(void){
 
-	ptitle = Label_Add(320.0,40.0); 
-	Label_setText(ptitle,"Title");
-	Label_setFont(ptitle,"DBIGFONT");
-	Label_setColor(ptitle,CR_WHITE);
-	Label_setTag(ptitle, -1);
-	Label_setShow(ptitle, false);
+	sfpcomps[SF_SFCOMPS_TITLE] = Label_Add(320.0,40.0); 
+	Label_setText(sfpcomps[SF_SFCOMPS_TITLE],"Title");
+	Label_setFont(sfpcomps[SF_SFCOMPS_TITLE],"DBIGFONT");
+	Label_setColor(sfpcomps[SF_SFCOMPS_TITLE],CR_WHITE);
+	Label_setTag(sfpcomps[SF_SFCOMPS_TITLE], -1);
+	Label_setShow(sfpcomps[SF_SFCOMPS_TITLE], false);
 }
 
 function void setTitleText(str title){
-	Label_setText(ptitle, title);
+	Label_setText(sfpcomps[SF_SFCOMPS_TITLE], title);
 }
 
 function void setTitleColor(int color){
-	Label_setColor(ptitle, color);
+	Label_setColor(sfpcomps[SF_SFCOMPS_TITLE], color);
 }

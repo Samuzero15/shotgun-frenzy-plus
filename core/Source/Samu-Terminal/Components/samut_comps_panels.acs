@@ -73,15 +73,18 @@ function void Panel_SetDefaultProps(int i){
 	Panel_SetScrollSpace(i, 24.0);
 	Panel_SetScrollSpeedDiv(i, 6.0);
 	Panel_SetScrollSpeedCap(i, 4.0);
+	Panel_SetBackFont(i, "WINFONT");
 }
 
-function void Panel_MakeScrollButton(int i, int id, int x, int y, int scrollx, int scrolly, int img){
+function void Panel_MakeScrollButton(int i, int id, int x, int y, int scrollx, int scrolly, int img, int char){
 	int btn = ImgButton_Add(x, y, 8.0, 8.0);
 	ImgButton_setExecute(btn, STEXE_PANEL_SCROLL);
 	ImgButton_setArgs(btn, i, scrollx, scrolly);
 	ImgButton_setShow(btn, true);
 	ImgButton_setImage(btn, img);
 	ImgButton_setHudId(btn, ST_HID_PAN_FOREG + btn);
+	ImgButton_setDrawMode(btn, 1);
+	ImgButton_setDispCharacter(btn, char);
 	panels_scrollbuttons[i][id] = btn;
 }
 
@@ -262,6 +265,7 @@ function str Panel_GenerateBack(int i){
 	int ybtn = xpan;
 	int xscroll = Panel_GetScrollX(i);
 	int yscroll = Panel_GetScrollY(i);
+	int backfont = Panel_GetBackFont(i);
 	
 	if(w != 0){
 		for(int j = 0; j < w; j++){
@@ -276,13 +280,13 @@ function str Panel_GenerateBack(int i){
 		if	(y == 0) {
 			//btnstring = StrAdd(btnstring, "\nJ");
 			//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
-			Panel_MakeScrollButton(i, 0, xbtn, ybtn, 0, yscroll, "WP11");
+			Panel_MakeScrollButton(i, 0, xbtn, ybtn, 0, yscroll, backfont, "K");
 		}   
 		else if	(y == h-1){
 			//btnstring = StrAdd(btnstring, "\nK");
 			ybtn += 8.0*(h-1);
 			//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
-			Panel_MakeScrollButton(i, 1, xbtn, ybtn,  0, -yscroll, "WP10");
+			Panel_MakeScrollButton(i, 1, xbtn, ybtn,  0, -yscroll, backfont, "J");
 		}
 		btnstring = StrAdd(btnstring, "\nD");
 			for(int x = 0; x < w; x++){
@@ -301,13 +305,13 @@ function str Panel_GenerateBack(int i){
 				//btnstring = StrAdd(btnstring, "L");
 				xbtn += 8.0;
 				//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
-				Panel_MakeScrollButton(i, 2, xbtn, ybtn, xscroll, 0, "WP12");
+				Panel_MakeScrollButton(i, 2, xbtn, ybtn, xscroll, 0, backfont, "L");
 			} 
 			else if (k == w-1){
 				//btnstring = StrAdd(btnstring, "M");
 				xbtn += 8.0*(w-1);
 				//log(s:"Btn Pos: (",f:xbtn, s:", ",f:ybtn, s:")");
-				Panel_MakeScrollButton(i, 3, xbtn, ybtn, -xscroll, 0, "WP13");
+				Panel_MakeScrollButton(i, 3, xbtn, ybtn, -xscroll, 0, backfont, "M");
 			}
 			btnstring = StrAdd(btnstring, "H");
 		}
@@ -338,8 +342,8 @@ function int Panel_CalcScrollSpeed(int pan, int cursor_point, int axis_point){
 	return clamp(scrollspeed, 0.0, cap);
 }
 
-function void Panel_UpdateScrollAutomove(int pan){
-	if(!Panel_GetScrollAutomove(pan)) return;
+function void Panel_UpdateAutoscroll(int pan){
+	if(!Panel_GetAutoscroll(pan)) return;
 	int pan_rect = Panel_GetRect(pan);
 	if(!RectIsHovered(pan_rect)) return;
 	int scroll_pan[2] = {0.0, 0.0};

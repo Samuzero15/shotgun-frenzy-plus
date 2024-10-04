@@ -9,7 +9,8 @@ function void HudPrintText(int x, int y, int hid, str text, str font, int color)
 	HudSetResoultion();
 	HudSetTimes();
 	HudSetPoint(x, y);
-	HUDSetTextColor(color);
+	if(color > 25)	HUDSetTextColorString(color);
+	else 			HUDSetTextColor(color);
 	HUDSetFont(font);
 	HUDDrawText(hid, text);
 }
@@ -58,11 +59,12 @@ function void HudSetToastSettings(int color){
 	HudSetAppearTime(0.5);
 	HudSetStayTime(2.0);
 	HudSetDisappearTime(0.5);
-	HUDSetTextColor(color);
+	if(color > 25)  HUDSetTextColorString(color);
+	else 			HUDSetTextColor(color);
 	HudSetAlignX(HUD_ALIGN_Center);
 	HudSetAlignY(HUD_ALIGN_Center);
 }
 
 function void SamuTerm_Say(str msg){
-	Toaster_ShowToast(msg, CR_Green);
+	Toaster_ShowToast(msg, CR_GREEN);
 }

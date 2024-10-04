@@ -145,6 +145,7 @@ function void Prompt_AskEx(str title, str msg, str color, int virt_w, int virt_h
 	localAmbientSound("SamuTerm/HopIn",127);
 	//SamuTerm_CallOpExecute(STEXE_GTCAT,Prompt_GetTag(),0,0);
 	Prompt_SetState(true);
+	Cursor_MoveToRect(ImgButton_GetRect(prompt_data[STPROMPT_DATA_NOBTN]));
 }
 
 function void Prompt_ExecuteOnTrue(int cmd, int arg1, int arg2, int arg3){
@@ -173,6 +174,7 @@ function void Prompt_Notify(str title, str msg, str color){
 	
 	//SamuTerm_CallOpExecute(STEXE_GTCAT,Prompt_GetTag(),0,0);
 	Prompt_SetState(true);
+	Cursor_MoveToRect(ImgButton_GetRect(prompt_data[STPROMPT_DATA_OKBTN]));
 }
 
 function void Prompt_SetDefaultProps (void){

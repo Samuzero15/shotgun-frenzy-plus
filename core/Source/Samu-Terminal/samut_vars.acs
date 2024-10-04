@@ -50,6 +50,7 @@
 #LibDefine ST_HID_TOAST_TEXT 	ST_HID_GLOBAL + 10
 
 #LibDefine ST_HID_HILI      	ST_HID_GLOBAL + 9
+#LibDefine ST_HID_TOOLTIP      	ST_HID_GLOBAL + 8
 
 #LibDefine ST_HID_CURSOR ST_HID_GLOBAL
 
@@ -134,10 +135,10 @@
 #libdefine STEXE_PLAYUP_SETDESC		46
 #libdefine STEXE_PLAYUP_BTNHOVER 	45
 
+#libdefine STEXE_UPWEPOPENUPS 71
 #Libdefine STEXE_UPGPAGEWEPS 70
 #libdefine STEXE_UPGPAGECAT 42
-#libdefine STEXE_UPG1PAGEDESC 41
-#libdefine STEXE_UPG0PAGEDESC 40
+#libdefine STEXE_UPGPAGEDESC 40
 
 #libdefine STEXE_CMDEXIT 			-31
 #libdefine STEXE_CMDDEPLOY 			33
@@ -243,6 +244,7 @@
 
 // Variables
 
+//Card Helper stuff.
 int cardproptop;
 int cardpropsave[STLAYOUT_SAVES][4];
 int cardpos[STLAYOUT_SAVES][100][2];
@@ -255,7 +257,6 @@ int tmp[STVARS_TMP];
 int gridproptop;
 int gridpropsave[STLAYOUT_SAVES][7];
 int gridpos[STLAYOUT_SAVES][500][2];
-
 
 int comp_propsave[ACSUTILS_RECTLIB_USERVARS]; 
 //	Component Counter
@@ -289,11 +290,10 @@ int panels[STPANEL_COUNT_INDEX];
 int panels_scrollbuttons[STPANEL_COUNT_INDEX][STPANEL_COUNT_SCROLLBTNS];
 int panels_comps_index[STPANEL_COUNT_INDEX][STPANEL_COUNT_CONTENT][STPANEL_COUNT_PROPS];
 
-int pagetags[5];
-
-int comphover;
-int comptypehover;
-int lasthover;
+#libdefine STCURSOR_HOVER_COMP 		0
+#libdefine STCURSOR_HOVER_COMPTYPE 	STCURSOR_HOVER_COMP+1
+#libdefine STCURSOR_HOVER_LAST  	STCURSOR_HOVER_COMPTYPE+1
+int cursor_hover[STCURSOR_HOVER_LAST+1];
 
 //To do stuff with the components.
 
@@ -314,24 +314,28 @@ int lasthover;
 #libdefine STPROMPT_DATA STPROMPT_DATA_ONFALSE_EXEARG3+1
 int prompt_data[STPROMPT_DATA];
 
+// Input bind variables
 int input_bind_count = 0;
 int input_bind[20][6];
 int input_selectcomp_count = 0;
 int input_selectcomp_group = 0;
 int input_selectcomp[50][3];
 
-int wallet[2];
-
-int ptitle;
-//Other variables.
+// Core variables.
+int pagetags[5];
 str imgbg = STSET_BACK;
-
 int exitResult = 0;
-bool onceHover = false;
+int msgs[2];
 
 #LibDefine STMSGS_LOGIN 0
 #LibDefine STMSGS_LOGOUT 1
-int msgs[2];
+
+// Common components for Shotgun frenzy plus, like the page title and the credit and upgrade wallet.
+#Libdefine SF_SFCOMPS_TITLE 			0
+#Libdefine SF_SFCOMPS_WALLET_CREDITS 	SF_SFCOMPS_TITLE+1
+#Libdefine SF_SFCOMPS_WALLET_UPS 		SF_SFCOMPS_WALLET_CREDITS+1
+
+int sfpcomps[SF_SFCOMPS_WALLET_UPS+1];
 
 //Temporal Variables
 //int w=0,h=0; 

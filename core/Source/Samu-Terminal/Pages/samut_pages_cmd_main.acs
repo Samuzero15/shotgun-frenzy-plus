@@ -32,7 +32,7 @@ function void CMDPage_Update(void){
 	
 		ShowByAlphaTag();
 		
-	if(comphover != lasthover){
+	if(cursor_hover[STCURSOR_HOVER_COMP] != cursor_hover[STCURSOR_HOVER_LAST]){
 		Label_SetText(cmdpage_vars[1], "");
 		Label_SetText(cmdpage_vars[2], "");
 	}
@@ -138,30 +138,32 @@ function void CMDPage_UpdateButton(int slot){
 	int comp 	= CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_ID);
 	int btndata = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA);
 	int btnarg = CMDPage_LoadGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDARG);
-	if(btndata == -1) ImgButton_setShow	(comp, false);
-	else {
-		int up_btndata = CMDBut_UpdateConds(btndata);
-		
-		if(up_btndata != btndata){
-			//log(s:"slot: ", d:slot, s:" sex: ", d:up_btndata);
-			CMDPage_SetButtonInSlot(slot, up_btndata);
-			CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, up_btndata);
-			btndata = up_btndata;
-		}
-		
-		str icon = CMDBut_getIcon(btndata);
-		ImgButton_setImage(comp, cond(CMDBut_GetAccessCond(btndata), icon, "CG00"));
-		if(btnarg > 0){
-			ImgButton_setExecute	(comp, STEXE_CMDCAT2);
-			ImgButton_setArgs		(comp, btnarg, btndata, 0);
-		}else{
-			if(btnarg == -1)	ImgButton_setExecute	(comp, STEXE_CMDEXIT);
-			else 				ImgButton_setExecute	(comp, STEXE_CMDEVENT_CHECK);
-			ImgButton_setArgs		(comp, 0, btndata, 0);
-		}
-		ImgButton_setArgsHover	(comp, cmdpage_vars[1],cmdpage_vars[2],btndata);
-		ImgButton_setShow	(comp, CMDBut_GetShowCond(btndata));
+	if(btndata == -1) {
+		ImgButton_setShow	(comp, false);
+		return;
 	}
+
+	int up_btndata = CMDBut_UpdateConds(btndata);
+	if(up_btndata != btndata){
+		//log(s:"slot: ", d:slot, s:" sex: ", d:up_btndata);
+		CMDPage_SetButtonInSlot(slot, up_btndata);
+		CMDPage_SaveGroup(CMDPAGE_VAR_BASESLOT + slot, CMDPAGE_VAR_BTNDATA, up_btndata);
+		btndata = up_btndata;
+	}
+	
+	str icon = CMDBut_getIcon(btndata);
+	ImgButton_setImage(comp, cond(CMDBut_GetAccessCond(btndata), icon, "CG00"));
+	if(btnarg > 0){
+		ImgButton_setExecute	(comp, STEXE_CMDCAT2);
+		ImgButton_setArgs		(comp, btnarg, btndata, 0);
+	}else{
+		if(btnarg == -1)	ImgButton_setExecute	(comp, STEXE_CMDEXIT);
+		else 				ImgButton_setExecute	(comp, STEXE_CMDEVENT_CHECK);
+		ImgButton_setArgs		(comp, 0, btndata, 0);
+	}
+	ImgButton_setArgsHover	(comp, cmdpage_vars[1],cmdpage_vars[2],btndata);
+	ImgButton_setShow	(comp, CMDBut_GetShowCond(btndata));
+	ImgButton_setTooltip (comp, CMDBut_ )
 }
 
 function void CMDPage_SetButtonLayout(int layout){

@@ -234,6 +234,10 @@ function void ImgButton_SetDefaultProps(int i){
 		ImgButton_setArgsHover(i, 0,0,0);	
 		ImgButton_setTag(i, -1);
 		ImgButton_setColor(i, -1);
+		ImgButton_setGrabable(i, false);
+		ImgButton_setGrabState(i, false);
+		ImgButton_setDrawMode(i, 0);
+		ImgButton_setDispCharacter(i, "A");
 		//ImgButton_setOffsets(i, 0.0, 0.0);
 }
 

@@ -37,10 +37,10 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_GIVEWP: STExecute_giveWeapon(arg1); break;
 		case STEXE_BUYWP: STExecute_BuyWeapon(arg1); break;
 	
-		case STEXE_UPG1PAGEDESC: StExecute_Upg1PageDesc(arg1, arg2, arg3); break;
-		case STEXE_UPG0PAGEDESC: StExecute_Upg0PageDesc(arg1, arg2, arg3); break;
+		case STEXE_UPGPAGEDESC: StExecute_UpgPageDesc(arg1, arg2); break;
 		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
 		case STEXE_UPGPAGEWEPS: StExecute_UpgPageWeps(arg1); break;
+		case STEXE_UPWEPOPENUPS: StExecute_UpPageOpenUps(arg1); break;
 		
 		case STEXE_CMDEVENT_CHECK: STExecute_CMDEvent_Check(arg1, arg2); break;
 		case STEXE_CMDEVENT_DOIT: STExecute_CMDEvent_DoIt(arg1); break;

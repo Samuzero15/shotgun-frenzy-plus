@@ -9,7 +9,7 @@
 
 function void Toaster_Initialize (void){
 	int rect = RectCreate(320.0,440.0,0.0,0.0);
-	setToastRect(rect);
+	Toast_SetRect(rect);
 	Toaster_SetProps("I am a Toast!", CR_BRICK);
 }
 
@@ -18,10 +18,17 @@ function void Toaster_ShowToast(str msg, str color){
 	ShowToast();
 }
 
+function void Toaster_ShowToastLog(str msg, str color){
+	Toaster_SetProps(msg, color);
+	Toast_SetLogMessage(true);
+	ShowToast();
+	Toast_SetLogMessage(false);
+}
+
 function void Toaster_SetProps (str string, int color){
-	setToastString(string);
+	Toast_SetString(string);
 	Toaster_Setup (string);
-	setToastColor(color);
+	Toast_SetColor(color);
 }
 
 function void Toaster_Setup (str string){
@@ -74,6 +81,6 @@ function void Toaster_Setup (str string){
 
 	btnstring = StrAdd(btnstring, "I");
 	
-	setToastBack(btnstring);
+	Toast_SetBack(btnstring);
 	
 }

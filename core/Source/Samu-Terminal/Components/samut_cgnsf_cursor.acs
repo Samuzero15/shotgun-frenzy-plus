@@ -39,11 +39,11 @@ function str getCursorBack(void){
 // Setters for teh Cursor!
 ///////////////////////////////////////
 
-function void setCursorRect(int rect){ 
+function void Cursor_setRect(int rect){ 
 	comp_rects_once[STCOMP_CURSOR] = rect;
 }
 
-function void setCursorIcon(str icon){ 
+function void Cursor_setIcon(str icon){ 
 	SetRectUserData(getCursorRect(), ST_CPROP2, icon);
 }
 /*

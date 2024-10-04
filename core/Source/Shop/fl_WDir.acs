@@ -269,7 +269,7 @@ Script "SFPlus_WDir_SFWEPDEFReadLine" (int line) {
 		SFWEPDEF_AddWeaponUpgrade(line, file_wepid);
 	}
 	else {
-		log(s:"fl_WDir: Invalid command");
+		log(s:"fl_WDir: Invalid command: '", s:op, s:"'", s:", line=", s:line);
 	}
 }
 
@@ -320,11 +320,7 @@ function void Weapon_Swap(str this, str withThis){
 
 function void Weapon_Upgrade(int wid, int type){
 	//printbold(n:(playernumber() + 1), s:" Upgrades ", s:Weapon_GetActor(wid), s:" to: ", s:WeaponUpgrade_getActor(wid, type-1));
-if(type == 1)
-		Weapon_Swap(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 0));
-	else if( type == 2) 
-		Weapon_Swap(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, 1));
-
+	Weapon_Swap(Weapon_GetActor(wid),WeaponUpgrade_getActor(wid, type));
 }
 
 function void WeaponPack_Give(int wp){
