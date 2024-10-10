@@ -14,7 +14,7 @@ function int PlayUpPage_LoadGroup(int up, int id){
 function void PlayUpPage_Update(int pageTag){
 	setPageTitle(pageTag, "Player Upgrade Page", CR_PURPLE);
 	
-	if(isOnTheSamePage(pageTag)){
+	if(SamuTerminal_isOnSamePage(pageTag)){
 		Label_SetText(playup_vars[0], "");
 		//PlayUpPage_SetDetails(playup_vars[6], cond(playup_vars[6] != -1, true, false));
 		if(playup_vars[6] != -1)
@@ -93,7 +93,7 @@ function void PlayUpPage_SetDetails(int up){
 	Label_SetText		(playup_vars[3], cond(showbut, strparam(s:"Cost: ", d:cost, s:" U.Ps"), "Installed"));
 	StrButton_SetExecute(playup_vars[4], STEXE_PLAYUP_ASK);
 	StrButton_SetExeArgs(playup_vars[4], up,0,0);
-	StrButton_SetColor	(playup_vars[4], cond(GetPlayUpts() >= cost, CR_WHITE, CR_ORANGE));
+	StrButton_SetColor	(playup_vars[4], cond(SFPlus_getPlayUPts() >= cost, CR_WHITE, CR_ORANGE));
 	Image_SetFile		(playup_vars[5], upImage);
 	PlayUpPage_ShowDetails(true);
 	StrButton_SetShow	(playup_vars[4], showbut);

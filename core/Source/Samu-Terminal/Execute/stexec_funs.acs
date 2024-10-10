@@ -8,17 +8,6 @@
 *
 */
 
-#include "stexec_sfactions.acs"
-#include "stexec_cmdfuns.acs"
-#include "stexec_buyfuns.acs"
-#include "stexec_upgfuns.acs"
-#include "stexec_rcyfuns.acs"
-#include "stexec_mupfuns.acs"
-#include "stexec_pupfuns.acs"
-#include "stexec_supfuns.acs"
-#include "stexec_runefuns.acs"
-
-
 function void STExecute_OkayAction(void){
 	localAmbientSound("SamuTerm/HopOut",127);
 	Prompt_SetState(false);
@@ -48,7 +37,6 @@ function void STExecute_SayHi(void){
 	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
 }
 function void STExecute_Ask(void){
-	Prompt_Resize(20,10);
 	Prompt_Ask("A simple question", 
 	"Do you love me?", 
 	CR_BRICK);
@@ -156,9 +144,9 @@ function void STExecute_Close(void){
 
 function void STExecute_Open(int taggy){
 	SetInventory("SamuTInv_UsingTerminal", 1);
-	ACS_NamedExecuteAlways("TerminalLoop",0,taggy);
+	ACS_NamedExecuteAlways("SamuTerminal_Loop",0,taggy);
 	localambientsound("Amy/Welcome", 127);
-	lockPlayer(playernumber());
+	Samuterm_LockPlayer(playernumber());
 }
 
 function void STExecute_PanelScroll(int panel, int scrollx, int scrolly){
@@ -274,3 +262,5 @@ function void StExecute_SelectComponent(int selectDirection, int y){
 		SetCursorPosition(pos_tomove[0], pos_tomove[1]);
 	}
 }
+
+#include "stexec_sfptermfuns.acs"

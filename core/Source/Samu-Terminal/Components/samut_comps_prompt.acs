@@ -4,7 +4,63 @@
 	A prompt. I ask you something, You answer, Simple.
 */
 
-#include "samut_cgnsf_prompt.acs"
+////////////////////////////////////////
+// Getters from prompts!
+////////////////////////////////////////
+
+function int Prompt_GetRect(void){return comp_rects_once[STCOMP_PROMPT];}
+function int Prompt_GetX(void){return RectX1(Prompt_GetRect());}
+function int Prompt_GetY(void){return RectY1(Prompt_GetRect());}
+function int Prompt_GetWidth(void){return RectWidth(Prompt_GetRect());}
+function int Prompt_GetHeight(void){return RectHeight(Prompt_GetRect());}
+function int Prompt_GetTag(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP1);}
+function int Prompt_GetTitle(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP2);}
+function int Prompt_GetWindowId(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP3);}
+function int Prompt_GetValue(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP4);}
+function int Prompt_GetColor(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP5);}
+function str Prompt_GetBack(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP6);}
+function bool Prompt_GetState(void){ return RectGetUserData(Prompt_GetRect(), ST_CPROP7);}
+function bool Prompt_GetSourceTag(void){return RectGetUserData(Prompt_GetRect(), ST_CPROP8);}
+function int Prompt_GetExecute_YesAction(void){return prompt_data[STPROMPT_DATA_ONTRUE_EXECUTE];}
+function int Prompt_GetExecute_NoAction(void){return prompt_data[STPROMPT_DATA_ONFALSE_EXECUTE];}
+function int Prompt_GetExeArg1_YesAction(void){return prompt_data[STPROMPT_DATA_ONTRUE_EXEARG1];}
+function int Prompt_GetExeArg2_YesAction(void){return prompt_data[STPROMPT_DATA_ONTRUE_EXEARG2];}
+function int Prompt_GetExeArg3_YesAction(void){ return prompt_data[STPROMPT_DATA_ONTRUE_EXEARG3];}
+function int Prompt_GetExeArg1_NoAction(void){ return prompt_data[STPROMPT_DATA_ONFALSE_EXEARG1];}
+function int Prompt_GetExeArg2_NoAction(void){ return prompt_data[STPROMPT_DATA_ONFALSE_EXEARG2];}
+function int Prompt_GetExeArg3_NoAction(void){ return prompt_data[STPROMPT_DATA_ONFALSE_EXEARG3];}
+
+///////////////////////////////////////
+// Setters for teh prompts!
+///////////////////////////////////////
+
+function void Prompt_SetRect(int rect){ comp_rects_once[STCOMP_PROMPT] = rect;}
+function void Prompt_SetTag(int tag){ SetRectUserData(Prompt_GetRect(), ST_CPROP1, tag);}
+function void Prompt_SetTitle(str title){ SetRectUserData(Prompt_GetRect(), ST_CPROP2, title);}
+function void Prompt_SetWindowId(int windowid){ SetRectUserData(Prompt_GetRect(), ST_CPROP3, windowid);}
+function void Prompt_SetValue(int value){ SetRectUserData(Prompt_GetRect(), ST_CPROP4, value);}
+function void Prompt_SetColor(int color){ SetRectUserData(Prompt_GetRect(), ST_CPROP5, color);}
+function void Prompt_SetBack(str back){ SetRectUserData(Prompt_GetRect(), ST_CPROP6, back);}
+function void Prompt_SetState(bool state){ SetRectUserData(Prompt_GetRect(), ST_CPROP7, state);}
+function void Prompt_SetSourceTag(int tag){ SetRectUserData(Prompt_GetRect(), ST_CPROP8, tag);}
+function void Prompt_SetExecute_YesAction(int execute){ prompt_data[STPROMPT_DATA_ONTRUE_EXECUTE] = execute;}
+function void Prompt_SetExecute_NoAction(int execute){ prompt_data[STPROMPT_DATA_ONFALSE_EXECUTE] = execute;}
+
+function void Prompt_SetExeArgs_YesAction(int arg1,int arg2,int arg3){ 
+	prompt_data[STPROMPT_DATA_ONTRUE_EXEARG1] = arg1;
+	prompt_data[STPROMPT_DATA_ONTRUE_EXEARG2] = arg2;
+	prompt_data[STPROMPT_DATA_ONTRUE_EXEARG3] = arg3;
+}
+
+function void Prompt_SetExeArgs_NoAction(int arg1,int arg2,int arg3){ 
+	prompt_data[STPROMPT_DATA_ONFALSE_EXEARG1] = arg1;
+	prompt_data[STPROMPT_DATA_ONFALSE_EXEARG2] = arg2;
+	prompt_data[STPROMPT_DATA_ONFALSE_EXEARG3] = arg3;
+}
+
+////////////////////////
+// Prompts functions! //
+////////////////////////
 
 function void Prompt_Initialize (void){
 
@@ -94,28 +150,6 @@ function void Prompt_ResetOptions(void)
 	Panel_SetVirtualOffset(prompt_data[STPROMPT_DATA_PANEL], 0.0, 0.0);
 }
 
-function void Prompt_Resize(int w, int h){
-	return;
-	/*
-	int fw = 16.0 + (8.0*w);
-	int fh = 16.0 + (8.0*h);
-	
-	int posx = FixedDiv(640.0, 2.0)-FixedDiv(fw, 2.0);
-	int posy = FixedDiv(480.0, 2.0)-FixedDiv(fh, 2.0);
-	
-	//print(s:"Before reposition: ",f:Prompt_GetX());
-	
-	SetRectPosition(Prompt_GetRect(), posX, posY);
-	SetRectSize(Prompt_GetRect(), fw, fh);
-	
-	//print(s:"After reposition: ",f:Prompt_GetX());
-	Prompt_GenerateBack(w, h);
-	AdjustImgButton_P(prompt_data[STPROMPT_DATA_YESBTN],-32.0, 0.0, ST_COMPALIGN_South, Prompt_GetRect());
-	AdjustImgButton_P(prompt_data[STPROMPT_DATA_NOBTN],32.0, 0.0, ST_COMPALIGN_South, Prompt_GetRect());
-	AdjustImgButton_P(prompt_data[STPROMPT_DATA_OKBTN], 0.0, 0.0, ST_COMPALIGN_South, Prompt_GetRect());
-	AdjustLabel_P(prompt_data[STPROMPT_DATA_LABEL], 0.0, 0.0, ST_COMPALIGN_North, Prompt_GetRect());
-	*/
-}
 
 function void Prompt_Ask(str title, str msg, str color){
 	Prompt_AskEx(title, msg, color, 0.0, 0.0);

@@ -6,7 +6,6 @@
 *
 */
 
-
 #include "samut_comps_ibtns.acs"
 #include "samut_comps_sbtns.acs"
 #include "samut_comps_lbls.acs"
@@ -15,7 +14,6 @@
 #include "samut_comps_prompt.acs"
 #include "samut_comps_cursor.acs"
 #include "samut_comps_panels.acs"
-
 
 function void SamuTerm_InitComps(void){
 	Components_Clear();

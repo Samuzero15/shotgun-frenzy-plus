@@ -9,7 +9,7 @@ int runepage_vars[60];
 function void RunePage_Update(int pageTag) {
 	setPageTitle(pageTag, "Rune shop", CR_CYAN);
 	
-	if(isOnTheSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
+	if(SamuTerminal_isOnSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
 		//log(s:"Rune tier: ", d:CheckInventory("RuneTier"));
 		int runetier = 0;
 		runetier = CheckInventory("RuneTier");
@@ -130,7 +130,7 @@ function void RunePage_Init(int pageTag) {
 function void RunePage_UpdateComps(int rune){
 	int ibut = RunePage_LoadFromGroup(rune, 1);
 	int price = Rune_GetPrice(rune);
-	bool isaffordable = GetPlayCredits() >= price;
+	bool isaffordable = SFPlus_getPlayCredits() >= price;
 
 	ImgButton_setImage(ibut, cond(isaffordable, Rune_GetIcon(rune), "BTNDEN"));
 	ImgButton_setShow(ibut, cond(CheckInventory("RuneTier") >= Rune_GetTier(rune)-1, true, false));

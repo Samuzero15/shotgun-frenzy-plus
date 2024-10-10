@@ -24,11 +24,7 @@
 //////SF Stuff////////
 
 #include "samut_vars.acs"
-#include "samut_utils.acs"
-
-#include "samut_cards.acs"
-#include "samut_grids.acs"
-#include "samut_parse.acs"
+#include "samut_layouts.acs"
 #include "samut_comps.acs"
 #include "samut_pages.acs"
 #include "samut_exes.acs"
@@ -36,24 +32,26 @@
 #include "samut_update.acs"
 #include "samut_disp.acs"
 
+function bool Samuterm_InUse(void){return CheckInventory("SamuTInv_UsingTerminal");}
+function void Samuterm_LockPlayer(int player){SetPlayerProperty(0,true,PROP_TOTALLYFROZEN);SetActorVelocity(player+1000,0,0,0,false,false);}
+function void Samuterm_UnlockPlayer(int player){SetPlayerProperty(0,false,PROP_TOTALLYFROZEN);}
+function void SamuTerm_SetBack(str what){imgbg = what;}
+function void SamuTerm_ResetBack(void){imgbg = STSET_BACK;}
+script "Samuterm_PlayerDiesSomehow" Death {if(Samuterm_InUse()) SamuTerm_Execute(STEXE_SYSOFF, 0, 0, 0);}  
+script "SamuTerminal_IntDB" OPEN ClientSide {if(GameType() != GAME_SINGLE_PLAYER) IntDB_LoadStuff();}
+
 Script "SamuTerminal" (int homeTag, int hidestatusbar){
-	if(TerminalInUse() || g_Initialized == False) Terminate;
+	if(Samuterm_InUse() || g_Initialized == False) Terminate;
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
 	SetInventory("SamuTInv_Action2Key", 0);
 	SetInventory("SamuTInv_HideSBar", hidestatusbar);
 	//print(s:"Statusbar hidden?: ", d:hidestatusbar);
-	while(TerminalInUse()){delay(5);}
+	while(Samuterm_InUse()){delay(5);}
 	ACS_NamedExecuteAlways("SFPlus_UpdateSaves", 0);
-}	
-
-script "SamuTerminal_IntDB" OPEN ClientSide{
-	if(GameType() != GAME_SINGLE_PLAYER){
-        IntDB_LoadStuff();
-    }
 }
 
-script "TerminalLoop" (int alphatag) CLIENTSIDE {
+script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	//Here is where the magic begins!
 	int play = playerNumber();
 	if(IsClient() && consolePlayerNumber() == play && PlayerInGame(PlayerNumber())){
@@ -111,7 +109,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 	ACS_NamedExecuteAlways("SamuTerm_UpdateLoop", 0);
 	ACS_NamedExecuteAlways("SamuTerm_InputLoop", 0);
 	ACS_NamedExecuteAlways("SamuTerm_DisplayLoop", 0);
-		while(TerminalInUse())
+		while(Samuterm_InUse())
 		{// Loopy.
 			if(GetPlayerChasecam(play) == true) SetPlayerChasecam(play, 0);// I must keep you from abusing the chasecam.
 			if(CheckInventory("SamuTInv_ForcedExit"))
@@ -133,7 +131,7 @@ script "TerminalLoop" (int alphatag) CLIENTSIDE {
 }
 
 Script "SamuTerm_UpdateLoop" (void) Clientside {
-	while(TerminalInUse())
+	while(Samuterm_InUse())
 		{
 			SamuTerm_Update();
 			if(CheckInventory("SamuTInv_ForcedExit"))
@@ -145,7 +143,7 @@ Script "SamuTerm_UpdateLoop" (void) Clientside {
 
 Script "SamuTerm_InputLoop" (void) Clientside {
 	int play = playerNumber();
-	while(TerminalInUse()){
+	while(Samuterm_InUse()){
 			SamuTerm_Input(play);
 			if(CheckInventory("SamuTInv_ForcedExit"))
 				STExecute_Shutdown();
@@ -155,7 +153,7 @@ Script "SamuTerm_InputLoop" (void) Clientside {
 }
 
 Script "SamuTerm_DisplayLoop" (void) Clientside {
-	while(TerminalInUse())
+	while(Samuterm_InUse())
 		{
 			SamuTerm_Display();
 			if(CheckInventory("SamuTInv_ForcedExit"))
@@ -167,7 +165,7 @@ Script "SamuTerm_DisplayLoop" (void) Clientside {
 
 Script "SamuTerm_VariableSync" ENTER{
 	while(PlayerInGame(PlayerNumber())){
-		if(TerminalInUse()){ // Sync only if using the terminal.
+		if(Samuterm_InUse()){ // Sync only if using the terminal.
 			SetInventory("p_Money", 		p_credits[playernumber()]);
 			SetInventory("p_UpPoint", 		p_Exp_points[playernumber()]);
 			SetInventory("p_team_credits", 	c_credits);
@@ -187,6 +185,8 @@ Script "SamuTerm_VariableSync" ENTER{
 	}
 }
 
+
+
 function void debug(void){
 	HudPushState();
     HudResetState();
@@ -195,5 +195,4 @@ function void debug(void){
 		str msg = strParam(s:"x: ", f:CursorX(), s:",y: ",f:CursorY());
 		HUDDrawText(40,msg);
     HudPopState();
-	
 }

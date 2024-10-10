@@ -312,6 +312,6 @@ function bool IsHovering_ibtn(int i){
 }
 
 script "SamuTerm_FreePlayer" (int play) NET{
-	unlockPlayer(play);
+	Samuterm_unlockPlayer(play);
 	takeActorInventory(1000+play,"SamuTInv_UsingTerminal", 1);
 }

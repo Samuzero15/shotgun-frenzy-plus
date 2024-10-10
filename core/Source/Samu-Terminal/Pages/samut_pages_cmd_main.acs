@@ -37,7 +37,7 @@ function void CMDPage_Update(void){
 		Label_SetText(cmdpage_vars[2], "");
 	}
 	
-	Label_SetText(cmdpage_vars[3], strparam(s:"T.C: ", d:getTeamCredits(), s:" $"));
+	Label_SetText(cmdpage_vars[3], strparam(s:"T.C: ", d:SFPlus_getTeamCredits(), s:" $"));
 	Label_SetText(cmdpage_vars[4], 
 		strparam(s:"Hostile Counter",
 		s:"\nSector 1 : ", d:thingcount(0, 111), 
@@ -163,7 +163,7 @@ function void CMDPage_UpdateButton(int slot){
 	}
 	ImgButton_setArgsHover	(comp, cmdpage_vars[1],cmdpage_vars[2],btndata);
 	ImgButton_setShow	(comp, CMDBut_GetShowCond(btndata));
-	ImgButton_setTooltip (comp, CMDBut_ )
+	ImgButton_setTooltip (comp, "Test");
 }
 
 function void CMDPage_SetButtonLayout(int layout){

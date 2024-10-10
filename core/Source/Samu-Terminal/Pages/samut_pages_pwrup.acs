@@ -3,7 +3,7 @@ int powpage_vars[50];
 
 function void UpdatePowBuyPage(int pageTag){
 	setPageTitle(pageTag, "Buy a powerup", CR_CYAN);
-	if(isOnTheSamePage(pageTag)){
+	if(SamuTerminal_isOnSamePage(pageTag)){
 		for(int i = 0; i < fp_itemshop_last[ITEMSHOP_HEALTH_POWERUP]; i++){
 			PowBuyPage_UpdateComps(fp_itemshop[ITEMSHOP_HEALTH_POWERUP][i]);
 		}

@@ -87,7 +87,6 @@ function void SamuTerm_InitPages(void){
 			}
 			make_exitbutton(card, 5, "BTNEXIT2");
 			
-
 			setPageTitle_Alpha("Health Terminal", CR_CYAN);
 			InitPowBuyPage(1);
 			if(GameSkill() != 0){
@@ -176,8 +175,8 @@ function void make_exitbutton(int card, int cell, int img) {
 }
 
 function void updateWallet(void){
-	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_CREDITS], StrParam(d:getPlayCredits(), s:"$"));
-	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_UPS], StrParam(d:getPlayUPts(), s:" U.P"));
+	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_CREDITS], StrParam(d:SFPlus_getPlayCredits(), s:"$"));
+	Label_setText(sfpcomps[SF_SFCOMPS_WALLET_UPS], StrParam(d:SFPlus_getPlayUPts(), s:" U.P"));
 }
 
 function void setPageTitle_Alpha(str title, int color){
@@ -187,13 +186,11 @@ function void setPageTitle_Alpha(str title, int color){
 }
 
 function void setPageTitle(int pageTag, str title, int color){
-	if(isOnTheSamePage(pageTag)){
+	if(SamuTerminal_isOnSamePage(pageTag)){
 		setTitleText(title);
 		setTitleColor(color);
 		Label_setTag(sfpcomps[SF_SFCOMPS_TITLE], pagetags[STTAGS_ALPHA]);
 	}
 }
 
-function bool isOnTheSamePage(int pageTag){
-	return pagetags[STTAGS_NOW] == pageTag;
-}
+function bool SamuTerminal_isOnSamePage(int pageTag){return pagetags[STTAGS_NOW] == pageTag;}

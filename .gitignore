@@ -14,6 +14,7 @@ tools/acc/acscomp_tmp
 *bak.acs*
 *.o
 *.xcf
+gdcc/
 
 skulltag_content-3.0-beta01.pk3
 console.bat

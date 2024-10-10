@@ -4,7 +4,25 @@
 	Yeah that's a cursor.
 */
 
-#include "samut_cgnsf_cursor.acs"
+////////////////////////////////////////
+// Getters from Cursor!
+////////////////////////////////////////
+
+function int getCursorRect(void){return comp_rects_once[STCOMP_CURSOR];}
+function int getCursorWidth(void){return RectWidth(getCursorRect());}
+function int getCursorHeight(void){return RectHeight(getCursorRect());}
+function str getCursorIcon(void){return RectGetUserData(getCursorRect(), ST_CPROP2);}
+
+///////////////////////////////////////
+// Setters for teh Cursor!
+///////////////////////////////////////
+
+function void Cursor_setRect(int rect){comp_rects_once[STCOMP_CURSOR] = rect;}
+function void Cursor_setIcon(str icon){SetRectUserData(getCursorRect(), ST_CPROP2, icon);}
+
+///////////////////////////////////////
+// Cursor functions!				 //
+///////////////////////////////////////
 
 function void Cursor_Initialize(int w, int h){
 	int rect = RectCreate(CursorX(),CursorY(),w,h);

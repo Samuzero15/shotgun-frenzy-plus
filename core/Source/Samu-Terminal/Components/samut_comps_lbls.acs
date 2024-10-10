@@ -3,7 +3,67 @@
 	The Label contains a string. And nothing more.
 */
 
-#include "samut_cgnsf_lbls.acs"
+
+////////////////////////////////////////
+// Getters from Labels!
+////////////////////////////////////////
+
+function int Label_getRect(int bid){return comp_rects_many[STCOMP_LBL][bid];}
+function int Label_getX(int bid){return RectX1(Label_getRect(bid));}
+function int Label_getY(int bid){return RectY1(Label_getRect(bid));}
+function int Label_getTag(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP1);}
+function str Label_getText(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP2);}
+function int Label_getShow(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP3);}
+function str Label_getFont(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP4);}
+function int Label_getColor(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP5);}
+function int Label_getParent(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP6);}
+function int Label_getAlignX(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP11);}
+function int Label_getAlignY(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP12);}
+function int Label_getHudId(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP8);}
+function int Label_getWrapWidth(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP9);}
+function int Label_getOffsetX(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP13);}
+function int Label_getOffsetY(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP14);}
+
+///////////////////////////////////////
+// Setters from Labels!
+///////////////////////////////////////
+
+function void Label_setRect(int bid, int rect){comp_rects_many[STCOMP_LBL][bid] = rect;}
+function void Label_setTag(int bid, int tag){SetRectUserData(Label_getRect(bid), ST_CPROP1, tag);}
+function void Label_setPosition(int bid, int x, int y){SetRectPosition(Label_getRect(bid), x, y);}
+function void Label_setText(int bid, str text){SetRectUserData(Label_getRect(bid), ST_CPROP2, text);}
+function void Label_setShow(int bid, bool visible){Label_setShowEx(bid, visible, true);}
+
+function void Label_setShowEx(int bid, bool visible, bool update_panel_flag){
+	int p = Label_GetParent(bid);
+	if(p != -1 && update_panel_flag){
+		for (int i = 0 ; i < Panel_GetNumberOfComps(p); i++){
+			if(panels_comps_index[p][i][1] == bid && panels_comps_index[p][i][0] == STCOMP_LBL) panels_comps_index[p][i][3] = visible;
+		}
+	}
+	SetRectUserData(Label_getRect(bid), ST_CPROP3, visible);
+}
+
+function void Label_setFont(int bid, str font){SetRectUserData(Label_getRect(bid), ST_CPROP4, Font);}
+function void Label_setColor(int bid, int color){SetRectUserData(Label_getRect(bid), ST_CPROP5, color);}
+function void Label_setParent(int bid, int parent){SetRectUserData(Label_getRect(bid), ST_CPROP6, parent);}
+
+function void Label_setAligns(int bid, int alx, int aly){
+	SetRectUserData(Label_getRect(bid), ST_CPROP11, alx);
+	SetRectUserData(Label_getRect(bid), ST_CPROP12, aly);
+}
+
+function void Label_setHudID(int bid, int hudId){SetRectUserData(Label_getRect(bid), ST_CPROP8, hudId);}
+
+function void Label_setOffsets(int bid, int offx, int offy){
+	SetRectUserData(Label_getRect(bid), ST_CPROP13, offx);
+	SetRectUserData(Label_getRect(bid), ST_CPROP14, offy);
+}
+function void Label_setWrapWidth(int bid, int wrap){SetRectUserData(Label_getRect(bid), ST_CPROP9, wrap);}
+
+/////////////////////////
+// Label functions!    //
+/////////////////////////
 
 function int Label_Add (int x, int y){
 	int id = Component_Allocate(STCOMP_LBL, x, y, 0.0, 0.0);
@@ -13,36 +73,14 @@ function int Label_Add (int x, int y){
 	return id;
 }
 
-function int Label_AddGrid(int grid, int row, int col){
-	int x = Grid_GetX(grid, row, col);
-	int y = Grid_GetY(grid, row, col);
-	
-	int l = Label_Add(x, y);// Stupid limited ACS.
-	return l;
-}
-
+function int Label_AddGrid(int grid, int row, int col){return Label_AddGridOff(grid, row, col, 0.0, 0.0);}
 function int Label_AddGridOff(int grid, int row, int col, int offx, int offy){
-	int x = Grid_GetX(grid, row, col);
-	int y = Grid_GetY(grid, row, col);
-	
-	int l = Label_Add(x + offx, y + offy);// Stupid limited ACS.
-	return l;
+	return Label_Add( Grid_GetX(grid, row, col) + offx, Grid_GetY(grid, row, col) + offy);
 }
 
-function int Label_AddCard(int grid, int cell){
-	int x = Card_GetX(grid, cell);
-	int y = Card_GetY(grid, cell);
-	
-	int l = Label_Add(x, y);// Stupid limited ACS.
-	return l;
-}
-
+function int Label_AddCard(int grid, int cell){return Label_AddCardOff(grid, cell, 0.0, 0.0);}
 function int Label_AddCardOff(int grid, int cell, int offx, int offy){
-	int x = Card_GetX(grid, cell);
-	int y = Card_GetY(grid, cell);
-	
-	int l = Label_Add(x + offx, y + offy);// Stupid limited ACS.
-	return l;
+	return Label_Add(Card_GetX(grid, cell) + offx, Card_GetY(grid, cell) + offy);// Stupid limited ACS.
 }
 
 //Duplicate constructors.
@@ -113,60 +151,7 @@ function void Label_SetPosToGrid(int i, int grid, int row, int col){
 function void Label_SetPosToCard(int i, int card, int cell){
 	int x = Card_GetX(card, cell);
 	int y = Card_GetY(card, cell);
-	
 	Label_setPosition(i, x, y);
-}
-
-function int Label_Add_P (int coffx, int coffy, int align, int parent){
-	int posX = 0;
-	int posY = 0;
-	
-	int alx = 0, aly = 0;
-	
-	switch(align){
-		Case ST_COMPALIGN_NORTH:
-			
-			posX = coffx + RectCenterX(parent) + 8.0;
-			posY = coffy + RectY1(parent) + 4.0;
-			aly = HUD_ALIGN_TOP;
-		break;
-		Case ST_COMPALIGN_South:
-			posX = coffx + RectCenterX(parent) + 4.0;
-			posY = -coffy + RectY2(parent) - 4.0;
-			aly = HUD_ALIGN_BOTTOM;
-		break;
-		Case ST_COMPALIGN_East:
-			posX = coffx + RectX1(parent) + 4.0;
-			posY = coffy + RectCenterY(parent) + 4.0;
-			alx = HUD_ALIGN_LEFT;
-		break;
-		Case ST_COMPALIGN_West:
-			posX = -coffx + RectX2(parent) - 4.0;
-			posY = coffy + RectCenterY(parent) + 4.0;
-			alx = HUD_ALIGN_RIGHT;
-		break;
-
-		Case ST_COMPALIGN_Center:
-			posX = coffx + RectCenterX(parent);
-			posY = coffy + RectCenterY(parent);
-		break;
-		
-		default: // NorthEast
-			alX = HUD_ALIGN_LEFT;
-			aly = HUD_ALIGN_TOP;
-			posX = coffx + RectX1(parent);
-			posY = coffy + RectY1(parent) + 4.0;
-		break;
-	}
-
-	int id = Component_Allocate(STCOMP_LBL, posX, posY, 0.0, 0.0);
-	if(id != -1){
-		Label_SetDefaultProps(id);
-		Label_SetParent(id, parent);
-		//Panel_AddComponent(panel, id);
-		Label_setAligns(id,alX,alY);
-	}
-	return id;
 }
 
 function int Label_AddToPanelAbsPos (int panel, int pos, int x, int y) {return Label_AddToPanelEX (panel, pos, x, y, true);}
@@ -204,50 +189,6 @@ function int Label_DupToPanelEX(int copy, int panel, int pos, int offx, int offy
 	return id;
 }
 
-function void AdjustLabel_P (int lid, int coffx, int coffy, int align, int parent){
-	int posX = 0;
-	int posY = 0;
-	
-	int alx = 0, aly = 0;
-	
-	switch(align){
-		Case ST_COMPALIGN_NORTH:
-			posX = coffx + RectCenterX(parent);
-			posY = coffy + RectY1(parent) + 4.0;
-			aly = HUD_ALIGN_TOP;
-		break;
-		Case ST_COMPALIGN_South:
-			posX = coffx + RectCenterX(parent);
-			posY = -coffy + RectY2(parent) - 4.0;
-			aly = HUD_ALIGN_BOTTOM;
-		break;
-		Case ST_COMPALIGN_East:
-			posX = coffx + RectX1(parent) + 4.0;
-			posY = coffy + RectCenterY(parent);
-			alx = HUD_ALIGN_LEFT;
-		break;
-		Case ST_COMPALIGN_West:
-			posX = -coffx + RectX2(parent) - 4.0;
-			posY = coffy + RectCenterY(parent);
-			alx = HUD_ALIGN_RIGHT;
-		break;
-
-		Case ST_COMPALIGN_Center:
-			posX = coffx + RectCenterX(parent);
-			posY = coffy + RectCenterY(parent);
-		break;
-		
-		default: // NorthEast
-			alX = HUD_ALIGN_LEFT;
-			aly = HUD_ALIGN_TOP;
-			posX = coffx + RectX1(parent);
-			posY = coffy + RectY1(parent);
-		break;
-	}
-	Label_setAligns(lid,alX,alY);
-	Label_setPosition(lid, posX, posY);
-}
-
 function void Label_SetDefaultProps(int i){
 	//print(s:"Default props");
 		Label_setText(i,"This is a label");
@@ -260,110 +201,4 @@ function void Label_SetDefaultProps(int i){
 		Label_setOffsets(i, 0.0, 0.0);
 		Label_setParent(i, -1);
 		Label_setTag(i, -1);
-}
-
-function void Label_SetProperties(int i,
- str txt, bool visible, str font, int color, int alx, int aly){
-		Label_setText(i,txt);
-		Label_setShow(i, visible);
-		Label_setFont(i,font);
-		Label_setColor(i,color);
-		Label_setAligns(i,alx,aly);
-}
-
-/*
-function void Label_SetPropsByTag(int tag, str txt, bool visible, str font, int color){
-	if(tag == 0) return;
-	for(int i = 0; i < lblcount; i++){
-		if(Label_getTag(i) == tag){
-			Label_setText(i,txt);
-			Label_setShow(i, visible);
-			Label_setFont(i,font);
-			Label_setColor(i,color);
-			break;
-		}
-	}
-}
-
-function void Label_SetTextByTag(int tag, str txt){
-	if(tag == 0) return;
-	for(int i = 0; i < lblcount; i++){
-		if(Label_getTag(i) == tag){
-			Label_setText(i,txt);
-		}
-	}
-}
-
-function void Label_SetShowByTag(int tag, bool visible){
-	if(tag == 0) return;
-	for(int i = 0; i < lblcount; i++){
-		if(Label_getTag(i) == tag){
-			Label_setShow(i, visible);
-		}
-	}
-}
-
-function void Label_SetFontByTag(int tag, str font, int color){
-	if(tag == 0) return;
-	for(int i = 0; i < lblcount; i++){
-		if(Label_getTag(i) == tag){
-			Label_setFont(i,font);
-		}
-	}
-}
-
-function void Label_SetColorByTag(int tag, int color){
-	if(tag == 0) return;
-	for(int i = 0; i < lblcount; i++){
-		if(Label_getTag(i) == tag){
-			Label_setColor(i,color);
-		}
-	}
-}*/
-
-
-function void LabelProp_Parse(int i, str name,str value){
-/*
-	//Parsea todos los nombres de propiedades de un componente.
-	if(StrIEquals(name,  "image")){
-		setImgButtonImage(i,      Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "hoverimage")){
-		setImgButtonHoverImage(i, Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "tag")){
-		setImgButtonTag(i,        Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "execute")){
-		setImgButtonExecute(i,    Prop_Value(value));
-		return;
-	}if(StrIEquals(name, "exe_a1")){
-		setImgButtonArgs(i, 
-			Prop_Value(value),
-			getImgButtonExeArg2(i),
-			getImgButtonExeArg3(i));
-		return;
-	}if(StrIEquals(name, "exe_a2")){
-		setImgButtonArgs(i, 
-			getImgButtonExeArg1(i),
-			Prop_Value(value),
-			getImgButtonExeArg3(i));
-		return;
-	}if(StrIEquals(name, "exe_a3")){
-		setImgButtonArgs(i, 
-			getImgButtonExeArg1(i),
-			getImgButtonExeArg2(i),
-			Prop_Value(value));
-		return;
-	}
-	*/
-}
-
-function void Label_setProps(int id, str props){
-	Parser_Read(props);
-	
-	for(int j = 0; j < propb_top; j++){
-		LabelProp_Parse(id, propb[j][0], propb[j][1]);
-	}
-	
 }

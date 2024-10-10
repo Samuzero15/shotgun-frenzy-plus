@@ -105,11 +105,12 @@
     },
     "acs_compilation": {
         "type": "acc",
-        "executeable": "..\\tools\\acc\\acc64.exe",
+        "executeable": "C:\\Users\\Usuario\\Desktop\\Samu Stuff\\Doom Stuff\\Projects\\shotgun-frenzy-plus\\tools\\acc\\acc64.exe",
         "gdcc-linker_exe": "value",
         "gdcc-make_libs": false,
         "gdcc-makelib_exe": "value",
         "gdcc-mainlib_name": "value",
+        "gdcc-target_engine": "",
         "extra_params": "",
         "library_dirs": []
     }

@@ -13,7 +13,7 @@ function int ArmItmPage_LoadGroup(int up, int id){
 
 function void ArmItmPage_Update(int pageTag){
 	setPageTitle(pageTag, "More items", CR_GOLD);
-	if(isOnTheSamePage(pageTag)){
+	if(SamuTerminal_isOnSamePage(pageTag)){
 		for(int i = 0; i < fp_itemshop_last[ITEMSHOP_ARMORY]; i++){
 			ArmItmPage_UpdateItem(fp_itemshop[ITEMSHOP_ARMORY][i]);
 		}
@@ -105,7 +105,7 @@ function void ArmItmPage_UpdateItem(int itemId){
 	int maximum = Item_getMax(itemid);
 	
 	str button = Item_getIBtnOrColor(itemid);
-	bool caniafford = GetPlayCredits() >= price;
+	bool caniafford = SFPlus_getPlayCredits() >= price;
 	
 	if(quantity == maximum)
 		Label_setText(i, "Max!");

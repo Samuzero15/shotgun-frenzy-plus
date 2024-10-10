@@ -7,7 +7,7 @@ int stimpage_vars[50];
 function void StimUpPage_Update(int pageTag) {
     setPageTitle(pageTag, "Stimpack Upgrades!", CR_CYAN);
 	
-	if(isOnTheSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_STIMPK)){
+	if(SamuTerminal_isOnSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_STIMPK)){
 		stimpage_vars[3] = 0;
 		for(int j = 0; j < StimUpTop; j++){
 			StimUpPage_UpdateComps(j);
@@ -84,7 +84,7 @@ function void StimUpPage_UpdateComps(int upgrade){
 	else return;
 	int topping = stimpage_vars[3];
 	
-	bool isaffordable = GetPlayCredits() >= price;
+	bool isaffordable = SFPlus_getPlayCredits() >= price;
 
 	Label_setColor(lname, cond(isaffordable, CR_WHITE, CR_RED));
 	Label_setColor(lprice, cond(isaffordable, CR_Green, CR_RED));

@@ -180,8 +180,6 @@
 #libdefine STEXE_GETWP 10
 #libdefine STEXE_GIVEWP -5
 
-#libdefine STEXE_LUP_NEXTP 11
-#libdefine STEXE_LUP_PREVP 12
 #libdefine STEXE_ASKUP 13
 #libdefine STEXE_MSGUP 14
 #libdefine STEXE_GETUP -6
@@ -399,4 +397,67 @@ function str langstring(str lang, int randme){
 	return string;
 }
 
-#include "samut_sfstoof.acs"
+// SFPlus Stuff
+function int SFPlus_getPlayCredits(void){
+	return CheckInventory("p_Money");
+}
+
+function int SFPlus_getPlayUPts(void){
+	return CheckInventory("p_UpPoint");
+}
+
+Function int SFPlus_getTeamCredits(void){
+	return CheckInventory("p_team_credits");
+}
+
+// Font measures for teh DBIGFONT Font. (By jimmy of coruse :D)
+
+function int StringWidth(str wut){
+	int res = 0;
+		str stringy = StripColorCodes(wut);
+		for(int i = 0; i < StrLen(stringy); i++)
+		{
+			res += DBIGFONT_CharWidth(getChar(stringy, i));
+		}
+	return res;
+}
+
+function int DBIGFONT_CharWidth(int c){
+	int res = 0;
+	switch(c){
+		
+		case 'I': case 'i':
+		case ' ':
+			res = 5;
+		break;
+		case 'L': case 'l':
+			res = 9;
+		break;
+		case 'G': case 'g':
+		case 'H': case 'h':
+		case 'M': case 'm':
+		case 'O': case 'o':
+		case 'Q': case 'q':
+		case 'W': case 'w':
+			res = 15;
+		break;
+		default: 
+		res = 13;
+		break;
+	}
+	return res;
+}
+
+function int CharHeight(int c){
+	int res = 0;
+	switch(c){
+		case 'Q': case 'q':
+			res = 15;
+		break;
+		default: 
+		res = 13;
+		break;
+	}
+	return res;
+}
+//Wish i could get a magic function to measure the charsize in pixels for any font.

@@ -31,7 +31,7 @@ int buywpn_wp_categories[BWPAGE_CATEGORIES];
 function void BuyWpnPage_Update(int pageTag){
 	setPageTitle(pageTag, "Buy Weapon Packs", CR_CYAN);
 	
-	if(isOnTheSamePage(pageTag)){
+	if(SamuTerminal_isOnSamePage(pageTag)){
 		BuyWpnPage_UpdateCats();
 		BuyWpnPage_UpdateBuyBut(buywpn_vars[BWPAGE_SELECTED_PACK]);
 		BuyWpnPage_UpdatePackButtons(buywpn_vars[BWPAGE_SELECTED_CATEGORY]);
@@ -75,14 +75,14 @@ function void BuyWpnPage_UpdateBuyBut(int wp){
 	str msg0, msg1, msg2;
 	
 	msg0 = strParam(s:"Cost: \cf", d:WeaponPack_getPrice(wp), s:"$");
-	msg1 = strParam(s:"Needs \ci", d:(WeaponPack_getPrice(wp) - GetPlayCredits()), s:"$ \cgmore!");
+	msg1 = strParam(s:"Needs \ci", d:(WeaponPack_getPrice(wp) - SFPlus_getPlayCredits()), s:"$ \cgmore!");
 	msg2 = strParam(s:"\chAlready owned");
 	
 	
 	StrButton_setShow(buywpn_vars[BWPAGE_BUYSTRBTN], 	false);
 	Label_setShow	 (buywpn_vars[BWPAGE_COSTLABEL], 	false);
 	
-	bool canibuy = GetPlayCredits() >= WeaponPack_getPrice(wp);
+	bool canibuy = SFPlus_getPlayCredits() >= WeaponPack_getPrice(wp);
 	
 	bool gotit = WeaponPack_isOwned(wp);
 	

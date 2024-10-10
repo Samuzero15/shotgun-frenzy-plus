@@ -41,7 +41,7 @@ function void UpdateListUpPage(int pageTag){
 	setPageTitle(pageTag, "Upgrade weapons", CR_CYAN);
 	
 	
-	if(IsOnTheSamePage(pagetag)){
+	if(SamuTerminal_isOnSamePage(pagetag)){
 		int category = listup_vars[UWPAGE_VAR_CURRENTCATEGORY];
 		ListUpPage_UpdateUpWeapons(category);
 	}else {

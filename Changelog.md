@@ -9,6 +9,10 @@
 
 ## v1 - The path of the damned...
 
+#### (9 / 10 / 2024) [Samuterm's refactoring, update pack-o-daemon]
+	*) Updated pack-o-daemon to the 1.7.2 version.
+	*) Reorganized files and compacted the code inside some few files for the Samu-Terminal.
+
 #### (4 / 10 / 2024) [New Upgrade page, and some terminal additions]
 	!*) The new upgrade page from the ammo terminal is done!
 	*) Some bit of a cleanup on the Samu terminal code, by renaming variables and packing them down to a array format.  (Just to reduce the variable map counter and to reduce the hardcoded variables)

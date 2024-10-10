@@ -7,7 +7,7 @@ int mechpage_vars[50];
 
 function void MechUpPage_Update(int pageTag){
 	setPageTitle(pageTag, "Mecha Factory Terminal", CR_CYAN);
-	if(isOnTheSamePage(pageTag)){
+	if(SamuTerminal_isOnSamePage(pageTag)){
 		mechpage_vars[49] = 0;
 		MechUpPage_UpdateStats();
 		if(CheckInventory("Mech_State") == 99){
@@ -129,7 +129,7 @@ function void MechUpPage_UpdateComps(int upgrade){
 	else return;
 	int topping = mechpage_vars[49];
 	
-	bool isaffordable = GetPlayCredits() >= price;
+	bool isaffordable = SFPlus_getPlayCredits() >= price;
 	// [Samu] Makes sense, you can't upgrade something that its already broken. 
 	if(CheckInventory("Mech_State") == 99){isaffordable = false;}
 	
