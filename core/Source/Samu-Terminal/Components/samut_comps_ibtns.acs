@@ -36,7 +36,8 @@ function int ImgButton_getExeHover(int bid){return RectGetUserData(ImgButton_get
 function int ImgButton_getExeHoverArg1(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP14);}
 function int ImgButton_getExeHoverArg2(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP15);}
 function int ImgButton_getExeHoverArg3(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP16);}
-function int ImgButton_getParent(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP10);}
+function int ImgButton_getParent(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP9);}
+function int ImgButton_getParentId(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP10);}
 function int ImgButton_getOffsetX(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP6);}
 function int ImgButton_getOffsetY(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP17);}
 function int ImgButton_getColor(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP18);}
@@ -45,6 +46,10 @@ function int ImgButton_getGrabState(int bid){return RectGetUserData(ImgButton_ge
 function int ImgButton_getTooltip(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP21);}
 function int ImgButton_getDrawMode(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP22);}
 function int ImgButton_getDispCharacter(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP23);}
+function bool ImgButton_isPanelAbsolute(int bid){
+	return ImgButton_getParent(bid) != -1 && 
+	panels_comps_index[ImgButton_getParent(bid)][ImgButton_getParentId(bid)][STPANEL_COMPDATA_ISABSOLUTE];
+}
 
 ///////////////////////////////////////
 // Setters for teh Image Buttons!    //
@@ -58,7 +63,8 @@ function void ImgButton_setImage(int bid, str img){SetRectUserData(ImgButton_get
 function void ImgButton_setHoverImage(int bid, str img){SetRectUserData(ImgButton_getRect(bid), ST_CPROP3, img);}
 function void ImgButton_setHudId(int bid, int hid){SetRectUserData(ImgButton_getRect(bid), ST_CPROP7, hid);}
 function void ImgButton_setExeHover(int bid, int execute){SetRectUserData(ImgButton_getRect(bid), ST_CPROP8, execute);}
-function void ImgButton_setParent(int bid, int parent){SetRectUserData(ImgButton_getRect(bid), ST_CPROP10, parent);}
+function void ImgButton_setParent(int bid, int parent){SetRectUserData(ImgButton_getRect(bid), ST_CPROP9, parent);}
+function void ImgButton_setParentId(int bid, int parent){SetRectUserData(ImgButton_getRect(bid), ST_CPROP10, parent);}
 function void ImgButton_setColor(int bid, int color){SetRectUserData(ImgButton_getRect(bid), ST_CPROP18, color);}
 function void ImgButton_setGrabable(int bid, int state){SetRectUserData(ImgButton_getRect(bid), ST_CPROP19, state);}
 function void ImgButton_setGrabState(int bid, int state){SetRectUserData(ImgButton_getRect(bid), ST_CPROP20, state);}

@@ -117,30 +117,26 @@ function void CheckPromptClick(void){
 	if(!inputDone) inputDone = ExecuteOnClick_IBtn(panels_scrollbuttons[prompt_data[STPROMPT_DATA_PANEL]][3]);
 	
 	if(!inputDone){
+		//log(s:"Oh no. Click on somewhere else");
 		localAmbientSound("SamuTerm/Error",127);
 	}
 }
 
 function bool ExecuteOnClick_IBtn(int i){
 	int sucess = false;
-	int rect =  ImgButton_getRect(i);
 	int panel = ImgButton_getParent(i);
-	if(ImgButton_getShow(i) == ST_Disabled || ImgButton_getExecute(i) == 0) return false;
-	
+	/*
+	log(s:ImgButton_GetImage(i), 
+		s:") Not Shown?=", d:!ImgButton_getShow(i) || (panel != -1 && !Panel_GetShow(panel)));
+		*/
+	if(!ImgButton_getShow(i) || (panel != -1 && !Panel_GetShow(panel))) return false;
+	bool isclicked = RectIsClicked(ImgButton_getRect(i),FIRE1);
 	if(panel != -1){
-		if(!(Panel_GetShow(panel) && Panel_ImgBtnIsClicked(panel, i, FIRE1)) &&
-			 !(Prompt_GetState() && RectIsClicked(rect,FIRE1))) return false;
-		
-		SamuTerm_CallOpExecute 
-		(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
-		ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
-		localAmbientSound("SamuTerm/Select",127);
-		sucess = true;
-		
-	}else if(RectIsClicked(rect,FIRE1)){
-		SamuTerm_CallOpExecute 
-			(ImgButton_getExecute(i), ImgButton_getExeArg1(i),  
-			ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
+		isclicked = Panel_ImgBtnIsClicked(panel, i, FIRE1);
+	} 
+	if(isclicked){
+		SamuTerm_CallOpExecute (ImgButton_getExecute(i), 
+			ImgButton_getExeArg1(i), ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
 		localAmbientSound("SamuTerm/Select",127);
 		sucess = true;
 	}
@@ -161,24 +157,15 @@ function void ExecuteOnHover_SBtn(int i){
 
 function bool ExecuteOnClick_SBtn(int i){
 	int sucess = false;
-	int rect = StrButton_getRect(i);
 	int panel = StrButton_getParent(i);
-	if(StrButton_getShow(i) != ST_Disabled){
-		if(panel != -1 && Panel_GetShow(panel) && Panel_StrBtnIsClicked(panel, i, FIRE1)){
-				SamuTerm_CallOpExecute 
-				(StrButton_getExecute(i), StrButton_getExeArg1(i),  
-				StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
-				localAmbientSound("SamuTerm/Select",127);
-				sucess = true;
-			
-		}else if(RectIsClicked(rect,FIRE1)){
-			SamuTerm_CallOpExecute 
-				(StrButton_getExecute(i), StrButton_getExeArg1(i),  
-				StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
-			//log(s:"You clicked a string button!");
-			localAmbientSound("SamuTerm/Select",127);
-			sucess = true;
-		}
+	if(!StrButton_getShow(i) || (panel != -1 && !Panel_GetShow(panel))) return false;
+	bool isclicked = RectIsClicked(StrButton_getRect(i),FIRE1);
+	if(panel != -1) isclicked = Panel_StrBtnIsClicked(panel, i, FIRE1);
+	if(isclicked){
+		SamuTerm_CallOpExecute (StrButton_getExecute(i), 
+			StrButton_getExeArg1(i), StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
+		localAmbientSound("SamuTerm/Select",127);
+		sucess = true;
 	}
 	return sucess;
 }

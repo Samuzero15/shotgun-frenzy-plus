@@ -37,11 +37,16 @@ function int StrButton_getColor(int bid){ return RectGetUserData(StrButton_getRe
 function int StrButton_getHudId(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP8); }
 function int StrButton_getBack(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP9); }
 function int StrButton_getParent(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP10); }
+function int StrButton_getParentId(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP6); }
 function int StrButton_getBackHudId(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP16); }
 function int StrButton_getExeHover(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP17); }
 function int StrButton_getExeHoverArg1(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP18); }
 function int StrButton_getExeHoverArg2(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP19); }
 function int StrButton_getExeHoverArg3(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP20); }
+function bool StrButton_isPanelAbsolute(int bid){
+	return StrButton_getParent(bid) != -1 && 
+	panels_comps_index[StrButton_getParent(bid)][StrButton_getParentId(bid)][STPANEL_COMPDATA_ISABSOLUTE];
+}
 
 /////////////////////////////////////
 // Setters for the String Buttons! //
@@ -60,6 +65,7 @@ function void StrButton_setHudId(int bid, int hudid){SetRectUserData(StrButton_g
 function void StrButton_setBackHudId(int bid, int hudid){SetRectUserData(StrButton_getRect(bid), ST_CPROP16, hudid);}
 function void StrButton_setBack(int bid, str back){SetRectUserData(StrButton_getRect(bid), ST_CPROP9, back);}
 function void StrButton_setParent(int bid, str panel){SetRectUserData(StrButton_getRect(bid), ST_CPROP10, panel);}
+function void StrButton_setParentId(int bid, str panel_id){SetRectUserData(StrButton_getRect(bid), ST_CPROP6, panel_id);}
 function void StrButton_setExeHover(int bid, int exe){ SetRectUserData(StrButton_getRect(bid), ST_CPROP17, exe); }
 
 

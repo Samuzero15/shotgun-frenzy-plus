@@ -13,13 +13,13 @@ function void SamuTerm_Update(void){
 	// (Like, dunno, showing your money n stuff?)
 	
 	UpdateCursor();
-	UpdatePrompt();
 	//log(s:"Last tag hiding...");
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
 	//log(s:"Current tag showing...");
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
 	
 	showByAlphaTag();
+	UpdatePrompt();
 	//UpdateDragBtns();
 	UpdatePages();
 }
@@ -28,8 +28,8 @@ Function void UpdatePrompt(void){
 	ImgButton_setShow(prompt_data[STPROMPT_DATA_OKBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_OKBTN])) && Prompt_GetState());
 	ImgButton_setShow(prompt_data[STPROMPT_DATA_YESBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_YESBTN])) && Prompt_GetState());
 	ImgButton_setShow(prompt_data[STPROMPT_DATA_NOBTN], (Panel_GetTag(prompt_data[STPROMPT_DATA_PANEL]) == ImgButton_getTag(prompt_data[STPROMPT_DATA_NOBTN])) && Prompt_GetState());
-	Label_setShow(prompt_data[STPROMPT_DATA_LABEL], Prompt_GetState());
-	Panel_setShow(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetState());
+	//Label_setShow(prompt_data[STPROMPT_DATA_LABEL], Prompt_GetState());
+	//Panel_setShow(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetState());
 	UpdatePanel(prompt_data[STPROMPT_DATA_PANEL], Prompt_GetState());
 }
 

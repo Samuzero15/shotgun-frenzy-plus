@@ -196,6 +196,13 @@ function void Panel_AddCompEX(int p, int type, int id, int numb_pos, int offx, i
 		pos[1] + spacing[1]*(count/columns) + offy);
 	}
 	
+	switch(type){
+		case STCOMP_IBTN: ImgButton_SetParentId(id, panel_comp_stack); break;
+		case STCOMP_SBTN: StrButton_SetParentId(id, panel_comp_stack); break;
+		case STCOMP_LBL: Label_SetParentId(id, panel_comp_stack); break;
+		case STCOMP_IMG: Image_SetParentId(id, panel_comp_stack); break;
+	}
+
 	Panel_AddCompNumber(p);
 	if(absolute) Panel_AddCompAbsNumber(p);
 }
@@ -234,27 +241,27 @@ function void Panel_MakeScrollButton(int i, int id, int x, int y, int scrollx, i
 
 function bool Panel_ImgBtnIsClicked(int panel, int ibtn, int key){
 	return Panel_ButtonIsClicked(panel, Imgbutton_GetX1Offseted(ibtn), Imgbutton_GetY1Offseted(ibtn), 
-		Imgbutton_GetX2Offseted(ibtn), Imgbutton_GetY2Offseted(ibtn), key);
+		Imgbutton_GetX2Offseted(ibtn), Imgbutton_GetY2Offseted(ibtn), key, ImgButton_isPanelAbsolute(ibtn));
 }
 
 function bool Panel_ImgBtnIsHovered(int panel, int ibtn)
 {
 	return Panel_ButtonIsClicked(panel, Imgbutton_GetX1Offseted(ibtn), Imgbutton_GetY1Offseted(ibtn), 
-		Imgbutton_GetX2Offseted(ibtn), Imgbutton_GetY2Offseted(ibtn), -1);
+		Imgbutton_GetX2Offseted(ibtn), Imgbutton_GetY2Offseted(ibtn), -1, ImgButton_isPanelAbsolute(ibtn));
 }
 
 function bool Panel_StrBtnIsClicked(int panel, int ibtn, int key){
 	return Panel_ButtonIsClicked(panel, Strbutton_GetX1Offseted(ibtn), Strbutton_GetY1Offseted(ibtn), 
-		Strbutton_GetX2Offseted(ibtn), Strbutton_GetY2Offseted(ibtn), key);
+		Strbutton_GetX2Offseted(ibtn), Strbutton_GetY2Offseted(ibtn), key, StrButton_isPanelAbsolute(ibtn));
 }
 
 function bool Panel_StrBtnIsHovered(int panel, int ibtn)
 {
 	return Panel_ButtonIsClicked(panel, Strbutton_GetX1Offseted(ibtn), Strbutton_GetY1Offseted(ibtn), 
-		Strbutton_GetX2Offseted(ibtn), Strbutton_GetY2Offseted(ibtn), -1);
+		Strbutton_GetX2Offseted(ibtn), Strbutton_GetY2Offseted(ibtn), -1, StrButton_isPanelAbsolute(ibtn));
 }
 
-function bool Panel_ButtonIsClicked(int panel, int btnx1, int btny1, int btnx2, int btny2, int key)
+function bool Panel_ButtonIsClicked(int panel, int btnx1, int btny1, int btnx2, int btny2, int key, bool absolute)
 {
 	int cursor[2] = {CursorX(), CursorY()};
 	int pan_clip[4] = { // Get the clipping points of the panel.
@@ -265,7 +272,9 @@ function bool Panel_ButtonIsClicked(int panel, int btnx1, int btny1, int btnx2, 
 	};
 	bool res;
 	bool intersects = !(pan_clip[0] >= btnx2 ||btnx1 >= pan_clip[2] || pan_clip[1] >= btny2 || btny1 >= pan_clip[3]);
-	//log(s:"Img Btn Offset: ( ", f:btnx1, s:", ", f:btny1, s:", ", f:btnx2, s:", ", f:btny2, s:" ) Intersercts? ", d:intersects);
+	/*log(s:"Pan_Clip (", f:pan_clip[0], s:", ", f:pan_clip[1], s:", ", f:pan_clip[2], s:", ", f:pan_clip[3], 
+		s:"), Img Btn Offset: ( ", f:btnx1, s:", ", f:btny1, s:", ", f:btnx2, s:", ", f:btny2, s:" ) Intersercts? ", d:intersects);
+	*/
 	if(intersects){
 		int clip_rect[4] = {
 		max(pan_clip[0], btnx1),
@@ -278,14 +287,19 @@ function bool Panel_ButtonIsClicked(int panel, int btnx1, int btny1, int btnx2, 
 		//log(s:" Cursor: ( ", f:cursor[0], s:",", f:cursor[1], s:") \n Cursor Inside? ", d:cursor_inside);
 		if(key == -1){
 			res = cursor_inside;
-			/*if(res){
-				
-			}*/
 		}else {
 			res = cursor_inside && KeyPressed(key);
 		}
 	}else{
 		res = false;
+		if(absolute){
+			bool cursor_inside_abs = cursor[0] > btnx1 && cursor[0] < btnx2 && cursor[1] > btny1 && cursor[1] < btny2;
+			if(key == -1){
+				res = cursor_inside_abs;
+			}else {
+				res = cursor_inside_abs && KeyPressed(key);
+			}
+		}
 	}
 	return res;
 }

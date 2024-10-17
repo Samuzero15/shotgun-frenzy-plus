@@ -446,7 +446,7 @@ function void SamuTerm_Display(void){
 	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_PANEL);
 	
 	//if(Prompt_GetState()) ShowPrompt();
-	if(Prompt_GetState()) if(Panel_getShow(prompt_data[STPROMPT_DATA_PANEL])) ShowPanel(prompt_data[STPROMPT_DATA_PANEL]);
+	if(Prompt_GetState()) ShowPanel(prompt_data[STPROMPT_DATA_PANEL]);
 	ShowCursor();
 }
 

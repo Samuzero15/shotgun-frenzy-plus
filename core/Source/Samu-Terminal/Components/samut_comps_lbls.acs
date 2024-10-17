@@ -17,12 +17,17 @@ function int Label_getShow(int bid){return RectGetUserData(Label_getRect(bid), S
 function str Label_getFont(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP4);}
 function int Label_getColor(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP5);}
 function int Label_getParent(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP6);}
+function int Label_getParentId(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP7);}
 function int Label_getAlignX(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP11);}
 function int Label_getAlignY(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP12);}
 function int Label_getHudId(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP8);}
 function int Label_getWrapWidth(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP9);}
 function int Label_getOffsetX(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP13);}
 function int Label_getOffsetY(int bid){return RectGetUserData(Label_getRect(bid), ST_CPROP14);}
+function bool Label_isPanelAbsolute(int bid){
+	return Label_getParent(bid) != -1 && 
+	panels_comps_index[Label_getParent(bid)][Label_getParentId(bid)][STPANEL_COMPDATA_ISABSOLUTE];
+}
 
 ///////////////////////////////////////
 // Setters from Labels!
@@ -36,20 +41,20 @@ function void Label_setShow(int bid, bool visible){SetRectUserData(Label_getRect
 function void Label_setFont(int bid, str font){SetRectUserData(Label_getRect(bid), ST_CPROP4, Font);}
 function void Label_setColor(int bid, int color){SetRectUserData(Label_getRect(bid), ST_CPROP5, color);}
 function void Label_setParent(int bid, int parent){SetRectUserData(Label_getRect(bid), ST_CPROP6, parent);}
+function void Label_setHudID(int bid, int hudId){SetRectUserData(Label_getRect(bid), ST_CPROP8, hudId);}
+function void Label_setWrapWidth(int bid, int wrap){SetRectUserData(Label_getRect(bid), ST_CPROP9, wrap);}
+function void Label_setParentId(int bid, int pid){SetRectUserData(Label_getRect(bid), ST_CPROP7, pid);}
 
 function void Label_setAligns(int bid, int alx, int aly){
 	SetRectUserData(Label_getRect(bid), ST_CPROP11, alx);
 	SetRectUserData(Label_getRect(bid), ST_CPROP12, aly);
 }
 
-function void Label_setHudID(int bid, int hudId){SetRectUserData(Label_getRect(bid), ST_CPROP8, hudId);}
-
 function void Label_setOffsets(int bid, int offx, int offy){
 	SetRectUserData(Label_getRect(bid), ST_CPROP13, offx);
 	SetRectUserData(Label_getRect(bid), ST_CPROP14, offy);
 }
-function void Label_setWrapWidth(int bid, int wrap){SetRectUserData(Label_getRect(bid), ST_CPROP9, wrap);}
-function void Label_setParentId(int bid, int pid){SetRectUserData(Label_getRect(bid), ST_CPROP7, pid);}
+
 
 /////////////////////////
 // Label functions!    //
