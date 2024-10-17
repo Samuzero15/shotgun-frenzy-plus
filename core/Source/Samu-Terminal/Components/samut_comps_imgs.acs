@@ -32,22 +32,9 @@ function void Image_setRect(int bid, int rect){comp_rects_many[STCOMP_IMG][bid] 
 function void Image_setTag(int bid, int tag){SetRectUserData(Image_getRect(bid), ST_CPROP1, tag);}
 function void Image_setPosition(int bid, int x, int y){SetRectPosition(Image_getRect(bid), x, y);}
 function void Image_setFile(int bid, str file){SetRectUserData(Image_getRect(bid), ST_CPROP2, file);}
-function void Image_setShow(int bid, bool visible){Image_setShowEx(bid, visible, true);}
 function void Image_setParent(int bid, int parent){SetRectUserData(Image_getRect(bid), ST_CPROP4, parent);}
 function void Image_setHudID(int bid, int hudId){SetRectUserData(Image_getRect(bid), ST_CPROP7, hudId);}
-
-function void Image_setShowEx(int bid, bool visible, bool update_panel_flag){
-	int p = Image_GetParent(bid);
-	if(p != -1 && update_panel_flag){
-		for (int i = 0 ; i < Panel_GetNumberOfComps(p); i++){
-			if(panels_comps_index[p][i][1] == bid && panels_comps_index[p][i][0] == STCOMP_IMG){
-				log(d:bid, s:") Change Panel flag Image Visible: ", d:visible);
-				panels_comps_index[p][i][3] = visible;
-			} 
-		}
-	}
-	SetRectUserData(Image_getRect(bid), ST_CPROP3, visible);
-}
+function void Image_setShow(int bid, bool visible){SetRectUserData(Image_getRect(bid), ST_CPROP3, visible);}
 
 function void Image_setAligns(int bid, int alx, int aly){
 	SetRectUserData(Image_getRect(bid), ST_CPROP11, alx);

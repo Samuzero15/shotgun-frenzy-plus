@@ -77,6 +77,7 @@ function void SamuTerm_Say(str msg){
 
 function void ShowImgButton (int bid){
 	//log(s:"I am Being called.");
+	if(!ImgButton_GetShow(bid)) return;
 	int p = ImgButton_getParent(bid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 
@@ -150,7 +151,7 @@ function void ShowImgButton (int bid){
 }
 
 function void ShowLabel (int lid){
-	//log(s:"I am Being called.");
+	if(!Label_GetShow(lid)) return;
 	int p = Label_getParent(lid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 
@@ -179,6 +180,7 @@ function void ShowLabel (int lid){
 }
 
 function void ShowImage (int iid){
+	if(!Image_GetShow(iid)) return;
 	int p = Image_getParent(iid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 	
@@ -208,7 +210,8 @@ function void ShowImage (int iid){
 
 function void ShowStrButton (int sbid){
 	//log(s:"Printing string button: ", d:sbid);
-	
+	//if(sbid == 18) log(s:"Showing state: ", d:StrButton_GetShow(sbid));
+	if(!StrButton_GetShow(sbid)) return;
 	int p = StrButton_GetParent(sbid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 
@@ -330,7 +333,7 @@ function void ShowCursor(void){
 }
 
 function void ShowPanel (int pid){
-	
+	if(!Panel_GetShow(pid)) return;
 	int xpos = Panel_getX(pid);
 	int ypos = Panel_getY(pid);
 	int width = Panel_getWidth(pid);
@@ -384,12 +387,12 @@ function void ShowPanel (int pid){
 		//log(s:"virtual offset: (",f:Panel_GetVirtualOffsetX(pid),s:", ",f:Panel_GetVirtualOffsetY(pid),s:")");
 		// (width>>16)-16 on the fifth parameter works great for toggling wordwrapping for labels.
 		
-		int component = panels_comps_index[pid][i][1];
-		int absolute_pos = panels_comps_index[pid][i][2];
-		switch (panels_comps_index[pid][i][0]){
+		int component = panels_comps_index[pid][i][STPANEL_COMPDATA_ID];
+		int absolute_pos = panels_comps_index[pid][i][STPANEL_COMPDATA_ISABSOLUTE];
+		switch (panels_comps_index[pid][i][STPANEL_COMPDATA_TYPE]){
 			case STCOMP_IBTN:
 				//log(s:"Parent show? ", d:ImgButton_GetParent(component) == pid, s:", Component show? ", d:ImgButton_GetShow(component));
-				if(ImgButton_GetParent(component) == pid && ImgButton_GetShow(component)){
+				if(ImgButton_GetParent(component) == pid){
 					if(absolute_pos)
 						SetHudClipRect(0,0,0,0,0);
 					ShowImgButton(component);
@@ -397,7 +400,7 @@ function void ShowPanel (int pid){
 					
 			break;
 			case STCOMP_LBL: 
-				if(Label_GetParent(component) == pid && Label_GetShow(component)){
+				if(Label_GetParent(component) == pid){
 					int ww = Label_GetWrapWidth(component);
 					Panel_ApplyClipRect(pid, ww > 0 ? ww : 0);
 					if(absolute_pos){
@@ -408,7 +411,7 @@ function void ShowPanel (int pid){
 					
 			break;
 			case STCOMP_IMG: 
-				if(Image_GetParent(component) == pid && Image_GetShow(component)){
+				if(Image_GetParent(component) == pid){
 					if(absolute_pos)
 						SetHudClipRect(0,0,0,0,0);
 					ShowImage(component);
@@ -416,7 +419,7 @@ function void ShowPanel (int pid){
 					
 			break;
 			case STCOMP_SBTN: 
-				if(StrButton_GetParent(component) == pid && StrButton_GetShow(component)){
+				if(StrButton_GetParent(component) == pid){
 					if(absolute_pos)
 						SetHudClipRect(0,0,0,0,0);
 					ShowStrButton(component);
@@ -436,27 +439,29 @@ function void SamuTerm_Display(void){
 	ShowBackground();
 	
 	int i = 0;
-	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
-		if(ImgButton_getShow(i)) ShowImgButton(i);		
-	}
-
-	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
-		if(StrButton_getShow(i)) ShowStrButton(i);
-	}
-	
-	for (i = 0; i < comp_count[STCOMP_LBL]; i++){
-		if(Label_getShow(i)) ShowLabel(i);
-	}
-	
-	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
-		if(Image_getShow(i)) ShowImage(i);
-	}
-	
-	for(i = 0; i < panel_count; i++){
-		if(Panel_getShow(i)) ShowPanel(i);
-	}
+	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_IBTN);
+	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_SBTN);
+	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_LBL);
+	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_IMG);
+	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_PANEL);
 	
 	//if(Prompt_GetState()) ShowPrompt();
 	if(Prompt_GetState()) if(Panel_getShow(prompt_data[STPROMPT_DATA_PANEL])) ShowPanel(prompt_data[STPROMPT_DATA_PANEL]);
 	ShowCursor();
+}
+
+function void SamuTerm_Display_Comp(int type, int id){
+	switch(type){
+		case STCOMP_IBTN: if(ImgButton_GetParent(id) == -1) ShowImgButton(id); break;
+		case STCOMP_SBTN: if(StrButton_GetParent(id) == -1) ShowStrButton(id); break;
+		case STCOMP_LBL: if(Label_GetParent(id) == -1)  ShowLabel(id); break;
+		case STCOMP_IMG: if(Image_GetParent(id) == -1) ShowImage(id); break;
+		case STCOMP_PANEL: ShowPanel(id); break;
+	}
+}
+
+Script "SamuTerm_Display_Comps" (int type) Clientside{
+	for (int i = 0; i < comp_count[type]; i++){
+		SamuTerm_Display_Comp(type, i);
+	}
 }

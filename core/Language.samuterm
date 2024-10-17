@@ -11,6 +11,9 @@ SAMUT_ARMSTERM_NOACCESS_TITLE = "Upgrades not avilable.";
 SAMUT_ARMSTERM_NOACCESS_LABEL =  "\n\n\n\nEither you upgraded all your guns, or you don't have the basic ones. "
                                  "\n                         Try it next time...";
 
+SAMUT_ARMSTERM_NOACCESS_RCY_TITLE = "No weapons to Recycle.";
+SAMUT_ARMSTERM_NOACCESS_RCY_LABEL =  "Get a weapon first from the buy weapon page, and try again.";
+
 SAMUT_HEALTERM_NOACCESS_TITLE = "Access Denied";
 SAMUT_HEALTERM_NOACCESS_LABEL1 = "Stimpacks are not researched yet";
 SAMUT_HEALTERM_NOACCESS_LABEL2 = "This page is not available at the moment, come back later.";

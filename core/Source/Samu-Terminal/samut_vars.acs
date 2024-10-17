@@ -171,6 +171,7 @@
 #libDefine STEXE_MOVERC 36
 #libDefine STEXE_MSGRC 16
 #libDefine STEXE_ASKRC 15
+#libDefine STEXE_LABELRC 80
 
 #libDefine STEXE_BUYWP_PDESC 8
 #libDefine STEXE_BUYWP_PSHOW 35
@@ -227,12 +228,13 @@
 #libdefine STCOMP_LBL 1
 #libdefine STCOMP_IMG 2
 #libdefine STCOMP_SBTN 3
+#libdefine STCOMP_PANEL 4
 
 #libdefine STCOMP_CURSOR 0
 #libdefine STCOMP_PROMPT 1
 #libdefine STCOMP_TOAST 2
 //		Just to track the array limits.
-#libdefine STVARS_COMPCOUNT 4
+#libdefine STVARS_COMPCOUNT 5
 #libdefine STVARS_COMPCOUNT1 3
 #libdefine STVARS_TMP 10
 
@@ -283,7 +285,6 @@ int comp_rects_once[STVARS_COMPCOUNT1];
 #libdefine STPANEL_COMPDATA_ANCHORX 5
 #libdefine STPANEL_COMPDATA_ANCHORY 6
 
-int panel_count = 0;
 int panels[STPANEL_COUNT_INDEX];
 int panels_scrollbuttons[STPANEL_COUNT_INDEX][STPANEL_COUNT_SCROLLBTNS];
 int panels_comps_index[STPANEL_COUNT_INDEX][STPANEL_COUNT_CONTENT][STPANEL_COUNT_PROPS];
@@ -359,14 +360,20 @@ function void Vars_ClearTmps(void){
 
 function void Vars_ClearCompCounts(void){
 	int i, j;
+	for (i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
+		comp_propsave[i] = 0;
+	}
 	for (i = 0; i < STVARS_COMPCOUNT; i++){
 		comp_count[i] = 0;
 		for (j = 0; j < ST_NCOMPS; j++){
 			comp_rects_many[i][j] = 0;
 		}
+	}
+	
+	for (i = 0; i < STVARS_COMPCOUNT1; i++){
 		comp_rects_once[i] = 0;
 	}
-	panel_count = 0;
+
 	for (i = 0; i < STPANEL_COUNT_INDEX; i++){
 		panels[i] = 0;
 		for (j = 0; j < STPANEL_COUNT_SCROLLBTNS; j++){

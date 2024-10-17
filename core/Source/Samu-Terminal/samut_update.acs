@@ -14,8 +14,11 @@ function void SamuTerm_Update(void){
 	
 	UpdateCursor();
 	UpdatePrompt();
+	//log(s:"Last tag hiding...");
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
+	//log(s:"Current tag showing...");
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
+	
 	showByAlphaTag();
 	//UpdateDragBtns();
 	UpdatePages();
@@ -32,7 +35,9 @@ Function void UpdatePrompt(void){
 
 Function void ShowByAlphaTag(void){
 	int i, compTag;
+	//log(s:"0 tag showing...");
 	HideOrShowByTag(0, true);
+	//log(s:"Alpha tag showing...");
 	HideOrShowByTag(pagetags[STTAGS_ALPHA], true);
 }
 
@@ -48,12 +53,15 @@ function void UpdateDragBtns(void){
 Function void HideOrShowByTag(int tag, bool show){
 	int i, compTag;
 	for (i = 0; i < comp_count[STCOMP_IBTN]; i++){
-		if(i == prompt_data[STPROMPT_DATA_YESBTN] || i == prompt_data[STPROMPT_DATA_NOBTN] || i == prompt_data[STPROMPT_DATA_OKBTN]) continue;
+		if(i == prompt_data[STPROMPT_DATA_YESBTN] 
+			|| i == prompt_data[STPROMPT_DATA_NOBTN] 
+			|| i == prompt_data[STPROMPT_DATA_OKBTN]) continue;
 		if(ImgButton_getTag(i) == tag) ImgButton_setShow(i, show);
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
 		if(StrButton_getTag(i) == tag) StrButton_setShow(i, show);
+		
 	}
 	
 	for (i = 0; i < comp_count[STCOMP_LBL]; i++){
@@ -65,7 +73,10 @@ Function void HideOrShowByTag(int tag, bool show){
 	for (i = 0; i < comp_count[STCOMP_IMG]; i++){
 		if(Image_getTag(i) == tag) Image_setShow(i, show);
 	}
-	UpdatePanels(tag, show);
+
+	for (i = 0; i < comp_count[STCOMP_PANEL]; i++){
+		if(Panel_GetTag(i) == tag) UpdatePanel(i, show);
+	}
 }
 
 function void UpdatePanel(int pan,int show){
@@ -79,53 +90,29 @@ function void UpdatePanel(int pan,int show){
 	int x = Panel_GetAnchorPointX(pan);
 	int y = Panel_GetAnchorPointY(pan);
 	for(int i = 0; i < Panel_GetNumberOfComps(pan); i++){
-		int component = panels_comps_index[pan][i][STPANEL_COMPDATA_ID];
-		int panshow = Panel_GetShow(pan);
-		//int is_absolute = panels_comps_index[pan][i][STPANEL_COMPDATA_ISABSOLUTE];
-		int comp_show = panels_comps_index[pan][i][STPANEL_COMPDATA_SHOWSTATUS];
-		int is_anchored = panels_comps_index[pan][i][STPANEL_COMPDATA_ISANCHORED];
-		
-		// Check if the component is a label, a imgbutton, an img or a strbutton.
-		switch (panels_comps_index[pan][i][STPANEL_COMPDATA_TYPE]){
-			case STCOMP_IBTN:
-				if(ImgButton_GetParent(component) == pan){
-					ImgButton_setShowEx(component, panshow == false ? false : comp_show, false);
-					if(is_anchored) 
-						ImgButton_setOffsets(component, x, y);
-				}
-			break;
-			case STCOMP_LBL: 
-				if(Label_GetParent(component) == pan){
-					Label_setShowEx(component, !panshow ? false : comp_show, false);
-					if(is_anchored) 
-						Label_setOffsets(component, x, y);
-				}
-			break;
-			case STCOMP_IMG: 
-				if(Image_GetParent(component) == pan){
-					//log(s:"Panel show? ", d:show, s:" Image button, Component show? ", d:comp_show,  s:", Result? ",d:!show ? false : comp_show);
-					Image_setShowEx(component, !panshow ? false : comp_show, false);
-					if(is_anchored) 
-						Image_setOffsets(component, x, y);
-				}
-			break;
-			case STCOMP_SBTN: 
-				if(StrButton_GetParent(component) == pan){
-					StrButton_setShowEx(component, !panshow ? false : comp_show, false);
-					if(is_anchored) 
-						StrButton_setOffsets(component, x, y);
-				}
-			break;
-		}
+		Panel_UpdateOffsets(pan, i, x, y);
 	}
 	//log(s:"Panel Update Done");
 }
 
-function void UpdatePanels(int tag, int show){
-	for (int pan = 0; pan < panel_count; pan++){
-		int comptag = Panel_GetTag(pan);
-		if(comptag == tag){
-			UpdatePanel(pan, show);
-		}
+function void Panel_UpdateOffsets(int pan, int comp, int x, int y){
+	int component = panels_comps_index[pan][comp][STPANEL_COMPDATA_ID];
+	int is_anchored = panels_comps_index[pan][comp][STPANEL_COMPDATA_ISANCHORED];
+	if(!is_anchored) return;
+	
+	// Check if the component is a label, a imgbutton, an img or a strbutton.
+	switch (panels_comps_index[pan][comp][STPANEL_COMPDATA_TYPE]){
+		case STCOMP_IBTN:
+			if(ImgButton_GetParent(component) == pan) ImgButton_setOffsets(component, x, y);
+		break;
+		case STCOMP_LBL: 
+			if(Label_GetParent(component) == pan) Label_setOffsets(component, x, y);
+		break;
+		case STCOMP_IMG: 
+			if(Image_GetParent(component) == pan) Image_setOffsets(component, x, y);
+		break;
+		case STCOMP_SBTN: 
+			if(StrButton_GetParent(component) == pan) StrButton_setOffsets(component, x, y);
+		break;
 	}
 }

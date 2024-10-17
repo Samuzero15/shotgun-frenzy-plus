@@ -132,6 +132,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_MOVERC: STExecute_RecycleMove(arg1, arg2); break;
 		case STEXE_MSGRC: StExecute_RecycleAccepted(arg1, arg2); break;
 		case STEXE_ASKRC: StExecute_AskForRecycle(arg1, arg2); break;
+		case STEXE_LABELRC: StExecute_LabelWepRecycle(arg1, arg2); break;
 		
 		case STEXE_GETUP: StExecute_UpgradeWeapon(arg1, arg2); break;
 		case STEXE_MSGUP: StExecute_UpgradeAccepted(arg1, arg2); break;

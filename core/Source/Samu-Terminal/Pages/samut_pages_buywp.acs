@@ -106,26 +106,25 @@ function void BuyWpnPage_InitCats(int card1){
 	i = StrButton_addCard (card1, 1, " Standard ");
 		StrButton_setColor(i, CR_GREEN);
 		StrButton_setTag  (i, buywpn_vars[BWPAGE_TAG]);
-		StrButton_setShow (i, false);
 		StrButton_setExecute(i, STEXE_BUYWP_PSHOW);
 		StrButton_setExeArgs(i, WEAPON_SET_STANDARD,0,0);
 	buywpn_wp_categories[0] = i;
 
 	i = StrButton_DupCard(i, card1, 2);
 		StrButton_setColor(i, CR_CYAN);
-		StrButton_setTextAdj(i, " Advanced ");
+		StrButton_setText(i, " Advanced ");
 		StrButton_setExeArgs(i, WEAPON_SET_ADVANCED,0,0);
 	buywpn_wp_categories[1] = i;
 	
 	i = StrButton_DupCard(i, card1, 3);
 		StrButton_setColor(i, CR_ORANGE);
-		StrButton_setTextAdj(i, "Powerguns");
+		StrButton_setText(i, "Powerguns");
 		StrButton_setExeArgs(i, WEAPON_SET_OVERPOWERED,0,0);
 	buywpn_wp_categories[2] = i;
 	/*
 	i = StrButton_DupCard(card1, 4);
 	StrButton_setColor(i, CR_Gold);
-	StrButton_setTextAdj(i, "  Elite  ");
+	StrButton_setText(i, "  Elite  ");
 	buywpn_wp_categories[3] = i;
 	*/
 }
@@ -142,6 +141,7 @@ function void BuyWpnPage_UpdatePackDetails(int selected, int whichweapon){
 		Label_setShow(buywpn_vars[BWPAGE_WPPACK_DESC], false);
 		return;
 	}
+	Label_setShow(buywpn_vars[BWPAGE_WPPACK_DESC], true);
 	
 	Panel_setTitle(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL],  strparam(s:WeaponPack_getName(selected), s:" pack"));
 	Label_setText(buywpn_vars[BWPAGE_WPPACK_DESC], WeaponPack_getDesc(selected));
@@ -216,6 +216,7 @@ function void BuyWpnPage_InitPackPanelDetails(void){
 		Label_SetAligns		(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 		Label_setTag		(i, buywpn_vars[BWPAGE_TAG]);
 		Label_setWrapWidth	(i, 280);
+		Label_setShow		(i, true);
 	buywpn_vars[BWPAGE_WPPACK_DESC] = i;
 
 	i = Label_AddToPanelOff		(p, 0.0, 10.0); // Weapon 1 desc
@@ -224,6 +225,7 @@ function void BuyWpnPage_InitPackPanelDetails(void){
 		Label_setWrapWidth	(i, -1);
 		Label_SetAligns		(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 		Label_setTag		(i, buywpn_vars[BWPAGE_TAG]);
+		Label_setShow		(i, true);
 	buywpn_vars[BWPAGE_WPPACK_WEAP_NAME] = i;
 	
 	i = Label_DupToPanel	(i, p); // Weapon 1 name
@@ -295,7 +297,7 @@ function void BuyWpnPage_UpdatePackButtons(int category){
 	for (i = buywpn_vars[BWPAGE_CURRENT_PAGE]*BWPAGE_WPPACK_PERPAGE; i < fp_WpCategoryStack[category] && stack < BWPAGE_WPPACK_PERPAGE; i++){
 		wp = fp_WpCategory[category][i];
 		StrButton_setExeArgs(buywpn_wp_packbtns[stack], wp, 0, 0);
-		StrButton_setTextAdj(buywpn_wp_packbtns[stack], WeaponPack_getName(wp));
+		StrButton_setTextAdjust(buywpn_wp_packbtns[stack], WeaponPack_getName(wp));
 		StrButton_setColor(buywpn_wp_packbtns[stack], 
 		BuyWpnPage_getColorCat(category));
 		StrButton_setShow(buywpn_wp_packbtns[stack], true);

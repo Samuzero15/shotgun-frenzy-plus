@@ -235,15 +235,28 @@ function void STExecute_RecycleWeapon(int weapon, int uptype, int play){
 }
 
 function void STExecute_RecycleMove(int dir, int cap){	
-	 // Remember, all properties are ranged in 0-255!
-	if(dir == 255) dir = -1;
-	rcywpn_vars[3] = rcywpn_vars[3] + dir;
-	if (rcywpn_vars[3] > cap){
-		rcywpn_vars[3] = 0;
+	rcywpn_vars[RWPAGE_VAR_CURRPAGE] = rcywpn_vars[RWPAGE_VAR_CURRPAGE] + dir;
+	if (rcywpn_vars[RWPAGE_VAR_CURRPAGE] > cap){
+		rcywpn_vars[RWPAGE_VAR_CURRPAGE] = 0;
 	} 
-	else if (rcywpn_vars[3] < 0){
-		rcywpn_vars[3] = cap;
+	else if (rcywpn_vars[RWPAGE_VAR_CURRPAGE] < 0){
+		rcywpn_vars[RWPAGE_VAR_CURRPAGE] = cap;
 	} 
+}
+
+function void StExecute_LabelWepRecycle(int wep, int up) {
+	str weapon_name = Weapon_GetName(wep);
+	str wepup_type_str = "\cjBase Weapon";
+	int price = Weapon_GetPrice(wep);
+	int color = term_catStyle[Weapon_GetCat(wep)][TERM_CATSTYLE_COLOR];
+	if(up != -1){
+		weapon_name = WeaponUpgrade_GetName(wep, up);
+		wepup_type_str = strparam(s:"\cjWeapon Upgrade type ", d:up+1);
+		price = WeaponUpgrade_GetRcyPrice(wep, up);
+	} 
+	Label_SetText(rcywpn_vars[RWPAGE_LABEL_WEAPONRCY], 
+		strparam(s:wepup_type_str, s:"\n", s:weapon_name, s:"\n\cfRecycle Price: ", d:price, s:" Credits"));
+	Label_SetColor(rcywpn_vars[RWPAGE_LABEL_WEAPONRCY], color);
 }
 
 ////////////////////////////////////////////////////////////////

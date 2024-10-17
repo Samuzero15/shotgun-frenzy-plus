@@ -38,6 +38,10 @@ function int StrButton_getHudId(int bid){ return RectGetUserData(StrButton_getRe
 function int StrButton_getBack(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP9); }
 function int StrButton_getParent(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP10); }
 function int StrButton_getBackHudId(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP16); }
+function int StrButton_getExeHover(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP17); }
+function int StrButton_getExeHoverArg1(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP18); }
+function int StrButton_getExeHoverArg2(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP19); }
+function int StrButton_getExeHoverArg3(int bid){ return RectGetUserData(StrButton_getRect(bid), ST_CPROP20); }
 
 /////////////////////////////////////
 // Setters for the String Buttons! //
@@ -56,14 +60,10 @@ function void StrButton_setHudId(int bid, int hudid){SetRectUserData(StrButton_g
 function void StrButton_setBackHudId(int bid, int hudid){SetRectUserData(StrButton_getRect(bid), ST_CPROP16, hudid);}
 function void StrButton_setBack(int bid, str back){SetRectUserData(StrButton_getRect(bid), ST_CPROP9, back);}
 function void StrButton_setParent(int bid, str panel){SetRectUserData(StrButton_getRect(bid), ST_CPROP10, panel);}
+function void StrButton_setExeHover(int bid, int exe){ SetRectUserData(StrButton_getRect(bid), ST_CPROP17, exe); }
+
 
 function void StrButton_setShowEx(int bid, bool show, bool update_panel_flag){
-	int p = StrButton_GetParent(bid);
-	if(p != -1 && update_panel_flag){
-		for (int i = 0 ; i < Panel_GetNumberOfComps(p); i++){
-			if(panels_comps_index[p][i][1] == bid && panels_comps_index[p][i][0] == STCOMP_SBTN) panels_comps_index[p][i][3] = show;
-		}
-	}
 	SetRectUserData(StrButton_getRect(bid), ST_CPROP4, show);
 }
 
@@ -78,26 +78,38 @@ function void StrButton_setOffsets(int bid, int x, int y){
 	SetRectUserData(StrButton_getRect(bid), ST_CPROP15, y);
 }
 
+function void StrButton_setTextAdjust(int bid, str text){
+	StrButton_setText(bid,text);
+	StrButton_Setup(bid);
+}
+
+function void StrButton_setExeHoverArgs(int bid, int arg1, int arg2, int arg3){ 
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP18, arg1);
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP19, arg2);
+	SetRectUserData(StrButton_getRect(bid), ST_CPROP20, arg3);
+}
+
 //////////////////////////
 // StrButton Functions! //
 //////////////////////////
 
 function int StrButton_Add(int x, int y, str string){
-	StrButton_Setup (string);
-
+	//StrButton_Setup (string);
 	int id = Component_Allocate(STCOMP_SBTN, x, y, tmp[0], tmp[1]);
 	if(id != -1){
 		StrButton_SetDefaultProps(id);
-		StrButton_setText(id,string);
-		StrButton_setBack(id,tmp[2]);
+		StrButton_setTextAdjust(id,string);
 	}
-	
 	return id;
 }
 
 function int StrButton_AddMid(int x, int y, str string){
-	StrButton_Setup (string);
-	return StrButton_Add(x - (fixedDiv(tmp[0], 2.0) - 2.0), y - (fixedDiv(tmp[1], 2.0) - 2.0), string);
+	//StrButton_Setup (string);
+	int sbid = StrButton_Add(x, y - (fixedDiv(tmp[1], 2.0) - 2.0), string);
+	StrButton_SetPosition(sbid, 
+		x - (fixedDiv(StrButton_GetWidth(sbid), 2.0) - 2.0), 
+		y - (fixedDiv(StrButton_GetHeight(sbid), 2.0) - 2.0));
+	return sbid;
 }
 
 function int StrButton_AddGrid(int grid, int row, int col,str string){
@@ -117,11 +129,13 @@ function int StrButton_AddGridOff(int card, int row, int col, str string, int of
 }
 
 function int StrButton_Dup(int copy, int x, int y){
-	Component_Save(StrButton_getRect(copy));
-	int id = Component_Allocate(STCOMP_SBTN, x, y, 0.0, 0.0);
+	int comp_rect = StrButton_getRect(copy);
+	Component_Save(comp_rect);
+	int id = Component_Allocate(STCOMP_SBTN, x, y, RectWidth(comp_rect), RectHeight(comp_rect));
 	if(id != -1){
+		
 		Component_Load(id, StrButton_getRect(id));
-		//StrButton_Setup(StrButton_getText(id));
+		StrButton_Setup(StrButton_getText(id));
 		//StrButton_SetDimensions(id, tmp[0], tmp[1]);
 	}
 	return id;
@@ -145,7 +159,7 @@ function int StrButton_AddToPanelEX (str string, int panel, int pos, int offx, i
 		StrButton_SetDefaultProps(id);
 		//StrButton_SetDimensions(id, tmp[0], tmp[1]);
 		//StrButton_SetBack(id, tmp[2]);
-		StrButton_setText(id,string);
+		StrButton_setTextAdjust(id,string);
 		StrButton_SetParent(id, panel);
 		
 		Panel_AddCompEx(panel, STCOMP_SBTN, id, pos, offx, offy, absolute);
@@ -159,8 +173,9 @@ function int StrButton_DupToPanelOff (int copy, int panel, int offx, int offy) {
 function int StrButton_DupToPanelPos (int copy, int panel, int pos) 	 {return StrButton_DupToPanelEX (copy, panel, pos, 0.0, 0.0, false);}
 function int StrButton_DupToPanel (int copy, int panel) 				  {return StrButton_DupToPanelEX (copy, panel, -1, 0.0, 0.0, false);}
 function int StrButton_DupToPanelEX(int copy, int panel, int pos, int offx, int offy, bool absolute){
-	Component_Save(StrButton_getRect(copy));
-	int id = Component_Allocate(STCOMP_SBTN, 0.0, 0.0, 0.0, 0.0);
+	int comp_rect = StrButton_getRect(copy);
+	Component_Save(comp_rect);
+	int id = Component_Allocate(STCOMP_SBTN, 0.0, 0.0, RectWidth(comp_rect), RectHeight(comp_rect));
 	if(id != -1){
 		Component_Load(id, StrButton_getRect(id));
 		//StrButton_Setup(StrButton_getText(id));
@@ -202,6 +217,7 @@ function void StrButton_SetDefaultProps(int i){
 		StrButton_setText(i,"");
 		StrButton_setDescription(i, "");
 		StrButton_setColor(i, CR_GRAY);
+		if(i == 18)log(s:"Calling set Show from StrButton_SetDefaultProps");
 		StrButton_setShow(i, false);
 		StrButton_setExecute(i, 0);	
 		StrButton_setExeArgs(i,0,0,0);
@@ -211,21 +227,14 @@ function void StrButton_SetDefaultProps(int i){
 		StrButton_setParent(i, -1);
 }
 
-function void StrButton_SetTextAdj(int id, str string){
-	StrButton_Setup(string);
-	StrButton_SetDimensions(id, tmp[0], tmp[1]);
-	StrButton_SetBack(id, tmp[2]);
-	StrButton_SetText(id, string);
-}
-
-function void StrButton_Setup (str string){
-	Vars_ClearTmps();
+function void StrButton_Setup (int id){
 	int w = 0;
 	int h = 0;
 	
 	int charw = 0;
 	int charh = 0;
 	int chars = 0;
+	str string = StrButton_GetText(id);
 	string = StripColorCodes(string);
 	for(int i = 0; i < StrLen(string); i++){
 		int c = GetChar(string, i);
@@ -242,14 +251,11 @@ function void StrButton_Setup (str string){
 	h = (charh/16);
 	if(charh%16 != 0) h++;
 	
-	StrButton_GenerateBack(w, h);
-	
-	tmp[0] = (32.0 + (16.0*w));
-	tmp[1] = (32.0 + (16.0*h));
-	
+	StrButton_SetBack(id, StrButton_GenerateBack(w, h));
+	StrButton_setDimensions(id, 32.0 + (16.0*w), 32.0 + (16.0*h));
 }
 
-function void StrButton_GenerateBack(int w, int h){
+function str StrButton_GenerateBack(int w, int h){
 	str btnstring = "A";
 	
 	//print(s:"w: ", d:w, s:", h: ", d:h);
@@ -279,6 +285,6 @@ function void StrButton_GenerateBack(int w, int h){
 	}
 
 	btnstring = StrAdd(btnstring, "I");
-	
-	tmp[2] = btnstring;
+
+	return btnstring;
 }

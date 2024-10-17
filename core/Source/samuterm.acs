@@ -37,11 +37,13 @@ function void Samuterm_LockPlayer(int player){SetPlayerProperty(0,true,PROP_TOTA
 function void Samuterm_UnlockPlayer(int player){SetPlayerProperty(0,false,PROP_TOTALLYFROZEN);}
 function void SamuTerm_SetBack(str what){imgbg = what;}
 function void SamuTerm_ResetBack(void){imgbg = STSET_BACK;}
+
 script "Samuterm_PlayerDiesSomehow" Death {if(Samuterm_InUse()) SamuTerm_Execute(STEXE_SYSOFF, 0, 0, 0);}  
 script "SamuTerminal_IntDB" OPEN ClientSide {if(GameType() != GAME_SINGLE_PLAYER) IntDB_LoadStuff();}
 
 Script "SamuTerminal" (int homeTag, int hidestatusbar){
 	if(Samuterm_InUse() || g_Initialized == False) Terminate;
+	
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
 	SetInventory("SamuTInv_Action2Key", 0);
@@ -96,10 +98,10 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	int chasecam_state = GetPlayerChasecam(play);
 	
 	SamuTerm_InitComps();
-	delay(1); // Since the background generation takes a big chunk of function calls, enough to runaway error. Give it a extra tic and...
-	SamuTerm_InitComps_Back(); // Make their backgrounds aside.
+	//delay(5); // Since the background generation takes a big chunk of function calls, enough to runaway error. Give it a extra tic and...
 	Component_PrintCount();
 	//Samuterm_HelloPrompt();
+	Input_ClearBinds();
 	Input_BindDirections();
 	SamuTerm_Say(msgs[STMSGS_LOGIN]);
 	LocalAmbientSound("SamuTerm/LogIn", 127);

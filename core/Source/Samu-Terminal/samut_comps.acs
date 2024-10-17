@@ -28,19 +28,6 @@ function void SamuTerm_InitComps(void){
 	SamuTerm_InitPages();
 }
 
-function void SamuTerm_InitComps_Back(void){
-	int i;
-	for (i = 0; i < comp_count[STCOMP_SBTN]; i++){
-		StrButton_Setup (StrButton_GetText(i));
-		StrButton_SetDimensions(i, tmp[0], tmp[1]);
-		StrButton_setBack(i,tmp[2]);
-	}
-
-	for (i = 0; i < panel_count; i++){
-		Panel_GenerateBack(i);
-	}
-}
-
 function void Components_Clear(void){
 	RectsDelete(0);
 	Vars_ClearCompCounts();
@@ -115,10 +102,10 @@ function void Component_PrintCount(void){
 			case 1: type_str = "LABELS"; break;
 			case 2: type_str = "IMAGES"; break;
 			case 3: type_str = "STR BUTTON"; break;
+			case 4: type_str = "PANEL"; break;
 		}
 		log(s:type_str, s:", \cd", d:comp_count[i]);
 	}
-	log(s:"PANELS:", s:", \cd", d:panel_count);
 	log(s:"TOAST:", s:", \cd", d:1);
 	log(s:"CURSOR:", s:", \cd", d:1);
 	log(s:"Rects used: \cf", d:numrects, s:" / ", d:ACSUTILS_RECTLIB_SAVEDSTATES);

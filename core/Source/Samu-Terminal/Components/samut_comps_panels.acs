@@ -57,14 +57,6 @@ function void Panel_setBack(int pid, str back){ SetRectUserData(Panel_getRect(pi
 function void Panel_setHudId(int pid, int hid){ SetRectUserData(Panel_getRect(pid), ST_CPROP5, hid);}
 function void Panel_SetOffsetX(int pid, int xoff){ SetRectUserData(Panel_getRect(pid), ST_CPROP6, xoff);}
 function void Panel_SetOffsetY(int pid, int yoff){ SetRectUserData(Panel_getRect(pid), ST_CPROP7, yoff);}
-
-function void Panel_SetClipRect(int pid, int x, int y, int w, int h){ 
-	SetRectUserData(Panel_getRect(pid), ST_CPROP19, x <= -1 ? Panel_GetX(pid)+8.0 : x);
-	SetRectUserData(Panel_getRect(pid), ST_CPROP20, y <= -1 ? Panel_GetY(pid)+8.0 : y);
-	SetRectUserData(Panel_getRect(pid), ST_CPROP21, w <= -1 ? Panel_GetWidth(pid)-16.0 : w);
-	SetRectUserData(Panel_getRect(pid), ST_CPROP22, h <= -1 ? Panel_GetHeight(pid)-16.0 : h);
-}
-
 function void Panel_ResetCompNumber(int pid){ SetRectUserData(Panel_getRect(pid), ST_CPROP10, 0); }
 function void Panel_AddCompNumber(int pid){ SetRectUserData(Panel_getRect(pid), ST_CPROP10, Panel_GetNumberOfComps(pid) + 1); }
 function void Panel_ResetCompAbsNumber(int pid){ SetRectUserData(Panel_getRect(pid), ST_CPROP23, 0); }
@@ -79,6 +71,13 @@ function void Panel_SetScrollSpeedCap(int pid, int speedcap){SetRectUserData(Pan
 function void Panel_SetAutoscroll(int pid, int automove){SetRectUserData(Panel_getRect(pid), ST_CPROP34, automove);}
 function void Panel_SetBackFont(int pid, int backfont){SetRectUserData(Panel_getRect(pid), ST_CPROP35, backfont);}
 function void Panel_SetTitleHudId(int pid, int hid){ SetRectUserData(Panel_getRect(pid), ST_CPROP26, hid);}
+
+function void Panel_SetClipRect(int pid, int x, int y, int w, int h){ 
+	SetRectUserData(Panel_getRect(pid), ST_CPROP19, x <= -1 ? Panel_GetX(pid)+8.0 : x);
+	SetRectUserData(Panel_getRect(pid), ST_CPROP20, y <= -1 ? Panel_GetY(pid)+8.0 : y);
+	SetRectUserData(Panel_getRect(pid), ST_CPROP21, w <= -1 ? Panel_GetWidth(pid)-16.0 : w);
+	SetRectUserData(Panel_getRect(pid), ST_CPROP22, h <= -1 ? Panel_GetHeight(pid)-16.0 : h);
+}
 
 function void Panel_setShow(int pid, bool show){ 
 	SetRectUserData(Panel_getRect(pid), ST_CPROP4, show);
@@ -146,7 +145,7 @@ function void Panel_SetAnchorOffset(int pid, int x, int y){
 //////////////////////
 
 function int Panel_Add(int x, int y, int wx8, int hx8){
-	int i = panel_count;
+	int i = comp_count[STCOMP_PANEL];
 	
 	int fw = 16.0 + (8.0*wx8);
 	int fh = 16.0 + (8.0*hx8);
@@ -157,7 +156,9 @@ function int Panel_Add(int x, int y, int wx8, int hx8){
 		int rect = RectCreate(x,y,fw,fh);
 		Panel_setRect(i,rect);
 		Panel_SetDefaultProps(i);
-		panel_count++;
+		Panel_setBack(i, Panel_GenerateBack(i));
+		Panel_UpdateScrollButtons(i);
+		comp_count[STCOMP_PANEL]++;
 	}else log(s:"No more panels to add!");
 	
 	return i;
@@ -171,7 +172,6 @@ function void Panel_AddCompEX(int p, int type, int id, int numb_pos, int offx, i
 	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_TYPE] = type;
 	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_ID] = id;
 	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_ISABSOLUTE] = absolute;
-	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_SHOWSTATUS] = false;
 	panels_comps_index[p][panel_comp_stack][STPANEL_COMPDATA_ISANCHORED] = (!absolute || (absolute && numb_pos > -1));
 
 	int count = numb_pos <= -1 ? (panel_comp_stack - Panel_GetNumberOfCompsAbs(p)) : numb_pos;
@@ -462,9 +462,6 @@ function str Panel_GenerateBack(int i){
 	}
 	btnstring = StrAdd(btnstring, "I");
 	
-	tmp[2] = btnstring;
-	Panel_setBack(i, btnstring);
-	Panel_UpdateScrollButtons(i);
 	return btnstring;
 }
 

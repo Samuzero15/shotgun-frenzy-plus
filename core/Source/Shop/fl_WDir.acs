@@ -280,8 +280,11 @@ function void SFWEPDEF_AddWeapon (int line, int weapon_pack_id) {
 	fp_Wpns[file_wepid][FP_WDIR_WEAPON_PACK] = weapon_pack_id;
 	fp_Wpns[file_wepid][FP_WDIR_WEAPON_DESCRIPTION] = LumpRead_NextArg (line, LUMPR_VALUE_LANGSTR);
 	 // Ignoring Icon argument for now.
+	LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	//log(s:"Cvar: ", s:cvar);
 	if(weapon_pack_id >= 0) 
 		fp_Wpns[file_wepid][FP_WDIR_WEAPON_PRICE] = GetCvar(LumpRead_NextArg (line, LUMPR_VALUE_STR));
+	//log(s:"Price: ",  d:fp_Wpns[file_wepid][FP_WDIR_WEAPON_PRICE]);
 	fp_WeaponStack++;
 }
 
@@ -339,9 +342,9 @@ function void WeaponPack_Give(int wp){
 function void Weapon_Recycle(int wid, int upg, int play){
 	str whatweapon;
 	int rcyprice;
-	if(upg != 255){
-		whatweapon = WeaponUpgrade_GetActor(wid, upg-1);
-		rcyprice = WeaponUpgrade_getRcyPrice(wid, upg-1);
+	if(upg != -1){
+		whatweapon = WeaponUpgrade_GetActor(wid, upg);
+		rcyprice = WeaponUpgrade_getRcyPrice(wid, upg);
 	}else{ 
 		whatweapon = Weapon_getActor(wid);
 		rcyprice = Weapon_getPrice(wid);
@@ -368,10 +371,11 @@ function bool Weapon_IsNotUpgraded(int asThis){
 }
 
 function bool Weapon_OwnedSameKind(int asThis){
-	return 
-		checkinventory(Weapon_GetActor(asThis)) ||
-		checkinventory(WeaponUpgrade_getActor(asThis, 0)) ||
-		checkinventory(WeaponUpgrade_getActor(asThis, 1));
+	bool iGotItUpgraded = false;
+	for(int i = 0; i < Weapon_getUpsNum(asThis) && !iGotItUpgraded; i++){
+		iGotItUpgraded = CheckInventory(WeaponUpgrade_getActor(asThis, i));
+	}
+	return checkinventory(Weapon_GetActor(asThis)) || iGotItUpgraded;
 }
 
 function int Weapon_SaveLastUsed(void){
@@ -391,6 +395,9 @@ function void Weapon_LoadLastUsed(int which){
 	SetWeapon(Weapon_GetActor(which));
 	SetWeapon(WeaponUpgrade_GetActor(which, 0));
 	SetWeapon(WeaponUpgrade_GetActor(which, 1));
+	for(int i = 0; i < Weapon_getUpsNum(which); i++){
+		SetWeapon(WeaponUpgrade_GetActor(which, i));
+	}
 	//log(s:"Weapon style load: ", s:Weapon_GetActor(which));
 	
 }

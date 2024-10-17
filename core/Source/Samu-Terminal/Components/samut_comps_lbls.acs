@@ -32,18 +32,7 @@ function void Label_setRect(int bid, int rect){comp_rects_many[STCOMP_LBL][bid] 
 function void Label_setTag(int bid, int tag){SetRectUserData(Label_getRect(bid), ST_CPROP1, tag);}
 function void Label_setPosition(int bid, int x, int y){SetRectPosition(Label_getRect(bid), x, y);}
 function void Label_setText(int bid, str text){SetRectUserData(Label_getRect(bid), ST_CPROP2, text);}
-function void Label_setShow(int bid, bool visible){Label_setShowEx(bid, visible, true);}
-
-function void Label_setShowEx(int bid, bool visible, bool update_panel_flag){
-	int p = Label_GetParent(bid);
-	if(p != -1 && update_panel_flag){
-		for (int i = 0 ; i < Panel_GetNumberOfComps(p); i++){
-			if(panels_comps_index[p][i][1] == bid && panels_comps_index[p][i][0] == STCOMP_LBL) panels_comps_index[p][i][3] = visible;
-		}
-	}
-	SetRectUserData(Label_getRect(bid), ST_CPROP3, visible);
-}
-
+function void Label_setShow(int bid, bool visible){SetRectUserData(Label_getRect(bid), ST_CPROP3, visible);}
 function void Label_setFont(int bid, str font){SetRectUserData(Label_getRect(bid), ST_CPROP4, Font);}
 function void Label_setColor(int bid, int color){SetRectUserData(Label_getRect(bid), ST_CPROP5, color);}
 function void Label_setParent(int bid, int parent){SetRectUserData(Label_getRect(bid), ST_CPROP6, parent);}
@@ -60,6 +49,7 @@ function void Label_setOffsets(int bid, int offx, int offy){
 	SetRectUserData(Label_getRect(bid), ST_CPROP14, offy);
 }
 function void Label_setWrapWidth(int bid, int wrap){SetRectUserData(Label_getRect(bid), ST_CPROP9, wrap);}
+function void Label_setParentId(int bid, int pid){SetRectUserData(Label_getRect(bid), ST_CPROP7, pid);}
 
 /////////////////////////
 // Label functions!    //
@@ -173,14 +163,15 @@ function int Label_AddToPanelEX (int panel, int pos, int offx, int offy, bool ab
 }
 function int Label_DupToPanelAbsPos (int copy, int panel, int pos, int x, int y) {return Label_AddToPanelEX (panel, pos, x, y, true);}
 function int Label_DupToPanelAbs (int copy, int panel, int x, int y) {return Label_AddToPanelEX (panel, -1, x, y, true);}
-function int Label_DupToPanelOff (int copy, int panel, int pos, int offx, int offy) {return Label_DupToPanelEX (copy, panel, pos, offx, offy, false);}
-function int Label_DupToPanelPosOff (int copy, int panel, int offx, int offy) {return Label_DupToPanelEX (copy, panel, -1, offx, offy, false);}
+function int Label_DupToPanelPosOff (int copy, int panel, int pos, int offx, int offy) {return Label_DupToPanelEX (copy, panel, pos, offx, offy, false);}
+function int Label_DupToPanelOff (int copy, int panel, int offx, int offy) {return Label_DupToPanelEX (copy, panel, -1, offx, offy, false);}
 function int Label_DupToPanelPos (int copy, int panel, int pos) 			  {return Label_DupToPanelEX (copy, panel, pos, 0.0, 0.0, false);}
 function int Label_DupToPanel (int copy, int panel) 						  {return Label_DupToPanelEX (copy, panel, -1, 0.0, 0.0, false);}
 function int Label_DupToPanelEX(int copy, int panel, int pos, int offx, int offy, bool absolute){
-	int id = Component_Allocate(STCOMP_LBL, 0.0, 0.0, 0.0, 0.0);
+	int comp_rect = Label_getRect(copy);
+	int id = Component_Allocate(STCOMP_LBL, RectX1(comp_rect), RectY1(comp_rect), RectWidth(comp_rect), RectHeight(comp_rect));
 	if(id != -1){
-		Component_Save(Label_getRect(copy));
+		Component_Save(comp_rect);
 		Component_Load(id, Label_getRect(id));
 		Label_SetParent(id, panel);
 

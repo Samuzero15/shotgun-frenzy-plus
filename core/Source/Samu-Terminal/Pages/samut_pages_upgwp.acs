@@ -362,6 +362,7 @@ function void ListUpPage_MakeUpDescription(void){
 	Label_SetAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_SetTag(i, listup_vars[UWPAGE_TAG]);
 	Label_SetWrapWidth(i, 200);
+	Label_SetShow(i, true);
 	listup_vars[UWPAGE_LABEL_WEAPONNAME] = i;
 
 	i = Label_AddToPanelOff(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], 0.0, 32.0);
@@ -370,5 +371,6 @@ function void ListUpPage_MakeUpDescription(void){
 	Label_SetAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	Label_SetTag(i, listup_vars[UWPAGE_TAG]);
 	Label_SetWrapWidth(i, 200);
+	Label_SetShow(i, true);
 	listup_vars[UWPAGE_LABEL_WEAPONDESC] = i;
 }
