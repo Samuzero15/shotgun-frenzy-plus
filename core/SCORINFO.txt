@@ -169,10 +169,10 @@ Scoreboard
 
 	HeaderFont = "SmallFont"
 	RowFont = "SmallFont"
-	HeaderColor = "Grey"
-	RowColor = "Grey"
-	LocalRowColor = "Green"
-	LocalRowDemoColor = "Gold"
+	HeaderTextColor = "Grey"
+	RowTextColor = "Grey"
+	LocalRowTextColor = "Green"
+	LocalRowDemoTextColor = "Gold"
 	BackgroundColor = "00 00 00"
 	BackgroundAmount = 0.5
 	BackgroundBorderSize = 4
@@ -191,5 +191,5 @@ Scoreboard
 	ColumnOrder = "BotSkillIcon", "Index", "ReadyToGoAndStatusIcons", "ArtifactIcon", "PlayerIcon", "CountryFlag", "Player", "Vote", "StatusCompCol", "K.S.", "Kills", "$$$", "UPs", "Deaths", "Time", "Ping"
 	RankOrder =  "K.S.", "Kills", "UPs", "$$$", "Deaths"
 
-	AddFlag UseHeaderColorForBorders
+	AddFlag UseHeaderTextColorForBorders
 }
