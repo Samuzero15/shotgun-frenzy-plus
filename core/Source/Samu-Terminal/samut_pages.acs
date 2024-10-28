@@ -112,7 +112,6 @@ function void SamuTerm_InitPages(void){
 			ImgButton_SetTag		(b, pagetags[STTAGS_ALPHA]);
 			ImgButton_SetGrabable	(b, true);
 			*/
-
 			setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
 			BuyWpnPage_Init(1);
 			RcyWpnPage_Init(3);

@@ -454,7 +454,7 @@ function void SamuTerm_Display_Comp(int type, int id){
 	switch(type){
 		case STCOMP_IBTN: if(ImgButton_GetParent(id) == -1) ShowImgButton(id); break;
 		case STCOMP_SBTN: if(StrButton_GetParent(id) == -1) ShowStrButton(id); break;
-		case STCOMP_LBL: if(Label_GetParent(id) == -1)  ShowLabel(id); break;
+		case STCOMP_LBL: if(Label_GetParent(id) == -1) ShowLabel(id); break;
 		case STCOMP_IMG: if(Image_GetParent(id) == -1) ShowImage(id); break;
 		case STCOMP_PANEL: ShowPanel(id); break;
 	}

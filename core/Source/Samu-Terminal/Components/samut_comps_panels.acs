@@ -154,6 +154,7 @@ function int Panel_Add(int x, int y, int wx8, int hx8){
 	
 	if(i < ST_NCOMPS){
 		int rect = RectCreate(x,y,fw,fh);
+		SetRectUserData(rect , ST_CPROP0, STCOMP_PANEL);
 		Panel_setRect(i,rect);
 		Panel_SetDefaultProps(i);
 		Panel_setBack(i, Panel_GenerateBack(i));

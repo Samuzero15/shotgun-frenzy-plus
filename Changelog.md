@@ -8,6 +8,11 @@
 	!) Pretty important stuff.
 
 ## v1 - The path of the damned...
+#### (27 / 10 / 2024) [Numinput Component, rewritting page navigation buttons]
+	+) Added a new compound component, the NumInput!
+	// 3 components tied in one single component for increasing and decreasing values within certain range. Used a lot when displaying more items in the buy weapon, upgrade weapon, and recycle weapon.
+	// I'm still pending to add the numinput component to the items page from the ammo terminal.
+	*) Cleaned up some old code, and rewrote the components that acted as pagination buttons for the buy upgrade and recycle weapons.
 
 #### (17 / 10 / 2024) [Little fix on the prompt]
 	*) Now the prompt works again. Little oversight with the absolute components.

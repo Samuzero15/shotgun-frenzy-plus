@@ -1,0 +1,161 @@
+
+////////////////////
+// Numpage Getters
+///////////////////
+
+function int NumInput_getRect(int id){ return numpages[id];}
+function int NumInput_getX(int id){ return RectX1(NumInput_getRect(id)); }
+function int NumInput_getY(int id){ return RectY1(NumInput_getRect(id)); }
+function int NumInput_getNextButton(int id){ return RectGetUserData(NumInput_getRect(id), ST_CPROP1);}
+function int NumInput_getPrevButton(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP2);}
+function int NumInput_getLabelNum(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP3);}
+function int NumInput_getTag(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP4);}
+function bool NumInput_getShow(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP5);}
+function int NumInput_getBtnDistance(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP6);}
+function int NumInput_getValue(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP7);}
+function int NumInput_getMaxValue(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP8);}
+function int NumInput_getMinValue(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP9);}
+function int NumInput_getStepValue(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP10);}
+function int NumInput_getShowNumber(int id){return RectGetUserData(NumInput_getRect(id), ST_CPROP11);}
+function str NumInput_getLabelText(int id) {return RectGetUserData(NumInput_getRect(id), ST_CPROP12);}
+function int NumInput_getColor(int id) {return RectGetUserData(NumInput_getRect(id), ST_CPROP13);}
+function bool NumInput_getLoopValues(int id) {return RectGetUserData(NumInput_getRect(id), ST_CPROP14);}
+
+
+///////////////////
+//  Numpage Setters
+///////////////////
+
+function void NumInput_setRect(int id,int rect){ numpages[id] = rect;}
+function void NumInput_setPosition(int id, int x, int y){SetRectPosition(NumInput_getRect(id), x, y);}
+function void NumInput_setNextButton(int id, int sbid){SetRectUserData(NumInput_getRect(id), ST_CPROP1, sbid);}
+function void NumInput_setPrevButton(int id, int sbid){SetRectUserData(NumInput_getRect(id), ST_CPROP2, sbid);}
+function void NumInput_setLabelNum(int id, int lbl){SetRectUserData(NumInput_getRect(id), ST_CPROP3, lbl);}
+function void NumInput_setTag(int id, int tag){SetRectUserData(NumInput_getRect(id), ST_CPROP4, tag);}
+function void NumInput_setShow(int id, int show){SetRectUserData(NumInput_getRect(id), ST_CPROP5, show);}
+function void NumInput_setBtnDistance(int id, int width){SetRectUserData(NumInput_getRect(id), ST_CPROP6, width);}
+function void NumInput_setValue(int id, int val){SetRectUserData(NumInput_getRect(id), ST_CPROP7, val);}
+function void NumInput_setMaxValue(int id, int maxval){SetRectUserData(NumInput_getRect(id), ST_CPROP8, maxval);}
+function void NumInput_setMinValue(int id, int minval){SetRectUserData(NumInput_getRect(id), ST_CPROP9, minval);}
+function void NumInput_setStepValue(int id, int step){SetRectUserData(NumInput_getRect(id), ST_CPROP10, step);}
+function void NumInput_setShowNumber(int id, int shownum){SetRectUserData(NumInput_getRect(id), ST_CPROP11, shownum);}
+function void NumInput_setLabelText(int id, str string) {SetRectUserData(NumInput_getRect(id), ST_CPROP12, string);}
+function void NumInput_setColor(int id, int color) {SetRectUserData(NumInput_getRect(id), ST_CPROP13, color);}
+function void NumInput_setLoopValues(int id, int loop) {SetRectUserData(NumInput_getRect(id), ST_CPROP14, loop);}
+
+
+///////////////////
+// Numpage functions
+///////////////////
+
+function void NumInput_SetDefaultProps(int i){
+    NumInput_setTag(i, -1);
+    NumInput_setShow(i, false);
+    NumInput_setBtnDistance(i, 64.0);
+    NumInput_setValue(i, 1);
+    NumInput_setMaxValue(i, 5);
+    NumInput_setMinValue(i, 1);
+    NumInput_setStepValue(i, 1);
+    NumInput_setShowNumber(i, true);
+    NumInput_SetLabelText(i, "{n} / {M}");
+    NumInput_SetColor(i, CR_WHITE);
+    NumInput_setLoopValues(i, false);
+
+	int btn_dist_navs = NumInput_GetBtnDistance(i);
+    int tag = NumInput_getTag(i);
+
+    int rect = NumInput_GetRect(i);
+    int j;
+	j = StrButton_Add  (RectX1(rect), RectY1(rect), "<");
+	StrButton_SetExecute(j, STEXE_NUMINPUT_MOVE);
+    StrButton_SetExeArgs(j, i, -1, 0);
+	StrButton_setTag    (j, tag);
+    //StrButton_SetShow   (j, true);
+    NumInput_SetPrevButton(i, j);
+
+    int btn_width = StrButton_getWidth(j);
+
+	j = StrButton_Dup (j, RectX1(rect) + btn_width + btn_dist_navs, RectY1(rect));
+	StrButton_SetText   (j, ">");
+    StrButton_SetExeArgs(j, i, 1, 0);
+    //StrButton_SetShow   (j, true);
+    NumInput_SetNextButton(i, j);
+
+	j = Label_Add(RectX1(rect) + btn_width + btn_dist_navs/2, RectY1(rect) + StrButton_GetHeight(j)/2);
+	Label_setFont(j,"DBIGFONT");
+	Label_setTag (j, tag);
+	Label_setAligns(j, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+    NumInput_setLabelNum(i, j);
+}
+
+function int NumInput_Add(int x, int y){
+	int i = comp_count[STCOMP_NUMINPUT];
+	
+	if(i < ST_NCOMPS){
+		int rect = RectCreate(x,y,0.0,0.0);
+        SetRectUserData(NumInput_getRect(i), ST_CPROP0, STCOMP_NUMINPUT);
+        NumInput_setRect(i,rect);
+        NumInput_SetDefaultProps(i);
+        
+		comp_count[STCOMP_NUMINPUT]++;
+	}else log(s:"No more Num pages to add!");
+	
+	return i;
+}
+
+function int NumInput_AddMid(int x, int y){
+	int i = NumInput_Add(x, y);
+    int prevbtn = NumInput_getPrevButton(i);
+
+    NumInput_SetPosition(i, x - (StrButton_GetWidth(prevbtn) + (NumInput_GetBtnDistance(i)/2)), y - StrButton_GetHeight(prevbtn)/2);
+	
+	return i;
+}
+
+function void NumInput_Update(int i){
+    int np_lbl = NumInput_getLabelNum(i);
+    int np_prev = NumInput_getPrevButton(i);
+    int np_next = NumInput_getNextButton(i);
+    int value = NumInput_GetValue(i);
+    int maxvalue = NumInput_GetMaxValue(i);
+    int minvalue = NumInput_GetMinValue(i);
+    int show_me = NumInput_GetShow(i);
+    int loop_values = NumInput_GetLoopValues(i);
+
+    value = clamp(value, minvalue, maxvalue);
+    NumInput_SetValue(i, value);
+    // Update show
+    StrButton_setShow    (np_prev, show_me && ((value != minvalue) || loop_values));
+    StrButton_setShow    (np_next, show_me && ((value != maxvalue) || loop_values));
+    Label_SetShow       (np_lbl, show_me && NumInput_getShowNumber(i));
+    if(!show_me) return;
+    //log(s:"NumInput, Update!");
+    
+    int tag = NumInput_getTag(i);
+    // Update Tags
+    Label_setTag (np_lbl, tag);
+    StrButton_setTag (np_prev, tag);
+    StrButton_setTag (np_next, tag);
+    
+    //log(s:"NumInput, Show!");
+
+    // Update position
+    int rect = NumInput_GetRect(i);
+    int btn_dist_navs = NumInput_GetBtnDistance(i);
+    int btn_width = StrButton_getWidth(np_prev);
+    str string_text = NumInput_GetLabelText(i);
+    
+    string_text = StrReplace(string_text, "{n}", strparam(d:value));
+    string_text = StrReplace(string_text, "{m}", strparam(d:minvalue));
+    string_text = StrReplace(string_text, "{M}", strparam(d:maxvalue));
+    
+    StrButton_SetPosition  (np_prev, RectX1(rect), RectY1(rect));
+	StrButton_SetPosition  (np_next, RectX1(rect) + btn_width + btn_dist_navs, RectY1(rect));
+	Label_SetPosition      (np_lbl,  RectX1(rect) + btn_width + btn_dist_navs/2, RectY1(rect) + StrButton_GetHeight(np_prev)/2);
+
+    StrButton_SetColor  (np_prev, NumInput_getColor(i));
+    StrButton_SetColor  (np_next, NumInput_getColor(i));
+    Label_SetColor      (np_lbl, NumInput_getColor(i));
+    // Update label
+    Label_setText(np_lbl, string_text);
+}

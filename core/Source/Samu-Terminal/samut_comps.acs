@@ -14,6 +14,7 @@
 #include "samut_comps_prompt.acs"
 #include "samut_comps_cursor.acs"
 #include "samut_comps_panels.acs"
+#include "samut_comps_numinput.acs"
 
 function void SamuTerm_InitComps(void){
 	Components_Clear();

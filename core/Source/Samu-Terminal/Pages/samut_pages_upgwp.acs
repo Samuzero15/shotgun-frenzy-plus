@@ -5,9 +5,9 @@
 #define UWPAGE_TITLE 				UWPAGE_TAG+1
 #define UWPAGE_NOACCESS_TITLE 		UWPAGE_TITLE+1
 #define UWPAGE_NOACCESS_LABEL 		UWPAGE_NOACCESS_TITLE+1
-#define UWPAGE_BUTTONS_PREVCAT 		UWPAGE_NOACCESS_LABEL+1
-#define UWPAGE_BUTTONS_NEXTCAT 		UWPAGE_BUTTONS_PREVCAT+1
-#define UWPAGE_VAR_CURRENTCATEGORY 	UWPAGE_BUTTONS_NEXTCAT+1
+#define UWPAGE_NUMINPUT_CAT 		UWPAGE_NOACCESS_LABEL+1
+#define UWPAGE_NUMINPUT_WEP			UWPAGE_NUMINPUT_CAT+1
+#define UWPAGE_VAR_CURRENTCATEGORY 	UWPAGE_NUMINPUT_WEP+1
 #define UWPAGE_VAR_MAXCATEGORY 		UWPAGE_VAR_CURRENTCATEGORY+1
 #define UWPAGE_VAR_SELECTEDWEP 		UWPAGE_VAR_MAXCATEGORY+1
 #define UWPAGE_VAR_CATWEAPONSTACK 	UWPAGE_VAR_SELECTEDWEP+1
@@ -16,13 +16,10 @@
 #define UWPAGE_PANEL_WEAPONLIST 	UWPAGE_VAR_HOVEREDUPTYPE+1
 #define UWPAGE_PANEL_UPGRADES		UWPAGE_PANEL_WEAPONLIST+1
 #define UWPAGE_PANEL_UPDESCRIPTION 	UWPAGE_PANEL_UPGRADES+1
-#define UWPAGE_BUTTONS_PREVPAGE 	UWPAGE_PANEL_UPDESCRIPTION+1
-#define UWPAGE_BUTTONS_NEXTPAGE 	UWPAGE_BUTTONS_PREVPAGE+1
-#define UWPAGE_LABEL_CURRPAGE		UWPAGE_BUTTONS_NEXTPAGE+1
-#define UWPAGE_LABEL_WEAPONNAME 	UWPAGE_LABEL_CURRPAGE+1
+#define UWPAGE_LABEL_WEAPONNAME 	UWPAGE_PANEL_UPDESCRIPTION+1
 #define UWPAGE_LABEL_WEAPONDESC 	UWPAGE_LABEL_WEAPONNAME+1
 
-#define UWPAGE_CONST_UPS_PER_PAGE 10
+#define UWPAGE_ITEMSPERPAGE 10
 #define UWPAGE_VISIBLE_WEPS 7
 
 #define UWPAGE_WEPUP_WEPNAME 0
@@ -34,7 +31,7 @@
 #define UWPAGE_UPGRADES_MAX 8
 
 int listup_vars[UWPAGE_LABEL_WEAPONDESC+1];
-int listup_weplist[UWPAGE_CONST_UPS_PER_PAGE][2];
+int listup_weplist[UWPAGE_ITEMSPERPAGE][2];
 int listup_upbuttons[UWPAGE_UPGRADES_MAX][2];
 
 function void UpdateListUpPage(int pageTag){
@@ -63,32 +60,19 @@ function void ListUpPage_UpdateNoAccess(int category, int show){
 // Navigation buttons
 function void ListUpPage_UpdateNavButtons(int category, int show){
 	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
-	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_PREVCAT], show);
-	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_NEXTCAT], show);
-	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_PREVPAGE], show);
-	StrButton_SetShow   (listup_vars[UWPAGE_BUTTONS_NEXTPAGE], show);
-	Label_SetShow   	(listup_vars[UWPAGE_LABEL_CURRPAGE], show);
+	NumInput_SetShow	(listup_vars[UWPAGE_NUMINPUT_CAT], show);
+	NumInput_SetShow	(listup_vars[UWPAGE_NUMINPUT_WEP], show);
 	if(!show) return;
 
-	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_NEXTPAGE], color_cat); 
-	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_PREVPAGE], color_cat); 
-	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_PREVCAT], color_cat); 
-	StrButton_SetColor  (listup_vars[UWPAGE_BUTTONS_NEXTCAT], color_cat);
+	NumInput_SetColor	(listup_vars[UWPAGE_NUMINPUT_CAT], color_cat);
+	NumInput_SetColor	(listup_vars[UWPAGE_NUMINPUT_WEP], color_cat);
 
-	int last_page = listup_vars[UWPAGE_VAR_CATWEAPONSTACK]/UWPAGE_CONST_UPS_PER_PAGE;
+	int last_page = (listup_vars[UWPAGE_VAR_CATWEAPONSTACK]-1)/UWPAGE_ITEMSPERPAGE;
+	NumInput_SetMaxValue(listup_vars[UWPAGE_NUMINPUT_WEP], last_page+1);
+	NumInput_SetShow(listup_vars[UWPAGE_NUMINPUT_WEP], !(last_page == 0));
 	
-	Label_SetText	(listup_vars[UWPAGE_LABEL_CURRPAGE], 
-		strparam(d:listup_vars[UWPAGE_VAR_CURRENTWEPPAGE]+1, s:"/", d:last_page+1));
 	Label_SetText	(listup_vars[UWPAGE_TITLE], term_catStyle[category][TERM_CATSTYLE_TEXT]);
 	Label_SetColor	(listup_vars[UWPAGE_TITLE], color_cat);
-	
-	if(listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] == 0)
-		StrButton_SetShow  (listup_vars[UWPAGE_BUTTONS_PREVPAGE], false); 
-	
-	if(listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] == last_page)
-		StrButton_SetShow  (listup_vars[UWPAGE_BUTTONS_NEXTPAGE], false); 
-	
-	Label_SetShow (listup_vars[UWPAGE_LABEL_CURRPAGE], !(last_page == 0));
 }
 
 // Update Upgrade weapon panel.
@@ -96,23 +80,26 @@ function void ListUpPage_UpdateUpWeapons(int category){
 	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_WEAPONLIST], color_cat);
 	int ihavewep = false;
-	listup_vars[UWPAGE_VAR_CATWEAPONSTACK] = 0;
 	int stack_slot = 0;
-	int page_min_limit = listup_vars[UWPAGE_VAR_CURRENTWEPPAGE]*UWPAGE_CONST_UPS_PER_PAGE;
-	int page_max_limit = (listup_vars[UWPAGE_VAR_CURRENTWEPPAGE]+1)*UWPAGE_CONST_UPS_PER_PAGE;
-	
+	int current_wep_page = NumInput_GetValue(listup_vars[UWPAGE_NUMINPUT_WEP])-1;
+	int page_min_limit = current_wep_page*UWPAGE_ITEMSPERPAGE;
+	int page_max_limit = (current_wep_page+1)*UWPAGE_ITEMSPERPAGE-1;
+	//log(s:"Limits: ", d:page_min_limit, s:" - ", d:page_max_limit);
+	listup_vars[UWPAGE_VAR_CATWEAPONSTACK] = 0;
+	//log(s:"Limits: ", d:page_min_limit, s:" / ", d:page_max_limit);
 	//Check for all weapons, and stop if the stack did'nt reached for the max page limit.
 	for(int i = 0; i < fp_WeaponStack; i++){
 		if(Weapon_GetCat(i) != category) continue; // Skip if not the category
-		ihavewep = Weapon_IsNotUpgraded(i);
-		if(!ihavewep) continue; // Skip if you don't have the weapon.
+		if(!Weapon_IsNotUpgraded(i)) continue; // Skip if you don't have the weapon.
 		listup_vars[UWPAGE_VAR_CATWEAPONSTACK]++;
-		// If outside of limits, skip.
-		if(!(listup_vars[UWPAGE_VAR_CATWEAPONSTACK] >= page_min_limit 
-			&& listup_vars[UWPAGE_VAR_CATWEAPONSTACK] <= page_max_limit)) continue;
+		if(!(listup_vars[UWPAGE_VAR_CATWEAPONSTACK]-1 >= page_min_limit 
+			&& listup_vars[UWPAGE_VAR_CATWEAPONSTACK]-1 <= page_max_limit)) continue;
+		
 		// Finally, add 1 to the stack slot and update.
-		ListUpPage_UpdateUpWepSlot(category, stack_slot, i, true);
-		stack_slot++;
+		if(stack_slot < UWPAGE_ITEMSPERPAGE){
+			ListUpPage_UpdateUpWepSlot(category, stack_slot, i, true);
+			stack_slot++;
+		}
 	}
 	ListUpPage_UpdateNavButtons(category, true);
 	ListUpPage_UpdateUpTypes(category, listup_vars[UWPAGE_VAR_SELECTEDWEP], listup_vars[UWPAGE_VAR_SELECTEDWEP] != -1);
@@ -129,8 +116,8 @@ function void ListUpPage_UpdateUpWeapons(int category){
 	Panel_SetShow(listup_vars[UWPAGE_PANEL_WEAPONLIST], true);
 	
 	// If there are remaining slots, hide them.
-	if (stack_slot < UWPAGE_CONST_UPS_PER_PAGE){
-		for(int j = stack_slot; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
+	if (stack_slot < UWPAGE_ITEMSPERPAGE){
+		for(int j = stack_slot; j < UWPAGE_ITEMSPERPAGE; j++){
 			ListUpPage_UpdateUpWepSlot(category, j, -1, false);
 		}
 	}
@@ -207,6 +194,9 @@ function void InitListUpPage(int pageTag){
 	Label_setFont(i,"DBIGFONT");
 	Label_setTag (i, pagetag);
 	listup_vars[UWPAGE_TITLE] = i;
+
+	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = WEAPON_SET_STANDARD;
+	listup_vars[UWPAGE_VAR_MAXCATEGORY] = WEAPON_SET_OVERPOWERED;
 	
 	ListUpPage_MakeNoAccessLabels();
 	ListUpPage_MakeNavButtons();
@@ -214,8 +204,7 @@ function void InitListUpPage(int pageTag){
 	ListUpPage_MakeUpgradeTypes();
 	ListUpPage_MakeUpDescription();
 
-	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = WEAPON_SET_STANDARD;
-	listup_vars[UWPAGE_VAR_MAXCATEGORY] = WEAPON_SET_OVERPOWERED;
+	
 }
 
 // Init No access labels.
@@ -240,39 +229,32 @@ function void ListUpPage_MakeNoAccessLabels(void){
 // Init Nav buttons
 function void ListUpPage_MakeNavButtons(void){
 	int btn_dist = 60.0;
-	int base_x = 80.0;
+	int base_x = 475.0;
 	int btn_dist_navs = 60.0;
 	int base_x_navs = 375.0;
 	int i;
 
-	i = strbutton_add   (base_x, 45.0, "<");
-	StrButton_SetColor  (i, cr_WHITE);
-	StrButton_setTag    (i, listup_vars[UWPAGE_TAG]);
-	StrButton_SetExecute(i, STEXE_UPGPAGECAT);
-	StrButton_SetExeArgs(i, -1, 0, 0);
-	listup_vars[UWPAGE_BUTTONS_PREVCAT] = i;
-	
-	i = StrButton_Dup   (i, base_x + btn_dist, 45.0);
-	StrButton_SetText   (i, ">");
-	StrButton_SetExeArgs(i, 1, 0, 0);
-	listup_vars[UWPAGE_BUTTONS_NEXTCAT] = i;
+	i = NumInput_Add (60.0, 45.0);
+	NumInput_setBtnDistance(i, 28.0);
+	NumInput_setLoopValues(i, true);
+	NumInput_setShowNumber(i, false);
+	NumInput_setMinValue(i, 0);
+	NumInput_setMaxValue(i, listup_vars[UWPAGE_VAR_MAXCATEGORY]);
+	NumInput_setValue(i, listup_vars[UWPAGE_VAR_CURRENTCATEGORY]);
+	NumInput_setTag(i, listup_vars[UWPAGE_TAG]);
+	StrButton_SetExecute(NumInput_GetPrevButton(i), STEXE_UPGPAGECAT);
+	StrButton_SetExeArgs(NumInput_GetPrevButton(i), i, -1, 0);
+	StrButton_SetExecute(NumInput_GetNextButton(i), STEXE_UPGPAGECAT);
+	StrButton_SetExeArgs(NumInput_GetNextButton(i), i, 1, 0);
+	listup_vars[UWPAGE_NUMINPUT_CAT] = i;
 
-	i = StrButton_DupMid   (i, base_x_navs, 350.0);
-	StrButton_SetText   (i, "<");
-	StrButton_SetExecute(i, STEXE_UPGPAGEWEPS);
-	StrButton_SetExeArgs(i, -1, 0, 0);
-	listup_vars[UWPAGE_BUTTONS_PREVPAGE] = i;
-
-	i = StrButton_DupMid  (i, base_x_navs + btn_dist_navs*2, 350.0);
-	StrButton_SetText   (i, ">");
-	StrButton_SetExeArgs(i, 1, 0, 0);
-	listup_vars[UWPAGE_BUTTONS_NEXTPAGE] = i;
-
-	i = Label_Add(base_x_navs + btn_dist_navs + 16.0, 366.0);
-	Label_setFont(i,"DBIGFONT");
-	Label_setText(i, "n / m");
-	Label_setTag (i, listup_vars[UWPAGE_TAG]);
-	listup_vars[UWPAGE_LABEL_CURRPAGE] = i;
+	i = NumInput_Add (375.0, 350.0);
+	NumInput_setBtnDistance(i, 96.0);
+	NumInput_SetLabelText(i, "Page {n}/{M}");
+	NumInput_setMinValue(i, 1);
+	NumInput_setValue(i, 1);
+	NumInput_setTag(i, listup_vars[UWPAGE_TAG]);
+	listup_vars[UWPAGE_NUMINPUT_WEP] = i;
 }
 
 // Init Weapon upgrade panel and buttons.
@@ -287,7 +269,7 @@ function void ListUpPage_MakeUpWeapons(void){
 	listup_vars[UWPAGE_PANEL_WEAPONLIST] = i;
 
 	int j = 0;
-	for(j = 0; j < UWPAGE_CONST_UPS_PER_PAGE; j++){
+	for(j = 0; j < UWPAGE_ITEMSPERPAGE; j++){
 		ListUpPage_AddWepUpSlot(j);
 	}
 }

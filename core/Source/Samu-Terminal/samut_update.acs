@@ -11,7 +11,6 @@
 function void SamuTerm_Update(void){
 	//Here, change stuff before drawing!
 	// (Like, dunno, showing your money n stuff?)
-	
 	UpdateCursor();
 	//log(s:"Last tag hiding...");
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
@@ -22,6 +21,11 @@ function void SamuTerm_Update(void){
 	UpdatePrompt();
 	//UpdateDragBtns();
 	UpdatePages();
+
+	// Update numpages.
+	for (int i = 0; i < comp_count[STCOMP_NUMINPUT]; i++){
+		NumInput_Update(i);
+	}
 }
 
 Function void UpdatePrompt(void){
@@ -76,6 +80,10 @@ Function void HideOrShowByTag(int tag, bool show){
 
 	for (i = 0; i < comp_count[STCOMP_PANEL]; i++){
 		if(Panel_GetTag(i) == tag) UpdatePanel(i, show);
+	}
+
+	for (i = 0; i < comp_count[STCOMP_NUMINPUT]; i++){
+		if(NumInput_GetTag(i) == tag) NumInput_setShow(i, show);
 	}
 }
 

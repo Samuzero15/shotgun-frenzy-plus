@@ -99,15 +99,14 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		
 		case STEXE_BUYWP_PSHOW: STExecute_BuyWepSetCat(arg1); break;
 		case STEXE_BUYWP_PDESC: STExecute_BuyWepShowData(arg1); break;
-		case STEXE_BUYWP_MOVEWEP: STExecute_BuyWepChangeWeapon(arg1); break;
 		case STEXE_BUYWP_MOVEWPPAGE: STExecute_BuyWepChangeWPPage(arg1); break;
 		case STEXE_GETWP: STExecute_getWeapon(arg1); break;
 		case STEXE_GIVEWP: STExecute_giveWeapon(arg1); break;
 		case STEXE_BUYWP: STExecute_BuyWeapon(arg1); break;
 	
 		case STEXE_UPGPAGEDESC: StExecute_UpgPageDesc(arg1, arg2); break;
-		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1); break;
-		case STEXE_UPGPAGEWEPS: StExecute_UpgPageWeps(arg1); break;
+		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1, arg2); break;
+		//case STEXE_UPGPAGEWEPS: StExecute_UpgPageWeps(arg1); break;
 		case STEXE_UPWEPOPENUPS: StExecute_UpPageOpenUps(arg1); break;
 		
 		case STEXE_CMDEVENT_CHECK: STExecute_CMDEvent_Check(arg1, arg2); break;
@@ -129,7 +128,6 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_ITEMGET: StExecute_GetItem(arg1); break;
 		
 		case STEXE_WEPRC: StExecute_RecycleWeapon(arg1, arg2, arg3); break;
-		case STEXE_MOVERC: STExecute_RecycleMove(arg1, arg2); break;
 		case STEXE_MSGRC: StExecute_RecycleAccepted(arg1, arg2); break;
 		case STEXE_ASKRC: StExecute_AskForRecycle(arg1, arg2); break;
 		case STEXE_LABELRC: StExecute_LabelWepRecycle(arg1, arg2); break;
@@ -141,6 +139,7 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_ShowBuyPage: STExecute_ShowBuyPage(arg1); break;
 		*/
 		case STEXE_PANEL_SCROLL: STExecute_PanelScroll(arg1, arg2, arg3); break;
+		case STEXE_NUMINPUT_MOVE: STExecute_NumInputBtns(arg1, arg2); break;
 		case STEXE_HowKind: STExecute_AYesFun(); break;
 		case STEXE_HowRude: STExecute_ANoFun(); break;
 		case STEXE_YES: STExecute_YesAction(); break;

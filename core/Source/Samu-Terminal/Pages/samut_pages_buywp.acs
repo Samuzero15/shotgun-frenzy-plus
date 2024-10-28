@@ -12,8 +12,7 @@
 #define BWPAGE_WPPACK_WEAP_NAME 6
 #define BWPAGE_WPPACK_WEAP_DESC 7
 #define BWPAGE_WPPACK_DETAILPANEL 8
-#define BWPAGE_WPPACK_WEAP_NEXT 9
-#define BWPAGE_WPPACK_WEAP_PREV 10
+#define BWPAGE_NUMINPUT_SELECTWP 9
 #define BWPAGE_WPPACK_DESC 11
 #define BWPAGE_TAG 12
 #define BWPAGE_SELECTED_PACK 13
@@ -23,6 +22,8 @@
 #define BWPAGE_UPDATE_LAST 17
 #define BWPAGE_SELECTED_CATEGORY 18
 #define BWPAGE_CURRENT_PAGE 19
+
+#define BWPAGE_MAX_WEAPONS_PER_PACK 3
 
 int buywpn_vars[20];
 int buywpn_wp_packbtns[BWPAGE_WPPACK_PERPAGE];
@@ -35,7 +36,7 @@ function void BuyWpnPage_Update(int pageTag){
 		BuyWpnPage_UpdateCats();
 		BuyWpnPage_UpdateBuyBut(buywpn_vars[BWPAGE_SELECTED_PACK]);
 		BuyWpnPage_UpdatePackButtons(buywpn_vars[BWPAGE_SELECTED_CATEGORY]);
-		BuyWpnPage_UpdatePackDetails(buywpn_vars[BWPAGE_SELECTED_PACK], buywpn_vars[BWPAGE_SELECTED_WEAPON]);
+		BuyWpnPage_UpdatePackDetails(buywpn_vars[BWPAGE_SELECTED_PACK]);
 	}else{
 		buywpn_vars[BWPAGE_SELECTED_PACK] = -1;
 		buywpn_vars[BWPAGE_UPDATE_NOW] = -99;
@@ -44,8 +45,9 @@ function void BuyWpnPage_Update(int pageTag){
 		buywpn_vars[BWPAGE_SELECTED_WEAPON] = 1;
 		buywpn_vars[BWPAGE_CURRENT_PAGE] = 0;
 		buywpn_vars[BWPAGE_SELECTED_PAGE] = -1;
+		NumInput_SetValue(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP], 0);
 		BuyWpnPage_UpdatePackButtons(buywpn_vars[BWPAGE_SELECTED_CATEGORY]);
-		BuyWpnPage_UpdatePackDetails(buywpn_vars[BWPAGE_SELECTED_PACK], buywpn_vars[BWPAGE_SELECTED_WEAPON]);
+		BuyWpnPage_UpdatePackDetails(buywpn_vars[BWPAGE_SELECTED_PACK]);
 	}
 }
 
@@ -68,7 +70,7 @@ function void BuyWpnPage_Init(int pageTag){
 	buywpn_vars[BWPAGE_UPDATE_NOW] = -99;
 	
 	//BuyWpnPage_UpdatePackButtons(buywpn_vars[BWPAGE_SELECTED_CATEGORY]);
-	BuyWpnPage_UpdatePackDetails(buywpn_vars[BWPAGE_SELECTED_PACK], 1);
+	BuyWpnPage_UpdatePackDetails(buywpn_vars[BWPAGE_SELECTED_PACK]);
 }
 
 function void BuyWpnPage_UpdateBuyBut(int wp){
@@ -129,13 +131,12 @@ function void BuyWpnPage_InitCats(int card1){
 	*/
 }
 
-function void BuyWpnPage_UpdatePackDetails(int selected, int whichweapon){
+function void BuyWpnPage_UpdatePackDetails(int selected){
 	if(buywpn_vars[BWPAGE_SELECTED_PACK] == buywpn_vars[BWPAGE_UPDATE_NOW] 
-		&& buywpn_vars[BWPAGE_SELECTED_WEAPON] == buywpn_vars[BWPAGE_UPDATE_LAST]) return;
+		&& buywpn_vars[BWPAGE_SELECTED_WEAPON] == NumInput_GetValue(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP])) return;
 	int i; 
 
-	StrButton_setShow(buywpn_vars[BWPAGE_WPPACK_WEAP_NEXT], false);
-	StrButton_setShow(buywpn_vars[BWPAGE_WPPACK_WEAP_PREV], false);
+	NumInput_SetShow(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP], false);
 	if(selected < 0){
 		Panel_SetShow(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL], false);
 		Label_setShow(buywpn_vars[BWPAGE_WPPACK_DESC], false);
@@ -146,58 +147,32 @@ function void BuyWpnPage_UpdatePackDetails(int selected, int whichweapon){
 	Panel_setTitle(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL],  strparam(s:WeaponPack_getName(selected), s:" pack"));
 	Label_setText(buywpn_vars[BWPAGE_WPPACK_DESC], WeaponPack_getDesc(selected));
 	
+	
 	//Fetches all weapons, and checks which one is inside this pack.
-	int wep1 = -1, wep2 = -1, wep3 = -1, count = 0;
-	for (i = 0; i < fp_WeaponStack && count != 3; i++){
+	int weps_in_pack[BWPAGE_MAX_WEAPONS_PER_PACK]; 
+	int count = 0;
+	for (i = 0; i < fp_WeaponStack && count != BWPAGE_MAX_WEAPONS_PER_PACK; i++){
 		if(Weapon_getWepPack(i) == selected){
-			if(count == 0){
-				wep1 = i;
-			} else if (count == 1){
-				wep2 = i;
-			} else if (count == 2){
-				wep3 = i;
-			}
+			weps_in_pack[count] = i;
 			count++;
 		}
 	}
-	buywpn_vars[BWPAGE_SELECTED_WEAPON] = whichweapon;
+
+	NumInput_SetShow(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP], true);
+	NumInput_SetMaxValue(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP], count-1);
+	int selected_weapon = NumInput_GetValue(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP]);
 	//log(s:"Weapon Data To Show: ", d:whichweapon, s:", Has second weapon? ", d:wep2, s:", Has third weapon? ", d:wep3, s:", Selected Category: ", d:WeaponPack_getCat(selected));
-	switch(whichweapon){
-		case 1:
-			Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_NAME], Weapon_getName(wep1));
-			Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_DESC], Weapon_getDesc(wep1));
-			if(wep2 != -1){
-				StrButton_setShow(buywpn_vars[BWPAGE_WPPACK_WEAP_NEXT], true);
-			} 
-		break;
-		case 2:
-			Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_NAME], Weapon_getName(wep2));
-			Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_DESC], Weapon_getDesc(wep2));
-			if(wep3 != -1){
-				StrButton_setShow(buywpn_vars[BWPAGE_WPPACK_WEAP_NEXT], true);
-			} 
-			StrButton_setShow(buywpn_vars[BWPAGE_WPPACK_WEAP_PREV], true);
-		break;
-		case 3:
-			Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_NAME], Weapon_getName(wep3));
-			Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_DESC], Weapon_getDesc(wep3));
-			StrButton_setShow(buywpn_vars[BWPAGE_WPPACK_WEAP_PREV], true);
-		break;
-	}
+	Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_NAME], Weapon_getName(weps_in_pack[selected_weapon]));
+	Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_DESC], Weapon_getDesc(weps_in_pack[selected_weapon]));
+	
+	int color_cat = term_catStyle[WeaponPack_getCat(selected)][TERM_CATSTYLE_COLOR];
 
 	Panel_SetShow(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL], true);
-	Panel_setColor(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL], 
-			BuyWpnPage_getColorCat(WeaponPack_getCat(selected)));
+	Panel_setColor(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL], color_cat);
+	NumInput_SetColor(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP], color_cat);
 
 	buywpn_vars[BWPAGE_UPDATE_NOW] = selected;
-	buywpn_vars[BWPAGE_UPDATE_LAST] = whichweapon;
-}
-
-function int BuyWpnPage_getColorCat(int cat){
-	if(cat == WEAPON_SET_STANDARD) return CR_GREEN;
-	if(cat == WEAPON_SET_ADVANCED) return CR_CYAN;
-	if(cat == WEAPON_SET_OVERPOWERED) return CR_ORANGE;
-	return cr_white;
+	buywpn_vars[BWPAGE_SELECTED_WEAPON] = selected_weapon;
 }
 
 function void BuyWpnPage_InitPackPanelDetails(void){
@@ -235,17 +210,12 @@ function void BuyWpnPage_InitPackPanelDetails(void){
 		Label_SetWrapWidth  (i, 280);
 	buywpn_vars[BWPAGE_WPPACK_WEAP_DESC] = i;
 
-	i = StrButton_Add(280.0, 300.0, "<");
-		StrButton_SetColor	(i, cr_WHITE);
-		StrButton_SetExecute(i, STEXE_BUYWP_MOVEWEP);
-		StrButton_SetExeArgs(i, -1,0,0);
-	buywpn_vars[BWPAGE_WPPACK_WEAP_PREV] = i;
-
-	i = StrButton_Add(536.0, 300.0, ">");
-		StrButton_SetColor	(i, cr_WHITE);
-		StrButton_SetExecute(i, STEXE_BUYWP_MOVEWEP);
-		StrButton_SetExeArgs(i, 1,0,0);
-	buywpn_vars[BWPAGE_WPPACK_WEAP_NEXT] = i;
+	i = NumInput_Add(280.0, 300.0);
+		NumInput_SetShowNumber(i, false);
+		NumInput_SetBtnDistance(i, 224.0);
+		NumInput_SetMinValue(i, 0);
+		NumInput_SetValue(i, 0);
+	buywpn_vars[BWPAGE_NUMINPUT_SELECTWP] = i;
 	
 	//buywpn_vars[12] = i;
 	i = StrButton_Add(370.0,320.0, "Buy Pack");
@@ -259,9 +229,6 @@ function void BuyWpnPage_InitPackPanelDetails(void){
 		Label_setFont(i, "DBIGFONT");
 		Label_setText(i, "Cost Price.");
 	buywpn_vars[BWPAGE_COSTLABEL] = i;
-	/*
-	
-	*/
 }
 
 function void BuyWpnPage_UpdatePackButtons(int category){
@@ -293,17 +260,17 @@ function void BuyWpnPage_UpdatePackButtons(int category){
 	// Something new on the Zandro 3.1-alpha.
 	// Local arrays!
 	int stack, wp;
+	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
 	//log(s:"Category stack: ", d:fp_WpCategoryStack[category]);
 	for (i = buywpn_vars[BWPAGE_CURRENT_PAGE]*BWPAGE_WPPACK_PERPAGE; i < fp_WpCategoryStack[category] && stack < BWPAGE_WPPACK_PERPAGE; i++){
 		wp = fp_WpCategory[category][i];
 		StrButton_setExeArgs(buywpn_wp_packbtns[stack], wp, 0, 0);
 		StrButton_setTextAdjust(buywpn_wp_packbtns[stack], WeaponPack_getName(wp));
-		StrButton_setColor(buywpn_wp_packbtns[stack], 
-		BuyWpnPage_getColorCat(category));
+		StrButton_setColor(buywpn_wp_packbtns[stack], color_cat);
 		StrButton_setShow(buywpn_wp_packbtns[stack], true);
 		stack++;
 	}
-	Panel_SetColor(buywpn_vars[BWPAGE_WPPACK_LISTPANEL], BuyWpnPage_getColorCat(category));
+	Panel_SetColor(buywpn_vars[BWPAGE_WPPACK_LISTPANEL], color_cat);
 	Panel_SetVirtualSize(buywpn_vars[BWPAGE_WPPACK_LISTPANEL], 0.0, 32.0*(stack > 6 ? 1*(stack-7) : 0));
 	buywpn_vars[BWPAGE_SELECTED_PAGE] = buywpn_vars[BWPAGE_CURRENT_PAGE];
 }

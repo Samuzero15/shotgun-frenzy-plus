@@ -160,6 +160,21 @@ function void STExecute_PanelScroll(int panel, int scrollx, int scrolly){
 	Panel_UpdateScrollButtons(panel);
 }
 
+function void STExecute_NumInputBtns(int npid, int dir){
+	int maxvalue = NumInput_getMaxValue(npid);
+	int minvalue = NumInput_getMinValue(npid);
+	int value = NumInput_getValue(npid);
+	int step = NumInput_getStepValue(npid);
+	int loopvalues = NumInput_getLoopValues(npid);
+	if(loopvalues) {
+		if(value+(step*dir) > maxvalue) value = minvalue;
+		else if (value+(step*dir) < minvalue) value = maxvalue;
+		else value = value+(step*dir);
+	}else value = clamp(value+(step*dir), minvalue, maxvalue);
+	
+	NumInput_setValue(npid, value);
+}
+
 function void StExecute_SelectComponent(int selectDirection, int y){
 	Input_ClearSelectableComps();
 	int i, p;

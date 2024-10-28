@@ -3,10 +3,8 @@
 #define RWPAGE_PANEL_WEAPONS RWPAGE_TAG+1
 #define RWPAGE_VAR_WEPSTACK RWPAGE_PANEL_WEAPONS+1
 #define RWPAGE_VAR_CURRPAGE RWPAGE_VAR_WEPSTACK+1
-#define RWPAGE_STRBUTTON_NEXTPAGE RWPAGE_VAR_CURRPAGE+1
-#define RWPAGE_STRBUTTON_PREVPAGE RWPAGE_STRBUTTON_NEXTPAGE+1
-#define RWPAGE_LABEL_CURRPAGE RWPAGE_STRBUTTON_PREVPAGE+1
-#define RWPAGE_LABEL_WEAPONRCY RWPAGE_LABEL_CURRPAGE+1
+#define RWPAGE_NUMINPUT_RCYPAGE RWPAGE_VAR_CURRPAGE+1
+#define RWPAGE_LABEL_WEAPONRCY RWPAGE_NUMINPUT_RCYPAGE+1
 #define RWPAGE_LABEL_NORCY1 RWPAGE_LABEL_WEAPONRCY+1
 #define RWPAGE_LABEL_NORCY2 RWPAGE_LABEL_NORCY1+1
 #define RWPAGE_WEAPON_STRBTN 0
@@ -23,7 +21,6 @@ function void RcyWpnPage_Update(int pageTag){
 	if(cursor_hover[STCURSOR_HOVER_COMP] == -1 && !Prompt_GetState())
 		Label_SetText(rcywpn_vars[RWPAGE_LABEL_WEAPONRCY], "");
 	if(SamuTerminal_isOnSamePage(pageTag)){
-		
 		RcyWpnPage_UpdateRcyBtns();
 	}
 }
@@ -32,6 +29,7 @@ function void RcyWpnPage_UpdateRcyBtns(void){
 	int stack = 0;
 	int page_items = RWPAGE_ITEMSPERPAGE;
 	rcywpn_vars[RWPAGE_VAR_WEPSTACK] = 0;
+	rcywpn_vars[RWPAGE_VAR_CURRPAGE] = NumInput_GetValue(rcywpn_vars[RWPAGE_NUMINPUT_RCYPAGE])-1;
 
 	int page_min_limit = rcywpn_vars[RWPAGE_VAR_CURRPAGE]*RWPAGE_ITEMSPERPAGE;
 	int page_max_limit = (rcywpn_vars[RWPAGE_VAR_CURRPAGE]+1)*RWPAGE_ITEMSPERPAGE;
@@ -41,8 +39,8 @@ function void RcyWpnPage_UpdateRcyBtns(void){
 		if(Weapon_getWepPack(i) != -1 && Weapon_getWepPack(i) != -2 && Weapon_OwnedSameKind(i)){
 			rcywpn_vars[RWPAGE_VAR_WEPSTACK]++;
 
-			if(!(rcywpn_vars[RWPAGE_VAR_WEPSTACK] >= page_min_limit 
-				&& rcywpn_vars[RWPAGE_VAR_WEPSTACK] <= page_max_limit)) continue;
+			if(!(rcywpn_vars[RWPAGE_VAR_WEPSTACK]-1 >= page_min_limit 
+				&& rcywpn_vars[RWPAGE_VAR_WEPSTACK]-1 <= page_max_limit)) continue;
 
 			if(stack < RWPAGE_ITEMSPERPAGE) RcyWpnPage_UpdateButton(stack, i);
 			stack++;
@@ -50,15 +48,13 @@ function void RcyWpnPage_UpdateRcyBtns(void){
 	}
 	bool can_i_show = stack > 0;
 	Panel_SetShow(rcywpn_vars[RWPAGE_PANEL_WEAPONS], can_i_show);
-	StrButton_SetShow  (rcywpn_vars[RWPAGE_STRBUTTON_PREVPAGE], can_i_show); 
-	StrButton_SetShow  (rcywpn_vars[RWPAGE_STRBUTTON_NEXTPAGE], can_i_show); 
-	Label_SetShow(rcywpn_vars[RWPAGE_LABEL_CURRPAGE], can_i_show);
-
+	NumInput_SetShow(rcywpn_vars[RWPAGE_NUMINPUT_RCYPAGE], can_i_show);
+	
 	Label_SetShow(rcywpn_vars[RWPAGE_LABEL_NORCY1], !can_i_show);
 	Label_SetShow(rcywpn_vars[RWPAGE_LABEL_NORCY2], !can_i_show);
 	if(!can_i_show) return;
 
-	int last_page = rcywpn_vars[RWPAGE_VAR_WEPSTACK]/RWPAGE_ITEMSPERPAGE;
+	int last_page = (rcywpn_vars[RWPAGE_VAR_WEPSTACK]-1)/RWPAGE_ITEMSPERPAGE;
 	int sb;
 	int lbl;
 	if(stack < page_items){
@@ -69,22 +65,8 @@ function void RcyWpnPage_UpdateRcyBtns(void){
 			Label_SetShow(lbl, false);
 		}
 	}
-	if(rcywpn_vars[RWPAGE_VAR_CURRPAGE] > last_page) rcywpn_vars[RWPAGE_VAR_CURRPAGE] = last_page;
-	StrButton_SetExeArgs  (rcywpn_vars[RWPAGE_STRBUTTON_PREVPAGE], -1, last_page, 0); 
-	StrButton_SetExeArgs  (rcywpn_vars[RWPAGE_STRBUTTON_NEXTPAGE], 1, last_page, 0); 
-	StrButton_SetShow  (rcywpn_vars[RWPAGE_STRBUTTON_PREVPAGE], true);
-	StrButton_SetShow  (rcywpn_vars[RWPAGE_STRBUTTON_NEXTPAGE], true);
-	
-	Label_SetText	(rcywpn_vars[RWPAGE_LABEL_CURRPAGE], 
-		strparam(d:rcywpn_vars[RWPAGE_VAR_CURRPAGE]+1, s:"/", d:last_page+1));
-	
-		
-	if(rcywpn_vars[RWPAGE_VAR_CURRPAGE] == 0)
-		StrButton_SetShow  (rcywpn_vars[RWPAGE_STRBUTTON_PREVPAGE], false); 
-	
-	if(rcywpn_vars[RWPAGE_VAR_CURRPAGE] == last_page)
-		StrButton_SetShow  (rcywpn_vars[RWPAGE_STRBUTTON_NEXTPAGE], false); 
-
+	NumInput_SetValue(rcywpn_vars[RWPAGE_NUMINPUT_RCYPAGE], rcywpn_vars[RWPAGE_VAR_CURRPAGE]+1);
+	NumInput_SetMaxValue(rcywpn_vars[RWPAGE_NUMINPUT_RCYPAGE], last_page+1);
 }
 
 function void RcyWpnPage_UpdateButton(int slot, int wpn){
@@ -137,28 +119,22 @@ function void RcyWpnPage_Init(int pageTag){
 	int base_y_navs = 290.0;
 	int btn_dist_navs = 64.0;
 
-	i = StrButton_AddMid   (base_x_navs, base_y_navs, "<");
-	StrButton_SetExecute(i, STEXE_MOVERC);
-	StrButton_setTag    (i, rcywpn_vars[RWPAGE_TAG]);
-	rcywpn_vars[RWPAGE_STRBUTTON_PREVPAGE] = i;
+	i = NumInput_AddMid(320.0, 290.0);
+	NumInput_SetTag(i, rcywpn_vars[RWPAGE_TAG]);
+	NumInput_SetMinValue(i, 1);
+	NumInput_SetValue(i, 1);
+	rcywpn_vars[RWPAGE_NUMINPUT_RCYPAGE] = i;
 
-	i = StrButton_DupMid  (i, base_x_navs + btn_dist_navs*2, base_y_navs);
-	StrButton_SetText   (i, ">");
-	rcywpn_vars[RWPAGE_STRBUTTON_NEXTPAGE] = i;
-
-	i = Label_Add(base_x_navs + btn_dist_navs, base_y_navs);
-	Label_setFont(i,"DBIGFONT");
-	Label_setText(i, "n / m");
-	Label_setTag (i, rcywpn_vars[RWPAGE_TAG]);
-	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
-	rcywpn_vars[RWPAGE_LABEL_CURRPAGE] = i;
-
-	i = Label_Dup(i, 90.0, 330.0);
+	i = Label_Add(90.0, 330.0);
 	Label_setText(i, "Weapon Name Here");
 	Label_setAligns(i, HUD_ALIGN_TOP, HUD_ALIGN_LEFT);
+	Label_setTag(i, rcywpn_vars[RWPAGE_TAG]);
+	Label_SetFont(i, "BIGFONT");
 	rcywpn_vars[RWPAGE_LABEL_WEAPONRCY] = i;
 
-	i = Label_Dup(rcywpn_vars[RWPAGE_LABEL_CURRPAGE], Vars_Mid_Wid(), Vars_Mid_Hei() - 30.0);
+	i = Label_Dup(i, Vars_Mid_Wid(), Vars_Mid_Hei() - 30.0);
+	Label_SetColor(i, CR_WHITE);
+	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	Label_SetText(i, langstring("SAMUT_ARMSTERM_NOACCESS_RCY_TITLE", 0));
 	rcywpn_vars[RWPAGE_LABEL_NORCY1] = i;
 

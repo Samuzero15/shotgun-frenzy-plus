@@ -4,11 +4,11 @@ int playup_vars[30];
 #define PLAYUPPAGE_NPRIVARS 8
 
 function void PlayUpPage_SaveGroup(int up, int id, int comp){
-	rcywpn_vars[PLAYUPPAGE_NCOMPGROUP * up + PLAYUPPAGE_NPRIVARS + (id-1)] = comp;
+	playup_vars[PLAYUPPAGE_NCOMPGROUP * up + PLAYUPPAGE_NPRIVARS + (id-1)] = comp;
 }
 
 function int PlayUpPage_LoadGroup(int up, int id){
-	return rcywpn_vars[PLAYUPPAGE_NCOMPGROUP * up + PLAYUPPAGE_NPRIVARS + (id-1)];
+	return playup_vars[PLAYUPPAGE_NCOMPGROUP * up + PLAYUPPAGE_NPRIVARS + (id-1)];
 }
 
 function void PlayUpPage_Update(int pageTag){

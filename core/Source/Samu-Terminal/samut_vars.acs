@@ -136,7 +136,7 @@
 #libdefine STEXE_PLAYUP_BTNHOVER 	45
 
 #libdefine STEXE_UPWEPOPENUPS 71
-#Libdefine STEXE_UPGPAGEWEPS 70
+//#Libdefine STEXE_UPGPAGEWEPS 70
 #libdefine STEXE_UPGPAGECAT 42
 #libdefine STEXE_UPGPAGEDESC 40
 
@@ -185,6 +185,7 @@
 #libdefine STEXE_MSGUP 14
 #libdefine STEXE_GETUP -6
 #libdefine STEXE_PANEL_SCROLL		1000
+#libdefine STEXE_NUMINPUT_MOVE		1001
 
 //DoNotTouch_Start.
 #LibDefine STEXE_ASK 5
@@ -229,12 +230,13 @@
 #libdefine STCOMP_IMG 2
 #libdefine STCOMP_SBTN 3
 #libdefine STCOMP_PANEL 4
+#libdefine STCOMP_NUMINPUT 5
 
 #libdefine STCOMP_CURSOR 0
 #libdefine STCOMP_PROMPT 1
 #libdefine STCOMP_TOAST 2
 //		Just to track the array limits.
-#libdefine STVARS_COMPCOUNT 5
+#libdefine STVARS_COMPCOUNT 6
 #libdefine STVARS_COMPCOUNT1 3
 #libdefine STVARS_TMP 10
 
@@ -284,6 +286,8 @@ int comp_rects_once[STVARS_COMPCOUNT1];
 #libdefine STPANEL_COMPDATA_ISANCHORED 4
 #libdefine STPANEL_COMPDATA_ANCHORX 5
 #libdefine STPANEL_COMPDATA_ANCHORY 6
+
+int numpages[STPANEL_COUNT_INDEX];
 
 int panels[STPANEL_COUNT_INDEX];
 int panels_scrollbuttons[STPANEL_COUNT_INDEX][STPANEL_COUNT_SCROLLBTNS];
@@ -376,6 +380,7 @@ function void Vars_ClearCompCounts(void){
 
 	for (i = 0; i < STPANEL_COUNT_INDEX; i++){
 		panels[i] = 0;
+		numpages[i] = 0;
 		for (j = 0; j < STPANEL_COUNT_SCROLLBTNS; j++){
 			panels_scrollbuttons[i][j] = 0;
 		}
