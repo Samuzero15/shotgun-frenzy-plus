@@ -8,6 +8,10 @@
 	!) Pretty important stuff.
 
 ## v1 - The path of the damned...
+#### (28 / 10 / 2024) [Base weapon fixes, Dual berettas and SMG Beretta modified]
+	*) Some small fixes on the base weapon, allowing it to work in multiplayer with hand grenades and melee attacks.
+	*) Dual berettas and SMG Beretta can now throw grenades and punch!
+
 #### (27 / 10 / 2024) [Numinput Component, rewritting page navigation buttons]
 	+) Added a new compound component, the NumInput!
 	// 3 components tied in one single component for increasing and decreasing values within certain range. Used a lot when displaying more items in the buy weapon, upgrade weapon, and recycle weapon.
