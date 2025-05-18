@@ -123,6 +123,8 @@ function void PlayUpPage_AddButtons(int pageTag, int posx, int posy){
 	Card_setCells(PlayUpTop);
 	Card_setPosition(posx - (36.0*PlayUpTop)/2, posy); // Center aligned in x.
 	Card_setStep(36.0);
+	Card_SetVerticalOri(false);
+
 	int layout = Card_Generate();
 	
 	for(int btn = 0; btn < PlayUpTop; btn++){

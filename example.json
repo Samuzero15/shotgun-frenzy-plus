@@ -16,7 +16,7 @@
             "distdir": "dist",
             "acscomp": false,
             "notxt": false,
-            "skipped": true
+            "skipped": false
         },
         "Music": {
             "release": "v1.0",
@@ -25,13 +25,13 @@
             "distdir": "dist",
             "acscomp": false,
             "notxt": true,
-            "skipped": true
+            "skipped": false
         }
     },
     "play_settings": {
         "sourceport_path": "..\\tools\\zandronum\\zandronum.exe",
         "pwads_before": [
-            "..\\tools\\pwads\\skulltag_content-3-0-beta01.pk3"
+            "..\\tools\\pwads\\skulltag_content-3.2-beta2.pk3"
         ],
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
@@ -52,7 +52,7 @@
             ".dbs"
         ],
         "build_add_files": [
-            "C:\\Users\\Usuario\\Desktop\\Samu Stuff\\Doom Stuff\\Projects\\shotgun-frenzy-plus\\Changelog.md"
+            "..\\Changelog.md"
         ],
         "build_flags": [
             false,
@@ -105,13 +105,15 @@
     },
     "acs_compilation": {
         "type": "acc",
-        "executeable": "C:\\Users\\Usuario\\Desktop\\Samu Stuff\\Doom Stuff\\Projects\\shotgun-frenzy-plus\\tools\\acc\\acc64.exe",
+        "executeable": "..\\tools\\acc\\acc64.exe",
         "gdcc-linker_exe": "value",
         "gdcc-make_libs": false,
         "gdcc-makelib_exe": "value",
         "gdcc-mainlib_name": "value",
         "gdcc-target_engine": "",
         "extra_params": "",
-        "library_dirs": []
+        "library_dirs": [
+            "..\\tools\\acc"
+        ]
     }
 }

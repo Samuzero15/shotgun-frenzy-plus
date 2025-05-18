@@ -8,6 +8,18 @@
 	!) Pretty important stuff.
 
 ## v1 - The path of the damned...
+#### (18 / 5 / 2025) [Some repo updates & small fix on the Samu-Terminal]
+	// Ay! I'm back once again! and this time, I got the Powerhouse PC and the motivation to back it up!
+	// I'm not discussing on why I was absent on like, how much? half a year? Man and i did'nt done anything about this project on that time.
+	// But, in short, Many events happened. (got a well paid job, lack of motivation and planning to get a better pc, which i already did!)
+	// Now that I can play in a better connection, a better pc cuz Doom dark ages, and a new Zandro 3.2 Update. I guess this is my call to wake up, don't you think?
+	// Right now I'm calibrating myself on this new workspace and, then I'm trying to implement the weapon rework, which it should include the hand grenades and the weapon quick switching. That's the only thing that I'm missing here before the 1.8 release.
+	*) Removed ACS compiled files from core/ACS directory, cuz it is pretty much generated with the pack-o-daemon.
+	*) Added to the .gitignore file the last directory, and the project.json file
+	// Do not worry, an example.json has been added to the directory, if you need the project.json on your PC, just rename the example.json file.
+	*) Now the Player Upgrade card on the Samu terminal show in the horizontal direction.
+	// I'll see if I can do something with the weapon rework branch... Stay tuned ;)
+
 #### (27 / 10 / 2024) [Numinput Component, rewritting page navigation buttons]
 	+) Added a new compound component, the NumInput!
 	// 3 components tied in one single component for increasing and decreasing values within certain range. Used a lot when displaying more items in the buy weapon, upgrade weapon, and recycle weapon.

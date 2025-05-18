@@ -8,6 +8,7 @@ tools/zandronum/
 tools/zandronum_test/
 tools/pwads/*.*
 tools/acc/acscomp_tmp
+core/ACS/*.o
 *.dbs
 *.wad.backup*
 *bak.acs
@@ -16,8 +17,9 @@ tools/acc/acscomp_tmp
 *.xcf
 gdcc/
 
-skulltag_content-3.0-beta01.pk3
+skulltag_content-3.2-beta2.pk3
 console.bat
+project.json
 __*
 
 #############
