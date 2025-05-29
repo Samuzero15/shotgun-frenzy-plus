@@ -22,7 +22,7 @@ int StimUp_list[FP_STIMUP_MAX][5];
 
 function void SFPlus_DefineStimUps(void){
     StimUpTop = 0;
-	StimUp_Add ("Soul Healing",	    "Overhealth", 	"SUBTN1");
+	StimUp_Add ("Supercharge",	    "Overhealth", 	"SUBTN1");
     StimUp_Add ("Bigger Pocket",	"Amount", 	    "SUBTN2");
     StimUp_Add ("Extra Dosis",	    "ExtraDosis", 	"SUBTN3");
     StimUp_Add ("Skin Tightening",	"HardShell", 	"SUBTN4");

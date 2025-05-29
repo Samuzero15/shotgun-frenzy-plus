@@ -33,7 +33,7 @@ function void SFPlus_DefineMechUps(void){
 		"More resistance never done you harm.");
 	
 	MechUp_Add ("Manuvering", "MechUp_Speed", "speed", 3,
-		"Tanks are slow, but you're on a hurry.");
+		"Mechs are slow, but you're on a hurry.");
 	
 	MechUp_Add1Up("Lifesave", "MechUp_LifeSave", "life_save",
 		"On eject, you will return to the base.");

@@ -199,3 +199,7 @@ function bool Champ_IsType(int which){
 		((CheckInventory("ChampHybrid_Type1")-1) == which) ||
 		((CheckInventory("ChampHybrid_Type2")-1) == which));
 }
+
+Script "SFPlus_SetChampionNoSpawn" (int state) {
+	champion_nospawn = state;
+}

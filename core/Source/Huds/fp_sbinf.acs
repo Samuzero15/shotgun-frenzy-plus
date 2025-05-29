@@ -28,6 +28,7 @@ Script "SFPlus_SyncVariables" OPEN {// Thank You Mr.Satan!
 			else
 				SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
 			if (f_Gametype == 1) SetInventory("HUD_TeamCredits", c_Credits);
+			else TakeMaxInventory("HUD_TeamCredits");
 			if (f_GameType == 5) SetInventory("HUD_Wave", m_SurvivalWave);
 
 			SetInventory("HUD_Gametype", f_Gametype);
@@ -61,6 +62,7 @@ script "SFPlus_SyncWithSBARINFO" (int kills) {
 	SetInventory("HUD_CoreHP", getactorproperty(100 + g_Status, APROP_Health));
 	SetInventory("HUD_Credits", p_Credits[play]);
 	if (f_Gametype == 1)SetInventory("HUD_TeamCredits", c_Credits);
+	else TakeMaxInventory("HUD_TeamCredits");
 	if (f_GameType == 5)SetInventory("HUD_Wave", m_SurvivalWave);
 	SetInventory("HUD_Ups", p_Exp_Points[play]);
 	SetInventory("HUD_Kills", getlevelinfo(LEVELINFO_KILLED_MONSTERS));
@@ -90,8 +92,9 @@ script "SFPlus_SyncWithSBARINFO" (int kills) {
 		SetInventory("Hud_MechTime_Min" ,0);
 		SetInventory("Hud_MechTime_Sec" ,0);
 	}
-	
-	SetInventory("HUD_OnMech", cond(p_TankSlot[play] == 2, 1, 0));
+
+	if(p_TankSlot[play] == 2) SetInventory("HUD_OnMech", 1);
+	else TakeMaxInventory("HUD_OnMech");
 	
 	switch(p_TankSlot[play]){
 		case 1: SetInventory("HUD_MechState", 1); break;

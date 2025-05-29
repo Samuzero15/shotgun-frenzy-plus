@@ -17,8 +17,10 @@
 #import "f_StokP.acs"
 #import "fl_techs.acs"
 #import "fp_AISet.acs"
+#import "textlbls.acs"
 
 #include "zcommon.acs"
+#include "acsutils.acs"
 
 #include "samu_tools.acs"
 
@@ -29,6 +31,12 @@ int spawnStack = 0;
 int altars = 128;
 bool wavelikespawn = false;
 bool x4health = false;
+bool nochampions = false;
+bool nocredits = false;
+bool nobonuses = false;
+bool noitemdrops = false;
+bool norestockpads = false;
+bool respawnin10seconds = false;
 int spawned;
 
 script 100 Open{
@@ -104,44 +112,144 @@ script 14 (void){
 	Door_Open(5, 128);
 }
 
-script 17 (int modifier){
-	
-	str msg = "";
-	if(modifier == 1){
-		wavelikespawn = !wavelikespawn;
-		msg = strParam(s:"Wave-Like Spawning: ", s:strBool(wavelikespawn));
-		toggleIndicators(wavelikespawn, 10);
-	} else if (modifier == 2){
-		x4health = !x4health;
-		msg = strParam(s:"Health Points x4: ", s:strBool(x4health));
-		toggleIndicators(x4health, 11);
-	}
-	
-	SetFont("SMALLFNT");
-	HudMessage(s:msg; HUDMSG_FADEOUT, 2,  CR_WHITE, 0.5,0.75, 1.0, 0.5);
-	
+#Define SYNCTID_wavelikespawn 20000
+#Define SYNCTID_x4health 20001
+#Define SYNCTID_nochampions 20002
+#Define SYNCTID_nocredits 20003
+#Define SYNCTID_nobonuses 20004
+#Define SYNCTID_noitemdrops 20005
+
+int spawnOptions[8];
+
+Script "TextLabel_SyncStrings" Open {
+	initTextLabels();
 }
 
-function void toggleIndicators(int cond, int lineid){
-	if(cond)
+Script "TextLabel_SyncStringsClientside" Open Clientside {
+	initTextLabels();
+}
+
+function void initTextLabels (void) {
+	spawnOptions[0] = "Wave-Like Spawning";
+	spawnOptions[1] = "Health x4";
+	spawnOptions[2] = "No Champions";
+	spawnOptions[3] = "No Splash Credits";
+	spawnOptions[4] = "No Splash Bonuses";
+	spawnOptions[5] = "No Item Drops";
+	spawnOptions[6] = "No Restock pads";
+	spawnOptions[7] = "10 second Respawn";
+	textLabelMsgs[0] = spawnOptions[0];
+	textLabelMsgs[1] = spawnOptions[1];
+	textLabelMsgs[2] = spawnOptions[2];
+	textLabelMsgs[3] = spawnOptions[3];
+	textLabelMsgs[4] = spawnOptions[4];
+	textLabelMsgs[5] = spawnOptions[5];
+	textLabelMsgs[6] = spawnOptions[6];
+	textLabelMsgs[7] = spawnOptions[7];
+	textLabelMsgs[8] = "Respawn Monsters";
+	textLabelMsgs[9] = "Kill Monsters";
+}
+
+script "SyncVariables" OPEN
+{
+	SyncVariable(SYNCTID_wavelikespawn, wavelikespawn);
+	SyncVariable(SYNCTID_x4health,		x4health);
+	SyncVariable(SYNCTID_nochampions,	nochampions);
+	SyncVariable(SYNCTID_nocredits,		nocredits);
+	SyncVariable(SYNCTID_nobonuses,		nobonuses);
+	SyncVariable(SYNCTID_noitemdrops,	noitemdrops);
+	Delay(1);
+	restart;
+}
+
+script 17 (int modifier){
+	bool condition;
+	bool invalid = false;
+
+	switch(modifier){
+		case 1:
+			wavelikespawn = !wavelikespawn;
+			condition = wavelikespawn;
+		break;
+		case 2:
+			x4health = !x4health;
+			condition = x4health;
+		break;
+		case 3:
+			nochampions = !nochampions;
+			condition = nochampions;
+			ACS_NamedExecute("SFPlus_SetChampionNoSpawn", 0, nochampions);
+		break;
+		case 4:
+			nocredits = !nocredits;
+			condition = nocredits;
+			ACS_NamedExecute("SFPlus_SetkillFlagNoCoinDrop", 0, nocredits);
+		break;
+		case 5:
+			nobonuses = !nobonuses;
+			condition = nobonuses;
+			ACS_NamedExecute("SFPlus_SetkillFlagNoHPAPBonusDrop", 0, nobonuses);
+		break;
+		case 6:
+			noitemdrops = !noitemdrops;
+			condition = noitemdrops;
+			ACS_NamedExecute("SFPlus_SetkillFlagNoItemDrop", 0, noitemdrops);
+		break;
+		case 7:
+			norestockpads = !norestockpads;
+			condition = norestockpads;
+		break;
+		case 8:
+			respawnin10seconds = !respawnin10seconds;
+			condition = respawnin10seconds;
+		break;
+		default:
+		 	invalid = true;
+		break;
+	}
+
+	if(!invalid) {
+		int index = modifier-1;
+		toggleIndicators(condition, index);
+	}
+}
+
+Script "MonsterSpawner_RestockPad" (int type) {
+	if(norestockpads) terminate;
+	ACS_ExecuteAlways(106, 0, type, 1, 0);
+}
+
+function void toggleIndicators(int condition, int index){
+	int lineid = 10+index;
+	if(condition)
 		SetLineTexture(lineid, Side_FRONT, TEXTURE_BOTTOM, "N_CGRN01");
 	else
 		SetLineTexture(lineid, Side_FRONT, TEXTURE_BOTTOM, "N_CRED01");
+	
+	showSpawnFlags(condition, index);
 }
 
-function str strBool(bool cond){
-	if(cond) return "true";
-	return "false";
+function void showSpawnFlags(int condition, int index){
+	SetFont("SMALLFNT");
+	HudMessage(s:strParam(s:spawnOptions[index], s:": ", s:strBool(condition)); HUDMSG_FADEOUT, 2,  CR_WHITE, 0.5,0.75, 1.0, 0.5);
+}
+
+
+function str strBool(bool condition){
+	if(condition) return "\cdtrue";
+	return "\cgfalse";
 }
 
 script 18 (int cmd){// Teleport commands.
 	if(cmd == 1){ // Kill that sonofablitch
 		Thing_Remove(1998);
 		Thing_Remove(1898);
+		if(respawnin10seconds) ACS_Terminate(40, 0);
 	}
 	else if (cmd == 0){// I liked that, again!
 		Thing_Remove(1998);
 		Thing_Remove(1898);
+		ACS_Terminate(40, 0);
 		if(wavelikespawn){
 			Spawnspot("TeleportFog", 1899, 1898, 0);
 			Spawnspot(spawnerList[spawned], 1899, 1898, 0);
@@ -159,6 +267,9 @@ script 18 (int cmd){// Teleport commands.
 		
 		Thing_Hate(1998, 0, 0);
 		Thing_Hate(1898, 0, 0);
+		if(respawnin10seconds){
+			ACS_Execute(40, 0, spawned);
+		}
 	}
 }
 
@@ -180,6 +291,7 @@ script 19 (int tlport){
 
 script 16 (int who){
 	// Set the monster to be spawned.
+	ACS_Terminate(40, 0);
 	spawned = who;
 	print(s:"I am from the: ", s:spawnerList[who], s:" Class.");
 	Thing_Remove(1998);
@@ -198,8 +310,49 @@ script 16 (int who){
 		health = getActorProperty(1898, APROP_Health);
 		SetActorProperty(1898, APROP_HEALTH, health + health * 4);
 	}
+	if(respawnin10seconds){
+		ACS_Execute(40, 0, who);
+	}
 }
 
+script 40 (int who){
+	while (respawnin10seconds){
+		if(wavelikespawn && ThingCountName(spawnerList[who], 1898) == 0){
+			f_TipShow("DEMON", "", "Respawning in 10 seconds.", 10);
+			delay(35*5);
+			f_TipShow("DEMON", "", "Respawning in 5 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 4 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 3 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 2 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 1 second.", 10);
+			delay(35);
+			Spawnspot("TeleportFog", 1899, 1898, 0);
+			Spawnspot(spawnerList[who], 1899, 1898, 0);
+		}
+		else if(ThingCountName(spawnerList[who], 1998) == 0){
+			f_TipShow("DEMON", "", "Respawning in 10 seconds.", 10);
+			delay(35*5);
+			f_TipShow("DEMON", "", "Respawning in 5 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 4 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 3 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 2 seconds.", 10);
+			delay(35);
+			f_TipShow("DEMON", "", "Respawning in 1 second.", 10);
+			delay(35);
+			Spawnspot("TeleportFog", 1999, 1998, 0);
+			Spawnspot(spawnerList[who], 1999, 1998, 0);
+		}
+		delay(5);
+	}
+
+}
 script 15 (int who){
 	//If the altar is not used, hide it.
 	changeFloor(300 + who,		"CEIL4_2");
@@ -330,4 +483,143 @@ function void addToSpawner(str who){
 		spawnerList[spawnStack] = who;
 		spawnstack++;
 	}
+}
+/*
+////////////////////////////////////////
+// Took this from DTDSphere's DPS Map //
+////////////////////////////////////////
+
+int tic = 0; //Clock for displaying DPS
+int second = 0; //Internal clock for Average DPS(Damage Per 10 Seconds)
+int dmgDealt = 0; //Value for Damage Dealt each tic (realtime)
+int dmgSecond = 0; //Value for Damage Dealt each second
+int dmgTenSeconds = 0; //Value for Damage Dealt each 10 seconds
+int xtextbox = 1.0; //xPosition for text e.g. "title: timer, damage"
+int ytextbox = 0.15; //yPosition for text e.g. "title: timer, damage"
+
+////////////////
+//Total Damage//
+////////////////
+Script "DTD_TotalDamage" OPEN
+{
+	SetFont("SMALFONT");
+	
+	//Damage dealt is the difference between the Cyberdemon's max health (999999) and current health.
+	dmgDealt = 999999 - GetActorProperty(1,APROP_Health);
+	
+	HUDMessageBold (s:"Total damage:           ";HUDMSG_PLAIN,1,CR_RED,xtextbox,ytextbox,0,1);
+	HUDMessageBold (d:dmgDealt;HUDMSG_PLAIN,2,CR_RED,xtextbox,ytextbox,0,1);
+	
+	//Check every tic
+	Delay (1);
+	Restart;
+}
+
+///////
+//DPS//
+///////
+Script "DTD_DPS" OPEN
+{
+	SetFont("SMALFONT");
+
+	//If Cyberdemon isn't at Max Health (999999), don't activate timer and initalise everything
+	If (GetActorProperty(1,APROP_Health) == 999999)
+	{
+		HUDMessageBold (s:"\nDPS: 70", s:"        ";HUDMSG_PLAIN,3,CR_ORANGE,xtextbox,ytextbox,0,1);
+		HUDMessageBold (s:"\n0";HUDMSG_PLAIN,4,CR_ORANGE,xtextbox,ytextbox,0,1);
+	
+		//Check every tic
+		Delay(1);
+		Restart;
+	}
+	
+	//Update every two seconds
+	If (tic <= 0)
+		{
+		//Reset timer back to 70
+		tic = tic + 70;
+		
+		//DPS equals half the value of the total difference between real-time damage and the damage from 2 seconds ago
+		HUDMessageBold(s:"\n", d:(dmgDealt-dmgSecond)/2;HUDMSG_PLAIN,4,CR_ORANGE,xtextbox,ytextbox,0,1);
+		
+		//Damage from 2 seconds ago is now refreshed with the current real-time damage value to be compared again in 2 seconds from now
+		dmgSecond = dmgDealt;
+		}
+	
+	//If Else statement to keep timer value 2 digits long e.g. display 09 instead of 9
+	If (tic < 10)	{ HUDMessageBold (s:"\nDPS: 0", d:tic, s:"        ";HUDMSG_PLAIN,3,CR_ORANGE,xtextbox,ytextbox,0,1); }
+	Else 			{ HUDMessageBold (s:"\nDPS: ",  d:tic, s:"        ";HUDMSG_PLAIN,3,CR_ORANGE,xtextbox,ytextbox,0,1); }
+	
+	//Check every tic while taking 1 from timer
+	Delay(1);
+	tic = tic - 1;
+	Restart;
+}
+
+/////////////////////////////////////////////
+//Average DPS (Damage dealt per 10 seconds)//
+/////////////////////////////////////////////
+Script "DTD_AverageDPS" OPEN
+{
+	SetFont("SMALFONT");
+	
+	//If Cyberdemon isn't at Max Health, don't activate timer
+	If (GetActorProperty(1,APROP_Health) == 999999)
+	{
+		HUDMessageBold (s:"\n\nAverage DPS: 10        ";HUDMSG_PLAIN,6,CR_GOLD,xtextbox,ytextbox,0,1);
+		HUDMessageBold (s:"\n\n0";HUDMSG_PLAIN,5,CR_GOLD,xtextbox,ytextbox,0,1);
+		Delay(1);
+		Restart;
+	}
+	
+	//Update every 10 seconds
+	If (second <= 0)
+	{
+		//Reset timer back to 10
+		second = second + 10;
+		
+		HUDMessageBold (s:"\n\n", d:(dmgDealt-dmgTenSeconds)/10;HUDMSG_PLAIN,5,CR_GOLD,xtextbox,ytextbox,0,1); //The difference between current damage and damage from 10 seconds ago
+		
+		//Damage from 10 seconds ago is now refreshed with the current real-time damage value to be compared again in 10 seconds from now
+		dmgTenSeconds = dmgDealt;
+	}
+	
+	//Keep timer value 2 digits long e.g. display 09 instead of 9.
+	If (second < 10) { HUDMessageBold (s:"\n\nAverage DPS: 0", d:second, s:"        ";HUDMSG_PLAIN,6,CR_GOLD,xtextbox,ytextbox,0,1); } //Title and true timer
+	Else { 			HUDMessageBold (s:"\n\nAverage DPS: " , d:second, s:"        ";HUDMSG_PLAIN,6,CR_GOLD,xtextbox,ytextbox,0,1); } //Title and true timer
+	
+	//Check every second (35 tics) while taking 1 from timer
+	Delay(35);
+	second = second - 1;
+	Restart;
+}
+
+////////////////
+//Reset button//
+////////////////
+Script 4 (void)
+{
+	SetFont("SMALFONT");
+	
+	//Kill and replace Cyberdemon
+	Thing_Damage (1, 999999);
+	SpawnSpotForced ("CyberdemonDPS", 40, 1, 192);
+	SpawnSpotForced ("TeleportFog", 40, 1, 192);
+	
+	//Reset internal timer and damage values
+	tic = 70;
+	second = 10;
+	dmgSecond = 0;
+	dmgTenSeconds = 0;
+	
+	//Terminate and restart Script 2 and 3 to keep them in sync
+	ACS_NamedTerminate ("DTD_DPS",0);
+	ACS_NamedTerminate ("DTD_AverageDPS",0);
+	Delay (1);
+	ACS_NamedExecute ("DTD_DPS",0,0,0,0);
+	ACS_NamedExecute ("DTD_AverageDPS",0,0,0,0);
+	
+	//Reset external damage value to 0
+	HUDMessageBold (s:"\n0";HUDMSG_PLAIN,4,CR_ORANGE,xtextbox,ytextbox,0,1);
+	HUDMessageBold (s:"\n\n0";HUDMSG_PLAIN,5,CR_GOLD,xtextbox,ytextbox,0,1);
 }

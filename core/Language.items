@@ -17,7 +17,7 @@ ITDATA_D_SOULSPHERE = "Heals and overheals you 100 HP";
 
 ITDATA_I_MEGASPHERE = "ITEM02";
 ITDATA_N_MEGASPHERE = "Megasphere";
-ITDATA_D_MEGASPHERE = "Grants you 200 Hp and a Blue armor";
+ITDATA_D_MEGASPHERE = "Grants you 200 HP and a Blue armor";
 
 ITDATA_I_GODSPHERE = "ITEM03";
 ITDATA_N_GODSPHERE = "Godsphere";

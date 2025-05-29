@@ -15,6 +15,7 @@
 #import "fl_techs.acs"
 #import "fc_AStr.acs"
 #import "fl_RuneDir.acs"
+#import "constants.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -120,7 +121,11 @@ script 305 (void)
 
 Script "SFPlus_MechHud" (int move_state) Clientside
 {
-	if(consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())){
+	int spyCam = CheckPlayerCamera(consolePlayerNumber());
+	if((consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())) || 
+			(spyCam >= CONST_TID_PLAYER && spyCam < CONST_TID_PLAYER+32) && StrEquals(GetActorClass(spyCam), "MechPlayer")){
+
+		if(spyCam >= CONST_TID_PLAYER && spyCam < CONST_TID_PLAYER+32) SetActivator(0);
 		str img;
 		switch(move_state){
 			case 1:
@@ -139,6 +144,9 @@ Script "SFPlus_MechHud" (int move_state) Clientside
 		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
 		setfont(img);
 		hudmessage(s:"a"; HUDMSG_LAYER_UNDERHUD, -201, 0, 400.0, 0.1, 1.0);
+	}else {
+		SetActivator(0);
+		ClearHudMessage(-201);
 	}
 }
 
@@ -151,7 +159,7 @@ script 308 (void)
 		else if (GetPlayerInput(-1, INPUT_YAW) > 0)      mech_state = 2;
 		else mech_state = 1;
 			
-			ACS_NamedExecuteAlways("SFPlus_MechHud", 0, mech_state );
+		ACS_NamedExecuteAlways("SFPlus_MechHud", 0, mech_state );
 		delay(6);
 	}
 	ACS_NamedExecuteAlways("SFPlus_MechHud", 0, 0);
@@ -204,6 +212,8 @@ script 306 (void)
 		Rune_SaveAndUnequip();
 
 		giveinventory("TankGun", 1);
+		Thing_ChangeTID(ActivatorTid(), CONST_TID_PLAYER+playernumber());
+		SetActivator(CONST_TID_PLAYER+playernumber());
 		// welcome message
 		if(GetUserCVar(playernumber(), "sfp_mechmsg")){
 			setfont("BIGFONT");

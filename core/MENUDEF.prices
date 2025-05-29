@@ -164,11 +164,11 @@ OptionMenu "SFPlus_PriceEdit_Cmd"{
 	NumberField "Stimpack Tech", "pr_cmd_gl_stimpk", 25, 20000, 25
 	NumberField "Rune Sync Tech", "pr_cmd_gl_rusync", 25, 20000, 25
 	//Armory researches
-	NumberField " Phase 1 Tech", "pr_cmd_ar_arms1", 25, 20000, 25
-	NumberField " Phase 2 Tech", "pr_cmd_ar_arms2", 25, 20000, 25
-	NumberField " Tech", "pr_cmd_ar_boomrn", 25, 20000, 25
-	NumberField " Tech", "pr_cmd_ar_ammobp", 25, 20000, 25
-	NumberField " Tech", "pr_cmd_ar_gnades", 25, 20000, 25
+	NumberField "Arms Phase 1 Tech", "pr_cmd_ar_arms1", 25, 20000, 25
+	NumberField "Arms Phase 2 Tech", "pr_cmd_ar_arms2", 25, 20000, 25
+	NumberField "Boom rounds Tech", "pr_cmd_ar_boomrn", 25, 20000, 25
+	NumberField "Ammo Backpacks Tech", "pr_cmd_ar_ammobp", 25, 20000, 25
+	NumberField "Hand Grenades Tech", "pr_cmd_ar_gnades", 25, 20000, 25
 	//Refinery researches
 	NumberField "Processing Phase 1 Tech", "pr_cmd_rf_pump1", 25, 20000, 25
 	NumberField "Processing Phase 2 Tech", "pr_cmd_rf_pump2", 25, 20000, 25

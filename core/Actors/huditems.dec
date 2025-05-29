@@ -1,32 +1,25 @@
 
-Actor HudBar : Ammo {
-	// Why ammo instead inventory?
-	// Zandronum limitation with the GetMaxInventory.
-	inventory.maxAmount 1 // The SetAmmoCapacity can change it. No worries!
-	//Ammo.BackpackAmount 0
-}
-
 Actor HUD_MaxHp 			: Integer {}
 
 Actor HUD_Exp 				: Ammo {}
 Actor HUD_ExpLeft 			: Integer {}
 
-Actor HUD_Credits 			: Integer {}
-Actor HUD_Ups 				: Integer {}
-Actor HUD_Kills 			: Integer {}
-Actor Hud_Deaths 			: Integer {}
-Actor HUD_TeamCredits 		: Integer {}
+Actor HUD_Credits 			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_Ups 				: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_Kills 			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor Hud_Deaths 			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_TeamCredits 		: Ammo { Inventory.MaxAmount 0x7fffffff }
 Actor HUD_Streak			: Integer {}
 Actor HUD_OnMech			: Integer {}
 Actor HUD_MechState			: Integer {}
 Actor HUD_MechTime_min		: Integer {}
 Actor HUD_MechTime_sec		: Integer {}
-Actor HUD_HiStreak			: Integer {}
-Actor HUD_MsStreak			: Integer {}
-Actor HUD_NextRange			: Integer {}
-Actor HUD_MechTime			: Integer {}
-Actor HUD_Commander			: Integer {}
-Actor HUD_RankNow			: Integer {}
+Actor HUD_HiStreak			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_MsStreak			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_NextRange			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_MechTime			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_Commander			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_RankNow			: Ammo { Inventory.MaxAmount 0x7fffffff }
 Actor HUD_KS				: Integer {}
 Actor HUD_GuardianState 	: Integer {}
 Actor HUD_GameOver 			: Integer {}
@@ -36,11 +29,11 @@ Actor HUD_GameTimer 		: Integer {}
 Actor HUD_MonstersLeft 		: Integer {}
 Actor HUD_GuardianTimer		: Integer {}
 
-Actor HUD_Sector 			: Integer {}
-Actor HUD_CoreHP 			: Integer {}
+Actor HUD_Sector 			: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_CoreHP 			: Ammo { Inventory.MaxAmount 0x7fffffff }
 
 Actor HUD_Gamemode 			: Integer {}
-Actor HUD_NukeLaunched 		: Integer {}
+Actor HUD_NukeLaunched 		: Ammo { Inventory.MaxAmount 0x7fffffff }
 Actor HUD_Spectating 		: Integer {}
 Actor HUD_Rank 				: Integer {}
 Actor HUD_Wave 				: Integer {}

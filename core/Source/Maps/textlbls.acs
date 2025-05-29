@@ -1,0 +1,113 @@
+///////////////////////////////////////////////////
+//      SHOTGUN FRENZY PLUS
+//   a Shotgun Frenzy fork by Samuzero15tlh
+
+// textlbls.acs
+// Label items, that are useful to pinpoint something cool.
+
+#library "textlbls"
+
+#include "zcommon.acs"
+#include "acsutils.acs"
+#include "constants.acs"
+
+#define TEXTLABELS_MSGNUM 20
+#define TEXTLABELS_LABELNUM 50
+#define TEXTLABELS_TID 0
+#define TEXTLABELS_MSGID 1
+#define TEXTLABELS_BOLD 2
+#define TEXTLABELS_SCALE 3
+#define TEXTLABELS_WORDWRAP 4
+#define TEXTLABELS_HID 400
+
+int textLabelMsgs[TEXTLABELS_MSGNUM];
+int textlabelCount = 0;
+int textlabelData[TEXTLABELS_LABELNUM][5];
+
+script "TextLabel_Add" (int msgid, int bold, int scale, int wordwrap){
+	TextLabel_Add(msgid, bold, scale, wordwrap);
+}
+
+function void TextLabel_Add(int msgid, int bold, int scale, int wordwrap){
+	textlabelData[textlabelCount][TEXTLABELS_TID] = ActivatorTID();
+	textlabelData[textlabelCount][TEXTLABELS_MSGID] = msgid;
+	textlabelData[textlabelCount][TEXTLABELS_BOLD] = bold;
+	textlabelData[textlabelCount][TEXTLABELS_SCALE] = scale;
+	textlabelData[textlabelCount][TEXTLABELS_WORDWRAP] = wordwrap;
+	textlabelCount++;
+}
+
+Script "TextLabel_SyncVars" open {
+	// This is stupid, but!
+	int syncindex = 0;
+	int basetid = 60000;
+	SyncVariable(basetid + syncindex, textlabelCount); syncindex++;
+	for(int textlblid = 0; textlblid < textlabelCount; textlblid++){
+		for(int textlblprop = 0; textlblprop < 5; textlblprop++){
+			SyncVariable(basetid + syncindex, textlabelData[textlblid][textlblprop]);
+			syncindex++;
+		}
+	}
+	delay(1);
+	restart;
+}
+
+script "TextLabels_ShowScript" open Clientside {
+	delay(5);
+	//log(s:"TextLabelCount: ", d:GetSyncVar(60000));
+	while(true)
+    {
+		for(int i = 0; i < GetSyncVar(60000); i++){
+			TextLabel_Show(i);
+		}
+        Delay(1);
+    }
+}
+
+function void TextLabel_Show (int index) {
+	//if(index == 0) log(s:"boop");
+	int basetid = 60001;
+	int tid = GetSyncVar(basetid + 5*index);
+	int msgid = GetSyncVar(basetid + 5*index + 1);
+	int font = GetSyncVar(basetid + 5*index + 2);
+	int scale = GetSyncVar(basetid + 5*index + 3);
+	int wordwrap = GetSyncVar(basetid + 5*index + 4);
+	int range = 256.0;
+
+	//log(s:"TID: ", d:tid, s:", Msg (", d:msgid, s:"): ", s:textLabelMsgs[msgid], s:", boldfont: ", d:font, s:", scale: ", d:scale);
+
+	if(PlayerIsSpectator(ConsolePlayerNumber())) {
+		int specOnPlayCam = CheckPlayerCamera(ConsolePlayerNumber()) >= CONST_TID_PLAYER && CheckPlayerCamera(ConsolePlayerNumber()) < CONST_TID_PLAYER+32;
+		int playerSpecedNearLabelText = ActorDistance(CheckPlayerCamera(ConsolePlayerNumber()), tid) <= range;
+		if(!specOnPlayCam || specOnPlayCam && !playerSpecedNearLabelText){
+			ClearHudMessage(TEXTLABELS_HID+index);
+			return;
+		}
+		HudSetCameraActor(CheckPlayerCamera(ConsolePlayerNumber()));
+	} else {
+		int playerNearLabelText = ActorDistance(990+ConsolePlayerNumber(), tid) <= range;
+		if(!playerNearLabelText){
+			ClearHudMessage(TEXTLABELS_HID+index);
+			return;
+		}
+		HudSetCameraActor(990+ConsolePlayerNumber());
+	}
+
+	if(font == 1) HudSetFont("DBIGFONT");
+	else HudSetFont("SMALFONT");
+	
+	HudSetPoint3D(GetActorX(tid), GetActorY(tid), GetActorZ(tid) + 8.0);
+	HudSetScale(1.0+(0.10*scale));
+	HudSetTextColor(CR_WHITE);
+	HudSetAlignment(HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+
+	if(wordwrap > 0){
+		HudSetWordWrap(true);
+		SetHUDClipRect (0, 0, 0, 0, wordwrap);
+	} 
+	else {
+		HudSetWordWrap(false);
+		SetHUDClipRect (0, 0, 0, 0, 0);
+	}
+	HudDrawText(TEXTLABELS_HID+index, strparam(s:textLabelMsgs[msgid]));
+}

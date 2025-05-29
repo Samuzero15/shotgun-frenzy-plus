@@ -374,5 +374,5 @@ script 969 (void)
 script 880 OPEN
 {
 	delay(35 * 3);
-	c_Credits = c_Startcash;
+	c_Credits = GetCvar("sf_teamcash");
 }

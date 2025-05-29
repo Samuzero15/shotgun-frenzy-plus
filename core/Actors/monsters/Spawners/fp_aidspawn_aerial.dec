@@ -48,11 +48,11 @@ Actor FPSpawn_AE10 : RandomSpawner {
 	dropitem "FPSSpot_sfLostSoul"
 }
 
-Actor FPSpawn_AM12 : RandomSpawner {
+Actor FPSpawn_AE12 : RandomSpawner {
 	dropitem "FPSSpot_sfCacodemon"
 } 
 
-Actor FPSpawn_AM15 : RandomSpawner {
+Actor FPSpawn_AE15 : RandomSpawner {
 	dropitem "FPSSpot_Aracnorb"
 } 
             
@@ -132,7 +132,7 @@ Actor FPSpawn_AH4 : RandomSpawner {
 	dropitem "FPSSpot_sfCacodemon" 128, 1
 } 
 
-Actor FPSpawn_AH4 : RandomSpawner {
+Actor FPSpawn_AH5 : RandomSpawner {
 	dropitem "FPSSpot_sfCacodemon" 
 } 
 

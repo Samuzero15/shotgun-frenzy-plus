@@ -22,7 +22,7 @@
 #include "Actors/gameobjects/frenzy_inventory.dec"
 
 // map
-#include "Actors/map/frenzy_cf01.txt"
+#include "Actors/map/frenzy_cf01.dec"
 
 // props
 #include "Actors/props/frenzy_mechtest.txt"	// TEMP

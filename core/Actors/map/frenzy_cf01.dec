@@ -1,0 +1,75 @@
+ACTOR Vapor
+{
+	SpawnID 253
+	Speed 20
+	Damage 100
+	PROJECTILE
+	Radius 20
+	Height 20
+	+RIPPER
+	+ICEDAMAGE
+	RENDERSTYLE NONE
+	States
+	{
+		Spawn:
+			NULL A 300
+			Stop
+		Death:
+			PLSZ A 0
+			Stop 
+	} 
+}
+
+Actor TextLabel 25000
+{
+  //$Title "Text Label"
+	//$Category "SF Plus Decoration"
+  //$Colour 6
+	//$Arg0 "Message ID"
+	//$Arg0Tooltip "Shows a message based on id (Must specify the message with the textLabelMsg[id] on ACS)"
+  //$Arg1 "Bold Font"
+	//$Arg1Tooltip "Instead of Smalfont, show this message with DBigfont"
+  //$Arg2 "Size"
+	//$Arg2Tooltip "Change the size of text by 0.15"
+  //$Arg3 "Word-Wrap Width"
+	//$Arg3Tooltip "Specify the amount of width for triggering word wrap. If 0, it is disabled."
+  Height 1
+  Radius 1
+  Mass 0xFFFFFFFF
+  -Solid
+  +Float
+  +NoGravity
+  States
+  {
+  Spawn:
+    TNT1 A 1 nodelay Thing_ChangeTID(0, CallAcs("GetUniqueTID"))
+    TNT1 A 0 ACS_NamedExecuteWithResult("TextLabel_Add", args[0], args[1], args[2], args[3])
+    TNT1 A -1
+    stop
+  }
+}
+
+ACTOR CyberdemonDPS : Cyberdemon 254
+{
+  Health  999999
+  Speed 0
+  Mass 9999999999
+  PainChance 255
+ -NORADIUSDMG
+  SeeSound "mute"
+  PainSound "mute"
+  States
+  {
+  Spawn:
+    CYBR A 10 A_Look
+    Loop
+  See:
+	CYBR A 10
+    Loop
+  Missile:
+    Goto See
+  Pain:
+    CYBR G 1
+    Goto See
+  }
+}

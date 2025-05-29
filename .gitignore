@@ -16,6 +16,7 @@ core/ACS/*.o
 *.o
 *.xcf
 gdcc/
+*.autosave*
 
 skulltag_content-3.2-beta2.pk3
 console.bat

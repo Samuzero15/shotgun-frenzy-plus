@@ -147,6 +147,8 @@ script 53 ENTER
 
     int creditmult = GetCVar("sf_creditcorrection");
 	
+	f_Startcash = GetCvar("sf_startcash");
+
 	int play = playernumber();
     p_Credits[play] = cond(g_Status != 0,
 							f_Startcash + (10 + creditmult) * Timer() / 35,

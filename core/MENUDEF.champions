@@ -26,7 +26,7 @@ OptionMenu "SFPlusChampionsAbout"{
 	StaticText "Explosive", 1
 	StaticText "Bronze Coloured"
 	StaticText "The moment it dies, it will go kaboom."
-	StaticText "This explosion affects enemies and alies alike."
+	StaticText "This explosion affects enemies and allies alike."
 	StaticText ""
 	StaticText "Golden", 1
 	StaticText "Gold Coloured"
@@ -170,13 +170,13 @@ OptionMenu "SFPlusGameOptionHelp"{
 	StaticText ""
 	StaticText "Monster Cap", 1
 	StaticText "Modifies the amount of monsters available to spawn."
-	StaticText "Bigger amounts means more lag! Be extremly careful with this cvar!"
+	StaticText "Bigger amounts means more lag! Be extremely careful with this cvar!"
 	StaticText ""
 	StaticText "Player's Extra Oomph", 1
 	StaticText "Grants some extra damage multipler to players."
 	StaticText "Feeling under-powered with the demons growing in health?"
 	StaticText "Increase this factor, and the player should get stronger too."
-	StaticText "Works only if the player count is greater than 3."
+	StaticText "Works only if the player count is greater or equal than 3."
 	StaticText "The more players are in, the higher DPS they get!"
 	StaticText ""
 	StaticText "Monster's Extra Meat", 1

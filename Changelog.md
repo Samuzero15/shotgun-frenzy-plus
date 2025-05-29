@@ -8,11 +8,24 @@
 	!) Pretty important stuff.
 
 ## v1 - The path of the damned...
+
+#### (28 / 5 / 2025) [FullHud touches, Text Label actors, TEST map Update & typo fixes]
+	*) Testing map adds new spawn monster flags.
+		+) No Item Spawn: Prevents the spawning of item after killing a monster.
+		+) No Champions: All spawned monsters will no have the champions powers. Staying as vanilla as possible.
+		+) No Bonus drops: Disables the bonus drops, like health potions and armor shards.
+		+) No Restock Pads: Disables the restock ammo and health pads.
+		+) Respawn in 10 seconds: After all monsters are dead, respawn them after 10 seconds.
+	+) There is a new actor called TextLabel which it works as a tooltip pointer on intresting points of the map.
+	*) Now the Fullscreen Hud will show the stats of a player if the player is a spectator if using the spycam.
+	*) Same thing works if the player looks through spycam if the player is using the Mech (Previously, there was no hud)
+	*) Fixed some typos in some strings.
+
 #### (18 / 5 / 2025) [Some repo updates & small fix on the Samu-Terminal]
 	// Ay! I'm back once again! and this time, I got the Powerhouse PC and the motivation to back it up!
 	// I'm not discussing on why I was absent on like, how much? half a year? Man and i did'nt done anything about this project on that time.
 	// But, in short, Many events happened. (got a well paid job, lack of motivation and planning to get a better pc, which i already did!)
-	// Now that I can play in a better connection, a better pc cuz Doom dark ages, and a new Zandro 3.2 Update. I guess this is my call to wake up, don't you think?
+	// Now that I can play in a better connection, a better pc cuz Doom Dark Ages, and a new Zandro 3.2 Update. I guess this is my call to wake up, don't you think?
 	// Right now I'm calibrating myself on this new workspace and, then I'm trying to implement the weapon rework, which it should include the hand grenades and the weapon quick switching. That's the only thing that I'm missing here before the 1.8 release.
 	*) Removed ACS compiled files from core/ACS directory, cuz it is pretty much generated with the pack-o-daemon.
 	*) Added to the .gitignore file the last directory, and the project.json file

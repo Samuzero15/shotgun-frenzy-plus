@@ -81,82 +81,98 @@ Actor Blur_HealthBonusD : BrightBlur {scale 1.0 States{Frame:
 Actor Blur_SawA : Blur
 {States{Frame:
 		SAWS A 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawB : Blur
 {States{Frame:
 		SAWS B 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawC : Blur
 {States{Frame:
 		SAWS C 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawD : Blur
 {States{Frame:
 		SAWS D 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawE : Blur
 {States{Frame:
 		SAWS E 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawF : Blur
 {States{Frame:
 		SAWS F 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawG : Blur
 {States{Frame:
 		SAWS G 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_SawH : Blur
 {States{Frame:
 		SAWS H 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2A : Blur
 {States{Frame:
 		SAW2 A 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2B : Blur
 {States{Frame:
 		SAW2 B 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2C : Blur
 {States{Frame:
 		SAW2 C 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2D : Blur
 {States{Frame:
 		SAW2 D 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2E : Blur
 {States{Frame:
 		SAW2 E 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2F : Blur
 {States{Frame:
 		SAW2 F 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2G : Blur
 {States{Frame:
 		SAW2 G 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 Actor Blur_Saw2H : Blur
 {States{Frame:
 		SAW2 H 1
-goto Super::Loopme}}
+		goto Super::Loopme
+}}
 
 // Flak Blur
 actor Blur_FlakA : Blur 

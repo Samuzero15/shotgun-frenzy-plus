@@ -15,6 +15,10 @@
 #include "zcommon.acs"
 #include "samu_tools.acs"
 
+int killscript_noItemDrop = false;
+int killscript_noCoinDrop = false;
+int killscript_noHPAPBonusDrop = false;
+
 Script "SFPlus_MonsterKill" Kill{
 	delay(1); // Let the monsters set their flags in the decorate.
 	ACS_NamedExecuteAlways("SFPlus_ChampionDeath", 0);
@@ -38,12 +42,12 @@ Script "SFPlus_MonsterKill" Kill{
 	  if	(flag_boss) montype = 2;
 	  if	(flag_hard) montype = 1;
 	 
-		if(ischamp && CheckInventory("ChampZombie_SkipDeathScript")){
-			SetActivatorToTarget(0);
-			ACS_NamedExecuteAlways("Runes_OnMonsterKill", 0, ischamp);
-			p_monsterKilled(monsterClass, splat, noProfit, montype);
-			terminate;
-		}
+	  if(ischamp && CheckInventory("ChampZombie_SkipDeathScript")){
+		SetActivatorToTarget(0);
+		ACS_NamedExecuteAlways("Runes_OnMonsterKill", 0, ischamp);
+		p_monsterKilled(monsterClass, splat, noProfit, montype);
+		terminate;
+	  }
 	  
 	  
 
@@ -51,30 +55,37 @@ Script "SFPlus_MonsterKill" Kill{
 	  int chance = 5;
 	  bool spawn_sfx = false;
 
-	 // [Samu] Drop credits
-	 if(!flag_NoCount){
+	  // [Samu] Drop credits
+	  if(!flag_NoCount){
 		if(CheckActorInventory(GetActorProperty(ActivatorTID(), APROP_TargetTID), "RuneFortune")) 
 			chance = chance + 5; 
+
 		while((monsterClass/2 + flag_gibbed + flag_boss + flag_hard + ischamp) > i){
 			// Drop the coins.
-			if(random(0, 100) < chance)
-				SpawnForced("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
+			if(!killscript_noCoinDrop){
+				if(random(0, 100) < chance)
+					SpawnForced("ClassicCreditBoom", GetActorX(0), GetActorY(0), GetActorFloorZ(0));
+			}
+			
 			
 			// Drop Health-Armor Bonuses
-			if(random(0, 100) < chance && GameSkill() != 0){
-				ItemDr_Spawn("HealthArmorBonusSplash");
-				spawn_sfx = true;
+			if(!killscript_noHPAPBonusDrop){
+				if(random(0, 100) < chance && GameSkill() != 0){
+					ItemDr_Spawn("HealthArmorBonusSplash");
+					spawn_sfx = true;
+				}
 			}
 
 			i++;
 		}
 		if(spawn_sfx) PlaySound(ActivatorTID(), "misc/spawn");
-	 }
+	  }
 	 
-  	  
-	 if(ischamp) ItemDr_ChampionDrop(monsterClass);
-	 // Drop reward items.
-	 ItemDr_MonsterDrop(monsterClass);
+  	  if(!killscript_noItemDrop){
+		if(ischamp) ItemDr_ChampionDrop(monsterClass);
+		// Drop reward items.
+		ItemDr_MonsterDrop(monsterClass);
+	  }
 	 
 		//debugTidPointers (0);
 		//debugTidPointersStrings(0);
@@ -88,4 +99,16 @@ Script "SFPlus_MonsterKill" Kill{
 	p_monsterKilled(monsterClass, splat, noProfit, montype);
 	
 	}
+}
+
+Script "SFPlus_SetkillFlagNoItemDrop" (int state) {
+	killscript_noItemDrop = state;
+}
+
+Script "SFPlus_SetkillFlagNoCoinDrop" (int state) {
+	killscript_noCoinDrop = state;
+}
+
+Script "SFPlus_SetkillFlagNoHPAPBonusDrop" (int state) {
+	killscript_noHPAPBonusDrop = state;
 }

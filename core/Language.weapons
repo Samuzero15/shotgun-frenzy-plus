@@ -90,7 +90,7 @@ WEPS_SUPPORT_PTCH_DESC =    "Repairs and Upgrades Turrets and Dispensers. \n"
 	                        "Harmless against monsters, limited to 5 Levels per building.\n "
                             "Uses credits as repair material. Aim to a building to show it's stats.\n\n"
                             "Pri-Fire: Repairs buildings (Gains 1 Exp Point)\n"
-                            "Alt-fire: \cvUpgrades\c-, \cdMoves\c-, and \cgRecycles Turrets\c-.\n"
+                            "Alt-fire: \cvUpgrades\c-, \cdMoves\c-, and \cgRecycles \c-Turrets.\n"
                             "Reload: Switch between Patcher modes.";
 
 WEPS_SUPPORT_PTCH_UP0_NAME = "Advanced Patcher Gun";
@@ -125,7 +125,7 @@ WEPS_COMMANDO_NAIL_UP2_DESC = "Each nail shatters in Flak Shards. They're bouncy
 // Explosive
 
 WEPS_EXPLOSIVE_NAME =        "Explosive";
-WEPS_EXPLOSIVE_DESC =        "Dynamate weapons with explosive projectiles, excelent for crowd control.";
+WEPS_EXPLOSIVE_DESC =        "Dynamate weapons with explosive projectiles, excellent for crowd control.";
 
 WEPS_EXPLOSIVE_ROKT_NAME =    "Rocket Launcher";
 WEPS_EXPLOSIVE_ROKT_DESC =    "Shoots fast and explosive rockets straight into the waves.\n"
@@ -185,7 +185,7 @@ WEPS_PYRO_FLAM_UP0_DESC = "Bigger flames, more fire, more crisp and ashes.";
 
 // Not added yet, just throwing out some ideas.
 // Blue flames anyone?
-WEPS_PYRO_FLAM_UP1_NAME = "Cold Flamer";
+WEPS_PYRO_FLAM_UP1_NAME = "Nitrogen Flamer";
 WEPS_PYRO_FLAM_UP1_DESC = "Blue flames. Cools enemies on impact. More Damage.";
 
 // Cryomancer Pack (?)

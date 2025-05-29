@@ -21,7 +21,6 @@ FP_PROTIP18 = "Credits are used on buying weapon packs, consumables like powerup
 FP_PROTIP19 = "Powerups can stack, do not hesitate on using 2 powerups at the same time.";
 FP_PROTIP20 = "Don't like a weapon? Then recycle it, and use the credits for a better weapon!";
 FP_PROTIP21 = "Megaspheres also grant blue armors, and remember, armor depletes first than health.";
-FP_PROTIP22 = "An use of the Hell-trigger powerup in the right time will let you fire a few projectiles for free.";
 FP_PROTIP23 = "Champions may drop runes, the higher class the monster is, the higher tier the rune spawns";
 FP_PROTIP24 = "Feeling supportive? A good supplier and the patcher gun will help.";
 FP_PROTIP25 = "Patcher and Suppliers can also grant experience! Slower than killing monster tho, but it's a consistent way to farm exp.";
