@@ -9,6 +9,16 @@
 
 ## v1 - The path of the damned...
 
+#### (27 / 6 / 2025) [Weapon recoding, added new buttons for grenade and melee + some Repeater & BFG tweaks]
+	!+) Now the players can throw a melee attack and throw a grenade when using a weapon!
+	!*) Not only that but also the switch speed and style has been greatly increase for all weapons, yes you can go wild with switching between your ssg and spitter!
+	*) With it, it implies a lot of changes with the weapon bobing and sway.
+	*) Other changes in weapons covers only for the repeater and BFGs.
+	*) Now the seeking of the Overcharged BFG has been slightly nerfed.
+	*) Splash BFG now explodes arround the projectile whilke traveling, with some extra cool effect!
+	*) Repeater's alt, now can shoot if the altfire is hold. Aside of that, you can resume your firing with the fire button if you released the button for a while, letting it to cooldown and increase accuracy.
+	*) The repeater will now fire more bullets but with slightly less damage.
+
 #### (28 / 5 / 2025) [FullHud touches, Text Label actors, TEST map Update & typo fixes]
 	*) Testing map adds new spawn monster flags.
 		+) No Item Spawn: Prevents the spawning of item after killing a monster.

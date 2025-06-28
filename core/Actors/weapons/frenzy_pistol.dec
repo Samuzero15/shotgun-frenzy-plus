@@ -19,12 +19,12 @@ ACTOR Beretta : FrenzyWeapon
 	States
 	{
 		Ready: 
-			PISG A 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Main")
+			PISG A 0
             goto Ready.Raise
+
         Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			PISG A 1 A_WeaponReady
-            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-            "####" "#" 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
 		loop
 
 		Select:
@@ -35,7 +35,10 @@ ACTOR Beretta : FrenzyWeapon
 			PISG A 0
 		goto Super::Deselect
 
-		Fire.Gun:
+		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			PISG B 1 
 			PISG A 0 A_FireCustomMissile("splatBulletCasing", 45 + random(-8,8), 0, 2, 3)
 			PISG B 2 A_GunFlash
@@ -44,11 +47,13 @@ ACTOR Beretta : FrenzyWeapon
 			PISG C 2 A_ReFire
 			PISG B 1
 		Goto Ready
+		
 		Flash:
 			PISF A 1 Bright A_Light1
 		Goto LightDone
 			PISF A 1 Bright A_Light0
 		Goto LightDone
+
 		Spawn:
 			PIST A -1
 		Stop
@@ -74,12 +79,12 @@ ACTOR Beretta_Dual : FrenzyWeapon
 	States
 	{
 		Ready: 
-			DPIS A 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Main")
+			DPIS A 0
             goto Ready.Raise
+
         Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			DPIS A 1 A_WeaponReady
-            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-            "####" "#" 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
 		loop
 
 		Select:
@@ -90,7 +95,10 @@ ACTOR Beretta_Dual : FrenzyWeapon
 			DPIS A 0
 		goto Super::Deselect
 
-		Fire.Gun:
+		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			DPIS A 1 A_GunFlash
 			DPIS E 1 bright  A_FireBullets (6 + 3*CallACS("Player_GetRank", 0), 0, 1, 9, "BulletPuff_Standard")	// damage changed to 8
 			DPIS A 0 A_FireCustomMissile("splatBulletCasing", 45 + random(-8,8), 0, 2, 3)
@@ -107,7 +115,9 @@ ACTOR Beretta_Dual : FrenzyWeapon
 		Goto Ready
 
 		AltFire:
-			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			DPIS A 2 A_GunFlash
 			DPIS B 1 bright  A_FireBullets (8 + 3*CallACS("Player_GetRank", 0), 8, 2, 9, "BulletPuff_Standard")	// damage changed to 8
 			DPIS A 0 A_FireCustomMissile("splatBulletCasing", 45 + random(-8,8), 0, 2, 3)
@@ -120,7 +130,7 @@ ACTOR Beretta_Dual : FrenzyWeapon
         goto Ready
 
 		Spawn:
-		PIST A -1
+			PIST A -1
 		Stop
 	}
 }
@@ -144,12 +154,11 @@ ACTOR Beretta_SMG : FrenzyWeapon
 	States
 	{
 		Ready: 
-			SMGP A 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Main")
+			SMGP A 0
             goto Ready.Raise
         Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			SMGP A 1 A_WeaponReady
-            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-            "####" "#" 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
 		loop
 
 		Select:
@@ -160,7 +169,10 @@ ACTOR Beretta_SMG : FrenzyWeapon
 			SMGP A 0
 		goto Super::Deselect
 
-		Fire.Gun:
+		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			SMGP A 1
 			SMGP B 1
 			SMGP C 1 bright  A_FireBullets (6 + 3*CallACS("Player_GetRank", 0), 0, 1, 9, "BulletPuff_Standard")	// damage changed to 8

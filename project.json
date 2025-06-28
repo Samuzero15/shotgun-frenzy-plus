@@ -16,7 +16,7 @@
             "distdir": "dist",
             "acscomp": false,
             "notxt": false,
-            "skipped": false
+            "skipped": true
         },
         "Music": {
             "release": "v1.0",
@@ -25,7 +25,7 @@
             "distdir": "dist",
             "acscomp": false,
             "notxt": true,
-            "skipped": false
+            "skipped": true
         }
     },
     "play_settings": {
@@ -58,7 +58,7 @@
             true,
             false,
             false,
-            false,
+            true,
             false,
             true,
             true,

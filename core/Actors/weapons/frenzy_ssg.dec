@@ -1,4 +1,4 @@
-ACTOR SSG : Weapon
+ACTOR SSG : FrenzyWeapon
 {
 	Weapon.AmmoUse1 		1
 	Weapon.AmmoUse2 		1
@@ -15,18 +15,27 @@ ACTOR SSG : Weapon
 	Weapon.SlotPriority 1.0
 	States
 	{
-		Ready:
+		Ready: 
+			W3E1 A 0
+            goto Ready.Raise
+
+        Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W3E1 A 1 A_WeaponReady
-			goto Ready
-		Deselect:
-			W3E1 A 1 A_Lower
-			W3E1 A 0 A_Lower
-			goto Deselect
+		loop
+
 		Select:
-			W3E1 A 1 A_Raise
-			W3E1 A 0 A_Raise
-			goto Select
+			W3E1 A 0
+		goto Super::Select
+
+		Deselect:
+			W3E1 A 0
+		goto Super::Deselect
+
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_JumpIfInventory("SSG_1BarrelShot", 1, "AltFire2")
 			TNT1 A 0 A_GunFlash
 			W3E1 N 1
@@ -45,6 +54,9 @@ ACTOR SSG : Weapon
 			goto Reload
 		
 		AltFire:
+		 	"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			TNT1 A 0 A_JumpIfInventory("SSG_1BarrelShot", 1, "AltFire2")
 			TNT1 A 0 A_GunFlash
 			W3E1 P 1
@@ -86,17 +98,17 @@ ACTOR SSG : Weapon
 			W3E1 D 3 A_OpenShotgun2
 			TNT1 A 0 A_CheckReload
 			W3E1 C 2
-			W3E1 B 2
-			W3E1 E 2
-			W3E1 F 2 
+			W3E1 B 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 E 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 F 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W3E1 A 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
 			W3E1 A 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
-			W3E1 GH 2
+			W3E1 GH 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W3E1 I 4 A_LoadShotgun2
-			W3E1 J 2
-			W3E1 K 3
-			W3E1 L 3
-			W3E1 M 3 
+			W3E1 J 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 K 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 L 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 M 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W3E1 A 5 A_CloseShotgun2
 			goto Ready
 			
@@ -106,16 +118,12 @@ ACTOR SSG : Weapon
 			TNT1 A 1 bright A_Light1
 			TNT1 A 0 bright A_Light0
 			goto LightDone
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
 Actor SSG_1BarrelShot : Inventory {Inventory.MaxAmount 1 +Undroppable}
 
-ACTOR SSG_Autoload : Weapon
+ACTOR SSG_Autoload : FrenzyWeapon
 {// [Samu] amma Force a Nature.
 	Weapon.AmmoUse1 		1
 	Weapon.AmmoUse2 		1
@@ -132,18 +140,26 @@ ACTOR SSG_Autoload : Weapon
 	Weapon.SlotPriority 2.0
 	States
 	{
-		Ready:
+		Ready: 
+			W3E2 A 0 
+            goto Ready.Raise
+        Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W3E2 A 1 A_WeaponReady
-			goto Ready
-		Deselect:
-			W3E2 A 1 A_Lower
-			W3E2 A 0 A_Lower
-			goto Deselect
+		loop
+
 		Select:
-			W3E2 A 1 A_Raise
-			W3E2 A 0 A_Raise
-			goto Select
+			W3E2 A 0
+		goto Super::Select
+
+		Deselect:
+			W3E2 A 0
+		goto Super::Deselect
+
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_JumpIfInventory("SSG_1BarrelShot", 1, "AltFire2")
 			W3E2 A 0 A_GunFlash
 			W3E2 GHHG 1
@@ -164,15 +180,18 @@ ACTOR SSG_Autoload : Weapon
 			W3E1 C 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
 			W3E1 C 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
 			TNT1 A 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
-			W3E2 D 1
-			W3E2 C 1
+			W3E2 D 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E2 C 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			TNT1 A 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
-			W3E2 B 1
-			W3E2 A 1 
+			W3E2 B 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E2 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			TNT1 A 0 A_CloseShotgun2
 			W3E2 A 5 A_ReFire
 			goto Ready
 		AltFire:
+		 	"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			TNT1 A 0 A_JumpIfInventory("SSG_1BarrelShot", 1, "AltFire2")
 			W3E2 A 0 A_GunFlash
 			W3E2 IJJI 1
@@ -209,11 +228,11 @@ ACTOR SSG_Autoload : Weapon
 			W3E1 C 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
 			W3E1 C 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
 			TNT1 A 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
-			W3E2 D 1
-			W3E2 C 1
+			W3E2 D 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E2 C 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			TNT1 A 0 A_JumpIfInventory("RuneDoubleFiringSpeed", 1, 2)
-			W3E2 B 1
-			W3E2 A 1 
+			W3E2 B 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E2 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			TNT1 A 0 A_CloseShotgun2
     		W3E2 A 5 A_ReFire
 			goto Ready
@@ -224,13 +243,10 @@ ACTOR SSG_Autoload : Weapon
 			TNT1 A 0 bright A_Light0
 			goto LightDone
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
-ACTOR SSG_Explosive : Weapon
+ACTOR SSG_Explosive : FrenzyWeapon
 {
 	Weapon.AmmoUse1 			1
 	Weapon.AmmoUse2 			1
@@ -246,20 +262,27 @@ ACTOR SSG_Explosive : Weapon
 	Weapon.SlotPriority 2.0
 	Weapon.SelectionOrder 2300
 	States
-	{
-		Ready:
+	{		
+		Ready: 
+			W3E1 A 0 
+            goto Ready.Raise
+        Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W3E1 A 1 A_WeaponReady
-			goto Ready
-		Deselect:
-			W3E3 A 1 A_Lower
-			W3E3 A 0 A_Lower
-			goto Deselect
+		loop
+
 		Select:
-			W3E3 A 1 A_Raise
-			W3E3 A 0 A_Raise
-			goto Select
-		
+			W3E1 A 0
+		goto Super::Select
+
+		Deselect:
+			W3E1 A 0
+		goto Super::Deselect
+
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_JumpIfInventory("SSG_1BarrelShot", 1, "AltFire2")
 			TNT1 A 0 A_GunFlash
 			W3E1 N 1
@@ -277,6 +300,9 @@ ACTOR SSG_Explosive : Weapon
 			goto Reload
 		
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			TNT1 A 0 A_JumpIfInventory("SSG_1BarrelShot", 1, "AltFire2")
 			TNT1 A 0 A_GunFlash
 			W3E1 P 1
@@ -315,18 +341,18 @@ ACTOR SSG_Explosive : Weapon
 			W3E1 C 2
 			W3E1 D 3 A_OpenShotgun2
 			TNT1 A 0 A_CheckReload
-			W3E1 C 2
-			W3E1 B 2
-			W3E1 E 2
-			W3E1 F 2 
+			W3E1 C 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 B 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 E 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 F 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W3E1 A 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
 			W3E1 A 0 A_FireCustomMissile("splatShellCasing",45+random(-8,8),0,2,3)
-			W3E1 GH 2
+			W3E1 GH 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W3E1 I 4 A_LoadShotgun2
-			W3E1 J 2
-			W3E1 K 3
-			W3E1 L 3
-			W3E1 M 3 
+			W3E1 J 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 K 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 L 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W3E1 M 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W3E1 A 5 A_CloseShotgun2
 			goto Ready
 			
@@ -337,8 +363,5 @@ ACTOR SSG_Explosive : Weapon
 			TNT1 A 0 bright A_Light0
 			goto LightDone
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }

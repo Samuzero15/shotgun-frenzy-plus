@@ -1,4 +1,4 @@
-ACTOR SF_Railgun : Weapon
+ACTOR SF_Railgun : FrenzyWeapon
 {
 	Weapon.AmmoUse 		        2
 	Weapon.AmmoGive 		50
@@ -14,18 +14,27 @@ ACTOR SF_Railgun : Weapon
 	Weapon.SelectionOrder 2500
 	States
 	{
-		Ready:
+		Ready: 
+			X1E1 A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			X1E1 A 1 A_WeaponReady
 			goto Ready
+
 		Deselect:
-			X1E1 A 1 A_Lower
-			X1E1 A 0 A_Lower
-			goto Deselect
+			X1E1 A 0 A_TakeInventory("Railgun_Passthrough", 9999)
+			goto Super::Deselect
+
 		Select:
-			X1E1 A 1 A_Raise
-			X1E1 A 0 A_Raise
-			goto Select
+			X1E1 A 0
+			goto Super::Select
+
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_TakeInventory("Railgun_Passthrough", 9999)
 			X1E1 A 2 A_GunFlash
 			// 20 enemies pass-through.
@@ -45,17 +54,13 @@ ACTOR SF_Railgun : Weapon
 			X1E1 D 2 bright
 			X1E1 E 2 bright
 			stop
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
 Actor Railgun_Passthrough : Integer { Inventory.MaxAmount 100}
 Actor Railgun_Taser_WindUp : Integer { Inventory.MaxAmount 10}
 
-ACTOR Railgun_Taser : Weapon
+ACTOR Railgun_Taser : FrenzyWeapon
 {
 	Weapon.AmmoUse1			2
 	Weapon.AmmoUse2 		8
@@ -72,24 +77,31 @@ ACTOR Railgun_Taser : Weapon
 	Weapon.SelectionOrder 2300
 	States
 	{
-		Ready:
+		Ready: 
+			X1E2 A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			X1E2 A 1 A_WeaponReady
 			goto Ready
+
 		Deselect:
 			TNT1 A 0 A_TakeInventory("Railgun_Taser_WindUp", 9999)
 			TNT1 A 0 A_StopSoundEx (soundslot7)
-			X1E2 A 1 A_Lower
-			X1E2 A 0 A_Lower
-			goto Deselect
+			X1E2 A 0
+			goto Super::Deselect
+
 		Select:
 			TNT1 A 0 A_TakeInventory("Railgun_Taser_WindUp", 9999)
 			TNT1 A 0 A_StopSoundEx (soundslot7)
-			X1E2 A 1 A_Raise
-			X1E2 A 0 A_Raise
-			goto Select
+			X1E2 A 0
+			goto Super::Select
 
 		Fire:
-			TNT1 A 0 A_JumpIfNoAmmo("Ready")
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_PlaySoundEx ("Railgun_Taser/StartLaser", soundslot7, 1)
 			X1E2 A 1 A_GunFlash
 			X1E2 B 2 
@@ -106,6 +118,7 @@ ACTOR Railgun_Taser : Weapon
 			TNT1 A 0 A_TakeInventory("Railgun_Taser_WindUp", 9999)
 			X1E2 BABCB 5 A_SpawnItem(Smoke_Spawner, 0, -20, 0)
 			goto Ready
+
 		Hold:
 			X1E2 B 2 A_Jump(256, "Hold.Tracer1", "Hold.Tracer2")
 			goto Hold.Tracer1
@@ -139,6 +152,9 @@ ACTOR Railgun_Taser : Weapon
 			goto Ready
 
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			X1E2 A 1 A_PlaySoundEx ("x1/taser", soundslot8)
 			X1E2 A 1 A_GunFlash
 			X1E2 BC 2 A_RailAttack (20, 0, 0, "", "", RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer1")
@@ -149,18 +165,15 @@ ACTOR Railgun_Taser : Weapon
 			X1E2 C 2 A_RailAttack (20, 0, 1, "", "", RGF_NOPIERCING | RGF_SILENT, 0, "Rail_TaserPuff",0,0,512,0,20.0,0,"Rail_Taser_Tracer1")
 			X1E2 A 4 A_Refire("AltFire")
 			goto Ready
+
 		Flash:
 			X1E1 D 2 bright
 			X1E1 E 2 bright
 			stop
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
-ACTOR Railgun_Slug : Weapon
+ACTOR Railgun_Slug : FrenzyWeapon
 {
 	Weapon.AmmoUse1			2
 	Weapon.AmmoUse2 		8
@@ -177,19 +190,27 @@ ACTOR Railgun_Slug : Weapon
 	Weapon.SelectionOrder 2300
 	States
 	{
-		Ready:
+		Ready: 
+			X1E3 A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			X1E3 A 1 A_WeaponReady
 			goto Ready
+
 		Deselect:
-			X1E3 A 1 A_Lower
-			X1E3 A 0 A_Lower
-			goto Deselect
+			X1E3 A 0
+			goto Super::Deselect
+
 		Select:
-			X1E3 A 1 A_Raise
-			X1E3 A 0 A_Raise
-			goto Select
+			X1E3 A 0
+			goto Super::Select
 
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_TakeInventory("Railgun_Passthrough", 9999)
 			X1E3 A 2 A_GunFlash
 			// 30 enemies pass-through.
@@ -213,19 +234,19 @@ ACTOR Railgun_Slug : Weapon
 			goto Ready
 			
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			X1E3 A 2 A_GunFlash
 			X1E3 B 0 A_RailAttack (250, 1, 1, "0C 00 FF", "ff ff ff", 0, 0, "BulletPuff_Player")		// damage from 60 to 100
 			X1E3 B 0 A_RailAttack (250, -1, 1, "0C 00 FF", "ff ff ff", 0, 0, "BulletPuff_Player")		// damage from 60 to 100
 			X1E3 BCB 5
 			X1E3 A 4 A_Refire("AltFire")
 			goto Ready
+
 		Flash:
 			X1E3 D 2 bright
 			X1E3 E 2 bright
 			stop
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }

@@ -24,7 +24,7 @@
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
 // I have no shaem.
-script "ItemInputs" ENTER
+script "Weapon_ItemInputs" ENTER
 {
  int buttons;
 
@@ -54,6 +54,9 @@ script "ItemInputs" ENTER
  }
 }
 
+Script "Weapon_ItemTics" (void){
+	SetResultValue(CheckInventory("WeaponToken_Tics"));
+}
 
 script "ParticleCheck" (int type) ClientSide{
 	int cvar = 0;

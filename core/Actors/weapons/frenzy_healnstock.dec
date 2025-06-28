@@ -1,6 +1,6 @@
 Actor Sup_HealMode : Inventory {Inventory.MaxAmount 1}
 
-ACTOR Supplier : Weapon
+ACTOR Supplier : FrenzyWeapon
 {
 	Weapon.AmmoUse1			1
 	Weapon.AmmoGive1 		8
@@ -9,7 +9,7 @@ ACTOR Supplier : Weapon
 	Weapon.AmmoGive2 		8
 	Weapon.AmmoType2			"Supplies_Health"
 	Inventory.PickupMessage		"You got the Stocker!"
-	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
+		Obituary			"How? HOW?"
 	Tag "Supply Restocker"
 	
 	Weapon.UpSound			"w/load4"
@@ -17,35 +17,45 @@ ACTOR Supplier : Weapon
 	Weapon.SelectionOrder 2500
 	States
 	{
-		Ready:
+		Ready: 
+			W7E1 A 0 A_JumpIfInventory("Sup_HealMode",1,1)
+            goto Ready.Raise
+			W7E2 A 0 
+            goto Ready.Raise
+
+		Ready.Main:
 			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"Ready.Health")
 		Ready.Ammo:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W7E1 A 1 A_WeaponReady
 			loop
 		Ready.Health:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W7E2 A 1 A_WeaponReady
 			loop
+
 		Deselect:
 			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"Deselect.HealthMode")
 		Deselect.AmmoMode:
-			W7E1 A 1 A_Lower
-			W7E2 A 0 A_Lower
-			loop
+			W7E1 A 0
+			goto Super::Deselect
 		Deselect.HealthMode:
-			W7E2 A 1 A_Lower
-			W7E2 A 0 A_Lower
-			loop
+			W7E2 A 0
+			goto Super::Deselect
+
 		Select:
 			TNT1 A 0 A_JumpIfInventory("Sup_HealMode",1,"Select.HealthMode")
 		Select.AmmoMode:
-			W7E1 A 1 A_Lower
-			W7E2 A 0 A_Lower
-			loop
+			W7E1 A 0
+			goto Super::Select
 		Select.HealthMode:
-			W7E2 A 1 A_Lower
-			W7E2 A 0 A_Lower
-			loop
+			W7E2 A 0
+			goto Super::Select
+
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_TakeInventory("Sup_HealMode", 1)
 			W7E1 A 0 A_PlaySound("w6/up")
 			W7E1 A 0 A_SpawnItemEx ("Fading_ClipBox",		random(-16,16), random(-16,16), 0)
@@ -63,7 +73,11 @@ ACTOR Supplier : Weapon
 			W7E1 BCDE 5
 			W7E1 A 5 A_Refire
 			goto Ready
-		Altfire:
+
+		AltFire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			TNT1 A 0 A_GiveInventory("Sup_HealMode", 1)
 			W7E2 A 0 A_PlaySound("w6/up")
 			W7E2 A 0 A_SpawnItemEX ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
@@ -75,22 +89,15 @@ ACTOR Supplier : Weapon
 			W7E2 A 5 A_Refire
 			goto Ready
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 
 ACTOR Supplier_Big : Supplier
 {
-	Weapon.AmmoUse1			1
-	Weapon.AmmoGive1 		8
 	Weapon.AmmoType1			"Supplies_Ammo_Big"
-	Weapon.AmmoUse2 		1
-	Weapon.AmmoGive2 		8
 	Weapon.AmmoType2			"Supplies_Health_Big"
-	Inventory.PickupMessage		"You got the BEEG Supplier!"
-	Obituary			"Hmmm. That appears to be a bug. I otta fix that somehow..."
+	Inventory.PickupMessage		"You got the Big Supplier!"
 	Tag "Mega Supply Restocker"
 	
 	Weapon.UpSound			"w/load4"
@@ -98,6 +105,9 @@ ACTOR Supplier_Big : Supplier
 	Weapon.SelectionOrder 2300
 	States{
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_TakeInventory("Sup_HealMode", 1)
 			W7E1 A 0 A_PlaySound("w6/up")
 			W7E1 A 0 A_SpawnItemEx ("Fading_ClipPistol", random(-32,32), random(-32,32), 0)
@@ -125,7 +135,10 @@ ACTOR Supplier_Big : Supplier
 			W7E1 BCDE 5
 			W7E1 A 5 A_Refire
 			goto Ready
-		Altfire:
+		AltFire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			TNT1 A 0 A_GiveInventory("Sup_HealMode", 1)
 			W7E2 A 0 A_PlaySound("w6/up")
 			W7E2 A 0 A_SpawnItemEX ("Fading_Medikit" , random(-32,32),random(-32,32), 0)
@@ -141,9 +154,7 @@ ACTOR Supplier_Big : Supplier
 			W7E2 A 5 A_Refire
 			goto Ready
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 

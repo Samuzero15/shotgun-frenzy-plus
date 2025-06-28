@@ -1,4 +1,4 @@
-ACTOR PlasmaGun : Weapon
+ACTOR PlasmaGun : FrenzyWeapon
 {
 	Weapon.AmmoUse			1
 	Weapon.AmmoGive 		50
@@ -15,29 +15,40 @@ ACTOR PlasmaGun : Weapon
 	Tag "Plasma Rifle"
 	States
 	{
-		Ready:
+		Ready: 
+			PLSG A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			PLSG A 1 A_WeaponReady
 			goto Ready
+
 		Deselect:
-			PLSG A 1 A_Lower
-			PLSG A 0 A_Lower
-			goto Deselect
+			PLSG A 0
+			goto Super::Deselect
+
 		Select:
-			PLSG A 1 A_Raise
-			PLSG A 0 A_Raise
-			goto Select
+			PLSG A 0
+			goto Super::Select
 			
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			PLSG A 3 A_FirePlasma
 			X2E1 A 20 A_Refire("Fire")
-			goto Ready
+			goto Ready.Main
 
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			PLSG A 0 A_PlayWeaponSound("weapons/plasmaf")
 			PLSG A 10 A_Gunflash
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Alt")
 			X2E1 A 20 A_Refire("AltFire")
-			goto Ready
+			goto Ready.Main
 
 		Flash:
 			PLSF A 4 Bright A_Light1
@@ -53,14 +64,10 @@ ACTOR PlasmaGun : Weapon
 			PLSF A 1 Bright A_Light1
 			PLSF B 2 Bright A_Light1
 			goto LightDone
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
-ACTOR PlasmaGun_Advanced : Weapon
+ACTOR PlasmaGun_Advanced : FrenzyWeapon
 {
 	Weapon.AmmoUse1			1 
 	Weapon.AmmoGive1 		50
@@ -76,19 +83,26 @@ ACTOR PlasmaGun_Advanced : Weapon
 	Weapon.SelectionOrder 2300
 	States
 	{
-		Ready:
+		Ready: 
+			X2E3 A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			X2E3 A 1 A_WeaponReady
-			goto Ready
+			goto Ready.Main
+
 		Deselect:
-			X2E3 A 1 A_Lower
-			X2E3 A 0 A_Lower
-			goto Deselect
+			X2E3 A 0
+			goto Super::Deselect
 		Select:
-			X2E3 A 1 A_Raise
-			X2E3 A 0 A_Raise
-			goto Select
+			X2E3 A 0
+			goto Super::Select
 			
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			X2E3 B 1 A_PlayWeaponSound("weapons/plasmaf")
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Adv2", 0)
 			X2E3 B 1
@@ -104,20 +118,19 @@ ACTOR PlasmaGun_Advanced : Weapon
 			
 		
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			X2E3 BBCC 1 BRIGHT
 			X2E3 BCBC 1 BRIGHT A_PlayWeaponSound("weapons/plasmaf")
 			X2E3 A 3
 			TNT1 A 0 A_FireCustomMissile("PlasmaProjectile_Adv2Alt", 0)
 			X2E3 A 15 A_Refire("AltFire")
 			goto Ready
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
-ACTOR PlasmaGun_Spread : Weapon
+ACTOR PlasmaGun_Spread : FrenzyWeapon
 {
 	Weapon.AmmoUse			1
 	Weapon.AmmoGive 		50
@@ -135,27 +148,37 @@ ACTOR PlasmaGun_Spread : Weapon
 	Tag "Plasma Rifle + Spread Chip"
 	States
 	{
-		Ready:
+		Ready: 
+			X2E2 A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			X2E2 A 1 A_WeaponReady
-			goto Ready
+			goto Ready.Main
+
 		Deselect:
-			X2E2 A 1 A_Lower
-			goto Deselect
+			X2E2 A 0
+			goto Super::Deselect
+			
 		Select:
-			X2E2 A 1 A_Raise
-			goto Select
+			X2E2 A 0
+			goto Super::Select
+
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			X2E2 BC 4 A_FireCustomMissile("PlasmaProjectile_Spread",0,1,0,0,0,0)
 			X2E2 A 3 A_Refire("Fire")
 			goto Ready
 			
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			X2E2 BC 4 A_FireCustomMissile("PlasmaProjectile_Spread2",0,1,0,0,0,0)
 			X2E2 A 3 A_ReFire("AltFire")
 			goto Ready
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }

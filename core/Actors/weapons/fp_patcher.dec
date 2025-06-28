@@ -1,4 +1,4 @@
-Actor Patcher : Weapon
+Actor Patcher : FrenzyWeapon
 {
   Weapon.SlotPriority 1.0
   Weapon.SelectionOrder 2500
@@ -11,37 +11,50 @@ Actor Patcher : Weapon
 	Spawn:
 		PLSP A -1
 		loop
+	
 	Ready:
+		PLPI A 0
+		goto Ready.Raise
+		
+	Ready.Main:
 		TNT1 A 0 ACS_NamedExecuteAlways("Patcher_WeaponLoop", 0)
 	Ready.Loop:
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 2, "Ready.Sell")
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 1, "Ready.Move")
 		PLPI A 1 A_WeaponReady
+		"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 		loop
 	Ready.Move:
 		PLPI D 1 A_WeaponReady
+		"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 		goto Ready.Loop
 	Ready.Sell:
 		PLPI G 1 A_WeaponReady
+		"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 		goto Ready.Loop
+
 	Select:
-		PLPI A 1 A_Raise
-		PLPI A 0 A_Raise
-		loop
+		PLPI A 0
+		goto Super::Select
 	Deselect:
-		PLPI A 1 A_Lower
-		PLPI A 0 A_Lower
-		loop
+		PLPI A 0
+		goto Super::Deselect
 
 	Fire:
+        "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+        "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+	Fire.Main:
 		PLPI A 0
 	Hold:
 		PLPI B 3
 		PLPI C 4 A_FireBullets(0, 0, 1, 1, "Patcher_FixPuff", FBF_NOFLASH, 256)
 		BLAG B 0 A_ReFire
 		PLPI A 8
-		goto Ready
-	Altfire:
+		goto Ready.Loop
+	AltFire:
+        "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+        "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+	AltFire.Main:
 		PLPI A 0
 	AltHold:
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 2, "AltHold.Sell")
@@ -70,18 +83,24 @@ Actor Patcher_Advanced : Patcher
 	states{
 
 	Ready:
-		TNT1 A 0  ACS_NamedExecuteAlways("Patcher_WeaponLoop", 0)
-		goto Super::Ready.Loop
+		PLPI A 0
+		goto Ready.Raise
 
 	Fire:
+        "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+        "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+	Fire.Main:
 		PLPI A 0
 	Hold:
 		PLPI B 2
 		PLPI C 2 A_FireBullets(0, 0, 1, 1, "Patcher_FixPuff", FBF_NOFLASH, 512)
 		BLAG B 0 A_ReFire
 		PLPI A 8
-		goto Ready
-	Altfire:
+		goto Ready.Loop
+	AltFire:
+        "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+        "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+	AltFire.Main:
 		PLPI A 0
 	AltHold:
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 2, "AltHold.Sell")
@@ -90,13 +109,13 @@ Actor Patcher_Advanced : Patcher
 		PLPI C 4 A_FireBullets(0, 0, 1, 1, "Patcher_UpgradePuff", FBF_NOFLASH, 512)
 		TNT1 B 0 A_ReFire
 		PLPI A 8 
-		goto Ready
+		goto Ready.Loop
 	AltHold.Move:
 		PLPI E 2 A_FireBullets(0, 0, 1, 1, "Patcher_MovePuff_Preview", FBF_NOFLASH, 512) 
 		TNT1 A 0 A_ReFire
 		PLPI F 2 A_FireBullets(0, 0, 1, 1, "Patcher_MovePuff", FBF_NOFLASH, 512) 
 		PLPI D 8
-		goto Ready
+		goto Ready.Loop
 	AltHold.Sell:
 		PLPI HG 3
 		PLPI G 0 A_ReFire

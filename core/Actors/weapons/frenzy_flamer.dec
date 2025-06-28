@@ -1,4 +1,4 @@
-ACTOR Flamer : Weapon
+ACTOR Flamer : FrenzyWeapon
 {
 	Weapon.AmmoUse			1
 	Weapon.AmmoGive 		50
@@ -12,18 +12,27 @@ ACTOR Flamer : Weapon
 	Weapon.SelectionOrder 2500
 	States
 	{
-		Ready:
+		Ready: 
+			BLST A 0 
+            goto Ready.Raise
+		
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			BLST A 1 A_WeaponReady
-			goto Ready
+			goto Ready.Main
+
 		Deselect:
-			BLST A 1 A_Lower
-			BLST A 0 A_Lower
-			goto Deselect
+			BLST A 0
+			goto Super::Deselect
+
 		Select:
-			BLST A 1 A_Raise
-			BLST A 0 A_Raise
-			goto Select
+			BLST A 0
+			goto Super::Select
+
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+           	"####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			TNT1 A 0 A_FireCustomMissile("FlamerShot_NoRip", 0, 0)
 			BLST B 5 A_FireCustomMissile("FlamerShot", 0)
 			TNT1 A 0 A_FireCustomMissile("FlamerShot", 5)
@@ -32,16 +41,14 @@ ACTOR Flamer : Weapon
 			TNT1 A 0 A_FireCustomMissile("FlamerShot_NoRip", -5, 0)
 			BLST B 4 
 			BLST C 20 A_Refire
-			goto Ready
+			goto Ready.Main
+
 		Flash:
 			BLST C 4 Bright A_Light1
 			goto LightDone
 			BLST C 4 Bright A_Light1
 			goto LightDone
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }
 
@@ -51,36 +58,22 @@ actor FlamerS : Flamer
 	Weapon.SelectionOrder 2300
         States
         {
-                Ready:
-                        BLST A 1 A_WeaponReady
-                        goto Ready
-                Deselect:
-                        BLST A 1 A_Lower
-                        BLST A 0 A_Lower
-                        goto Deselect
-                Select:
-                        BLST A 1 A_Raise
-                        BLST A 0 A_Raise
-                        goto Select
                 Fire:
-                        BLST B 5 A_FireCustomMissile("FlamerShotS_tw", 0)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", 5)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -5)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 0, 0)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 5, 0)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", -5, 0)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 10, 0)
-						BLST B 2 A_FireCustomMissile("FlamerShotS_tw", 10, 0)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -10, 0)
-						TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", -10, 0)
-						BLST B 2 
-                        BLST C 20 A_Refire
-                        goto Ready
-                Flash:
-                        BLST C 4 Bright A_Light1
-                        goto LightDone
-                        BLST C 4 Bright A_Light1
-                        goto LightDone
+					"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+           			"####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+					BLST B 5 A_FireCustomMissile("FlamerShotS_tw", 0)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", 5)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -5)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 0, 0)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 5, 0)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", -5, 0)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", 10, 0)
+					BLST B 2 A_FireCustomMissile("FlamerShotS_tw", 10, 0)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_tw", -10, 0)
+					TNT1 A 0 A_FireCustomMissile("FlamerShotS_NoRip", -10, 0)
+					BLST B 2 
+					BLST C 20 A_Refire
+					goto Ready.Main
         }
 }
 

@@ -15,14 +15,9 @@ ACTOR Boomstick : FrenzyWeapon
 	States
 	{	
 		Ready: 
-			W2E1 A 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Main")
+			W2E1 A 0 
             goto Ready.Raise
-        Ready.Main:
-			W2E1 A 1 A_WeaponReady
-            "####" "#" 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-            "####" "#" 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-		loop
-
+		
 		Select:
 			W2E1 A 0
 		goto Super::Select
@@ -31,7 +26,15 @@ ACTOR Boomstick : FrenzyWeapon
 			W2E1 A 0
 		goto Super::Deselect
 
-		Fire.Gun:
+		Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			W2E1 A 1 A_WeaponReady
+		loop
+
+		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W2E1 A 3 A_GunFlash
 			W2E1 A 0 A_FireBullets(6, 6, 7 + CallACS("Player_GetRank", 0), 7 + 2*CallACS("Player_GetRank", 0), "BulletPuff_Standard")
 			W2E1 A 1 offset (0,37)
@@ -46,8 +49,8 @@ ACTOR Boomstick : FrenzyWeapon
 			W2E1 D 4 A_PlayWeaponSound("w2/load")
 			W2E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + random(-8,8), 0, 2, 3)
 			W2E1 CB 4 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
-			TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
-			TNT1 A 0 A_Refire
+			W2E1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W2E1 A 0 A_Refire
 			W2E1 A 5 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			goto Ready
 		Flash:
@@ -78,6 +81,10 @@ ACTOR Boomstick_Full : FrenzyWeapon
 	
 	States
 	{	
+		Ready: 
+			W2E2 A 0
+            goto Ready.Raise
+		
 		Select:
 			W2E2 A 0
 		goto Super::Select
@@ -86,45 +93,23 @@ ACTOR Boomstick_Full : FrenzyWeapon
 			W2E2 A 0
 		goto Super::Deselect
 
-		Ready: 
-			W2E2 A 0 A_JumpIfInventory("WeaponToken_Rised", 1, "Ready.Main")
-            goto Ready.Raise
-        Ready.Main:
+		// Because We need to check input in each tic on animated idle weapons, we gotta check for each sprite with a small inventory variable.
+		Ready.Main:
 			W2E2 A 0 A_PlaySound("weapons/sawidle")
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W2E2 A 1 A_WeaponReady
-			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W2E2 A 1 A_WeaponReady
-			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 A 1 A_WeaponReady
-			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 A 1 A_WeaponReady
-			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 A 1 A_WeaponReady
-			W2E2 A 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 A 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 B 0 A_PlaySound("weapons/sawidle")
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W2E2 B 1 A_WeaponReady
-			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W2E2 B 1 A_WeaponReady
-			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 B 1 A_WeaponReady
-			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 B 1 A_WeaponReady
-			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
-			W2E2 B 1 A_WeaponReady
-			W2E2 B 0 A_JumpIfInventory("Input_Grenade", 1, "Grenade")
-			W2E2 B 0 A_JumpIfInventory("Input_Melee", 1, "Melee")
 			loop
 
-		Fire.Gun:
+		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W2E2 A 3 A_GunFlash
 			W2E2 A 0 A_FireBullets(7, 7, 7 + CallACS("Player_GetRank", 0), 18 + 3*CallACS("Player_GetRank", 0), "BulletPuff_Explosive")
 			W2E2 A 1 offset (0,37)
@@ -142,7 +127,11 @@ ACTOR Boomstick_Full : FrenzyWeapon
 			W2E2 CB 4 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W2E2 A 5 A_Refire
 			goto Ready
+
 		AltFire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			W2E2 AB 2 A_Saw("weapons/sawfull", "weapons/sawhit", 15, "Saw_Spread", SF_NOUSEAMMO, 90)
 			goto Ready
 		Flash:

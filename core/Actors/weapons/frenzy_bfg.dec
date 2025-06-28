@@ -1,15 +1,41 @@
-ACTOR BFG : BFG9000
+ACTOR BFG : FrenzyWeapon
 {
   DamageType			MarineFire2
+  Height 20
+  Weapon.SelectionOrder 2800
+  Weapon.AmmoUse1 40
   Weapon.AmmoUse2   1
+  Weapon.AmmoGive1 40
+  Weapon.AmmoType1 "Cell"
   Weapon.AmmoType2 "Cell"
   Weapon.UpSound			"w/load6"
   Tag "BFG"
   Weapon.SlotPriority 1.0
   Weapon.SelectionOrder 2500
+  +WEAPON.NOAUTOFIRE
   States
   {
+  Ready: 
+		BFGG A 0 
+    goto Ready.Raise
+
+  Ready.Main:
+    "####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+    BFGG A 1 A_WeaponReady
+    Loop
+  
+  Deselect:
+    BFGG A 0
+    goto Super::Deselect
+
+  Select:
+    BFGG A 0
+    goto Super::Select
+
   Fire:
+    "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+    "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+  Fire.Main:
     BFGG A 20 A_BFGSound
     BFGG B 10 A_GunFlash
     BFGG B 10 A_FireCustomMissile("sfBFGBall")
@@ -17,6 +43,9 @@ ACTOR BFG : BFG9000
     goto Ready
   
   AltFire:
+    "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+    "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+  AltFire.Main:
     BFGG A 5 A_BFGsound
     BFGG B 5
   AltHold:
@@ -29,10 +58,12 @@ ACTOR BFG : BFG9000
 		BFGF A 1 Bright A_Light1
 		BFGF B 1 Bright A_Light2
 		Goto LightDone
+  
+  Spawn:
+    BFUG A -1
+    stop
 	
-FireRockets:
-			TNT1 A 1
-		goto lightdone
+
   }
 }
 
@@ -101,6 +132,9 @@ actor BFG_Splash : BFG
   States
   {
   Fire:
+    "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+    "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+  Fire.Main:
     BFGG A 20 A_BFGSound
     BFGG B 10 A_GunFlash
     BFGG B 10 A_FireCustomMissile("sfBFGBallS_tw")
@@ -108,6 +142,9 @@ actor BFG_Splash : BFG
     goto Ready
 
   AltFire:
+    "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+    "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+  AltFire.Main:
     BFGG A 10 A_BFGsound
   AltHold:
     TNT1 A 0 A_FireCustomMissile("BFGPlasmaBall1_Splash",random(8,-8),0,random(5,-5),random(5,-5),0,random(4,-4))
@@ -134,20 +171,25 @@ actor BFG_Splash : BFG
 
 actor sfBFGBallS_tw : sfBFGBall
 {
-  Damage (150)
+  Damage (200)
+  Radius 16
   +RIPPER
   +BLOODLESSIMPACT
   +NODAMAGETHRUST
   States
   {
   Spawn:
-    BFS1 AB 4 bright
+    BFS1 AA 2 bright
+    TNT1 A 0 A_SpawnItem("BFGBall_Overcharge_Death")
+    BFS1 AA 2 bright A_Explode(200,512,0,0,256)
     TNT1 A 0 A_SpawnItem("BFGSplash_SplashIt")
-    BFS1 AB 4 bright 
+    BFS1 BB 2 bright
+    TNT1 A 0 A_SpawnItem("BFGBall_Overcharge_Death")
+    BFS1 BB 2 bright A_Explode(200,512,0,0,256)
     TNT1 A 0 A_SpawnItem("BFGSplash_SplashIt")
     loop
   Death:
-    BFE1 AB 8 bright A_Explode(300,256,0,0,64)
+    BFE1 AB 8 bright A_Explode(200,512,0,0,512)
     BFE1 C 8 bright A_BFGSpray
     BFE1 DEF 8 bright
     stop
@@ -177,37 +219,50 @@ actor BFG_Overcharge : BFG
 // The bfg with partial piercing, but produces a homing ball that hit's the 10 first enemies.
 // Each hit increases its stats, range, damage and size of projectile.
 // The last hit is the most devastating. Absurdly powerful against one enemy. Like Cyberdemons.
-// The catch it's on it's projectile speed, and ammo cost, 2 shots with backpack.
+// The catch is on it's projectile speed, and ammo cost, 3 shots with backpack.
   Tag "BFG Overcharge"
   Weapon.AmmoUse 200
   Weapon.SlotPriority 2.0
   Weapon.SelectionOrder 2300
   States
   {
-    Ready:
-      BFGO A 1 A_WeaponReady
-    loop
+    Ready: 
+		BFGO A 0 
+    goto Ready.Raise
+
+  Ready.Main:
+    "####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+    BFGO A 1 A_WeaponReady
+    goto Ready.Main
+
     Select:
-      BFGO A 1 A_Raise
-    loop
+      BFGO A 1
+    goto Super::Select
+
     Deselect:
-      BFGO A 1 A_Lower
-    loop
+      BFGO A 1
+    goto Super::Deselect
 
   Fire:
+    "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+    "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+  Fire.Main:
     BFGO A 20 A_BFGSound
     BFGO BCD 5
     BFGO D 5 A_FireCustomMissile("BFGBall_Overcharge")
     BFGO C 10 
     BFGO B 10 A_ReFire
-    goto Ready
+    goto Ready.Main
 
   AltFire:
+    "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+    "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+  AltFire.Main:
     BFGO A 5 A_BFGSound
     BFGO B 3 
     BFGO C 2 
 		BFGO B 0 A_ReFire("AltHold")
-		Goto Ready
+		Goto Ready.Main
 
   AltHold:
     TNT1 A 0 A_Playsound("weapons/bfgx")
@@ -233,6 +288,8 @@ actor BFG_Overcharge : BFG
   }
 }
 
+const int BFGOvercharged_MaxAngleChase = 30;
+
 actor BFGBall_Overcharge : sfBFGBall
 { // Alex's idea of making a BEEG BALL. That deals a hugeass damage.
   Damage (200)
@@ -249,13 +306,13 @@ actor BFGBall_Overcharge : sfBFGBall
   States
   {
   Spawn.Hit9:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit9")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit9")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit9")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit9")
     loop
   XDeath.Hit9:
@@ -266,14 +323,15 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
 
   Spawn.Hit8:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit8")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit8")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit8")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit8")
+    TNT1 A 0 A_ChangeFlag("MISSILE", true)
     loop
   XDeath.Hit8:
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Death_Hit8")
@@ -283,13 +341,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
   
   Spawn.Hit7:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit7")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit7")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit7")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit7")
     loop
   XDeath.Hit7:
@@ -300,13 +358,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
   
   Spawn.Hit6:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit6")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit6")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit6")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit6")
     loop
   XDeath.Hit6:
@@ -317,13 +375,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
   
   Spawn.Hit5:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit5")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit5")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit5")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit5")
     loop
   XDeath.Hit5:
@@ -334,13 +392,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
   
   Spawn.Hit4:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit4")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit4")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit4")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit4")
     loop
   XDeath.Hit4:
@@ -351,13 +409,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
   
   Spawn.Hit3:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit3")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit3")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit3")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit3")
     loop
   XDeath.Hit3:
@@ -368,13 +426,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
   
   Spawn.Hit2:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit2")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit2")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit2")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit2")
     loop
   XDeath.Hit2:
@@ -385,13 +443,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
 
   Spawn.Hit1:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit1")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit1")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit1")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Hit1")
     loop
   XDeath.Hit1:
@@ -402,13 +460,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto XDeath.Hit
 
   Spawn:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail")
     loop
   XDeath:
@@ -427,13 +485,13 @@ actor BFGBall_Overcharge : sfBFGBall
     goto Death.Rest
   
   Spawn.Last:
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Last")
-    BFS1 A 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 A 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Last")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright A_SeekerMissile(0, BFGOvercharged_MaxAngleChase, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Last")
-    BFS1 B 4 bright A_SeekerMissile(0, 80, SMF_LOOK | SMF_PRECISE | SMF_CURSPEED, 256)
+    BFS1 B 4 bright 
     TNT1 A 0 A_SpawnItemEx("BFGBall_Overcharge_Trail_Last")
     loop
   XDeath.Last: // Harms more on last hit

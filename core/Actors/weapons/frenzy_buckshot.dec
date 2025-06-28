@@ -15,7 +15,7 @@ ACTOR Buckshot_Chamber_LoadedShells : Inventory
 	Inventory.MaxAmount 20
 }
 
-ACTOR Buckshot : Weapon
+ACTOR Buckshot : FrenzyWeapon
 {
 	Weapon.AmmoUse1			0
 	Weapon.AmmoUse2			0
@@ -34,7 +34,19 @@ ACTOR Buckshot : Weapon
 	
 	States
 	{
-		Ready:
+		Ready: 
+			W5E1 A 0 
+            goto Ready.Raise
+
+		Select:
+			W5E1 A 0
+		goto Super::Select
+
+		Deselect:
+			W5E1 A 0
+		goto Super::Deselect
+
+		Ready.Main:
 			W5E1 V 5
 			TNT1 A 0 A_JumpIfInventory("Buckshot_FirstTime", 1, "Ready0")
 			TNT1 A 0 A_GiveInventory("Buckshot_FirstTime", 1)
@@ -98,46 +110,53 @@ ACTOR Buckshot : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, 1)
 			W5E1 A 1 A_WeaponReady
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, "AltFire")
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			goto Ready0
 		Ready1:
 			W5E1 B 1 A_WeaponReady
-			goto Ready1
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready2:
 			W5E1 C 1 A_WeaponReady
-			goto Ready2
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready3:
 			W5E1 D 1 A_WeaponReady
-			goto Ready3
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready4:
 			W5E1 E 1 A_WeaponReady
-			goto Ready4
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready5:
 			W5E1 F 1 A_WeaponReady
-			goto Ready5
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready6:
 			W5E1 G 1 A_WeaponReady
-			goto Ready6
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready7:
 			W5E1 H 1 A_WeaponReady
-			goto Ready7
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready8:
 			W5E1 I 1 A_WeaponReady
-			goto Ready8
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready9:
 			W5E1 J 1 A_WeaponReady
-			goto Ready9
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready10:
 			W5E1 K 1 A_WeaponReady
-			goto Ready10
-		Deselect:
-			W5E1 V 1 A_Lower
-			W5E1 V 0 A_Lower
-			goto Deselect
-		Select:
-			W5E1 V 1 A_Raise
-			W5E1 V 0 A_Raise
-			goto Select
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
+		
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Fire10")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Fire9")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 8, "Fire8")
@@ -215,12 +234,15 @@ ACTOR Buckshot : Weapon
 			"####" "#" 10 A_Refire
 			goto Ready0
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
 			W5E1 A 0 A_Jump(255, "Nope0")
 			W5E1 A 0 A_JumpIfInventory("Shell", 2, 2)
 			W5E1 A 0 A_Jump(255, "AltFire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Altfire2")
-            W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready")
+            W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 		Altfire.Reloading:
 			//W2E1 B 3
@@ -235,7 +257,7 @@ ACTOR Buckshot : Weapon
 			W2E1 B 3 A_Refire("Altfire.Reloading")
 			goto Ready0
        Altfire2:
-            W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Ready")
+            W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Ready.Main")
 			W2E1 B 3 
 			TNT1 A 0 A_PlayWeaponSound("w2/load")
             W2E1 C 4 A_TakeInventory("Shell", 1)
@@ -250,13 +272,11 @@ ACTOR Buckshot : Weapon
 			SHTF A 1 offset(0,0) bright A_Light1
 			goto LightDone
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 
-ACTOR Buckshot_Chamber : Weapon
+ACTOR Buckshot_Chamber : FrenzyWeapon
 {
 
 	Weapon.AmmoUse1			0
@@ -276,7 +296,19 @@ ACTOR Buckshot_Chamber : Weapon
 	
 	States
 	{
-		Ready:
+		Ready: 
+			W5E2 A 0 
+            goto Ready.Raise
+
+		Select:
+			W5E2 A 0
+		goto Super::Select
+
+		Deselect:
+			W5E2 A 0
+		goto Super::Deselect
+
+		Ready.Main:
 			W5E2 A 5
 			TNT1 A 0 A_JumpIfInventory("Buckshot_Chamber_FirstTime", 1, "Ready0")
 			TNT1 A 0 A_GiveInventory("Buckshot_Chamber_FirstTime", 1)
@@ -390,76 +422,92 @@ ACTOR Buckshot_Chamber : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, 1)
 			W5E1 A 1 A_WeaponReady
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, "AltFire")
-			goto Ready0
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready1:
 			W5E1 B 1 A_WeaponReady
-			goto Ready1
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready2:
 			W5E1 C 1 A_WeaponReady
-			goto Ready2
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready3:
 			W5E1 D 1 A_WeaponReady
-			goto Ready3
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready4:
 			W5E1 E 1 A_WeaponReady
-			goto Ready4
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready5:
 			W5E1 F 1 A_WeaponReady
-			goto Ready5
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready6:
 			W5E1 G 1 A_WeaponReady
-			goto Ready6
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready7:
 			W5E1 H 1 A_WeaponReady
-			goto Ready7
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready8:
 			W5E1 I 1 A_WeaponReady
-			goto Ready8
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready9:
 			W5E1 J 1 A_WeaponReady
-			goto Ready9
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready10:
 			W5E1 K 1 A_WeaponReady
-			goto Ready10
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready11:
 			W5E1 L 1 A_WeaponReady
-			goto Ready11
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready12:
 			W5E1 M 1 A_WeaponReady
-			goto Ready12
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready13:
 			W5E1 N 1 A_WeaponReady
-			goto Ready13
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready14:
 			W5E1 O 1 A_WeaponReady
-			goto Ready14
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready15:
 			W5E1 P 1 A_WeaponReady
-			goto Ready15
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready16:
 			W5E1 Q 1 A_WeaponReady
-			goto Ready16
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready17:
 			W5E1 R 1 A_WeaponReady
-			goto Ready17
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready18:
 			W5E1 S 1 A_WeaponReady
-			goto Ready18
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready19:
 			W5E1 T 1 A_WeaponReady
-			goto Ready19
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Ready20:
 			W5E1 U 1 A_WeaponReady
-			goto Ready20
-		Deselect:
-			W5E2 A 1 A_Lower
-			W5E2 A 0 A_Lower
-			goto Deselect
-		Select:
-			W5E2 A 1 A_Raise
-			W5E2 A 0 A_Raise
-			goto Select
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			loop
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 20, "Fire20")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 19, "Fire19")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 18, "Fire18")
@@ -597,6 +645,9 @@ ACTOR Buckshot_Chamber : Weapon
 			"####" "#" 10 A_Refire
 			goto Ready0
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
 			W5E1 A 0 A_Jump(255, "Nope0")
 			W5E1 A 0 A_JumpIfInventory("Shell", 2, 2)
@@ -608,7 +659,7 @@ ACTOR Buckshot_Chamber : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 19, "AltFire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 18, "AltFire3")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 17, "AltFire4")
-			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready")
+			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 			W2E1 B 3
 			W2E1 C 3 A_TakeInventory("Shell", 4)
@@ -618,7 +669,7 @@ ACTOR Buckshot_Chamber : Weapon
 			goto Ready0
 		AltFire2: // 1 shell
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 20, "Ready")
-			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready")
+			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 			W2E1 B 3
 			W2E1 C 3 A_TakeInventory("Shell", 1)
@@ -629,7 +680,7 @@ ACTOR Buckshot_Chamber : Weapon
 		AltFire3: // 2 shells
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 20, "Ready")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 19, "AltFire2")
-			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready")
+			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 			W2E1 B 3
 			W2E1 C 3 A_TakeInventory("Shell", 2)
@@ -641,7 +692,7 @@ ACTOR Buckshot_Chamber : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 20, "Ready")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 19, "AltFire2")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 18, "AltFire3")
-			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready")
+			W2E1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 			W2E1 B 3
 			W2E1 C 3 A_TakeInventory("Shell", 3)
@@ -655,13 +706,11 @@ ACTOR Buckshot_Chamber : Weapon
 			SHTF B 1 offset(0,0) Bright A_Light2
 			SHTF A 1 offset(0,0) bright A_Light1
 			Goto LightDone
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 
-ACTOR Buckshot_Explosive : Weapon
+ACTOR Buckshot_Explosive : FrenzyWeapon
 {
 	Weapon.AmmoUse1			0
 	Weapon.AmmoUse2			0
@@ -679,7 +728,19 @@ ACTOR Buckshot_Explosive : Weapon
 	Weapon.SelectionOrder 2300
 	States
 	{
-		Ready:
+		Ready: 
+			W5E3 A 0 
+            goto Ready.Raise
+
+		Select:
+			W5E3 A 0
+		goto Super::Select
+
+		Deselect:
+			W5E3 A 0
+		goto Super::Deselect
+
+		Ready.Main:
 			W5E3 A 5
 			TNT1 A 0 A_JumpIfInventory("Buckshot_Explosive_FirstTime", 1, "Ready0")
 			TNT1 A 0 A_GiveInventory("Buckshot_Explosive_FirstTime", 1)
@@ -743,46 +804,52 @@ ACTOR Buckshot_Explosive : Weapon
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, 1)
 			W5E1 A 1 A_WeaponReady
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, "AltFire")
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			goto Ready0
 		Ready1:
 			W5E1 B 1 A_WeaponReady
-			goto Ready1
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready2:
 			W5E1 C 1 A_WeaponReady
-			goto Ready2
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready3:
 			W5E1 D 1 A_WeaponReady
-			goto Ready3
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready4:
 			W5E1 E 1 A_WeaponReady
-			goto Ready4
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready5:
 			W5E1 F 1 A_WeaponReady
-			goto Ready5
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready6:
 			W5E1 G 1 A_WeaponReady
-			goto Ready6
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready7:
 			W5E1 H 1 A_WeaponReady
-			goto Ready7
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready8:
 			W5E1 I 1 A_WeaponReady
-			goto Ready8
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready9:
 			W5E1 J 1 A_WeaponReady
-			goto Ready9
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Ready10:
 			W5E1 K 1 A_WeaponReady
-			goto Ready10
-		Deselect:
-			W5E3 A 1 A_Lower
-			W5E3 A 0 A_Lower
-			goto Deselect
-		Select:
-			W5E3 A 1 A_Raise
-			W5E3 A 0 A_Raise
-			goto Select
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
+			goto Ready0
 		Fire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Fire10")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Fire9")
 			W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 8, "Fire8")
@@ -864,12 +931,15 @@ ACTOR Buckshot_Explosive : Weapon
 			"####" "#" 10 A_Refire
 			goto Ready0
 		AltFire:
+			"####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			W5E1 A 0 A_JumpIfInventory("Shell", 1, 2)
 			W5E1 A 0 A_Jump(255, "Nope0")
 			W5E1 A 0 A_JumpIfInventory("Shell", 2, 2)
 			W5E1 A 0 A_Jump(255, "AltFire2")
 			W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "AltFire2")
-			W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready")
+			W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 			W2E1 B 3
 			W2E1 C 3 A_TakeInventory("Shell", 2)
@@ -878,8 +948,8 @@ ACTOR Buckshot_Explosive : Weapon
 			W2E1 B 2 A_Refire
 			goto Ready0
 		AltFire2:
-            W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Ready")
-			W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready")
+            W5E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 10, "Ready.Main")
+			W2E1 A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready.Main")
 			W2E1 A 1
 			W2E1 B 3
 			W2E1 C 3 A_TakeInventory("Shell", 1)
@@ -892,9 +962,5 @@ ACTOR Buckshot_Explosive : Weapon
 			SHTF B 1 offset(0,0) Bright A_Light2
 			SHTF A 1 offset(0,0) bright A_Light1
 			Goto LightDone
-			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
 	}
 }

@@ -1,4 +1,4 @@
-ACTOR Quadshot : Weapon
+ACTOR Quadshot : FrenzyWeapon
 { // Big Tops for Mike 12 And his Shadow Warior's Centered Riot Gun!
 	Weapon.AmmoUse1 		4
 	Weapon.AmmoUse2 		1
@@ -15,18 +15,27 @@ ACTOR Quadshot : Weapon
 	Weapon.SelectionOrder 2500
 	States
 	{
-		Ready:
+		Ready: 
+			W4X1 A 0 
+            goto Ready.Raise
+
+        Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W4X1 A 1 A_WeaponReady
-			goto Ready
-		Deselect:
-			W4X1 A 1 A_Lower
-			W4X1 A 0 A_Lower
-			goto Deselect
+		loop
+
 		Select:
-			W4X1 A 1 A_Raise
-			W4X1 A 0 A_Raise
-			goto Select
+			W4X1 A 0
+		goto Super::Select
+
+		Deselect:
+			W4X1 A 0
+		goto Super::Deselect
+
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W4X1 A 3
 			W4X1 H 2 Offset(0,34)
 			TNT1 A 0 A_Quake(4,4,0,32)
@@ -41,25 +50,28 @@ ACTOR Quadshot : Weapon
 			W4X1 E 2 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
 			W4X1 F 2
-			W4X1 G 2
-			W4X1 D 6
+			W4X1 G 2 
+			W4X1 D 6 
 			W4X1 E 2 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
 			W4X1 F 2
-			W4X1 G 2
-			W4X1 D 6
+			W4X1 G 2 
+			W4X1 D 6 
 			W4X1 E 2 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
-			W4X1 F 2
-			W4X1 G 2
-			W4X1 D 6
+			W4X1 F 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X1 G 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X1 D 6 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W4X1 E 2 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
-			W4X1 F 2
-			W4X1 G 2
+			W4X1 F 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X1 G 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W4X1 A 5 A_Refire
 			goto Ready
 		AltFire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			W4X1 A 3
 			W4X1 B 2 Offset(0,34)
 			TNT1 A 0 Offset(0,37) A_Quake(2,4,0,32)
@@ -68,20 +80,18 @@ ACTOR Quadshot : Weapon
 			W4X1 D 1 offset(0,39)
 			W4X1 D 1 offset(0,36)
 			W4X1 D 1 offset(0,33)
-			W4X1 D 3
+			W4X1 D 3 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W4X1 E 2 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
-			W4X1 F 2
-			W4X1 G 2
+			W4X1 F 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X1 G 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W4X1 A 5 A_Refire
 			goto Ready
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 
-ACTOR Quadshot_Full : Weapon
+ACTOR Quadshot_Full : FrenzyWeapon
 {
 	Weapon.AmmoUse1 		4
 	Weapon.AmmoUse2 		1
@@ -98,18 +108,27 @@ ACTOR Quadshot_Full : Weapon
 	Weapon.SlotPriority 2.0
 	States
 	{
-		Ready:
+		Ready: 
+			W4X2 A 0 
+            goto Ready.Raise
+
+        Ready.Main:
+			"####" "#" 0 A_JumpIfInventory("Input_Key", 1, "Ready.Inputs")
 			W4X2 A 1 A_WeaponReady
-			goto Ready
-		Deselect:
-			W4X2 A 1 A_Lower
-			W4X2 A 0 A_Lower
-			goto Deselect
+		loop
+
 		Select:
-			W4X2 A 1 A_Raise
-			W4X2 A 0 A_Raise
-			goto Select
+			W4X2 A 0
+		goto Super::Select
+
+		Deselect:
+			W4X2 A 0
+		goto Super::Deselect
+
 		Fire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		Fire.Main:
 			W4X2 A 3
 			W4X2 H 2 Offset(0,34)
 			TNT1 A 0 A_Quake(4,4,0,32)
@@ -124,24 +143,27 @@ ACTOR Quadshot_Full : Weapon
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
 			W4X2 F 1
 			W4X2 G 1
-			W4X2 D 5
+			W4X2 D 5 
 			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
 			W4X2 F 1
 			W4X2 G 1
-			W4X2 D 5
+			W4X2 D 5 
 			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
-			W4X2 F 1
-			W4X2 G 1
-			W4X2 D 5
+			W4X2 F 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X2 G 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X2 D 5 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W4X2 E 1 A_PlaySound("Quadshot/Reload", CHAN_AUTO)
 			W4E1 D 0 A_FireCustomMissile("splatShellCasing", 45 + frandom(-8,8), 0, 2, 3, 0, 20 + random(-10,10))
-			W4X2 F 1
-			W4X2 G 1
+			W4X2 F 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+			W4X2 G 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
 			W4X2 A 5 A_Refire
 			goto Ready
 		AltFire:
+            "####" "#" 0 offset (0,32)  A_GiveInventory("WeaponToken_Rised", 1)
+            "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
+		AltFire.Main:
 			W4X2 A 2
 			W4X2 B 2 Offset(0,34)
 			TNT1 A 0 Offset(0,37) A_Quake(2,4,0,32)
@@ -157,9 +179,7 @@ ACTOR Quadshot_Full : Weapon
 			W4X2 A 5 A_Refire
 			goto Ready
 		
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 /*
@@ -211,9 +231,7 @@ ACTOR Quadshot_Explosive : Weapon
 			W4E2 CBA 3
 			goto Ready
 			
-		FireRockets:
-			TNT1 A 1
-		goto lightdone
+		
 	}
 }
 */
