@@ -425,7 +425,6 @@ ACTOR Deploy_Counter
 	***
 */
 
-
 Actor Turret_HealthBar {
 	Height 1
 	Radius 1
@@ -434,10 +433,8 @@ Actor Turret_HealthBar {
 	renderstyle Add
 	Alpha 0.5
 	+NOINTERACTION
-	+CLIENTSIDEONLY
 	+NOCLIP
 	-SOLID
-	
 	
 	States{
 		Spawn:
@@ -515,7 +512,6 @@ Actor Turret_LevelStars {
 	renderstyle Add
 	Alpha 0.5
 	+NOINTERACTION
-	+CLIENTSIDEONLY
 	+NOCLIP
 	+FLOATBOB
 	-SOLID
@@ -600,7 +596,6 @@ ACTOR StreakEffect
 	+FORCEYBILLBOARD
 	+ClientsideOnly
 	renderstyle add
-	
 }
 
 Actor DispenserPickup : CustomInventory{
@@ -791,7 +786,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 			TNT1 A 0 A_SetUserVar("user_rangeup", 64)
 			
 			TNT1 A 1 ACS_NamedExecuteAlways("Building_AggroLoop", 0)
-			TNT1 A 0 ACS_NamedExecuteAlways("Turret_States", 0, 40)		
+			TNT1 A 0 ACS_NamedExecuteAlways("Turret_States", 0)		
 			//TNT1 A 0 ACS_NamedExecuteAlways("DebugTID", 0, 0, tid)
 			TNT1 A 1
 			TNT1 A 50 A_Jump(256, "Spawn.Head")

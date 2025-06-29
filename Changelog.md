@@ -9,6 +9,12 @@
 
 ## v1 - The path of the damned...
 
+#### (29 / 6 / 2025) [Clientside fixes on buildings, and Patcher's bullets]
+	*) Updated pack-o-daemon again.
+	*) Now the dispenser visual effects should display and expand their spawn area in clientside.
+	*) Patcher's bullets now have increased damage, but this is akin to a fix, where it inconsistently does not trigger the Damage script.
+	*) Now the health bars for the buildings (dispensers and turrets) is set on 90 map units. Removed the clientside tags, and now it properly updates the health of a building in clientside (although I don't like this fix at all, but whatever...)
+
 #### (27 / 6 / 2025) [Weapon recoding, added new buttons for grenade and melee + some Repeater & BFG tweaks]
 	!+) Now the players can throw a melee attack and throw a grenade when using a weapon!
 	!*) Not only that but also the switch speed and style has been greatly increase for all weapons, yes you can go wild with switching between your ssg and spitter!

@@ -585,19 +585,18 @@ Script "Turret_Count" (int tid) {
 	
 }
 
-Script "Turret_States" (int height){
+Script "Turret_States" (void){
 	// The current state of the turret/dispenser!, Level and Health!
 	int hp = GetActorProperty(0, APROP_HEALTH);
 	int max_hp = GetActorProperty(0, APROP_SPAWNHEALTH);
 	int lvl = GetActorProperty(0, APROP_STAMINA);
-	int z = height<<16 + 4.0;
+	int z = (90)<<16 + 4.0;
 	int bid = UniqueTID(4000);
 	int sid = UniqueTID(5000);
 	spawn("Turret_HealthBar", getactorx(0), getactory(0), getactorz(0) + z, bid);
 	spawn("Turret_LevelStars", getactorx(0), getactory(0), getactorz(0) + z, sid);
 	//SetActorProperty(bid, APROP_RENDERSTYLE, STYLE_STENCIL);
 	Bar_State(bid, hp, max_hp);
-	//Bar_Color(bid, hp, max_hp); 
 	setActorState(sid, Strparam(s:"LV", d:lvl));
 	delay(random(0,35));
 	while (hp > 0){
@@ -605,7 +604,6 @@ Script "Turret_States" (int height){
 		if(hp != GetActorProperty(0, APROP_HEALTH)){
 			hp = GetActorProperty(0, APROP_HEALTH);
 			Bar_State(bid, hp, max_hp);
-			//Bar_Color(bid, hp, max_hp); 
 		}
 		// Level display
 		if(lvl != GetActorProperty(0, APROP_STAMINA)){
@@ -621,6 +619,41 @@ Script "Turret_States" (int height){
 	delay(35);
 	Thing_Remove(bid);
 	Thing_Remove(sid);
+}
+
+Script "Dispenser_SpawnVFX" (int sparks, int ammo_or_health) {
+	int range = GetUserVariable(0, "user_range")*2;
+	int times = 3 + GetActorStamina(0);
+	for (int i = 0; i < times; i ++){
+		if(ammo_or_health == 0){
+			SpawnRadius("AmmoDispenser_StreakBarEmmiter", 0, (random(8, range-4))<<16, random(0.01, 1.0), 0, false);
+			if(sparks)
+				SpawnRadius("AmmoDispenser_StreakSparkEmmiter", 0, range<<16, random(0.01, 1.0), 0, false);
+		}
+		if(ammo_or_health == 1){
+			SpawnRadius("HealthDispenser_StreakBarEmmiter", 0, (random(8, range-4))<<16, random(0.01, 1.0), 0, false);
+			if(sparks)
+				SpawnRadius("HealthDispenser_StreakSparkEmmiter", 0, range<<16, random(0.01, 1.0), 0, false);
+		}
+		
+	}
+	
+}
+
+function int SpawnRadius(str type, int spotid, int radius, int angle, int newtid, bool fog)
+{
+   int x = GetActorX(spotid) + FixedMul(cos(angle), radius);
+   int y = GetActorY(spotid) + FixedMul(sin(angle), radius);
+
+   int test = Spawn(type, x, y, GetActorZ(spotid), newtid, angle >> 8);
+
+   if (test && fog)
+     Spawn("TeleportFog", x, y, GetActorZ(spotid), 0, 0);
+
+   if (test)
+     return TRUE;
+
+   return FALSE;
 }
 
 Script "Building_AggroLoop" (int tid) {
@@ -665,21 +698,3 @@ function void Bar_State(int id, int var, int max_val){
 	if(bar_state_num >= 20) bar_state_num = 20;
 	setActorState(id, Strparam(s:"HP_", d:bar_state_num));
 } 
-
-function void Bar_Color(int id, int var, int max_val){
-	//Colour your life.
-	int bar_amount = FixedMul(FixedDiv(var, max_val), 100.0) >> 16;
-	int color = bar_amount / 20;
-	if(color >= 5) color = 5;
-	int res =  0xFFFFFF;
-	switch(color){
-		case 0:	res = 0xFF0000; break; // Red (20 %)
-		case 1:	res = 0xFF8800; break; // Orange (40 %)
-		case 2:	res = 0xFFFF00; break; // Yellow (60 %)
-		case 3:	res = 0x00FF00; break; // Green (80 %)
-		case 4:	res = 0xAAAAFF; break; // cyan (100 %)
-		case 5:	res = 0xFFFFFF; break; // White (Overhealth)
-	}
-	SetActorProperty(id, APROP_STENCILCOLOR, res);
-}
-

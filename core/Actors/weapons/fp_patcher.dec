@@ -47,7 +47,7 @@ Actor Patcher : FrenzyWeapon
 		PLPI A 0
 	Hold:
 		PLPI B 3
-		PLPI C 4 A_FireBullets(0, 0, 1, 1, "Patcher_FixPuff", FBF_NOFLASH, 256)
+		PLPI C 4 A_FireBullets(0, 0, 1, 10, "Patcher_FixPuff",  FBF_NOFLASH | FBF_NORANDOM, 256)
 		BLAG B 0 A_ReFire
 		PLPI A 8
 		goto Ready.Loop
@@ -60,19 +60,19 @@ Actor Patcher : FrenzyWeapon
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 2, "AltHold.Sell")
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 1, "AltHold.Move")
 		PLPI B 6
-		PLPI C 8 A_FireBullets(0, 0, 1, 1, "Patcher_UpgradePuff", FBF_NOFLASH, 256)
+		PLPI C 8 A_FireBullets(0, 0, 1, 10, "Patcher_UpgradePuff",  FBF_NOFLASH | FBF_NORANDOM, 256)
 		PLPI A 8 A_ReFire
 		goto Ready.Loop
 	AltHold.Move:
-		PLPI E 2 A_FireBullets(0, 0, 1, 1, "Patcher_MovePuff_Preview", FBF_NOFLASH, 256) 
+		PLPI E 2 A_FireBullets(0, 0, 1, 10, "Patcher_MovePuff_Preview",  FBF_NOFLASH | FBF_NORANDOM, 256) 
 		BLAG B 0 A_ReFire
-		PLPI F 2 A_FireBullets(0, 0, 1, 1, "Patcher_MovePuff", FBF_NOFLASH, 256) 
+		PLPI F 2 A_FireBullets(0, 0, 1, 10, "Patcher_MovePuff", FBF_NOFLASH | FBF_NORANDOM, 256) 
 		PLPI D 8
 		goto Ready.Loop
 	AltHold.Sell:
 		PLPI HG 3
 		PLPI G 0 A_ReFire
-		PLPI I 8 A_FireBullets(0, 0, 1, 1, "Patcher_SellPuff", FBF_NOFLASH, 256)
+		PLPI I 8 A_FireBullets(0, 0, 1, 10, "Patcher_SellPuff", FBF_NOFLASH | FBF_NORANDOM, 256)
 		goto Ready.Loop
   }
 }
@@ -93,7 +93,7 @@ Actor Patcher_Advanced : Patcher
 		PLPI A 0
 	Hold:
 		PLPI B 2
-		PLPI C 2 A_FireBullets(0, 0, 1, 1, "Patcher_FixPuff", FBF_NOFLASH, 512)
+		PLPI C 2 A_FireBullets(0, 0, 1, 10, "Patcher_FixPuff", FBF_NOFLASH | FBF_NORANDOM, 512)
 		BLAG B 0 A_ReFire
 		PLPI A 8
 		goto Ready.Loop
@@ -106,20 +106,20 @@ Actor Patcher_Advanced : Patcher
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 2, "AltHold.Sell")
 		TNT1 A 0 A_JumpIfInventory("Patcher_Mode", 1, "AltHold.Move")
 		PLPI B 3
-		PLPI C 4 A_FireBullets(0, 0, 1, 1, "Patcher_UpgradePuff", FBF_NOFLASH, 512)
+		PLPI C 4 A_FireBullets(0, 0, 1, 10, "Patcher_UpgradePuff", FBF_NOFLASH | FBF_NORANDOM, 512)
 		TNT1 B 0 A_ReFire
 		PLPI A 8 
 		goto Ready.Loop
 	AltHold.Move:
-		PLPI E 2 A_FireBullets(0, 0, 1, 1, "Patcher_MovePuff_Preview", FBF_NOFLASH, 512) 
+		PLPI E 2 A_FireBullets(0, 0, 1, 10, "Patcher_MovePuff_Preview", FBF_NOFLASH | FBF_NORANDOM, 512) 
 		TNT1 A 0 A_ReFire
-		PLPI F 2 A_FireBullets(0, 0, 1, 1, "Patcher_MovePuff", FBF_NOFLASH, 512) 
+		PLPI F 2 A_FireBullets(0, 0, 1, 10, "Patcher_MovePuff", FBF_NOFLASH | FBF_NORANDOM, 512) 
 		PLPI D 8
 		goto Ready.Loop
 	AltHold.Sell:
 		PLPI HG 3
 		PLPI G 0 A_ReFire
-		PLPI I 8 A_FireBullets(0, 0, 1, 1, "Patcher_SellPuff", FBF_NOFLASH, 512)
+		PLPI I 8 A_FireBullets(0, 0, 1, 10, "Patcher_SellPuff", FBF_NOFLASH | FBF_NORANDOM, 512)
 		goto Ready.Loop
 	}
 }
@@ -128,7 +128,6 @@ ACTOR Patcher_Puff
 	+NOINTERACTION
 	+BLOODLESSIMPACT
 	-ACTIVATEPCROSS
-	+ALWAYSPUFF
 	-RANDOMIZE
 	DamageType			"IdlePatcherDmg"
 	VSpeed				1
@@ -225,7 +224,7 @@ Actor Patcher_Libra : CustomInventory {
 			TNT1 A 1
 		stop
 		Pickup:
-			TNT1 A 0 A_FireBullets(0, 0, 1, 1, "Patcher_LibraPuff", FBF_NOFLASH, 256)
+			TNT1 A 0 A_FireBullets(0, 0, 1, 10, "Patcher_LibraPuff", FBF_NOFLASH | FBF_NORANDOM, 256)
 		stop
 	}
 }
@@ -233,7 +232,7 @@ Actor Patcher_Libra : CustomInventory {
 Actor Patcher_LibraAdvanced : Patcher_Libra {
 	States{
 		Pickup:
-			TNT1 A 0 A_FireBullets(0, 0, 1, 1, "Patcher_LibraPuff", FBF_NOFLASH, 512)
+			TNT1 A 0 A_FireBullets(0, 0, 1, 10, "Patcher_LibraPuff", FBF_NOFLASH | FBF_NORANDOM, 512)
 		stop
 	}
 }

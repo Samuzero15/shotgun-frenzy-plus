@@ -36,7 +36,7 @@
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
         "map": "TEST",
-        "extra_params": "+skill 1"
+        "extra_params": "+skill 1 +sv_cheats 1"
     },
     "build_settings": {
         "name": "sfplus",
@@ -55,13 +55,14 @@
             "..\\Changelog.md"
         ],
         "build_flags": [
-            true,
             false,
             false,
+            false,
             true,
             false,
             true,
             true,
+            false,
             false,
             false,
             true

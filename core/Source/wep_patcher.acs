@@ -263,7 +263,6 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 		}
 		
 	} else if(strcmp(arg2, "AltPatcherDmg") == 0){
-		
 		int patcher_upgraded = CheckWeapon("Patcher_Advanced");
 		
 		SetActivator(0, AAPTR_Damage_Target); // Turret
