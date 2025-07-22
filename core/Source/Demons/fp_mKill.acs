@@ -10,10 +10,11 @@
 #import "f_IntDB.acs"
 #import "f_cred.acs"
 #import "fl_techs.acs"
-#import "fp_itemDr.acs"
+#import "fl_IDir.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
+
 
 int killscript_noItemDrop = false;
 int killscript_noCoinDrop = false;

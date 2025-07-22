@@ -74,9 +74,8 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	
 	if(l_splatCombo) color = CR_BRICK;
 
-	if(Human() && 
-		(CheckActorClass(ActivatorTID(), "FrenzyPlayer") 
-		|| CheckActorClass(ActivatorTID(), "MONSTEREDITED_MechPlayer"))){
+	if(Human() && ActorIsPlayer(ActivatorTID()))
+	{
 	int play = playernumber();
 		
 	if(GetUserCvar(play, "sfp_hitmarksnd"))

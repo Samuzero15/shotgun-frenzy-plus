@@ -1,8 +1,12 @@
 #library "fp_runes"
+
 #include "zcommon.acs"
+#include "acsutils.acs"
+
 #import "fl_techs.acs"
 #import "f_tip.acs"
-#import "fl_runeDir.acs"
+#import "fl_IDir.acs"
+#import "fl_WDir.acs"
 
 script "Rune_Events" (int type, int arg1, int arg2) Event {
     int hpold, hpnow;
@@ -137,29 +141,16 @@ Script "RuneHealth_Effect" (void) {
 
 Script "RuneSpread_Effect" (void) {
     // Spread's triple ammo consumption.
-    int a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, i;
-    a0 = CheckInventory("Clip");
-    a1 = CheckInventory("ClipPistol");
-    a2 = CheckInventory("Shell");
-    a3 = CheckInventory("RocketAmmo");
-    a4 = CheckInventory("Cell");
-    a5 = CheckInventory("HeavyBullets");
-    a6 = CheckInventory("Dualshot_Ammo");
-    a7 = CheckInventory("GLauncher_Ammo");
-    a8 = CheckInventory("Flinger_Ammo");
-    a9 = CheckInventory("Gasoline");
+    int i;
+    int ammoList[100];
+    for (i = 0; i < fp_AmmoDefStack; i++) {
+        ammoList[i] = CheckInventory(fp_AmmoList[i][FP_AMMODEF_NAME]);
+	}
 
     while(CheckInventory("RuneSpread")){
-        a0 = RuneEffect_ConsumeMoreAmmo (a0, "Clip");
-        a1 = RuneEffect_ConsumeMoreAmmo (a1, "ClipPistol");
-        a2 = RuneEffect_ConsumeMoreAmmo (a2, "Shell");
-        a3 = RuneEffect_ConsumeMoreAmmo (a3, "RocketAmmo");
-        a4 = RuneEffect_ConsumeMoreAmmo (a4, "Cell");
-        a5 = RuneEffect_ConsumeMoreAmmo (a5, "HeavyBullets");
-        a6 = RuneEffect_ConsumeMoreAmmo (a6, "Dualshot_Ammo");
-        a7 = RuneEffect_ConsumeMoreAmmo (a7, "GLauncher_Ammo");
-        a8 = RuneEffect_ConsumeMoreAmmo (a8, "Flinger_Ammo");
-        a9 = RuneEffect_ConsumeMoreAmmo (a9, "Gasoline");
+        for (i = 0; i < fp_AmmoDefStack; i++) {
+            ammoList[i] = RuneEffect_ConsumeMoreAmmo (ammoList[i], fp_AmmoList[i][FP_AMMODEF_NAME]);
+        }
         delay(1);
     }
 }
@@ -197,7 +188,7 @@ script "SFPlus_OnTeleport" (void) {
 	SetActivatorToTarget(0);
 	delay(5);
     int tid = ActivatorTID();
-	if(CheckActorClass(tid, "FrenzyPlayer")){
+	if(ActorIsPlayer(tid)){
 		// If a player was teleported, check if he got the spawn protection upgrade.
 		if(CheckActorInventory(tid, "PlayUp_SpawnShield") && !CheckActorInventory(tid, "PlayUp_Spawnshield_Cooldown")){
             if(!CheckActorInventory(tid, "PlayUp_SpawnShield_Power")){

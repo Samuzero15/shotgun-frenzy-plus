@@ -1,69 +1,90 @@
 // Basic Weapons 
-addweaponnopack, "Boomstick", "WEPS_BASIC_BSTK_NAME", "WEPS_BASIC_BSTK_DESC", "SHT2A0"
-addweaponup, 0, "Boomstick_Full", "WEPS_BASIC_BSTK_UP0_NAME", "WEPS_BASIC_BSTK_UP0_DESC", "pr_wu_boomstick_up0", ""
+addweaponnopack, "Boomstick", "BASIC_BSTK", "SHT2A0", "FrenzyPlayer"
+addweaponup, "Boomstick", 0, "Boomstick_Full", "pr_wu_boomstick_up0", ""
+
+AddAmmo, "Clip", 200, 100, 10
+AddAmmo, "ClipPistol", 50, 50, 10
+AddAmmo, "Shell", 60, 30, 2
+AddAmmo, "RocketAmmo", 50, 25, 2
+AddAmmo, "HeavyBullets", 300, 100, 40
+AddAmmo, "Dualshot_Ammo", 200, 50, 15
+AddAmmo, "Cell", 300, 200, 20
+AddAmmo, "GLauncher_Ammo", 15, 5, 2
+AddAmmo, "GLauncher_Ammo2", 5, 5, 1
+AddAmmo, "Flinger_Ammo", 50, 50, 2
+AddAmmo, "Gasoline", 200, 50, 20
+AddAmmo, "Supplies_Ammo", 10, 5, 0
+AddAmmo, "Supplies_Health", 10, 5, 0
+AddAmmo, "Supplies_Ammo_Big", 20, 5, 0
+AddAmmo, "Supplies_Health_Big", 20, 5, 0
+
+StarterItem, "FrenzyPlayer", "Inventory_TurretBullet", 3
+StarterItem, "FrenzyPlayer", "Beretta",    1
+StarterItem, "FrenzyPlayer", "Boomstick",  1, true
 
 
 // Standard Weapons
-addWeaponPack, 0, "WEPS_SHOTGUN_NAME", "WEPS_SHOTGUN_DESC", "pr_wb_shotgun", 2
-    addweapon, "SSG", "WEPS_SHOTGUN_SSG_NAME", "WEPS_SHOTGUN_SSG_DESC", "SHT2A0", "pr_wr_ssg"
-    addweaponup, 1, "SSG_Autoload", "WEPS_SHOTGUN_SSG_UP1_NAME", "WEPS_SHOTGUN_SSG_UP1_DESC", "pr_wu_ssg_up1", "pr_wr_ssg_up1"
-    addweaponup, 2, "SSG_Explosive", "WEPS_SHOTGUN_SSG_UP2_NAME", "WEPS_SHOTGUN_SSG_UP2_DESC", "pr_wu_ssg_up2", "pr_wr_ssg_up2"
 
-    addweapon, "Quadshot", "WEPS_SHOTGUN_QUAD_NAME", "WEPS_SHOTGUN_QUAD_DESC", "SHT2A0", "pr_wr_quadshot"
-    addweaponup, 0, "Quadshot_Full", "WEPS_SHOTGUN_QUAD_UP0_NAME", "WEPS_SHOTGUN_QUAD_UP0_DESC", "pr_wu_quadshot_up0", "pr_wr_quadshot_up0"
+addWeaponPack, 0, "SHOTGUN", "pr_wb_shotgun", 2, 0
+    addweapon, "SHOTGUN", "SSG", "SSG", "SHT2A0", "pr_wr_ssg", 0
+    addweaponup, "SSG", 1, "SSG_Autoload", "pr_wu_ssg_up1", "pr_wr_ssg_up1"
+    addweaponup, "SSG", 2, "SSG_Explosive", "pr_wu_ssg_up2", "pr_wr_ssg_up2"
 
-addWeaponPack, 0, "WEPS_ASSAULT_NAME", "WEPS_ASSAULT_DESC", "pr_wb_assault", 2
-    addweapon, "Spitter", "WEPS_ASSAULT_SPIT_NAME", "WEPS_ASSAULT_SPIT_DESC", "SHT2A0", "pr_wr_spitter"
-    addweaponup, 1, "Spitter_SSG", "WEPS_ASSAULT_SPIT_UP1_NAME", "WEPS_ASSAULT_SPIT_UP1_DESC", "pr_wu_spitter_up1", "pr_wr_spitter_up1"
-    addweaponup, 2, "Spitter_GLauncher", "WEPS_ASSAULT_SPIT_UP2_NAME", "WEPS_ASSAULT_SPIT_UP2_DESC", "pr_wu_spitter_up2", "pr_wr_spitter_up2"
+    addweapon, "SHOTGUN", "Quadshot", "QUAD", "SHT2A0", "pr_wr_quadshot", 0
+    addweaponup, "Quadshot", 0, "Quadshot_Full", "pr_wu_quadshot_up0", "pr_wr_quadshot_up0"
 
-    addweapon, "Buckshot", "WEPS_ASSAULT_BUCK_NAME", "WEPS_ASSAULT_BUCK_DESC", "SHT2A0", "pr_wr_buckshot"
-    addweaponup, 1, "Buckshot_Chamber", "WEPS_ASSAULT_BUCK_UP1_NAME", "WEPS_ASSAULT_BUCK_UP1_DESC", "pr_wu_buckshot_up1", "pr_wr_buckshot_up1"
-    addweaponup, 2, "Buckshot_Explosive", "WEPS_ASSAULT_BUCK_UP2_NAME", "WEPS_ASSAULT_BUCK_UP2_DESC", "pr_wu_buckshot_up2", "pr_wr_buckshot_up2"
+addWeaponPack, 0, "ASSAULT", "pr_wb_assault", 2, 0
+    addweapon, "ASSAULT", "Spitter", "SPIT", "SHT2A0", "pr_wr_spitter", 0
+    addweaponup, "Spitter", 1, "Spitter_SSG", "pr_wu_spitter_up1", "pr_wr_spitter_up1"
+    addweaponup, "Spitter", 2, "Spitter_GLauncher", "pr_wu_spitter_up2", "pr_wr_spitter_up2"
 
-addWeaponPack, 0, "WEPS_SUPPORT_NAME", "WEPS_SUPPORT_DESC", "pr_wb_support", 0
-    addweapon, "Supplier", "WEPS_SUPPORT_SUPP_NAME", "WEPS_SUPPORT_SUPP_DESC", "SHT2A0", "pr_wr_supplier"
-    addweaponup, 0, "SSG_Autoload", "WEPS_SHOTGUN_SSG_UP1_NAME", "WEPS_SHOTGUN_SSG_UP1_DESC", "pr_wu_ssg_up1", "pr_wr_ssg_up1"
+    addweapon, "ASSAULT", "Buckshot", "BUCK", "SHT2A0", "pr_wr_buckshot"
+    addweaponup, "Buckshot", 1, "Buckshot_Chamber", "pr_wu_buckshot_up1", "pr_wr_buckshot_up1"
+    addweaponup, "Buckshot", 2, "Buckshot_Explosive", "pr_wu_buckshot_up2", "pr_wr_buckshot_up2"
 
-    addweapon, "Patcher", "WEPS_SUPPORT_PTCH_NAME", "WEPS_SUPPORT_PTCH_DESC", "SHT2A0", "pr_wr_patcher"
-    addweaponup, 0, "Patcher_Advanced", "WEPS_SUPPORT_PTCH_UP0_NAME", "WEPS_SUPPORT_PTCH_UP0_DESC", "pr_wu_patcher_up0", "pr_wr_patcher_up0"
+addWeaponPack, 0, "SUPPORT", "pr_wb_support", 0, 0
+    addweapon, "SUPPORT", "Supplier", "SUPP", "SHT2A0", "pr_wr_supplier", 0
+    addweaponup, "Supplier", 0, "SSG_Autoload", "pr_wu_supplier_up0", "pr_wr_supplier_up0"
+
+    addweapon, "SUPPORT", "Patcher", "PTCH", "SHT2A0", "pr_wr_patcher", 0
+    addweaponup, "Patcher", 0, "Patcher_Advanced", "pr_wu_patcher_up0", "pr_wr_patcher_up0"
 
 // Advanced Weapons
 
-addWeaponPack, 1, "WEPS_COMMANDO_NAME", "WEPS_COMMANDO_DESC", "pr_wb_commando", 5
-    addweapon, "Repeater", "WEPS_COMMANDO_REPE_NAME", "WEPS_COMMANDO_REPE_DESC", "SHT2A0", "pr_wr_repeater"
-    addweaponup, 1, "Repeater_DoubleSpeed", "WEPS_COMMANDO_REPE_UP1_NAME", "WEPS_COMMANDO_REPE_UP1_DESC", "pr_wu_repeater_up1", "pr_wr_repeater_up1"
-    addweaponup, 2, "Repeater_BlastShells", "WEPS_COMMANDO_REPE_UP2_NAME", "WEPS_COMMANDO_REPE_UP2_DESC", "pr_wu_repeater_up2", "pr_wr_repeater_up2"
+addWeaponPack, 1, "COMMANDO", "pr_wb_commando", 5, 0
+    addweapon, "COMMANDO", "Repeater", "REPE", "SHT2A0", "pr_wr_repeater", 0
+    addweaponup, "Repeater", 1, "Repeater_DoubleSpeed", "pr_wu_repeater_up1", "pr_wr_repeater_up1"
+    addweaponup, "Repeater", 2, "Repeater_BlastShells", "pr_wu_repeater_up2", "pr_wr_repeater_up2"
 
-    addweapon, "Dualshot", "WEPS_COMMANDO_NAIL_NAME", "WEPS_COMMANDO_NAIL_DESC", "SHT2A0", "pr_wr_ssg"
-    addweaponup, 1, "Dualshot_FlakShells", "WEPS_COMMANDO_NAIL_UP1_NAME", "WEPS_COMMANDO_NAIL_UP1_DESC", "pr_wu_dualshot_up1", "pr_wr_dualshot_up1"
-    addweaponup, 2, "Dualshot_Razor", "WEPS_COMMANDO_NAIL_UP2_NAME", "WEPS_COMMANDO_NAIL_UP2_DESC", "pr_wu_dualshot_up2", "pr_wr_dualshot_up2"
+    addweapon, "COMMANDO", "Dualshot", "NAIL", "SHT2A0", "pr_wr_ssg", 0
+    addweaponup, "Dualshot", 1, "Dualshot_FlakShells", "pr_wu_dualshot_up1", "pr_wr_dualshot_up1"
+    addweaponup, "Dualshot", 2, "Dualshot_Razor", "pr_wu_dualshot_up2", "pr_wr_dualshot_up2"
 
-addWeaponPack, 1, "WEPS_EXPLOSIVE_NAME", "WEPS_EXPLOSIVE_DESC", "pr_wb_heavy", 8
-    addweapon, "Launcher", "WEPS_EXPLOSIVE_ROKT_NAME", "WEPS_EXPLOSIVE_ROKT_DESC", "SHT2A0", "pr_wr_launcher"
-    addweaponup, 1, "Launcher_Exploder", "WEPS_EXPLOSIVE_ROKT_UP1_NAME", "WEPS_EXPLOSIVE_ROKT_UP1_DESC", "pr_wu_launcher_up1", "pr_wr_launcher_up1"
-    addweaponup, 2, "Launcher_Multi", "WEPS_EXPLOSIVE_ROKT_UP2_NAME", "WEPS_EXPLOSIVE_ROKT_UP2_DESC", "pr_wu_launcher_up2", "pr_wr_launcher_up2"
+addWeaponPack, 1, "EXPLOSIVE", "pr_wb_heavy", 8, 0
+    addweapon, "EXPLOSIVE", "Launcher", "ROKT", "SHT2A0", "pr_wr_launcher", 0
+    addweaponup, "Launcher", 1, "Launcher_Exploder", "pr_wu_launcher_up1", "pr_wr_launcher_up1"
+    addweaponup, "Launcher", 2, "Launcher_Multi", "pr_wu_launcher_up2", "pr_wr_launcher_up2"
 
-    addweapon, "Flinger", "WEPS_EXPLOSIVE_FLIN_NAME", "WEPS_EXPLOSIVE_FLIN_DESC", "SHT2A0", "pr_wr_flinger"
-    addweaponup, 1, "Flinger_Expander", "WEPS_EXPLOSIVE_FLIN_UP1_NAME", "WEPS_EXPLOSIVE_FLIN_UP1_DESC", "pr_wu_flinger_up1", "pr_wr_flinger_up1"
-    addweaponup, 2, "Flinger_MinePlacer", "WEPS_EXPLOSIVE_FLIN_UP2_NAME", "WEPS_EXPLOSIVE_FLIN_UP2_DESC", "pr_wu_flinger_up2", "pr_wr_flinger_up2"
+    addweapon, "EXPLOSIVE", "Flinger", "FLIN", "SHT2A0", "pr_wr_flinger", 0
+    addweaponup, "Flinger", 1, "Flinger_Expander", "pr_wu_flinger_up1", "pr_wr_flinger_up1"
+    addweaponup, "Flinger", 2, "Flinger_MinePlacer", "pr_wu_flinger_up2", "pr_wr_flinger_up2"
 
-addWeaponPack, 1, "WEPS_PLASMA_NAME", "WEPS_PLASMA_DESC", "pr_wb_plasma", 8
-    addweapon, "PlasmaGun", "WEPS_PLASMA_PLSG_NAME", "WEPS_PLASMA_PLSG_DESC", "SHT2A0", "pr_wr_plasmagun"
-    addweaponup, 1, "PlasmaGun_Spread", "WEPS_PLASMA_PLSG_UP1_NAME", "WEPS_PLASMA_PLSG_UP1_DESC", "pr_wu_plasmagun_up2", "pr_wr_plasmagun_up1"
-    addweaponup, 2, "PlasmaGun_Advanced", "WEPS_PLASMA_PLSG_UP2_NAME", "WEPS_PLASMA_PLSG_UP2_DESC", "pr_wu_plasmagun_up1", "pr_wr_plasmagun_up2"
+addWeaponPack, 1, "PLASMA", "pr_wb_plasma", 8, 0
+    addweapon, "PLASMA", "PlasmaGun", "PLSG", "SHT2A0", "pr_wr_plasmagun", 0
+    addweaponup, "PlasmaGun", 1, "PlasmaGun_Spread", "pr_wu_plasmagun_up2", "pr_wr_plasmagun_up1"
+    addweaponup, "PlasmaGun", 2, "PlasmaGun_Advanced", "pr_wu_plasmagun_up1", "pr_wr_plasmagun_up2"
 
-    addweapon, "SF_Railgun", "WEPS_PLASMA_RAIL_NAME", "WEPS_PLASMA_RAIL_DESC", "SHT2A0", "pr_wr_repeater"
-    addweaponup, 1, "Railgun_Taser", "WEPS_PLASMA_RAIL_UP1_NAME", "WEPS_PLASMA_RAIL_UP1_DESC", "pr_wu_railgun_up1", "pr_wr_railgun_up1"
-    addweaponup, 2, "Railgun_Slug", "WEPS_PLASMA_RAIL_UP2_NAME", "WEPS_PLASMA_RAIL_UP2_DESC", "pr_wu_railgun_up2", "pr_wr_railgun_up2"
+    addweapon, "PLASMA", "SF_Railgun", "RAIL", "SHT2A0", "pr_wr_repeater", 0
+    addweaponup, "SF_Railgun", 1, "Railgun_Taser", "pr_wu_railgun_up1", "pr_wr_railgun_up1"
+    addweaponup, "SF_Railgun", 2, "Railgun_Slug", "pr_wu_railgun_up2", "pr_wr_railgun_up2"
 
 // Overpowered Weapons
 
-addWeaponPack, 2, "WEPS_PYRO_NAME", "WEPS_PYRO_DESC", "pr_wb_flamer", 12
-    addweapon, "Flamer", "WEPS_PYRO_FLAM_NAME", "WEPS_PYRO_FLAM_DESC", "SHT2A0", "pr_wr_flamer"
-    addweaponup, 0, "FlamerS", "WEPS_PYRO_FLAM_UP0_NAME", "WEPS_PYRO_FLAM_UP0_DESC", "pr_wu_flamer_up0", "pr_wr_flamer_up0"
+addWeaponPack, 2, "PYRO", "pr_wb_flamer", 12, 0
+    addweapon, "PYRO", "Flamer", "FLAM", "SHT2A0", "pr_wr_flamer", 0
+    addweaponup, "Flamer", 0, "FlamerS", "pr_wu_flamer_up0", "pr_wr_flamer_up0"
 
-addWeaponPack, 2, "WEPS_BFGL_NAME", "WEPS_BFGL_DESC", "pr_wb_bfg", 12
-    addweapon, "BFG", "WEPS_BFGL_BFG_NAME", "WEPS_BFGL_BFG_DESC", "SHT2A0", "pr_wr_flamer"
-    addweaponup, 1, "BFG_Splash", "WEPS_BFGL_BFG_UP1_NAME", "WEPS_BFGL_BFG_UP1_DESC", "pr_wu_bfg_up1", "pr_wr_bfg_up1"
-    addweaponup, 2, "BFG_Overcharge", "WEPS_BFGL_BFG_UP2_NAME", "WEPS_BFGL_BFG_UP2_DESC", "pr_wu_bfg_up2", "pr_wr_bfg_up2"
+addWeaponPack, 2, "BFGL", "pr_wb_bfg", 12, 0
+    addweapon, "BFGL", "BFG", "BFG", "SHT2A0", "pr_wr_flamer", 0
+    addweaponup, "BFG", 1, "BFG_Splash", "pr_wu_bfg_up1", "pr_wr_bfg_up1"
+    addweaponup, "BFG", 2, "BFG_Overcharge", "pr_wu_bfg_up2", "pr_wr_bfg_up2"

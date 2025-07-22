@@ -1,0 +1,91 @@
+
+// ItemDrop, (int Monster_class_0_6, str actor, fixed chance_percent, [str for_class])
+// Add a item to be dropped by monsters.
+
+// ItemDropChampion, (int Monster_class_0_6, str actor, fixed chance_percent, [str for_class])
+// Add a item to be dropped by champion monsters.
+
+// ItemDropRune, (int Monster_class_0_6, int rune_tier_1_4, fixed chance_percent)
+// Add a chance to drop a rune
+
+ItemDrop, 0, "Inventory_Soulsphere", 6.0
+ItemDrop, 0, "Fading_Medikit", 25.0
+ItemDropChampion, 0, "SmallGem", 5.0
+
+ItemDrop, 1, "Inventory_Megasphere", 10.0
+ItemDrop, 1, "Fading_Medikit", 25.0
+ItemDropRune, 1, 1, 5.0
+ItemDropChampion, 1, "SmallGem", 10.0
+
+ItemDrop, 2, "Inventory_Soulsphere", 16.0
+ItemDrop, 2, "Inventory_Megasphere", 8.0
+ItemDrop, 2, "Fading_SteelPlatingArmor", 13.5
+ItemDrop, 2, "Fading_Medikit", 25.0
+ItemDropRune, 2, 2, 2.5
+ItemDropRune, 2, 1, 7.5
+ItemDropChampion, 2, "UpgradeCard", 0.5
+ItemDropChampion, 2, "Fading_TitaniumArmor", 10.0
+ItemDropChampion, 2, "SmallGem", 15.0
+
+ItemDrop, 3, "Inventory_TurretBullet", 20.0
+ItemDrop, 3, "Inventory_TurretShotgun", 10.0
+ItemDrop, 3, "Inventory_Soulsphere", 12.0
+ItemDrop, 3, "Inventory_Berserk2", 10.0
+ItemDrop, 3, "Fading_SteelPlatingArmor", 13.5
+ItemDrop, 3, "Fading_Medikit", 25.0
+ItemDropRune, 3, 3, 3.0
+ItemDropRune, 3, 2, 4.0
+ItemDropRune, 3, 1, 8.0
+ItemDropChampion, 3, "UpgradeCard", 1.5
+ItemDropChampion, 3, "Greedsphere", 7.5
+ItemDropChampion, 3, "Fading_TitaniumArmor", 15.0
+ItemDropChampion, 3, "SmallGem", 20.0
+
+ItemDrop, 4, "Inventory_TeslaCoil", 12.0
+ItemDrop, 4, "Inventory_TurretBullet", 8.0
+ItemDrop, 4, "Inventory_TurretShotgun", 4.0
+ItemDrop, 4, "Inventory_Berserk2", 6.0
+ItemDrop, 4, "Inventory_Godsphere", 10.0
+ItemDrop, 4, "Fading_SteelPlatingArmor", 13.5
+ItemDrop, 4, "Fading_Medikit", 25.0
+ItemDropRune, 4, 4, 3.0
+ItemDropRune, 4, 3, 4.0
+ItemDropRune, 4, 2, 8.0
+ItemDropChampion, 4, "UpgradeCard", 2.5
+ItemDropChampion, 4, "Greedsphere", 7.5
+ItemDropChampion, 4, "Fading_TitaniumArmor", 20.0
+ItemDropChampion, 4, "BigGem", 15.0
+ItemDropChampion, 4, "SmallGem", 25.0
+
+ItemDrop, 5, "Inventory_Berserk2", 12.0
+ItemDrop, 5, "Inventory_Megasphere", 10.0
+ItemDrop, 5, "Inventory_Godsphere", 6.0
+ItemDrop, 5, "Inventory_Ammogiver", 6.0
+ItemDrop, 5, "Inventory_TurretChaingun", 11.0
+ItemDrop, 5, "Inventory_TurretShotgun", 13.5
+ItemDrop, 5, "Fading_SteelPlatingArmor", 13.5
+ItemDrop, 5, "Fading_Medikit", 25.0
+ItemDropRune, 5, 4, 4.0
+ItemDropRune, 5, 3, 6.0
+ItemDropRune, 5, 2, 10.0
+ItemDropChampion, 5, "UpgradeCard", 3.5
+ItemDropChampion, 5, "Greedsphere", 7.5
+ItemDropChampion, 5, "Fading_TitaniumArmor", 25.0
+ItemDropChampion, 5, "BigGem", 17.5
+ItemDropChampion, 5, "SmallGem", 30.0
+
+ItemDrop, 6, "Inventory_Berserk2", 20.0
+ItemDrop, 6, "Inventory_Megasphere", 16.0
+ItemDrop, 6, "Inventory_Godsphere", 8.0
+ItemDrop, 6, "Inventory_Ammogiver", 8.0
+ItemDrop, 6, "Inventory_TurretChaingun", 11.0
+ItemDrop, 6, "Fading_SteelPlatingArmor", 13.5
+ItemDrop, 6, "Fading_Medikit", 25.0
+ItemDropRune, 6, 4, 6.0
+ItemDropRune, 6, 3, 7.0
+ItemDropRune, 6, 2, 12.0
+ItemDropChampion, 6, "UpgradeCard", 5.0
+ItemDropChampion, 6, "Greedsphere", 7.5
+ItemDropChampion, 6, "Fading_TitaniumArmor", 30.0
+ItemDropChampion, 6, "BigGem", 20.0
+ItemDropChampion, 6, "SmallGem", 35.0

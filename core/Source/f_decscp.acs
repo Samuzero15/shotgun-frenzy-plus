@@ -121,62 +121,6 @@ Script "LightBarsSpawner" (int radius, int color) ClientSide{
 	Thing_Remove(tid);
 }
 
-
-function void AddAmmoCapacity (str ammo, int amount){
-	SetAmmoCapacity(ammo, getAmmoCapacity(ammo) + amount);
-}
-
-function void AmmoTakeLeftOvers (str ammo){
-	if(getAmmoCapacity(ammo) < CheckInventory(ammo)){
-		TakeInventory(ammo, CheckInventory(ammo) - getAmmoCapacity(ammo));
-	}
-}
-
-script "Ammo_UpdateCaps" (void) {
-	int p_back = CheckInventory("p_Backpack");
-	int g_back = 1 + (CheckInventory("g_Backpack") || CheckInventory("Cheat_Ammo"));
-	int ammo_rune = CheckInventory("RuneAmmunition");
-	SetAmmoCapacity("Clip", 			(200*(ammo_rune+g_back) + 100*p_back));
-	SetAmmoCapacity("ClipPistol",		(50*(ammo_rune+g_back) + 50*p_back));
-	SetAmmoCapacity("Shell", 			(60*(ammo_rune+g_back) + 30*p_back));
-	SetAmmoCapacity("RocketAmmo", 		(50*(ammo_rune+g_back) + 25*p_back));
-	SetAmmoCapacity("HeavyBullets", 	(300*(ammo_rune+g_back) + 100*p_back));
-	SetAmmoCapacity("Dualshot_Ammo",	(200*(ammo_rune+g_back) + 50*p_back));
-	SetAmmoCapacity("Cell", 			(300*(ammo_rune+g_back) + 200*p_back));
-	SetAmmoCapacity("GLauncher_Ammo", 	(15*(ammo_rune+g_back) + 5*p_back));
-	SetAmmoCapacity("GLauncher_Ammo2", 	(5*(ammo_rune+g_back) + 5*p_back));
-	SetAmmoCapacity("Flinger_Ammo", 	(50*(ammo_rune+g_back) + 50*p_back));
-	SetAmmoCapacity("Gasoline", 		(200*(ammo_rune+g_back) + 50*p_back));
-	AmmoTakeLeftOvers ("Clip");
-	AmmoTakeLeftOvers ("ClipPistol");
-	AmmoTakeLeftOvers ("Shell");
-	AmmoTakeLeftOvers ("RocketAmmo");
-	AmmoTakeLeftOvers ("HeavyBullets");
-	AmmoTakeLeftOvers ("Dualshot_Ammo");
-	AmmoTakeLeftOvers ("Cell");
-	AmmoTakeLeftOvers ("GLauncher_Ammo");
-	AmmoTakeLeftOvers ("GLauncher_Ammo2");
-	AmmoTakeLeftOvers ("Flinger_Ammo");
-	AmmoTakeLeftOvers ("Gasoline");
-}
-
-script "Ammo_ResetCaps" (void) {
-	TakeInventory("p_Backpack", 1); // Reset token.
-	TakeInventory("g_Backpack", 1); // Reset token.
-
-	SetAmmoCapacity("Clip", 			200);
-	SetAmmoCapacity("ClipPistol",		50);
-	SetAmmoCapacity("Shell", 			60);
-	SetAmmoCapacity("RocketAmmo", 		50);
-	SetAmmoCapacity("HeavyBullets", 	300);
-	SetAmmoCapacity("Dualshot_Ammo",	200);
-	SetAmmoCapacity("Cell", 			300);
-	SetAmmoCapacity("GLauncher_Ammo", 	15);
-	SetAmmoCapacity("GLauncher_Ammo2", 	5);
-	SetAmmoCapacity("Flinger_Ammo", 	50);
-	SetAmmoCapacity("Gasoline", 		200);
-}
-
 Script "HellTriggerPower_AmmoRegeneration" (int upgraded){
 	TakeInventory("Inv_Power_AmmoRegeneration", 99999999);
 	int lessdelay = 0, ragerune = CheckInventory("RuneDoubleFiringSpeed");
@@ -215,7 +159,7 @@ Script "Player_IsDed" (void) {
 
 Script "MagneticPickup_TargetIsPlayer" (void) {
 	SetActivatorToTarget(0);
-	SetResultValue(CheckActorClass(0, "FrenzyPlayer"));
+	SetResultValue(ActorIsPlayer(0));
 }
 
 Script "Invul_Check" (void) {
@@ -681,8 +625,13 @@ Script "Building_AttackThis" (void) {
 	if(CheckInventory("Building_AttackFirst")) Terminate;
 	//int tid = ActivatorTid();
 	GiveInventory("Building_AttackFirst", 1);
-	GiveInventory("Building_Attack", 1);
-	delay(35*4);
+	//GiveInventory("Building_Attack", 1);
+	int seconds = 0;
+	while((ThingCount(0, 666) > 1) && (seconds <= 10)){
+		thing_hate(0, 666, 4);
+		delay(35*2);
+		seconds++;
+	}
 	TakeInventory("Building_AttackFirst", 1);
 	thing_hate(0, g_Status + 100, 4);
 }

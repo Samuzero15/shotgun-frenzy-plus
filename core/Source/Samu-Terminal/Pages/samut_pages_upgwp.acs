@@ -91,6 +91,7 @@ function void ListUpPage_UpdateUpWeapons(int category){
 	for(int i = 0; i < fp_WeaponStack; i++){
 		if(Weapon_GetCat(i) != category) continue; // Skip if not the category
 		if(!Weapon_IsNotUpgraded(i)) continue; // Skip if you don't have the weapon.
+		if(!Weapon_IsEquipableForPClass(i)) continue; // Skip if the player cannot use it because does not belong to this class.
 		listup_vars[UWPAGE_VAR_CATWEAPONSTACK]++;
 		if(!(listup_vars[UWPAGE_VAR_CATWEAPONSTACK]-1 >= page_min_limit 
 			&& listup_vars[UWPAGE_VAR_CATWEAPONSTACK]-1 <= page_max_limit)) continue;

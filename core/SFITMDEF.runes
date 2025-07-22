@@ -1,0 +1,27 @@
+// Define new items using a lump like SFITMDEF, each line defines a new item.
+
+// AddRune (int rune_tier_1_4, str rune_giver, str rune_power, str title, str buttonsprite)
+// Add a Rune to be spawned by champions and sold in the health terminal
+
+AddRune, 4,  "RampageRune",          "RuneRampage",              "Rampage",      "RBTN14"
+AddRune, 4,  "RageRune",             "RuneDoubleFiringSpeed",    "Rage",         "RBTN08"
+AddRune, 4,  "StrengthRune",         "RuneDoubleDamage",         "Strength",     "RBTN02"
+AddRune, 4,  "SpreadRune_Pickup",    "RuneSpread",               "Spread",       "RBTN11"
+AddRune, 4,	"ResistanceRune",       "RuneHalfDamage",           "Resistance",   "RBTN10"
+
+AddRune, 3,	"DrainRune",        "RuneDrain",        "Drain",        "RBTN03"
+AddRune, 3,  "ReflectionRune",   "RuneReflection",   "Reflection",   "RBTN06"
+AddRune, 3,  "DefenseRune",      "RuneDefense",      "Defense",      "RBTN19"
+AddRune, 3,  "ResurrectionRune", "RuneResurrection", "Resurrection", "RBTN01"
+AddRune, 3,  "SoulRune_Pickup",  "RuneSoul",         "Soul",         "RBTN13"
+
+AddRune, 2,  "ProsperityRune",           "RuneProsperity",   "Prosperity",   "RBTN07"
+AddRune, 2,  "BlastRune",                "RuneBlast",        "Blast",        "RBTN17"
+AddRune, 2,  "AmmunitionRune_Pickup",    "RuneAmmunition",   "Ammunition",   "RBTN16"
+AddRune, 2,  "FortuneRune",              "RuneFortune",      "Fortune",      "RBTN18"
+AddRune, 2,  "TemperanceRune",           "RuneTemperance",   "Temperance",   "RBTN15"
+
+AddRune, 1,  "HealthRune_Pickup",    "RuneHealth",        "Health",          "RBTN12"
+AddRune, 1,	"RegenerationRune",     "RuneRegeneration",  "Regeneration",    "RBTN09"
+AddRune, 1,	"HighJumpRune",         "RuneHighJump",      "HighJump",        "RBTN05"
+AddRune, 1,	"HasteRune",            "RuneSpeed25",       "Haste",           "RBTN04"

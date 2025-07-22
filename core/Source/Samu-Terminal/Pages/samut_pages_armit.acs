@@ -97,11 +97,14 @@ function void ArmItmPage_AddItemOption(int pos, int itemId){
 }
 
 function void ArmItmPage_UpdateItem(int itemId){
-	int i = ArmItmPage_LoadGroup(itemid, 3);
-	int j = ArmItmPage_LoadGroup(itemid, 2);
-	int k = ArmItmPage_LoadGroup(itemid, 4);
-	int price = Item_getPrice(itemid);
-	int quantity = Checkinventory(Item_getActor(itemid));
+	if(Item_IsForClass(itemId) == false){
+		return;
+	}
+	int i = ArmItmPage_LoadGroup(itemId, 3);
+	int j = ArmItmPage_LoadGroup(itemId, 2);
+	int k = ArmItmPage_LoadGroup(itemId, 4);
+	int price = Item_getPrice(itemId);
+	int quantity = Checkinventory(Item_getActor(itemId));
 	int maximum = Item_getMax(itemid);
 	
 	str button = Item_getIBtnOrColor(itemid);

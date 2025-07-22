@@ -14,7 +14,6 @@
 #import "fl_idir.acs"
 #import "fl_wdir.acs"
 #import "fl_stupdir.acs"
-#import "fl_runedir.acs"
 
 int save_player_count = 0;
 int save_player_dict[99]; // Hold's the name, which it should be unique.

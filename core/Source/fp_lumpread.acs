@@ -19,6 +19,8 @@
 #libdefine LUMPR_VALUE_STR      3
 #libdefine LUMPR_VALUE_BOOL     4
 #libdefine LUMPR_VALUE_LANGSTR  5
+#libdefine LUMPR_VALUE_CVAR     6
+#libdefine LUMPR_VALUE_USERCVAR 7
 
 function bool LumpRead_ParseBool (str string){
     bool res = false;
@@ -35,6 +37,7 @@ function int LumpRead_ParseValue (str string_value, int value_type){
         case LUMPR_VALUE_STR: value = StrReplace(string_value, "\\n", strparam(c:'\n')); break;
         case LUMPR_VALUE_BOOL: value = LumpRead_ParseBool(string_value); break;
         case LUMPR_VALUE_LANGSTR: value = StrReplace(strparam(l:string_value), "\\n", strparam(c:'\n')); break;
+        case LUMPR_VALUE_CVAR: value = GetCvar(string_value);
         default:
             //log(s:"command: ", d:tokenid);
     }
@@ -47,19 +50,20 @@ Script "LumpRead_LoadFile" (int lumpfile, int lineread_script){
 // For some reason i don't really friggin explain, why does this crashes in the 32bit version!? 
 //function void LumpRead_LoadFile(str lumpfile, int lineread_script){
     //Grab all your lumps and read them all.
-	int lump = -1;
+	int lump = 0;
 	while (true){
-		lump = LumpOpen(lumpfile, lump);
-        //Log(s:"LumpOpen: ", d:lump, s:".");
+		lump = LumpOpen(lumpfile, lump, 0);
+
 		if(lump == -1) {
             break;
         }
-        //Log(s:"Next ", s:lumpfile, s:" lump was found at index ", d:lump, s:".");
+        
         str file_text = LumpReadString(lump, 0);
         ACS_NamedExecuteWithResult("LumpRead_ReadFile", file_text, lineread_script);
         
         //Log(s:"Finished processing ", s:lumpfile, s:" lump. Index: ", d:lump, s:".");
         LumpClose(lump);
+        Log(s:LumpGetInfo(lump, LUMP_INFO_NAME), s:" - ", d:lump);
 	}
 }
 
@@ -129,19 +133,56 @@ Script "LumpRead_ReadLine" (int line, int lineread_script){
         ACS_NamedExecuteWithResult(lineread_script, line);
     }
 }
+function int LumpRead_CountArgs(str line, int min_args, int max_args, str command) {
+    int count = 0;
+    int in_quotes = 0;
+    int len = StrLen(line);
+    for (int i = 0; i < len; i++) {
+        int ch = GetChar(line, i);
+        if (ch == '"') in_quotes = !in_quotes;
+        if (ch == ',' && !in_quotes) count++;
+    }
+    count++; // Last argument after last comma
+    if (count < min_args) {
+        Log(s:"(",s:command, s:"): ", s:"Not enough arguments! Expected at least ", d:min_args, s:", got ", d:count, s:".");
+        return 0;
+    }
+    if (count > max_args) {
+        Log(s:"(",s:command, s:"): ", s:"Too many arguments! Expected at most ", d:max_args, s:", got ", d:count, s:".");
+        return 0;
+    }
+    return count;
+}
 
-function void LumpRead_StrNextArg(str line){
-	int nextcoma = StrFindFrom(line, ",", res2);
-	if(nextcoma == -1) nextcoma = strlen(line);
-	res1 = StrSlice(line, res2, nextcoma);
-	res1 = StrRemoveCR(res1);
+function bool LumpRead_StrNextArg(str line){
+    int nextcoma = StrFindFrom(line, ",", res2);
+    if(nextcoma == -1){
+        nextcoma = strlen(line);
+    }
+    
+    if(res2 >= strlen(line) || res2 >= nextcoma) { 
+        res1 = "";
+        return false; // No more arguments
+    }
+    res1 = StrSlice(line, res2, nextcoma);
+    res1 = StrRemoveCR(res1);
     res1 = StrTrim(res1);
     res1 = StrRemove(res1, "\"");
-	res2 = nextcoma+1;
+    res1 = StrRemove(res1, "\t");
+    res2 = nextcoma+1;
+    return true; // Argument found
 }
 
 function int LumpRead_NextArg(str line, int value_type) {
-    LumpRead_StrNextArg(line);
+    if(!LumpRead_StrNextArg(line)){
+        log(s:"(LumpRead_NextArg): Required Next Argument not found in pos = ", d:res2, s:", line = '", s:line, s:"'");
+        return 0;
+    }
+    return LumpRead_ParseValue (res1, value_type);
+}
+
+function int LumpRead_NextArgDefault(str line, int value_type, int value) {
+    if(!LumpRead_StrNextArg(line)) return value;
     return LumpRead_ParseValue (res1, value_type);
 }
 

@@ -146,7 +146,7 @@ special
 	
 	143:Player_RemoveItem(2),			// Skulltag Functions
 	144:Player_GiveItem(2),				// Skulltag Functions
-	145:Player_SetTeam(1),				// Skulltag Functions
+	145:Player_SetTeam(1, 2),			// Skulltag Functions
 	150:Line_SetHealth(2),
 	151:Sector_SetHealth(3),
 	152:Team_Score(2),					// Skulltag Functions
@@ -434,7 +434,7 @@ special
 	-148:GetChatMessage(2),
 	-149:GetMapRotationSize(0),
 	-150:GetMapRotationInfo(2),
-	-151:GetCurrentMapPosition(0),
+	-151:GetMapPosition(1),
 	-152:GetEventResult(0),
 	-153:GetActorSectorLocation(2),
 	-154:ChangeTeamScore(3,4),
@@ -459,6 +459,14 @@ special
 	-175:SetPlayerSkin(2, 3),
 	-176:GetPlayerSkin(2),
 	-177:GetPlayerCountry(2),
+	-178:SetNextMapPosition(2),
+	-179:GivePlayerMedal(3),
+	-180:GetPlayerJoinQueuePosition(1),
+	-181:SkipJoinQueue(1),
+	-182:GetControlPointInfo(2),
+	-183:SetControlPointInfo(3),
+	-184:GetSkinProperty(2, 4),
+	-185:IsPlayerContestingControlPoint(2),
 
 	// -1xx are reserved for Zandronum
 	-200:CheckClass(1),
@@ -475,7 +483,8 @@ special
 	-211:StartSlideshow(1),
 	-212:GetSectorHealth(2),
 	-213:GetLineHealth(1),
-	
+	-215:GetNetID(2, 3),
+	-216:SetActivatorByNetID(1, 2),
 	
 	// Eternity's
 	-300:GetLineX(3),

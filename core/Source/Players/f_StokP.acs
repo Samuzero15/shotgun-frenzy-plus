@@ -10,6 +10,7 @@
 #import "f_IntDB.acs"
 #import "fl_techs.acs"
 #import "f_Tip.acs"
+#import "fl_Wdir.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -239,38 +240,23 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 }  
 
 function void Stock_FillAmmo(bool full){
-
+	int i = 0;
+	str ammo_name = "";
+	int ammo_dispensergive = 0;
 	if(full){
-		GiveMaxInventory("Clip");
-		GiveMaxInventory("ClipPistol");
-		GiveMaxInventory("Shell");
-		GiveMaxInventory("RocketAmmo");
-		GiveMaxInventory("GLauncher_Ammo");
-		GiveMaxInventory("GLauncher_Ammo2");
-		GiveMaxInventory("Flinger_Ammo"); 
-		GiveMaxInventory("Cell"); 
-		GiveMaxInventory("Dualshot_Ammo"); 
-		GiveMaxInventory("HeavyBullets"); 
-		GiveMaxInventory("Gasoline");
-		GiveMaxInventory("Supplies_Health"); 
-		GiveMaxInventory("Supplies_Ammo"); 
-		GiveMaxInventory("Supplies_Health_Big"); 
-		GiveMaxInventory("Supplies_Ammo_big");
+		for (i = 0; i < fp_AmmoDefStack; i++) {
+			ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
+			GiveMaxInventory(ammo_name);
+		}
 	}
 	else{
 		// [Samu] Expansive re-stock upgrades for the players.
 		int extra_ammo = (1 + CheckInventory("PlayUp_ExpansiveRestock"));
-		GiveInventory("Clip", 				10*extra_ammo);
-		GiveInventory("ClipPistol",			10*extra_ammo);
-		GiveInventory("Shell",				2*extra_ammo);
-		GiveInventory("RocketAmmo",			2*extra_ammo);
-		GiveInventory("GLauncher_Ammo",		2*extra_ammo);
-		GiveInventory("GLauncher_Ammo2",	1*extra_ammo);
-		GiveInventory("Flinger_Ammo",		2*extra_ammo); 
-		GiveInventory("Cell",				20*extra_ammo); 
-		GiveInventory("Dualshot_Ammo",		15*extra_ammo); 
-		GiveInventory("HeavyBullets",		40*extra_ammo); 
-		GiveInventory("Gasoline",			20*extra_ammo);
+		for (i = 0; i < fp_AmmoDefStack; i++) {
+			ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
+			ammo_dispensergive = fp_AmmoList[i][FP_AMMODEF_DISPENSERGIVE];
+			GiveInventory(ammo_name, ammo_dispensergive*extra_ammo);
+		}
 	}
 }
 

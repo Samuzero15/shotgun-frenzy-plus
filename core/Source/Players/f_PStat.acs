@@ -133,17 +133,23 @@ script 53 ENTER
 	TakeInventory("P_Backpack", 0xFFFFFFF);
 	// Just in case
 	ACS_NamedExecuteAlways("Ammo_ResetCaps", 0);
+	/*
     clearinventory();
 
     // give the player his/her boomstick and beretta
     giveinventory("Beretta", 1);
     giveinventory("Boomstick", 1);
+	setweapon("Boomstick");
+	*/
+
+	ACS_NamedExecuteAlways("SFPlus_WDir_GiveStarterItems", 0);
 
 	// [Samu] Give the Input_GrenadeItem and Input_Melee, to enable the grenade inputs!
 	GiveInventory("Input_GrenadeItem", 1);
 	GiveInventory("Input_MeleeItem", 1);
 	GiveInventory("Input_MeleeItemOff", 1);
-    setweapon("Boomstick");
+	
+    
 
     int creditmult = GetCVar("sf_creditcorrection");
 	
