@@ -53,6 +53,7 @@ actor InvisiblePuff { damagetype "MarineFire" }
 #include "Actors/projectiles/frenzy_monsterproj.txt"
 #include "Actors/projectiles/fp_rails.dec"
 #include "Actors/projectiles/fp_flak.dec"
+#include "Actors/projectiles/fp_bfgs.dec"
 
 #include "Actors/weapons/frenzy_weapons.dec"
 
