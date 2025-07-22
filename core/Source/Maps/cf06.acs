@@ -11,7 +11,6 @@
 #import "f_Tip.acs"
 
 #import "f_SecMan.acs"
-#import "f_MonAtt.acs"
 #import "f_AIDRL.acs"
 #import "f_FinalF.acs"
 #import "f_PMen.acs"
@@ -23,7 +22,6 @@
 #import "f_Battr.acs"
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
-#import "f_CfSpec.acs"
 #import "fl_techs.acs"
 
 #include "zcommon.acs"

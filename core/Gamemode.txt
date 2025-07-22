@@ -1,0 +1,12 @@
+Cooperative 
+{
+    addflag MAPRESETS
+    addflag MAPRESET_RESETS_MAPTIME
+    LockedGameSettings
+    {
+        sv_unblockallies = true
+        sv_shootthroughallies = true
+        sv_dontpushallies = true
+        Compat_ResetGlobalVarsOnMapReset = false
+    }
+}

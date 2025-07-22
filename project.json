@@ -55,7 +55,7 @@
             "..\\Changelog.md"
         ],
         "build_flags": [
-            false,
+            true,
             false,
             false,
             true,
@@ -106,7 +106,7 @@
     },
     "acs_compilation": {
         "type": "acc",
-        "executeable": "..\\tools\\acc\\acc64.exe",
+        "executeable": "..\\tools\\acc\\acc.exe",
         "gdcc-linker_exe": "value",
         "gdcc-make_libs": false,
         "gdcc-makelib_exe": "value",

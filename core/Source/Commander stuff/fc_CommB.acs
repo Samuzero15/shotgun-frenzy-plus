@@ -12,6 +12,7 @@
 #import "fl_techs.acs"
 #import "fp_cmdevt.acs"
 #include "zcommon.acs"
+#include "acsutils.acs"
 #include "samu_tools.acs"
 
 //check if we're allowed to put turrets down again
@@ -148,7 +149,7 @@ function bool CMD_SpawnEX(str something, int tid, int owner_tid, int radius, int
 	int turret_uid = UniqueTID();
 	if ((!sector_check && (free && valid_floor)) || (free && valid_area && valid_floor)){
 		sucess = Spawn(something, x, y, floorz + fixedmul(2.0, zoff), turret_uid, angle);
-		if(CheckActorClass(owner_tid, "FrenzyPlayer") && !CheckSight(owner_tid, turret_uid, CSF_NOBLOCKALL)){
+		if(ActorIsPlayer(owner_tid) && !CheckSight(owner_tid, turret_uid, CSF_NOBLOCKALL)){
 			sucess = false; skip_messages = true;
 			Thing_Remove(turret_uid);
 			f_SmallTip ("Deploy Error: Blocked by a wall!", CR_RED, 0);

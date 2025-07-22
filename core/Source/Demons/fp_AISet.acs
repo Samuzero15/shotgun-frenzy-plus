@@ -7,7 +7,6 @@
 
 #library "fp_AISet"
 #import "f_AIDRL.acs"
-#import "fa_SetList.acs"
 #import "fp_lumpread.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -73,6 +72,7 @@ Script "SFPlus_ListEnemySets" (void){
 
 Script "SFPlus_AISet_SFMWAVESReadLine" (int line) {
 	//log(s:"\"", s:line, s:"\"");
+	if(!LumpRead_CountArgs (line, 3, 3, "MWaves")) terminate;
 	str index = LumpRead_NextArg (line,LUMPR_VALUE_STR);
 	str name = 	LumpRead_NextArg (line,LUMPR_VALUE_STR);
 	str boss_level_start = 	LumpRead_NextArg (line, LUMPR_VALUE_INT);

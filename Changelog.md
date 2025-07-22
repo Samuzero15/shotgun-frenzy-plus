@@ -22,6 +22,20 @@
 	*) Some offset edits for the hand sprite
 	+) Added a potential pickup sprite for the Quadshot
 
+#### [SFWEPDEF & SFITMDEF Lumps reworked + Lump Reading scripts improved]
+	!*) The lump reading scripts are improved and more robust than before!
+	!*) SFWEPDEF now can call new functions on their files, letting you to replace, set which weapons and items you can start with, and clear weapons and ammo altogether!
+	!*) SFITMDEF also got the same treatment, except it will read for the Items, Drops, and Runes together!
+	-) Removed SFRUNDEF because of the merge with SFITMDEF.
+	*) Adjusted imports from each library in fl_IDir.acs and fl_WDir.acs
+	*) Now the ammo and player classes should be more globalized than before, giving you the enough space for modded actors and different player classes.
+
+#### [ACS Cleanup, removing old source code, and a new patch for Samsara!]
+	-) Removed some unused scripts from the unused folder
+	*) Some more cleanup too
+	*) Updated addon for Custom weapons
+	+) Added a addon for samsara reincarnated compatibility, expect it soon :)
+
 #### (29 / 6 / 2025) [Clientside fixes on buildings, and Patcher's bullets]
 	*) Updated pack-o-daemon again.
 	*) Now the dispenser visual effects should display and expand their spawn area in clientside.

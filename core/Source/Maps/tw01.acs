@@ -15,7 +15,6 @@
 #import "fc_Comm.acs"
 #import "fc_Entr.acs"
 #import "f_ScManS.acs"
-#import "f_MonAtt.acs"
 #import "f_AIDRL.acs"
 #import "f_FinalF.acs"
 #import "f_PMen.acs"
@@ -28,8 +27,6 @@
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
 
-// load demon wave set, for custom sets look in the ACS directory for any fa files
-#import "fa_SSD01.acs"
 
 #include "zcommon.acs"
 
