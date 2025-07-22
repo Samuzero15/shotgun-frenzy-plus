@@ -9,6 +9,19 @@
 
 ## v1 - The path of the damned...
 
+#### (22 / 7 / 2025) [Splash BFG new sprites, changed bfg alt-fires, Hand Grenade input tweaks]
+	*) New Sprites from SuperDave938 for the Splash bfg!
+	!*) Now bfg alt fires will fire a spread shot of bfg plasma as hitscans instead of bfg projectiles (In my opiion more practical than before)
+	*) Now the hand grenade input should be more responsive.
+	*) BFG Balls are separated in a new file called fp_bfgs.dec
+	*) Few changes on the language file for the Splash BFG.
+
+#### [New Sprites for buckshots, offset adjustments, and a Quadshot Pickup Sprite]
+	!*) New sprites from Bismuth, for the buckshot!
+	*) Some few adjustments on the offsets for some hud sprites in the inventory hud.
+	*) Some offset edits for the hand sprite
+	+) Added a potential pickup sprite for the Quadshot
+
 #### (29 / 6 / 2025) [Clientside fixes on buildings, and Patcher's bullets]
 	*) Updated pack-o-daemon again.
 	*) Now the dispenser visual effects should display and expand their spawn area in clientside.
@@ -17,7 +30,7 @@
 
 #### (27 / 6 / 2025) [Weapon recoding, added new buttons for grenade and melee + some Repeater & BFG tweaks]
 	!+) Now the players can throw a melee attack and throw a grenade when using a weapon!
-	!*) Not only that but also the switch speed and style has been greatly increase for all weapons, yes you can go wild with switching between your ssg and spitter!
+	!*) Not only that but also the switch speed and style has been greatly increased for all weapons, yes you can go wild with switching between your ssg and spitter!
 	*) With it, it implies a lot of changes with the weapon bobing and sway.
 	*) Other changes in weapons covers only for the repeater and BFGs.
 	*) Now the seeking of the Overcharged BFG has been slightly nerfed.
