@@ -240,7 +240,7 @@ script 102 (void)
     g_Status ++;
 	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.
     delay(35 * 2);
-	SecMan_MonsterAttack(g_Status); // Charge!
+	//SecMan_MonsterAttack(g_Status); // Charge!
     
 }
 
@@ -299,7 +299,7 @@ script 103 (void)
 		// Raise the battery
 		ACS_NamedExecute("SecMan_RaiseBattery",0,100 + g_Status); 
 		
-	SecMan_MonsterAttack(g_Status); // Charge!
+	//SecMan_MonsterAttack(g_Status); // Charge!
 	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.
     
     

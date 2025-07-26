@@ -152,7 +152,7 @@ script 71 (int l_MonsterType, int l_DelayTime){
 			spawnspot("sfCyberdemon", 117, 118, 0);
 			}
 		}
-		thing_hate(118, 104, 4);
+		//thing_hate(118, 104, 4);
 		delay(35*l_DelayTime);
 	}
 }

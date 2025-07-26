@@ -33,21 +33,25 @@ script 52 DEATH
 
 
 if (g_Status == 5){
+	/*
 	thing_hate(109, 104, 4);
 	thing_hate(110, 104, 4);
 	thing_hate(111, 104, 4);
 	thing_hate(112, 104, 4);
 	thing_hate(113, 104, 4);
 	thing_hate(114, 104, 4);
+	*/
 }
 else{
 	//log(s:"Hating on sector: ", d:g_Status);
+	/*
 	thing_hate(109, 100+g_Status, 4);
 	thing_hate(110, 100+g_Status, 4);
 	thing_hate(111, 100+g_Status, 4);
 	thing_hate(112, 100+g_Status, 4);
 	thing_hate(113, 100+g_Status, 4);
 	thing_hate(114, 100+g_Status, 4);
+	*/
 }
 
     // unmorph incase the player is in a tank

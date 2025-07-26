@@ -56,7 +56,7 @@ script 90 (void)
         if (PlayerCount() > 4){
         	spawnspot("Cyberdemon", 9, 118, 0);
         }
-		thing_hate(118, 104, 4);
+		//thing_hate(118, 104, 4);
         delay(35 * 1);
 		ticker++;
         delay(35 * 18);

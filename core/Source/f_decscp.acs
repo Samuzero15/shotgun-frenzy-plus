@@ -625,15 +625,9 @@ Script "Building_AttackThis" (void) {
 	if(CheckInventory("Building_AttackFirst")) Terminate;
 	//int tid = ActivatorTid();
 	GiveInventory("Building_AttackFirst", 1);
-	//GiveInventory("Building_Attack", 1);
-	int seconds = 0;
-	while((ThingCount(0, 666) > 1) && (seconds <= 10)){
-		thing_hate(0, 666, 4);
-		delay(35*2);
-		seconds++;
-	}
+	delay(20);
 	TakeInventory("Building_AttackFirst", 1);
-	thing_hate(0, g_Status + 100, 4);
+	//thing_hate(0, g_Status + 100, 4);
 }
 
 Script "Building_GetRange" (void) {

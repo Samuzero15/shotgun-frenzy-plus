@@ -140,21 +140,18 @@ script 100 OPEN
         if (playercount() < 2) {
             while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]/3){
                 f_AIDir_SpawnCount ++;
-	thing_hate(110, 104, 4);
                 delay(35);
             }
         }
         else if (playercount() < 3) {
             while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]/2){
                 f_AIDir_SpawnCount ++;
-	thing_hate(110, 104, 4);
                 delay(35);
             }
         }
         else {
             while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]){
                 f_AIDir_SpawnCount ++;
-	thing_hate(110, 104, 4);
                 delay(35);
             }
         }

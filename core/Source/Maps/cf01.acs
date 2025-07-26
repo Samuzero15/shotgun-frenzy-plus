@@ -91,12 +91,6 @@ script 90 (void)
         spawnspot("ArchVile", 115, 118, 0);
         ticker++;
         delay(35 * 2);
-        thing_hate(118, 104, 0);
-        thing_hate(110, 104, 0);
-        thing_hate(111, 104, 0);
-        thing_hate(112, 104, 0);
-        thing_hate(113, 104, 0);
-        thing_hate(114, 104, 0);
     }
     
 	ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 3);

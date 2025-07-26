@@ -629,8 +629,7 @@ Actor Building_HateTarget{
 	states {
 		Spawn:
 			TNT1 A 0 Nodelay Thing_ChangeTID(0, 666)
-			TNT1 A 115 bright
-			TNT1 A 0 //A_Log("Poof")
+			TNT1 A -1 bright
 		Stop
 	}
 }
@@ -654,12 +653,10 @@ Actor Building_HateRadius : CustomInventory {
 			//TNT1 A 0 A_RadiusGive("Building_AggroTid",user_range,RGF_MONSTERS, tid)
 			TNT1 A 0
 			TNT1 A 1 A_JumpIf(CheckClass("AmmoDispenser_Base") || CheckClass("HealthDispenser_Base"),"DispensersFirst")
-			TNT1 A 0 A_SpawnItem("Building_HateTarget")
 			TNT1 A 0 A_AlertMonsters(CallACS("Building_GetRange") * 1.0, AMF_TARGETEMITTER)
 			TNT1 A 0 A_RadiusGive("Building_Aggro",CallACS("Building_GetRange"), RGF_MONSTERS | RGF_CUBE)
 			Stop
 		DispensersFirst:
-			TNT1 A 0 A_SpawnItem("Building_HateTarget")
 			TNT1 A 0 A_AlertMonsters(CallACS("Building_GetRange") * 2.0, AMF_TARGETEMITTER)
 			TNT1 A 0 A_RadiusGive("Building_Aggro",CallACS("Building_GetRange"), RGF_MONSTERS | RGF_CUBE)
 			stop
@@ -682,7 +679,6 @@ Actor Building_Aggro : CustomInventory {
 			TNT1 A 0
 			//TNT1 A 0 A_JumpIf(tidtohate==667,"End")
 			//TNT1 A 0 A_JumpIf(tidtohate==666,"End")
-			//TNT1 A 0 Thing_Hate(tid,666,4)
 			Stop
 		End:
 			TNT1 A 0 
@@ -690,46 +686,6 @@ Actor Building_Aggro : CustomInventory {
 	}
 }
 
-Actor Building_Attack : CustomInventory {
-	+Inventory.ALWAYSPICKUP
-	States
-	{
-		Pickup:
-			TNT1 A 0
-			TNT1 A 0 A_RearrangePointers(AAPTR_NULL, AAPTR_NULL, AAPTR_DEFAULT)
-			TNT1 A 0 A_ClearTarget // Forget targeting core and hear any building near it.
-			Stop
-		End:
-			TNT1 A 0 
-			Stop
-	}
-}
-
-/*
-Actor Building_AggroDispensers : CustomInventory {
-	+Inventory.ALWAYSPICKUP
-	States
-	{
-		Pickup:
-			TNT1 A 0
-			TNT1 A 0 A_JumpIf(CheckClass("FrenzyPlayer"),"End")
-			TNT1 A 0 A_JumpIf(CheckClass("Building_HateTarget_First"),"End")
-			TNT1 A 0 A_JumpIf(CallACS("IAmATurret") == true,"End")
-			TNT1 A 0 A_RearrangePointers(AAPTR_NULL, AAPTR_NULL, AAPTR_DEFAULT)
-			TNT1 A 0 A_ClearTarget
-			TNT1 A 0 //ACS_NamedExecuteAlways("Building_AttackFirst", 0, tidtohate, 667)
-			//TNT1 A 0 A_JumpIf(tidtohate==666,"End")
-			//TNT1 A 0 A_JumpIf(tidtohate==667,"End")
-			//TNT1 A 0 Thing_Hate(tid,667,4)
-			
-			//TNT1 A 0 ACS_NamedExecuteAlways("Building_AggroBack", 0)
-			Stop
-		End:
-			TNT1 A 0 
-			Stop
-	}
-}
-*/
 //move this if incorrect placement
 ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or anything else)
 {
@@ -779,16 +735,16 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	states
 	{
 		Spawn:
-			TNT1 A 1 A_SetUserVar("user_crithealth", health/2)
+			TNT1 A 0 nodelay A_SetUserVar("user_crithealth", health/2)
 			TNT1 A 0 A_SetUserVar("user_fixcost", 30)
 			TNT1 A 0 A_SetUserVar("user_upgcost", 200)
 			TNT1 A 0 A_SetUserVar("user_range", 768)
 			TNT1 A 0 A_SetUserVar("user_rangestart", user_range)
 			TNT1 A 0 A_SetUserVar("user_rangeup", 64)
-			
-			TNT1 A 1 ACS_NamedExecuteAlways("Building_AggroLoop", 0)
+			TNT1 A 0 ACS_NamedExecuteAlways("Building_AggroLoop", 0)
 			TNT1 A 0 ACS_NamedExecuteAlways("Turret_States", 0)		
 			//TNT1 A 0 ACS_NamedExecuteAlways("DebugTID", 0, 0, tid)
+			TNT1 A 0 A_SpawnItem("Building_HateTarget")
 			TNT1 A 1
 			TNT1 A 50 A_Jump(256, "Spawn.Head")
 			goto Spawn.Head
@@ -802,8 +758,9 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 
 		See.Smoke:
 			"####" "#" 0 A_SpawnItemEx("Smoke_Spawner",0,0,40)
-			"####" "#" 50 A_Jump(256, "See+2")
-			goto See+2
+			"####" "######################################################" 1 A_Chase
+			"####" "#" 50 A_Jump(256, "See.Sound")
+			goto See.Sound
 		
 		See.Sound:
 			"####" "#" 5 A_PlaySound("turret/active", CHAN_AUTO, 6)

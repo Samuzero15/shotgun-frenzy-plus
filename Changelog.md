@@ -9,6 +9,12 @@
 
 ## v1 - The path of the damned...
 
+#### (25 / 7 / 2025) [Centralized thing hate calls]
+	*) Now the hate calls will be called by one script instead of multiple calls in many parts of the code.
+	// Buggy shiet I tell you.
+	-) Removed unnecesary thing hate calls on many maps and on the main scripts.
+	*) Now turrets and dispensers will aggro monsters more seamlessly.
+
 #### (22 / 7 / 2025) [Splash BFG new sprites, changed bfg alt-fires, Hand Grenade input tweaks]
 	*) New Sprites from SuperDave938 for the Splash bfg!
 	!*) Now bfg alt fires will fire a spread shot of bfg plasma as hitscans instead of bfg projectiles (In my opiion more practical than before)

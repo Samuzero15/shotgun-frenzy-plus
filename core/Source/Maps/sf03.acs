@@ -35,12 +35,6 @@ script 90 (void)
         spawnspot("CyberBaron", 157, 118, 0);
         spawnspot("CyberBaron", 159, 118, 0);
         ticker++;
-        thing_hate(118, 104, 0);
-        thing_hate(110, 104, 0);
-        thing_hate(111, 104, 0);
-        thing_hate(112, 104, 0);
-        thing_hate(113, 104, 0);
-        thing_hate(114, 104, 0);
         delay(35 * 4);
     }
     ticker = 0;

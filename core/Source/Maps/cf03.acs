@@ -33,12 +33,6 @@ script 90 (void)
 //	printbold(d:ticker, d:PlayerCount() + 3);
 //      Is there any point to printing this to the players?
         delay(35 * 3);
-        thing_hate(118, 104, 0);
-        thing_hate(110, 104, 0);
-        thing_hate(111, 104, 0);
-        thing_hate(112, 104, 0);
-        thing_hate(113, 104, 0);
-        thing_hate(114, 104, 0);
     }
     
     ACS_NamedExecute("SFPlus_GuardianWaveChecker", 0, 3);

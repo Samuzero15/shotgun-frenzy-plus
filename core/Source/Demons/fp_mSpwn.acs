@@ -101,7 +101,45 @@ script "SFPlus_MonsterSpawn" (int type, int arg1, int arg2) EVENT
 	// After all the health modifications, set the max health, for champion effects pruposes.
 	GiveInventory("Monster_MaxHealth", getactorproperty(0, APROP_Health));
 	ACS_NamedExecuteAlways("SFPlus_AutoBalanceDmg", 0);
-	
+	ACS_NamedExecuteAlways("SFPlus_MonsterTarget", 0);
+}
+
+Script "SFPlus_MonsterTarget" (void){
+	delay(random(5, 35));
+	int hp = GetActorProperty(0, APROP_Health);
+	int target_id = -1;
+	int last_target_id = 0;
+	int current_status = g_status;
+	int latest_battery = 100 + g_status;
+	str monsterClass = GetActorClass(0);
+	int five_ticks = 0;
+	while(hp > 0){
+		hp = GetActorProperty(0, APROP_Health);
+		latest_battery = 100 + g_status;
+		target_id = GetActorTargetTID(0);
+		int build_target = false;
+
+		if(getActorHealth(target_id) <= 0 || current_status != g_status){
+			TakeMaxInventory("Building_AttackFirst");
+			five_ticks = 0;
+		}
+
+		if(five_ticks == 28){ // Each 4* seconds
+			if(CheckInventory("Building_AttackFirst") >= 1){
+				thing_hate(0, 666, 4);
+			} else if(ThingCount(0, latest_battery) >= 1){
+				Thing_Hate(0, 100 + g_status, 4);
+			} else if(ThingCount(0, 104) >= 1){ // for Suirvival defender
+				Thing_Hate(0, 104, 4);
+			} else {
+				Thing_Hate(0, 0, 4);
+			}
+			five_ticks = 0;
+		}
+		current_status = g_status;
+		five_ticks++;
+		delay(5);
+	}
 }
 
 Script "SFPlus_AutoBalanceDmg" (void){

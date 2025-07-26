@@ -55,6 +55,10 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24307
 		Pain:
 			STRT A 1
 			goto Super::Pain
+		
+		Death:
+			STRT A 1 
+			goto Super::Death
 			
 			/** Alright, let me explain this code.
 				Shotgun turret will fire faster on each upgrade. (Up to 10 tics)

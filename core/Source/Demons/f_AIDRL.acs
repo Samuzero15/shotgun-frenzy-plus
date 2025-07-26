@@ -163,8 +163,8 @@ script 120 OPEN
            
            
         // make demons hate the sectors core
-        thing_hate(109, g_Status + 100, 4);
-        thing_hate(110, g_Status + 100, 4);
+        //thing_hate(109, g_Status + 100, 4);
+        //thing_hate(110, g_Status + 100, 4);
         //thing_hate(111, g_Status + 100, 4);
         //thing_hate(112, g_Status + 100, 4);
         //thing_hate(113, g_Status + 100, 4);

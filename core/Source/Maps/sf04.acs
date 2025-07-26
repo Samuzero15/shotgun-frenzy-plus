@@ -40,12 +40,6 @@ script 90 (void)
         //spawnspot("CyberBaron", 117, 118, 0);
         spawnspot("CyberBaron", 199, 118, 0);
         ticker++;
-        thing_hate(118, 104, 0);
-        thing_hate(110, 104, 0);
-        thing_hate(111, 104, 0);
-        thing_hate(112, 104, 0);
-        thing_hate(113, 104, 0);
-        thing_hate(114, 104, 0);
         delay(35 * 10);
     }
     ticker = 0;
@@ -59,12 +53,6 @@ script 92 (void)
     delay(35);
     while(thingcount(0, 55) > 0 || thingcount(0, 110) > 0 || thingcount(0, 111) > 0 || thingcount(0, 112) > 0 || thingcount(0, 113) > 0 || thingcount(0, 114) > 0)
     {
-        thing_hate(54, 104, 4);
-        thing_hate(110, 104, 4);
-        thing_hate(111, 104, 4);
-        thing_hate(112, 104, 4);
-        thing_hate(113, 104, 4);
-        thing_hate(114, 104, 4);
         delay(35);
     }
     delay(35 * 6);
@@ -72,12 +60,6 @@ script 92 (void)
     // double check
     while(thingcount(0, 55) > 0 || thingcount(0, 110) > 0 || thingcount(0, 111) > 0 || thingcount(0, 112) > 0 || thingcount(0, 113) > 0 || thingcount(0, 114) > 0)
     {
-        thing_hate(54, 104, 4);
-        thing_hate(110, 104, 4);
-        thing_hate(111, 104, 4);
-        thing_hate(112, 104, 4);
-        thing_hate(113, 104, 4);
-        thing_hate(114, 104, 4);
         delay(35);
     }
     delay(35 * 6);

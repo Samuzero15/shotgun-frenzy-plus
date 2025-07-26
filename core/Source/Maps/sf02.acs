@@ -70,7 +70,6 @@ script 189 (void)
 		
 		}
         
-        thing_hate(118, 104, 4);
         delay(35 * 5);
     }
 }
@@ -256,11 +255,6 @@ script 89 (void)
 			}
 		}
         
-        thing_hate(118, 104, 4);
-        thing_hate(110, 104, 4);
-        thing_hate(111, 104, 4);
-        thing_hate(112, 104, 4);
-        thing_hate(113, 104, 4);
         delay(35 * 5);
     }
 }

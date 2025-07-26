@@ -160,7 +160,7 @@ script 89 (void)
         spawnspot("PainElemental", 22, 24, 0);
         spawnspot("HellKnight", 23, 24, 0);
         
-        thing_hate(24, 104, 4);
+        //thing_hate(24, 104, 4);
         delay(35 * 10);
     }
 }

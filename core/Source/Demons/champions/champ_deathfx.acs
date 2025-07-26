@@ -80,8 +80,9 @@ Script "SFPlus_ChampZombie_Raise" (void){
 		TakeInventory("ChampZombie_LivesLeft", 1);
 		//log(s:"ChampionZombie rised again by an archvile, Lives:", d:CheckInventory("ChampZombie_LivesLeft"));
 		SetActorProperty(uni_tid, APROP_Health, CheckInventory("Monster_MaxHealth"));
-		delay(35);
-		thing_hate(uni_tid, g_Status + 100, 4);
+		delay(5);
+		//thing_hate(uni_tid, g_Status + 100, 4);
+		ACS_NamedExecuteAlways("SFPlus_MonsterTarget", 0);
 		Thing_ChangeTID(uni_tid, old_tid);
 		terminate;
 	}

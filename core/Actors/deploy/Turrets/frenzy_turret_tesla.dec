@@ -47,6 +47,10 @@ ACTOR TurretTesla_Head : TurretHeadBase 24306
 		Pain:
 			TTRT A 1
 			goto Super::Pain
+		
+		Death:
+			TTRT A 1 
+			goto Super::Death
 
 		Missile.Start:
 			TTRT B 1 A_FaceTarget

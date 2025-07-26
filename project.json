@@ -35,7 +35,7 @@
         ],
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
-        "map": "TEST",
+        "map": "cf01",
         "extra_params": "+skill 1 +sv_cheats 1"
     },
     "build_settings": {

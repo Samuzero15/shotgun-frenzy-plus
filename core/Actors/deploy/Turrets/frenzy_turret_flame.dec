@@ -88,5 +88,9 @@ ACTOR TurretFlame_Head : TurretHeadBase 24302
 		Pain:
 			FTRT A 1
 			goto Super::Pain
+		
+		Death:
+			BTRT A 1 
+			goto Super::Death
 	}
 }

@@ -179,14 +179,6 @@ script 108 (int l_RemainingMonsters)
     }
     
 	thing_activate(104); // If the last core was de-activated...
-	delay(1);
-        thing_hate(110, 104, 0);
-        thing_hate(111, 104, 0);
-        thing_hate(112, 104, 0);
-        thing_hate(113, 104, 0);
-        thing_hate(114, 104, 0);
-		
-	
 	
 	int mtotal, mkilled;
         
@@ -261,13 +253,6 @@ function bool GuardianWave_LoopCond(int surv){
 }
 
 Script "SFPlus_GuardianWaveChecker" (int surv){
-	// Re-hate just in case. 
-		thing_hate(118, 104, 0);
-		thing_hate(110, 104, 0);
-		thing_hate(111, 104, 0);
-		thing_hate(112, 104, 0);
-		thing_hate(113, 104, 0);
-		thing_hate(114, 104, 0);
 		
 	int mkilled, mTotal; 
 	int timeout = 300; // 5 Minutes (in secs) before moving to next map.
@@ -291,12 +276,6 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 		*/
 		if(g_GameOver) Terminate;
 		// Keep hatin'
-		thing_hate(118, 104, 4);
-		thing_hate(110, 104, 4);
-		thing_hate(111, 104, 4);
-		thing_hate(112, 104, 4);
-		thing_hate(113, 104, 4);
-		thing_hate(114, 104, 4);
 		delay(35 * 1);
 		timeout--;
 		thing_remove(7777);

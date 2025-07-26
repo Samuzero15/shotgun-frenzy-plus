@@ -83,12 +83,6 @@ script 451 (void)
 	delay(35);
 	
 	
-	// one last hate
-	thing_hate(110, 104, 4);
-	thing_hate(111, 104, 4);
-	thing_hate(112, 104, 4);
-	thing_hate(113, 104, 4);
-	thing_hate(114, 104, 4);
 
     // wait 5 minutes
     f_TipShow ("CM75", "NUCLEAR LAUNCH", "5 Minutes remaining...", 0);
