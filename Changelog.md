@@ -9,7 +9,10 @@
 
 ## v1 - The path of the damned...
 
-#### (12 / 8 / 2025) [Ammunition changes, SFWepDef documentation, Cleanup fixes]
+#### (12 / 8 / 2025) [Moved sounds for each respective folder]
+	*) Moved the sounds for each personal folder
+
+#### [Ammunition changes, SFWepDef documentation, Cleanup fixes]
 	*) Helltrigger will give the dispenser ammo amount. Respecting the defined ammo from SFWEPDEF
 	*) Ammunition rune satchels should give 5 times the dispenser ammo amount when picked up.
 	!*) Pistols now will have infinite ammo :) why? Because it sucks to be weapon-less when your are out of ammunition with your favorite weapon so... yeah.
