@@ -19,7 +19,7 @@ ACTOR AmmunitionRune : RuneGiver {
 }
 
 Actor AmmunitionRune_Pickup : CustomInventory
-{
+{// Use this actor to give the player the ammunition rune and the effect.
 	+NOGRAVITY
 	Inventory.PickupMessage "Ammunition!"
 	Inventory.PickupSound "runes/ammunition"
@@ -27,7 +27,7 @@ Actor AmmunitionRune_Pickup : CustomInventory
 	States
 	{
 	Spawn:
-		RAMO ABCD 4
+		RAMO ABCDEF 5
 		Loop
     Pickup:
         TNT1 A 0 ACS_NamedExecuteAlways("RuneAmmunition_Effect", 0)
@@ -43,14 +43,7 @@ Actor AmmunitionRune_Satchel : Rune_Activation {
 			ADDU A -1
 		stop
 		Pickup:
-			TNT1 A 0 A_GiveInventory("ClipPistol", 25)
-            TNT1 A 0 A_GiveInventory("Clip", 50)
-			TNT1 A 0 A_GiveInventory("Shell", 4)
-			TNT1 A 0 A_GiveInventory("RocketAmmo", 50)
-			TNT1 A 0 A_GiveInventory("Cell", 100)
-			TNT1 A 0 A_GiveInventory("Gasoline", 50)
-			TNT1 A 0 A_GiveInventory("Flinger_Ammo", 50)
-			TNT1 A 0 A_GiveInventory("Dualshot_Ammo", 50)
+            TNT1 A 0 ACS_NamedExecuteAlways("AmmunitionRune_GiveAmmo", 0)
         stop
 	}
 }

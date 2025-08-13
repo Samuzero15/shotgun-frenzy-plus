@@ -496,8 +496,6 @@ function void SFPlus_DefineRunes(void){
     Rune_TierPrices[1] = GetCvar("pr_rt_2");
     Rune_TierPrices[2] = GetCvar("pr_rt_3");
     Rune_TierPrices[3] = GetCvar("pr_rt_4");
-
-    RuneTop = 0;
 }
 
 function void Rune_Replace(int tier, str actorToReplace, str actor, str poweractor, str langdata, str btnimg) {
@@ -537,6 +535,7 @@ function void Rune_Add (int tier, str actor, str poweractor, str langdata, str b
 		log(s:"(fl_IDir): Too much runes!");
 		return;
 	}
+	// log(s:"(fl_IDir): Added a rune '", s:actor, s:"'");
 	// Look up language.txt
 	Rune_List[upg][RUNE_PROP_NAME] = StrParam(l:strparam(s:"FP_RN_", s:langdata));
 	Rune_List[upg][RUNE_PROP_DESC] = StrParam(l:strparam(s:"FP_RD_", s:langdata));

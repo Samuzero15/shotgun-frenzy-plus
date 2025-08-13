@@ -78,7 +78,6 @@ ACTOR TurretChaingun_Head : TurretHeadBase 24308
 			goto Super::Death
 
 		Missile.Start:
-			//TNT1 A 0 A_log("whaaaaaaaaa")
 			CTRT G 8 A_SetTics(8 - stamina/2)
 			TNT1 A 0 A_FaceTarget
 			CTRT H 8 A_SetTics(8 - stamina/2)

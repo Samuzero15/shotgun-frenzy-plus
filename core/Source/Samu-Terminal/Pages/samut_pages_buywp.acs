@@ -264,7 +264,7 @@ function void BuyWpnPage_UpdatePackButtons(int category){
 	//log(s:"Category stack: ", d:fp_WpCategoryStack[category]);
 	for (i = buywpn_vars[BWPAGE_CURRENT_PAGE]*BWPAGE_WPPACK_PERPAGE; i < fp_WpCategoryStack[category] && stack < BWPAGE_WPPACK_PERPAGE; i++){
 		wp = fp_WpCategory[category][i];
-		log(s:WeaponPack_GetForClass(wp), s:" - ", s:WeaponPack_getName(wp));
+		//log(s:WeaponPack_GetForClass(wp), s:" - ", s:WeaponPack_getName(wp));
 		if(!WeaponPack_IsEquipableForPClass(wp)) continue; // Check if the user is the correct player class.
 		StrButton_setExeArgs(buywpn_wp_packbtns[stack], wp, 0, 0);
 		StrButton_setTextAdjust(buywpn_wp_packbtns[stack], WeaponPack_getName(wp));

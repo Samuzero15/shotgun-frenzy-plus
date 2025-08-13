@@ -63,8 +63,9 @@
 #libdefine FP_AMMODEF_BASEMAX 1
 #libdefine FP_AMMODEF_PBEXTRAAMMO 2
 #libdefine FP_AMMODEF_DISPENSERGIVE 3
-#libdefine FP_AMMODEF_MAXCAP 4
-#libdefine FP_AMMODEF_NOTEXPANDABLE 5
+#libdefine FP_AMMODEF_SUPPLYSPAWN 4
+#libdefine FP_AMMODEF_MAXCAP 5
+#libdefine FP_AMMODEF_NOTEXPANDABLE 6
 
 #libdefine FP_LANGUAGEPROP_NAME "NAME"
 #libdefine FP_LANGUAGEPROP_DESC "DESC"
@@ -265,14 +266,15 @@ function void WeaponUpgrades_Clear(int weapon_id){
 
 /*  Adds an ammo definition  */
 function void SFWEPDEF_AddAmmo(int line) {
-	if(!LumpRead_CountArgs (line, 4, 7, "AddAmmo")) return; // 6 LumpRead_NextArg
+	if(!LumpRead_CountArgs (line, 4, 8, "AddAmmo")) return; // 6 LumpRead_NextArg
 
 	str ammo_name = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	int base_max_amount = LumpRead_NextArg(line, LUMPR_VALUE_INT);
 	int pb_extra_ammo = LumpRead_NextArg(line, LUMPR_VALUE_INT);
 	int dispenser_give = LumpRead_NextArgDefault(line, LUMPR_VALUE_INT, 1);
+	int supply_spawn = LumpRead_NextArgDefault(line, LUMPR_VALUE_STR, 0);
 	int max_cap = LumpRead_NextArgDefault(line, LUMPR_VALUE_INT, 0);
-	bool dont_use_backpack = LumpRead_NextArgDefault(line, LUMPR_VALUE_BOOL, true);
+	bool dont_expand = LumpRead_NextArgDefault(line, LUMPR_VALUE_BOOL, false);
 
 	int idx = fp_AmmoDefStack;
 	if(idx < FP_AMMODEFS) {
@@ -280,8 +282,9 @@ function void SFWEPDEF_AddAmmo(int line) {
 		fp_AmmoList[idx][FP_AMMODEF_BASEMAX] = base_max_amount;
 		fp_AmmoList[idx][FP_AMMODEF_PBEXTRAAMMO] = pb_extra_ammo;
 		fp_AmmoList[idx][FP_AMMODEF_DISPENSERGIVE] = dispenser_give;
+		fp_AmmoList[idx][FP_AMMODEF_SUPPLYSPAWN] = supply_spawn;
 		fp_AmmoList[idx][FP_AMMODEF_MAXCAP] = max_cap;
-		fp_AmmoList[idx][FP_AMMODEF_NOTEXPANDABLE] = dont_use_backpack;
+		fp_AmmoList[idx][FP_AMMODEF_NOTEXPANDABLE] = dont_expand;
 		fp_AmmoDefStack++;
 	} else {
 		log(s:"AddAmmo: Maximum ammo definitions reached (", d:FP_AMMODEFS, s:").");
@@ -306,19 +309,22 @@ function void AmmoTakeLeftOvers (str ammo){
 
 script "Ammo_UpdateCaps" (void) {
 	int p_back = CheckInventory("p_Backpack");
-	int g_back = 1 + (CheckInventory("g_Backpack") || CheckInventory("Cheat_Ammo"));
+	int g_back = (CheckInventory("g_Backpack") || CheckInventory("Cheat_Ammo"));
 	int ammo_rune = CheckInventory("RuneAmmunition");
 
 	for (int i = 0; i < fp_AmmoDefStack; i++) {
 		str ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
 		int base_max_amount = fp_AmmoList[i][FP_AMMODEF_BASEMAX];
 		int max_cap = fp_AmmoList[i][FP_AMMODEF_MAXCAP];
-		bool dont_use_backpack = fp_AmmoList[i][FP_AMMODEF_NOTEXPANDABLE];
+		bool dont_expand = fp_AmmoList[i][FP_AMMODEF_NOTEXPANDABLE];
+		int pbextra_ammo = fp_AmmoList[i][FP_AMMODEF_PBEXTRAAMMO];
 
 		int cap = base_max_amount;
-		if (!dont_use_backpack) {
-			cap += base_max_amount * g_back + fp_AmmoList[i][FP_AMMODEF_PBEXTRAAMMO] * p_back;
-			cap *= ammo_rune;
+		if (!dont_expand) {
+			cap = base_max_amount + (base_max_amount * g_back + pbextra_ammo * p_back);
+			if (ammo_rune) {
+				cap = cap * 3 / 2; // Multiply by 1.5 if ammo_rune is active
+			}
 		}
 		// If max_cap is not zero, limit cap to max_cap
 		if (max_cap != 0 && cap > max_cap) {
@@ -769,11 +775,11 @@ function int WeaponUpgrade_GetUpgPrice(int wpb, int uid){ return fp_WpUps[wpb][u
 function int WeaponUpgrade_GetRcyPrice(int wpb, int uid){ return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_RECYPRICE]; }
 function int WeaponUpgrade_GetUpType(int wpb, int uid){ return fp_WpUps[wpb][uid][FP_WDIR_WEPUPG_UPTYPE]; }
 function int WeaponUpgrade_Find(int weapon_parent_id, int up_type) {
-	log(s:"Weapon ups for weapon #", d:weapon_parent_id, s:": ", d:Weapon_getUpsNum(weapon_parent_id));
+	//log(s:"Weapon ups for weapon #", d:weapon_parent_id, s:": ", d:Weapon_getUpsNum(weapon_parent_id));
 	for(int i = 0; i < Weapon_getUpsNum(weapon_parent_id); i++){
 		log(d:i);
 		if(up_type == WeaponUpgrade_GetUpType(weapon_parent_id, i)){
-			log(d:i, s:", That's the target");
+			//log(d:i, s:", That's the target");
 			return i;
 		}
 	}
@@ -793,7 +799,7 @@ function bool WeaponPack_IsEquipableForPClass(int wid){
 	int forplayerclass = WeaponPack_GetForClass(wid);
 
 	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
-	log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:GetActorClass(990 + PlayerNumber()), s:"'");
+	//log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:GetActorClass(990 + PlayerNumber()), s:"'");
 	return StrContainsI(forplayerclass, GetActorClass(990 + PlayerNumber()));
 }
 function bool WeaponPack_isOwned(int wid){

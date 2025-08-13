@@ -9,6 +9,14 @@
 
 ## v1 - The path of the damned...
 
+#### (12 / 8 / 2025) [Ammunition changes, SFWepDef documentation, Cleanup fixes]
+	*) Helltrigger will give the dispenser ammo amount. Respecting the defined ammo from SFWEPDEF
+	*) Ammunition rune satchels should give 5 times the dispenser ammo amount when picked up.
+	!*) Pistols now will have infinite ammo :) why? Because it sucks to be weapon-less when your are out of ammunition with your favorite weapon so... yeah.
+	*) Fixed the ammo expansion script (specially with ammo rune). Back to the 1.5 extra ammo.
+	*) Removed some log calls that are useless at the moment.
+	*) Added some documentation on the functions in SFWEPDEF lump, should be good enough for modding purposes.
+
 #### (25 / 7 / 2025) [Centralized thing hate calls]
 	*) Now the hate calls will be called by one script instead of multiple calls in many parts of the code.
 	// Buggy shiet I tell you.

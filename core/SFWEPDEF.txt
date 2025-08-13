@@ -1,30 +1,132 @@
-// Basic Weapons 
-addweaponnopack, "Boomstick", "BASIC_BSTK", "SHT2A0", "FrenzyPlayer"
-addweaponup, "Boomstick", 0, "Boomstick_Full", "pr_wu_boomstick_up0", ""
+/* //// AddWeaponPack //// 
+ Defines the properties for a weapon pack.
 
-AddAmmo, "Clip", 200, 100, 10
-AddAmmo, "ClipPistol", 50, 50, 10
-AddAmmo, "Shell", 60, 30, 2
-AddAmmo, "RocketAmmo", 50, 25, 2
-AddAmmo, "HeavyBullets", 300, 100, 40
-AddAmmo, "Dualshot_Ammo", 200, 50, 15
-AddAmmo, "Cell", 300, 200, 20
-AddAmmo, "GLauncher_Ammo", 15, 5, 2
-AddAmmo, "GLauncher_Ammo2", 5, 5, 1
-AddAmmo, "Flinger_Ammo", 50, 50, 2
-AddAmmo, "Gasoline", 200, 50, 20
-AddAmmo, "Supplies_Ammo", 10, 5, 0
-AddAmmo, "Supplies_Health", 10, 5, 0
-AddAmmo, "Supplies_Ammo_Big", 20, 5, 0
-AddAmmo, "Supplies_Health_Big", 20, 5, 0
+ Syntax:
+ addWeaponPack, int category, str lang_str, str cvar_buy_price, int pressure_add, [str only_for_classes]
+
+ Parameters:
+   category                - (int) Set's the weapon category, 1 = Standard, 2 = Advanced, 3 = Overpowered
+   lang_str                - (string) The language string identifier for the weapon's display name and descriptions.
+   cvar_buy_price          - (string) The cvar to control the buy price on the terminal.
+   pressure_add            - (int) The monster pressure gain when bought on the terminal.
+   only_for_classes        - (string, optional) Restricts the weapon to specific player classes (space-separated). 0 means everyone can use it.
+*/
+
+/* //// AddWeaponNoPack ////
+ Defines the properties for a weapon's ammo type, without pack (only for the starter weapons in order to be upgradable on terminal).
+
+ Syntax:
+ addweaponnopack, str weapon_Actor, str lang_str, str str_icon, [str only_for_classes]
+
+ Parameters:
+   weapon_Actor            - (string) The actor or class name representing the weapon.
+   lang_str                - (string) The language string identifier for the weapon's display name.
+   icon                    - (string) The icon or sprite name used for the weapon in the UI.
+   only_for_classes        - (string, optional) Restricts the weapon to specific player classes (space-separated). 0 means everyone can use it.
+*/
+
+//// AddWeapon ////
+/*
+ Defines the properties for a weapon's ammo type, without pack (only for the starter weapons in order to be upgradable on terminal).
+
+ Syntax:
+ addweapon, str lang_pack_str, str weapon_actor, str lang_wep_str, str icon, str cvar_recycle_price, [str only_for_classes]
+
+ Parameters:
+   lang_pack_str:          - (string) The language keyword from a pack to add the weapon inside.
+   weapon_actor:           - (string) The weapon actor to be used.
+   lang_wep_str:           - (string) The language keyword for the weapon name and description.
+   icon:                   - (string) The sprite to show for the Terminal.
+   cvar_recycle_price:     - (string) The cvar to control the recycle price on the terminal.
+   only_for_classes:       - (string, optional) Restricts the weapon to specific player classes (space-separated). 0 means everyone can use it.
+*/
+
+//// AddWeaponUp //// 
+/*
+ Defines the properties for a Weapon Upgrade, requiring the base weapon to be replaced.
+
+ Syntax:
+ addweaponup, str base_weapon, int up_type_id, str upgrade_weapon, str cvar_upgrade_price_up, str cvar_recycle_price
+
+ Parameters:
+   base_weapon             - (string) The actor or class name representing the weapon to be upgraded.
+   up_type_id              - (int) The upgrade type identifier (usually 0, 1, or 2) 0 - 8.
+   upgrade_weapon          - (string) The actor or class name of the upgraded weapon.
+   cvar_upgrade_price_up   - (string) The cvar to control the upgrade price on the terminal, in Upgrade Points.
+   cvar_recycle_price      - (string) The cvar to control the recycle price on the terminal.
+*/
+
+//// AddAmmo //// 
+/*
+ Defines the properties for a weapon's ammo type.
+
+ Syntax:
+ AddAmmo, str Ammo_Actor, int Base_Max, int personal_backpack_ammo, [int dispenser_give], [str supply_sapwn], [int max_cap], [bool dont_expand]
+
+ Parameters:
+   Ammo_Actor              - (string) The actor or class name representing the ammo type.
+   Base_Max                - (int) The base maximum amount of this ammo type a player can carry.
+   personal_backpack_ammo  - (int) The maximum ammo capacity for this type when the player has a backpack.
+   dispenser_give          - (int, optional) The amount of ammo given by a dispenser or the ammo rune.
+   supply_sapwn            - (str, optional) The actor to replace when spawning the ammo with the supplier. 0 = Same value as ammo actor, -1 = Not spawnable by supplier
+   max_cap                 - (int, optional) The absolute maximum cap for this ammo type, regardless of upgrades.
+   dont_expand             - (bool, optional) If true, prevents this ammo type from being expanded by upgrades or backpacks.
+*/
+
+//// StarterItem ////
+/*
+ Defines the starting item for each player class
+
+ Syntax
+ StarterItem, str player_class, str inventory_item, int amount, [bool weapon_equip]
+
+ Parameters:
+   player_class            - (string) The player class for 
+   inventory_item          - (int) The quantity of the item.
+   amount                  - (int) The quantity of the item.
+   weapon_equip            - (bool, optional) The quantity of the item.
+*/
+
+//// ClearAllWeapons /////
+/*
+ Clears all previously defined weapons from the game, ensuring a clean slate for new weapon definitions.
+
+ Syntax:
+    ClearAllWeapons
+*/
+
+//// ClearAllAmmo ////
+/*
+ Clears all previously defined ammo types from the game, allowing for fresh ammo definitions.
+
+ Syntax:
+    ClearAllAmmo
+*/
+
+AddAmmo, "Clip",                200,    100,    10, "ClipBox"
+AddAmmo, "Shell",               60,     30,     2,  "ShellBox"
+AddAmmo, "RocketAmmo",          50,     25,     2,  "RocketBox"
+AddAmmo, "HeavyBullets",        300,    100,    40
+AddAmmo, "Dualshot_Ammo",       200,    50,     15
+AddAmmo, "Cell",                300,    200,    20, "CellPack"
+AddAmmo, "GLauncher_Ammo",      15,     5,      2
+AddAmmo, "GLauncher_Ammo2",     5,      5,      1
+AddAmmo, "Flinger_Ammo",        50,     50,     2
+AddAmmo, "Gasoline",            200,    50,     20
+AddAmmo, "Supplies_Ammo",       10,     5,      0, -1
+AddAmmo, "Supplies_Health",     10,     5,      0, -1
+AddAmmo, "Supplies_Ammo_Big",   20,     5,      0, -1
+AddAmmo, "Supplies_Health_Big", 20,     5,      0, -1
 
 StarterItem, "FrenzyPlayer", "Inventory_TurretBullet", 3
 StarterItem, "FrenzyPlayer", "Beretta",    1
 StarterItem, "FrenzyPlayer", "Boomstick",  1, true
 
+// Basic Weapons 
+addweaponnopack, "Boomstick", "BASIC_BSTK", "SHT2A0", "FrenzyPlayer"
+addweaponup, "Boomstick", 0, "Boomstick_Full", "pr_wu_boomstick_up0", ""
 
 // Standard Weapons
-
 addWeaponPack, 0, "SHOTGUN", "pr_wb_shotgun", 2, 0
     addweapon, "SHOTGUN", "SSG", "SSG", "SHT2A0", "pr_wr_ssg", 0
     addweaponup, "SSG", 1, "SSG_Autoload", "pr_wu_ssg_up1", "pr_wr_ssg_up1"

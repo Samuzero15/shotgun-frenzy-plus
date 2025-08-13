@@ -7,6 +7,7 @@
 #import "f_tip.acs"
 #import "fl_IDir.acs"
 #import "fl_WDir.acs"
+#import "f_stokP.acs"
 
 script "Rune_Events" (int type, int arg1, int arg2) Event {
     int hpold, hpnow;
@@ -257,7 +258,15 @@ script "Runes_PickMessage" (int type){
     if(!CheckActorClass(0, "MechPlayer")){
         ACS_NamedExecuteAlways("Runes_ShowPickMessage", 0, type);
     }
-    
+}
+
+Script "AmmunitionRune_GiveAmmo" (void) {
+	// Give the ammo 
+	Stock_FillAmmo(0);
+	Stock_FillAmmo(0);
+	Stock_FillAmmo(0);
+	Stock_FillAmmo(0);
+	Stock_FillAmmo(0);
 }
 
 script "Runes_ShowPickMessage" (int type) CLIENTSIDE{

@@ -4,9 +4,6 @@ Actor Beretta_DamageRiser : Integer {}
 
 ACTOR Beretta : FrenzyWeapon
 {
-	Weapon.AmmoUse 1
-	Weapon.AmmoGive 20
-	Weapon.AmmoType "ClipPistol"
 	Obituary "%o was tickled by %k's pea shooter."
 	+WEAPON.WIMPY_WEAPON
 	Inventory.Pickupmessage "Picked up a pistol."
@@ -62,11 +59,6 @@ ACTOR Beretta : FrenzyWeapon
 
 ACTOR Beretta_Dual : FrenzyWeapon
 {
-	Weapon.AmmoUse1 1
-	Weapon.AmmoUse2 2
-	Weapon.AmmoGive 20
-	Weapon.AmmoType1 "ClipPistol"
-	Weapon.AmmoType2 "ClipPistol"
 	Weapon.SlotPriority 2.0
 	Obituary "%o was gunned down by %k's dual pistols."
 	+WEAPON.WIMPY_WEAPON
@@ -137,11 +129,6 @@ ACTOR Beretta_Dual : FrenzyWeapon
 
 ACTOR Beretta_SMG : FrenzyWeapon
 {
-	Weapon.AmmoUse1 1
-	Weapon.AmmoUse2 1
-	Weapon.AmmoGive1 20
-	Weapon.AmmoType1 "ClipPistol"
-	Weapon.AmmoType2 "ClipPistol"
 	Weapon.SlotPriority 3.0
 	Obituary "%o was gunned down by %k's SMG."
 	+WEAPON.WIMPY_WEAPON

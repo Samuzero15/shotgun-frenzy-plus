@@ -17,9 +17,12 @@
 #import "f_intdb.acs"
 #import "f_Rank.acs"
 #import "f_tip.acs"
+#import "f_stokp.acs"
+#import "fl_WDir.acs"
 #include "samu_tools.acs"
 #include "wep_patcher.acs"
 #include "altstates.acs"
+//#include "announcer.acs"
 
 // ye, it's a shameless copy of dual wielding script from brutal doom.
 
@@ -137,7 +140,7 @@ Script "HellTriggerPower_AmmoRegeneration" (int upgraded){
 	int tics = 0;
 	while(PlayerHealth() > 0 && CheckInventory("Inv_Power_AmmoRegeneration")){
 		if(tics % (35-lessdelay) == 0) 
-			GiveInventory("HellTrigger_AmmoSatchel", 1);
+			Stock_FillAmmo(0);
 		tics ++;
 		delay(1);
 	}
@@ -280,6 +283,25 @@ Script "Supplier_GrantExp" (void)
 {
 	Rank_GrantEXP(PlayerNumber(), 1);
 }
+
+Script "Supplier_SpawnAmmo" (int expanded) {
+	int x = GetActorX(0);
+	int y = GetActorY(0);
+	int z = GetActorFloorZ(0);
+	int range = expanded ? 32.0 : 16.0;
+
+	for (int i = 0; i < fp_AmmoDefStack; i++) {
+		str ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
+		str ammo_supply_spawn = fp_AmmoList[i][FP_AMMODEF_SUPPLYSPAWN];
+		if(ammo_supply_spawn == -1) terminate; // Ammo is not given by supplier.
+		str ammo_actor = ammo_supply_spawn == 0 ? ammo_name : ammo_supply_spawn;
+		SpawnForced(ammo_actor, x + random(-range, range), y + random(-range, range), z);
+		if(expanded) {
+			SpawnForced(ammo_actor, x + random(-range, range), y + random(-range, range), z);
+		}
+	}
+}
+
 
 Script "AltState_Particle_Stop" (void) {
 	SetActivatorToTarget(0);
@@ -493,11 +515,11 @@ Script "Deploy_TID" (int tid, int type) {
 			case 1: dtid = 15000+play; break;
 			case 2: dtid = 10000+play; break;
 		}
-		log(s:"Owner: ", d:play, s:" TID:", d:dtid);
+		//log(s:"Owner: ", d:play, s:" TID:", d:dtid);
 		SetResultValue(dtid);
 		terminate;
 	}else {
-		log(s:"No owner found.");
+		//log(s:"No owner found.");
 		SetResultValue(UniqueTID(15200));
 	}
 	

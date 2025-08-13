@@ -21,8 +21,16 @@ ACTOR FrenzyPlayer : DoomPlayer
 	Player.StartItem "Boomstick"
 	Player.StartItem "Shell", 20
 	Player.WeaponSlot 1, "Beretta", "Beretta_Dual", "Beretta_SMG", 	"Boomstick", "Boomstick_Full"		
-	Player.WeaponSlot 2, "SSG", "SSG_Autoload", "SSG_Explosive", "Quadshot", "Quadshot_Full", "Quadshot_Explosive", "Buckshot", "Buckshot_Chamber", "Buckshot_Explosive", "Spitter", "Spitter_SSG", "Spitter_GLauncher"
-	Player.WeaponSlot 3, "Dualshot", "Dualshot_Razor", "Dualshot_FlakShells", "Repeater", "Repeater_DoubleSpeed", 	"Repeater_BlastShells", "Launcher", "Launcher_Multi", "Launcher_Exploder", 	"Flinger", 	"Flinger_Expander", "Flinger_MinePlacer", "SF_Railgun", "Railgun_Taser", "Railgun_Slug", "PlasmaGun", "PlasmaGun_Advanced", "PlasmaGun_Spread"
+	Player.WeaponSlot 2, "SSG", "SSG_Autoload", "SSG_Explosive", 
+						"Quadshot", "Quadshot_Full", 
+						"Buckshot", "Buckshot_Chamber", "Buckshot_Explosive", 
+						"Spitter", "Spitter_SSG", "Spitter_GLauncher"
+	Player.WeaponSlot 3, "Dualshot", "Dualshot_Razor", "Dualshot_FlakShells", 
+						 "Repeater", "Repeater_DoubleSpeed", "Repeater_BlastShells", 
+						 "Launcher", "Launcher_Multi", "Launcher_Exploder", 	
+						 "Flinger", 	"Flinger_Expander", "Flinger_MinePlacer", 
+						 "SF_Railgun", "Railgun_Taser", "Railgun_Slug", 
+						 "PlasmaGun", "PlasmaGun_Advanced", "PlasmaGun_Spread"
 	Player.WeaponSlot 4, "Flamer", 	"FlamerS", 	"BoomerCannon", "BFG", 	"BFG_Splash", "BFG_Overcharge"
 	Player.WeaponSlot 5, "Supplier", "Supplier_Big", "Patcher", "Patcher_Advanced"
 	
