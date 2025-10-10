@@ -9,6 +9,16 @@
 
 ## v1 - The path of the damned...
 
+#### (9 / 10 / 2025) [New sounds for items, runes and also a new... announcer?!]
+	+) Yes. New Announcer! (Mikell Dover VA, good voice :) )
+	+) Added the announcer options into SF+ Options.
+	+) New pickup and sounds for items, runes and in the announcer side, more voices for Cepstral Amy.
+	// The announcer adds new lines for the timer and depending on the game status. Available for all gamemodes (CF, SF and SD)
+	*) The game timer will start only after the first door and alarm is activated and open.
+	*) When nuking the map, now it will show the 5 minutes timer on top of the screen.
+	*) If a map is nuked, now the game grants a +10% skill score for the ending sequence.
+	*) A lot of changes for the sounds are now compatible with ANCRINFO lumps, so add your own announcer as you wish!
+
 #### (12 / 8 / 2025) [Moved sounds for each respective folder]
 	*) Moved the sounds for each personal folder
 

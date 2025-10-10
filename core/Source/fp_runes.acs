@@ -254,12 +254,6 @@ script "Runes_OnMonsterKill" (int ischamp){
     }
 }
 
-script "Runes_PickMessage" (int type){
-    if(!CheckActorClass(0, "MechPlayer")){
-        ACS_NamedExecuteAlways("Runes_ShowPickMessage", 0, type);
-    }
-}
-
 Script "AmmunitionRune_GiveAmmo" (void) {
 	// Give the ammo 
 	Stock_FillAmmo(0);
@@ -269,9 +263,30 @@ Script "AmmunitionRune_GiveAmmo" (void) {
 	Stock_FillAmmo(0);
 }
 
+script "Runes_PickMessage" (int type){
+    if(!CheckActorClass(0, "MechPlayer")){
+        ACS_NamedExecuteAlways("Runes_ShowPickMessage", 0, type);
+    }
+}
+
+script "Runes_OwnedMessage" (int type){
+    if(!CheckActorClass(0, "MechPlayer")){
+        ACS_NamedExecuteAlways("Runes_ShowOwnMessage", 0, type);
+    }
+}
+
+Script "Runes_PlayerIsHoldingRune" (int type) {
+    SetResultValue(CheckInventory(Rune_getPowerActor(type)));
+}
+
 script "Runes_ShowPickMessage" (int type) CLIENTSIDE{
     //SFPlus_DefineRunes();
     f_SmallTip_Runes (Strparam(s:"Hold \ci",k:"+use",s:"\c- to link the \cj",s:Rune_getName(type),s:" \c-rune!"), CR_CYAN, 0);
+}
+
+script "Runes_ShowOwnMessage" (int type) CLIENTSIDE{
+    //SFPlus_DefineRunes();
+    f_SmallTip_Runes (Strparam(s:"You already own the \cj",s:Rune_getName(type),s:" \c-rune!"), CR_ORANGE, 0);
 }
 
 script "SFPlus_Dash" (void){

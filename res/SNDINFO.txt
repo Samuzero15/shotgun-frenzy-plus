@@ -248,27 +248,6 @@ Railgun_Taser/Stop       lrtstop
 Railgun_Taser/LoopLaser  lrtloop
 Railgun_Taser/StartLaser lrtstart
 
-runes/temperance/hit temp_hit
-runes/temperance/break temp_brk
-runes/temperance        r_temper
-runes/blast             r_blast
-runes/defense           r_defen
-runes/rampage           r_ramp
-runes/resurrection      r_resur
-runes/soul              r_soul
-runes/ammunition        r_ammo
-runes/health            r_heal
-runes/fortune           r_fortu
-runes/spread            r_spred
-runes/strength          r_stren
-runes/resistance        r_resis
-runes/rage              r_rage
-runes/prosperity        r_prosp
-runes/reflection        r_reflec
-runes/airjump           r_ajump
-runes/drain             r_drain
-//runes/haste             r_haste // Not added yet.
-
 endboss			BOSS
 endboss/fire		BOSSF
 endboss/explode		BOSSE
@@ -360,18 +339,6 @@ p/drone_saw2 SAWD2
 p/drone_saw1 SAWD1
 p/drone_saw3 SAWD3
 
-
-////// Samu-term sounds
-
-A-Greet1 A-Greet1
-A-Greet2 A-Greet2
-$random Amy/Welcome {A-Greet1 A-Greet2}
-
-A-Bye1 A-Bye1
-A-Bye2 A-Bye2
-$random Amy/Farewell {A-Bye1 A-Bye2}
-Amy/WeaponEquipped A-wepeqi
-
 // Sounds from Gears of Wars 3 ! (Thanks to TiberumSoul!)
 
 SamuTerm/Login login
@@ -385,3 +352,14 @@ SamuTerm/Hopin goleft
 SamuTerm/Hopout goright
 
 SamuTerm/Error error
+
+PowerupPickup1 "sounds/plus stuff/Misc/ItemPickup1.ogg" 
+PowerupPickup2 "sounds/plus stuff/Misc/ItemPickup2.ogg"
+g/DeployPickup  "sounds/plus stuff/Misc/DeployablePickup.ogg"
+g/RunePickup  "sounds/plus stuff/Misc/RunePickup.ogg"
+$random g/PowerupPickup {PowerupPickup1 PowerupPickup2}
+PowerupUsed/Defense "sounds/plus stuff/Misc/DefPowerupUsed.ogg" 
+PowerupUsed/Offense "sounds/plus stuff/Misc/OffPowerupUsed.ogg" 
+
+runes/temperance/hit temp_hit
+runes/temperance/break temp_brk

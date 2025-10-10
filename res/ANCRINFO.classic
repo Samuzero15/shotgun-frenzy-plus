@@ -1,0 +1,102 @@
+{
+	name = "Amy (SF Plus)"
+	
+	count/1 = Amy/Count/1
+	count/2 = Amy/Count/2
+	count/3 = Amy/Count/3
+	count/4 = Amy/Count/4
+	count/5 = Amy/Count/5
+	
+	count/1! = Amy/Count/1!
+	count/2! = Amy/Count/2!
+	count/3! = Amy/Count/3!
+	count/4! = Amy/Count/4!
+	count/5! = Amy/Count/5!
+	
+	time/10mins = 	Amy/Time/10mins
+	time/5mins = 	Amy/Time/5mins 
+	time/2mins = 	Amy/Time/2mins 
+	time/60secs = 	Amy/Time/60secs 
+	time/30secs = 	Amy/Time/30secs 
+	time/10secs = 	Amy/Time/10secs 
+	
+	time/10mins! = 	Amy/Time/10mins!
+	time/5mins! = 	Amy/Time/5mins! 
+	time/2mins! = 	Amy/Time/2mins! 
+	time/60secs! = 	Amy/Time/60secs! 
+	time/30secs! = 	Amy/Time/30secs! 
+	time/10secs! = 	Amy/Time/10secs! 
+	
+	time/GuardianArrivesIn = 	Amy/Time/GuardiansArrivesIn 	
+	time/GuardianIncoming = 	Amy/Time/GuardiansIncoming 
+	time/Mission/BeginsIn = 	Amy/Time/Mission/BeginsIn
+	time/Mission/EndsIn  = 		Amy/Time/Mission/EndsIn 
+	time/Mission/Complete = 	Amy/Time/Mission/Complete 
+	time/Mission/Failed = 		Amy/Time/Mission/Failed 	
+	time/Mission/Inbound = 		Amy/Time/Mission/Inbound 
+	time/Mission/NextWaveIn = 	Amy/Time/NextWaveIn 
+
+	terminal/Hello = 	Amy/Terminal/Hello
+	terminal/Bye = 		Amy/Terminal/Bye
+	
+	ammunition = 		Amy/Runes/Ammunition 
+	blast = 			Amy/Runes/Blast 	
+	dash = 				Amy/Runes/Dash 
+	defense = 			Amy/Runes/Defense 
+	drain = 			Amy/Runes/Drain 
+	fortune = 			Amy/Runes/Fortune
+	haste = 			Amy/Runes/Haste 
+	highjump = 			Amy/Runes/AirJump
+	health = 			Amy/Runes/Health 
+	prosperity = 		Amy/Runes/Prosperity 
+	rage = 				Amy/Runes/Rage 
+	rampage = 			Amy/Runes/Rampage  
+	reflection = 		Amy/Runes/Reflection 
+	regeneration = 	Amy/Runes/Regeneration 
+	resistance = 		Amy/Runes/Resistance 
+	resurrection = 		Amy/Runes/Resurrection 	
+	soul = 				Amy/Runes/Soul 
+	spread = 			Amy/Runes/Spread 
+	strength = 			Amy/Runes/Strength 	
+	temperance = 		Amy/Runes/Temperance 
+
+	command/armory/building = 		Amy/Command/Armory/Building 
+	command/armory/constructed = 	Amy/Command/Armory/Constructed 
+	command/genlab/building = 		Amy/Command/GenLab/Building 
+	command/genlab/constructed =	Amy/Command/GenLab/Constructed 
+	command/marcom/building =		Amy/Command/MarCom/Building 
+	command/marcom/constructed =	Amy/Command/MarCom/Constructed 
+	command/mechfa/building =		Amy/Command/MechFa/Building 
+	command/mechfa/constructed =	Amy/Command/MechFa/Constructed 
+	command/Refine/building =		Amy/Command/Refine/Building 
+	command/Refine/constructed =	Amy/Command/Refine/Constructed 
+	command/NSilo/building =		Amy/Command/NSilo/Building 
+	command/NSilo/constructed =		Amy/Command/NSilo/Constructed 
+	
+	command/deploy/dispenser = 		Amy/Command/Deploy/Dispenser 
+	command/deploy/mines = 			Amy/Command/Deploy/Mines 
+	command/deploy/sandbags = 		Amy/Command/Deploy/Sandbags 
+	command/deploy/turret = 		Amy/Command/Deploy/Turret 
+	
+	command/researchComplete = 		Amy/Command/ResearchComplete 
+	command/airstrike = 			Amy/Command/AirStrike 
+	command/corepulse = 			Amy/Command/CorePulse 
+	command/blastoff = 				Amy/Command/BlastOff 
+	command/greetcmdr = 			Amy/Command/GreetCmd 
+	
+	combat/sector1 =			Amy/Combat/Sector1 
+	combat/sector2 =			Amy/Combat/Sector2 
+	combat/sector3 =			Amy/Combat/Sector3 
+	combat/sector4 =			Amy/Combat/Sector4 
+	combat/sectorlost =			Amy/Combat/SectorLost 
+	combat/sectorrecovered = 	Amy/Combat/SectorRecovered 
+	combat/prepareyourself = 	Amy/Combat/PrepareYourself 
+	combat/clearandfinish = 	Amy/Combat/ClearAndFinish 
+	
+	powerup/ammosphere = 		Amy/Powerup/Ammosphere 
+	powerup/doomsphere = 		Amy/Powerup/Doomsphere 
+	powerup/godsphere = 		Amy/Powerup/Godsphere 
+	powerup/helltrigger = 		Amy/Powerup/HellTrigger 
+	powerup/megasphere = 		Amy/Powerup/Megasphere 
+	powerup/soulsphere = 		Amy/Powerup/Soulsphere 
+}

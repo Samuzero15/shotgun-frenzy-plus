@@ -7,7 +7,8 @@ ACTOR DefenseRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Defense
 	Inventory.PickupMessage "Defense!"
-	Inventory.PickupSound "runes/defense"
+	Inventory.PickupSound "g/RunePickup"
+	Inventory.PickupAnnouncerEntry "defense"
 	scale 0.5
 	States
 	{

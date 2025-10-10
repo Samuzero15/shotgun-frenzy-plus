@@ -8,7 +8,8 @@ ACTOR BlastRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Blast
 	Inventory.PickupMessage "Blast!"
-    Inventory.PickupSound "runes/blast"
+    Inventory.PickupSound "g/RunePickup"
+    Inventory.PickupAnnouncerEntry "blast"
 	States
 	{
 	Spawn:

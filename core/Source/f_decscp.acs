@@ -152,6 +152,38 @@ Script "HellTriggerPower_AmmoRegeneration" (int upgraded){
 	}
 }
 
+Script "SFPlus_Announcer_SayTime" (int string, int time, int urgent){
+	AnnouncerSound(string, 0);
+	if(time == -1){
+		terminate;
+	}
+	delay(35 + 20);
+	str sound = "";
+	switch(time) {
+		case 10:
+			sound = "time/10Secs";
+			break;
+		case 30:
+			sound = "time/30Secs";
+			break;
+		case 60:
+			sound = "time/60Secs";
+			break;
+		case 120:
+			sound = "time/2Mins";
+			break;
+		case 300:
+			sound = "time/5Mins";
+			break;
+		case 600:
+			sound = "time/10Mins";
+			break;
+	}
+	if(urgent == 1) sound = strparam(s:sound, s:"!");
+
+	AnnouncerSound(sound, 0);
+}
+
 Script "Player_GetRank" (void){
 	SetResultValue(p_Rank[playernumber()] + 1);
 }

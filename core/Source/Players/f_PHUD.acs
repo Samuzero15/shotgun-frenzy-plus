@@ -130,6 +130,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 		guardian_state = CheckInventory("HUD_GuardianState"),
 		monsters_left = CheckInventory("HUD_MonstersLeft"),
 		guardian_timer = CheckInventory("HUD_GuardianTimer");
+		nuke_launched = CheckInventory("HUD_NukeLaunched");
 		/*
 		log(s:"gametype: ", d:gametype_);
 		log(s:"kills: ", d:kills);
@@ -146,8 +147,8 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 		
 		if(gametype_ == INTDB_GAMETYPE_COMBATFRENZY || gametype_ == INTDB_GAMETYPE_SHOTGUNFRENZY){
 			if(status != 0){
-				if(time_tics > 0)
-					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, time_tics);
+				if(time_tics > 0 || nuke_launched == 1)
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, time_tics, nuke_launched);
 				else {
 					switch(guardian_state){
 						case INTDB_GUARDIANSTATE_STANDBY:
@@ -169,7 +170,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 		}else if (gametype_ == INTDB_GAMETYPE_SURVIVALDEFENDER){
 			if(monsters_left > 0)
 				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
-			else if (monsters_left == -1)
+			else if (monsters_left == 0)
 				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 4);
 		}
 
@@ -191,7 +192,6 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 				teamcredits = CheckActorInventory(PlayerTIDCam, "HUD_TeamCredits");
 				commander = CheckActorInventory(PlayerTIDCam, "HUD_Commander");
 				ranknow = CheckActorInventory(PlayerTIDCam, "HUD_RankNow");
-				nuke_launched = CheckActorInventory(PlayerTIDCam, "HUD_NukeLaunched");
 				kills = next_range - exp;
 
 				sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
@@ -230,18 +230,22 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 	}
 }
 
-script "HUD_ShowGameProgress" (int showtype, int value) clientside {
+script "HUD_ShowGameProgress" (int showtype, int value, int nuke_launched) clientside {
 	//if(consolePlayerNumber() == PlayerNumber()){
 		setfont("DBIGFONT");
 		sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 		str string = "";
+		int color = CR_BLUE;
 		switch (showtype){
 			case 1: string = strparam(s:PlayHUD_TimerEX(value)); break;
-			case 2: string = strparam(d:value, s:" Left"); break;
-			case 3: string = "wait"; break;
-			case 4: string = "DONE";  break;
+			case 2: string = strparam(d:value, s:" Left"); color = CR_ORANGE;  break;
+			case 3: string = "wait"; color = CR_WHITE; break;
+			case 4: string = "DONE"; color = CR_GREEN; break;
 		}
-		hudmessage(s:string; 1, 255, CR_TAN, 400.0, 28.1, 7.0);
+		
+		if(nuke_launched) color = CR_ORANGE;
+		
+		hudmessage(s:string; 1, 255, color, 400.0, 28.1, 7.0);
 		setfont("SMALLFNT");
 	//}
 }

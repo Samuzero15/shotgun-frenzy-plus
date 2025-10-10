@@ -44,16 +44,16 @@ function void ProgTip_Init(void){
 	ProgTip_SetImg		(ptid, "CC01");
 	ProgTip_SetEndMsg1	(ptid, "Genetics Lab Constructed!");
 	ProgTip_SetEndMsg2	(ptid, "Now the marines will heal themselves.");
-	ProgTip_SetPreSound	(ptid, "cv/genetics1");
-	ProgTip_SetPostSound(ptid, "cv/genetics2");
+	ProgTip_SetPreSound	(ptid, "command/genlab/building");
+	ProgTip_SetPostSound(ptid, "command/genlab/constructed");
 	
 	ptid = ProgTip_Def(FP_PTID_ARMORY);  // Armory
 	ProgTip_SetMsg		(ptid, "Armory is building....");
 	ProgTip_SetImg		(ptid, "CC02");
 	ProgTip_SetEndMsg1	(ptid, "Armory Constructed!");
 	ProgTip_SetEndMsg2	(ptid, "Lock and load everyone.");
-	ProgTip_SetPreSound	(ptid, "cv/armory1");
-	ProgTip_SetPostSound(ptid, "cv/armory2");
+	ProgTip_SetPreSound	(ptid, "command/armory/building");
+	ProgTip_SetPostSound(ptid, "command/armory/constructed");
 
 	ptid = ProgTip_Def(FP_PTID_MECHFA);  // Mech factory
 	ProgTip_SetMsg		(ptid, "Mech Factory is building....");
@@ -62,6 +62,8 @@ function void ProgTip_Init(void){
 	ProgTip_SetEndMsg2	(ptid, "Heavy machinery awaits you in the base.");
 	ProgTip_SetPreSound	(ptid, "cv/dem1");
 	ProgTip_SetPostSound(ptid, "cv/dem2");
+	ProgTip_SetPreSound	(ptid, "command/mechfa/building");
+	ProgTip_SetPostSound(ptid, "command/mechfa/constructed");
 
 	ptid = ProgTip_Def(FP_PTID_REFINE);  // Refinery
 	ProgTip_SetMsg		(ptid, "Refinery is building....");
@@ -70,6 +72,8 @@ function void ProgTip_Init(void){
 	ProgTip_SetEndMsg2	(ptid, "Extra credits can now be earned periodically.");
 	ProgTip_SetPreSound	(ptid, "cv/refinery1");
 	ProgTip_SetPostSound(ptid, "cv/refinery2");
+	ProgTip_SetPreSound	(ptid, "command/refine/building");
+	ProgTip_SetPostSound(ptid, "command/refine/constructed");
 
 	ptid = ProgTip_Def(FP_PTID_MARCOM);  // Marine Command
 	ProgTip_SetMsg		(ptid, "Marine Command is building....");
@@ -78,15 +82,19 @@ function void ProgTip_Init(void){
 	ProgTip_SetEndMsg2	(ptid, "The commander can aid the marines with some extra support.");
 	ProgTip_SetPreSound	(ptid, "cv/mcom1");
 	ProgTip_SetPostSound(ptid, "cv/mcom2");
-		
+	ProgTip_SetPreSound	(ptid, "command/marcom/building");
+	ProgTip_SetPostSound(ptid, "command/marcom/constructed");
+
 	ptid = ProgTip_Def(FP_PTID_NUKESY);  // Nuclear Sylo
 	ProgTip_SetMsg		(ptid, "Nuclear Silo is building....");
 	ProgTip_SetImg		(ptid, "BUTTON");
 	ProgTip_SetEndMsg1	(ptid, "Nuclear Sylo Constructed!");
 	ProgTip_SetEndMsg2	(ptid, "The doomsday-clock is ready to be launched in the command chair.");
-	ProgTip_SetPreSound	(ptid, "cv/nsylo1");
-	ProgTip_SetPostSound(ptid, "cv/nsylo2");
-	
+	ProgTip_SetPreSound	(ptid, "cv/nsilo1");
+	ProgTip_SetPostSound(ptid, "cv/nsilo2");
+	ProgTip_SetPreSound	(ptid, "command/nsilo/building");
+	ProgTip_SetPostSound(ptid, "command/nsilo/constructed");
+
 	ptid = ProgTip_Def(FP_PTID_IONCAN_1);  // Ion cannon charges
 	ProgTip_SetMsg		(ptid, "Preparing Ion Cannon...");
 	ProgTip_SetEndMsg1	(ptid, "Firing ION CANNON!");

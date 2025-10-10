@@ -3,6 +3,8 @@ Actor SpreadRune_Pickup : CustomInventory
 {
 	Inventory.PickupMessage "$PICKUP_SPREAD"
 	Inventory.PickupAnnouncerEntry "spread"
+	Inventory.PickupSound "g/RunePickup"
+	+Float
 	States
 	{
 	Spawn:

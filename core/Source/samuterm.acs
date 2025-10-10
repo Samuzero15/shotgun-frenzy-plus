@@ -64,6 +64,7 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_HEALTERM_HI", 3));
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_HEALTERM_BYE", 3));
 			SamuTerm_SetBack("BGR");
+			AnnouncerSound("terminal/Hello", 1);
 		break;
 
 		case 30:
@@ -77,11 +78,13 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 				Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_MECHTERM_HI", 3));
 				Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_MECHTERM_BYE", 3));
 			}
+			AnnouncerSound("terminal/Hello", 1);
 		break;
 	
 		case 10:
 			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_COMMTERM_HI", 0));
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_COMMTERM_BYE", 0));
+			AnnouncerSound("command/greetcmdr", 1);
 			SamuTerm_SetBack("");
 			//Toast_SetPosition(320.0, 380.0);
 		break;
@@ -89,10 +92,12 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 		case 0:
 			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_AMMOTERM_HI", 3));
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_AMMOTERM_BYE", 3));
+			AnnouncerSound("terminal/Hello", 1);
 		break;
 		default:
 			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_DEFAULT_HI", 0));
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_DEFAULT_BYE", 0));
+			AnnouncerSound("terminal/Hello", 1);
 	}
 	int chasecam_state = GetPlayerChasecam(play);
 	
@@ -101,7 +106,9 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	Component_PrintCount();
 	//Samuterm_HelloPrompt();
 	Input_ClearBinds();
-	Input_BindDirections();
+	if(pagetags[STTAGS_ALPHA] != 10){
+		Input_BindDirections();
+	}
 	SamuTerm_Say(msgs[STMSGS_LOGIN]);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
 	PlaySound(1000+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
@@ -121,6 +128,9 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	SetPlayerChasecam(play, chasecam_state);
 	CenterCursor();
 	SamuTerm_ResetBack();
+
+	if(pagetags[STTAGS_ALPHA] != 10) AnnouncerSound("terminal/Bye", 1);
+	
 	if(exitResult != -1){
 		SamuTerm_Say(msgs[STMSGS_LOGOUT]);
 		LocalAmbientSound("SamuTerm/Back", 127);

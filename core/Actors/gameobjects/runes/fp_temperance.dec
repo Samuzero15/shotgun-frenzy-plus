@@ -7,8 +7,8 @@ ACTOR TemperanceRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Temperance
 	Inventory.PickupMessage "Temperance!"
-	//Inventory.PickupAnnouncerEntry "Strength"
-	Inventory.PickupSound "runes/temperance"
+	Inventory.PickupSound "g/RunePickup"
+	Inventory.PickupAnnouncerEntry "temperance"
 	States
 	{
 	Spawn:

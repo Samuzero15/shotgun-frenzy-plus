@@ -176,7 +176,7 @@ script 130 (void)
     // call clickscanner
     //acs_execute(131, 0, 0, 0, 0);
     
-    localambientsound("cv/welcomecommander", 125);
+    //localambientsound("cv/welcomecommander", 125);
     
     // load up demon count per sector
     //acs_execute(969, 0, 0, 0, 0);

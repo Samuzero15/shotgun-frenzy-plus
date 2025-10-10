@@ -43,7 +43,7 @@
 
 //// AddWeaponUp //// 
 /*
- Defines the properties for a Weapon Upgrade, requiring the base weapon to be replaced.
+ Defines the properties for a Weapon Upgrade, requiring the base weapon to be replaced with another upgraded version.
 
  Syntax:
  addweaponup, str base_weapon, int up_type_id, str upgrade_weapon, str cvar_upgrade_price_up, str cvar_recycle_price

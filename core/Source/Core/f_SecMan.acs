@@ -54,7 +54,7 @@ script 51 OPEN
 
 function int SecMan_RecapCond(int sector){
 	// Decides if the selected sector is recapturable.
-	return (m_CalcSector() <= m_recapmin && sector > 1);
+	return (m_CalcSector() <= m_recapmin && sector > 1 && !c_NukeLaunched);
 }
 
 script "SFPlus_SecManDebug" (void)//OPEN
@@ -140,15 +140,19 @@ Script "SFPlus_SecManMainLoop" OPEN {
 		
 		SecMan_ToggleCores(g_Status);
 		
+		if(!alarmsUsed) AnnouncerSound("combat/prepareyourself", 0);
+		
 		current_sector = g_Status;
 		delay(1);
 		
 		time = GetCvar("sf_doorholdtime");
 		acs_execute(129, 0, 1, time, 0);
-		while(time != 0){// The timer before opening a door.
+		while(time != 0 && !c_NukeLaunched){// The timer before opening a door.
+			if(!alarmsUsed && 
+				(time == 10 || time == 30 || time == 60)) ACS_NamedExecute("SFPlus_Announcer_SayTime", 0, "time/mission/beginsin", time);
+			
 			if(time == 10 || time == 5){
 				Notify_Message("DOORS BREACHED!",strParam(d:time, s:" secs left!"), "INFO", 0);
-				
 			}
 			
 			if (SecMan_RecapCond(g_Status)){
@@ -158,43 +162,36 @@ Script "SFPlus_SecManMainLoop" OPEN {
 				SecMan_ToggleDoors(1, g_Status-1, f_Doortype, f_Doorspeed); // Close them again.
 				acs_execute(103, 0, 0, 0, 0);
 				g_RecapCount++; // Add a recapture point, +5% skill bonus for each recapture.
-				
+				AnnouncerSound(strparam(s:"combat/sector", d:g_Status), 0);
 				skip_recap = true;
 				break; // Break the time wait-up
 			}
 
 			if(Time <= 5){
 				if (alarmsUsed == 0){
+					AnnouncerSound(strparam(s:"count/", d:time), 0);
 					ambientsound("TIME", 125);
 				}
 			}
 			delay(35);
 			time--;
 		}
+
+		if(c_NukeLaunched){
+			g_GameStarted = true; // Just in case
+			alarmsUsed += 1;
+		} 
 		
 		Notify_Message("DOORS BREACHED!","Demons are entering!", "INFO", 0);
 		if (alarmsUsed == 0){
 			ambientsound("ATTACK", 125);
+			g_GameStarted = true;
 		}
 		alarmsUsed += 1;
 	
 		// breached sound
-		if(!skip_recap){
-			switch(g_Status)
-			{
-				case 1:
-					ambientsound("cv/sector1", 125);
-					break;
-				case 2:
-					ambientsound("cv/sector2", 125);
-					break;
-				case 3:
-					ambientsound("cv/sector3", 125);
-					break;
-				case 4:
-					ambientsound("cv/sector4", 125);
-					break;
-			}
+		if(!skip_recap && !c_NukeLaunched){
+			AnnouncerSound(strparam(s:"combat/sector", d:g_Status), 0);
 		}
     
     // open doors/gates
@@ -207,6 +204,7 @@ Script "SFPlus_SecManMainLoop" OPEN {
 				SecMan_ToggleDoors(1, g_Status-1, f_Doortype, f_Doorspeed);
 				acs_execute(103, 0, 0, 0, 0);
 				g_RecapCount++; // Add a recapture point, +5% skill bonus for each recapture.
+				AnnouncerSound("combat/sectorrecovered", 0);
 				break;
 			}
 			delay(5);
@@ -230,12 +228,14 @@ script 102 (void)
         terminate;
     }
     
-    ambientsound("cv/batterydestroyed", 125);
+    //ambientsound("cv/batterydestroyed", 125);
     
     // message
 	Notify_Message(Strparam(s:"Sector ", d:g_Status, s:" control lost!"),
 			"The battery is destroyed!", "INFO", 3);
     
+	AnnouncerSound(strparam(s:"combat/sectorlost"), 0);
+
     // change sectors
     g_Status ++;
 	SecMan_ToggleCores(g_Status);// Switch the cores. Inmediatly.

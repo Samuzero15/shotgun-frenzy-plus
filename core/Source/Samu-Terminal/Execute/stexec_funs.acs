@@ -139,13 +139,13 @@ function void STExecute_Close(void){
 	cursor_hover[STCURSOR_HOVER_COMPTYPE] = -1;
 	cursor_hover[STCURSOR_HOVER_LAST] = -2;
 	exitResult = 0;
-	localambientsound("Amy/Farewell", 127);
+	//localambientsound("Amy/Farewell", 127);
 }
 
 function void STExecute_Open(int taggy){
 	SetInventory("SamuTInv_UsingTerminal", 1);
 	ACS_NamedExecuteAlways("SamuTerminal_Loop",0,taggy);
-	localambientsound("Amy/Welcome", 127);
+	//localambientsound("Amy/Welcome", 127);
 	Samuterm_LockPlayer(playernumber());
 }
 

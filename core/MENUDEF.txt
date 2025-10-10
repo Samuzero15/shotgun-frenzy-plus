@@ -61,6 +61,8 @@ OptionMenu "SFPlusOptions"{
 	SubMenu "Champion Banlist", "SFPlus_ChampionBanlist"
 	SubMenu "Price Edit", "SFPlus_PriceEdit"
 	StaticText ""
+	Option "Announcer",			"cl_announcer", "ZA_Announcers" // [TP]
+	StaticText ""
 	Command "To the Testing Map!", "map TEST"
 }
 

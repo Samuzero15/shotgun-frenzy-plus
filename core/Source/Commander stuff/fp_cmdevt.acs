@@ -266,7 +266,8 @@ function void CmdEvent_Execute(int index, int price){
 			//print(s:"Research event.");
 			Tech_Set(arg1, TECHF_DONE);
 			Notify_Research(arg2, arg3);
-			localambientsound("cv/researchcomplete",128);
+			//localambientsound("cv/researchcomplete",128);
+			AnnouncerSound("command/researchComplete", false);
 			CmdEvent_Announce(arg4, arg3);
 		break;
 		case CMDEVT_TYPE_SCRIPT:

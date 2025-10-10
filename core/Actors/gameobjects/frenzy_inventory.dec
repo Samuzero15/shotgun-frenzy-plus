@@ -4,6 +4,7 @@ Actor InventoryCooldown : Integer {Inventory.maxamount 200}
 
 Actor Inventory_Item : CustomInventory 
 {
+	Inventory.PickupSound "g/DeployPickup"
 	+COUNTITEM
 		
 	-INVENTORY.AUTOACTIVATE
@@ -45,6 +46,7 @@ Actor Inventory_Item : CustomInventory
 }
 
 Actor Inventory_Powerup : Inventory_Item {
+	Inventory.PickupSound "g/PowerupPickup"
 	States {
 		Use:
 			TNT1 A 0 A_TakeInventory("Inventory_Item", 1)

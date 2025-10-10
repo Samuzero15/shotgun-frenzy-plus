@@ -1,0 +1,230 @@
+Mikell/Count/1 "sounds/plus stuff/Mikell/Time/1_1.ogg"
+Mikell/Count/2 "sounds/plus stuff/Mikell/Time/2_1.ogg"
+Mikell/Count/3 "sounds/plus stuff/Mikell/Time/3_1.ogg"
+Mikell/Count/4 "sounds/plus stuff/Mikell/Time/4_1.ogg"
+Mikell/Count/5 "sounds/plus stuff/Mikell/Time/5_1.ogg"
+
+Mikell/Count/1! "sounds/plus stuff/Mikell/Time/1_2.ogg"
+Mikell/Count/2! "sounds/plus stuff/Mikell/Time/2_2.ogg"
+Mikell/Count/3! "sounds/plus stuff/Mikell/Time/3_2.ogg"
+Mikell/Count/4! "sounds/plus stuff/Mikell/Time/4_2.ogg"
+Mikell/Count/5! "sounds/plus stuff/Mikell/Time/5_2.ogg"
+
+Mikell/Time/10mins 				"sounds/plus stuff/Mikell/Time/10Mins.ogg"
+Mikell/Time/5Mins 				"sounds/plus stuff/Mikell/Time/5Mins.ogg"
+Mikell/Time/2Mins 				"sounds/plus stuff/Mikell/Time/2Mins.ogg"
+Mikell/Time/60secs 				"sounds/plus stuff/Mikell/Time/60Seconds.ogg"
+Mikell/Time/30Secs 				"sounds/plus stuff/Mikell/Time/30Seconds.ogg"
+Mikell/Time/10secs 				"sounds/plus stuff/Mikell/Time/10Seconds.ogg"
+
+Mikell/Time/10mins! 			"sounds/plus stuff/Mikell/Time/10Mins2.ogg"
+Mikell/Time/5Mins! 				"sounds/plus stuff/Mikell/Time/5Mins2.ogg"
+Mikell/Time/2Mins! 				"sounds/plus stuff/Mikell/Time/2Mins2.ogg"
+Mikell/Time/60secs! 			"sounds/plus stuff/Mikell/Time/60Seconds2.ogg"
+Mikell/Time/30Secs! 			"sounds/plus stuff/Mikell/Time/30Seconds2.ogg"
+Mikell/Time/10secs! 			"sounds/plus stuff/Mikell/Time/10Seconds2.ogg"
+
+Mikell/Time/GuardiansArrivesIn 			"sounds/plus stuff/Mikell/Time/GuardiansArrivesIn.ogg"
+$random Mikell/Time/GuardiansIncoming 	{Mikell/Time/GuardiansIncoming_1 Mikell/Time/GuardiansIncoming_2 Mikell/Time/GuardiansIncoming_3}
+$random Mikell/Time/Mission/BeginsIn 	{Mikell/Time/Mission/BeginsIn_1 Mikell/Time/Mission/BeginsIn_2}
+$random Mikell/Time/Mission/EndsIn 		{Mikell/Time/Mission/EndsIn_1 Mikell/Time/Mission/EndsIn_2}
+$random Mikell/Time/Mission/Complete 	{Mikell/Time/Mission/Complete_1 Mikell/Time/Mission/Complete_2}
+$random Mikell/Time/Mission/Failed 		{Mikell/Time/Mission/Failed_1 Mikell/Time/Mission/Failed_2}
+$random Mikell/Time/Mission/Inbound 	{Mikell/Time/Mission/Inbound_1 Mikell/Time/Mission/Inbound_2}
+Mikell/Time/NextWaveIn 					"sounds/plus stuff/Mikell/Time/NextWaveIn.ogg"
+Mikell/Time/NukeLaunchIn                "sounds/plus stuff/Mikell/Time/NukeLaunchIn.ogg"
+
+$random Mikell/Terminal/Hello 	{Mikell/Terminal/Hello1 Mikell/Terminal/Hello2}
+$random Mikell/Terminal/Bye 	{Mikell/Terminal/Bye1 Mikell/Terminal/Bye2}
+
+Mikell/Runes/Ammunition 			"sounds/plus stuff/Mikell/Runes/Ammunition.ogg"
+Mikell/Runes/Blast 					"sounds/plus stuff/Mikell/Runes/Blast.ogg"
+Mikell/Runes/Dash 					"sounds/plus stuff/Mikell/Runes/Dash.ogg"
+Mikell/Runes/Defense 				"sounds/plus stuff/Mikell/Runes/Defense.ogg"
+Mikell/Runes/Drain 					"sounds/plus stuff/Mikell/Runes/Drain.ogg"
+Mikell/Runes/Fortune				"sounds/plus stuff/Mikell/Runes/Fortune.ogg"
+Mikell/Runes/Haste 					"sounds/plus stuff/Mikell/Runes/Haste.ogg"
+Mikell/Runes/Health 				"sounds/plus stuff/Mikell/Runes/Health.ogg"
+Mikell/Runes/Prosperity 			"sounds/plus stuff/Mikell/Runes/Prosperity.ogg"
+Mikell/Runes/Rage 					"sounds/plus stuff/Mikell/Runes/Rage.ogg"
+Mikell/Runes/Rampage 				"sounds/plus stuff/Mikell/Runes/Rampage.ogg"
+Mikell/Runes/Reflection 			"sounds/plus stuff/Mikell/Runes/Reflection.ogg"
+Mikell/Runes/Regeneration 			"sounds/plus stuff/Mikell/Runes/Regeneration.ogg"
+Mikell/Runes/Resistance 			"sounds/plus stuff/Mikell/Runes/Resistance.ogg"
+$random Mikell/Runes/Resurrection 	{Mikell/Runes/Resurrection_1 Mikell/Runes/Resurrection_2}
+Mikell/Runes/Soul 					"sounds/plus stuff/Mikell/Runes/Soul.ogg"
+Mikell/Runes/Spread 				"sounds/plus stuff/Mikell/Runes/Spread.ogg"
+Mikell/Runes/Strength 				"sounds/plus stuff/Mikell/Runes/Strength.ogg"
+$random Mikell/Runes/Temperance 	{Mikell/Runes/Temperance_1 Mikell/Runes/Temperance_2 Mikell/Runes/Temperance_3}
+
+$random Mikell/Command/Armory/Building 		{Mikell/Command/Armory/Building_1 		Mikell/Command/Armory/Building_2}
+$random Mikell/Command/Armory/Constructed 	{Mikell/Command/Armory/Constructed_1	Mikell/Command/Armory/Constructed_2}
+$random Mikell/Command/GenLab/Building 		{Mikell/Command/GenLab/Building_1 		Mikell/Command/GenLab/Building_2}
+$random Mikell/Command/GenLab/Constructed 	{Mikell/Command/GenLab/Constructed_1 	Mikell/Command/GenLab/Constructed_2}
+$random Mikell/Command/MarCom/Building 		{Mikell/Command/MarCom/Building_1 		Mikell/Command/MarCom/Building_2}
+$random Mikell/Command/MarCom/Constructed 	{Mikell/Command/MarCom/Constructed_1 	Mikell/Command/MarCom/Constructed_2}
+$random Mikell/Command/MechFa/Building 		{Mikell/Command/MechFa/Building_1 		Mikell/Command/MechFa/Building_2}
+$random Mikell/Command/MechFa/Constructed 	{Mikell/Command/MechFa/Constructed_1 	Mikell/Command/MechFa/Constructed_2}
+$random Mikell/Command/Refine/Building 		{Mikell/Command/Refine/Building_1 		Mikell/Command/Refine/Building_2}
+$random Mikell/Command/Refine/Constructed 	{Mikell/Command/Refine/Constructed_1 	Mikell/Command/Refine/Constructed_2}
+$random Mikell/Command/NSilo/Building 		{Mikell/Command/NSilo/Building_1 		Mikell/Command/NSilo/Building_2}
+$random Mikell/Command/NSilo/Constructed 	{Mikell/Command/NSilo/Constructed_1 	Mikell/Command/NSilo/Constructed_2}
+$random Mikell/Command/ResearchComplete 	{Mikell/Command/ResearchComplete_1 		Mikell/Command/ResearchComplete_2 Mikell/Command/ResearchComplete_3}
+Mikell/Command/AirStrike 					"sounds/plus stuff/Mikell/Command/AirStrike.ogg"
+Mikell/Command/CorePulse 					"sounds/plus stuff/Mikell/Command/CorePulse.ogg"
+$random Mikell/Command/BlastOff 			{Mikell/Command/BlastOff_1 				Mikell/Command/BlastOff_2 Mikell/Command/BlastOff_3 Mikell/Command/BlastOff_4}
+$random Mikell/Command/Deploy/Dispenser 	{Mikell/Command/Deploy/Dispenser_1 		Mikell/Command/Deploy/Dispenser_2 Mikell/Command/Deploy/Dispenser_3 }
+$random Mikell/Command/Deploy/Mines 		{Mikell/Command/Deploy/Mines_1 			Mikell/Command/Deploy/Mines_2}
+$random Mikell/Command/Deploy/Sandbags 		{Mikell/Command/Deploy/Sandbags_1 		Mikell/Command/Deploy/Sandbags_2}
+$random Mikell/Command/Deploy/Turret 		{Mikell/Command/Deploy/Turret_1 		Mikell/Command/Deploy/Turret_2}
+$random Mikell/Command/GreetCmd 			{Mikell/Command/GreetCmd_1 				Mikell/Command/GreetCmd_2 		Mikell/Command/GreetCmd_3 }
+
+Mikell/Combat/Sector1 						"sounds/plus stuff/Mikell/Combat/Sector1.ogg"
+Mikell/Combat/Sector2 						"sounds/plus stuff/Mikell/Combat/Sector2.ogg"
+Mikell/Combat/Sector3 						"sounds/plus stuff/Mikell/Combat/Sector3.ogg"
+Mikell/Combat/Sector4 						"sounds/plus stuff/Mikell/Combat/Sector4.ogg"
+$random Mikell/Combat/SectorLost 			{Mikell/Combat/SectorLost_1 			Mikell/Combat/SectorLost_2}
+$random Mikell/Combat/SectorRecovered 		{Mikell/Combat/SectorRecovered_1 		Mikell/Combat/SectorRecovered_2 	Mikell/Combat/SectorRecovered_3}
+$random Mikell/Combat/PrepareYourself 		{Mikell/Combat/PrepareYourself_1 		Mikell/Combat/PrepareYourself_2}
+$random Mikell/Combat/ClearAndFinish 		{Mikell/Combat/ClearAndFinish_1 		Mikell/Combat/ClearAndFinish_2}
+
+$random Mikell/Powerup/Ammosphere 	{Mikell/Powerup/Ammosphere_1 	Mikell/Powerup/Ammosphere_2}
+$random Mikell/Powerup/Doomsphere 	{Mikell/Powerup/Doomsphere_1 	Mikell/Powerup/Doomsphere_2}
+$random Mikell/Powerup/Godsphere 	{Mikell/Powerup/Godsphere_1 	Mikell/Powerup/Godsphere_2}
+$random Mikell/Powerup/HellTrigger 	{Mikell/Powerup/HellTrigger_1 	Mikell/Powerup/HellTrigger_2}
+$random Mikell/Powerup/Megasphere 	{Mikell/Powerup/Megasphere_1 	Mikell/Powerup/Megasphere_2}
+$random Mikell/Powerup/Soulsphere 	{Mikell/Powerup/Soulsphere_1 	Mikell/Powerup/Soulsphere_2}
+
+//////////////////////////////////
+
+Mikell/Time/GuardiansIncoming_1 "sounds/plus stuff/Mikell/Time/GuardiansIncoming.ogg"
+Mikell/Time/GuardiansIncoming_2 "sounds/plus stuff/Mikell/Time/GuardiansIncoming2.ogg"
+Mikell/Time/GuardiansIncoming_3 "sounds/plus stuff/Mikell/Time/GuardiansIncoming3.ogg"
+
+Mikell/Time/Mission/BeginsIn_1 "sounds/plus stuff/Mikell/Time/MissionBeginsIn.ogg"
+Mikell/Time/Mission/BeginsIn_2 "sounds/plus stuff/Mikell/Time/MissionBeginsIn2.ogg"
+
+Mikell/Time/Mission/Complete_1 "sounds/plus stuff/Mikell/Time/MissionComplete.ogg"
+Mikell/Time/Mission/Complete_2 "sounds/plus stuff/Mikell/Time/MissionComplete2.ogg"
+
+Mikell/Time/Mission/EndsIn_1 "sounds/plus stuff/Mikell/Time/MissionEndsIn.ogg"
+Mikell/Time/Mission/EndsIn_2 "sounds/plus stuff/Mikell/Time/MissionEndsIn2.ogg"
+
+Mikell/Time/Mission/Failed_1 "sounds/plus stuff/Mikell/Time/MissionFailed.ogg"
+Mikell/Time/Mission/Failed_2 "sounds/plus stuff/Mikell/Time/MissionFailed2.ogg"
+
+Mikell/Time/Mission/Inbound_1 "sounds/plus stuff/Mikell/Time/MissionInbound.ogg"
+Mikell/Time/Mission/Inbound_2 "sounds/plus stuff/Mikell/Time/MissionInbound2.ogg"
+
+Mikell/Terminal/Hello1_1 "sounds/plus stuff/Mikell/Terminal/TerminalHello1_1.ogg"
+Mikell/Terminal/Hello1_2 "sounds/plus stuff/Mikell/Terminal/TerminalHello1_2.ogg"
+Mikell/Terminal/Hello1_3 "sounds/plus stuff/Mikell/Terminal/TerminalHello1_3.ogg"
+$random Mikell/Terminal/Hello1 {Mikell/Terminal/Hello1_1 Mikell/Terminal/Hello1_2 Mikell/Terminal/Hello1_3}
+
+Mikell/Terminal/Hello2_1 "sounds/plus stuff/Mikell/Terminal/TerminalHello2_1.ogg"
+Mikell/Terminal/Hello2_2 "sounds/plus stuff/Mikell/Terminal/TerminalHello2_2.ogg"
+Mikell/Terminal/Hello2_3 "sounds/plus stuff/Mikell/Terminal/TerminalHello2_3.ogg"
+Mikell/Terminal/Hello2_4 "sounds/plus stuff/Mikell/Terminal/TerminalHello2_4.ogg"
+Mikell/Terminal/Hello2_5 "sounds/plus stuff/Mikell/Terminal/TerminalHello2_5.ogg"
+$random Mikell/Terminal/Hello2 {Mikell/Terminal/Hello2_1 Mikell/Terminal/Hello2_2 Mikell/Terminal/Hello2_3 Mikell/Terminal/Hello2_4 Mikell/Terminal/Hello2_5}
+
+Mikell/Terminal/Bye1_1 "sounds/plus stuff/Mikell/Terminal/TerminalBye1_1.ogg"
+Mikell/Terminal/Bye1_2 "sounds/plus stuff/Mikell/Terminal/TerminalBye1_2.ogg"
+Mikell/Terminal/Bye1_3 "sounds/plus stuff/Mikell/Terminal/TerminalBye1_3.ogg"
+Mikell/Terminal/Bye1_4 "sounds/plus stuff/Mikell/Terminal/TerminalBye1_4.ogg"
+$random Mikell/Terminal/Bye1 {Mikell/Terminal/Bye1_1 Mikell/Terminal/Bye1_2 Mikell/Terminal/Bye1_3 Mikell/Terminal/Bye1_4}
+
+Mikell/Terminal/Bye2_1 "sounds/plus stuff/Mikell/Terminal/TerminalBye2_1.ogg"
+Mikell/Terminal/Bye2_2 "sounds/plus stuff/Mikell/Terminal/TerminalBye2_2.ogg"
+Mikell/Terminal/Bye2_3 "sounds/plus stuff/Mikell/Terminal/TerminalBye2_3.ogg"
+Mikell/Terminal/Bye2_4 "sounds/plus stuff/Mikell/Terminal/TerminalBye2_4.ogg"
+$random Mikell/Terminal/Bye2 {Mikell/Terminal/Bye2_1 Mikell/Terminal/Bye2_2 Mikell/Terminal/Bye2_3 Mikell/Terminal/Bye2_4}
+
+Mikell/Runes/Resurrection_1 "sounds/plus stuff/Mikell/Runes/Resurrection.ogg"
+Mikell/Runes/Resurrection_2 "sounds/plus stuff/Mikell/Runes/Resurrection2.ogg"
+
+Mikell/Runes/Temperance_1 	"sounds/plus stuff/Mikell/Runes/Temperance.ogg"
+Mikell/Runes/Temperance_2 	"sounds/plus stuff/Mikell/Runes/Temperance2.ogg"
+Mikell/Runes/Temperance_3 	"sounds/plus stuff/Mikell/Runes/Temperance3.ogg"
+
+Mikell/Command/Armory/Building_1 "sounds/plus stuff/Mikell/Command/ArmoryB.ogg"
+Mikell/Command/Armory/Building_2 "sounds/plus stuff/Mikell/Command/ArmoryB2.ogg"
+Mikell/Command/Armory/Constructed_1 "sounds/plus stuff/Mikell/Command/ArmoryC.ogg"
+Mikell/Command/Armory/Constructed_2 "sounds/plus stuff/Mikell/Command/ArmoryC2.ogg"
+
+Mikell/Command/GenLab/Building_1 "sounds/plus stuff/Mikell/Command/GenLabB.ogg"
+Mikell/Command/GenLab/Building_2 "sounds/plus stuff/Mikell/Command/GenLabB2.ogg"
+Mikell/Command/GenLab/Constructed_1 "sounds/plus stuff/Mikell/Command/GenLabC.ogg"
+Mikell/Command/GenLab/Constructed_2 "sounds/plus stuff/Mikell/Command/GenLabC2.ogg"
+
+Mikell/Command/MarCom/Building_1 "sounds/plus stuff/Mikell/Command/MarComB.ogg"
+Mikell/Command/MarCom/Building_2 "sounds/plus stuff/Mikell/Command/MarComB2.ogg"
+Mikell/Command/MarCom/Constructed_1 "sounds/plus stuff/Mikell/Command/MarComC.ogg"
+Mikell/Command/MarCom/Constructed_2 "sounds/plus stuff/Mikell/Command/MarComC2.ogg"
+
+Mikell/Command/MechFa/Building_1 "sounds/plus stuff/Mikell/Command/MechFaB.ogg"
+Mikell/Command/MechFa/Building_2 "sounds/plus stuff/Mikell/Command/MechFaB2.ogg"
+Mikell/Command/MechFa/Constructed_1 "sounds/plus stuff/Mikell/Command/MechFaC.ogg"
+Mikell/Command/MechFa/Constructed_2 "sounds/plus stuff/Mikell/Command/MechFaC2.ogg"
+
+Mikell/Command/Refine/Building_1 "sounds/plus stuff/Mikell/Command/RefineB.ogg"
+Mikell/Command/Refine/Building_2 "sounds/plus stuff/Mikell/Command/RefineB2.ogg"
+Mikell/Command/Refine/Constructed_1 "sounds/plus stuff/Mikell/Command/RefineC.ogg"
+Mikell/Command/Refine/Constructed_2 "sounds/plus stuff/Mikell/Command/RefineC2.ogg"
+
+Mikell/Command/NSilo/Building_1 "sounds/plus stuff/Mikell/Command/NSiloB.ogg"
+Mikell/Command/NSilo/Building_2 "sounds/plus stuff/Mikell/Command/NSiloB2.ogg"
+Mikell/Command/NSilo/Constructed_1 "sounds/plus stuff/Mikell/Command/NSiloC.ogg"
+Mikell/Command/NSilo/Constructed_2 "sounds/plus stuff/Mikell/Command/NSiloC2.ogg"
+
+Mikell/Command/ResearchComplete_1 	"sounds/plus stuff/Mikell/Command/ResearchComplete.ogg"
+Mikell/Command/ResearchComplete_2 	"sounds/plus stuff/Mikell/Command/ResearchComplete2.ogg"
+Mikell/Command/ResearchComplete_3 	"sounds/plus stuff/Mikell/Command/ResearchComplete3.ogg"
+
+Mikell/Command/BlastOff_1 	"sounds/plus stuff/Mikell/Command/BlastOff.ogg"
+Mikell/Command/BlastOff_2 	"sounds/plus stuff/Mikell/Command/BlastOff2.ogg"
+Mikell/Command/BlastOff_3 	"sounds/plus stuff/Mikell/Command/BlastOff3.ogg"
+Mikell/Command/BlastOff_4 	"sounds/plus stuff/Mikell/Command/BlastOff4.ogg"
+
+Mikell/Command/Deploy/Dispenser_1 	"sounds/plus stuff/Mikell/Command/DeployDispenser.ogg"
+Mikell/Command/Deploy/Dispenser_2 	"sounds/plus stuff/Mikell/Command/DeployDispenser2.ogg"
+Mikell/Command/Deploy/Dispenser_3 	"sounds/plus stuff/Mikell/Command/DeployDispenser3.ogg"
+
+Mikell/Command/Deploy/Mines_1 	"sounds/plus stuff/Mikell/Command/DeployMines.ogg"
+Mikell/Command/Deploy/Mines_2 	"sounds/plus stuff/Mikell/Command/DeployMines2.ogg"
+
+Mikell/Command/Deploy/Sandbags_1 	"sounds/plus stuff/Mikell/Command/DeploySandbags.ogg"
+Mikell/Command/Deploy/Sandbags_2 	"sounds/plus stuff/Mikell/Command/DeploySandbags2.ogg"
+
+Mikell/Command/Deploy/Turret_1 	"sounds/plus stuff/Mikell/Command/DeployTurret.ogg"
+Mikell/Command/Deploy/Turret_2 	"sounds/plus stuff/Mikell/Command/DeployTurret2.ogg"
+
+Mikell/Command/GreetCmd_1 	"sounds/plus stuff/Mikell/Command/GreetCmd.ogg"
+Mikell/Command/GreetCmd_2	"sounds/plus stuff/Mikell/Command/GreetCmd2.ogg"
+Mikell/Command/GreetCmd_3	"sounds/plus stuff/Mikell/Command/GreetCmd3.ogg"
+
+Mikell/Combat/SectorLost_1 				"sounds/plus stuff/Mikell/Combat/SectorLost.ogg"
+Mikell/Combat/SectorLost_2 				"sounds/plus stuff/Mikell/Combat/SectorLost2.ogg"
+
+Mikell/Combat/SectorRecovered_1 				"sounds/plus stuff/Mikell/Combat/SectorRecovered.ogg"
+Mikell/Combat/SectorRecovered_2 				"sounds/plus stuff/Mikell/Combat/SectorRecovered2.ogg"
+Mikell/Combat/SectorRecovered_3 				"sounds/plus stuff/Mikell/Combat/SectorRecovered3.ogg"
+
+Mikell/Combat/PrepareYourself_1 				"sounds/plus stuff/Mikell/Combat/PrepareYourself.ogg"
+Mikell/Combat/PrepareYourself_2 				"sounds/plus stuff/Mikell/Combat/PrepareYourself2.ogg"
+
+Mikell/Combat/ClearAndFinish_1 				"sounds/plus stuff/Mikell/Combat/ClearAndFinish.ogg"
+Mikell/Combat/ClearAndFinish_2 				"sounds/plus stuff/Mikell/Combat/ClearAndFinish2.ogg"
+
+Mikell/Powerup/Ammosphere_1 		"sounds/plus stuff/Mikell/Powerup/Ammosphere.ogg"
+Mikell/Powerup/Ammosphere_2 		"sounds/plus stuff/Mikell/Powerup/Ammosphere2.ogg"
+Mikell/Powerup/Doomsphere_1 		"sounds/plus stuff/Mikell/Powerup/Doomsphere.ogg"
+Mikell/Powerup/Doomsphere_2 		"sounds/plus stuff/Mikell/Powerup/Doomsphere2.ogg"
+Mikell/Powerup/Godsphere_1 			"sounds/plus stuff/Mikell/Powerup/Godsphere.ogg"
+Mikell/Powerup/Godsphere_2 			"sounds/plus stuff/Mikell/Powerup/Godsphere2.ogg"
+Mikell/Powerup/HellTrigger_1 		"sounds/plus stuff/Mikell/Powerup/HellTrigger.ogg"
+Mikell/Powerup/HellTrigger_2 		"sounds/plus stuff/Mikell/Powerup/HellTrigger2.ogg"
+Mikell/Powerup/Megasphere_1 		"sounds/plus stuff/Mikell/Powerup/Megasphere.ogg"
+Mikell/Powerup/Megasphere_2 		"sounds/plus stuff/Mikell/Powerup/Megasphere2.ogg"
+Mikell/Powerup/Soulsphere_1 		"sounds/plus stuff/Mikell/Powerup/Soulsphere.ogg"
+Mikell/Powerup/Soulsphere_2 		"sounds/plus stuff/Mikell/Powerup/Soulsphere2.ogg"

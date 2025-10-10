@@ -88,7 +88,8 @@ script "SFPlus_CorePulse" (int pulse_cmd)
 		terminate;
 	}
 	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/corepulse", 125);
+    //ambientsound("cv/corepulse", 125);
+	AnnouncerSound("command/corepulse", 125);
     
     // disable use of core weapons
 	Tech_SetDone(TECH_MARCOM_CPULSE, TECHF_LOCK);

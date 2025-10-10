@@ -7,7 +7,8 @@ ACTOR SoulRune : RuneGiver {
 	Rune.Type Soul
     scale 0.75
 	Inventory.PickupMessage "Soul!"
-    Inventory.PickupSound "runes/soul"
+    Inventory.PickupAnnouncerEntry "soul"
+    Inventory.PickupSound "g/RunePickup"
 	States
 	{
 	Spawn:
@@ -24,7 +25,8 @@ Actor SoulRune_Pickup : CustomInventory
 	+NOGRAVITY
     scale 0.75
 	Inventory.PickupMessage "Soul!"
-    Inventory.PickupSound "runes/soul"
+    Inventory.PickupSound "g/RunePickup"
+    Inventory.PickupAnnouncerEntry "soul"
 	States
 	{
 	Spawn:

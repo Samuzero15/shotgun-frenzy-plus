@@ -9,7 +9,8 @@ ACTOR ResurrectionRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Resurrection
 	Inventory.PickupMessage "Resurrection!"
-	Inventory.PickupSound "runes/resurrection"
+	Inventory.PickupSound "g/RunePickup"
+	Inventory.PickupAnnouncerEntry "resurrection"
 	scale 0.9
 	FloatSpeed 2
 	States

@@ -8,7 +8,8 @@ ACTOR AmmunitionRune : RuneGiver {
 	Inventory.MaxAmount 0
 	Rune.Type Ammunition
 	Inventory.PickupMessage "Ammunition!"
-	Inventory.PickupSound "runes/ammunition"
+	Inventory.PickupSound "g/RunePickup"
+	Inventory.PickupAnnouncerEntry "ammunition"
 	scale 0.5
 	States
 	{
@@ -22,7 +23,9 @@ Actor AmmunitionRune_Pickup : CustomInventory
 {// Use this actor to give the player the ammunition rune and the effect.
 	+NOGRAVITY
 	Inventory.PickupMessage "Ammunition!"
-	Inventory.PickupSound "runes/ammunition"
+	Inventory.PickupSound "g/RunePickup"
+	Inventory.PickupAnnouncerEntry "ammunition"
+	Inventory.Icon RAMOA0
 	scale 0.5
 	States
 	{

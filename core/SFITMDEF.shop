@@ -1,14 +1,14 @@
 // Define new items using a lump like SFITMDEF, each line defines a new item.
 
-// AddPowerup, (str item_actor, int max_items, str cvar_price, str lang_data, int color, [bool hide_in_hud], [bool not_in_classic], [str for_class])
+// AddPowerup, (str item_actor, int max_items, str cvar_price, str lang_data, int color, int powerid, str announcer_sound, [bool hide_in_hud], [bool not_in_classic], [str for_class])
 // Adds a powerup sold by the Health terminal
 
-AddPowerup, "Inventory_Soulsphere",      3, "pr_p_soulsphere",       "SOULSPHERE", 7
-AddPowerup, "Inventory_Megasphere",      3, "pr_p_megasphere",       "MEGASPHERE", 21
-AddPowerup, "Inventory_Godsphere",       1, "pr_p_godsphere",        "GODSPHERE", 9
-AddPowerup, "Inventory_Berserk2",        1, "pr_p_berserk2",         "BERSERK2", 6
-AddPowerup, "Inventory_AmmoGiver",       1, "pr_p_ammosphere",       "AMMOSPHERE", 3
-AddPowerup, "Inventory_Helltrigger",     1, "pr_p_helltrigger",      "HELLTRIGGER", 8,, true
+AddPowerup, "Inventory_Soulsphere",      3, "pr_p_soulsphere",       "SOULSPHERE", 7, 1
+AddPowerup, "Inventory_Megasphere",      3, "pr_p_megasphere",       "MEGASPHERE", 21, 2
+AddPowerup, "Inventory_Godsphere",       1, "pr_p_godsphere",        "GODSPHERE", 9, 3
+AddPowerup, "Inventory_Berserk2",        1, "pr_p_berserk2",         "BERSERK2", 6, 4
+AddPowerup, "Inventory_AmmoGiver",       1, "pr_p_ammosphere",       "AMMOSPHERE", 3, 5
+AddPowerup, "Inventory_Helltrigger",     1, "pr_p_helltrigger",      "HELLTRIGGER", 8, 6,, true
 
 // AddItem, (str item_actor, int max_items, str cvar_price, str lang_data, [bool hide_in_hud], [bool not_in_classic], [str for_class])
 // Adds a item sold in the Ammo Terminal

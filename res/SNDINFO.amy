@@ -1,0 +1,119 @@
+
+Amy/Count/1 "sounds/plus stuff/Amy/Time/One.ogg"
+Amy/Count/2 "sounds/plus stuff/Amy/Time/Two.ogg"
+Amy/Count/3 "sounds/plus stuff/Amy/Time/Three.ogg"
+Amy/Count/4 "sounds/plus stuff/Amy/Time/Four.ogg"
+Amy/Count/5 "sounds/plus stuff/Amy/Time/Five.ogg"
+
+Amy/Count/1! "sounds/plus stuff/Amy/Time/One.ogg"
+Amy/Count/2! "sounds/plus stuff/Amy/Time/Two.ogg"
+Amy/Count/3! "sounds/plus stuff/Amy/Time/Three.ogg"
+Amy/Count/4! "sounds/plus stuff/Amy/Time/Four.ogg"
+Amy/Count/5! "sounds/plus stuff/Amy/Time/Five.ogg"
+
+Amy/Time/10mins 			"sounds/plus stuff/Amy/Time/10Mins.ogg"
+Amy/Time/5Mins 				"sounds/plus stuff/Amy/Time/5Mins.ogg"
+Amy/Time/2Mins 				"sounds/plus stuff/Amy/Time/2Mins.ogg"
+Amy/Time/60secs 			"sounds/plus stuff/Amy/Time/60Seconds.ogg"
+Amy/Time/30Secs 			"sounds/plus stuff/Amy/Time/30Seconds.ogg"
+Amy/Time/10secs 			"sounds/plus stuff/Amy/Time/10Seconds.ogg"
+
+Amy/Time/10mins! 			"sounds/plus stuff/Amy/Time/10Mins.ogg"
+Amy/Time/5Mins! 			"sounds/plus stuff/Amy/Time/5Mins.ogg"
+Amy/Time/2Mins! 			"sounds/plus stuff/Amy/Time/2Mins.ogg"
+Amy/Time/60secs! 			"sounds/plus stuff/Amy/Time/60Seconds.ogg"
+Amy/Time/30Secs! 			"sounds/plus stuff/Amy/Time/30Seconds.ogg"
+Amy/Time/10secs! 			"sounds/plus stuff/Amy/Time/10Seconds.ogg"
+
+Amy/Time/GuardiansArrivesIn 	"sounds/plus stuff/Amy/Mission/GuardiansArrivesIn.ogg"
+Amy/Time/GuardiansIncoming 	    "sounds/plus stuff/Amy/Mission/GuardiansIncoming.ogg"
+Amy/Time/Mission/BeginsIn 	    "sounds/plus stuff/Amy/Mission/BeginsIn.ogg"
+Amy/Time/Mission/EndsIn 	    "sounds/plus stuff/Amy/Mission/EndsIn.ogg"
+Amy/Time/Mission/Complete 	    "sounds/plus stuff/Amy/Mission/MissionComplete.ogg"
+Amy/Time/Mission/Failed 	    "sounds/plus stuff/Amy/Mission/MissionFailed.ogg"
+Amy/Time/Mission/Inbound 	    "sounds/plus stuff/Amy/Mission/MissionInbound.ogg"
+Amy/Time/NextWaveIn 			"sounds/plus stuff/Amy/Mission/NextWaveIn.ogg"
+Amy/Time/NukeLaunchesIn 		"sounds/plus stuff/Amy/Mission/NukeLaunchesIn.ogg"
+
+Amy/Runes/Ammunition 	"sounds/plus stuff/Amy/Runes/Ammunition.ogg"
+Amy/Runes/AirJump       "sounds/plus stuff/Amy/Runes/HighJump.ogg"
+Amy/Runes/Blast 		"sounds/plus stuff/Amy/Runes/Blast.ogg"
+Amy/Runes/Dash 			"sounds/plus stuff/Amy/Runes/Dash.ogg"
+Amy/Runes/Defense 		"sounds/plus stuff/Amy/Runes/Defense.ogg"
+Amy/Runes/Drain 		"sounds/plus stuff/Amy/Runes/Drain.ogg"
+Amy/Runes/Fortune		"sounds/plus stuff/Amy/Runes/Fortune.ogg"
+Amy/Runes/Haste 		"sounds/plus stuff/Amy/Runes/Haste.ogg"
+Amy/Runes/Health 		"sounds/plus stuff/Amy/Runes/Health.ogg"
+Amy/Runes/Prosperity 	"sounds/plus stuff/Amy/Runes/Prosperity.ogg"
+Amy/Runes/Rage 			"sounds/plus stuff/Amy/Runes/Rage.ogg"
+Amy/Runes/Rampage 		"sounds/plus stuff/Amy/Runes/Rampage.ogg"
+Amy/Runes/Reflection 	"sounds/plus stuff/Amy/Runes/Reflection.ogg"
+Amy/Runes/Regeneration	"sounds/plus stuff/Amy/Runes/Regeneration.ogg"
+Amy/Runes/Resistance 	"sounds/plus stuff/Amy/Runes/Resistance.ogg"
+Amy/Runes/Resurrection	"sounds/plus stuff/Amy/Runes/Resurrection.ogg"
+Amy/Runes/Soul 			"sounds/plus stuff/Amy/Runes/Soul.ogg"
+Amy/Runes/Spread 		"sounds/plus stuff/Amy/Runes/Spread.ogg"
+Amy/Runes/Strength 		"sounds/plus stuff/Amy/Runes/Strength.ogg"
+Amy/Runes/Temperance 	"sounds/plus stuff/Amy/Runes/Temperance.ogg"
+
+/*
+Amy/Runes/Ammunition 	r_ammo
+Amy/Runes/AirJump       r_ajump
+Amy/Runes/Blast 		r_blast
+Amy/Runes/Dash 			r_dash
+Amy/Runes/Defense 		r_defen
+Amy/Runes/Drain 		r_drain
+Amy/Runes/Fortune		r_fortu
+Amy/Runes/Haste 		r_haste
+Amy/Runes/Health 		r_heal
+Amy/Runes/Prosperity 	r_prosp
+Amy/Runes/Rage 			r_rage
+Amy/Runes/Rampage 		r_ramp
+Amy/Runes/Reflection 	r_reflec
+Amy/Runes/Regeneration	r_regen
+Amy/Runes/Resistance 	r_resis
+Amy/Runes/Resurrection	r_resur
+Amy/Runes/Soul 			r_soul
+Amy/Runes/Spread 		r_spread
+Amy/Runes/Strength 		r_stren
+Amy/Runes/Temperance 	r_temper
+*/
+
+Amy/Command/Armory/Building         V_ARM1
+Amy/Command/Armory/Constructed      V_ARM2
+Amy/Command/GenLab/Building         V_GEN1
+Amy/Command/GenLab/Constructed      V_GEN2
+Amy/Command/MarCom/Building         V_MCO1
+Amy/Command/MarCom/Constructed      V_MCO2
+Amy/Command/MechFa/Building         a_mf1
+Amy/Command/MechFa/Constructed      a_mf2
+Amy/Command/Refine/Building         V_REF1
+Amy/Command/Refine/Constructed      V_REF2
+Amy/Command/NSilo/Building          V_NSI1
+Amy/Command/NSilo/Constructed       V_NSI2
+	
+Amy/Command/ResearchComplete    V_RES
+Amy/Command/AirStrike           V_AIR
+Amy/Command/CorePulse           V_COR
+Amy/Command/GreetCmd            V_COM
+	
+Amy/Combat/Sector1              V_SEC1
+Amy/Combat/Sector2              V_SEC2
+Amy/Combat/Sector3              V_SEC3
+Amy/Combat/Sector4              V_SEC4
+Amy/Combat/ClearAndFinish 		"sounds/plus stuff/Amy/Mission/ClearArea.ogg"
+
+Amy/Powerup/Ammosphere      "sounds/plus stuff/Amy/Powerup/Ammosphere.ogg"
+Amy/Powerup/Doomsphere      "sounds/plus stuff/Amy/Powerup/Doomsphere.ogg"
+Amy/Powerup/Godsphere       "sounds/plus stuff/Amy/Powerup/Godsphere.ogg" 
+Amy/Powerup/HellTrigger     "sounds/plus stuff/Amy/Powerup/HellTrigger.ogg"
+Amy/Powerup/Megasphere      "sounds/plus stuff/Amy/Powerup/Megasphere.ogg"
+Amy/Powerup/Soulsphere      "sounds/plus stuff/Amy/Powerup/Soulsphere.ogg"
+
+A-Greet1 A-Greet1
+A-Greet2 A-Greet2
+$random Amy/Terminal/Hello {A-Greet1 A-Greet2}
+
+A-Bye1 A-Bye1
+A-Bye2 A-Bye2
+$random Amy/Terminal/Bye {A-Bye1 A-Bye2}

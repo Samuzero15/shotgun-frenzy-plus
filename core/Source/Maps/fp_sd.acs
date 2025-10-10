@@ -49,7 +49,8 @@ function void SFPlus_DefaultVars(void){
 script 405 (int l_BypassProperty)
 {
 	SetActivator(0); //Preventing a major disaster
-    ambientsound("cv/corepulse", 125);
+    //ambientsound("cv/corepulse", 125);
+	AnnouncerSound("command/corepulse", 0);
     
     int setValue;
     

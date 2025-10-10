@@ -45,10 +45,20 @@ script 451 (void)
 {
 	SetActivator(0); //Preventing a major disaster
     // start the nuclear launch
+
+    if(g_GuardianState >= INTDB_GUARDIANSTATE_ATTACK) {
+        f_TipShow ("CM75", "NUCLEAR LAUNCH", "The guardians are here \nwe can't use the nuclear silo!", 0);
+        terminate;
+    }
+
     c_NukeLaunched = 1;
     acs_execute(89, 0, 0, 0, 0);
-    //Music_Change("D_BOSS", 1);
+    acs_terminate(129, 0);// Kill the timer script.
+    ACS_NamedTerminate("SFPlus_SecManMainLoop", 0);
     
+    // Screw final battle timer, now we make our own.
+    acs_terminate(107, 0);
+
     acs_terminate(120, 0);
     acs_terminate(100, 0);
     acs_terminate(102, 0);
@@ -79,50 +89,67 @@ script 451 (void)
     
     // raise nuke sprite
     floor_raisebyvalue		(307, 1, 1024);
-    
-	delay(35);
-	
-	
+    f_TipShow ("CM75", "NUCLEAR LAUNCH Initiated!", "5 Minutes remaining...", 0);
+    AnnouncerSound("combat/prepareyourself", 0);
+    setfont("DBIGFONT");
+    hudmessageBold(s:"Nuclear Launch Program Initiated!"; 2, 0, cr_white, 400.0, 200.0, 5.0);
+	delay(35 * 3);
 
-    // wait 5 minutes
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "5 Minutes remaining...", 0);
-    delay(35 * 60);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "4 Minutes remaining...", 0);
-    delay(35 * 60);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "3 Minutes remaining...", 0);
-    delay(35 * 60);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "2 Minutes remaining...", 0);
-    delay(35 * 60);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "1 Minute remaining...", 0);
-    delay(35 * 30);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "30 Seconds remaining...", 0);
-    delay(35 * 15);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "15 Seconds remaining...", 0);
-    delay(35 * 5);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "10...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "9...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "8...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "7...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "6...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "5...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "4...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "3...", 0);
-    delay(35 * 1);
-    f_TipShow ("CM75", "NUCLEAR LAUNCH", "PREPARE FOR LAUNCH...", 0);
-    delay(35 * 2);
-    
+    ACS_NamedExecute("SFPlus_NukeTimer", 0);
+}
+
+Script "SFPlus_NukeTimer" (void) {
+    SetCvarString("sfp_scordata_status", "Launching Nuke");
+    g_GameTimer = 35 * 5;
+    int remainingSeconds = g_GameTimer / 35;
+    while(g_GameTimer > 0){ // [Samu] Here it is the game timer.
+        if((g_GameTimer) % 35 == 0){
+            SetCvar("sfp_scordata_timemin", ((g_GameTimer) / (35*60))%60);
+            SetCvar("sfp_scordata_timesec", ((g_GameTimer) / 35)%60);
+            //log(s:"Remaining seconds: ", d:g_GameTimer / 35);
+            remainingSeconds = g_GameTimer / 35;
+
+            if(remainingSeconds == 10 || remainingSeconds == 30 || remainingSeconds == 60 || remainingSeconds == 120 || remainingSeconds == 300 || remainingSeconds == 600){
+                ACS_NamedExecute("SFPlus_Announcer_SayTime", 0, "time/Mission/NukeLaunchIn", remainingSeconds, 1);
+            }else if (remainingSeconds <= 5){
+                AnnouncerSound(strparam(s:"count/", d:remainingSeconds, s:"!"), 0);
+            }
+
+            switch(remainingSeconds) {
+                case 300:
+                    f_TipShow ("CM75", "NUCLEAR LAUNCH", "5 Minutes remaining...", 0);
+                    break;
+                case 240:
+                    f_TipShow ("CM75", "NUCLEAR LAUNCH", "4 Minutes remaining...", 0);
+                    break;
+                case 180:
+                    f_TipShow ("CM75", "NUCLEAR LAUNCH", "3 Minutes remaining...", 0);
+                    break;
+                case 120:
+                    f_TipShow ("CM75", "NUCLEAR LAUNCH", "2 Minutes remaining...", 0);
+                    break;
+                case 60: case 30: case 10:
+                    f_TipShow ("CM75", "NUCLEAR LAUNCH", StrParam(d:remainingSeconds, s:" Seconds remaining..."), 0);
+                    break;
+                case 10: case 9: case 8: case 7: case 6: case 5: case 4: case 3: case 2: case 1:
+                    f_TipShow ("CM75", "NUCLEAR LAUNCH", StrParam(d:remainingSeconds, s:"..."), 0);
+                    ambientsound("TIME", 125);
+                    break;
+            }
+        }
+        delay(1);
+        g_GameTimer--;
+    }
+    f_TipShow ("CM75", "NUCLEAR LAUNCH", "Blasting off!", 0);
+    AnnouncerSound("command/blastoff", 0);
+    SetCvarString("sfp_scordata_status", "Nuke Launched!");
+
     // gather score before game end
     g_SkillScore = f_AIDir_Check();
     
     // launch missile
     int thrustamount;
+    AmbientSound("c/airstrike1", 128);
     while(thrustamount < 130)
     {
         radius_quake(8, 20, 0, 10, 0);
@@ -131,8 +158,8 @@ script 451 (void)
         delay(1);
     }
     thing_remove(135);
-    
-    delay(35 * 5);
+    AmbientSound("c/airstrike2", 128);
+    delay(35 * 2);
     
     // explosion
     acs_execute(452, 0, 0, 0, 0);

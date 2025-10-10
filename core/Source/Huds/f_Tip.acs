@@ -275,8 +275,9 @@ Script "SFPlus_ProgressScript" (int pnid, int wait_time, int slot)
 	
 	
     ambientsound("patch/newmessage", 56);
-	if(pre_sound != 0) ambientsound(pre_sound, 56);
-    
+	//if(pre_sound != 0) ambientsound(pre_sound, 56);
+    if(pre_sound != 0) AnnouncerSound(pre_sound, 0);
+
 	while(l_Percent < 101)
     {
         // display message and image
@@ -293,7 +294,8 @@ Script "SFPlus_ProgressScript" (int pnid, int wait_time, int slot)
 	p_TipProcess[slot] = False;
 	
 	ambientsound("patch/newmessage", 56);
-	if(post_sound != 0) ambientsound(post_sound, 56);
+	//if(post_sound != 0) ambientsound(post_sound, 56);
+	if(post_sound != 0) AnnouncerSound(post_sound, 0);
 	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
 
 }
@@ -316,7 +318,8 @@ Script "SFPlus_TimerScript" (int pnid, int timehit, int pslot)
 	int pos = Notify_QueueGet(TIP_NOTIFY_POS, timer_slot);
 	
     ambientsound("patch/newmessage", 56);
-	if(pre_sound != 0) ambientsound(pre_sound, 56);
+	//if(pre_sound != 0) ambientsound(pre_sound, 56);
+	if(pre_sound != 0) AnnouncerSound(pre_sound, 0);
 	
 	p_TipProcess[pslot] = True;
     p_TipQue[timer_slot] ++;
@@ -363,7 +366,8 @@ Script "SFPlus_TimerScript" (int pnid, int timehit, int pslot)
 	
 	Notify_Clear(last_count_slot);
 	ambientsound("patch/newmessage", 56);
-	if(post_sound != 0) ambientsound(post_sound, 56);
+	//if(post_sound != 0) ambientsound(post_sound, 56);
+	if(post_sound != 0) AnnouncerSound(post_sound, 0);
 	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
 	
 }

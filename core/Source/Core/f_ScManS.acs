@@ -70,7 +70,9 @@ script 100 OPEN
     
     // setup current sector
     l_CurrentSector = g_Status;
-    
+
+    AnnouncerSound("combat/prepareyourself", 0);
+
     while(1)
     {
 
@@ -80,12 +82,12 @@ script 100 OPEN
         if (f_SurvivalLastLevel == m_SurvivalWave) {
         	hudmessage(s:"FINAL WAVE"; 2, 0, cr_red, 400.0, 200.0, 5.0); 
             setfont("SMALLFNT");
-            hudmessage(s:"Final Wave", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
+            hudmessage(s:"Final Wave"; 2, 2, cr_white, 400.0, 45.0, 9999.0);
             SetCvar("sfp_scordata_timemin", 0);
 	        SetCvar("sfp_scordata_timesec", 0);
             SetCvarString("sfp_scordata_status", "Final Wave");
         }
-        else {
+        else{
         	hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 0, cr_red, 400.0, 200.0, 5.0);
             setfont("SMALLFNT");
             hudmessage(s:"Wave ", d:m_SurvivalWave; 2, 2, cr_white, 400.0, 45.0, 9999.0);
@@ -93,23 +95,37 @@ script 100 OPEN
 	        SetCvar("sfp_scordata_timesec", 0);
             SetCvarString("sfp_scordata_status", strparam(s:"Wave ", d:m_SurvivalWave, s:"/", d:f_SurvivalLastLevel));
         }
+
+        if (g_GameStarted == 0) {
+            SetCvar("sfp_scordata_timemin", 0);
+	        SetCvar("sfp_scordata_timesec", 0);
+            SetCvarString("sfp_scordata_status", "Preparing to fight");
+        }
         g_MonstersLeft = 0;
 
         // heal core
-        acs_execute(405, 0, 0, 0, 0);
+        if(g_gameStarted)
+            acs_execute(405, 0, 0, 0, 0);
 		
 		time = timecvar;
 		acs_execute(129, 0, 1, time, 0);
 		if(time != 30 || time != 15 || time != 5) Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
         
 		while(time != 0){// The timer before opening a door.
-			if(time == 10 || time == 5 || time == 30){
+			if(time == 10 || time == 5 || time == 30 || time == 60){
 				Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
+                if(time >= 10){
+                    if(!g_gameStarted)
+                        ACS_NamedExecute("SFPlus_Announcer_SayTime", 0, "time/mission/beginsin", time);
+                    else if (m_SurvivalWave != 1)
+                        ACS_NamedExecute("SFPlus_Announcer_SayTime", 0, "time/Mission/NextWaveIn", time);
+                }
 			}
 
 			if(Time <= 5){
 				if (alarmsUsed == 0){
 					ambientsound("TIME", 125);
+                    AnnouncerSound(strparam(s:"count/", d:time), 0);
 				}
 			}
 			delay(35);
@@ -119,16 +135,17 @@ script 100 OPEN
         
 		if (alarmsUsed == 0){
 			ambientsound("ATTACK", 125);
+            g_GameStarted = true;
+            SetCvarString("sfp_scordata_status", strparam(s:"Wave ", d:m_SurvivalWave, s:"/", d:f_SurvivalLastLevel));
 		}
 		alarmsUsed += 1;
 		
-		
-                
         // remove first blocker
         thing_remove(50);
         
         // breached sound
-        ambientsound("cv/sector4", 125);
+        //ambientsound("cv/sector4", 125);
+        AnnouncerSound("combat/sector4", 0);
         
         // reactivate script
         acs_execute(120, 0, 0, 0, 0);
@@ -185,6 +202,9 @@ script 100 OPEN
         thing_destroy(112, 0);
         thing_destroy(113, 0);
         thing_destroy(114, 0);
+        setfont("DBIGFONT");
+        hudmessage(s:"Wave ", d:m_SurvivalWave, s:" Completed"; 2, 0, cr_white, 400.0, 200.0, 5.0);
+        setfont("SMALLFNT");
 		delay(35 * 3);
         
         // proceed
@@ -194,6 +214,7 @@ script 100 OPEN
         
         // last wave?
         if (f_SurvivalLastLevel == m_SurvivalWave) {
+                SetCvarString("sfp_scordata_status", "Game Over");
                 acs_execute(125, 0, 2, 0, 0);
                 break;
         }

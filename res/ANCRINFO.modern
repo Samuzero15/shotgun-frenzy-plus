@@ -1,0 +1,103 @@
+{
+	name = "Mikell (SF Plus)"
+	
+	count/1 = Mikell/Count/1
+	count/2 = Mikell/Count/2
+	count/3 = Mikell/Count/3
+	count/4 = Mikell/Count/4
+	count/5 = Mikell/Count/5
+	
+	count/1! = Mikell/Count/1!
+	count/2! = Mikell/Count/2!
+	count/3! = Mikell/Count/3!
+	count/4! = Mikell/Count/4!
+	count/5! = Mikell/Count/5!
+	
+	time/10mins = 	Mikell/Time/10mins
+	time/5mins = 	Mikell/Time/5mins 
+	time/2mins = 	Mikell/Time/2mins 
+	time/60secs = 	Mikell/Time/60secs 
+	time/30secs = 	Mikell/Time/30secs 
+	time/10secs = 	Mikell/Time/10secs 
+	
+	time/10mins! = 	Mikell/Time/10mins!
+	time/5mins! = 	Mikell/Time/5mins! 
+	time/2mins! = 	Mikell/Time/2mins! 
+	time/60secs! = 	Mikell/Time/60secs! 
+	time/30secs! = 	Mikell/Time/30secs! 
+	time/10secs! = 	Mikell/Time/10secs! 
+	
+	time/GuardianArrivesIn = 		Mikell/Time/GuardiansArrivesIn 	
+	time/GuardianIncoming = 		Mikell/Time/GuardiansIncoming 
+	time/Mission/BeginsIn = 		Mikell/Time/Mission/BeginsIn
+	time/Mission/EndsIn  = 			Mikell/Time/Mission/EndsIn 
+	time/Mission/Complete = 		Mikell/Time/Mission/Complete 
+	time/Mission/Failed = 			Mikell/Time/Mission/Failed 	
+	time/Mission/Inbound = 			Mikell/Time/Mission/Inbound 
+	time/Mission/NextWaveIn = 		Mikell/Time/NextWaveIn 
+	time/Mission/NukeLaunchIn = 	Mikell/Time/NukeLaunchIn 
+
+	terminal/Hello = 	Mikell/Terminal/Hello
+	terminal/Bye = 		Mikell/Terminal/Bye
+	
+	ammunition = 		Mikell/Runes/Ammunition 
+	blast = 			Mikell/Runes/Blast 	
+	dash = 				Mikell/Runes/Dash 
+	defense = 			Mikell/Runes/Defense 
+	drain = 			Mikell/Runes/Drain 
+	fortune = 			Mikell/Runes/Fortune
+	haste = 			Mikell/Runes/Haste 	
+	highjump = 			Mikell/Runes/AirJump
+	health = 			Mikell/Runes/Health 
+	prosperity = 		Mikell/Runes/Prosperity 
+	rage = 				Mikell/Runes/Rage 
+	rampage = 			Mikell/Runes/Rampage 
+	reflection = 		Mikell/Runes/Reflection 
+	regeneration = 		Mikell/Runes/Regeneration 
+	resistance = 		Mikell/Runes/Resistance 
+	resurrection = 		Mikell/Runes/Resurrection 	
+	soul = 				Mikell/Runes/Soul 
+	spread = 			Mikell/Runes/Spread 
+	strength = 			Mikell/Runes/Strength 	
+	temperance = 		Mikell/Runes/Temperance 
+
+	command/armory/building = 		Mikell/Command/Armory/Building 
+	command/armory/constructed = 	Mikell/Command/Armory/Constructed 
+	command/genlab/building = 		Mikell/Command/GenLab/Building 
+	command/genlab/constructed =	Mikell/Command/GenLab/Constructed 
+	command/marcom/building =		Mikell/Command/MarCom/Building 
+	command/marcom/constructed =	Mikell/Command/MarCom/Constructed 
+	command/mechfa/building =		Mikell/Command/MechFa/Building 
+	command/mechfa/constructed =	Mikell/Command/MechFa/Constructed 
+	command/Refine/building =		Mikell/Command/Refine/Building 
+	command/Refine/constructed =	Mikell/Command/Refine/Constructed 
+	command/NSilo/building =		Mikell/Command/NSilo/Building 
+	command/NSilo/constructed =		Mikell/Command/NSilo/Constructed 
+	
+	command/deploy/dispenser = 		Mikell/Command/Deploy/Dispenser 
+	command/deploy/mines = 			Mikell/Command/Deploy/Mines 
+	command/deploy/sandbags = 		Mikell/Command/Deploy/Sandbags 
+	command/deploy/turret = 		Mikell/Command/Deploy/Turret 
+	
+	command/researchComplete = 		Mikell/Command/ResearchComplete 
+	command/airstrike = 			Mikell/Command/AirStrike 
+	command/corepulse = 			Mikell/Command/CorePulse 
+	command/blastoff = 				Mikell/Command/BlastOff 
+	command/greetcmdr = 			Mikell/Command/GreetCmd 
+	
+	combat/sector1 =			Mikell/Combat/Sector1 
+	combat/sector2 =			Mikell/Combat/Sector2 
+	combat/sector3 =			Mikell/Combat/Sector3 
+	combat/sector4 =			Mikell/Combat/Sector4 
+	combat/sectorlost =			Mikell/Combat/SectorLost 
+	combat/sectorrecovered = 	Mikell/Combat/SectorRecovered 
+	combat/prepareyourself = 	Mikell/Combat/PrepareYourself 
+	combat/clearandfinish = 	Mikell/Combat/ClearAndFinish 
+	
+	powerup/ammosphere = 		Mikell/Powerup/Ammosphere 
+	powerup/doomsphere = 		Mikell/Powerup/Doomsphere 
+	powerup/godsphere = 		Mikell/Powerup/Godsphere 
+	powerup/helltrigger = 		Mikell/Powerup/HellTrigger 
+	powerup/megasphere = 		Mikell/Powerup/Megasphere 
+	powerup/soulsphere = 		Mikell/Powerup/Soulsphere 
+}

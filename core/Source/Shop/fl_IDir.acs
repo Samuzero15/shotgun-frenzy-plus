@@ -32,16 +32,17 @@
 
 #libdefine ITEMSHOP_NUM 4
 
-#libdefine ITEM_PROP_TYPE      0
-#libdefine ITEM_PROP_ACTOR     1
-#libdefine ITEM_PROP_MAXAMOUNT 2
-#libdefine ITEM_PROP_PRICE     3
-#libdefine ITEM_PROP_NAME      4
-#libdefine ITEM_PROP_ICON      5
-#libdefine ITEM_PROP_DESC      6
-#libdefine ITEM_PROP_IBTN      7
-#libdefine ITEM_PROP_SHOWINHUD 8
-#libdefine ITEM_PROP_FORCLASS  9
+#libdefine ITEM_PROP_TYPE      	0
+#libdefine ITEM_PROP_ACTOR     	1
+#libdefine ITEM_PROP_MAXAMOUNT	2
+#libdefine ITEM_PROP_PRICE     	3
+#libdefine ITEM_PROP_NAME      	4
+#libdefine ITEM_PROP_ICON      	5
+#libdefine ITEM_PROP_DESC      	6
+#libdefine ITEM_PROP_IBTN      	7
+#libdefine ITEM_PROP_SHOWINHUD 	8
+#libdefine ITEM_PROP_FORCLASS  	9
+#libdefine ITEM_PROP_POWERID    10 // Internal ID For powerup reference in decorate (Just to link their activation announcer sound, I know, sounds stupid but i guess people is kinda lazy with this niche stuff).
 
 #libdefine ITEMDROP_MAX 4
 #libdefine ITEMDROP_PROPS 3
@@ -57,7 +58,7 @@ int ItemDr_champStack[ITEMDROP_CLASSES];
 int ItemDr_rewards[ITEMDROP_CLASSES][ITEMDROP_ITEMS][ITEMDROP_PROPS];
 int ItemDr_championRewards[ITEMDROP_CLASSES][ITEMDROP_ITEMS][ITEMDROP_PROPS];
 
-int fp_Items[FP_ITEM_NUM][10];
+int fp_Items[FP_ITEM_NUM][11];
 int fp_itemshop[ITEMSHOP_NUM][100];
 int fp_itemshop_last[ITEMSHOP_NUM];
 int fp_LastItem = 0;
@@ -150,7 +151,7 @@ Script "SFPlus_IDir_SFITMDEFReadLine" (int line) {
 }
 
 function void SFITMDEF_AddItem(str line, int type){
-	if(!LumpRead_CountArgs (line, 5, 8, "AddItem")) return;
+	if(!LumpRead_CountArgs (line, 5, 10, "AddItem")) return;
 	if(fp_LastItem >= FP_ITEM_NUM) {
 		log(s:"(fl_IDir.acs):", s:" Item directory maxed out.");
 		return;
@@ -168,9 +169,12 @@ function void SFITMDEF_AddItem(str line, int type){
 	str icon = SFITMDEF_WepLanguageValue (lang, "I");
 	int ibtn = SFITMDEF_WepLanguageValue (lang, "B");
 
+	int announcer_sound = 0;
+	int powerupid = 0;
 	if(type == FP_ITEM_T_POWERUP){
 		// Color
 		ibtn = LumpRead_NextArgDefault (line, LUMPR_VALUE_INT, 0);
+		powerupid = LumpRead_NextArgDefault (line, LUMPR_VALUE_INT, 0);
 	}
 	
 	str showinhud = LumpRead_NextArgDefault (line, LUMPR_VALUE_BOOL, true);
@@ -198,6 +202,7 @@ function void SFITMDEF_AddItem(str line, int type){
 	fp_Items[fp_LastItem][ITEM_PROP_IBTN]      = ibtn;
 	fp_Items[fp_LastItem][ITEM_PROP_SHOWINHUD] = showinhud;
 	fp_Items[fp_LastItem][ITEM_PROP_FORCLASS]  = forclass;
+	fp_Items[fp_LastItem][ITEM_PROP_POWERID]   = powerupid;
 	//log(s:"[DEBUG fl_IDir] Item #", d:fp_LastItem, s:" type=", d:type, s:" actor=", s:actor, s:" maxamount=", d:maxamount, s:" price=", s:price, s:" name=", s:name, s:" icon=", s:icon, s:" desc=", s:desc, s:" ibtn=", s:ibtn, s:" showinhud=", d:showinhud, s:" in_classic_now=", d:in_classic_mode);
 	fp_LastItem++;
 
@@ -213,6 +218,32 @@ function void SFITMDEF_AddItem(str line, int type){
 		case FP_ITEM_T_HIDDEN: break;
 		default: log(s:"(fl_IDir.acs) Unknown Type number.");
 	}
+}
+
+// Pointless function but whatever.
+Script "SFPlus_Announcer_PowerupUsed" (int powerupid) {
+	//log(s:"Sound!");
+	//delay(20);
+	/*
+	
+	StopSound(0, CHAN_ITEM );
+	log(s:"Powerup ID used: ", d:powerupId);
+	if(powerupId == 0) terminate;
+	//log(s:"Item ID:", d:Item_GetItemByPowerID(powerupId));
+	str announcer_sound = Item_GetAnnouncerSound(Item_GetItemByPowerID(powerupId));
+	log(s:"Announcer sound: '", s:announcer_sound, s:"'");
+	AnnouncerSound(announcer_sound, 1);
+	*/
+	//GiveInventory("AnnouncerSound_Soulsphere", 1);
+	delay(20);
+	int x = GetActorX(0), y = GetActorY(0), z = GetActorZ(0);
+	str announcer_sound = strparam(s:"AncrSnd_", s:Item_GetActor(Item_GetByPowerID(powerupid)));
+	SpawnForced(announcer_sound,x, y, z);
+	if(GetActorVelX(0) == 0 || GetActorVelY(0) == 0){ // Standing still? move it a lil' bit so it triggers the sound.
+		ThrustThing(GetActorAngle(0) >> 8, 1, 1, 0);
+	}
+		
+	//SpawnForced(item, GetActorX(tid), GetActorY(tid), GetActorZ(tid), 0);
 }
 
 function str SFITMDEF_WepLanguageValue (str string, str prop){
@@ -232,6 +263,19 @@ function int Item_GetDesc(int it){	return fp_Items[it][ITEM_PROP_DESC];}
 function int Item_GetIBtnOrColor(int it){return fp_Items[it][ITEM_PROP_IBTN];}
 function int Item_GetShowInHud(int it){return fp_Items[it][ITEM_PROP_SHOWINHUD];}
 function str Item_GetForClass(int it){return fp_Items[it][ITEM_PROP_FORCLASS];}
+function int Item_GetPowerID(int it){return fp_Items[it][ITEM_PROP_POWERID];}
+
+function int Item_GetByPowerID(int powerid){
+	int res = -1;
+	for(int i = 0; i < fp_LastItem; i++){
+		if(Item_GetType(i) == FP_ITEM_T_POWERUP && Item_GetPowerID(i) == powerid){
+			res = i;
+			break;
+		}
+	}
+	return res;
+}
+
 function bool Item_IsForClass(int it){
 	int forplayerclass = Item_GetForClass(it);
 

@@ -149,7 +149,8 @@ script "SFPlus_AirstrikeAttack" (void)
     // message
     Notify_Message("Airstrike", "Incoming! Take cover!", "CM76", 2);
     ambientsound("c/airstrike1", 125);
-    ambientsound("cv/airstrike", 125);
+    //ambientsound("cv/airstrike", 125);
+	AnnouncerSound("command/airstrike", 0);
     
     delay(35 * 5);
     

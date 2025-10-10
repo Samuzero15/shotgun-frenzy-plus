@@ -21,7 +21,7 @@ const int RUNE_HASTE = 18;
 
 Actor RuneDrop : CustomInventory { // yes, the fading pickup code, i know, but with a small difference.
 	// A fading pickup that must be took between the time limit before it disappears.
-	Inventory.PickupSound "misc/p_pkup"
+	Inventory.PickupSound "g/RunePickup"
 	States{
 		Spawn:
 			TNT1 A 0 NODELAY ACS_NamedExecuteAlways("Pickup_Fade", 0, 45)
@@ -31,6 +31,7 @@ Actor RuneDrop : CustomInventory { // yes, the fading pickup code, i know, but w
 		Pickup:
 			TNT1 A 0
 			TNT1 A 0 A_JumpIf(CheckClass("MechPlayer"), "Null") // Do not allow pickup by mech users.
+			TNT1 A 0 A_JumpIf(CallACS("Runes_PlayerIsHoldingRune", args[0]), "Pickup.AlreadyGotIt")
 			TNT1 A 0 A_JumpIfInventory("Input_Use", 1, "Pickup.Give")
 			TNT1 A 0 ACS_NamedExecuteAlways("Runes_PickMessage", 0, args[0])
 		fail
@@ -38,6 +39,12 @@ Actor RuneDrop : CustomInventory { // yes, the fading pickup code, i know, but w
 		Pickup.Give:
 			TNT1 A 0
 		Stop
+
+		Pickup.AlreadyGotIt:
+			TNT1 A 0 ACS_NamedExecuteAlways("Runes_OwnedMessage", 0, args[0])
+		FailPickup:
+			TNT1 A 0
+		fail
 	}
 }
 
@@ -107,7 +114,6 @@ ACTOR SpreadRune_Drop : RuneDrop
 			TNT1 A 0 A_SetArg(0, RUNE_SPREAD)
 		goto Super::Pickup
 		Pickup.Give:
-			TNT1 A 0 A_JumpIfInventory("RuneSpread", 1, "Null")
 			TNT1 A 0 A_GiveInventory("SpreadRune_Pickup", 1)
 		stop
 	}
@@ -235,7 +241,7 @@ ACTOR AmmunitionRune_Drop : RuneDrop
 {
 	+NOGRAVITY
 	Inventory.PickupMessage "Ammunition!"
-	Inventory.PickupSound "runes/ammunition"
+	Inventory.PickupAnnouncerEntry "ammunition"
 	scale 0.5
 	States
 	{
@@ -255,7 +261,7 @@ ACTOR BlastRune_Drop : RuneDrop
 {
 	+NOGRAVITY
 	Inventory.PickupMessage "Blast!"
-	Inventory.PickupSound "runes/blast"
+	Inventory.PickupAnnouncerEntry "blast"
 	States
 	{
         Spawn.Loop:
@@ -275,7 +281,7 @@ ACTOR DefenseRune_Drop : RuneDrop
 {
 	+NOGRAVITY
 	Inventory.PickupMessage "Defense!"
-	Inventory.PickupSound "runes/defense"
+	Inventory.PickupAnnouncerEntry "defense"
 	scale 0.5
 	States
 	{
@@ -297,7 +303,7 @@ ACTOR FortuneRune_Drop : RuneDrop
 {
 	+NOGRAVITY
 	Inventory.PickupMessage "Fortune!"
-	Inventory.PickupSound "runes/fortune"
+	Inventory.PickupAnnouncerEntry "fortune"
 	States
 	{
         Spawn.Loop:
@@ -315,7 +321,7 @@ ACTOR FortuneRune_Drop : RuneDrop
 ACTOR TemperanceRune_Drop : RuneDrop {
 	+NOGRAVITY
 	Inventory.PickupMessage "Temperance!"
-	Inventory.PickupSound "runes/temperance"
+	Inventory.PickupAnnouncerEntry "temperance"
 	States
 	{
         Spawn.Loop:
@@ -334,7 +340,7 @@ ACTOR SoulRune_Drop : RuneDrop {
 	+NOGRAVITY
     scale 0.75
 	Inventory.PickupMessage "Soul!"
-    Inventory.PickupSound "runes/soul"
+    Inventory.PickupAnnouncerEntry "soul"
 	States
 	{
 		Spawn.Loop:
@@ -352,7 +358,7 @@ ACTOR SoulRune_Drop : RuneDrop {
 ACTOR RampageRune_Drop : RuneDrop {
 	+NOGRAVITY
 	Inventory.PickupMessage "Rampage!"
-	Inventory.PickupSound "runes/rampage"
+	Inventory.PickupAnnouncerEntry "rampage"
 	scale 0.5
 	States
 	{
@@ -371,7 +377,7 @@ ACTOR RampageRune_Drop : RuneDrop {
 ACTOR HealthRune_Drop : RuneDrop {
 	+NOGRAVITY
 	Inventory.PickupMessage "Health!"
-	Inventory.PickupSound "runes/health"
+	Inventory.PickupAnnouncerEntry "health"
 	scale 0.5
 	States
 	{
@@ -390,7 +396,7 @@ ACTOR HealthRune_Drop : RuneDrop {
 ACTOR ResurrectionRune_Drop : RuneDrop {
 	+NOGRAVITY
 	Inventory.PickupMessage "Resurrection!"
-	Inventory.PickupSound "runes/resurrection"
+	Inventory.PickupAnnouncerEntry "resurrection"
 	scale 0.9
 	FloatSpeed 2
 	States

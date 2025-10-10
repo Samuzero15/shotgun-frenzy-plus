@@ -65,12 +65,12 @@ What is inside?
 	would do that? If you need money so badly, then get a job. Hippe.)
 	
 	*) Last, but not least, if you found bugs, go to the zandronum forum 
-	(coming soon) and to Samu's Chambers. (A discord server where i update this 
-	thing and other doomy stuffs.)
+	(https://zandronum.com/forum/viewtopic.php?f=58&t=9954) 
+	and to Samu's Chambers. (https://discord.gg/s3eWNxe)
 
-//////////////////
-// Thanks to... //
-//////////////////
+//////////////////////////////////////////////////////
+// Thanks to... (If I forgot someone, let me know!) //
+//////////////////////////////////////////////////////
 
 	Wad'a'holic:
 		He did leaded, play tested, and created Shotgun frenzy.
@@ -110,7 +110,7 @@ What is inside?
 	Madcat:
 		Thanks for the turret sprites my man!
 		
-	Korshun, TDRR, Buu42 and Mr. Satan:
+	Korshun, TDRR, Trillster, FusedQyou, Buu42 and Mr. Satan:
 		They Helped me out with some acs questions :D
 		
 	WolfNexus:
@@ -118,6 +118,9 @@ What is inside?
 	
 	Cepstral:
 		Domo arigato, Mister robotto! 10010101 01011100
+
+	Mikell Dover:
+		For the Voice Acting on the new Announcer :P (Yeeeah and thanks for the suggestion Kapelli47)
 	
 	Myself (Samuzero15tlh):
 		Now i think i've took this WAY personal. 
