@@ -583,40 +583,151 @@ Script "Turret_Count" (int tid) {
 	
 }
 
-Script "Turret_States" (void){
-	// The current state of the turret/dispenser!, Level and Health!
-	int hp = GetActorProperty(0, APROP_HEALTH);
-	int max_hp = GetActorProperty(0, APROP_SPAWNHEALTH);
-	int lvl = GetActorProperty(0, APROP_STAMINA);
-	int z = (90)<<16 + 4.0;
-	int bid = UniqueTID(4000);
-	int sid = UniqueTID(5000);
-	spawn("Turret_HealthBar", getactorx(0), getactory(0), getactorz(0) + z, bid);
-	spawn("Turret_LevelStars", getactorx(0), getactory(0), getactorz(0) + z, sid);
-	//SetActorProperty(bid, APROP_RENDERSTYLE, STYLE_STENCIL);
-	Bar_State(bid, hp, max_hp);
-	setActorState(sid, Strparam(s:"LV", d:lvl));
-	delay(random(0,35));
-	while (hp > 0){
-		// Health display
-		if(hp != GetActorProperty(0, APROP_HEALTH)){
-			hp = GetActorProperty(0, APROP_HEALTH);
-			Bar_State(bid, hp, max_hp);
+#define TURRETSTATEHID_HP 	9000
+#define TURRETSTATEHID_LVL 12000
+#define TURRETSTATE_TID 70001
+#define TURRETSTATE_MAX 200
+#define TURRETSTATE_PROPS 6
+
+int turretStates_lastIndex = 0;
+int turretStates_data[TURRETSTATE_MAX][TURRETSTATE_PROPS]; // HP_HID, HP, MAXHP, LVL_HID, LVL
+
+Script "TurretState_SyncLabels" open {
+	int syncindex = 0;
+	int basetid = TURRETSTATE_TID;
+	SyncVariable(basetid + syncindex, turretStates_lastIndex); syncindex++;
+	for(int i = 0; i < turretStates_lastIndex; i++){
+		for(int j = 0; j < TURRETSTATE_PROPS; j++){
+			SyncVariable(basetid + syncindex, turretStates_data[i][j]);
+			syncindex++;
 		}
-		// Level display
-		if(lvl != GetActorProperty(0, APROP_STAMINA)){
-			lvl = GetActorProperty(0, APROP_STAMINA);
-			setActorState(sid, Strparam(s:"LV", d:lvl));
-		}
-		setactorposition(bid, getactorx(0), getactory(0), getactorz(0) + z, 0);
-		setactorposition(sid, getactorx(0), getactory(0), getactorz(0) + z, 0);
-		delay(5);
 	}
-	setActorState(bid, "HP_0");
-	setActorState(sid, "LV0");
-	delay(35);
-	Thing_Remove(bid);
-	Thing_Remove(sid);
+	delay(1);
+	restart;
+}
+
+script "TurretState_ShowLabels" OPEN Clientside {
+	for(int id = 0; id < GetSyncVar(TURRETSTATE_TID); id++){
+		int hp_hid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id);
+		int hp = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id + 1);
+		int lvl_hid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id + 3);
+		
+		if(hp <= 0 || !GetUserCVar(ConsolePlayerNumber(), "sfp_buildstats")) {
+			ClearHudMessageBold(hp_hid);
+			ClearHudMessageBold(lvl_hid);
+			continue;
+		}
+		//log(s:"TurretState_ShowLabels: id=", d:id, s:" hp_hid=", d:hp_hid, s:" hp=", d:hp, s:" lvl_hid=", d:lvl_hid);
+		TurretState_Draw(id);
+	}
+	delay(1);
+	restart;
+}
+
+function void TurretState_Draw (int index) {
+	//log(s:"TurretState_Draw index: ", d:index);
+	int hp_hid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*index);
+	int hp = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*index + 1);
+	int max_hp = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*index + 2);
+	int lvl_hid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*index + 3);
+	int lvl = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*index + 4);
+	int utid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*index + 5);
+	//log(s:"hp_hid: ", d:hp_hid, s:", hp: ", d:hp, s:", max_hp: ", d:max_hp, s:", lvl_hid: ", d:lvl_hid, s:", lvl: ", d:lvl, s:", utid: ", d:utid);
+	int range = GetUserCvar(ConsolePlayerNumber(), "sfp_buildstats_renderdistance");
+
+	HudResetState();
+	HudSetShowToEveryone(true);
+
+	if(PlayerIsSpectator(ConsolePlayerNumber()) && (CheckPlayerCamera(ConsolePlayerNumber()) > 0)) {
+		int playerSpecedNearLabelText = ActorDistance(CheckPlayerCamera(ConsolePlayerNumber()), utid) <= range;
+		if(!playerSpecedNearLabelText){
+			ClearHudMessageBold(hp_hid);
+			ClearHudMessageBold(lvl_hid);
+			return;
+		}
+		
+		HudSetCameraActor(CheckPlayerCamera(ConsolePlayerNumber()));
+	} else {
+		int playerNearLabelText = ActorDistance(990+ConsolePlayerNumber(), utid) <= range;
+		if(!playerNearLabelText){
+			ClearHudMessageBold(hp_hid);
+			ClearHudMessageBold(lvl_hid);
+			return;
+		}
+		HudSetCameraActor(990+ConsolePlayerNumber());
+	}
+
+	HudSetFont(Bar_StateFont(hp, max_hp));
+	HudSetPoint3D(GetActorX(utid), GetActorY(utid), GetActorZ(utid) + 90.0);
+	HudSetScale(1.0);
+	HudSetTextColor(CR_CYAN);
+	int alpha = fixedDiv(GetUserCvar(ConsolePlayerNumber(), "sfp_buildstats_alpha"), 100.0);
+	HudSetAlpha(alpha);
+	HudSetStayTime(0.1);
+	HudSetAlignment(HUD_ALIGN_LEFT, HUD_ALIGN_CENTER);
+	//HudDrawText(hp_hid, strparam(d:hp, s:"/", d:max_hp));
+	HudDrawText(hp_hid, "a");
+	//HudSetAlignment(HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+	HudSetFont(Stars_StateFont(lvl));
+	HudSetPoint3D(GetActorX(utid), GetActorY(utid), GetActorZ(utid) + 95.0);
+	if(lvl == 0) HudDrawText(lvl_hid, "");
+	else  		HudDrawText(lvl_hid, "a");
+} 
+
+function int TurretState_Allocate(void) {
+	int res = -1;
+	for(int i = 0; i < TURRETSTATE_MAX; i++){
+		if(turretStates_data[i][1] <= 0){
+			res = i;
+			break;
+		}
+	}
+	return res;
+}
+
+function void TurretState_UpdateLastIndex(void) {
+	int res = 0;
+	for(int i = TURRETSTATE_MAX; i > 0; i--){
+		if(turretStates_data[i][1] > 0){
+			res = i;
+			break;
+		}
+	}
+	turretStates_lastIndex = res+1;
+	log(s:"TurretState LastId: (", d:turretStates_lastIndex, s:")");
+}
+
+Script "Turret_States" (void) {
+	int free_index = TurretState_Allocate();
+	turretStates_data[free_index][0] = TURRETSTATEHID_HP + free_index;
+	turretStates_data[free_index][1] = GetActorProperty(0, APROP_HEALTH);
+	turretStates_data[free_index][2] = GetActorProperty(0, APROP_SPAWNHEALTH);
+	turretStates_data[free_index][3] = TURRETSTATEHID_LVL + free_index;
+	turretStates_data[free_index][4] = GetActorProperty(0, APROP_STAMINA);
+	turretStates_data[free_index][5] = UniqueTID(4000);
+	SpawnForced("TurretStates_Label", GetActorX(0), GetActorY(0), GetActorZ(0), turretStates_data[free_index][5]);
+	ACS_NamedExecuteAlways("TurretStates_Update", 0, free_index);
+	TurretState_UpdateLastIndex();
+}
+
+Script "TurretStates_Update" (int id) {
+	if (GetActorHealth(0) <= 0){
+		Thing_Remove(turretStates_data[id][5]);
+		for (int i = 0; i < TURRETSTATE_PROPS; i++) {
+			turretStates_data[id][i] = 0;
+		}
+		TurretState_UpdateLastIndex();
+		log(s:"TurretState ID: (", d:id, s:") Data Cleared");
+		terminate;
+	}
+
+	turretStates_data[id][1] = GetActorProperty(0, APROP_HEALTH);
+	turretStates_data[id][2] = GetActorProperty(0, APROP_SPAWNHEALTH);
+	turretStates_data[id][4] = GetActorProperty(0, APROP_STAMINA);
+	SetActorPosition(turretStates_data[id][5], GetActorX(0), GetActorY(0), GetActorZ(0), false);
+
+	delay(5);
+	restart;
 }
 
 Script "Dispenser_SpawnVFX" (int sparks, int ammo_or_health) {
@@ -656,7 +767,7 @@ function int SpawnRadius(str type, int spotid, int radius, int angle, int newtid
 
 Script "Building_AggroLoop" (int tid) {
 	delay(random(0,17));
-	while(GetActorProperty(0, APROP_HEALTH) >= 1){
+	while(GetActorProperty(0, APROP_HEALTH) > 0){
 		//log(s:"Aggroing");
 		TakeInventory("Building_GetRange", 0xFFFFFFFF);
 		//
@@ -674,6 +785,7 @@ Script "Building_AggroLoop" (int tid) {
 	}
 	//log(s:"Done aggroing");
 }
+
 
 Script "Building_AttackThis" (void) {
 	if(CheckInventory("Building_AttackFirst")) Terminate;
@@ -694,4 +806,17 @@ function void Bar_State(int id, int var, int max_val){
 	int bar_state_num = bar_amount / 5;
 	if(bar_state_num >= 20) bar_state_num = 20;
 	setActorState(id, Strparam(s:"HP_", d:bar_state_num));
+} 
+
+function str Bar_StateFont(int var, int max_val){
+	// Quick division function to show sprite.
+	int bar_amount = FixedMul(FixedDiv(var, max_val), 100.0) >> 16;
+	int bar_state_num = bar_amount / 5;
+	if(bar_state_num >= 20) bar_state_num = 20;
+	return Strparam(s:"BUHB", c:65+bar_state_num, s:"0");
+} 
+
+function str Stars_StateFont(int val){
+	// Quick division function to show sprite.
+	return Strparam(s:"BULV", c:65+(val-1), s:"0");
 } 

@@ -28,6 +28,7 @@ Actor HUD_Gametype 			: Integer {}
 Actor HUD_GameTimer 		: Integer {}
 Actor HUD_MonstersLeft 		: Integer {}
 Actor HUD_GuardianTimer		: Integer {}
+Actor HUD_SurvProgress 		: Integer {}
 
 Actor HUD_Sector 			: Ammo { Inventory.MaxAmount 0x7fffffff }
 Actor HUD_CoreHP 			: Ammo { Inventory.MaxAmount 0x7fffffff }

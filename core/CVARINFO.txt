@@ -30,6 +30,10 @@ server int sfp_monsterset = 0; // Default.  		// Which monster set do you want t
 server string sfp_monstersetname = "";
 server bool cv_false = false;
 server bool sfp_hubaftergame = true;
+server int sfp_sd_wavereward = 1000;
+server int sfp_sd_waveincrease = 500;
+server int sfp_sd_lowplayerbonus = 500;
+server int sfp_sd_coreprotection = 1;
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;
@@ -63,7 +67,13 @@ user bool sfp_part_smoke = false;
 user bool sfp_part_casings = false;
 user bool sfp_part_junk = false;
 
+user bool sfp_buildstats = true;
+user float sfp_buildstats_renderdistance = 512.0;
+user float sfp_buildstats_alpha = 0.5;
+
 // Champion cvars
+server bool sfp_champ_enable = false; 
+server bool sfp_champ_forcespawn = false;
 server int  sfp_champ_onbanned = 0;
 server bool sfp_champ_1 = false;
 server bool sfp_champ_2 = false;

@@ -9,7 +9,10 @@
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
 #import "fp_AISet.acs"
+#import "fl_techs.acs"
 #include "zcommon.acs"
+#include "acsutils.acs"
+#include "samu_tools.acs"
 
 function int m_CalcSector (void)
 {
@@ -73,6 +76,12 @@ script 100 OPEN
 
     AnnouncerSound("combat/prepareyourself", 0);
 
+    int cred_moneyreward = GetCvar("sfp_sd_wavereward");
+    int cred_waveincrease = GetCvar("sfp_sd_waveincrease");
+    int cred_lowplayerbonus = GetCvar("sfp_sd_lowplayerbonus");
+    int up_coreprotect = GetCvar("sfp_sd_coreprotection");
+    int cred_totalreward = 0;
+
     while(1)
     {
 
@@ -102,6 +111,7 @@ script 100 OPEN
             SetCvarString("sfp_scordata_status", "Preparing to fight");
         }
         g_MonstersLeft = 0;
+        g_SurvProgress = 0;
 
         // heal core
         if(g_gameStarted)
@@ -109,10 +119,15 @@ script 100 OPEN
 		
 		time = timecvar;
 		acs_execute(129, 0, 1, time, 0);
-		if(time != 30 || time != 15 || time != 5) Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
+
+        int Notifyed = 0;
+		if(time != 30 || time != 15 || time != 5){
+             Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
+             Notifyed = 1;
+        }
         
 		while(time != 0){// The timer before opening a door.
-			if(time == 10 || time == 5 || time == 30 || time == 60){
+			if((time == 10 || time == 5 || time == 30 || time == 60) && Notifyed == 0){
 				Notify_Message("DEMON WAVE Spawning",strParam(d:time, s:" secs..."), "DEMONT", 0);
                 if(time >= 10){
                     if(!g_gameStarted)
@@ -130,6 +145,7 @@ script 100 OPEN
 			}
 			delay(35);
 			time--;
+            Notifyed = 0;
 		}
 		Notify_Message("DEMON WAVE is spawning!","Give'em Hell!", "DEMONT", 0);
         
@@ -154,24 +170,17 @@ script 100 OPEN
         thing_remove(70);
         
         // start counting the waves (skill modifiers for less players ( =less demons))
-        if (playercount() < 2) {
-            while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]/3){
-                f_AIDir_SpawnCount ++;
-                delay(35);
-            }
+        int limit = demon_spawncount[m_SurvivalWave-1];
+        
+        if(playercount() < 2) limit /= 3;
+        else if (playercount() < 3) limit /= 2;
+        
+        while (f_AIDir_SpawnCount < limit){
+            f_AIDir_SpawnCount ++;
+            g_SurvProgress = (f_AIDir_SpawnCount * 100) / limit;
+            delay(35);
         }
-        else if (playercount() < 3) {
-            while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]/2){
-                f_AIDir_SpawnCount ++;
-                delay(35);
-            }
-        }
-        else {
-            while (f_AIDir_SpawnCount < demon_spawncount[m_SurvivalWave-1]){
-                f_AIDir_SpawnCount ++;
-                delay(35);
-            }
-        }
+        g_SurvProgress = 0;
         
         // kill remaining demons
 		Notify_Message("DEMON WAVE is flawing!", "Finish cleaning the remaining demons", "DEMONT", 0);
@@ -194,33 +203,60 @@ script 100 OPEN
             if (l_RemainingMonsters < 5)     break;
             delay(1);
         }
-        g_MonstersLeft =-1;
+        g_MonstersLeft = -1;
     
         // kill off the remaining demons
-        thing_destroy(110, 0);
-        thing_destroy(111, 0);
-        thing_destroy(112, 0);
-        thing_destroy(113, 0);
-        thing_destroy(114, 0);
+        Thing_Damage2(110, 0xfffffff, "Script");
+        Thing_Damage2(111, 0xfffffff, "Script");
+        Thing_Damage2(112, 0xfffffff, "Script");
+        Thing_Damage2(113, 0xfffffff, "Script");
+        Thing_Damage2(114, 0xfffffff, "Script");
+
         setfont("DBIGFONT");
-        hudmessage(s:"Wave ", d:m_SurvivalWave, s:" Completed"; 2, 0, cr_white, 400.0, 200.0, 5.0);
+        if (f_SurvivalLastLevel == m_SurvivalWave) {
+        	hudmessage(s:"FINAL WAVE Completed"; 2, 0, cr_white, 400.0, 200.0, 5.0); 
+        }
+        else{
+            hudmessage(s:"Wave ", d:m_SurvivalWave, s:" Completed"; 2, 0, cr_white, 400.0, 200.0, 5.0);
+        }
         setfont("SMALLFNT");
 		delay(35 * 3);
         
         // proceed
         f_AIDir_SpawnCount = 0;
         
-        delay(35 * 3);
-        
         // last wave?
         if (f_SurvivalLastLevel == m_SurvivalWave) {
-                SetCvarString("sfp_scordata_status", "Game Over");
-                acs_execute(125, 0, 2, 0, 0);
-                break;
+            SetCvarString("sfp_scordata_status", "Game Over");
+            acs_execute(125, 0, 2, 0, 0);
+            break;
         }
         else {
-                // goto next wave
-                m_SurvivalWave ++;
+            str msg = "";
+            cred_totalreward = cred_moneyreward + (cred_waveincrease * (m_SurvivalWave-1));
+
+            if(PlayerCount() < 4) { // A little of extra help if you are alone.
+                cred_totalreward += (cred_lowplayerbonus * (m_SurvivalWave-1));
+                msg = strparam(s:"( +", d:(cred_lowplayerbonus * (m_SurvivalWave-1)), s:" low personnel bonus )");
+            }
+
+            if(cred_totalreward > 0){
+                giveCashToPlayers(cred_totalreward);
+                AmbientSound("Monies", 127);
+                msg = strparam(s:"Wave Reward: $", d:cred_totalreward, s:" ", s:msg);
+                f_BigCenterTipBold (msg, CR_WHITE);
+            }
+            delay(35);
+            if (GetActorHealth(104) == 1500) { // bonus U.P.s for a perfect core protection.
+                if(up_coreprotect > 0){
+                    f_BigCenterTipBold ("Core protection Bonus!", CR_WHITE);
+                    giveUPToPlayers(up_coreprotect);
+                    AmbientSound("p/heal", 127);
+                }
+            }
+            delay(35 * 3);
+            // goto next wave
+            m_SurvivalWave ++;
         }
     }
 }

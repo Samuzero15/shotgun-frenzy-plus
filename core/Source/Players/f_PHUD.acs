@@ -121,7 +121,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 	int gametype_, kills, status, time_tics,
 		guardian_state, monsters_left, guardian_timer,
 		credits, next_range, exp, deaths, ups,
-	 	streak, histreak, msstreak, corehp, teamcredits, commander, ranknow, nuke_launched, mechtimer;
+	 	streak, histreak, msstreak, corehp, teamcredits, commander, ranknow, nuke_launched, mechtimer, survprogress;
 	while(1){
 		gametype_ = CheckInventory("HUD_Gametype"),
 		kills = CheckInventory("HUD_Kills"),
@@ -131,6 +131,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 		monsters_left = CheckInventory("HUD_MonstersLeft"),
 		guardian_timer = CheckInventory("HUD_GuardianTimer");
 		nuke_launched = CheckInventory("HUD_NukeLaunched");
+		survprogress = CheckInventory("HUD_SurvProgress");
 		/*
 		log(s:"gametype: ", d:gametype_);
 		log(s:"kills: ", d:kills);
@@ -168,10 +169,14 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 			}
 
 		}else if (gametype_ == INTDB_GAMETYPE_SURVIVALDEFENDER){
-			if(monsters_left > 0)
-				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
-			else if (monsters_left == 0)
+			if((survprogress != 0) && monsters_left != 9999)
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 5, survprogress);
+			else if (monsters_left == 9999)
 				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 4);
+			else if(monsters_left > 0)
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
+			else 
+				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 0);
 		}
 
 		if(!PlayerInGame(ConsolePlayerNumber())){
@@ -235,16 +240,18 @@ script "HUD_ShowGameProgress" (int showtype, int value, int nuke_launched) clien
 		setfont("DBIGFONT");
 		sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 		str string = "";
-		int color = CR_BLUE;
+		int color = CR_CYAN;
 		switch (showtype){
+			case 0: string = "READY"; color = CR_WHITE;  break;
 			case 1: string = strparam(s:PlayHUD_TimerEX(value)); break;
 			case 2: string = strparam(d:value, s:" Left"); color = CR_ORANGE;  break;
-			case 3: string = "wait"; color = CR_WHITE; break;
+			case 3: string = "WAIT"; color = CR_WHITE; break;
 			case 4: string = "DONE"; color = CR_GREEN; break;
+			case 5: string = strparam(d:value, s:" %"); break;
 		}
-		
-		if(nuke_launched) color = CR_ORANGE;
-		
+
+		if(nuke_launched == 1) color = CR_ORANGE;
+
 		hudmessage(s:string; 1, 255, color, 400.0, 28.1, 7.0);
 		setfont("SMALLFNT");
 	//}
@@ -425,7 +432,7 @@ function str PlayHUD_TimerEX(int tics){
 	str min_s = min_i > 0 ? strparam(d:min_i, s:" : ") : "";
 	str tics_s = min_i < 1 ? strparam(s:".", d:milisecs) : "";
 	str sec_s = sec_i < 10 && min_i >= 1 ? strparam(s:"0", d:sec_i) : strparam(d:sec_i);
-	str color = "\cj";
+	str color = "";
 	if(min_i < 1){
 		color = "\cf";
 		if(sec_i < 30 && sec_i >= 20) 		color = "\ck";

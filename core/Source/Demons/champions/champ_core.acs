@@ -37,7 +37,7 @@
 #define CHAMP_AMOUNT 16
 
 int champion_forcespawn;
-int champion_nospawn;
+int champion_enabled;
 int champion_typeSpawn;
 int champion_allowlist[CHAMP_AMOUNT];
 int champion_validlist[CHAMP_AMOUNT];
@@ -61,8 +61,8 @@ Script "SFPlus_InitChampColors" OPEN {
 	CreateTranslation(CHAMPCOLOR_CYAN, 		0:255=%[0.00,0.00,1.01]:[1.47,2.00,2.00]); // Cyan
 	CreateTranslation(CHAMPCOLOR_BLACK, 	0:255=%[0.00,0.00,0.00]:[0.50,0.50,0.50]); // Black
 	CreateTranslation(CHAMPCOLOR_WHITE, 	0:255=%[0.00,0.00,0.00]:[2.00,2.00,2.00]); // White
-	champion_nospawn = false;
-	champion_forcespawn = false;
+	champion_enabled = GetCvar("sfp_champ_enable");
+	champion_forcespawn = GetCvar("sfp_champ_forcespawn");
 	champion_typeSpawn = -1;
 	champion_onbanned = GetCvar("sfp_champ_onbanned");
 	Champ_InitBanlist();
@@ -201,5 +201,5 @@ function bool Champ_IsType(int which){
 }
 
 Script "SFPlus_SetChampionNoSpawn" (int state) {
-	champion_nospawn = state;
+	champion_enabled = state;
 }

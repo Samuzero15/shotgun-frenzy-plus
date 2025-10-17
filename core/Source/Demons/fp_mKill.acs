@@ -22,7 +22,6 @@ int killscript_noHPAPBonusDrop = false;
 
 Script "SFPlus_MonsterKill" Kill{
 	delay(1); // Let the monsters set their flags in the decorate.
-	ACS_NamedExecuteAlways("SFPlus_ChampionDeath", 0);
 	if(CheckFlag(0, "ISMONSTER") && !CheckFlag(0, "FRIENDLY")){
 	  GiveInventory("MarkToken_IAmDead", 1);
 	  bool flag_boss = checkinventory("FPMToken_Boss");

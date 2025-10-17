@@ -9,9 +9,20 @@
 
 ## v1 - The path of the damned...
 
+#### (17 / 10 / 2025) [Survival Defender Qol changes, More options, and fixes.]
+	!*) The tesla coil now will no longer freeze your game when the building has been damaged.
+	*) Now in Survival Defender, there is a indicator for the progress of the demon wave before finishing the remaining monsters.
+	!+) Now each wave completed, the players will be rewarded with money and ups!
+	// If the core is fully protected untill the end of the wave.
+	// If there are less than 4 players, the players can get rewarded with a extra little bonus.
+	// Again customizable on the SF+ Options menu.
+	+) Now the champions can be disabled (and force spawns with it) on the Menudef
+	*) The death script for the chamipions are moved and now prevents the execution of death scripts, if the game (with the scripts damage type) kills a monster, the death script will not be executed.
+	!*) Turrets and buildings states (HP bars and Level Stars) can be toggled with ACS (and also it's converted to ACS)  
+
 #### (9 / 10 / 2025) [New sounds for items, runes and also a new... announcer?!]
-	+) Yes. New Announcer! (Mikell Dover VA, good voice :) )
-	+) Added the announcer options into SF+ Options.
+	!+) Yes. New Announcer! (Mikell Dover VA, good voice :) )
+	!+) Added the announcer options into SF+ Options.
 	+) New pickup and sounds for items, runes and in the announcer side, more voices for Cepstral Amy.
 	// The announcer adds new lines for the timer and depending on the game status. Available for all gamemodes (CF, SF and SD)
 	*) The game timer will start only after the first door and alarm is activated and open.

@@ -4,8 +4,9 @@ Cooperative
     addflag MAPRESET_RESETS_MAPTIME
     LockedGameSettings
     {
+        teamdamage = 1 // Necesary for allied damage scripts
         sv_unblockallies = true
-        sv_shootthroughallies = true
+        sv_shootthroughallies = false
         sv_dontpushallies = true
         Compat_ResetGlobalVarsOnMapReset = false
     }

@@ -432,7 +432,8 @@ Actor Turret_HealthBar {
 	scale 0.30
 	renderstyle Add
 	Alpha 0.5
-	+NOINTERACTION
+  	+CLIENTSIDEONLY
+	+NOGRAVITY
 	+NOCLIP
 	-SOLID
 	
@@ -506,12 +507,31 @@ Actor Turret_HealthBar {
 	}
 }
 
+Actor TurretStates_Label
+{
+  Height 1
+  Radius 1
+  Mass 0xFFFFFFFF
+  -Solid
+  +Float
+  +NoGravity
+  //+NoInteraction
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    TNT1 A -1
+    stop
+  }
+}
+
 Actor Turret_LevelStars {
 	Height 1
 	Radius 1
 	renderstyle Add
 	Alpha 0.5
-	+NOINTERACTION
+  	+CLIENTSIDEONLY
+	+NOGRAVITY
 	+NOCLIP
 	+FLOATBOB
 	-SOLID
@@ -713,7 +733,7 @@ ACTOR TurretHeadBase //this will quickly add flags to all the damn turrets (or a
 	+THRUSPECIES
 	+MISSILEMORE
 	+MISSILEEVENMORE
-	+USEDAMAGEEVENTSCRIPT
+	+USEDAMAGEEVENTSCRIPT // Used for patcher
 	DeathSound "turret/death"
 	scale 0.5
 	damagefactor "MarineFire", 0.0

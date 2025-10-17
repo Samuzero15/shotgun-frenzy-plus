@@ -58,7 +58,7 @@ OptionMenu "SFPlusOptions"{
 	SubMenu "Game Options", "SFPlus_GameOptions"
 	SubMenu "Mod Hotkeys", "SFPlus_ItemHotkeys"
 	SubMenu "User Options", "SFPlus_UserOptions"
-	SubMenu "Champion Banlist", "SFPlus_ChampionBanlist"
+	SubMenu "Champion Options", "SFPlus_ChampionBanlist"
 	SubMenu "Price Edit", "SFPlus_PriceEdit"
 	StaticText ""
 	Option "Announcer",			"cl_announcer", "ZA_Announcers" // [TP]
@@ -71,7 +71,7 @@ OptionMenu SFPlus_GameOptions{
 	StaticText "*) Requires a map restart to take effect",1
 	StaticText "0 means use the map default varable.", 1
 	StaticText ""
-	StaticText "All options that you need for your server.", 1
+	StaticText "General Settings", 1
 	StaticText ""
 	Slider "Game Length (Mins) *", "sf_gamelength", 0, 30, 10, 0
 	Slider "Guardian Time Length (Mins) *", "sf_guardianlength", 0, 3, 2, 0
@@ -94,6 +94,13 @@ OptionMenu SFPlus_GameOptions{
 	Option "Damage per Experience", "sfp_damageperexp", "Boolean"
 	Option "Hub after game", "sfp_hubaftergame", "Boolean"
 	TextField "Monster set", "sfp_monstersetname", "cv_false"
+	StaticText ""
+	StaticText "Survival Defender Settings", 1 
+	StaticText ""
+	NumberField "Wave Credit Reward *", "sfp_sd_wavereward", 0, 10000, 1000, 0
+	NumberField "Wave Credit Increase *", "sfp_sd_waveincrease", 0, 5000, 100, 0
+	NumberField "Low Personnel Credit Bonus *", "sfp_sd_lowplayerbonus", 0, 5000, 100, 0
+	NumberField "Core Protection UPs *", "sfp_sd_coreprotection", 0, 5, 1, 0
 	StaticText ""
 	SubMenu "About Game Options", "SFPlusGameOptionHelp"
 	SafeCommand "Reset Game Options", "sfp_resetGameOptions"
@@ -146,7 +153,7 @@ OptionMenu SFPlus_UserOptions{
 	StaticText "Kill-streak HUD settings"
 	StaticText ""
 	Option "Enable hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
-	Slider "Transparency", "sfp_killstreakhud_alpha" , 0.0, 100.0, 80.0, 0
+	Slider "Transparency", "sfp_killstreakhud_alpha" , 0.0, 100.0, 1.0, 0
 	Option "Milestone Color", "sfp_killstreakhud_color1", "Color"
 	Option "Hiscore Color", "sfp_killstreakhud_color2", "Color"
 	Option "Overflow Color", "sfp_killstreakhud_color3", "Color"
@@ -157,37 +164,47 @@ OptionMenu SFPlus_UserOptions{
 	Slider "X Position", "sfp_itemhud_x" , 0.0, 100.0, 50.0, 0
 	Slider "Y Position", "sfp_itemhud_y" , 0.0, 100.0, 75.0, 0
 	Slider "Items per Rows", "sfp_itemhud_items_per_row" , 1, 16, 16, 0
-	Slider "Alpha", "sfp_itemhud_alpha" , 0.0, 100.0, 80.0, 0
+	Slider "Alpha", "sfp_itemhud_alpha" , 0.0, 100.0, 1.0, 0
 	Option "Orientation", "sfp_itemhud_orientation", "ItemHud_Orientation"
+	StaticText ""
+	StaticText "Building Status settings"
+	StaticText ""
+	Option "Show Status", "sfp_buildstats", "ShowHideBoolean"
+	Slider "Render Distance", "sfp_buildstats_renderdistance" , 128.0, 2048.0, 64.0, 0
+	Slider "Alpha", "sfp_buildstats_alpha" , 0.0, 100.0, 1.0, 0
 	StaticText ""
 	SubMenu "About User Options", "SFPlusUserOptionHelp"
 	SafeCommand "Reset User Options", "sfp_resetUserOptions"
 }
 
 OptionMenu SFPlus_ChampionBanlist{
-	Title "Champion Banlist"
+	Title "Champion Settings"
 	StaticText "Requires a map restart before taking effect"
 	StaticText ""
-	StaticText "Limit your champions here", 1
+	StaticText "Settings", 1
 	StaticText ""
-	Option "Meaty", 		"sfp_champ_1", 		"BanBoolean"
-	Option "Quick", 		"sfp_champ_2", 		"BanBoolean"
-	Option "Strong", 		"sfp_champ_3", 		"BanBoolean"
-	Option "Stealth", 		"sfp_champ_4", 		"BanBoolean"
-	Option "Poison", 		"sfp_champ_5", 		"BanBoolean"
-	Option "Explosive", 	"sfp_champ_6", 		"BanBoolean"
-	Option "Golden", 		"sfp_champ_7", 		"BanBoolean"
-	Option "Split", 		"sfp_champ_8", 		"BanBoolean"
-	Option "Teleport", 		"sfp_champ_9", 		"BanBoolean"
-	Option "Healing", 		"sfp_champ_10", 	"BanBoolean"
-	Option "Pusher", 		"sfp_champ_11", 	"BanBoolean"
-	Option "Puller", 		"sfp_champ_12", 	"BanBoolean"
-	Option "Hybrid", 		"sfp_champ_13", 	"BanBoolean"
-	Option "Emperor", 		"sfp_champ_14", 	"BanBoolean"
-	Option "Zombie", 		"sfp_champ_15", 	"BanBoolean"
-	Option "Prideful", 		"sfp_champ_16", 	"BanBoolean"
+	Option "Enable Champions",  "sfp_champ_enable", "Boolean"
+	Option "On Banned Champion", 		"sfp_champ_onbanned", 	"OnBanBoolean", "sfp_champ_enable"
+	Option "Force Champion Spawn", 		"sfp_champ_forcespawn", "Boolean", 		"sfp_champ_enable"
 	StaticText ""
-	Option "On Banned Champion", 		"sfp_champ_onbanned", 	"OnBanBoolean"
+	StaticText "Champion Banlist", 1
+	StaticText ""
+	Option "Meaty", 		"sfp_champ_1", 		"BanBoolean", "sfp_champ_enable"
+	Option "Quick", 		"sfp_champ_2", 		"BanBoolean", "sfp_champ_enable"
+	Option "Strong", 		"sfp_champ_3", 		"BanBoolean", "sfp_champ_enable"
+	Option "Stealth", 		"sfp_champ_4", 		"BanBoolean", "sfp_champ_enable"
+	Option "Poison", 		"sfp_champ_5", 		"BanBoolean", "sfp_champ_enable"
+	Option "Explosive", 	"sfp_champ_6", 		"BanBoolean", "sfp_champ_enable"
+	Option "Golden", 		"sfp_champ_7", 		"BanBoolean", "sfp_champ_enable"
+	Option "Split", 		"sfp_champ_8", 		"BanBoolean", "sfp_champ_enable"
+	Option "Teleport", 		"sfp_champ_9", 		"BanBoolean", "sfp_champ_enable"
+	Option "Healing", 		"sfp_champ_10", 	"BanBoolean", "sfp_champ_enable"
+	Option "Pusher", 		"sfp_champ_11", 	"BanBoolean", "sfp_champ_enable"
+	Option "Puller", 		"sfp_champ_12", 	"BanBoolean", "sfp_champ_enable"
+	Option "Hybrid", 		"sfp_champ_13", 	"BanBoolean", "sfp_champ_enable"
+	Option "Emperor", 		"sfp_champ_14", 	"BanBoolean", "sfp_champ_enable"
+	Option "Zombie", 		"sfp_champ_15", 	"BanBoolean", "sfp_champ_enable"
+	Option "Prideful", 		"sfp_champ_16", 	"BanBoolean", "sfp_champ_enable"
 	StaticText ""
 	SubMenu "About Champions", "SFPlusChampionsAbout"
 }

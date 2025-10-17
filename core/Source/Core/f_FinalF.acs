@@ -240,11 +240,11 @@ script 108 (int l_RemainingMonsters)
     }
 
     // kill off the remaining demons
-    thing_destroy(110, 0);
-    thing_destroy(111, 0);
-    thing_destroy(112, 0);
-    thing_destroy(113, 0);
-    thing_destroy(114, 0);
+    Thing_Damage2(110, 0xfffffff, "Script");
+	Thing_Damage2(111, 0xfffffff, "Script");
+	Thing_Damage2(112, 0xfffffff, "Script");
+	Thing_Damage2(113, 0xfffffff, "Script");
+	Thing_Damage2(114, 0xfffffff, "Script");
     
     delay(35);
 	AnnouncerSound("time/GuardianIncoming", 0);
@@ -317,12 +317,12 @@ Script "SFPlus_GuardianWaveChecker" (int surv){
 }
 
 Script "SFPlus_KillnEnd" (int reason){
-	thing_destroy(118, 0);
-	thing_destroy(110, 0);
-    thing_destroy(111, 0);
-    thing_destroy(112, 0);
-    thing_destroy(113, 0);
-    thing_destroy(114, 0);
+	Thing_Damage2(118, 0xfffffff, "Script");
+	Thing_Damage2(110, 0xfffffff, "Script");
+	Thing_Damage2(111, 0xfffffff, "Script");
+	Thing_Damage2(112, 0xfffffff, "Script");
+	Thing_Damage2(113, 0xfffffff, "Script");
+	Thing_Damage2(114, 0xfffffff, "Script");
 
 	delay(35);
 	thing_remove(118);

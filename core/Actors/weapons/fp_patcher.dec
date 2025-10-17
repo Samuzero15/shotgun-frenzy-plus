@@ -125,10 +125,10 @@ Actor Patcher_Advanced : Patcher
 }
 ACTOR Patcher_Puff
 {
-	+NOINTERACTION
 	+BLOODLESSIMPACT
 	-ACTIVATEPCROSS
 	-RANDOMIZE
+	+FORCEALLYCOLLISION
 	DamageType			"IdlePatcherDmg"
 	VSpeed				1
 	Mass				5

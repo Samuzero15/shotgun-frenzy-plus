@@ -50,6 +50,7 @@ int g_SpecialPortal;
 int g_GuardianState;
 int g_MonstersLeft;
 int g_GameStarted;
+int g_SurvProgress;
 //int g_AIDirector_TrackRockets;
 //int g_AIDirector_TrackPlasma;
 //int g_AIDirector_TrackFlamer;

@@ -38,6 +38,8 @@ Script "SFPlus_SyncVariables" OPEN {// Thank You Mr.Satan!
 			SetInventory("HUD_GameEnding", g_GameEnding);
 			SetInventory("HUD_GameTimer", g_GameTimer);
 			SetInventory("HUD_GuardianTimer", g_GuardianTimer);
+			SetInventory("HUD_MonstersLeft", (g_MonstersLeft == -1) ? 9999 : g_MonstersLeft);
+			SetInventory("HUD_SurvProgress", g_SurvProgress);
 		} else { // Player is not on the game (as spectator or game player).
 			SetActivator(0,AAPTR_NULL);
 			play++;
@@ -83,7 +85,8 @@ script "SFPlus_SyncWithSBARINFO" (int kills) {
 	SetInventory("HUD_GuardianState", g_GuardianState);
 	SetInventory("HUD_GameOver", g_GameOver);
 	SetInventory("HUD_GameEnding", g_GameEnding);
-	SetInventory("HUD_MonstersLeft", g_MonstersLeft);
+	SetInventory("HUD_MonstersLeft", (g_MonstersLeft == -1) ? 9999 : g_MonstersLeft);
+	SetInventory("HUD_SurvProgress", g_SurvProgress);
 
 	if(p_MechTimer[play] > 0){
 		SetInventory("Hud_MechTime_Min", ((p_MechTimer[play] + 35) / (35*60))%60);
