@@ -45,12 +45,30 @@ function int LumpRead_ParseValue (str string_value, int value_type){
 }
 
 int res1, res2;
+int lumpread_busy = 0; // 
+int lumpread_busyfile = 0; // 
+
+global bool 30:lumpread_initialized;
+global int 32:lumpread_count;
+global int 31:lumpread_files[]; // 0: lumpfile, 1: lineread_script
+global int 35:lumpread_filecount;
+global int 34:lumpread_lastline[]; // 0: lastline, 1:lineread_script
+global int 36:lumpread_bufferlinecount;
+global int 33:lumpread_buffer[];
+global int 37:lumpread_buffernextcomma[];
 
 Script "LumpRead_LoadFile" (int lumpfile, int lineread_script){
-// For some reason i don't really friggin explain, why does this crashes in the 32bit version!? 
-//function void LumpRead_LoadFile(str lumpfile, int lineread_script){
-    //Grab all your lumps and read them all.
-	int lump = 0;
+    if(lumpread_initialized == true) terminate;
+
+    lumpread_files[2*lumpread_count] = lumpfile;
+    lumpread_files[2*lumpread_count + 1] = lineread_script;
+    lumpread_count++;
+}
+
+Script "LumpRead_ProcessLumps" (int lumpread_id) {
+    int lump = 0;
+    int lumpfile = lumpread_files[2*lumpread_id];
+    int lineread_script = lumpread_files[2*lumpread_id + 1];
 	while (true){
 		lump = LumpOpen(lumpfile, lump, 0);
 
@@ -59,15 +77,63 @@ Script "LumpRead_LoadFile" (int lumpfile, int lineread_script){
         }
         
         str file_text = LumpReadString(lump, 0);
-        ACS_NamedExecuteWithResult("LumpRead_ReadFile", file_text, lineread_script);
-        
+        lumpread_busyfile = true;
+        ACS_NamedExecuteWithResult("LumpRead_ReadFile", file_text, lineread_script, lumpread_filecount);
+        lumpread_lastline[2*lumpread_filecount + 1] = lineread_script;
+        lumpread_filecount++;
+        while(lumpread_busyfile == true){
+            //Log(s:LumpGetInfo(lump, LUMP_INFO_NAME), s:" - ", d:lump);
+            delay(1);
+        }
+        //Log(s:LumpGetInfo(lump, LUMP_INFO_NAME), s:" - ", d:lump, s:", Processed");
         //Log(s:"Finished processing ", s:lumpfile, s:" lump. Index: ", d:lump, s:".");
         LumpClose(lump);
-        Log(s:LumpGetInfo(lump, LUMP_INFO_NAME), s:" - ", d:lump);
 	}
+    lumpread_busy = false;
 }
 
-Script "LumpRead_ReadFile" (int file_text, int lineread_script){
+
+Script "LumpRead_OpenFiles_Clientside" Open Clientside {
+    if(GameType() != GAME_SINGLE_PLAYER)
+        ACS_NamedExecuteAlways("LumpRead_OpenFiles", 0);
+}
+
+Script "LumpRead_OpenFiles" Open {
+    if(lumpread_initialized == true) {
+        // If already intialized when changing the map, reload the buffered lines.
+        int line_loaded = 0;
+        for(int i = 0; i < lumpread_filecount; i++){
+            //Log(s:"File ", d:i, s:" had ", d:lumpread_lastline[2*i], s:" lines buffered.");
+            for(int j = 0; j < lumpread_lastline[2*i]; j++){
+                //log(s:"line buffered:", d:j, s:", line-script: '", s:lumpread_lastline[2*i + 1], s:"', total lines: ", d:lumpread_lastline[2*i], s:", content: '", s:lumpread_buffer[line_loaded + j], s:"'");
+                res2 = 0; res1 = 0;
+                ACS_NamedExecuteWithResult(lumpread_lastline[2*i+1], lumpread_buffer[line_loaded + j]);
+                if(j % 1000 == 0){
+                    delay(1); // Screw you delays on lump reading.
+                }
+            }
+            line_loaded += lumpread_lastline[2*i];
+        }
+        terminate;
+    }
+    lumpread_bufferlinecount = 0;
+    //delay(3);
+    int lump = -1;
+    while(lump < lumpread_count){
+        if(lumpread_busy == true){
+            delay(1);
+        }
+        lumpread_busy = true;
+        lump ++;
+        if(lump < lumpread_count) {
+            //Log(s:"Reading: '", s:lumpread_files[2*lump], s:"' Lumps");
+            ACS_NamedExecute("LumpRead_ProcessLumps", 0, lump);
+        }
+    }
+    lumpread_initialized = true;
+}
+
+Script "LumpRead_ReadFile" (int file_text, int lineread_script, int lumpread_fileid){
     //Now let's read this file, comments with '//' or in '/**/' will be skipped.
     //str file_text = LumpReadString(lump, 0);
     //log(s:file_text);
@@ -93,13 +159,15 @@ Script "LumpRead_ReadFile" (int file_text, int lineread_script){
             }
         }
         str line = StrSlice(file_text, pos, next_newline);
-        ACS_NamedExecuteWithResult("LumpRead_ReadLine", line, lineread_script);
+        ACS_NamedExecuteWithResult("LumpRead_ReadLine", line, lineread_script, lumpread_fileid);
+        // go to next line
         pos = next_newline+1;
         next_newline = ACS_NamedExecuteWithResult("LumpRead_FindText", file_text, "\n", pos);
         next_newline = next_newline != -1 ? next_newline : tex_len;
         delayer ++;
         if(!(delayer % 200)) delay(1);			
     }while(pos-1 != tex_len);
+    lumpread_busyfile = false;
 }
 
 Script "LumpRead_FindText" (int file_text, int char, int pos){
@@ -107,7 +175,7 @@ Script "LumpRead_FindText" (int file_text, int char, int pos){
     SetResultValue(StrFindFrom(file_text, char, pos));
 }
 
-Script "LumpRead_ReadLine" (int line, int lineread_script){
+Script "LumpRead_ReadLine" (int line, int lineread_script, int lumpread_fileid){
     // Each parsed line, removing comments and CR's. And then, execute the lineread_script
     int next_comment;
     int next_comment1;
@@ -129,7 +197,13 @@ Script "LumpRead_ReadLine" (int line, int lineread_script){
     //log(s:"Pos= (", d:pos, s:"), line=(", s:line, s:")");
     //log(s:line, s:" => Pos = ", d:pos, s:", next_newline = ", d:next_newline, s:", next_comment = ", d:next_comment, s:", line_size = ", d:line_size);
     if(line_size != 0){
-        res1 = 0; res2 = 0;
+        //Save this line into buffered lines, for a quick re-load.
+        res1 = 0; 
+        res2 = 0;
+        lumpread_lastline[2*lumpread_fileid]++;
+        lumpread_buffer[lumpread_bufferlinecount] = line;
+        //lumpread_buffernextcomma[lumpread_bufferlinecount] = res2;
+        lumpread_bufferlinecount ++;
         ACS_NamedExecuteWithResult(lineread_script, line);
     }
 }

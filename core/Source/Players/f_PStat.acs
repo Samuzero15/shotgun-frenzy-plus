@@ -111,6 +111,7 @@ Script 607 (void) NET
 // player enters game
 script 53 ENTER
 {
+	delay(5); // Give it enough time for lump reading finish their process (soon to be skipped with the incoming BUSY flag)
     //Clear potential bugs
     setactorproperty(0, APROP_SPEED, 1.0);
     setactorproperty(0, APROP_Health, 100);

@@ -217,27 +217,19 @@ ACTOR Patcher_SellPuff : Patcher_UpgradePuff
 	
 }
 
-Actor Patcher_Libra : CustomInventory {
+Actor Patcher_Effect : CustomInventory {
 	+Inventory.AlwaysPickup
 	States{
 		Spawn:
 			TNT1 A 1
 		stop
 		Pickup:
-			TNT1 A 0 A_FireBullets(0, 0, 1, 10, "Patcher_LibraPuff", FBF_NOFLASH | FBF_NORANDOM, 256)
+			TNT1 A 0
 		stop
 	}
 }
 
-Actor Patcher_LibraAdvanced : Patcher_Libra {
-	States{
-		Pickup:
-			TNT1 A 0 A_FireBullets(0, 0, 1, 10, "Patcher_LibraPuff", FBF_NOFLASH | FBF_NORANDOM, 512)
-		stop
-	}
-}
-
-Actor PatcherEffect_Fixed : Patcher_Libra {
+Actor PatcherEffect_Fixed : Patcher_Effect {
 	States{
 		Pickup:
 			TNT1 A 0 A_PlaySound("p/deploy")
@@ -246,15 +238,16 @@ Actor PatcherEffect_Fixed : Patcher_Libra {
 	}
 }
 
-Actor PatcherEffect_Upgraded : Patcher_Libra {
+Actor PatcherEffect_Upgraded : Patcher_Effect {
 	States{
 		Pickup:
+			TNT1 A 0 A_PlaySound("p/deploy")
 			TNT1 A 0 A_SpawnItemEx("SparksEmitter_Deploy", 0, 0, 0, 0)
 		stop
 	}
 }
 
-Actor PatcherEffect_Fail : Patcher_Libra {
+Actor PatcherEffect_Fail : Patcher_Effect {
 	States{
 		Pickup:
 			TNT1 A 0 A_PlaySound("SamuTerm/Error")

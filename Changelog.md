@@ -9,6 +9,12 @@
 
 ## v1 - The path of the damned...
 
+#### (18 / 10 / 2025) [Line buffering for Lump reading process]
+	*) Now the lump reading process will be done once, and the lines read are now saved in a array, for a quicker data load.
+	// It will get a bit laggy when starting a match in single player, but on the future matches will be ready to be loaded.
+	*) Turret states will be drawn only if the player is not using the Samu Terminal
+	*) Some cleanup fixes, with the patcher specifically.
+
 #### (17 / 10 / 2025) [Survival Defender Qol changes, More options, and fixes.]
 	!*) The tesla coil now will no longer freeze your game when the building has been damaged.
 	*) Now in Survival Defender, there is a indicator for the progress of the demon wave before finishing the remaining monsters.

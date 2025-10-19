@@ -153,7 +153,6 @@ function void SFPlus_DefineWeapons (void){
 }
 
 function void WDir_ReadSFWEPDEF(void){
-	//ACS_NamedExecuteWithResult("LumpRead_Execute", "SFWEPDEF", "SFPlus_Wdir_InitSFWEPDEF", "SFPlus_Wdir_ProcessLump");
 	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFWEPDEF", "SFPlus_WDir_SFWEPDEFReadLine");
 }
 
@@ -206,7 +205,7 @@ Script "SFPlus_WDir_SFWEPDEFReadLine" (int line) {
 		SFWEPDEF_ClearClasses();
 	}
 	else {
-		log(s:"fl_WDir: Invalid command: '", s:op, s:"'", s:", line=", d:line);
+		log(s:"fl_WDir: Invalid command: '", s:op, s:"'", s:", line=", s:line);
 	}
 }
 

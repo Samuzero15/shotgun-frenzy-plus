@@ -285,6 +285,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 					terminate;
 				}
 				SetActivator(0, AAPTR_Damage_Target); // Back to the turret
+				GiveInventory("PatcherEffect_Upgraded", 1);
 				ACS_NamedExecuteAlways("Building_UpgradeIt", 0, playnum, price_upg);
 			break;
 			case 1: 

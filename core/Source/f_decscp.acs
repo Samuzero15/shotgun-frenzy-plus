@@ -607,6 +607,11 @@ Script "TurretState_SyncLabels" open {
 }
 
 script "TurretState_ShowLabels" OPEN Clientside {
+	if(CheckActorInventory(990+ConsolePlayerNumber(),"SamuTInv_UsingTerminal")){
+		delay(1);
+		restart;
+	}
+	
 	for(int id = 0; id < GetSyncVar(TURRETSTATE_TID); id++){
 		int hp_hid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id);
 		int hp = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id + 1);
@@ -694,7 +699,7 @@ function void TurretState_UpdateLastIndex(void) {
 		}
 	}
 	turretStates_lastIndex = res+1;
-	log(s:"TurretState LastId: (", d:turretStates_lastIndex, s:")");
+	//log(s:"TurretState LastId: (", d:turretStates_lastIndex, s:")");
 }
 
 Script "Turret_States" (void) {
@@ -717,7 +722,7 @@ Script "TurretStates_Update" (int id) {
 			turretStates_data[id][i] = 0;
 		}
 		TurretState_UpdateLastIndex();
-		log(s:"TurretState ID: (", d:id, s:") Data Cleared");
+		//log(s:"TurretState ID: (", d:id, s:") Data Cleared");
 		terminate;
 	}
 
