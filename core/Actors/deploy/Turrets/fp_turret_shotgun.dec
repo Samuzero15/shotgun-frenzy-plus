@@ -90,7 +90,7 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24307
 			goto Missile.Reload
 		Missile.Reload: // Hi health
 			TNT1 A 0 A_JumpIfHealthLower(user_crithealth,"Missile.Smoke")
-			
+		Missile.Reload.Delay:
 			STRT A 25 A_SetTics(25 - (stamina*3)) // Up to 10 tics in level 5.
 			STRT A 1 A_PlaySound("turret/shotgun/load")
 			TNT1 A 0 A_JumpIfInventory("TurretShotgun_FireToken", 1, "See")
@@ -99,7 +99,7 @@ ACTOR TurretShotgun_Head : TurretHeadBase 24307
 		
 		Missile.Smoke:
 			TNT1 A 0 A_SpawnItemEx("Smoke_Spawner",0,0,40)
-			goto Missile.Reload+1
+			goto Missile.Reload.Delay
 
 	}
 }

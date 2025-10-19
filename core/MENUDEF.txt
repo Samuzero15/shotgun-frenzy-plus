@@ -78,22 +78,28 @@ OptionMenu SFPlus_GameOptions{
 	Slider "Starting Player Cash *", "sf_startcash", 0, 20000, 500, 0
 	Slider "Starting Team Cash *", "sf_teamcash", 0, 20000, 500, 0
 	Option "Do you like cacos? *", "sf_cacodemons", "CacoBoolean"
-	Slider "Champion Spawn Chance *", "sf_percentfast", 0, 50, 5, 0
 	Option "Adaptive Spawning *", "sf_adaptivespawn", "MapBoolean"
 	Slider "Door Hold-Time Seconds", "sf_doorholdtime", 15, 45, 1, 0
-	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
-	Option "Allow Credit Drop", "sfp_allowdropcredits", "Boolean"
-	NumberField "Credit Drop Delay", "sfp_dropcredits_delay", 3, 10, 1, "sfp_allowdropcredits"
-	Option "No drop on starting credits", "sfp_dropcredits_nostartcredits", "Boolean", "sfp_allowdropcredits"
-	NumberField "Re-Capture Minimal *", "sfp_recapmin", 0, 10, 1, 0
 	NumberField "Monster Cap *", "sfp_maxmonsters", 0, 500, 50, 0
-	Slider "Player's Extra DMG %", "sfp_playerdmgmult", 0.0, 200.0, 5.0, 0
-	Slider "Monster's Extra HP % *", "sfp_monsterhpmult", 0.0, 200.0, 5.0, 0
-	Slider "Monster's Extra HP over Lv20", "sfp_monsolv20hpmult", 0.0, 200.0, 5.0, 0
+	StaticText ""
+	StaticText "Game Rules", 1 
+	StaticText ""
+	Option "Instant Deploying", "sfp_instantdeploying", "Boolean"
+	NumberField "Re-Capture Minimal *", "sfp_recapmin", 0, 10, 1, 0
+	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
+	Option "No drop on starting credits", "sfp_dropcredits_nostartcredits", "Boolean", "sfp_allowdropcredits"
 	Option "Allow AutoSave Items *", "sfp_autosaveitems", "Boolean"
 	Option "Damage per Experience", "sfp_damageperexp", "Boolean"
 	Option "Hub after game", "sfp_hubaftergame", "Boolean"
 	TextField "Monster set", "sfp_monstersetname", "cv_false"
+	StaticText ""
+	StaticText "Balancing Settings", 1 
+	StaticText ""
+	Slider "Player's Extra DMG %", "sfp_playerdmgmult", 0.0, 200.0, 5.0, 0
+	Slider "Monster's Extra HP % *", "sfp_monsterhpmult", 0.0, 200.0, 5.0, 0
+	Slider "Monster's Extra HP over Lv20", "sfp_monsolv20hpmult", 0.0, 200.0, 5.0, 0
+	Option "Allow Credit Drop", "sfp_allowdropcredits", "Boolean"
+	NumberField "Credit Drop Delay", "sfp_dropcredits_delay", 3, 10, 1, "sfp_allowdropcredits"
 	StaticText ""
 	StaticText "Survival Defender Settings", 1 
 	StaticText ""
@@ -127,7 +133,7 @@ OptionMenu SFPlus_ItemHotkeys{
 
 OptionMenu SFPlus_UserOptions{
 	Title "User Options"
-	StaticText "Not needed at all, but hey, you should take a look.",1
+	StaticText "Not needed at all, but hey, you should take a look.", 1
 	StaticText ""
 	Option "Enable Auto-Healing?", "sfp_Autouse", "Boolean"
 	NumberField "Stimpack Low HP %",   "sfp_stimpack_t" , 5, 75, 5, "sfp_Autouse"
@@ -139,7 +145,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Mech Mount MSG?", "sfp_mechmsg", "Boolean"
 	Option "Play old soundtrack?", "sfp_oldsoundtrack", "NostalgiaBoolean"
 	StaticText ""	
-	StaticText "Show/Hide Particles?"
+	StaticText "Show/Hide Particles?", 1
 	StaticText ""
 	Option "Blood splats", "sfp_part_gore", "ShowHideBoolean"
 	Option "Light bars", "sfp_part_lightbars", "ShowHideBoolean"
@@ -150,7 +156,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Junk", "sfp_part_junk", "ShowHideBoolean"
 	Option "Sparks", "sfp_part_sparks", "ShowHideBoolean"
 	StaticText ""
-	StaticText "Kill-streak HUD settings"
+	StaticText "Kill-streak HUD settings", 1
 	StaticText ""
 	Option "Enable hud?", "sfp_killstreakhud", "KillStreakHudpOptions"
 	Slider "Transparency", "sfp_killstreakhud_alpha" , 0.0, 100.0, 1.0, 0
@@ -159,7 +165,7 @@ OptionMenu SFPlus_UserOptions{
 	Option "Overflow Color", "sfp_killstreakhud_color3", "Color"
 	Option "Shutdown Color", "sfp_killstreakhud_color4", "Color"
 	StaticText ""
-	StaticText "Item HUD settings"
+	StaticText "Item HUD settings", 1
 	StaticText ""
 	Slider "X Position", "sfp_itemhud_x" , 0.0, 100.0, 50.0, 0
 	Slider "Y Position", "sfp_itemhud_y" , 0.0, 100.0, 75.0, 0
@@ -167,7 +173,7 @@ OptionMenu SFPlus_UserOptions{
 	Slider "Alpha", "sfp_itemhud_alpha" , 0.0, 100.0, 1.0, 0
 	Option "Orientation", "sfp_itemhud_orientation", "ItemHud_Orientation"
 	StaticText ""
-	StaticText "Building Status settings"
+	StaticText "Building Status settings", 1
 	StaticText ""
 	Option "Show Status", "sfp_buildstats", "ShowHideBoolean"
 	Slider "Render Distance", "sfp_buildstats_renderdistance" , 128.0, 2048.0, 64.0, 0
@@ -184,6 +190,7 @@ OptionMenu SFPlus_ChampionBanlist{
 	StaticText "Settings", 1
 	StaticText ""
 	Option "Enable Champions",  "sfp_champ_enable", "Boolean"
+	Slider "Champion Spawn Chance", "sf_percentfast", 0, 50, 5, 0
 	Option "On Banned Champion", 		"sfp_champ_onbanned", 	"OnBanBoolean", "sfp_champ_enable"
 	Option "Force Champion Spawn", 		"sfp_champ_forcespawn", "Boolean", 		"sfp_champ_enable"
 	StaticText ""

@@ -441,18 +441,18 @@ Script "Building_MoveTo_SpawnSpot" (void){
 Script "Building_MoveTo_Preview" (void){
 	// Spawns the preview position of the destination move spot.
 	int x = GetActorX(0), y = GetActorY(0), z = GetActorFloorZ(0) + 5.0;
-	ACS_NamedExecuteAlways("Building_MoveTo_PreviewBlur",0, 15100);
 	SetActivatorToTarget(0); 
+	ACS_NamedExecuteWithResult("Building_MoveTo_PreviewBlur", 15100, x, y, z);
 	Spawn("Building_MoveSpot", x, y, z, 16100+PlayerNumber());// Dummy move spot to calculate the move price.
 }
 
-Script "Building_MoveTo_PreviewBlur" (int tid) ClientSide{
+Script "Building_MoveTo_PreviewBlur" (int tid, int x, int y, int z) ClientSide{
 	// Shows the turret blur over the destination spot.
-	int x = GetActorX(0), y = GetActorY(0), z = GetActorFloorZ(0) + 5.0;
-	SetActivatorToTarget(0);
+	//log(s:"Player Number: ", d:PlayerNumber());
+	//SetActivatorToTarget(0);
 	if(ConsolePlayerNumber() != PlayerNumber()) Terminate;
 	int turrmove = tid+PlayerNumber(), actor = GetActorClass(tid+PlayerNumber());
-
+	//log(s:"Actor to blur: ", s:actor);
 	if(StrCmp(actor, "None") == 0) terminate;
 	str blur = "";
 	if(StrCmp(actor, "TurretBullet_Head") == 0) blur = "Blur_TurretBullet";

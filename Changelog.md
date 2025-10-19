@@ -9,6 +9,16 @@
 
 ## v1 - The path of the damned...
 
+#### (19 / 10 / 2025) [Menu colors, Turret touches and fixes]
+	*) Modified the menu colors a bit in favor of readability.
+	*) Separated some options inside SF+ options for an easier access in game options.
+	+) Added a cvar for enabling instant deploying for all turrets and dispensers.
+	!*) Fixed every freeze locking bugs inside for the flame, shotgun, chaingun, plasma, rocket turrets and tesla coils.
+	-) Removed some legacy code from older turrets.
+	*) Fixed the patcher building preview when using the move mode in multiplayer.
+	*) Changed the tags from patcher and patcher advanced.
+	*) Tesla coil sprites has been removed and replaced with the spark as a separate actor for a muzzle flash.
+
 #### (18 / 10 / 2025) [Line buffering for Lump reading process]
 	*) Now the lump reading process will be done once, and the lines read are now saved in a array, for a quicker data load.
 	// It will get a bit laggy when starting a match in single player, but on the future matches will be ready to be loaded.
@@ -27,7 +37,7 @@
 	!*) Turrets and buildings states (HP bars and Level Stars) can be toggled with ACS (and also it's converted to ACS)  
 
 #### (9 / 10 / 2025) [New sounds for items, runes and also a new... announcer?!]
-	!+) Yes. New Announcer! (Mikell Dover VA, good voice :) )
+	!+) Yes. New Announcer! ( Mikell Dover VA, good voice :) )
 	!+) Added the announcer options into SF+ Options.
 	+) New pickup and sounds for items, runes and in the announcer side, more voices for Cepstral Amy.
 	// The announcer adds new lines for the timer and depending on the game status. Available for all gamemodes (CF, SF and SD)

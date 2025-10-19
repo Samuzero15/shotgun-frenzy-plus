@@ -2,13 +2,13 @@
 
 Gameinfo
 {
-	MenuFontColor_Title = "White"
-	MenuFontColor_Action = "LightBlue"
-	MenuFontColor_Label = "Cream"
-	MenuFontColor_Selection = "Cyan"	
-	MenuFontColor_Header = "Gold"
+	MenuFontColor_Title = "white"
+	MenuFontColor_Action = "orange"
+	MenuFontColor_Label = "lightblue"
+	MenuFontColor_Selection = "cyan"	
+	MenuFontColor_Header = "Cream"
 	MenuFontColor_Highlight = "Orange"
-	DimColor = "88 88 88"
+	DimColor = "00 00 8b"
 	InfoPage = "HELP1", "HELP2"
 
 	AddCustomData = "K.S.", "int", 0

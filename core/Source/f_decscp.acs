@@ -455,6 +455,10 @@ script "IAmATurret" (void){
 	SetResultValue(IsAUpgradeableBuilding(ActivatorTID()));
 }
 
+Script "Cheat_InstaDeploying" (void) {
+	SetResultValue(GetCvar("sfp_instantdeploying"));
+}
+
 script "MinesGoBoom" (int tid) {
 	SpawnProjectile(tid, "Grenade_Mine_GoBoom", 0,0,0,0,0);
 	Thing_remove(tid);
@@ -702,7 +706,7 @@ function void TurretState_UpdateLastIndex(void) {
 	//log(s:"TurretState LastId: (", d:turretStates_lastIndex, s:")");
 }
 
-Script "Turret_States" (void) {
+Script "Building_States" (void) {
 	int free_index = TurretState_Allocate();
 	turretStates_data[free_index][0] = TURRETSTATEHID_HP + free_index;
 	turretStates_data[free_index][1] = GetActorProperty(0, APROP_HEALTH);
@@ -713,6 +717,11 @@ Script "Turret_States" (void) {
 	SpawnForced("TurretStates_Label", GetActorX(0), GetActorY(0), GetActorZ(0), turretStates_data[free_index][5]);
 	ACS_NamedExecuteAlways("TurretStates_Update", 0, free_index);
 	TurretState_UpdateLastIndex();
+}
+
+Script "Building_Scripts" (void) {
+	ACS_NamedExecuteAlways("Building_States", 0);
+	ACS_NamedExecuteAlways("Building_AggroLoop", 0);
 }
 
 Script "TurretStates_Update" (int id) {

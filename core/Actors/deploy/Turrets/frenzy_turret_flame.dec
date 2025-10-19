@@ -75,6 +75,7 @@ ACTOR TurretFlame_Head : TurretHeadBase 24302
 
 		Missile.Reload:
 			TNT1 A 0 A_JumpIfHealthLower(user_crithealth,"Missile.Smoke")
+		Missile.Reload.Delay:
 			FTRT A 5 bright A_SetTics(5 - stamina)
 			TNT1 A 0 A_ClearTarget
 			TNT1 A 0 A_LookEx(LOF_NOJUMP)
@@ -83,14 +84,14 @@ ACTOR TurretFlame_Head : TurretHeadBase 24302
 
 		Missile.Smoke:
 			TNT1 A 0 A_SpawnItemEx("Smoke_Spawner",0,0,40)
-			goto Missile.Reload+1
+			goto Missile.Reload.Delay
 		
 		Pain:
 			FTRT A 1
 			goto Super::Pain
 		
 		Death:
-			BTRT A 1 
+			FTRT A 1 
 			goto Super::Death
 	}
 }

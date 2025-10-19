@@ -59,6 +59,7 @@ ACTOR TurretRocket_Head : TurretHeadBase 24305
 
 		Missile.Start:
 			RTRT A 0 A_JumpIfHealthLower(user_crithealth,"Missile.Smoke")
+		Missile.Fire.Setup:
 			RTRT A 2 A_FaceTarget
 			RTRT A 0 A_PlaySound("weapons/rocklf")
 			TNT1 A 0 A_SetUserVar("user_shots", 1 + 1*(stamina >= 2) + 1*(stamina >= 4))
@@ -99,7 +100,7 @@ ACTOR TurretRocket_Head : TurretHeadBase 24305
 		
 		Missile.Smoke:
 			TNT1 A 0 A_SpawnItemEx("Smoke_Spawner",0,0,40)
-			goto Missile.Start+1
+			goto Missile.Fire.Setup
 		
 	}
 }

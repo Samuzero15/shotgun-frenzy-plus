@@ -114,6 +114,7 @@ ACTOR TurretPlasma_Head : TurretHeadBase 24303
 
 		Missile.Refire:
 			NULL A 0 A_JumpIfHealthLower(user_crithealth,"Missile.Smoke")
+		Missile.ReFire.Look:
 			TNT1 A 0 A_SetUserVar("user_rounds", user_rounds+1)
 			TNT1 A 0 A_LookEx(LOF_NOJUMP)
 			TNT1 A 0 A_FaceTarget
@@ -127,7 +128,7 @@ ACTOR TurretPlasma_Head : TurretHeadBase 24303
 
 		Missile.Smoke:
 			TNT1 A 0 A_SpawnItemEx("Smoke_Spawner",0,0,40)
-			goto Missile.ReFire+1
+			goto Missile.ReFire.Look
 		
 		Death:
 			PTRT A 1 

@@ -34,6 +34,7 @@ server int sfp_sd_wavereward = 1000;
 server int sfp_sd_waveincrease = 500;
 server int sfp_sd_lowplayerbonus = 500;
 server int sfp_sd_coreprotection = 1;
+server bool sfp_instantdeploying = false;
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;

@@ -5,6 +5,7 @@ Actor Patcher : FrenzyWeapon
   Inventory.PickupMessage "You found the Patcher Gun!"
   obituary "%o was shocked by %k's Patcher Gun, which it should'nt happen, because this gun is for cooperative, so, wtf just happened?"
   Weapon.UpSound "w/load1"
+  Tag "Patcher Tool-Gun"
   +WEAPON.NOAUTOAIM
   states
   {
@@ -79,6 +80,8 @@ Actor Patcher : FrenzyWeapon
 
 Actor Patcher_Advanced : Patcher
 {
+	Tag "Advanced Patcher Tool-Gun"
+
 	Weapon.SelectionOrder 2300
 	states{
 
