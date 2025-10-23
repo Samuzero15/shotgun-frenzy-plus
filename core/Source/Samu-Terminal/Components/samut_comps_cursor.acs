@@ -8,17 +8,29 @@
 // Getters from Cursor!
 ////////////////////////////////////////
 
-function int getCursorRect(void){return comp_rects_once[STCOMP_CURSOR];}
-function int getCursorWidth(void){return RectWidth(getCursorRect());}
-function int getCursorHeight(void){return RectHeight(getCursorRect());}
-function str getCursorIcon(void){return RectGetUserData(getCursorRect(), ST_CPROP2);}
+function int Cursor_getRect(void){return comp_rects_once[STCOMP_CURSOR];}
+function int Cursor_getWidth(void){return RectWidth(Cursor_getRect());}
+function int Cursor_getHeight(void){return RectHeight(Cursor_getRect());}
+function str Cursor_getIcon(void){return RectGetUserData(Cursor_getRect(), ST_CPROP2);}
+function int Cursor_getToolTipXAlignFix(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP5);}
+function int Cursor_getToolTipYAlignFix(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP6);}
+function int Cursor_getTooltipWrapWidth(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP7);}
+function int Cursor_getToolTipOffX(void){return RectGetUserData(Cursor_getRect(), ST_CPROP11);}
+function int Cursor_getToolTipOffY(void){return RectGetUserData(Cursor_getRect(), ST_CPROP12);}
+function int Cursor_getBack(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP13);}
 
 ///////////////////////////////////////
 // Setters for teh Cursor!
 ///////////////////////////////////////
 
 function void Cursor_setRect(int rect){comp_rects_once[STCOMP_CURSOR] = rect;}
-function void Cursor_setIcon(str icon){SetRectUserData(getCursorRect(), ST_CPROP2, icon);}
+function void Cursor_setIcon(str icon){SetRectUserData(Cursor_getRect(), ST_CPROP2, icon);}
+function void Cursor_SetToolTipXAlignFix(int range){SetRectUserData(Cursor_getRect(), ST_CPROP5, range);}
+function void Cursor_SetToolTipYAlignFix(int range){SetRectUserData(Cursor_getRect(), ST_CPROP6, range);}
+function void Cursor_SetTooltipWrapWidth(int width) {SetRectUserData(Cursor_getRect(), ST_CPROP7, width);}
+function void Cursor_SetToolTipOffX(int offset){SetRectUserData(Cursor_getRect(), ST_CPROP11, offset);}
+function void Cursor_SetToolTipOffY(int offset){SetRectUserData(Cursor_getRect(), ST_CPROP12, offset);}
+function void Cursor_SetBack (str string) { SetRectUserData(Cursor_getRect(), ST_CPROP13, string); }
 
 ///////////////////////////////////////
 // Cursor functions!				 //
@@ -32,6 +44,11 @@ function void Cursor_Initialize(int w, int h){
 
 function void Cursor_SetDefaultProps (void){
 	Cursor_setIcon("PNTR");
+	Cursor_SetToolTipOffX(0.0);
+	Cursor_SetToolTipOffY(-12.0);
+	Cursor_SetToolTipXAlignFix(64.0);
+	Cursor_SetToolTipYAlignFix(0.0);
+	Cursor_SetTooltipWrapWidth(8*24); // 24 characters per wrap
 }
 
 function void Cursor_UpdatePosition(void){
@@ -47,5 +64,76 @@ function void Cursor_MoveToRect(int rect){
 function void Cursor_MoveToPoint(int x, int y){
 	UpdateCursor();
 	setCursorPosition(x, y);
-	setRectPosition(getCursorRect(), x, y);
+	setRectPosition(Cursor_getRect(), x, y);
+}
+
+function void Cursor_GenerateBack(str string) {
+	if(string == 0) {
+		return;
+	}
+	int w = 0;
+	int h = 0;
+	
+	int charw = 0, charh = 0, chars = 0;
+	str btnstring = "A";
+	string = StripColorCodes(string);
+	bool wordwrapped = false;
+	bool in_word = false;
+	int word_length = 0;
+	for(int i = 0; i < StrLen(string); i++){
+		int c = GetChar(string, i);
+		
+		if(c == '\n'){
+			charh += 8;
+			chars = 0;
+		}else chars += 8;
+		if(chars > 8*24) {
+			charh += 8;
+			if(!wordwrapped) {
+				charw = chars;
+				wordwrapped = true;
+			}
+			chars = 0;
+			//charw += 8;
+		}
+		else if(charw < chars) {
+			charw = chars;
+		}
+	}
+
+	//log(s:string, s:" charw: ", d:charw, s:", charh: ", d:charh);
+	if(charw > 2){
+		w = (charw/8)-1;
+		if(charw%8 != 0) w++;
+	}
+	h = (charh/8);
+	if(charh%8 != 0) h++;
+
+	//log(s:"w: ", d:w, s:", h:", d:h);
+	if(w != 0){
+		for(int j = 0; j < w; j++){
+			btnstring = StrAdd(btnstring, "B");
+		}
+	}
+	btnstring = StrAdd(btnstring, "C");
+	
+	if(w != 0 && h != 0){
+		for(int y = 0; y < h; y++){
+		btnstring = StrAdd(btnstring, "\nD");
+			for(int x = 0; x < w; x++){
+				btnstring = StrAdd(btnstring, "E");
+			}
+		btnstring = StrAdd(btnstring, "F");
+		}
+	}
+	
+	btnstring = StrAdd(btnstring, "\nG");
+	if(w != 0){
+		for(int k = 0; k < w; k++){
+			btnstring = StrAdd(btnstring, "H");
+		}
+	}
+
+	btnstring = StrAdd(btnstring, "I");
+	Cursor_SetBack(btnstring);
 }

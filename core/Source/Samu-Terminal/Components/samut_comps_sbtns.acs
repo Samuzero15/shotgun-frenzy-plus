@@ -223,7 +223,6 @@ function void StrButton_SetDefaultProps(int i){
 		StrButton_setText(i,"");
 		StrButton_setDescription(i, "");
 		StrButton_setColor(i, CR_GRAY);
-		if(i == 18)log(s:"Calling set Show from StrButton_SetDefaultProps");
 		StrButton_setShow(i, false);
 		StrButton_setExecute(i, 0);	
 		StrButton_setExeArgs(i,0,0,0);

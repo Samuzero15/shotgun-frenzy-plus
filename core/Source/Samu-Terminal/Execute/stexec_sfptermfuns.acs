@@ -50,7 +50,6 @@ function void StExecute_BuyItem(int which){
 			Toaster_ShowToast(StrParam(s:name, s:" Pursached! Click for more!"),CR_GREEN);
 			SamuTerm_CallOpExecute(STEXE_ItemGet, which, 0, 0);
 		}
-		
 		tmp[6] = tmp[5];
 	}
 }
@@ -86,7 +85,7 @@ function void STExecute_BuyWeapon(int which){
 }
 
 function void STExecute_GetWeapon(int which){
-	Toaster_ShowToast("Weapon pack equipped!",CR_GOLD);
+	Toaster_ShowToastLog("Weapon pack equipped!",CR_GOLD);
 	buywpn_vars[25] = -99; // To let it update.
 	SamuTerm_CallOpExecute(STEXE_GIVEWP, which, 0, 0);
 	LocalAmbientSound("p/deploy",128);
@@ -179,7 +178,7 @@ function void STExecute_AskForUpgrade(int which, int type){
 	int price = WeaponUpgrade_getUpgPrice(which, type);
 	
 	if(SFPlus_getPlayUPts() < price){
-		Toaster_ShowToastLog("You need more \cgUpgrade Points\c-!",CR_RED);
+		Toaster_ShowToast("You need more \cgUpgrade Points\c-!",CR_RED);
 		localAmbientSound("SamuTerm/Error",127);
 		} else {
 		Prompt_Ask("Conf. Upgrade", 
@@ -202,7 +201,7 @@ function void STExecute_AskForRecycle(int weapon, int uptype){
 function void STExecute_RecycleAccepted(int which, int uptype){
 	LocalAmbientSound("monies",128);
 	SamuTerm_CallOpExecute(STEXE_WEPRC, which, uptype, playerNumber());
-	Toaster_ShowToast("Recycling process completed!", CR_GOLD);
+	Toaster_ShowToastLog("Recycling process completed!", CR_GOLD);
 }
 
 function void STExecute_RecycleWeapon(int weapon, int uptype, int play){	
@@ -232,7 +231,7 @@ function void StExecute_BuyMechTank(void){
 	if(SFPlus_getPlayCredits() < Mech_GetPrice()){
 		Toaster_ShowToast("Not enough credits!",CR_RED);
 	}else{
-		Toaster_ShowToast("The War Mech is your's to drive!",CR_GREEN);
+		Toaster_ShowToastLog("The War Mech is yours to drive!",CR_GREEN);
 		SamuTerm_CallOpExecute(STEXE_GetMechTank, 0, 0, 0);
 	}
 }
@@ -271,7 +270,7 @@ function void STExecute_UpgradeMech(int which){
 			Toaster_ShowToast(stradd(stradd("Sure to apply the ", name), "?"),CR_ORANGE);
 		else{
 			localambientsound("vehicle/mechupgrade",128);
-			Toaster_ShowToast(stradd(name," Installed! (click for more)"),CR_GREEN);
+			Toaster_ShowToastLog(stradd(name," Installed! (click for more)"),CR_GREEN);
 			SamuTerm_CallOpExecute(STEXE_GETMECHUPG, which, 0, 0);
 		}
 		
@@ -300,9 +299,8 @@ function void STExecute_PlayUpTitleHover(int title, int btndata){
 	bool alreadygot = CheckInventory(PlayUp_getActor(btndata));
 	bool canigetit = SFPlus_getPlayUPts() >= PlayUp_getPrice(btndata);
 	
-	int color = cond(alreadygot, CR_CYAN, cond(canigetit, CR_WHITE, CR_ORANGE));
-
-	Label_SetText(title,PlayUp_GetName(btndata));
+	int color = alreadygot ? CR_CYAN : (canigetit ? CR_WHITE : CR_ORANGE);
+	Label_SetText(title, PlayUp_GetName(btndata));
 	Label_setColor(title, color);
 }
 
@@ -370,7 +368,7 @@ function void STExecute_RuneBuy(int r){
 
 function void STExecute_RuneGet(int r){
     str msg = strparam(s:Rune_GetName(r), s:" Rune linked!");
-	Toaster_ShowToast(msg, CR_CYAN);
+	Toaster_ShowToastLog(msg, CR_CYAN);
 	SamuTerm_CallOpExecute(STEXE_RUNESHOP_GIVE, r, 0, 0);
 	LocalAmbientSound("p/deploy",128);
 }
@@ -384,8 +382,10 @@ function void STExecute_RuneGive(int r){
 }
 
 function void STExecute_RuneDesc(int r){
+	/*
 	log(s:Rune_GetName(r));
 	log(s:Rune_GetDesc(r));
+	*/
     Label_setText(runepage_vars[3], Rune_GetName(r));
 	Label_setText(runepage_vars[4], Rune_GetDesc(r));
 }

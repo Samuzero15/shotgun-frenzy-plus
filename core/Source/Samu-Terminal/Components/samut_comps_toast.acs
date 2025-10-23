@@ -60,9 +60,7 @@ function void Toaster_Setup (str string){
 	int w = 0;
 	int h = 0;
 	
-	int charw = 0;
-	int charh = 0;
-	int chars = 0;
+	int charw = 0, charh = 0, chars = 0;
 	str btnstring = "A";
 	string = StripColorCodes(string);
 	for(int i = 0; i < StrLen(string); i++){

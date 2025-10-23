@@ -94,6 +94,7 @@ function void SamuTerm_InitPages(void){
 				StimUpPage_Init(3);
 				RunePage_Init(4);
 			}
+			Toast_SetPosition(320.0, 465.0);
 		break;
 		case ST_PAGEALPHA_ATE:
 			i = Image_Add (0.0, 0.0, "TFRAME");
@@ -103,20 +104,12 @@ function void SamuTerm_InitPages(void){
 			make_menubutton(card, 3, 3, "BTN3", "Recycle Weapons");
 			make_menubutton(card, 4, 4, "BTNOK", "Extra Items");
 			make_exitbutton(card, 5, "BTNEXIT");
-
-			/*
-			b = ImgButton_Add(50.0, 50.0, 32.0, 32.0);
-			log(s:"Dummy button: ", d:b);
-			ImgButton_SetImage		(b, "BTN1");
-			ImgButton_SetHoverImage	(b, "BTNHOV");
-			ImgButton_SetTag		(b, pagetags[STTAGS_ALPHA]);
-			ImgButton_SetGrabable	(b, true);
-			*/
 			setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
 			BuyWpnPage_Init(1);
 			RcyWpnPage_Init(3);
 			ArmItmPage_Init(4);
 			InitListUPPage(2);
+			Toast_SetPosition(320.0, 465.0);
 		break;
 		case ST_PAGEALPHA_MTE:
 			Image_Add (0.0, 0.0, "TFRAME");

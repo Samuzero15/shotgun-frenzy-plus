@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (22 / 10 / 2025) [Tooltips on cursor + More items page rework]
+	*) Updated the more items page for the ammo terminal!
+	+) Added tooltips for the CMD buttons.
+	-) Removed some debug logs and prints arround there.
+	+) Some extra parameters for the cursor (for some manipulation on the tooltips) are added.
+	+) Added some tooltips on the player upgrade buttons.
+
 #### (19 / 10 / 2025) [Menu colors, Turret touches and fixes]
 	*) Modified the menu colors a bit in favor of readability.
 	*) Separated some options inside SF+ options for an easier access in game options.

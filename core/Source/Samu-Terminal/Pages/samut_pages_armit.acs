@@ -1,4 +1,19 @@
-int armitm_vars[200];
+
+#define ITPAGE_TAG 0
+#define ITPAGE_PAGE 1
+#define ITPAGE_PANEL 2
+#define ITPAGE_CURRENTPAGE 3
+#define ITPAGE_MAXPAGE 4
+
+#define ITPAGE_MAXITEMS_PERPAGE 32
+#define ITPAGE_ITEMPROPS 3
+
+#define ITPAGE_ITEM_IMGBUTTON 0
+#define ITPAGE_ITEM_LABELPRICE 1
+#define ITPAGE_ITEM_LABELCOUNT 2
+
+int armitm_item[ITPAGE_MAXITEMS_PERPAGE][ITPAGE_ITEMPROPS];
+int armitm_vars[10];
 
 #define ArmItmPage_NCOMPGROUP 6
 #define ArmItmPage_NPRIVARS 30
@@ -13,108 +28,119 @@ function int ArmItmPage_LoadGroup(int up, int id){
 
 function void ArmItmPage_Update(int pageTag){
 	setPageTitle(pageTag, "More items", CR_GOLD);
-	if(SamuTerminal_isOnSamePage(pageTag)){
-		for(int i = 0; i < fp_itemshop_last[ITEMSHOP_ARMORY]; i++){
-			ArmItmPage_UpdateItem(fp_itemshop[ITEMSHOP_ARMORY][i]);
+	if(SamuTerminal_isOnSamePage(pageTag))
+	{
+		armitm_vars[ITPAGE_CURRENTPAGE] = NumInput_getValue(armitm_vars[ITPAGE_PAGE]);
+		int start = ITPAGE_MAXITEMS_PERPAGE*(armitm_vars[ITPAGE_CURRENTPAGE]-1);
+
+		// If we are on the last page, show the last range with the reminder of items, otherwise, show only what the ITMPAGE_MAXITEMS_PERPAGE says.
+		int end_fullpage = ITPAGE_MAXITEMS_PERPAGE * armitm_vars[ITPAGE_CURRENTPAGE];
+
+		int end = (armitm_vars[ITPAGE_CURRENTPAGE] == armitm_vars[ITPAGE_MAXPAGE]) ? fp_itemshop_last[ITEMSHOP_ARMORY] : end_fullpage;
+		int slot = 0;
+		for(int i = start; i < end; i++){
+			ArmItmPage_UpdateItem(slot, i);
+			slot++;
+		}
+		// Hide remaining buttons
+		for(int j = slot; j < ITPAGE_MAXITEMS_PERPAGE; j++){
+			ArmItmPage_UpdateItem(j, -1);
 		}
 	}
-	else;
 }
 
 
 function void ArmItmPage_Init(int pageTag){
 	//ArmItemsPage_InitGrid(285.0, 50.0);
-	Grid_SetPosition(285.0, 50.0);
-	Grid_SetCellSize(50.0, 38.0);
-	Grid_SetDimensions(8,2);
-	armitm_vars[0] = Grid_Generate();
-	
-	armitm_vars[1] = pageTag;
-	
-	for(int i = 0; i < fp_itemshop_last[ITEMSHOP_ARMORY]; i++){
-		ArmItmPage_AddItemOption(i % 16, fp_itemshop[ITEMSHOP_ARMORY][i]);
+	armitm_vars[ITPAGE_TAG] = pageTag;
+
+	int i;
+
+	armitm_vars[ITPAGE_CURRENTPAGE] = 1;
+	armitm_vars[ITPAGE_MAXPAGE] = (fp_itemshop_last[ITEMSHOP_ARMORY] / ITPAGE_MAXITEMS_PERPAGE) + 1;
+	//log(s:"Max pages for armory:", d:armitm_vars[ITPAGE_MAXPAGE]);
+	i = NumInput_AddMid (320.0, 350.0);
+	NumInput_setBtnDistance(i, 96.0);
+	NumInput_SetLabelText(i, "{n}/{M}");
+	NumInput_setValue(i, 1);
+	NumInput_setMinValue(i, 1);
+	NumInput_setMaxValue(i, armitm_vars[ITPAGE_MAXPAGE]);
+	NumInput_setLoopValues(i, true);
+	NumInput_setTag(i, armitm_vars[ITPAGE_TAG]);
+	armitm_vars[ITPAGE_PAGE] = i;
+
+	i = Panel_Add(75.0, 60.0, 60, 28);
+	Panel_SetTitle(i, "Items");
+	Panel_setColor(i, CR_GREEN);
+	Panel_setTag(i, armitm_vars[ITPAGE_TAG]);
+	Panel_setColumns(i, 8);
+	Panel_setSpacing(i, 60.0, 56.0);
+	Panel_setAnchorOffset(i, 12.0, 4.0);
+	armitm_vars[ITPAGE_PANEL] = i;
+
+	for(int j = 0; j < ITPAGE_MAXITEMS_PERPAGE; j++){
+		ArmItmPage_AddItemButton(j);
 	}
 }
 
-function void ArmItmPage_AddItemOption(int pos, int itemId){
-	int i;
-	int y = (pos / 8) + 1;
-	int x = (pos % 8) + 1;
-	int offx = cond(y <= 1, -8.0, 40.0);
-	int ix = (pos % 8) + 1;
-	int grid = armitm_vars[0];
-	
-	int align = cond(y <= 1,HUD_ALIGN_RIGHT, HUD_ALIGN_LEFT);
-	int pagetag = armitm_vars[1];
-	int color;
-	
-	int prop0, prop1, prop2, prop3, prop4;
-	
-	prop0 = Item_GetName(itemid);
-	prop1 = Item_GetIBtnOrColor(itemid);
-	prop2 = Item_GetDesc(itemid);
-	prop3 = strParam(d:Item_GetPrice(itemId), s:" $");
-	prop4 = strParam(d:CheckInventory(Item_getActor(itemId)), s:"/", d:Item_getMax(itemId) );
-	//[Samu] recycling biatch!
-	
-	if(Item_getType(itemid) == FP_ITEM_T_DEPLOY) color = cr_Orange;
-	else color = cr_cyan;
-	
-	int i2;
-	i2 = Label_AddGridOff(grid, x, y, offx, 4.0); 
-	Label_setText	(i2, prop0);
-	Label_setFont	(i2,"DBIGFONT");
-	Label_setAligns	(i2, align, HUD_ALIGN_TOP);
-	Label_setColor	(i2, color);
-	Label_setTag	(i2, pageTag);
-	ArmItmPage_SaveGroup(itemId, 0, i2);
-	
-	i = Label_DupGridOff(i2, grid, x, y, offx, 16.0); 
-	Label_setText(i, prop2);
-	Label_setFont(i,"SMALLFNT");
-	Label_setWrapWidth(i, 250);
-	ArmItmPage_SaveGroup(itemId, 1, i);
-	
-	i = Label_DupGridOff(i2, grid, x, y, offx, 30.0); 
-	Label_setText(i, prop3);
-	Label_setFont(i,"SMALLFNT");
-	Label_setColor(i, CR_GREEN);
-	ArmItmPage_SaveGroup(itemId, 2, i);
-	
-	i = Label_DupGridOff(i2, grid, x, y, 16.0, 30.0); 
-	Label_setFont(i,"SMALLFNT");
-	Label_setText(i, prop4);
-	Label_setAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
-	ArmItmPage_SaveGroup(itemId, 3, i);
-	
-	i = ImgButton_AddGrid(grid, ix, y, 32.0, 32.0); 
-	ImgButton_setImage(i, prop1);
-	ImgButton_setTag(i, pageTag);
+// TODO: Rewrite this to use Panels
+function void ArmItmPage_AddItemButton(int slot){
+	int p = armitm_vars[ITPAGE_PANEL];
+	int btn_dims[2] = {32.0, 32.0};
+
+	int i = ImgButton_AddToPanelPos(btn_dims[0], btn_dims[1], p, slot);
+	//ImgButton_SetTag(i, armitm_vars[ITPAGE_TAG]);
 	ImgButton_setExecute(i, STEXE_ITEMBUY);
-	ImgButton_setArgs(i, itemId, 0 ,0);
-	ArmItmPage_SaveGroup(itemId, 4, i);
-	
+	armitm_item[slot][ITPAGE_ITEM_IMGBUTTON] = i;
+	/*
+	ImgButton_SetExeHover(i, STEXE_UPGPAGEDESC);
+	ImgButton_SetArgsHover(i, 0, slot, 0);
+	*/
+
+	i = Label_AddToPanelPosOff(p, slot, 16.0, 34.0);
+	Label_SetText(i, "price $");
+	//Label_SetTag(i, armitm_vars[ITPAGE_TAG]);
+	Label_SetAligns(i, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
+	Label_SetColor(i, CR_GOLD);
+	armitm_item[slot][ITPAGE_ITEM_LABELPRICE] = i;
+
+	int i2 = Label_DupToPanelPosOff(i, p, slot, 16.0, 42.0);
+	Label_SetText(i2, "n / M");
+	Label_SetColor(i2, CR_WHITE);
+	armitm_item[slot][ITPAGE_ITEM_LABELCOUNT] = i2;
 }
 
-function void ArmItmPage_UpdateItem(int itemId){
-	if(Item_IsForClass(itemId) == false){
+function void ArmItmPage_UpdateItem(int slot, int itemId){
+	int itemid_data = fp_itemshop[ITEMSHOP_ARMORY][itemId];
+	int imgbutton = armitm_item[slot][ITPAGE_ITEM_IMGBUTTON];
+	int priceLabel = armitm_item[slot][ITPAGE_ITEM_LABELPRICE];
+	int countLabel = armitm_item[slot][ITPAGE_ITEM_LABELCOUNT];
+
+	if (itemId == -1 || Item_IsForClass(itemid_data) == false) {
+		ImgButton_SetShow(imgbutton, false);
+		Label_SetShow(priceLabel, false);
+		Label_SetShow(countLabel, false);
 		return;
 	}
-	int i = ArmItmPage_LoadGroup(itemId, 3);
-	int j = ArmItmPage_LoadGroup(itemId, 2);
-	int k = ArmItmPage_LoadGroup(itemId, 4);
-	int price = Item_getPrice(itemId);
-	int quantity = Checkinventory(Item_getActor(itemId));
-	int maximum = Item_getMax(itemid);
+
+	ImgButton_SetShow(imgbutton, true);
+	Label_SetShow(priceLabel, true);
+	Label_SetShow(countLabel, true);
 	
-	str button = Item_getIBtnOrColor(itemid);
-	bool caniafford = SFPlus_getPlayCredits() >= price;
-	
-	if(quantity == maximum)
-		Label_setText(i, "Max!");
-	else
-		Label_setText(i, StrParam(d:quantity, s:"/",d:maximum));
-		
-	Label_setColor(j, cond(caniafford,   CR_GREEN, CR_RED));
-	ImgButton_SetImage(k, cond(caniafford, button, "BTNDEN")); 
+	str button = Item_getIBtnOrColor(itemid_data);
+	int price = Item_getPrice(itemid_data);
+	int caniafford = SFPlus_getPlayCredits() >= price;
+	str actor = Item_getActor(itemid_data);
+	int item_max = Item_getMax(itemid_data);
+	int amount = strparam(d:Checkinventory(actor), s:" / ", d:item_max);
+
+	ImgButton_SetImage(imgbutton, caniafford ? button : "BTNDEN");
+	ImgButton_SetArgs(imgbutton, itemid_data, 1, 0);
+
+	str tooltip_string = strparam(s:Item_GetType(itemid_data) == FP_ITEM_T_DEPLOY ? "\ci" : "\cf", s:Item_GetName(itemid_data), s:"\n\n", s:Item_GetDesc(itemid_data));
+	ImgButton_SetTooltip(imgbutton, tooltip_string);
+	Label_SetText(priceLabel, strparam(d:price, s:" $"));
+	Label_SetColor(priceLabel, caniafford ? CR_GOLD : CR_RED);
+	Label_SetText(countLabel, amount);
+	Label_SetColor(countLabel, CheckInventory(actor) == item_max ? CR_ORANGE : CR_WHITE);
 }

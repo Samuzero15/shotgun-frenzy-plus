@@ -55,7 +55,7 @@
             "..\\Changelog.md"
         ],
         "build_flags": [
-            true,
+            false,
             false,
             false,
             true,

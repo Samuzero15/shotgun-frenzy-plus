@@ -47,7 +47,7 @@ ITDATA_D_MARINEMINE = "Set it on the floor, and let them come!";
 ITDATA_I_MINEDRONE = "ITEM06";
 ITDATA_B_MINEDRONE = "CM48";
 ITDATA_N_MINEDRONE = "Mine drone";
-ITDATA_D_MINEDRONE = "Throw it and let it blow.";
+ITDATA_D_MINEDRONE = "Throw it and let it blow";
 
 ITDATA_I_SAWDRONE = "ITEM05";
 ITDATA_B_SAWDRONE = "CM52";

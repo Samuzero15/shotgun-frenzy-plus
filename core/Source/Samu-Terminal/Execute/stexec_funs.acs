@@ -23,7 +23,6 @@ function void Samuterm_HelloPrompt(void){
 	Prompt_Notify("Something new!", 
 	"Now, on prompts, you can \ciaccept or dismiss\c- this message with  the \cguse \c-key, and \cidecline or cancel\c- with either the \cgalt-fire or crouch\c- key!\n\n Try dismissing this message with the use key."
 	, CR_GREEN);
-	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
 }
 
 function void STExecute_SayHi(void){
@@ -34,13 +33,11 @@ function void STExecute_SayHi(void){
 	Prompt_Notify("Greetings", 
 	" I am Amy, your computarizated voice, and welcome to the Systemic Advanced Monitored User-frendly Terminal. S.A.M.U. Terminal for short.\n\n My duty is to serve you for any needings you'd wish.\n\n Try interacting with the \cgPrimary Click \c-button to gain acesss for many functions for you.\n\n Now, tell me, what do you need this time?"
 	, CR_GREEN);
-	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
 }
 function void STExecute_Ask(void){
 	Prompt_Ask("A simple question", 
 	"Do you love me?", 
 	CR_BRICK);
-	//Toaster_ShowToast("Holy shiet! I'm toast!", CR_RED);
 }
 
 function void STExecute_GoToCategory(int tagCategory, str title){

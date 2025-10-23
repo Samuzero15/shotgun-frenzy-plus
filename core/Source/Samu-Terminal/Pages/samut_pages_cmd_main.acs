@@ -30,7 +30,7 @@ int cmdpage_vars[500];
 function void CMDPage_Update(void){
 	setPageTitle_Alpha("Commander mode", CR_CYAN);
 	
-		ShowByAlphaTag();
+	ShowByAlphaTag();
 		
 	if(cursor_hover[STCURSOR_HOVER_COMP] != cursor_hover[STCURSOR_HOVER_LAST]){
 		Label_SetText(cmdpage_vars[1], "");
@@ -74,6 +74,7 @@ function void CMDPage_Init(void){
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
 	Label_setColor(i, CR_YELLOW);
 	Label_setFont(i, "DBIGFONT");
+	Label_setText(i, "");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_Center);
 	cmdpage_vars[1] = i;
 	
@@ -81,6 +82,7 @@ function void CMDPage_Init(void){
 	Label_setTag(i, pagetags[STTAGS_ALPHA]);
 	Label_setColor(i, CR_WHITE);
 	Label_setFont(i, "SMALLFNT");
+	Label_setText(i, "");
 	Label_setAligns(i, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	cmdpage_vars[2] = i;
 	
@@ -163,7 +165,15 @@ function void CMDPage_UpdateButton(int slot){
 	}
 	ImgButton_setArgsHover	(comp, cmdpage_vars[1],cmdpage_vars[2],btndata);
 	ImgButton_setShow	(comp, CMDBut_GetShowCond(btndata));
-	ImgButton_setTooltip (comp, "Test");
+
+	int price = CMDBut_GetPrice(btndata);
+
+	if(price > 0){
+		ImgButton_setTooltip (comp, strparam(s:(SFPlus_getTeamCredits() >= price ? "\cd" : "\cg"), d:price, s:" $"));
+	}else{
+		ImgButton_setTooltip (comp, strparam(s:"\cy", s:CMDBut_getName(btndata)));
+	}
+	//ImgButton_setTooltip (comp, "Test");
 }
 
 function void CMDPage_SetButtonLayout(int layout){

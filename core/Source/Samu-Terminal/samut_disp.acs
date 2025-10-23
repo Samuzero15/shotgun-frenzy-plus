@@ -308,11 +308,17 @@ function void ShowToast (void){
 function void ShowCursor(void){
 	int x = CursorX();
 	int y = CursorY();
-	int icon = getCursorIcon();
+	int icon = Cursor_getIcon();
 	int tooltip = 0;
+	
 	if(cursor_hover[STCURSOR_HOVER_COMP] != -1 
 		&& cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN){
 		tooltip = ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_COMP]);
+		// Check if the tooltip has changed.
+		if(StrCmp(tooltip, ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_LAST]), 0) == 0)
+			Cursor_GenerateBack(tooltip);
+	} else {
+		Cursor_SetBack(0);
 	}
 	
 	//print(s:icon);
@@ -323,13 +329,40 @@ function void ShowCursor(void){
 	HudSetAlignY(HUD_ALIGN_TOP);
 	HudPrintImage(x, y, ST_HID_CURSOR,icon);
 	if(tooltip != 0){ // Tooltip
+		int halfchars = StrLen(tooltip) / 2;
+		int back_xoff = 0, back_yoff = 0, back_off = halfchars*8.0;
 		HudSetAlignX(HUD_ALIGN_CENTER);
-		HudSetAlignY(HUD_ALIGN_BOTTOM);
-		HUDSetPoint(x, y - 16.0);
-		HUDDrawText(ST_HID_TOOLTIP,tooltip);
+		HudSetAlignY(HUD_ALIGN_CENTER);
+		if(x < STSET_WIDTH && x > STSET_WIDTH - Cursor_getToolTipXAlignFix()){
+			back_xoff = -back_off;
+		} else if( x >= 0 && x < Cursor_getToolTipXAlignFix()) {
+			back_xoff = back_off;
+		}
+
+		if(y < STSET_HEIGHT && y > STSET_HEIGHT - Cursor_getToolTipYAlignFix()){
+			back_yoff = -back_off;
+		} else if( y >= 0 && y < Cursor_getToolTipYAlignFix()) {
+			back_yoff = back_off;
+		}
+		
+		HUDSetPoint(x + Cursor_getToolTipOffX() + back_xoff, y + Cursor_getToolTipOffY() + back_yoff);
+		HudSetTextColor(CR_WHITE);
+		
+		int ww = Cursor_getTooltipWrapWidth();
+		if(ww > 0) {
+			HudSetWordWrap(true);
+			SetHudClipRect(0,0,0,0, ww);
+			HUDDrawText(ST_HID_TOOLTIP,tooltip);
+			HudSetWordWrap(false);
+			SetHudClipRect(0,0,0,0,0);
+		} else {
+			HUDDrawText(ST_HID_TOOLTIP,tooltip);
+		}
+		
+		HUDSetFont("TOSFONT");
+		HUDDrawText(ST_HID_TOOLTIPBACK,Cursor_getBack());
 	}
     HudPopState();
-	//log(s:"Cursor HID: ", d:ST_HID_CURSOR);
 }
 
 function void ShowPanel (int pid){

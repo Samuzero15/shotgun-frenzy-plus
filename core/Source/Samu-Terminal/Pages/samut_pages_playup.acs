@@ -12,16 +12,25 @@ function int PlayUpPage_LoadGroup(int up, int id){
 }
 
 function void PlayUpPage_Update(int pageTag){
-	setPageTitle(pageTag, "Player Upgrade Page", CR_PURPLE);
+	setPageTitle(pageTag, "Player Upgrade Page", CR_CYAN);
 	
 	if(SamuTerminal_isOnSamePage(pageTag)){
-		Label_SetText(playup_vars[0], "");
-		//PlayUpPage_SetDetails(playup_vars[6], cond(playup_vars[6] != -1, true, false));
+		if(cursor_hover[STCURSOR_HOVER_COMP] == -1){
+			Label_SetText(playup_vars[0], "");
+		}
+
 		if(playup_vars[6] != -1)
 			PlayUpPage_SetDetails(playup_vars[6]);
 		else
 			PlayUpPage_ShowDetails(false);
+		
+		for(int btn = 0; btn < PlayUpTop; btn++){
+			int ib = PlayUpPage_LoadGroup(btn, 1);
+			ImgButton_SetImage		(ib, PlayUp_getIcon(btn));
+			ImgButton_SetHoverImage	(ib, SFPlus_getPlayUPts() >= PlayUp_getPrice(btn) ? "BTNHOV" : "BTNDEN");
+		}
 	}else{
+		Label_SetText(playup_vars[0], "");
 		if(playup_vars[6] != -1){
 			PlayUpPage_ShowDetails(false);
 		}
@@ -136,6 +145,7 @@ function void PlayUpPage_AddButtons(int pageTag, int posx, int posy){
 			ImgButton_SetArgsHover	(i, playup_vars[0], btn, 0);
 			ImgButton_SetExecute	(i, STEXE_PLAYUP_SETDESC);
 			ImgButton_SetArgs		(i, btn, 0, 0);
+			ImgButton_SetTooltip	(i, strparam(s:PlayUp_GetName(btn)));
 			PlayUpPage_SaveGroup(btn, 1, i);
 	}
 }

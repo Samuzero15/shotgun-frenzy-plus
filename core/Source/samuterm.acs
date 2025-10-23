@@ -60,13 +60,6 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	pagetags[STTAGS_ALPHA] = alphatag;
 	//log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);
 	switch(pagetags[STTAGS_ALPHA]){
-		case 20:
-			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_HEALTERM_HI", 3));
-			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_HEALTERM_BYE", 3));
-			SamuTerm_SetBack("BGR");
-			AnnouncerSound("terminal/Hello", 1);
-		break;
-
 		case 30:
 			if(CheckInventory("Mech_State") == 99){
 				Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_MECHTERM_REPAIR_HI", 3));
@@ -86,7 +79,14 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_COMMTERM_BYE", 0));
 			AnnouncerSound("command/greetcmdr", 1);
 			SamuTerm_SetBack("");
-			//Toast_SetPosition(320.0, 380.0);
+			//
+		break;
+
+		case 20:
+			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_HEALTERM_HI", 3));
+			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_HEALTERM_BYE", 3));
+			SamuTerm_SetBack("BGR");
+			AnnouncerSound("terminal/Hello", 1);
 		break;
 
 		case 0:
@@ -94,6 +94,7 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_AMMOTERM_BYE", 3));
 			AnnouncerSound("terminal/Hello", 1);
 		break;
+
 		default:
 			Vars_SetMessage(STMSGS_LOGIN, langstring("SAMUT_DEFAULT_HI", 0));
 			Vars_SetMessage(STMSGS_LOGOUT, langstring("SAMUT_DEFAULT_BYE", 0));
@@ -103,7 +104,7 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	
 	SamuTerm_InitComps();
 	//delay(5); // Since the background generation takes a big chunk of function calls, enough to runaway error. Give it a extra tic and...
-	Component_PrintCount();
+	//Component_PrintCount();
 	//Samuterm_HelloPrompt();
 	Input_ClearBinds();
 	if(pagetags[STTAGS_ALPHA] != 10){
@@ -122,7 +123,7 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 			if(GetPlayerChasecam(play) == true) SetPlayerChasecam(play, 0);// I must keep you from abusing the chasecam.
 			if(CheckInventory("SamuTInv_ForcedExit"))
 				STExecute_Shutdown();
-			debug();
+			//debug();
 			Delay(1);
 		}
 	SetPlayerChasecam(play, chasecam_state);
