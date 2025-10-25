@@ -296,7 +296,7 @@ function void STExecute_getMechUpgrade(int which){
 ////////////////////////////////////////////////////////////////
 
 function void STExecute_PlayUpTitleHover(int title, int btndata){
-	bool alreadygot = CheckInventory(PlayUp_getActor(btndata));
+	bool alreadygot = PlayUp_CheckInv(PlayUp_getActor(btndata));
 	bool canigetit = SFPlus_getPlayUPts() >= PlayUp_getPrice(btndata);
 	
 	int color = alreadygot ? CR_CYAN : (canigetit ? CR_WHITE : CR_ORANGE);
@@ -333,7 +333,7 @@ function void STExecute_PlayUpAsk(int up){
 	int affordable = SFPlus_getPlayUPts() >= PlayUp_getPrice(up);
 	
 	if(!affordable){
-		Toaster_ShowToast("You need more \cgUpgrade Points\c-!",CR_ORANGE);
+		Toaster_ShowToast("You need more \cvUpgrade Points\c-!",CR_ORANGE);
 		localAmbientSound("SamuTerm/Error",127);
 		}
 	else{
@@ -394,7 +394,7 @@ function void STExecute_RuneTierBuy(void){
 	int tierup = CheckInventory("RuneTier");
 
     if(SFPlus_getPlayUPts() < Rune_getTierUnlockPrice(tierup+2)){
-		Toaster_ShowToast("Not enough U.Ps!",CR_RED);
+		Toaster_ShowToast("You need more \cvUpgrade Points\c-!",CR_ORANGE);
 		localAmbientSound("SamuTerm/Error",127);
 	}
 	else{
@@ -403,7 +403,7 @@ function void STExecute_RuneTierBuy(void){
 			Toaster_ShowToast(strparam(s:"Sure to unlock the tier ", d:tierup+2, s:" of runes?"),CR_ORANGE);
 		else{
 			//localambientsound("vehicle/mechupgrade",128);
-			Toaster_ShowToast(strparam(s:"Tier ",d:tierup+2,s:" unlocked! (click for more)"),CR_GREEN);
+			Toaster_ShowToast(strparam(s:"Tier ",d:tierup+2,s:" unlocked! (click for more)"),CR_PURPLE);
 			SamuTerm_CallOpExecute(STEXE_RUNESHOP_GIVETIER, 0, 0, 0);
 		}
 		

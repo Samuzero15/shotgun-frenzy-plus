@@ -74,7 +74,7 @@ function void StimUpPage_UpdateComps(int upgrade){
 		llevel = StimUpPage_LoadFromGroup(upgrade, 3), 
 		ibut = StimUpPage_LoadFromGroup(upgrade, 4);
 	
-	bool showit = CheckInventory(actor) < 5;
+	bool showit = StimUp_CheckInv(actor) < 5;
 	Label_setShow(lname, showit);
 	Label_setShow(lprice, showit);
 	Label_setShow(llevel, showit);

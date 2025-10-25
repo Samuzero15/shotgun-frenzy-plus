@@ -113,7 +113,7 @@ function void MechUpPage_UpdateComps(int upgrade){
 	int maxup = MechUp_GetMax(upgrade);
 	int price = MechUp_GetPrice(upgrade);
 	
-	bool showit = pursached && CheckInventory(actor) < maxup;
+	bool showit = pursached && MechUp_CheckInv(actor) < maxup;
 	
 	int i = MechUpPage_LoadFromGroup(upgrade, 1),
 		j = MechUpPage_LoadFromGroup(upgrade, 2),

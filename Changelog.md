@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (24 /10 / 2025) [All ups(player / stim / mech) and tech options are here!]
+	+) Some new cvars, for enabling instant techs and marine upgrades!
+	// Including, player ups, stim ups and mech ups.
+	*) Some touches in the overview reports when going to the restock pads.
+	*) Some buff for the hand grenade, still on WIP.
+	*) Little small visual fixes on the terminal.
+
 #### (22 / 10 / 2025) [Tooltips on cursor + More items page rework]
 	*) Updated the more items page for the ammo terminal!
 	+) Added tooltips for the CMD buttons.

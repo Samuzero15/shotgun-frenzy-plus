@@ -16,6 +16,7 @@
 #import "fp_credd.acs"
 #import "fp_cmdevt.acs"
 #import "f_StokP.acs"
+#import "fl_PupDir.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -236,7 +237,7 @@ script 54 RESPAWN
 	if(CheckInventory("PlayUp_Prometeo_Used"))
 		takeinventory("PlayUp_Prometeo_Used", 1);
 		
-	if(CheckInventory("PlayUp_SpawnShield")) 
+	if(PlayUp_CheckInv("PlayUp_SpawnShield")) 
 		giveinventory("PlayUp_SpawnShield_Activate", 1);
 		
     acs_execute(106, 0, RESTOCK_HEALTHPAD, 1, 0);
@@ -246,7 +247,7 @@ script 54 RESPAWN
 	
 	//[Samu] If you die, the teleport script will not activate the spawnshield effect.
 	// So to counter that, I should place it here.
-	if(CheckInventory("PlayUp_SpawnShield")){
+	if(PlayUp_CheckInv("PlayUp_SpawnShield")){
 		TakeInventory("PlayUp_SpawnShield_Power", 1);
 		delay(1);
 		giveInventory("PlayUp_SpawnShield_Activate", 1);

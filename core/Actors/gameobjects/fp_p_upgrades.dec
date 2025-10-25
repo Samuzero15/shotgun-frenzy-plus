@@ -30,6 +30,8 @@ actor StimUp_Cicatrizate  : Integer { Inventory.MaxAmount 5 }
 actor StimUp_Caffeine     : Integer { Inventory.MaxAmount 5 }
 actor StimUp_Stimulant    : Integer { Inventory.MaxAmount 5 }
 
+actor StimUp_MaxLevel : Ammo { Inventory.MaxAmount 5 } // Needed for GetAmmoCapacity. Because Zandronum being zandronum.
+
 Actor PowerToken : PowerSpeed
 {
   Speed 1.0

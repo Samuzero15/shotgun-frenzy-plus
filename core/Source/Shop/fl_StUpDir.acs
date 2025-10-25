@@ -85,14 +85,22 @@ Script "SFPlus_FullStimpackUps" (void)
 	}
 }
 
+function int StimUp_CheckInv(str inv) {
+    int amount = CheckInventory(inv);
+    if(GetCvar("sfp_allstimups")){
+        amount = GetAmmoCapacity("StimUp_MaxLevel");
+    }
+    return amount;
+}
+
 Script "Stimpack_Healme" (void)
 {
-    int overheal = CheckInventory("StimUp_Overhealth");
-    int dosis = CheckInventory("StimUp_ExtraDosis");
-    int armor = CheckInventory("StimUp_HardShell");
-    int cicatr = CheckInventory("StimUp_Cicatrizate");
-    int coffie  = CheckInventory("StimUp_Caffeine");
-    int stimul = CheckInventory("StimUp_Stimulant");
+    int overheal = StimUp_CheckInv("StimUp_Overhealth");
+    int dosis = StimUp_CheckInv("StimUp_ExtraDosis");
+    int armor = StimUp_CheckInv("StimUp_HardShell");
+    int cicatr = StimUp_CheckInv("StimUp_Cicatrizate");
+    int coffie  = StimUp_CheckInv("StimUp_Caffeine");
+    int stimul = StimUp_CheckInv("StimUp_Stimulant");
 
     if(stimul) ACS_NamedExecuteAlways("StimUp_StimulantPower", 0);
     if(coffie) ACS_NamedExecuteAlways("StimUp_CaffeinePower", 0);
@@ -118,11 +126,11 @@ Script "Stimpack_Healme" (void)
 Script "StimUp_CaffeinePower" (void)
 {// For some time, gain some 10% speed!
     GiveInventory("StimUp_CaffeinePowerGiver", 1);
-    if(CheckInventory("StimUpScript_Caffeine")) terminate;
+    if(StimUp_CheckInv("StimUpScript_Caffeine")) terminate;
     GiveInventory("StimUpScript_Caffeine", 1);
     int ori_speed = getactorproperty(0, APROP_Speed);
-    while(CheckInventory("StimUp_CaffeinePower")){
-        int coffie = CheckInventory("StimUp_Caffeine");
+    while(StimUp_CheckInv("StimUp_CaffeinePower")){
+        int coffie = StimUp_CheckInv("StimUp_Caffeine");
         setactorproperty(0, APROP_SPEED, ori_speed + 0.1*coffie);
         //log(s:"(StimUp) Caffeine On. Speed:", f:(getActorProperty(0, APROP_SPEED)));
         delay(1);
@@ -135,11 +143,11 @@ Script "StimUp_CaffeinePower" (void)
 Script "StimUp_StimulantPower" (void)
 {// For a large time (1:30 minutes) gain +10 MaxHP per stimulant level.
     GiveInventory("StimUp_StimulantPowerGiver", 1);
-    if(CheckInventory("StimUpScript_Stimulant")) terminate;
+    if(StimUp_CheckInv("StimUpScript_Stimulant")) terminate;
     GiveInventory("StimUpScript_Stimulant", 1);
     int ori_maxHP = getactorproperty(0, APROP_SpawnHealth);
-    while(CheckInventory("StimUp_StimulantPower")){
-        int stimul = CheckInventory("StimUp_Stimulant");
+    while(StimUp_CheckInv("StimUp_StimulantPower")){
+        int stimul = StimUp_CheckInv("StimUp_Stimulant");
         setactorproperty(0, APROP_SpawnHealth, ori_maxHP + 20*stimul);
         //log(s:"(StimUp) Stimulant On. MaxHP=", d:(getActorProperty(0, APROP_SpawnHealth)));
         delay(1);
@@ -153,12 +161,12 @@ Script "StimUp_CicatrizatePower" (void)
 {// For 10 seconds, regenerate 1 hp. (in each 10-level tics)
 
     GiveInventory("StimUp_CicatrizatePowerGiver", 1);
-    if(CheckInventory("StimUpScript_Cicatrizate")) terminate;
+    if(StimUp_CheckInv("StimUpScript_Cicatrizate")) terminate;
     GiveInventory("StimUpScript_Cicatrizate", 1);
     int ticks = 0;
     int maxHP, nowHP;
-    while(CheckInventory("StimUp_CicatrizatePower")){
-        int regen = CheckInventory("StimUp_Cicatrizate");
+    while(StimUp_CheckInv("StimUp_CicatrizatePower")){
+        int regen = StimUp_CheckInv("StimUp_Cicatrizate");
         //log(s:"(StimUp) Regeneration On. Regen Delay=", d:(10-regen));
         if(ticks > 10-regen){
             //log(s:"(StimUp) Regeneration On. Regen 1 HP");

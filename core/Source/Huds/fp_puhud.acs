@@ -11,6 +11,8 @@
 #include "zcommon.acs"
 #include "acsutils.acs"
 
+#import "fl_StUpDir.acs"
+
 #libdefine PUPHUD_MAX 40
 #libdefine PUPHUD_PROP_LABEL 0
 #libdefine PUPHUD_PROP_ACTOR 1
@@ -120,15 +122,15 @@ function void PowHud_Update(int which) {
 		str label = "";
 		switch(which){
 			case 0: 
-			label = strparam(s:"+",d:(20*CheckInventory("StimUp_Stimulant")), s:" Max HP");
+			label = strparam(s:"+",d:(20*StimUp_CheckInv("StimUp_Stimulant")), s:" Max HP");
 			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
 			break;
 			case 1:
-			label = strparam(s:"+",d:(10*CheckInventory("StimUp_Caffeine")), s:"% Speed");
+			label = strparam(s:"+",d:(10*StimUp_CheckInv("StimUp_Caffeine")), s:"% Speed");
 			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
 			break;
 			case 2: 
-			label = strparam(d:(10-CheckInventory("StimUp_Cicatrizate")), s:" Tic Hp Regen");
+			label = strparam(d:(10-StimUp_CheckInv("StimUp_Cicatrizate")), s:" Tic Hp Regen");
 			PowHud_Set(which, PUPHUD_PROP_LABEL, label);
 			break;
 

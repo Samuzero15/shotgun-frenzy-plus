@@ -10,6 +10,7 @@
 #import "f_Tip.acs"
 #import "f_Rank.acs"
 #import "fl_techs.acs"
+#import "fl_PupDir.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -43,7 +44,7 @@ script "SFPlus_CreditPickup" (int howmuch, int color){
 	NamedExecuteClientScript("SF_CreditAddDisplay", playernumber(), howmuch, color);
 	sf_AddCredits_S(howmuch, playernumber());
 	sf_AddTeamCredits(howmuch);
-	if(CheckInventory("PlayUp_HealCoins")) GiveInventory("HealthBonus", howmuch);
+	if(PlayUp_CheckInv("PlayUp_HealCoins")) GiveInventory("HealthBonus", howmuch);
 }
 
 script "SF_Net_AddCredits" (int l_AmountSpecial, int who) NET{

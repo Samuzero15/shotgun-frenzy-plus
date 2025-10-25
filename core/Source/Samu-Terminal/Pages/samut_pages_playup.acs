@@ -27,7 +27,8 @@ function void PlayUpPage_Update(int pageTag){
 		for(int btn = 0; btn < PlayUpTop; btn++){
 			int ib = PlayUpPage_LoadGroup(btn, 1);
 			ImgButton_SetImage		(ib, PlayUp_getIcon(btn));
-			ImgButton_SetHoverImage	(ib, SFPlus_getPlayUPts() >= PlayUp_getPrice(btn) ? "BTNHOV" : "BTNDEN");
+			ImgButton_SetHoverImage	(ib, PlayUp_CheckInv(PlayUp_getActor(btn)) ? 
+			"BTNHOV" : (SFPlus_getPlayUPts() >= PlayUp_getPrice(btn) ? "BTNHOV" : "BTNDEN"));
 		}
 	}else{
 		Label_SetText(playup_vars[0], "");
@@ -94,7 +95,7 @@ function void PlayUpPage_SetDetails(int up){
 	str name = PlayUp_GetName(up);
 	str desc = PlayUp_GetDesc(up);
 	str upImage = PlayUp_GetIcon(up);
-	bool showbut = !CheckInventory(PlayUp_getActor(up));
+	bool showbut = !PlayUp_CheckInv(PlayUp_getActor(up));
 	int cost = PlayUp_GetPrice(up);
 	
 	Label_SetText		(playup_vars[1], name);

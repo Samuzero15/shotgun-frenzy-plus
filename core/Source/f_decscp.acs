@@ -814,6 +814,10 @@ Script "Building_GetRange" (void) {
 	SetResultValue(CheckInventory("Building_GetRange"));
 }
 
+Script "PlayUp_CheckCvar" (void) {
+	SetResultValue(GetCvar("sfp_allplayups"));
+}
+
 function void Bar_State(int id, int var, int max_val){
 	// Quick division function to show sprite.
 	int bar_amount = FixedMul(FixedDiv(var, max_val), 100.0) >> 16;

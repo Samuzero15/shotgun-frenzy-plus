@@ -35,6 +35,10 @@ server int sfp_sd_waveincrease = 500;
 server int sfp_sd_lowplayerbonus = 500;
 server int sfp_sd_coreprotection = 1;
 server bool sfp_instantdeploying = false;
+server bool sfp_alltechs = false;
+server bool sfp_allstimups = false;
+server bool sfp_allmechups = false;
+server bool sfp_allplayups = false;
 
 //[Samu] For the auto-healing functions!
 user bool sfp_AutoUse = false;

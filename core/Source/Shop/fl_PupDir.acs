@@ -54,6 +54,17 @@ function void PlayUp_Add(str name, str actor, str btnimg){
 	PlayUpTop++;
 }
 
+function int PlayUp_CheckInv(str inv) {
+    int amount = CheckInventory(inv);
+    return amount || GetCvar("sfp_allplayups");
+}
+
+function int PlayUp_CheckActorInv(int tid, str inv) {
+    int amount = CheckActorInventory(tid, inv);
+    return amount || GetCvar("sfp_allplayups");
+}
+
+
 function str PlayUp_getName(int up){	return PlayUp_List[up][0];}
 function str PlayUp_getDesc(int up){	return PlayUp_List[up][1];}
 function str PlayUp_getActor(int up){	return PlayUp_List[up][2];}

@@ -11,6 +11,9 @@
 #import "fl_techs.acs"
 #import "f_Tip.acs"
 #import "fl_Wdir.acs"
+#import "fl_StUpDir.acs"
+#import "fl_MupDir.acs"
+#import "fl_PupDir.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
@@ -32,7 +35,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 	if(l_type > 0) ACS_NamedExecute("SFPlus_ShowUpgrades", 0); // All the reminders wrapped up
 	
 	int hp = getActorProperty(0, APROP_Health);
-	bool bodyEnhance = CheckInventory("PlayUp_BodyEnhancement");
+	bool bodyEnhance = PlayUp_CheckInv("PlayUp_BodyEnhancement");
 	bool health1 = Tech_IsDone(TECH_GENLAB_HEALTH1);
 	bool health2 = Tech_IsDone(TECH_GENLAB_HEALTH2);
 	bool adrenaline = Tech_IsDone(TECH_GENLAB_SPEEDB);
@@ -80,8 +83,8 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			s:"Damage Factor:", f:getActorProperty(0,APROP_DamageFactor));
 			*/
 
-			int stimul = CheckInventory("StimUp_Stimulant");
-			int coffie = CheckInventory("StimUp_Caffeine");
+			int stimul = StimUp_CheckInv("StimUp_Stimulant");
+			int coffie = StimUp_CheckInv("StimUp_Caffeine");
 			
 			// Do all calculations depending on the researches and unit upgrades.
 			//Apply da techs!
@@ -119,7 +122,7 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			 if (Tech_IsDone(TECH_ARMORY_GNADES))
 				GiveInventory("HandGrenade_Ammo", 5);
 			 if (Tech_IsDone(TECH_GENLAB_STIMPK))
-				SetInventory("Inventory_Stimpack", 5 + CheckInventory("StimUp_Amount"));
+				SetInventory("Inventory_Stimpack", 5 + StimUp_CheckInv("StimUp_Amount"));
 			 if (Tech_IsDone(TECH_ARMORY_BOOMRN)) 
 				giveinventory("Upgrade_Boomshot", 1);   // boomshot rounds
              if (Tech_IsDone(TECH_ARMORY_AMMOBP)) 
@@ -190,14 +193,14 @@ script 106 (int l_Type, int l_Give, int l_DisableFlash)
 			terminate;
 		}
 		// [Samu] Expansive re-stock and armor repair upgrades for the players.
-		int health_give = 10 + 15*CheckInventory("PlayUp_ExpansiveRestock");
+		int health_give = 10 + 15*PlayUp_CheckInv("PlayUp_ExpansiveRestock");
 		int armor = Checkinventory("BasicArmor");
 		int armor_max = 100 + 100*CheckInventory("Flag_BlueArmor") + 200*CheckInventory("Flag_RedArmor");
 		int armor_left = armor_max - armor;
-		int armor_give = 5 + 15*CheckInventory("PlayUp_ArmorRepair") + 30*CheckInventory("PlayUp_ExpansiveRestock");
+		int armor_give = 5 + 15*PlayUp_CheckInv("PlayUp_ArmorRepair") + 30*PlayUp_CheckInv("PlayUp_ExpansiveRestock");
 		giveinventory("Health", health_give);
 			
-		if(armor == 0 && armorTech && CheckInventory("PlayUp_ArmorRepair")){
+		if(armor == 0 && armorTech && PlayUp_CheckInv("PlayUp_ArmorRepair")){
 			takeInventory("Flag_RedArmor", 1);
 			takeInventory("Flag_BlueArmor", 1);
 			GiveInventory("SteelPlatingArmor", 1);
@@ -251,7 +254,7 @@ function void Stock_FillAmmo(bool full){
 	}
 	else{
 		// [Samu] Expansive re-stock upgrades for the players.
-		int extra_ammo = (1 + CheckInventory("PlayUp_ExpansiveRestock"));
+		int extra_ammo = (1 + PlayUp_CheckInv("PlayUp_ExpansiveRestock"));
 		for (i = 0; i < fp_AmmoDefStack; i++) {
 			ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
 			ammo_dispensergive = fp_AmmoList[i][FP_AMMODEF_DISPENSERGIVE];
@@ -264,81 +267,141 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 	int s = 0;
 	int c = 0;
 	str uplvl;
-	
-	c = CR_CYAN;
-	if (Tech_IsDoneC(TECH_GENLAB_HEALTH2))
-		s = Stock_RemindUpgrade(s, c,true, "+ HUMAN GENETICS P2");
-	else if (Tech_IsDoneC(TECH_GENLAB_HEALTH1)) 
-		s = Stock_RemindUpgrade(s, c,true, "+ HUMAN GENETICS P1");
-		
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_SPEEDB), "+ Adrenaline");
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_ARMOR), "+ Steel Plating");
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_RESISB), "+ Resister Unit");
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_REGENB), "+ Absorber Unit");
-	
-	c = CR_BLUE;
-	s++;
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_BodyEnhancement"), 	"+ Body Enhancement");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_ExpansiveRestock"), "+ Expansive Restock");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_ArmorRepair"), 		"+ Armor Repair");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_PowUpUpgrade_Defense"), 	"+ Def. Powerup Upgrade");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_PowUpUpgrade_Attack"), 	"+ Atk. Powerup Upgrade");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_MechSync"), 		"+ Mech Syncronize");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_SpawnShield"), 		"+ Spawn Shield");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_HealCoins"), 		"+ Healing Coins");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_Prometeo"), 		"+ Prometeo Protocol");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("PlayUp_RuneSync"), 		"+ Rune Syncronize");
 
-	c = CR_GREEN;
-	s++;
-	if (Tech_IsDoneC(TECH_ARMORY_ARMS2)) {
-		s = Stock_RemindUpgrade(s, c,true, "+ Arms P2");
+	for (int j = 0; j < 30; j++){
+		Stock_RemindUpgrade(j, c, true, "");
 	}
-	else if (Tech_IsDoneC(TECH_ARMORY_ARMS1)) {
-		s = Stock_RemindUpgrade(s, c,true, "+ Arms P1");
+	
+	if (Tech_IsDoneC(TECH_GENLAB_HEALTH1) || Tech_IsDoneC(TECH_GENLAB_HEALTH2) ||
+		Tech_IsDoneC(TECH_GENLAB_SPEEDB) || Tech_IsDoneC(TECH_GENLAB_ARMOR) ||
+		Tech_IsDoneC(TECH_GENLAB_RESISB) || Tech_IsDoneC(TECH_GENLAB_REGENB) ||
+		Tech_IsDoneC(TECH_GENLAB_STIMPK))
+	{
+		c = CR_CYAN;
+		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_HEALTH1) || Tech_IsDoneC(TECH_GENLAB_HEALTH2),
+			 strparam(s:"+ HUMAN GENETICS ", s:Tech_IsDoneC(TECH_GENLAB_HEALTH2) ? ("P2") : ("P1")));	
+		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_SPEEDB), "+ Adrenaline");
+		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_ARMOR), "+ Steel Plating");
+		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_RESISB), "+ Resister Unit");
+		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_REGENB), "+ Absorber Unit");
+		c = CR_LIGHTBLUE;
+		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_STIMPK), "+ 10 Stimpacks");
+		Stock_RemindUpgrade(s+1, c, true, "");
 	}
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_ARMORY_BOOMRN), "+ Boomshot Rounds");
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_ARMORY_AMMOBP), "+ Ammo Backpack");
-	c = CR_DARKGREEN;
-	s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_STIMPK), "+ 10 Stimpacks");
-	s = Stock_RemindUpgrade(s, c, CheckInventory("P_Backpack"), "+ Personal Backpack");
+
+	if (Tech_IsDoneC(TECH_ARMORY_ARMS2) ||
+		Tech_IsDoneC(TECH_ARMORY_ARMS1) ||
+		Tech_IsDoneC(TECH_ARMORY_BOOMRN) ||
+		Tech_IsDoneC(TECH_ARMORY_AMMOBP) ||
+		Tech_IsDoneC(TECH_ARMORY_GNADES) ||
+		CheckInventory("P_Backpack"))
+	{
+		c = CR_GREEN;
+		s++;
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_ARMS1) || Tech_IsDoneC(TECH_ARMORY_ARMS2), 
+			strparam(s:"+ Arms ", s:Tech_IsDoneC(TECH_ARMORY_ARMS2) ? ("P2") : ("P1")));
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_BOOMRN), "+ Boomshot Rounds");
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_AMMOBP), "+ Ammo Backpack");
+		c = CR_DARKGREEN;
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_GNADES), "+ Grenades");
+		s = Stock_RemindUpgrade(s, c, CheckInventory("P_Backpack"), "+ Personal Backpack");
+		Stock_RemindUpgrade(s+1, c, true, "");
+	}
 	
-	c = CR_GOLD;
-	s++;
-	s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_PUMP1), "+ Processing Phase 1");
-	s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_PUMP2), "+ Processing Phase 2");
+	if (Tech_IsDoneC(TECH_REFINE_PUMP1) || Tech_IsDoneC(TECH_REFINE_PUMP2) || Tech_IsDoneC(TECH_REFINE_COINX5))
+	{
+		c = CR_GOLD;
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_PUMP1), "+ Processing Phase 1");
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_PUMP2), "+ Processing Phase 2");
+		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_REFINE_COINX5), "+ Compensation");
+	}
+
+	for (int i = 0; i < 20; i++){
+		Stock_RemindUpgrade(s+i, c, true, "");
+	}
+
+	delay(35*3 + 17);
+	s = 0, c = 0;
+
+	if (PlayUp_CheckInv("PlayUp_BodyEnhancement") || 
+		PlayUp_CheckInv("PlayUp_ExpansiveRestock") || 
+		PlayUp_CheckInv("PlayUp_ArmorRepair") ||
+		PlayUp_CheckInv("PlayUp_PowUpUpgrade_Defense") || 
+		PlayUp_CheckInv("PlayUp_PowUpUpgrade_Attack") || 
+		PlayUp_CheckInv("PlayUp_MechSync") ||
+		PlayUp_CheckInv("PlayUp_SpawnShield") || 
+		PlayUp_CheckInv("PlayUp_HealCoins") || 
+		PlayUp_CheckInv("PlayUp_Prometeo") ||
+		PlayUp_CheckInv("PlayUp_RuneSync"))
+	{
+		c = CR_BLUE;
+		s = Stock_RemindUpgrade(s, c,true, 	"// Player Ups. //");
+		s = Stock_RemindUpgrade(s, c,true, "");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_BodyEnhancement"), 	"+ Body Enhancement");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_ExpansiveRestock"), "+ Expansive Restock");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_ArmorRepair"), 		"+ Armor Repair");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_PowUpUpgrade_Defense"), 	"+ Def. Powerup");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_PowUpUpgrade_Attack"), 	"+ Off. Powerup");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_MechSync"), 		"+ Mech Syncronize");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_SpawnShield"), 		"+ Spawn Shield");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_HealCoins"), 		"+ Healing Coins");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_Prometeo"), 		"+ Prometeo Protocol");
+		s = Stock_RemindUpgrade(s, c,PlayUp_CheckInv("PlayUp_RuneSync"), 		"+ Rune Syncronize");
+		s = Stock_RemindUpgrade(s, c,true, "");
+	}
+
+	if (StimUp_CheckInv("StimUp_ExtraDosis") || StimUp_CheckInv("StimUp_Amount") ||
+		StimUp_CheckInv("StimUp_Overhealth") || StimUp_CheckInv("StimUp_HardShell") ||
+		StimUp_CheckInv("StimUp_Cicatrizate") || StimUp_CheckInv("StimUp_Caffeine") ||
+		StimUp_CheckInv("StimUp_Stimulant"))
+	{
+		c = CR_CREAM;
+		s = Stock_RemindUpgrade(s, c,true, 	"// Stimpack Ups. //");
+		s = Stock_RemindUpgrade(s, c,true, "");
+		uplvl = strparam(s:"+ Extra Dosis Lv.", d:StimUp_CheckInv("StimUp_ExtraDosis"));
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_ExtraDosis"), uplvl);
+		uplvl = strparam(s:"+ ", d:StimUp_CheckInv("StimUp_Amount"), s:" Stimps. More");
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_Amount"), uplvl);
+		uplvl = strparam(s:"+ ", d:(10*StimUp_CheckInv("StimUp_Overhealth")), s:"% Overheal");
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_Overhealth"), uplvl);
+		uplvl = strparam(s:"+ 50% A.Repair Lv", d:(StimUp_CheckInv("StimUp_HardShell")));
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_HardShell"), uplvl);
+		uplvl = strparam(s:"+ Regen. Lv", d:(StimUp_CheckInv("StimUp_Cicatrizate")));
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_Cicatrizate"), uplvl);
+		uplvl = strparam(s:"+ ", d:(10*StimUp_CheckInv("StimUp_Caffeine")), s:"% Speed Up");
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_Caffeine"), uplvl);
+		uplvl = strparam(s:"+ ", d:(20*StimUp_CheckInv("StimUp_Stimulant")), s:" Max HP");
+		s = Stock_RemindUpgrade(s, c, StimUp_CheckInv("StimUp_Stimulant"), uplvl);
+		s = Stock_RemindUpgrade(s, c,true, "");
+	}
 	
-	c = CR_WHITE;
-	s++;
-	uplvl = strparam(s:"+(M.Up) Nails Lv. ", d:CheckInventory("MechUp_Nails"));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Nails"), uplvl);
-	uplvl = strparam(s:"+(M.Up) Rockets Lv. ", d:CheckInventory("MechUp_Rockets"));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Rockets"), uplvl);
-	uplvl = strparam(s:"+(M.Up) Armor Lv. ", d:CheckInventory("MechUp_Armor"));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Armor"), uplvl);
-	uplvl = strparam(s:"+(M.Up) Manuver Lv. ", d:CheckInventory("MechUp_Speed"));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_Speed"), uplvl);
-	uplvl = strparam(s:"+(M.Up) Auto Repair Lv. ", d:CheckInventory("MechUp_AutoRepair"));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("MechUp_AutoRepair"), uplvl);
-	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_LifeSave"), 		"+(M.Up) Life Saver");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_SelfDestruct"), 	"+(M.Up) Self Destruct");
-	s = Stock_RemindUpgrade(s, c,CheckInventory("MechUp_Efficiency"), 		"+(M.Up) Efficiency");
-	
-	s++;
-	uplvl = strparam(s:"+(S.Up) Extra Dosis Lv.", d:CheckInventory("StimUp_ExtraDosis"));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_ExtraDosis"), uplvl);
-	uplvl = strparam(s:"+(S.Up) ", d:CheckInventory("StimUp_Amount"), s:" Stimpacks More");
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Amount"), uplvl);
-	uplvl = strparam(s:"+(S.Up) ", d:(10*CheckInventory("StimUp_Overhealth")), s:"% Overheal");
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Overhealth"), uplvl);
-	uplvl = strparam(s:"+(S.Up) 50% A.Repair Lv", d:(CheckInventory("StimUp_HardShell")));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_HardShell"), uplvl);
-	uplvl = strparam(s:"+(S.Up) Regen. Lv", d:(CheckInventory("StimUp_Cicatrizate")));
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Cicatrizate"), uplvl);
-	uplvl = strparam(s:"+(S.Up) ", d:(10*CheckInventory("StimUp_Caffeine")), s:"% Speed Up");
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Caffeine"), uplvl);
-	uplvl = strparam(s:"+(S.Up) ", d:(20*CheckInventory("StimUp_Stimulant")), s:" Max HP");
-	s = Stock_RemindUpgrade(s, c, CheckInventory("StimUp_Stimulant"), uplvl);
+	if (MechUp_CheckInv("Mechup_Nails") ||
+		MechUp_CheckInv("Mechup_Rockets") ||
+		MechUp_CheckInv("Mechup_Armor") ||
+		MechUp_CheckInv("Mechup_Speed") ||
+		MechUp_CheckInv("Mechup_AutoRepair") ||
+		MechUp_CheckInv("Mechup_LifeSave") ||
+		MechUp_CheckInv("Mechup_SelfDestruct") ||
+		MechUp_CheckInv("Mechup_Efficiency"))
+	{
+		c = CR_ORANGE;
+		s = Stock_RemindUpgrade(s, c,true, 	"// Mech Ups. //");
+		s = Stock_RemindUpgrade(s, c,true, "");
+		uplvl = strparam(s:"+ Nails Lv. ", d:MechUp_CheckInv("Mechup_Nails"));
+		s = Stock_RemindUpgrade(s, c, MechUp_CheckInv("Mechup_Nails"), uplvl);
+		uplvl = strparam(s:"+ Rockets Lv. ", d:MechUp_CheckInv("Mechup_Rockets"));
+		s = Stock_RemindUpgrade(s, c, MechUp_CheckInv("Mechup_Rockets"), uplvl);
+		uplvl = strparam(s:"+ Armor Lv. ", d:MechUp_CheckInv("Mechup_Armor"));
+		s = Stock_RemindUpgrade(s, c, MechUp_CheckInv("Mechup_Armor"), uplvl);
+		uplvl = strparam(s:"+ Manuver Lv. ", d:MechUp_CheckInv("Mechup_Speed"));
+		s = Stock_RemindUpgrade(s, c, MechUp_CheckInv("Mechup_Speed"), uplvl);
+		uplvl = strparam(s:"+ Auto Repair Lv. ", d:MechUp_CheckInv("Mechup_AutoRepair"));
+		s = Stock_RemindUpgrade(s, c, MechUp_CheckInv("Mechup_AutoRepair"), uplvl);
+		s = Stock_RemindUpgrade(s, c,MechUp_CheckInv("Mechup_LifeSave"), 		"+ Life Saver");
+		s = Stock_RemindUpgrade(s, c,MechUp_CheckInv("Mechup_SelfDestruct"), 	"+ Self Destruct");
+		s = Stock_RemindUpgrade(s, c,MechUp_CheckInv("Mechup_Efficiency"), 		"+ Efficiency");
+		s = Stock_RemindUpgrade(s, c,true, "");
+	}
 
 	delay(17);
 }

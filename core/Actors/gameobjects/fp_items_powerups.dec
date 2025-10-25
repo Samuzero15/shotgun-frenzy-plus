@@ -10,9 +10,11 @@ ACTOR Inventory_Soulsphere : Inventory_Powerup
 		ITM1 ABCDEFGH 2 bright
 		loop
 	MechSync:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Mech")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Mech")
 		goto Effect.Mech
 	PowUpUpgrade_Cond:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Defense")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect
@@ -69,6 +71,7 @@ ACTOR Inventory_Megasphere : Inventory_Powerup
 		loop
 
 	PowUpUpgrade_Cond:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Defense")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
 		TNT1 A 0 ACS_NamedExecuteAlways("Armor_ReplaceShardsWithArmor", 0, 1)
 		TNT1 A 1 A_Jump(256, "Effect")
@@ -112,6 +115,7 @@ ACTOR Inventory_Megasphere : Inventory_Powerup
 		goto Effect+3
 		
 	MechSync:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Mech")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Mech")
 		goto Effect.Mech
 	PowUpUpgrade.Mech:
@@ -136,9 +140,11 @@ ACTOR Inventory_Godsphere : Inventory_Powerup
 		ITM3 ABCDEFGH 2 bright
 		loop
 	MechSync:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Defense")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
 		goto Effect
 	PowUpUpgrade_Cond:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Defense")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Defense" , 1,"PowUpUpgrade.Defense")
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect
@@ -175,9 +181,11 @@ ACTOR Inventory_Berserk2 : Inventory_Powerup
 		ITM4 ABCDEFGH 2 bright
 		loop
 	MechSync: // Allows the use inside mechs.
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Attack")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		goto Effect
 	PowUpUpgrade_Cond:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Attack")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect
@@ -212,6 +220,7 @@ ACTOR Inventory_AmmoGiver : Inventory_Powerup
 		ITM9 A 2 bright
 		loop
 	PowUpUpgrade_Cond:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Attack")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect
@@ -267,9 +276,11 @@ ACTOR Inventory_HellTrigger : Inventory_Powerup
 		ITP4 ABCDEFGH 2 bright
 		loop
 	MechSync:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Attack")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		goto Effect
 	PowUpUpgrade_Cond:
+		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "PowUpUpgrade.Attack")
 		TNT1 A 0 A_JumpIfInventory("PlayUp_PowUpUpgrade_Attack" , 1,"PowUpUpgrade.Attack")
 		TNT1 A 1 A_Jump(256, "Effect")
 		goto Effect

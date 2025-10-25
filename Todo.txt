@@ -5,7 +5,7 @@ w) Work in progres
 [d] Re-Make the SBarInfo
 	[d] Do some more touchs in the normal bar.
 	[d] Rework the full screen bar.
-[w] Get some more voices for Amy (Yeah that computer lady voice.)
+[d] Get some more voices for Amy (Yeah that computer lady voice.)
 [d] Clientside the Acs HUD.
 [d] Add the powerups on the genetics terminal.
 [d] Re-arrange buildings to fit on their right places.
@@ -55,3 +55,13 @@ w) Work in progres
 [d] Make the Rune page terminal.
 [d] Finish up champions
 [ ] Implement the Elite Weapons
+[ ] Implement different types of grenades 
+	[ ] Fire grenade
+	[ ] Shell grenade
+	[ ] Drone grenade
+	[ ] Plasma grenade
+[ ] Implement the rest of missing techs.
+	[ ] TECH_MARCOM_REPDRN: Repair drones, Building HP Regen increases.
+	[ ] TECH_MARCOM_GEARUP: Gear up, Buildings spawn with a level 1 building.
+	[ ] TECH_MARCOM_SOLIDG: Solid Ground, Buildings spawn with a level 1 building.
+	[ ] TECH_REFINE_BOUNTY: Bounty bonus, x1.25 credit multipler per monster killed.

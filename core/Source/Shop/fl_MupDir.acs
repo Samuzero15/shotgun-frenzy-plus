@@ -95,6 +95,19 @@ function int MechUp_GetScore(void){
 	return (score * 3) / players;
 }
 
+function int MechUp_CheckInv(str inv) {
+    int amount = CheckInventory(inv);
+    if(GetCvar("sfp_allmechups")){
+		for(int i = 0; i < MechUpTop; i++){
+			if(Stricmp(inv, MechUp_getActor(i)) == 0){
+				amount = MechUp_getMax(i);
+				break;
+			}
+		}
+    }
+    return amount;
+}
+
 function str MechUp_ReportUps(bool colored){
 	str result = "Current stats";
 	if(colored) result = Strparam(s:"\cn", s:result);

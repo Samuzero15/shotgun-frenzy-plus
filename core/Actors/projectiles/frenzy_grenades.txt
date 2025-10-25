@@ -801,3 +801,55 @@ Actor ShellBlast_Pellet {
 			stop
 	}
 }
+
+
+///////////////////
+// hand grenades //
+///////////////////
+
+Actor HandGrenade_ShellBlast : Grenade_ShellBlast {
+	Damage 50
+	radius 16
+	scale 0.75
+
+	states {
+		Death:
+			TNT1 A 0 A_ChangeFlag("NoGRAVITY", True)
+			TNT1 A 1 A_JumpIf(Health <= 0, "Death.Shot")
+			PUFF B 1 A_Explode(70,192,0,192,64)
+			TNT1 A 0 a_setScale(1.5, 1.5)
+			PUFF B 1 A_SetArg(3, 0)
+			goto ReleaseThePeels 
+		Death.Shot:
+			PUFF B 1 A_Explode(100,224,0,224,96)
+			TNT1 A 0 a_setScale(1.5, 1.5)
+			PUFF B 1 A_SetArg(3, 0)
+			PUFF B 1 A_SetArg(2, 5)
+			goto ReleaseThePeels_Y 
+		
+		ReleaseThePeels:
+			PUFF B 1 A_Jumpif(args[3] >= 5 + args[2], "ChangeTheWorld_MyFinalMessage_Goodbye")
+			TNT1 A 0 A_SetArg(3, args[3] + 1)
+			TNT1 A 0 A_Explode(50,192,0,192,96)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			loop
+		ReleaseThePeels_Y:
+			PUFF B 1 A_Jumpif(args[3] >= 5 + args[2], "ChangeTheWorld_MyFinalMessage_Goodbye")
+			TNT1 A 0 A_SetArg(3, args[3] + 1)
+			TNT1 A 0 A_Explode(80,224,0,224,96)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			TNT1 A 0 A_SpawnitemEx("ShellBlast_PelletSpawner_x4",0,0,0,0,0,0, 0,SXF_TransferPointers)
+			loop
+	}
+}

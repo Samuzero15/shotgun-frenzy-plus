@@ -84,7 +84,6 @@ OptionMenu SFPlus_GameOptions{
 	StaticText ""
 	StaticText "Game Rules", 1 
 	StaticText ""
-	Option "Instant Deploying", "sfp_instantdeploying", "Boolean"
 	NumberField "Re-Capture Minimal *", "sfp_recapmin", 0, 10, 1, 0
 	Slider "Credit Correction", "sf_creditcorrection", -20, 20, 1, 0
 	Option "No drop on starting credits", "sfp_dropcredits_nostartcredits", "Boolean", "sfp_allowdropcredits"
@@ -92,6 +91,14 @@ OptionMenu SFPlus_GameOptions{
 	Option "Damage per Experience", "sfp_damageperexp", "Boolean"
 	Option "Hub after game", "sfp_hubaftergame", "Boolean"
 	TextField "Monster set", "sfp_monstersetname", "cv_false"
+	StaticText ""
+	StaticText "Cheaty Game rules", 1 
+	StaticText ""
+	Option "Instant Deploying", "sfp_instantdeploying", "Boolean"
+	Option "All techs and researches", "sfp_alltechs", "Boolean"
+	Option "All stimpack upgrades", "sfp_allstimups", "Boolean"
+	Option "All mech upgrades", "sfp_allmechups", "Boolean"
+	Option "All player upgrades", "sfp_allplayups", "Boolean"
 	StaticText ""
 	StaticText "Balancing Settings", 1 
 	StaticText ""

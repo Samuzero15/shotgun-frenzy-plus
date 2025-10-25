@@ -41,13 +41,16 @@
 #libdefine TECH_MARCOM_CPULSE	22
 #libdefine TECH_MECHFA			23
 #libdefine TECH_NUKESY			24
-#libdefine TECH_MARCOM_REPDRN   25
-#libdefine TECH_MARCOM_GEARUP	26
-#libdefine TECH_MARCOM_SOLIDG	27
-#libdefine TECH_MARCOM_TARMOR	28
-#libdefine TECH_REFINE_BOUNTY	29
-#libdefine TECH_REFINE_DEEPER	30
-#libdefine TECH_REFINE_FASTER	31
+// TODO Start
+#libdefine TECH_MARCOM_REPDRN   25 // Repair drones (Buildings gain a boost in HP regeneration)
+#libdefine TECH_MARCOM_GEARUP	26 // Gear up (Buildings are deployed with a level 1 upgrade) 
+#libdefine TECH_MARCOM_SOLIDG	27 // Solid ground (Buildings gain extra HPs.)
+//#libdefine TECH_MARCOM_TARMOR	28 // Tactical armor (Buildings gain armor)
+// This is just to speed up refineries.
+#libdefine TECH_REFINE_BOUNTY	29 
+//#libdefine TECH_REFINE_DEEPER	30
+//#libdefine TECH_REFINE_FASTER	31
+// TODO End
 #libdefine TECH_GENLAB_RUSYNC	32
 #libdefine TECH_MARCOM_CBOOST	33
 #libdefine TECH_MARCOM_COPTIM	34
@@ -94,7 +97,7 @@ function bool Tech_IsDoneC(int flag){
 		case 0: res = ((CheckInventory("tech_doneflags") & (1<<flag)) > 0); break;
 		case 1: res = ((CheckInventory("tech_doneflags2") & (1<<flag)) > 0); break;
 	}
-	return res;
+	return res || GetCVar("sfp_alltechs");
 }
 
 function bool Tech_IsLockC(int flag){
@@ -169,7 +172,7 @@ function void Tech_Set(int which, int flags){
 }
 
 function bool Tech_IsDone(int which){
-	return fp_techstate[which] & TECHF_DONE;
+	return fp_techstate[which] & TECHF_DONE || GetCVar("sfp_alltechs");
 }
 
 function bool Tech_IsLock(int which){

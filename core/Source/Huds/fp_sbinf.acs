@@ -12,6 +12,7 @@
 #include "acsutils.acs"
 
 #import "f_intdb.acs"
+#import "fl_MupDir.acs"
 
 Script "SFPlus_SyncVariables" OPEN {// Thank You Mr.Satan!
 	int play = 0;
@@ -134,7 +135,7 @@ script "SFPlus_Sbarinfo_HealthStatus" (int using_tank) ClientSide {
 			maxhp = 450;
 		}else {
 			// If we're using the mech, the max health changes.
-			maxhp = cond(using_tank, 1500 + 900 * checkinventory("MechUp_Armor"), 
+			maxhp = cond(using_tank, 1500 + 900 * MechUp_CheckInv("Mechup_Armor"), 
 			GetActorProperty(0, APROP_SPAWNHEALTH));
 		}
 		

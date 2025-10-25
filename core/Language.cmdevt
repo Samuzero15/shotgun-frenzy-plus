@@ -86,7 +86,7 @@ CEDATA_RM_RESEARCH_VETMER = "Veteran Mercenaries\n\nPlayers under Sergant Rank g
 
 CEDATA_I_RESEARCH_COINX5 = "CC23";
 CEDATA_N_RESEARCH_COINX5 = "COMPENSATION";
-CEDATA_CM_RESEARCH_COINX5 = "Compensation\n\nDropped coins worths 5 times more!.";
+CEDATA_CM_RESEARCH_COINX5 = "Compensation Activated!\n\nDropped coins worths 5 times more!.";
 
 CEDATA_I_RESEARCH_ADVSYS = "CM44";
 CEDATA_N_RESEARCH_ADVSYS = "ADVANCED SYSTEMS";
