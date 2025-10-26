@@ -720,6 +720,14 @@ Script "Building_States" (void) {
 }
 
 Script "Building_Scripts" (void) {
+	if(Tech_IsDone(TECH_MARCOM_GEARUP)){
+		int rng = GetUserVariable(0, PATCHER_USERVAR_RANGE);
+		int rng_up = GetUserVariable(0, PATCHER_USERVAR_RANGEUP);
+		SetActorProperty(0, APROP_STAMINA, 1);
+		ACS_NamedExecuteAlways("Building_UpgradeStats", 0);
+		SetUserVariable(0, "user_range", rng + rng_up);
+	}
+
 	ACS_NamedExecuteAlways("Building_States", 0);
 	ACS_NamedExecuteAlways("Building_AggroLoop", 0);
 }

@@ -108,3 +108,18 @@ CEDATA_N_RESEARCH_COPTIM = "CORE OPTIMIZER";
 
 CEDATA_I_RESEARCH_ENGINE = "CC22";
 CEDATA_N_RESEARCH_ENGINE = "ENGINE BOOST";
+
+CEDATA_I_RESEARCH_REPDRN = "CM44";
+CEDATA_N_RESEARCH_REPDRN = "REPAIR DRONES";
+CEDATA_CM_RESEARCH_REPDRN = "Repair drones Activated!\n\nBuildings now auto repair damages faster.";
+CEDATA_RM_RESEARCH_REPDRN = "Repair drones\n\nBuildings now auto repair damages faster.";
+
+CEDATA_I_RESEARCH_GEARUP = "CM44";
+CEDATA_N_RESEARCH_GEARUP = "GEAR UPGRADE";
+CEDATA_CM_RESEARCH_GEARUP = "Gear Upgrade Activated!\n\nDeployed buildings gain a LVL 1 upgrade. \nTurrets deal extra x0.5 damage.";
+CEDATA_RM_RESEARCH_GEARUP = "Gear Upgrade\n\nDeployed buildings gain a LVL 1 upgrade\n\nTurrets deal extra x0.5 damage.";
+
+CEDATA_I_RESEARCH_BOUNTY = "CC23";
+CEDATA_N_RESEARCH_BOUNTY = "DEMONIC BOUNTY";
+CEDATA_CM_RESEARCH_BOUNTY = "Demonic Bounty Activated!\n\nDuplicates credit reward for all killed demons!";
+CEDATA_RM_RESEARCH_BOUNTY = "Demonic Bounty\n\nDuplicates credit reward for all killed demons!.";

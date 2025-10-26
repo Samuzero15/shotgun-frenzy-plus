@@ -286,7 +286,7 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_REGENB), "+ Absorber Unit");
 		c = CR_LIGHTBLUE;
 		s = Stock_RemindUpgrade(s, c,Tech_IsDoneC(TECH_GENLAB_STIMPK), "+ 10 Stimpacks");
-		Stock_RemindUpgrade(s+1, c, true, "");
+		s = Stock_RemindUpgrade(s, c, true, "");
 	}
 
 	if (Tech_IsDoneC(TECH_ARMORY_ARMS2) ||
@@ -297,7 +297,6 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 		CheckInventory("P_Backpack"))
 	{
 		c = CR_GREEN;
-		s++;
 		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_ARMS1) || Tech_IsDoneC(TECH_ARMORY_ARMS2), 
 			strparam(s:"+ Arms ", s:Tech_IsDoneC(TECH_ARMORY_ARMS2) ? ("P2") : ("P1")));
 		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_BOOMRN), "+ Boomshot Rounds");
@@ -305,7 +304,7 @@ script "SFPlus_ShowUpgrades" (void) CLIENTSIDE{
 		c = CR_DARKGREEN;
 		s = Stock_RemindUpgrade(s, c, Tech_IsDoneC(TECH_ARMORY_GNADES), "+ Grenades");
 		s = Stock_RemindUpgrade(s, c, CheckInventory("P_Backpack"), "+ Personal Backpack");
-		Stock_RemindUpgrade(s+1, c, true, "");
+		s = Stock_RemindUpgrade(s, c, true, "");
 	}
 	
 	if (Tech_IsDoneC(TECH_REFINE_PUMP1) || Tech_IsDoneC(TECH_REFINE_PUMP2) || Tech_IsDoneC(TECH_REFINE_COINX5))

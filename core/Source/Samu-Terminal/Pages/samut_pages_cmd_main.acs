@@ -250,6 +250,7 @@ function void CMDPage_SetButtonLayout(int layout){
 			CMDPage_SetButtonInSlot(1, FP_CB_UPGRADE_REFINE_PUMP2);
 			CMDPage_SetButtonInSlot(2, FP_CB_UPGRADE_REFINE_ENGINE);
 			CMDPage_SetButtonInSlot(3, FP_CB_UPGRADE_REFINE_COINX5);
+			CMDPage_SetButtonInSlot(4, FP_CB_UPGRADE_REFINE_BOUNTY);
 			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
 			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
 		break;
@@ -262,6 +263,8 @@ function void CMDPage_SetButtonLayout(int layout){
 			CMDPage_SetButtonInSlot(4, FP_CB_UPGRADE_MARCOM_VETMER);
 			CMDPage_SetButtonInSlot(5, FP_CB_UPGRADE_MARCOM_CBOOST);
 			CMDPage_SetButtonInSlot(6, FP_CB_UPGRADE_MARCOM_COPTIM);
+			CMDPage_SetButtonInSlot(7, FP_CB_UPGRADE_MARCOM_REPDRN);
+			CMDPage_SetButtonInSlot(8, FP_CB_UPGRADE_MARCOM_GEARUP);
 			CMDPage_SetButtonInSlot_Exit(10, FP_CB_EXIT);
 			CMDPage_SetButtonInSlot_Link(11, FP_CB_RETURN, CMDPAGE_LAYOUT_UPGRADE);
 		break;

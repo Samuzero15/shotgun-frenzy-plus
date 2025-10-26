@@ -39,8 +39,9 @@ Script "SFPlus_MonsterKill" Kill{
 	  int splat = flag_gibbed;
 	  int noprofit = flag_NoCount;
 	  int montype;
-	  if	(flag_boss) montype = 2;
-	  if	(flag_hard) montype = 1;
+	  if	(flag_boss) montype |= 2;
+	  if	(flag_hard) montype |= 1;
+	  if 	(ischamp)	montype |= 4;
 	 
 	  if(ischamp && CheckInventory("ChampZombie_SkipDeathScript")){
 		SetActivatorToTarget(0);

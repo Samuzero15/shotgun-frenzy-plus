@@ -38,6 +38,7 @@ script 83 (void) { // Uh...
 //Armory
 script 230 OPEN
 {
+	int opened = 0;
 	while (1)
 	{
 		if(!Tech_isDone(TECH_ARMORY))
@@ -46,6 +47,10 @@ script 230 OPEN
 		}
 		else
 		{
+			if(opened == 0) {
+				acs_execute(250, 0, 0, 0, 0);
+				opened = 1;
+			}
 			door_open(252, 100);
 	                floor_movetovalue(250, 50, 24, 0);
 			DELAY(35);
@@ -59,6 +64,7 @@ script 230 OPEN
 //Genetics
 script 236 OPEN
 {
+	int opened = 0;
 	while (1)
 	{
 		if(!Tech_isDone(TECH_GENLAB))
@@ -67,6 +73,10 @@ script 236 OPEN
 		}
 		else
 		{
+			if(opened == 0) {
+				acs_execute(200, 0, 0, 0, 0);
+				opened = 1;
+			}
 			door_open(225, 100);
 	                floor_movetovalue(223, 50, 24, 0);
 			DELAY(35);
@@ -80,6 +90,7 @@ script 236 OPEN
 //Refinery
 script 232 OPEN
 {
+	int opened = 0;
 	while (1)
 	{
 		if(!Tech_isDone(TECH_REFINE))
@@ -88,6 +99,10 @@ script 232 OPEN
 		}
 		else
 		{
+			if(opened == 0) {
+				acs_execute(350, 0, 0, 0, 0);
+				opened = 1;
+			}
 			door_open(196, 100);
 	                floor_movetovalue(195, 50, 24, 0);
 			DELAY(35);
@@ -101,6 +116,7 @@ script 232 OPEN
 //Marine command
 script 233 OPEN
 {
+	int opened = 0;
 	while (1)
 	{
 		if(!Tech_isDone(TECH_MARCOM))
@@ -109,6 +125,10 @@ script 233 OPEN
 		}
 		else
 		{
+			if(opened == 0) {
+				acs_execute(400, 0, 0, 0, 0);
+				opened = 1;
+			}
 			door_open(206, 100);
 	                floor_movetovalue(204, 50, 24, 0);
 			DELAY(35);
@@ -122,6 +142,7 @@ script 233 OPEN
 //Mecha Factory
 script 234 OPEN
 {
+	int opened = 0;
 	while (1)
 	{
 		if(!Tech_isDone(TECH_MECHFA))
@@ -130,6 +151,10 @@ script 234 OPEN
 		}
 		else
 		{
+			if(opened == 0) {
+				acs_execute(300, 0, 0, 0, 0);
+				opened = 1;
+			}
 			door_open(198, 100);
 	                floor_movetovalue(197, 50, 24, 0);
 			DELAY(35);

@@ -42,10 +42,10 @@
 #libdefine TECH_MECHFA			23
 #libdefine TECH_NUKESY			24
 // TODO Start
-#libdefine TECH_MARCOM_REPDRN   25 // Repair drones (Buildings gain a boost in HP regeneration)
-#libdefine TECH_MARCOM_GEARUP	26 // Gear up (Buildings are deployed with a level 1 upgrade) 
-#libdefine TECH_MARCOM_SOLIDG	27 // Solid ground (Buildings gain extra HPs.)
-//#libdefine TECH_MARCOM_TARMOR	28 // Tactical armor (Buildings gain armor)
+#libdefine TECH_MARCOM_REPDRN   25 // Repair drones (Buildings gain a faster regen time)
+#libdefine TECH_MARCOM_GEARUP	26 // Gear up (Buildings are deployed with a level 1 upgrade + Less upgrade delay time) 
+//#libdefine TECH_MARCOM_SOLIDG	27 // Solid ground (Buildings gain extra HPs) (SpawnHealth does not work on monsters yet goddamit)
+//#libdefine TECH_MARCOM_HSENSR	28 // Heat sensor (Buildings range x2)
 // This is just to speed up refineries.
 #libdefine TECH_REFINE_BOUNTY	29 
 //#libdefine TECH_REFINE_DEEPER	30

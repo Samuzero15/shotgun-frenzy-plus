@@ -503,16 +503,34 @@ Script "Building_UpgradeStats" (void){
 	GiveInventory("Patcher_ScriptActive", 1);
 
 	int current_level = 0;
-	int health = GetActorProperty(0, APROP_HEALTH);
+	int health = GetActorHealth(0);
 	int heal_factor = 0;
-	int max_health = GetActorProperty(0, APROP_SpawnHealth);
+	int max_health = GetActorSpawnHealth(0);
+	int tech_repairdrones, tech_gearup, tech_solidground;
+	int base_max_health = max_health;
 	delay(random(0,35));
 	while(health >= 1){
-		health = GetActorProperty(0, APROP_HEALTH);
-		if(current_level == GetActorProperty(0, APROP_STAMINA)){
-			max_health = GetActorProperty(0, APROP_SpawnHealth);
+		health = GetActorHealth(0);
+		max_health = GetActorSpawnHealth(0);
+		tech_repairdrones = Tech_IsDone(TECH_MARCOM_REPDRN);
+		tech_gearup = Tech_IsDone(TECH_MARCOM_GEARUP);
+		/* Solid ground tech is disabled for now, cuz SetActorProperty(0, APROP_SPAWNHEALTH, value) doesn't work properly yet.
+		tech_solidground = Tech_IsDone(TECH_MARCOM_SOLIDG);
+
+		if(tech_solidground) {
+			// Extra 25% hp.
+			max_health = max_health + (FixedMul(0.25, max_health*1.0) >> 16);
+			SetActorSpawnHealth(0, max_health);
+		}else {
+			SetActorSpawnHealth(0, base_max_health);
+		}*/
+
+		SetInventory("Upgrade_GearRev_Factor", tech_gearup);
+
+		if(current_level == GetActorStamina(0)){
+			//max_health = GetActorSpawnHealth(0);
 			if(current_level == 0 || health < 1 || health == max_health){
-				delay(35);
+				delay(5);
 				continue;
 			}
 			heal_factor = FixedMul(0.015*current_level, max_health*1.0) >> 16;
@@ -523,15 +541,21 @@ Script "Building_UpgradeStats" (void){
 				SetActorProperty(0, APROP_Health, health + heal_factor);
 			}
 
-			delay(35);
+			delay(35 - 10*(tech_repairdrones));
 			continue;
 		}
+		//SetActorDamageMultiplier(0, 1.0+(0.2)*current_level); // Damage up (does'nt work with zandronum yet, frick)
+		//SetActorProperty(0, APROP_DamageMultiplier, 1.0+(0.2)*current_level); // Damage up
+		//log(s:"Damage Multiplier set to: x", f:GetActorDamageMultiplier(0));
+		current_level = GetActorStamina(0);
+		SetActorDamageFactor(0, 1.0-(0.1)*current_level); // Armor up
+		// Damage up
+		if(CheckInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1))){
+			TakeInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1), 1);
+		}
+		GiveInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level), 1);
+		SetActorHealth(0, max_health);// Fully heal it
 
-		SetActorProperty(0, APROP_DamageFactor, 1.0-(0.1)*current_level); // Armor up
-		SetActorProperty(0, APROP_DamageMultiplier, 1.0+(0.2)*current_level); // Damage up
-		current_level = GetActorProperty(0, APROP_STAMINA);
-		SetActorProperty(0, APROP_Health, max_health);// Fully heal it
-
-		delay(35);
+		delay(35 - 10*(tech_repairdrones));
 	}
 }

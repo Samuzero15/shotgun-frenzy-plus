@@ -9,7 +9,15 @@
 
 ## v1 - The path of the damned...
 
-#### (24 /10 / 2025) [All ups(player / stim / mech) and tech options are here!]
+#### (25 / 10 / 2025) [New techs for turrets + one for extra coins!]
+	+) Added at least 3 planned techs that I haven't implemented until now, god I'm such a mess.
+	// Repair drones: Speeds up HP regen for buildings.
+	// Gear Upgrade: Buildings start with a lvl 1 level upgrade & turrets deals some extra x0.5 damage.
+	// Demonic Bounty: Duplicates the money from killed demons.
+	*) Some fixes on the all techs activated when starting SF maps
+	*) Now killed champions reward more money and one extra EXP point.
+
+#### (24 / 10 / 2025) [All ups(player / stim / mech) and tech options are here!]
 	+) Some new cvars, for enabling instant techs and marine upgrades!
 	// Including, player ups, stim ups and mech ups.
 	*) Some touches in the overview reports when going to the restock pads.

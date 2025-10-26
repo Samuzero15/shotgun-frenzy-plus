@@ -40,6 +40,13 @@ ACTOR Upgrade_Resister : PowerupGiver
 	}
 }
 
+// Gear Revolution (for turrets)
+
+Actor Upgrade_GearRev_Factor : PowerDamage {
+	Powerup.Duration 0x7FFFFFFF
+    DamageFactor Normal, 1.5
+}
+
 // Boomer Resister Unit
 ACTOR Boomer_Resister_Factor : PowerProtection
 {

@@ -62,17 +62,18 @@ script "SF_Net_KillRewardCredits" (int monster, int splat) NET{
 
 // mmm: monster killed - give credits and exp
 
-//[Samu] Time for the Clientside rape!
+//[Samu] Time for the Clientside raep!
 function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, int enemytype)
 {
 	//log(s:GetActorClass(0));
 	int l_Amount;
 	int l_amount_copy;
 	int color = CR_GREEN;
-	
-	bool bossmon = enemytype == 2;
-	bool hardmon = enemytype == 1;
-	
+
+	bool bossmon = (enemytype & 2) >= 1;
+	bool hardmon = (enemytype & 1) >= 1;
+	bool champ = (enemytype & 4) >= 1;
+
 	if(l_splatCombo) color = CR_BRICK;
 
 	if(Human() && ActorIsPlayer(ActivatorTID()))
@@ -82,7 +83,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(GetUserCvar(play, "sfp_hitmarksnd"))
 		localambientsound("p/kill", 125);
 
-	l_Amount = p_MonsterCredits[monsterClass] + (playercount()-1);
+	l_Amount = p_MonsterCredits[monsterClass]*(1+1*Tech_IsDone(TECH_REFINE_BOUNTY)) + (playercount()-1);
 	l_amount_copy = l_amount;
 	// increase credit
 	
@@ -91,6 +92,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(hardmon) l_Amount *= 3;
 	
 	if(l_SplatCombo > 0)	l_Amount += l_Amount/2;
+	if(champ)				l_Amount += l_Amount/3;
 	/*
 	log(s:"Amount: ", d:l_Amount);
 	log(s:"Proc. Phase Bonus: ", d:((l_Amount_copy*0.25 + 1.0)>>16));
@@ -139,7 +141,7 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	if(monsterClass < 0){ return; }
 	
 	// increase exp and streak
-	Rank_GrantEXP(play, 1 + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
+	Rank_GrantEXP(play, 1 + champ + (hardmon*(monsterClass)/2) + bossmon*(monsterClass));
 	if(GetActorProperty(0, APROP_HEALTH) > 1){
 		p_Streak[play] ++;
 		if(p_Streak[play] >= p_StreakHi[play]){

@@ -49,7 +49,8 @@
 #libdefine FP_CB_UPGRADE_REFINE_PUMP2		FP_CB_UPGRADE_REFINE_PUMP1+1
 #libdefine FP_CB_UPGRADE_REFINE_ENGINE		FP_CB_UPGRADE_REFINE_PUMP2+1
 #libdefine FP_CB_UPGRADE_REFINE_COINX5		FP_CB_UPGRADE_REFINE_ENGINE+1
-#libdefine FP_CB_UPGRADE_MARCOM				FP_CB_UPGRADE_REFINE_COINX5+1
+#libdefine FP_CB_UPGRADE_REFINE_BOUNTY		FP_CB_UPGRADE_REFINE_COINX5+1
+#libdefine FP_CB_UPGRADE_MARCOM				FP_CB_UPGRADE_REFINE_BOUNTY+1
 #libdefine FP_CB_UPGRADE_MARCOM_VETMER		FP_CB_UPGRADE_MARCOM+1
 #libdefine FP_CB_UPGRADE_MARCOM_AIRSUP		FP_CB_UPGRADE_MARCOM_VETMER+1
 #libdefine FP_CB_UPGRADE_MARCOM_ADVSYS		FP_CB_UPGRADE_MARCOM_AIRSUP+1
@@ -57,7 +58,9 @@
 #libdefine FP_CB_UPGRADE_MARCOM_CPULSE		FP_CB_UPGRADE_MARCOM_IONCAN+1
 #libdefine FP_CB_UPGRADE_MARCOM_COPTIM		FP_CB_UPGRADE_MARCOM_CPULSE+1
 #libdefine FP_CB_UPGRADE_MARCOM_CBOOST		FP_CB_UPGRADE_MARCOM_COPTIM+1
-#libdefine FP_CB_SUPPORT					FP_CB_UPGRADE_MARCOM_CBOOST+1
+#libdefine FP_CB_UPGRADE_MARCOM_REPDRN		FP_CB_UPGRADE_MARCOM_CBOOST+1
+#libdefine FP_CB_UPGRADE_MARCOM_GEARUP		FP_CB_UPGRADE_MARCOM_REPDRN+1
+#libdefine FP_CB_SUPPORT					FP_CB_UPGRADE_MARCOM_GEARUP+1
 #libdefine FP_CB_SUPPORT_AIRSTK				FP_CB_SUPPORT+1
 #libdefine FP_CB_SUPPORT_AIRSTK_POINT		FP_CB_SUPPORT_AIRSTK+1	
 #libdefine FP_CB_SUPPORT_AIRSTK_LINE_1		FP_CB_SUPPORT_AIRSTK_POINT+1	
@@ -151,6 +154,7 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_UPGRADE_REFINE_PUMP2,		CMDEVT_RESEARCH_PUMP2, "UPG_REFINE_PUMP2");
 	CMDBut_Add(FP_CB_UPGRADE_REFINE_ENGINE,		CMDEVT_RESEARCH_ENGINE, "UPG_REFINE_ENGINE");
 	CMDBut_Add(FP_CB_UPGRADE_REFINE_COINX5,		CMDEVT_RESEARCH_COINX5, "UPG_REFINE_COINX5");
+	CMDBut_Add(FP_CB_UPGRADE_REFINE_BOUNTY,		CMDEVT_RESEARCH_BOUNTY, "UPG_REFINE_BOUNTY");
 	
 
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM, CMDEVT_NULL, "UPG_MARCOM");
@@ -161,6 +165,8 @@ function void SFPlus_DefineCMDButtons(void){
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM_CPULSE,		CMDEVT_RESEARCH_CPULSE, "UPG_MARCOM_CPULSE");
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM_CBOOST,		CMDEVT_RESEARCH_CBOOST, "UPG_MARCOM_CBOOST");
 	CMDBut_Add(FP_CB_UPGRADE_MARCOM_COPTIM,		CMDEVT_RESEARCH_COPTIM, "UPG_MARCOM_COPTIM");
+	CMDBut_Add(FP_CB_UPGRADE_MARCOM_REPDRN,		CMDEVT_RESEARCH_REPDRN, "UPG_MARCOM_REPDRN");
+	CMDBut_Add(FP_CB_UPGRADE_MARCOM_GEARUP,		CMDEVT_RESEARCH_GEARUP, "UPG_MARCOM_GEARUP");
 	
 	CMDBut_Add(FP_CB_SUPPORT_AIRSTK, CMDEVT_NULL, "SUP_AIRSTK");
 	CMDBut_Add(FP_CB_SUPPORT_AIRSTK_POINT,		CMDEVT_AIRSTK_POINT,  	"SUP_AIRSTK_POINT");
@@ -270,7 +276,7 @@ function int CMDBut_UpdateConds(int btn){
 	/**
 		Build buttons.
 	*/
-
+	int alltechs = GetCvar("sfp_alltechs");
 	switch(btn){
 		case FP_CB_BUILD:
 		if(checkInventory("f_allownuke")){
@@ -300,14 +306,14 @@ function int CMDBut_UpdateConds(int btn){
 		case FP_CB_BUILD_REFINE: CMDBut_SetShowCond	(btn, 	!Tech_IsActivatedC(TECH_REFINE)); break; 
 		case FP_CB_BUILD_MARCOM: CMDBut_SetShowCond	(btn, 	!Tech_IsActivatedC(TECH_MARCOM)); break; 
 		case FP_CB_BUILD_NUKESY: 
-			CMDBut_SetShowCond	(btn,  !Tech_IsActivatedC(TECH_NUKESY) && CheckInventory("f_allownuke"));
+			CMDBut_SetShowCond	(btn,  (!Tech_IsActivatedC(TECH_NUKESY)) && CheckInventory("f_allownuke"));
 		break;
 
 		case FP_CB_UPGRADE_GENLAB: CMDBut_SetShowCond	(btn, Tech_IsDoneC(TECH_GENLAB)); break;
 		case FP_CB_UPGRADE_ARMORY: CMDBut_SetShowCond	(btn, Tech_IsDoneC(TECH_ARMORY)); break;
 		case FP_CB_UPGRADE_REFINE: CMDBut_SetShowCond	(btn, Tech_IsDoneC(TECH_REFINE)); break;
 		case FP_CB_UPGRADE_MARCOM: CMDBut_SetShowCond	(btn, Tech_IsDoneC(TECH_MARCOM)); break;
-		
+
 		// Genlab Armor
 		case FP_CB_UPGRADE_GENLAB_HEALTH1:
 			if(Tech_IsDoneC(TECH_GENLAB_HEALTH1)) return FP_CB_UPGRADE_GENLAB_HEALTH2;
@@ -355,7 +361,10 @@ function int CMDBut_UpdateConds(int btn){
 		case FP_CB_UPGRADE_REFINE_ENGINE: CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_ENGINE)); 
 			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Requires the Marine Command...");
 		break;
-		case FP_CB_UPGRADE_REFINE_COINX5: CMDBut_SetShowCond	(btn, !Tech_IsDoneC(TECH_REFINE_COINX5)); 
+		case FP_CB_UPGRADE_REFINE_COINX5: CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_REFINE_COINX5)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Requires the Marine Command...");
+		break;
+		case FP_CB_UPGRADE_REFINE_BOUNTY: CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_REFINE_BOUNTY)); 
 			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM), "Requires the Marine Command...");
 		break;
 
@@ -375,6 +384,16 @@ function int CMDBut_UpdateConds(int btn){
 		case FP_CB_UPGRADE_MARCOM_CBOOST: 
 			CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_CBOOST)); 
 			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_CPULSE), "Requires Core Pulses...");
+		break;
+
+		case FP_CB_UPGRADE_MARCOM_REPDRN: 
+			CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_REPDRN)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_ADVSYS), "Requires Advanced Systems...");
+		break;
+
+		case FP_CB_UPGRADE_MARCOM_GEARUP: 
+			CMDBut_SetShowCond (btn, !Tech_IsDoneC(TECH_MARCOM_GEARUP)); 
+			CMDBut_SetAccessCond (btn, Tech_IsDoneC(TECH_MARCOM_ADVSYS), "Requires Advanced Systems...");
 		break;
 
 		// Support commands

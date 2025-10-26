@@ -60,8 +60,7 @@ w) Work in progres
 	[ ] Shell grenade
 	[ ] Drone grenade
 	[ ] Plasma grenade
-[ ] Implement the rest of missing techs.
-	[ ] TECH_MARCOM_REPDRN: Repair drones, Building HP Regen increases.
-	[ ] TECH_MARCOM_GEARUP: Gear up, Buildings spawn with a level 1 building.
-	[ ] TECH_MARCOM_SOLIDG: Solid Ground, Buildings spawn with a level 1 building.
-	[ ] TECH_REFINE_BOUNTY: Bounty bonus, x1.25 credit multipler per monster killed.
+[d] Implement the rest of missing techs.
+	[d] TECH_MARCOM_REPDRN: Repair drones, Building HP Regen increases.
+	[d] TECH_MARCOM_GEARUP: Gear up, Buildings spawn with a level 1 building.
+	[d] TECH_REFINE_BOUNTY: Bounty bonus, x2 credit multipler per monster killed.

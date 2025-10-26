@@ -172,6 +172,10 @@ CBDATA_I_UPG_REFINE_COINX5 = "CC23";
 CBDATA_N_UPG_REFINE_COINX5 = "Compensation"; 
 CBDATA_D_UPG_REFINE_COINX5 = "All dropped coins worths 5 times more.\n";
 
+CBDATA_I_UPG_REFINE_BOUNTY = "CC23";
+CBDATA_N_UPG_REFINE_BOUNTY = "Demonic Bounty"; 
+CBDATA_D_UPG_REFINE_BOUNTY = "Duplicates credit reward for all killed demons\n";
+
 CBDATA_I_UPG_MARCOM_AIRSUP = "CM54";
 CBDATA_N_UPG_MARCOM_AIRSUP = "Air Strike"; 
 CBDATA_D_UPG_MARCOM_AIRSUP = "Allows you to launch aerial strikes, by dropping"
@@ -208,6 +212,14 @@ CBDATA_D_UPG_MARCOM_COPTIM = "Less recharge and startup delay on pulses.\n"
 CBDATA_I_UPG_MARCOM_CBOOST = "CC20";
 CBDATA_N_UPG_MARCOM_CBOOST = "Core Booster"; 
 CBDATA_D_UPG_MARCOM_CBOOST = "Improves the effects of your core pulses.";	
+
+CBDATA_I_UPG_MARCOM_REPDRN = "CM44"; // placeholder
+CBDATA_N_UPG_MARCOM_REPDRN = "Repair Drones"; 
+CBDATA_D_UPG_MARCOM_REPDRN = "Decreases building's HP regeneration delay.";	
+
+CBDATA_I_UPG_MARCOM_GEARUP = "CM44"; // placeholder
+CBDATA_N_UPG_MARCOM_GEARUP = "Gear Upgrade"; 
+CBDATA_D_UPG_MARCOM_GEARUP = "Deployed buildings start with a lvl 1 upgrade.\n\nTurrets gain an additional x0.5 damage multipler.";	
 
 CBDATA_I_SUP_AIRSTK = "CM76";
 CBDATA_N_SUP_AIRSTK = "Airstrike attack..."; 
