@@ -9,7 +9,7 @@
 
 ## v1 - The path of the damned...
 
-#### (25 / 10 / 2025) [New techs for turrets + one for extra coins!]
+#### (25 / 10 / 2025) (v1.8-rc1 Release!) [New techs for turrets + one for extra coins!]
 	+) Added at least 3 planned techs that I haven't implemented until now, god I'm such a mess.
 	// Repair drones: Speeds up HP regen for buildings.
 	// Gear Upgrade: Buildings start with a lvl 1 level upgrade & turrets deals some extra x0.5 damage.

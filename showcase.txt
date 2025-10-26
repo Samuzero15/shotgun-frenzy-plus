@@ -1,45 +1,31 @@
-///////// (v1.6) //////////
-
-!) Now causing burns is not guaranteed, and causing the fire chain is also reduced. There is a chance for triggering it.
-!) Flamers will launch a fire projectile that will not rip (and does more damage for the first target) along side of the ripper version.
-!) Helltrigger will give ammo regeneration, and ammo infinity but for only the first 2.5 seconds. (5 seconds with pow.up upgrade)
-) Lightbars will now be spawned by ACS when using powerups, and the champion effects (Like healing and emperor champions).
-) Touched the Altstates's delay and some few rewrites.
-) Some more optimizations on the scripts.
-) Now fading items will not be done by decorate but done now by an small ACS script.
-) Turrets will now add credits to it's owner.
-) Another attempt to call always the kill streak HUD.
-) Spread will always spend x3 Ammo. For the sake of a nerf.
-) Did some adjusts in the Enemy Marker actor. (Thanks Mr. Satan!)
-) Clientsided some other HUD scripts.
-) Patcher projectiles will now they activate as Hitscan projectiles!
-) Optimized the display code for the patcher turret checker.
-) Now, stealth champions will be actually traslucent up to 25% of alpha by the help of ACS. (they did'nt fade in server side)
-) Spawn shield will now call a 3 second cooldown timer after triggering its effects.
-) Some other code rewrites.
-) Marker Enemy is now clientsided, yay! (and now follows the enemies through an ACS script)
-) Changed the prices of the item shop turrets.
-
-///////// (v1.7) //////////
-
-) CF01 now in the first battery zone, a teleporter in front of the teleport destination has been placed in there, if you want to get to the other side of the room, where the battery is ubicated :)
-) SF01's Sector 1 has been slightly changed, now there are 2 teleport destinations in each side of the outposts. With a pair of health and ammo dispensers. And now, the platforms should now lower properly.
-) CF04's Sector 1 has been slightly changed, now the area it's a little less cramped, and now you have a red barrier that protects you from the spawn killing caused by the crowd. Also moved the home teleport to the spawn area of Sector 1.
-) Dualshot nails will now bounce only once, and razor blade upgrade bounces up to 4 times. Buffed their damages too.
-) Repeaters damage has been buffed up. Now they take less time to overheat. Remember, overheating means less accuracy, but more damage.
-) Deployers will now instead of giving the item on failure. Will stop the deployer from consuming, which that removes the scrolling active items from the inventory bar.
-) Drones are also buffed too, and reduced the prices of them.
-) Flame turret price drops to 2750 credits.
-) BFG Overcharged upgrade will now consume 200 cells.
-) Rage rune will now not be overriden by the helltrigger powerup.
-) Ok now, personal backpack and global backpack should do their respective values in either order of picks.
-) Renamed a pair of visual inconvenient icons on the item shop from the armory.
-) Rampage and Health runes are now spawnable and pickable up again.
-) Rewritten and modified the Mech class.
-) Rampage rune's additive effect is now limited up to 10 seconds.
-) Now the temperance rune will give 100 AP upon each armor pickup.
-) Health rune will extend the user's health to 100 hp. Obeying the current techs.
-) Ammunition runes will extend the user's base ammo capacity to x2. Obeying backpack tech and personal backpack item.
-) CF02 map's certain linedef who caused a TID switch for the players has been changed now to change it for the monsters.
-) Some extra fixes on the armors.
-!) New skill levels are added! These skill levels change the game completly.
+///////// (v1.8rc1) //////////
+) New skill levels are added!
+) Health, Ammunition and temperance runes are reworked!
+) SSGs can deal more damage when fired on close range.
+) Spitters' grenades can be shot mid air!
+) Base spitter now can throw grenades!
+) Faster weapon switching!
+) Hand grenades are buffed a bit more (still needs testing again)
+) A WIP Melee punch (It's weak don't waste your time on this yet)
+) BFG Splash is more powerful and devastating than ever!
+) Repeaters got some Qol changes too!
+) Announcer changes and... a new announcer?
+) New sprites for buckshots (yeah I know, they're ripped from FreeDoom)
+) Patcher functions are complete, now with Recycle and Move functions (Needs a Relaod key btw)!
+) Infinite ammo for berettas! yay!
+) New Autosave feature! (that still needs testing)
+) Customizable Item HUD!
+) New SCORINFO lump, with new scoreboard stuff!
+) New Lump reading capacities for the modders out there! Includes SFWEPDEF, SFITMDEF, SFMWAVES!
+) Now there is a price edit cvar list on the SF Options!
+) SD maps now grant credits per wave cleared! (and UPs if you protect the core from any damage)
+) Buildings (turrets and dispensers together) can enable and disable hp bars and level stars.
+) New Map HUB!
+) More stuff in the TEST Map!
+) Panels on the terminal!
+) New tooltips on the ammo, health and cmdr terminals!
+) Reworked ammo terminal with some new layout!
+) More CVars for customizing your experience!
+) New graphics, new fonts, new conback screens!
+) Lot'sa fixes, a ton more fixes aaaagh.
+) Tesla Coil, plasma, flame and chaingun turrets will no longer crash the game!
