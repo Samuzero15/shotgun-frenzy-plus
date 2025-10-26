@@ -28,4 +28,4 @@
 ) More CVars for customizing your experience!
 ) New graphics, new fonts, new conback screens!
 ) Lot'sa fixes, a ton more fixes aaaagh.
-) Tesla Coil, plasma, flame and chaingun turrets will no longer crash the game!
+) Tesla Coil, rocket, shotgun, plasma, flame and chaingun turrets will no longer crash the game!
