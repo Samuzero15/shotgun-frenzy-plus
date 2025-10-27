@@ -1,13 +1,13 @@
 {
     "project_parts": {
         "Core": {
-            "release": "v1.8rc1",
+            "release": "v1.8rc2",
             "filename": "sfplus_core",
             "sourcedir": "core",
             "distdir": "dist",
             "acscomp": true,
             "notxt": false,
-            "skipped": false
+            "skipped": true
         },
         "Resources": {
             "release": "v1.8rc1",
