@@ -1,3 +1,9 @@
+///////// (v1.8rc2) //////////
+) Now buyed weapons will not be shared with all players.
+) Fixed some bug with the Buckshot reloading when there is no ammo.
+) Fixed the powerup giver for the building states.
+) Some other fixes
+
 ///////// (v1.8rc1) //////////
 ) New skill levels are added!
 ) Health, Ammunition and temperance runes are reworked!

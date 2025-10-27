@@ -9,7 +9,7 @@
 
 ## v1 - The path of the damned...
 
-#### (27 / 10 / 2025) [Hotfixes, Cvars on new techs, and Stock reminder cvars] 
+#### (27 / 10 / 2025) (v1.8-rc2 Release!)  [Hotfixes, Cvars on new techs, and Stock reminder cvars] 
 	*) Now buyed weapons will not be shared with all players.
 	*) Fixed some bug with the Buckshot reloading when there is no ammo.
 	*) Added price cvars for Demonic Bounty, Repair Drones, Veteran Marines and Gear Upgrade techs.
