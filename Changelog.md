@@ -9,6 +9,15 @@
 
 ## v1 - The path of the damned...
 
+#### (27 / 10 / 2025) [Hotfixes, Cvars on new techs, and Stock reminder cvars] 
+	*) Now buyed weapons will not be shared with all players.
+	*) Fixed some bug with the Buckshot reloading when there is no ammo.
+	*) Added price cvars for Demonic Bounty, Repair Drones, Veteran Marines and Gear Upgrade techs.
+	*) Now the price list menu will update the names of the techs and prices for the cmd values.
+	+) Added some CVars for the stock reminder displays on the user options menu.
+	*) Fixed the powerup giver for the building states.
+	*) Merged Update and Input scripts on the Samu Terminal (temporary fix until Busy scripts are added).
+
 #### (25 / 10 / 2025) (v1.8-rc1 Release!) [New techs for turrets + one for extra coins!]
 	+) Added at least 3 planned techs that I haven't implemented until now, god I'm such a mess.
 	// Repair drones: Speeds up HP regen for buildings.

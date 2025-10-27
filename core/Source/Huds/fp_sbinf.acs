@@ -50,7 +50,7 @@ Script "SFPlus_SyncVariables" OPEN {// Thank You Mr.Satan!
 		SetActivator(0,AAPTR_NULL);
 		play++;
 	}
-	delay(3);
+	delay(5);
 	restart;
 }
 

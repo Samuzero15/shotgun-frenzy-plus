@@ -148,57 +148,61 @@ OptionMenu "SFPlus_PriceEdit_Cmd"{
 
 	//Prices for researching/building
 	StaticText "Commander Build / Research", 1
-	NumberField "Genetics Lab", "pr_cmd_genlab", 25, 20000, 25
-	NumberField "Armory", "pr_cmd_armory", 25, 20000, 25
-	NumberField "Mech Factory", "pr_cmd_mechfa", 25, 20000, 25
-	NumberField "Refinery", "pr_cmd_refine", 25, 20000, 25
-	NumberField "Marine Command", "pr_cmd_marcom", 25, 20000, 25
-	NumberField "Nuke Silo", "pr_cmd_nukesy", 25, 20000, 25
+	NumberField "$CBDATA_N_BUILD_GENLAB", "pr_cmd_genlab", 25, 20000, 25
+	NumberField "$CBDATA_N_BUILD_ARMORY", "pr_cmd_armory", 25, 20000, 25
+	NumberField "$CBDATA_N_BUILD_MECHFA", "pr_cmd_mechfa", 25, 20000, 25
+	NumberField "$CBDATA_N_BUILD_REFINE", "pr_cmd_refine", 25, 20000, 25
+	NumberField "$CBDATA_N_BUILD_MARCOM", "pr_cmd_marcom", 25, 20000, 25
+	NumberField "$CBDATA_N_BUILD_NUKESY", "pr_cmd_nukesy", 25, 20000, 25
 	//Gen-lab researches
-	NumberField "H. Engineering Phase 1 Tech", "pr_cmd_gl_health1", 25, 20000, 25
-	NumberField "H. Engineering Phase 2 Tech", "pr_cmd_gl_health2", 25, 20000, 25
-	NumberField "Steel Plating Tech", "pr_cmd_gl_armor1", 25, 20000, 25
-	NumberField "Resister Unit Tech", "pr_cmd_gl_resisb", 25, 20000, 25
-	NumberField "Adrenaline Tech", "pr_cmd_gl_speedb", 25, 20000, 25
-	NumberField "Absorber Unit Tech", "pr_cmd_gl_regenb", 25, 20000, 25
-	NumberField "Stimpack Tech", "pr_cmd_gl_stimpk", 25, 20000, 25
-	NumberField "Rune Sync Tech", "pr_cmd_gl_rusync", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_HEALTH1", "pr_cmd_gl_health1", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_HEALTH2", "pr_cmd_gl_health2", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_ARMOR", "pr_cmd_gl_armor1", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_RESISB", "pr_cmd_gl_resisb", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_SPEEDB", "pr_cmd_gl_speedb", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_REGENB", "pr_cmd_gl_regenb", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_STIMPK", "pr_cmd_gl_stimpk", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_GENLAB_RUSYNC", "pr_cmd_gl_rusync", 25, 20000, 25
 	//Armory researches
-	NumberField "Arms Phase 1 Tech", "pr_cmd_ar_arms1", 25, 20000, 25
-	NumberField "Arms Phase 2 Tech", "pr_cmd_ar_arms2", 25, 20000, 25
-	NumberField "Boom rounds Tech", "pr_cmd_ar_boomrn", 25, 20000, 25
-	NumberField "Ammo Backpacks Tech", "pr_cmd_ar_ammobp", 25, 20000, 25
-	NumberField "Hand Grenades Tech", "pr_cmd_ar_gnades", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_ARMORY_ARMS1", "pr_cmd_ar_arms1", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_ARMORY_ARMS2", "pr_cmd_ar_arms2", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_ARMORY_BOOMRN", "pr_cmd_ar_boomrn", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_ARMORY_AMMOBP", "pr_cmd_ar_ammobp", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_ARMORY_GNADES", "pr_cmd_ar_gnades", 25, 20000, 25
 	//Refinery researches
-	NumberField "Processing Phase 1 Tech", "pr_cmd_rf_pump1", 25, 20000, 25
-	NumberField "Processing Phase 2 Tech", "pr_cmd_rf_pump2", 25, 20000, 25
-	NumberField "Engine Boost Tech", "pr_cmd_rf_engine", 25, 20000, 25
-	NumberField "Compensation Tech", "pr_cmd_rf_coinx5", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_REFINE_PUMP1", "pr_cmd_rf_pump1", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_REFINE_PUMP2", "pr_cmd_rf_pump2", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_REFINE_ENGINE", "pr_cmd_rf_engine", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_REFINE_COINX5", "pr_cmd_rf_coinx5", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_REFINE_BOUNTY", "pr_cmd_rf_bounty", 25, 20000, 25
 	//Marine command researches
-	NumberField "Advanced Systems Tech", "pr_cmd_mc_advsys", 25, 20000, 25
-	NumberField "Air Support Tech", "pr_cmd_mc_airsup", 25, 20000, 25
-	NumberField "Ion Cannon Tech", "pr_cmd_mc_ioncan", 25, 20000, 25
-	NumberField "Core Pulses Tech", "pr_cmd_mc_cpulse", 25, 20000, 25
-	NumberField "Core Optimizer Tech", "pr_cmd_mc_coptim", 25, 20000, 25
-	NumberField "Core Booster Tech", "pr_cmd_mc_cboost", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_ADVSYS", "pr_cmd_mc_advsys", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_AIRSUP", "pr_cmd_mc_airsup", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_IONCAN", "pr_cmd_mc_ioncan", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_CPULSE", "pr_cmd_mc_cpulse", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_COPTIM", "pr_cmd_mc_coptim", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_CBOOST", "pr_cmd_mc_cboost", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_VETMER", "pr_cmd_mc_cboost", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_REPDRN", "pr_cmd_mc_repdrn", 25, 20000, 25
+	NumberField "$CBDATA_N_UPG_MARCOM_GEARUP", "pr_cmd_mc_gearup", 25, 20000, 25
 	StaticText ""
 
 	//Commander deploys / actions
 	StaticText "Commander Deploy / Actions", 1
-	NumberField "Bullet Turret", "pr_cmd_turret_bullet", 25, 20000, 25
-	NumberField "Rocket Turret", "pr_cmd_turret_rocket", 25, 20000, 25
-	NumberField "Plasma Turret", "pr_cmd_turret_plasma", 25, 20000, 25
-	NumberField "Flame Turret", "pr_cmd_turret_flame", 25, 20000, 25
-	NumberField "Tesla Turret", "pr_cmd_turret_tesla", 25, 20000, 25
-	NumberField "Chaingun Turret", "pr_cmd_turret_chaingun", 25, 20000, 25
-	NumberField "Shotgun Turret", "pr_cmd_turret_shotgun", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_BULLET", "pr_cmd_turret_bullet", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_ROCKET", "pr_cmd_turret_rocket", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_PLASMA", "pr_cmd_turret_plasma", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_FLAMER", "pr_cmd_turret_flame", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_TESCOL", "pr_cmd_turret_tesla", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_CHAINGUN", "pr_cmd_turret_chaingun", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_SHOTGUN", "pr_cmd_turret_shotgun", 25, 20000, 25
 	//NumberField "Rail Turret", "pr_cmd_turret_rail", 25, 20000, 25 
-	NumberField "BFG Turret", "pr_cmd_turret_bfg", 25, 20000, 25
-	NumberField "Health Dispenser", "pr_cmd_disp_health", 25, 20000, 25
-	NumberField "Ammo Dispenser", "pr_cmd_disp_ammo", 25, 20000, 25
-	NumberField "Money Bag", "pr_cmd_moneybag", 25, 20000, 25
-	NumberField "Minefield", "pr_cmd_minefield", 25, 20000, 25
-	NumberField "Sandbags", "pr_cmd_sandbags", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_TURRET_BFG", "pr_cmd_turret_bfg", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_DISP_HEALTH", "pr_cmd_disp_health", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_DISP_AMMO", "pr_cmd_disp_ammo", 25, 20000, 25
+	NumberField "$CBDATA_N_SUP_MONEYBAG", "pr_cmd_moneybag", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_MINEFIELD", "pr_cmd_minefield", 25, 20000, 25
+	NumberField "$CBDATA_N_DEP_BARRIER", "pr_cmd_sandbags", 25, 20000, 25
 	StaticText ""
 }
 
@@ -208,7 +212,7 @@ OptionMenu "SFPlus_PriceEdit_MechUps"{
 	StaticText ""
 	//Mech prices
 	StaticText "Mech Upgrades", 1
-	NumberField "Mech Buy", "pr_mech", 25, 20000, 25
+	NumberField "Mech Price", "pr_mech", 25, 20000, 25
 	NumberField "Nails", "pr_mu_nails", 25, 20000, 25
 	NumberField "Rockets", "pr_mu_rockets", 25, 20000, 25
 	NumberField "Armor", "pr_mu_armor", 25, 20000, 25
@@ -246,7 +250,7 @@ OptionMenu "SFPlus_PriceEdit_RuneSync"{
 	NumberField "Tier 4 Rune", "pr_rt_4", 25, 20000, 25
 	NumberField "Tier 3 Rune", "pr_rt_3", 25, 20000, 25
 	NumberField "Tier 2 Rune", "pr_rt_2", 25, 20000, 25
-	NumberField "Tier 1, 20 Rune", "pr_rt_1", 25, 20000, 25
+	NumberField "Tier 1 Rune", "pr_rt_1", 25, 20000, 25
 	StaticText ""
 }
 

@@ -180,6 +180,14 @@ OptionMenu SFPlus_UserOptions{
 	Slider "Alpha", "sfp_itemhud_alpha" , 0.0, 100.0, 1.0, 0
 	Option "Orientation", "sfp_itemhud_orientation", "ItemHud_Orientation"
 	StaticText ""
+	StaticText "Stock reminder settings", 1
+	StaticText ""
+	Option "Show Stock Reminders", "sfp_stockreminder", "ShowHideBoolean"
+	Option "Tech Upgrades", "sfp_sr_techs", "ShowHideBoolean"
+	Option "Play Upgrades", "sfp_sr_playups", "ShowHideBoolean"
+	Option "Mech Upgrades", "sfp_sr_mechups", "ShowHideBoolean"
+	Option "Stim Upgrades", "sfp_sr_stimups", "ShowHideBoolean"
+	StaticText ""
 	StaticText "Building Status settings", 1
 	StaticText ""
 	Option "Show Status", "sfp_buildstats", "ShowHideBoolean"

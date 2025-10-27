@@ -92,9 +92,9 @@ ACTOR Buckshot : FrenzyWeapon
             BSHT A 0 A_JumpIfNoAmmo("Ready.Main")
 		AltFire.Main:
 			BSHT A 0 A_JumpIfInventory("Shell", 1, 2)
-			BSHT A 0 A_Jump(255, "Nope0")
+			BSHT A 0 A_Jump(256, "Nope")
 			BSHT A 0 A_JumpIfInventory("Shell", 2, 2)
-			BSHT A 0 A_Jump(255, "AltFire2")
+			BSHT A 0 A_Jump(256, "AltFire2")
 			BSHT A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Altfire2")
             BSHT A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready.Main")
 			BSHT A 1
@@ -206,13 +206,13 @@ ACTOR Buckshot_Chamber : FrenzyWeapon
             "####" "#" 0 A_JumpIfNoAmmo("Ready.Main")
 		AltFire.Main:
 			BSH1 A 0 A_JumpIfInventory("Shell", 1, 2)
-			BSH1 A 0 A_Jump(255, "Nope")
+			BSH1 A 0 A_Jump(256, "Nope")
 			BSH1 A 0 A_JumpIfInventory("Shell", 2, 2)
-			BSH1 A 0 A_Jump(255, "AltFire2")
+			BSH1 A 0 A_Jump(256, "AltFire2")
 			BSH1 A 0 A_JumpIfInventory("Shell", 3, 2)
-			BSH1 A 0 A_Jump(255, "AltFire3")
+			BSH1 A 0 A_Jump(256, "AltFire3")
 			BSH1 A 0 A_JumpIfInventory("Shell", 4, 2)
-			BSH1 A 0 A_Jump(255, "AltFire4")
+			BSH1 A 0 A_Jump(256, "AltFire4")
 			BSH1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 19, "AltFire2")
 			BSH1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 18, "AltFire3")
 			BSH1 A 0 A_JumpIfInventory("Buckshot_Chamber_LoadedShells", 17, "AltFire4")
@@ -343,9 +343,9 @@ ACTOR Buckshot_Explosive : FrenzyWeapon
             BSHT A 0 A_JumpIfNoAmmo("Ready.Main")
 		AltFire.Main:
 			BSHT A 0 A_JumpIfInventory("Shell", 1, 2)
-			BSHT A 0 A_Jump(255, "Nope0")
+			BSHT A 0 A_Jump(256, "Nope0")
 			BSHT A 0 A_JumpIfInventory("Shell", 2, 2)
-			BSHT A 0 A_Jump(255, "AltFire2")
+			BSHT A 0 A_Jump(256, "AltFire2")
 			BSHT A 0 A_JumpIfInventory("Buckshot_LoadedShells", 9, "Altfire2")
             BSHT A 0 A_JumpIfInventory("Buckshot_LoadedShells", 0, "Ready.Main")
 			BSHT A 1

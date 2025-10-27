@@ -30,6 +30,5 @@ Actor tech_doneflags2 : Integer {}
 Actor tech_lockflags2 : Integer {}
 Actor tech_loadflags2 : Integer {}
 
-Actor mech_buy : Integer {}
 Actor mech_state : Integer {}
 Actor pr_cmd_airstrike : Integer {}

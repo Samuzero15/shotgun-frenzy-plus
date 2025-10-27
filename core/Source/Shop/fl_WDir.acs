@@ -657,7 +657,7 @@ function void WeaponPack_Give(int wp){
 		if(Weapon_getWepPack(i) == wp){
 			str weapon = Weapon_getActor(i);
 			//giveinventory(weapon, 1);
-			GiveActorReplacedInventory(0, weapon, 1);
+			GiveActorReplacedInventory(ActivatorTID(), weapon, 1);
 			setweapon(weapon);
 		}
 	}

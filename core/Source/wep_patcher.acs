@@ -550,7 +550,7 @@ Script "Building_UpgradeStats" (void){
 		current_level = GetActorStamina(0);
 		SetActorDamageFactor(0, 1.0-(0.1)*current_level); // Armor up
 		// Damage up
-		if(CheckInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1))){
+		if(CheckInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1)) && current_level > 0){
 			TakeInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1), 1);
 		}
 		GiveInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level), 1);

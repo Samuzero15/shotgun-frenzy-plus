@@ -240,14 +240,17 @@ function void CMDBut_SetPrices(void){
 	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_PUMP2, "rf_pump2");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_ENGINE, "rf_engine");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_COINX5, "rf_coinx5");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_REFINE_BOUNTY, "rf_bounty");
 
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_AIRSUP, "mc_airsup");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_ADVSYS, "mc_advsys");
-	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_VETMER, "mc_advsys");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_VETMER, "mc_vetmer");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_IONCAN, "mc_ioncan");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_CPULSE, "mc_cpulse");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_COPTIM, "mc_coptim");
 	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_CBOOST, "mc_cboost");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_REPDRN, "mc_repdrn");
+	CMDBut_SetPrice		(FP_CB_UPGRADE_MARCOM_GEARUP, "mc_gearup");
 
 	CMDBut_SetPrice		 (FP_CB_SUPPORT_AIRSTK_EXE, "airstrike");
 	CMDBut_SetPrice		 (FP_CB_SUPPORT_DROPMONEY, "moneybag");

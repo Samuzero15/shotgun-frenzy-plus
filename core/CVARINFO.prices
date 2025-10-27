@@ -130,6 +130,7 @@ server noarchive int pr_cmd_rf_pump1 =  		4500;
 server noarchive int pr_cmd_rf_pump2 =  		4500;
 server noarchive int pr_cmd_rf_engine =  		7000;
 server noarchive int pr_cmd_rf_coinx5 =  		7000;
+server noarchive int pr_cmd_rf_bounty =  		12000;
 
 //Marine command researches
 server noarchive int pr_cmd_mc_advsys =  		1200;
@@ -138,6 +139,9 @@ server noarchive int pr_cmd_mc_ioncan =  		5000;
 server noarchive int pr_cmd_mc_cpulse =  		2000;
 server noarchive int pr_cmd_mc_coptim =  		5000;
 server noarchive int pr_cmd_mc_cboost =  		5000;
+server noarchive int pr_cmd_mc_vetmer =         7000;
+server noarchive int pr_cmd_mc_repdrn =  		9000;
+server noarchive int pr_cmd_mc_gearup =  		9000;
 
 //Commander deploys / actions
 server noarchive int pr_cmd_turret_bullet =  	600;
@@ -156,7 +160,7 @@ server noarchive int pr_cmd_moneybag =  		3000;
 server noarchive int pr_cmd_minefield =  		750;
 server noarchive int pr_cmd_sandbags =  		200;
 
-//Mech prices
+//Mech Up. prices
 server noarchive int pr_mech =  				12000;
 server noarchive int pr_mu_nails =  			2500;
 server noarchive int pr_mu_rockets =  		    5500;
@@ -176,6 +180,7 @@ server noarchive int pr_su_cicatrizate =    550;
 server noarchive int pr_su_caffeine =  	    525;
 server noarchive int pr_su_stimulant =  	600;
 
+// Rune-sync prices
 server noarchive int pr_rt_u4 =  	3; // Unlock tier 4 (U.P)
 server noarchive int pr_rt_u3 =  	2; // Unlock tier 3 (U.P)
 server noarchive int pr_rt_u2 =  	1; // Unlock tier 2 (U.P)

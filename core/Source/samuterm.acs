@@ -116,7 +116,7 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 
 	// Split the big bad bois. THIS should mitigate that gae ass Runaway script.
 	ACS_NamedExecuteAlways("SamuTerm_UpdateLoop", 0);
-	ACS_NamedExecuteAlways("SamuTerm_InputLoop", 0);
+	//ACS_NamedExecuteAlways("SamuTerm_InputLoop", 0);
 	ACS_NamedExecuteAlways("SamuTerm_DisplayLoop", 0);
 		while(Samuterm_InUse())
 		{// Loopy.
@@ -142,17 +142,31 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	}
 }
 
-Script "SamuTerm_UpdateLoop" (void) Clientside {
+Script "SamuTerm_UpdateLoop" (void) Clientside { // Needs a busy keyword ASAP as soon as TDRR does the PR to zandronum
+	int play = playerNumber();
 	while(Samuterm_InUse())
 		{
 			SamuTerm_Update();
+			SamuTerm_Input(play);
 			if(CheckInventory("SamuTInv_ForcedExit"))
 				STExecute_Shutdown();
 			//debug();
-			Delay(1);
+			Delay(1); // With a BUSY script, i don't need to worry about runaway errors. But here we are.
 		}
 }
 
+Script "SamuTerm_DisplayLoop" (void) Clientside { // Needs a busy keyword ASAP as soon as  TDRR does the PR to zandronum
+	while(Samuterm_InUse())
+		{
+			SamuTerm_Display();
+			if(CheckInventory("SamuTInv_ForcedExit"))
+				STExecute_Shutdown();
+			//debug();
+			Delay(1); // With a BUSY script, i don't need to worry about runaway errors. But here we are.
+		}
+}
+
+/*
 Script "SamuTerm_InputLoop" (void) Clientside {
 	int play = playerNumber();
 	while(Samuterm_InUse()){
@@ -163,17 +177,7 @@ Script "SamuTerm_InputLoop" (void) Clientside {
 			Delay(1);
 	}
 }
-
-Script "SamuTerm_DisplayLoop" (void) Clientside {
-	while(Samuterm_InUse())
-		{
-			SamuTerm_Display();
-			if(CheckInventory("SamuTInv_ForcedExit"))
-				STExecute_Shutdown();
-			//debug();
-			Delay(1);
-		}
-}
+*/
 
 Script "SamuTerm_VariableSync" ENTER{
 	while(PlayerInGame(PlayerNumber())){
@@ -189,7 +193,6 @@ Script "SamuTerm_VariableSync" ENTER{
 			SetInventory("c_timer", 		Timer());
 			SetInventory("f_gametype", 		f_Gametype);
 			SetInventory("pr_cmd_airstrike", AirStrike_GetPrice());
-			SetInventory("mech_BUY", f_Price[52]);
 			SetInventory("mech_state", p_TankSlot[PlayerNumber()]);
 		}
 		

@@ -76,6 +76,12 @@ user bool sfp_buildstats = true;
 user float sfp_buildstats_renderdistance = 512.0;
 user float sfp_buildstats_alpha = 0.5;
 
+user bool sfp_stockreminder = true;
+user bool sfp_sr_techs = true;
+user bool sfp_sr_playups = true;
+user bool sfp_sr_mechups = true;
+user bool sfp_sr_stimups = true;
+
 // Champion cvars
 server bool sfp_champ_enable = false; 
 server bool sfp_champ_forcespawn = false;
