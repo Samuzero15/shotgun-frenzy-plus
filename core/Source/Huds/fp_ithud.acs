@@ -32,38 +32,32 @@ script "SFPlus_InventoryList_Respawn" RESPAWN{
 }
 
 Script "SFPlus_InventoryList" (void) Clientside{
+	int last_itemhud_stack = 0, i = 0, j = 0;
 	if(ConsolePlayerNumber() == Playernumber()){
 		while(PlayerInGame(PlayerNumber())){
-			for (int i = 0; i < fp_LastItem; i++){
-				ItemHud_ShowItem(i);
+			itemhud_stack = 0;
+			for (i = 0; i < fp_LastItem; i++){
+				ItemHud_CountItems(i);
 			}
-			ItemHud_Adjust(itemhud_stack);
+			if(itemhud_stack != last_itemhud_stack){
+				last_itemhud_stack = itemhud_stack;
+				ItemHud_AdjustCaret(itemhud_stack);
+			}
+			int slot = 0;
+			for (j = 0; j < fp_LastItem; j++){
+				slot = ItemHud_ShowItem(j, slot);
+			}
 			delay(1);
-			ItemHud_Clear();
 		}
 	}
 }
 
-Script "ItemHud_ClearDisconnect" (int play) DISCONNECT {
-	for (int i = 64; i >= 0; i--){
-		ClearHudMessage(ITEMHUD_ID_IMG+i); 
-		ClearHudMessage(ITEMHUD_ID_NUM+i); 
-	}
-}
-
-function void ItemHud_Clear(void){
-	for (int i = itemhud_stack; i >= 0; i--){
-		ClearHudMessage(ITEMHUD_ID_IMG+i); 
-		ClearHudMessage(ITEMHUD_ID_NUM+i); 
-	}
-	itemhud_stack = 0;
-}
 
 #libdefine ITEMHUD_W 640
 #libdefine ITEMHUD_H 480
 #libdefine ITEMHUD_SPACING 32.0
 
-function void ItemHud_Adjust(int items){
+function void ItemHud_AdjustCaret(int items){
 	int w = ITEMHUD_W, h = ITEMHUD_H;
 	int cvarx = fixedDiv(GetUserCvar(PlayerNumber(), "sfp_itemhud_x"), 100.0);
 	int cvary = fixedDiv(GetUserCvar(PlayerNumber(), "sfp_itemhud_y"), 100.0);
@@ -76,43 +70,51 @@ function void ItemHud_Adjust(int items){
 		itemhud_caretx = w*(cvarx) - (ITEMHUD_SPACING*(min(items-1, items_per_row)))/2;
 		itemhud_carety = h*(cvary) - (ITEMHUD_SPACING*((items-1)/items_per_row))/2;
 	}
-	
 }
 
-function void ItemHud_ShowItem(int itemid) {
-	
+function void ItemHud_CountItems(int itemid) {
+	if(!(CheckInventory(Item_GetActor(itemid)) && Item_GetShowInHud(itemid))) return;
+	itemhud_stack++;
+}
+
+function int ItemHud_ShowItem(int itemid, int slot) {
 	int num = CheckInventory(Item_GetActor(itemid));
 	int max_num = Item_GetMax(itemid);
 	str img = Item_GetIcon(itemid);
 	// Set position
-	if(num > 0 && img != 0 && !CheckInventory("SamuTInv_UsingTerminal") && Item_GetShowInHud(itemid) && getCvar("screenblocks") != 12) {
-	
-	int index = itemhud_stack;
+	if(!(num > 0 && img != 0 &&
+		!CheckInventory("SamuTInv_UsingTerminal") &&
+		Item_GetShowInHud(itemid) &&
+		getCvar("screenblocks") != 12)) {
+		return slot;
+	}
+
+	int index = slot;
 	int w = ITEMHUD_W, h = ITEMHUD_H;
 	int x, y, x_num, y_num, space = index*16.0;
 	int alpha = fixedDiv(GetUserCvar(PlayerNumber(), "sfp_itemhud_alpha"), 100.0);
 	int items_per_row = GetUserCvar(PlayerNumber(), "sfp_itemhud_items_per_row");
 	int vertical_ori = GetUserCvar(PlayerNumber(), "sfp_itemhud_orientation");
-		if (vertical_ori){
-			x = itemhud_caretx + (index/items_per_row)*32.0; 
-			y = itemhud_carety + (index%items_per_row)*32.0;
-		}
-		else {
-			x = itemhud_caretx + (index%items_per_row)*32.0; 
-			y = itemhud_carety + (index/items_per_row)*32.0;
-		}
-		
-		x_num = x+20.0; 
-		y_num = y+20.0;
 
-		SetHudSize(w, h, 1);
-		SetFont(img);
-		HudMessage(s:"A"; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_IMG+index, CR_WHITE, x+0.1, y+0.1, 3.0, alpha);
-		
-		if(max_num > 1){
-			SetFont("SMALFONT");
-			HudMessage(s:cond(num == max_num, "\ci", "\cj"), d:num; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_NUM+index, CR_WHITE, x_num+0.1, y_num+0.1, 3.0, alpha);
-		}
-		itemhud_stack++;
+	if (vertical_ori){
+		x = itemhud_caretx + (index/items_per_row)*32.0; 
+		y = itemhud_carety + (index%items_per_row)*32.0;
 	}
+	else {
+		x = itemhud_caretx + (index%items_per_row)*32.0; 
+		y = itemhud_carety + (index/items_per_row)*32.0;
+	}
+	
+	x_num = x+20.0; 
+	y_num = y+20.0;
+
+	SetHudSize(w, h, 1);
+	SetFont(img);
+	HudMessage(s:"A"; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_IMG+index, CR_WHITE, x+0.1, y+0.1, 0.03, alpha);
+	
+	if(max_num > 1){
+		SetFont("SMALFONT");
+		HudMessage(s:num == max_num ? "\ci" : "\cj", d:num; HUDMSG_PLAIN | HUDMSG_ALPHA, ITEMHUD_ID_NUM+index, CR_WHITE, x_num+0.1, y_num+0.1, 0.03, alpha);
+	}
+	return slot+1;
 }

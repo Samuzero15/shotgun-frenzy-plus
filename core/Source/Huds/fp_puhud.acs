@@ -72,12 +72,13 @@ Script "SFPlus_PowerupList" (void) CLIENTSIDE{
 		PowHud_Add("Resurrection", 		"RuneResurrection");
 		
 		while(PlayerHealth() > 0){
+			puphud_stack = 0;
 			for(int i = 0; i < puphud_amount; i++){
 				PowHud_Show(i);
 				PowHud_Update(i);
 			}
 			delay(1);
-			PowHud_Clear();
+			//PowHud_Clear();
 		}
 	}
 }
@@ -108,11 +109,12 @@ function void PowHud_Set(int which, int prop, int value){
 	powerup_list[which][prop] = value;
 }
 
+/*
 function void PowHud_Clear(void){
 	for (int i = puphud_stack; i >= 0; i--)
 		ClearHudMessage(6100+i); 
 	puphud_stack = 0;
-}
+}*/
 
 function void PowHud_Update(int which) {
 	str msg = PowHud_Get(which, PUPHUD_PROP_LABEL);
@@ -210,7 +212,7 @@ function void PowHud_Show(int which) {
 
 		SetHudSize(w, h, 1);
 		SetFont("DBIGFONT");
-		HudMessage(s:msg; HUDMSG_PLAIN, 6100+index, CR_WHITE, x, y, 3.0);
+		HudMessage(s:msg; HUDMSG_PLAIN, 6100+index, CR_WHITE, x, y, 0.03);
 		puphud_stack++;
 	}
 	

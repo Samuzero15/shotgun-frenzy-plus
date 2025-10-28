@@ -1,3 +1,9 @@
+///////// (v1.8rc3) //////////
+) Some optimizations on the clearing hud messages.
+) Terminals will get a cooldown after exiting from it. Just to keep it from breaking.
+) Some other visual glitches.
+) Fixed the powerup giver for the building states, again.
+
 ///////// (v1.8rc2) //////////
 ) Now buyed weapons will not be shared with all players.
 ) Fixed some bug with the Buckshot reloading when there is no ammo.

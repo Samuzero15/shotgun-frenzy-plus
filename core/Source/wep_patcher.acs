@@ -550,10 +550,10 @@ Script "Building_UpgradeStats" (void){
 		current_level = GetActorStamina(0);
 		SetActorDamageFactor(0, 1.0-(0.1)*current_level); // Armor up
 		// Damage up
-		if(CheckInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1)) && current_level > 0){
-			TakeInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level-1), 1);
-		}
-		GiveInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level), 1);
+		int prev = current_level - 1;
+		if(prev >= 1) TakeInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:prev), 1);
+		if(current_level >= 1) GiveInventory(strparam(s:"Patcher_DamageUpgrade_Lv", d:current_level), 1);
+		
 		SetActorHealth(0, max_health);// Fully heal it
 
 		delay(35 - 10*(tech_repairdrones));

@@ -80,14 +80,12 @@ function void TextLabel_Show (int index) {
 		int specOnPlayCam = CheckPlayerCamera(ConsolePlayerNumber()) >= CONST_TID_PLAYER && CheckPlayerCamera(ConsolePlayerNumber()) < CONST_TID_PLAYER+32;
 		int playerSpecedNearLabelText = ActorDistance(CheckPlayerCamera(ConsolePlayerNumber()), tid) <= range;
 		if(!specOnPlayCam || specOnPlayCam && !playerSpecedNearLabelText){
-			ClearHudMessage(TEXTLABELS_HID+index);
 			return;
 		}
 		HudSetCameraActor(CheckPlayerCamera(ConsolePlayerNumber()));
 	} else {
 		int playerNearLabelText = ActorDistance(990+ConsolePlayerNumber(), tid) <= range;
 		if(!playerNearLabelText){
-			ClearHudMessage(TEXTLABELS_HID+index);
 			return;
 		}
 		HudSetCameraActor(990+ConsolePlayerNumber());
@@ -98,6 +96,7 @@ function void TextLabel_Show (int index) {
 	
 	HudSetPoint3D(GetActorX(tid), GetActorY(tid), GetActorZ(tid) + 8.0);
 	HudSetScale(1.0+(0.10*scale));
+	HudSetStayTime(HUDTIC);
 	HudSetTextColor(CR_WHITE);
 	HudSetAlignment(HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 

@@ -44,10 +44,9 @@ script "SamuTerm_RequestServExe" (int cmd, int arg1, int arg2, int arg3){
 			NamedRequestScriptPuke("SamuTerm_ServerExecute_Command", key, cmd);
 		if(SamuTerm_ClientCheck(key))
 			NamedRequestScriptPuke("SamuTerm_ServerExecute_Args", key, arg1, arg2, arg3);
-		delay(3);
+		delay(5);
 	}
 	TakeInventory("SamuTInv_LockInput", 1);
-    
 }
 int stexecute_server_cmd;
 // I divided the server execution in 2 parts, one for setting the cmd for execution. and the other action for setting args and execute.

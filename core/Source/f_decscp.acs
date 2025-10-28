@@ -611,7 +611,10 @@ Script "TurretState_SyncLabels" open {
 }
 
 script "TurretState_ShowLabels" OPEN Clientside {
-	if(CheckActorInventory(990+ConsolePlayerNumber(),"SamuTInv_UsingTerminal")){
+	int player = ConsolePlayerNumber();
+	if(CheckActorInventory(990+player,"SamuTInv_UsingTerminal") 
+		|| !GetUserCVar(player, "sfp_buildstats") 
+		|| PlayerIsSpectator(player)){
 		delay(1);
 		restart;
 	}
@@ -621,11 +624,8 @@ script "TurretState_ShowLabels" OPEN Clientside {
 		int hp = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id + 1);
 		int lvl_hid = GetSyncVar(TURRETSTATE_TID+1 + (TURRETSTATE_PROPS)*id + 3);
 		
-		if(hp <= 0 || !GetUserCVar(ConsolePlayerNumber(), "sfp_buildstats")) {
-			ClearHudMessageBold(hp_hid);
-			ClearHudMessageBold(lvl_hid);
-			continue;
-		}
+		if(hp <= 0) continue;
+		
 		//log(s:"TurretState_ShowLabels: id=", d:id, s:" hp_hid=", d:hp_hid, s:" hp=", d:hp, s:" lvl_hid=", d:lvl_hid);
 		TurretState_Draw(id);
 	}
@@ -645,13 +645,14 @@ function void TurretState_Draw (int index) {
 	int range = GetUserCvar(ConsolePlayerNumber(), "sfp_buildstats_renderdistance");
 
 	HudResetState();
-	HudSetShowToEveryone(true);
 
 	if(PlayerIsSpectator(ConsolePlayerNumber()) && (CheckPlayerCamera(ConsolePlayerNumber()) > 0)) {
 		int playerSpecedNearLabelText = ActorDistance(CheckPlayerCamera(ConsolePlayerNumber()), utid) <= range;
 		if(!playerSpecedNearLabelText){
+			/*
 			ClearHudMessageBold(hp_hid);
 			ClearHudMessageBold(lvl_hid);
+			*/
 			return;
 		}
 		
@@ -659,20 +660,23 @@ function void TurretState_Draw (int index) {
 	} else {
 		int playerNearLabelText = ActorDistance(990+ConsolePlayerNumber(), utid) <= range;
 		if(!playerNearLabelText){
+			/*
 			ClearHudMessageBold(hp_hid);
 			ClearHudMessageBold(lvl_hid);
+			*/
 			return;
 		}
 		HudSetCameraActor(990+ConsolePlayerNumber());
 	}
 
+	HudSetShowToEveryone(true);
 	HudSetFont(Bar_StateFont(hp, max_hp));
 	HudSetPoint3D(GetActorX(utid), GetActorY(utid), GetActorZ(utid) + 90.0);
 	HudSetScale(1.0);
 	HudSetTextColor(CR_CYAN);
 	int alpha = fixedDiv(GetUserCvar(ConsolePlayerNumber(), "sfp_buildstats_alpha"), 100.0);
 	HudSetAlpha(alpha);
-	HudSetStayTime(0.1);
+	HudSetStayTime(0.03);
 	HudSetAlignment(HUD_ALIGN_LEFT, HUD_ALIGN_CENTER);
 	//HudDrawText(hp_hid, strparam(d:hp, s:"/", d:max_hp));
 	HudDrawText(hp_hid, "a");

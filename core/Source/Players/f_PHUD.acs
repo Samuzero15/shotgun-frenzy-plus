@@ -477,9 +477,11 @@ script "HUD_ShowTeamScore" (int points) clientside
 script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_tics) clientside
 {	// Shows the team credits, and the current status about the mech.
 	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
-		if(CheckInventory("SamuTInv_UsingTerminal")) log(s:"Player is using terminal");
-		if(getCvar("screenblocks") == 12) log(s:"Player is on no HUD mode");
-		if(getCvar("screenblocks") != 11) log(s:"Player is in standard hud mode");
+		/*
+		if(CheckInventory("SamuTInv_UsingTerminal")) //log(s:"Player is using terminal");
+		if(getCvar("screenblocks") == 12) //log(s:"Player is on no HUD mode");
+		if(getCvar("screenblocks") != 11) //log(s:"Player is in standard hud mode");
+		*/
 		ClearHudMessage(86);
 		terminate;
 	}

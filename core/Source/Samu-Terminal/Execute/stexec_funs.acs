@@ -113,7 +113,7 @@ function void STExecute_NoAction(void){
 }
 
 function void STExecute_Shutdown(void){
-	SetInventory("SamuTInv_UsingTerminal", 0);
+	SetInventory("SamuTInv_OnCooldown", 1);
 	SetInventory("SamuTInv_HideSBAR", 0);
 	SetInventory("SamuTInv_ForcedExit", 0);
 	pagetags[STTAGS_ALPHA] = 0;
@@ -126,7 +126,7 @@ function void STExecute_Shutdown(void){
 }
 
 function void STExecute_Close(void){
-	SetInventory("SamuTInv_UsingTerminal", 0);
+	SetInventory("SamuTInv_OnCooldown", 1);
 	SetInventory("SamuTInv_HideSBAR", 0);
 	SetInventory("SamuTInv_ForcedExit", 0);
 	pagetags[STTAGS_ALPHA] = 0;
@@ -140,6 +140,7 @@ function void STExecute_Close(void){
 }
 
 function void STExecute_Open(int taggy){
+	SetInventory("SamuTInv_OnCooldown", 0);
 	SetInventory("SamuTInv_UsingTerminal", 1);
 	ACS_NamedExecuteAlways("SamuTerminal_Loop",0,taggy);
 	//localambientsound("Amy/Welcome", 127);

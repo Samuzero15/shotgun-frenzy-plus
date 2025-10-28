@@ -9,7 +9,15 @@
 
 ## v1 - The path of the damned...
 
-#### (27 / 10 / 2025) (v1.8-rc2 Release!)  [Hotfixes, Cvars on new techs, and Stock reminder cvars] 
+#### (28 / 10 / 2025) (v1.8-rc3 Release!) [Hotfixes, Reduced Clear Hud calls and terminal optimizations]
+	*) Samu terminal will have a 10 tic cooldown after exiting from the terminal.
+	*) Optimized click on the terminals by using the comp Hover data.
+	*) Removed some logs on the hud.
+	*) Cleared some unnecesary hud messages that cleared messages.
+	*) Removed a visual glitch with the item hud with a tic delay when a new item is added.
+	*) Fixed again the patcher upgrade powerup. For real this time.
+
+#### (27 / 10 / 2025) (v1.8-rc2 Release!) [Hotfixes, Cvars on new techs, and Stock reminder cvars] 
 	*) Now buyed weapons will not be shared with all players.
 	*) Fixed some bug with the Buckshot reloading when there is no ammo.
 	*) Added price cvars for Demonic Bounty, Repair Drones, Veteran Marines and Gear Upgrade techs.

@@ -41,7 +41,9 @@ script "Samuterm_PlayerDiesSomehow" Death {if(Samuterm_InUse()) SamuTerm_Execute
 script "SamuTerminal_IntDB" OPEN ClientSide {if(GameType() != GAME_SINGLE_PLAYER) IntDB_LoadStuff();}
 
 Script "SamuTerminal" (int homeTag, int hidestatusbar){
-	if(Samuterm_InUse() || g_Initialized == False) Terminate;
+	if(Samuterm_InUse() || CheckInventory("SamuTInv_OnCooldown") || g_Initialized == False){
+		Terminate;
+	} 
 	
 	SamuTerm_Execute(STEXE_OPEN, homeTag, 0, 0);
 	SetInventory("SamuTInv_ActionKey", 0);
@@ -55,7 +57,8 @@ Script "SamuTerminal" (int homeTag, int hidestatusbar){
 script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	//Here is where the magic begins!
 	int play = playerNumber();
-	if(IsClient() && consolePlayerNumber() == play && PlayerInGame(PlayerNumber())){
+	if( !(IsClient() && consolePlayerNumber() == play && PlayerInGame(PlayerNumber()))) 
+		terminate;
 	
 	pagetags[STTAGS_ALPHA] = alphatag;
 	//log(s:"Terminal #:", d:pagetags[STTAGS_ALPHA]);
@@ -116,16 +119,15 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 
 	// Split the big bad bois. THIS should mitigate that gae ass Runaway script.
 	ACS_NamedExecuteAlways("SamuTerm_UpdateLoop", 0);
-	//ACS_NamedExecuteAlways("SamuTerm_InputLoop", 0);
 	ACS_NamedExecuteAlways("SamuTerm_DisplayLoop", 0);
-		while(Samuterm_InUse())
-		{// Loopy.
-			if(GetPlayerChasecam(play) == true) SetPlayerChasecam(play, 0);// I must keep you from abusing the chasecam.
-			if(CheckInventory("SamuTInv_ForcedExit"))
-				STExecute_Shutdown();
-			//debug();
-			Delay(1);
-		}
+	while(Samuterm_InUse() && !CheckInventory("SamuTInv_OnCooldown"))
+	{// Loopy.
+		if(GetPlayerChasecam(play) == true) SetPlayerChasecam(play, 0);// I must keep you from abusing the chasecam.
+		if(CheckInventory("SamuTInv_ForcedExit"))
+			STExecute_Shutdown();
+		//debug();
+		Delay(1);
+	}
 	SetPlayerChasecam(play, chasecam_state);
 	CenterCursor();
 	SamuTerm_ResetBack();
@@ -137,14 +139,20 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 		LocalAmbientSound("SamuTerm/Back", 127);
 	}
 	StopSound(0,CHAN_BODY); 
-	Delay(5);
 	NamedRequestScriptPuke("SamuTerm_FreePlayer", ConsolePlayerNumber());
-	}
+	
+}
+
+script "SamuTerm_FreePlayer" (int play) NET{
+	Samuterm_unlockPlayer(play);
+	delay(10);
+	takeActorInventory(990+play,"SamuTInv_UsingTerminal", 1);
+	takeActorInventory(990+play,"SamuTInv_OnCooldown", 1);
 }
 
 Script "SamuTerm_UpdateLoop" (void) Clientside { // Needs a busy keyword ASAP as soon as TDRR does the PR to zandronum
 	int play = playerNumber();
-	while(Samuterm_InUse())
+	while(Samuterm_InUse() && !CheckInventory("SamuTInv_OnCooldown"))
 		{
 			SamuTerm_Update();
 			SamuTerm_Input(play);
@@ -156,7 +164,7 @@ Script "SamuTerm_UpdateLoop" (void) Clientside { // Needs a busy keyword ASAP as
 }
 
 Script "SamuTerm_DisplayLoop" (void) Clientside { // Needs a busy keyword ASAP as soon as  TDRR does the PR to zandronum
-	while(Samuterm_InUse())
+	while(Samuterm_InUse() && !CheckInventory("SamuTInv_OnCooldown"))
 		{
 			SamuTerm_Display();
 			if(CheckInventory("SamuTInv_ForcedExit"))

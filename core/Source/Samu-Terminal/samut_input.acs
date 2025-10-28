@@ -8,7 +8,10 @@
 
 function void SamuTerm_Input(int play){
 	if(CheckInventory("SamuTInv_LockInput")){
-		//hudmessage(s:"Waiting..."; HUDMSG_PLAIN, 0, 0, 0.5, 0.5, 1.0);
+		/*
+		Setfont ("SMALLFONT");
+		hudmessage(s:"Waiting..."; HUDMSG_PLAIN, 0, 0, 0.5, 0.5, 1.0);
+		*/
 		return;
 	}
 
@@ -21,17 +24,17 @@ function void SamuTerm_Input(int play){
 		}
 	}
 
+	// First hover-check, and if there is a component that is clickable, check click will take care of it!
+	if(!Prompt_GetState())
+		CheckHover();
+	else CheckPromptHover();
+
 	if(PlayerKeyDown(play, FIRE1) && PlayerKeyPressed(play, FIRE1)){
 		if(!Prompt_GetState())
 			CheckClick();
 		else CheckPromptClick();
 	}
-
 	//CheckGrab();
-	
-	if(!Prompt_GetState())
-		CheckHover();
-	else CheckPromptHover();
 }
 
 function void Input_AddBind(int input, int execute, int exearg1, int exearg2, int exearg3){
@@ -171,16 +174,17 @@ function bool ExecuteOnClick_SBtn(int i){
 }
 
 function void CheckClick(void){
-	int rect, i = 0;
+	int comp = cursor_hover[STCURSOR_HOVER_COMP];
 	bool inputDone = false;
-		for(i = 0; i < comp_count[STCOMP_IBTN] && !inputDone; i++){
-			inputDone = ExecuteOnClick_IBtn(i);
-		}
-		for(i = 0; i < comp_count[STCOMP_SBTN] && !inputDone; i++){
-			inputDone = ExecuteOnClick_SBtn(i);
-		}
-	
-	//log(s:"Click!");
+
+	switch(cursor_hover[STCURSOR_HOVER_COMPTYPE]) {
+		case STCOMP_IBTN:
+			ExecuteOnClick_IBtn(comp);
+		break;
+		case STCOMP_SBTN:
+			ExecuteOnClick_SBtn(comp);
+		break;
+	}
 }
 
 function void CheckHover(void){
@@ -279,9 +283,4 @@ function bool IsHovering_ibtn(int i){
 		res = true;
 	}
 	return res;
-}
-
-script "SamuTerm_FreePlayer" (int play) NET{
-	Samuterm_unlockPlayer(play);
-	takeActorInventory(1000+play,"SamuTInv_UsingTerminal", 1);
 }
