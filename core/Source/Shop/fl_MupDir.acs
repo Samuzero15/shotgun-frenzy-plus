@@ -111,22 +111,29 @@ function int MechUp_CheckInv(str inv) {
 function str MechUp_ReportUps(bool colored){
 	str result = "Current stats";
 	if(colored) result = Strparam(s:"\cn", s:result);
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Armor        ", 		2, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Nails        ", 		0, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Rockets      ",		1, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Manuvering   ", 		3, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Life Saver   ", 		4, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Self Destruct", 		5, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Auto Repair  ",   		6, colored));
-	result = Strparam(s:result, s:MechUp_StrUpgrade("Efficiency   ",   		7, colored));
-	
+	result = Strparam(s:result, s:MechUp_StrUpgrade(2, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(0, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(1, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(3, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(4, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(5, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(6, colored));
+	result = Strparam(s:result, s:MechUp_StrUpgrade(7, colored));
 	return result;
 }
 
-function str MechUp_StrUpgrade(str string, int up, bool coloured){
+function str MechUp_StrUpgrade(int up, bool coloured){
 	str res;
-	int lvl_amount = CheckInventory(MechUp_getActor(up));
-	str lvl_str = cond(lvl_amount == MechUp_getMax(up), "LV. MAX", strparam(s:"LV. ", d:lvl_amount));
+	int lvl_amount = MechUp_CheckInv(MechUp_getActor(up));
+	str lvl_str = lvl_amount == MechUp_getMax(up) ? "LV. MAX" : strparam(s:"LV. ", d:lvl_amount);
+
+	str string = MechUp_getName(up);
+	int max_chars = 14;
+	if(StrLen(string) < max_chars){
+		for(int i = StrLen(string); i < max_chars; i++) {
+			string = Strparam(s:string, s:" ");
+		}
+	}
 	
 	if(coloured){
 		if(MechUp_getMax(up) > 1)

@@ -9,6 +9,15 @@
 
 ## v1 - The path of the damned...
 
+#### (30 / 10 / 2025) [Hotfixes, Full mech tech flag fixes, balances and few fixes]
+	*) Added some fixes, so the full mech upgrade cvar will have effect on the weapons and mech class.
+	*) Mechs will not pickup items, armor shards, health bonuses, or armor, however credits and gems can be picked up.
+	*) Removed some blocking lines and added some paths outside of the base in SF01.
+	*) Updated stimpack upgrades' report has been updated so it should obey the sfp_allstimups cvar.
+	*) Samu terminal scripts should be lag proof and it should not lock you outta no where.
+	*) SpawnShield powerup will not trigger when the player is morphing to the merch.
+	*) Updated the mech HUD so it will only show if the player is looking at its camera instead of the final round camera.
+
 #### (28 / 10 / 2025) (v1.8-rc3 Release!) [Hotfixes, Reduced Clear Hud calls and terminal optimizations]
 	*) Samu terminal will have a 10 tic cooldown after exiting from the terminal.
 	*) Optimized click on the terminals by using the comp Hover data.

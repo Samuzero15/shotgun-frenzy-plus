@@ -230,6 +230,7 @@ function void StExecute_LabelWepRecycle(int wep, int up) {
 function void StExecute_BuyMechTank(void){
 	if(SFPlus_getPlayCredits() < Mech_GetPrice()){
 		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
 	}else{
 		Toaster_ShowToastLog("The War Mech is yours to drive!",CR_GREEN);
 		SamuTerm_CallOpExecute(STEXE_GetMechTank, 0, 0, 0);

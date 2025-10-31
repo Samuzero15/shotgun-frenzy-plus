@@ -247,7 +247,7 @@ script 54 RESPAWN
 	
 	//[Samu] If you die, the teleport script will not activate the spawnshield effect.
 	// So to counter that, I should place it here.
-	if(PlayUp_CheckInv("PlayUp_SpawnShield")){
+	if(PlayUp_CheckInv("PlayUp_SpawnShield") && !CheckActorClass(990+PlayerNumber(),"MechPlayer")){
 		TakeInventory("PlayUp_SpawnShield_Power", 1);
 		delay(1);
 		giveInventory("PlayUp_SpawnShield_Activate", 1);

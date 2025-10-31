@@ -194,7 +194,7 @@ Script "Player_IsDed" (void) {
 
 Script "MagneticPickup_TargetIsPlayer" (void) {
 	SetActivatorToTarget(0);
-	SetResultValue(ActorIsPlayer(0));
+	SetResultValue(ActorIsPlayer(0) && !CheckActorClass(0, "MechPlayer"));
 }
 
 Script "Invul_Check" (void) {
@@ -828,6 +828,10 @@ Script "Building_GetRange" (void) {
 
 Script "PlayUp_CheckCvar" (void) {
 	SetResultValue(GetCvar("sfp_allplayups"));
+}
+
+Script "MechUp_CheckCvar" (void) {
+	SetResultValue(GetCvar("sfp_allmechups"));
 }
 
 function void Bar_State(int id, int var, int max_val){

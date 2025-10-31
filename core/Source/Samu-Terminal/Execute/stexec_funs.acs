@@ -140,11 +140,7 @@ function void STExecute_Close(void){
 }
 
 function void STExecute_Open(int taggy){
-	SetInventory("SamuTInv_OnCooldown", 0);
-	SetInventory("SamuTInv_UsingTerminal", 1);
 	ACS_NamedExecuteAlways("SamuTerminal_Loop",0,taggy);
-	//localambientsound("Amy/Welcome", 127);
-	Samuterm_LockPlayer(playernumber());
 }
 
 function void STExecute_PanelScroll(int panel, int scrollx, int scrolly){

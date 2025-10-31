@@ -1,7 +1,7 @@
 {
     "project_parts": {
         "Core": {
-            "release": "v1.8rc3",
+            "release": "v1.8rc4",
             "filename": "sfplus_core",
             "sourcedir": "core",
             "distdir": "dist",
@@ -35,12 +35,12 @@
         ],
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
-        "map": "test",
+        "map": "sd01",
         "extra_params": "+skill 1 +sv_cheats 1"
     },
     "build_settings": {
         "name": "sfplus",
-        "tag": "v1.8rc1",
+        "tag": "v1.8rc4",
         "build_dir": "",
         "zip_compress_type": "deflated",
         "zip_dir": "dist\\packed",

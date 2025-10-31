@@ -45,35 +45,6 @@ function void SamuTerm_InitPages(void){
 	Label_setColor(sfpcomps[SF_SFCOMPS_WALLET_UPS],CR_cyan);
 	Label_setShow(sfpcomps[SF_SFCOMPS_WALLET_UPS], true);
 
-	/*
-	int panel = Panel_Add(80.0, 80.0, 20, 15);
-	Panel_SetVirtualSize(panel, 32.0, 32.0);
-	Panel_SetScrollAmount(panel, 4.0, 4.0);
-	Panel_SetSpacing(panel, 32.0, 32.0);
-	Panel_SetColumns(panel, 2);
-	Panel_SetShow(panel, true);
-	Panel_SetAnchors(panel, STPANEL_ANCHOR_CENTER, STPANEL_ANCHOR_CENTER);
-	int image = Image_AddToPanel("BTN7", panel);
-	Image_SetShow(image, true);
-	int image2 = Image_DupToPanel(image, panel);
-	Image_SetShow(image2, true);
-	int image3 = Image_DupToPanel(image, panel);
-	Image_SetShow(image3, true);
-	int image4 = Image_DupToPanel(image, panel);
-	Image_SetShow(image4, true);
-	/*
-	int label = Label_AddToPanel(panel);
-	Label_SetText(label, "TESTME");
-	Label_SetAligns(label, HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
-	Label_SetShow(label, true);
-	int imgbtn = ImgButton_AddToPanel(32.0, 32.0, panel);
-	ImgButton_SetImage		(imgbtn, "BTN1");
-	ImgButton_SetHoverImage	(imgbtn, "BTNHOV");
-	ImgButton_SetShow(imgbtn, true);
-	int strbtn = StrButton_AddToPanel("Sex", panel);
-	StrButton_SetShow(strbtn, true);
-	int strbtn2 = StrButton_AddToPanelAbs("Sex", panel, 50.0, 50.0);
-	*/
 	switch(pagetags[STTAGS_ALPHA]){
 		int i;
 		case ST_PAGEALPHA_HTE:

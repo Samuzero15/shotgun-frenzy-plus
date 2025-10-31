@@ -122,7 +122,7 @@ script 305 (void)
 Script "SFPlus_MechHud" (int move_state) Clientside
 {
 	int spyCam = CheckPlayerCamera(consolePlayerNumber());
-	if((consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())) || 
+	if((consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())) && 
 			(spyCam >= CONST_TID_PLAYER && spyCam < CONST_TID_PLAYER+32) && StrEquals(GetActorClass(spyCam), "MechPlayer")){
 
 		if(spyCam >= CONST_TID_PLAYER && spyCam < CONST_TID_PLAYER+32) SetActivator(0);
@@ -185,124 +185,121 @@ script 306 (void)
 	int lastWeapon = saveLastWeapon();
 	p_LastWeap[playernumber()] = lastWeapon;
 	*/
-	
-	if ((CheckInventory("PowerInvulnerable") || 
-		CheckInventory("PlayUp_Spawnshield_Power") ||
-		CheckInventory("CorePulse_Heal_Invul") ||
-		CheckInventory("DefenseRune_ShieldInvul") || 
-		CheckInventory("PlayUp_Prometeo_Power_Invul")) == 0) {
-		
-		// teleport to new location
-		teleport(142, 0, 0);
-		// change skin and class
-		//morphactor(0, "TankPlayer", "", 999999, 2, "", "");
-		takeinventory("MechMorph",1); // Just in case
-		giveinventory("MechMorph",1);
-		if(!CheckActorClass(0, "MechPlayer")){
-			// If for some reason, the morph fails. Teleport him back to the starting point.
-			GiveInventory("StartingPoint", 1);
-			Print(s:"Sorry, the morph failed for some reason, try it again.");
-		}
-		takeinventory("MechMorph",1);
-		// change flags
-		p_TankSlot[playernumber()] = 2;
-		p_MechTimer[playernumber()] = -1;// Initialize timer.
-		SetCustomPlayerValue("OnMechCol", playernumber(), true);
-		
-		Rune_SaveAndUnequip();
 
-		giveinventory("TankGun", 1);
-		Thing_ChangeTID(ActivatorTid(), CONST_TID_PLAYER+playernumber());
-		SetActivator(CONST_TID_PLAYER+playernumber());
-		// welcome message
-		if(GetUserCVar(playernumber(), "sfp_mechmsg")){
-			setfont("BIGFONT");
-			hudmessage(s:
-			"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory and press use or hold \cguse \ca for 1 second!\
-			\n\n\cbQuit early \cato \cgavoid death!\
-			\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
-			\n\n\cgPrimary fire \cafor your \cbNails\
-			\n\n\cgSecondary Fire \cafor your \cbRockets\
-			\n\n\n\ci Now give em' Hell!\n\n\n \ca(Disable this msg with '\cvsfp_mechmsg false\ca')"
-			; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
-		}
-		//f_TipShow("VEHIC", " War Mech State", "Deployed for action!", 10);
-
-		Notify_PlayerEX(0, " Mech State", "Deployed!", "VEHIC", 0);
-		
-		//Update Stats
-		setactorproperty(0, APROP_HEALTH, 1500 + 900 * MechUp_CheckInv("Mechup_Armor"));
-		SetActorProperty(0, APROP_SPEED, 0.7 + 0.1 * MechUp_CheckInv("Mechup_Speed"));
-		setactorproperty(0, APROP_DamageFactor, 1.0);
-		
-		// open marine command doors
-		door_raise(347, 10, 150, 0);
-		
-		//setActivatortoPlayer(playernumber());
-		ACS_ExecuteAlways(308, 0);
-		int ticks_use;
-		int exit_progress;
-		str dots;
-		int ticks_repair;
-		int max_armor = 1500 + 900 *MechUp_CheckInv("Mechup_Armor");
-		int auto_repair_heal = 4*MechUp_CheckInv("Mechup_AutoRepair");
-		int auto_repair_delay = 35 - 15*MechUp_CheckInv("Mechup_Efficiency"); 
-		int hp, diff;
-		while(p_TankSlot[playernumber()] == 2 && g_Status != 299)
-		{
-			if(!CheckInventory("TankGun")){ // Kill the bugs
-				GiveInventory("TankGun", 1);
-			}
-			
-			if(!CheckWeapon("TankGun")){ // Kill the bugs
-				SetWeapon("TankGun");
-			}
-			// [Samu] Hold use for 3 seconds to get out of the tank!
-			if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE) ticks_use++;
-			else ticks_use = 0;
-			
-			
-			if(ticks_use != 0){
-				dots = ProgressDot(3, ticks_use, 35);
-				f_CenterTip(strparam(s:dots, s:"Ejecting", s:dots));
-			}
-			else ClearHudMessage(78);
-			
-			if(ticks_use == 35) {
-				f_CenterTip("Ejection sucessful.");
-				ACS_ExecuteAlways(307, 0);
-			}
-			
-			if(MechUp_CheckInv("Mechup_AutoRepair")){
-				// [Samu] Auto-repair the mech, because im an impacient person.
-				ticks_repair++;
-				if(ticks_repair % auto_repair_delay == 0){ // Heh
-					hp = GetActorProperty(0, APROP_HEALTH);
-					if(hp < max_armor){
-						diff = max_armor - hp;
-						if(diff < auto_repair_heal) setactorproperty(0, APROP_HEALTH, hp + diff);
-						else 		  				setactorproperty(0, APROP_HEALTH, hp + auto_repair_heal);
-					}
-					ticks_repair = 0;
-				}
-			}
-			
-			
-			
-			
-			// display tank health and upgrades.
-			setfont("SMALLFNT");
-			hudmessage(s:"Armor: \cv", d:getactorproperty(0, APROP_HEALTH), s:" / ", d:max_armor
-					,s:"\n\n\c-", s:MechUp_ReportUps(true); 0, 202, CR_lightBlue, 128.1, 300.1, 1.0);
-			delay(1);
-		}
-	
+	if(ACS_NamedExecuteWithResult("Invul_Check")) {
+		// Nullify the active invulnerability effects.
+		TakeInventory("PowerInvulnerable", 1);
+		TakeInventory("PlayUp_Spawnshield_Power", 1);
+		TakeInventory("CorePulse_Heal_Invul", 1);
+		TakeInventory("DefenseRune_ShieldInvul", 1);
+		TakeInventory("PlayUp_Prometeo_Power_Invul", 1);
 	}
-	else
+		
+	// teleport to new location
+	teleport(142, 0, 0);
+	// change skin and class
+	//morphactor(0, "TankPlayer", "", 999999, 2, "", "");
+	takeinventory("MechMorph",1); // Just in case
+	giveinventory("MechMorph",1);
+	if(!CheckActorClass(0, "MechPlayer")){
+		// If for some reason, the morph fails. Teleport him back to the starting point.
+		GiveInventory("StartingPoint", 1);
+		Print(s:"Sorry, the morph failed for some reason, try it again.");
+	}
+	takeinventory("MechMorph",1);
+	// change flags
+	p_TankSlot[playernumber()] = 2;
+	p_MechTimer[playernumber()] = -1;// Initialize timer.
+	SetCustomPlayerValue("OnMechCol", playernumber(), true);
+	
+	Rune_SaveAndUnequip();
+
+	giveinventory("TankGun", 1);
+	Thing_ChangeTID(ActivatorTid(), CONST_TID_PLAYER+playernumber());
+	SetActivator(CONST_TID_PLAYER+playernumber());
+	// welcome message
+	if(GetUserCVar(playernumber(), "sfp_mechmsg")){
+		setfont("BIGFONT");
+		hudmessage(s:
+		"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory and press use or hold \cguse \ca for 1 second!\
+		\n\n\cbQuit early \cato \cgavoid death!\
+		\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
+		\n\n\cgPrimary fire \cafor your \cbNails\
+		\n\n\cgSecondary Fire \cafor your \cbRockets\
+		\n\n\n\ci Now give em' Hell!\n\n\n \ca(Disable this msg with '\cvsfp_mechmsg false\ca')"
+		; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
+	}
+	//f_TipShow("VEHIC", " War Mech State", "Deployed for action!", 10);
+
+	Notify_PlayerEX(0, " Mech State", "Deployed!", "VEHIC", 0);
+	
+	//Update Stats
+	setactorproperty(0, APROP_HEALTH, 1500 + 900 * MechUp_CheckInv("Mechup_Armor"));
+	SetActorProperty(0, APROP_SPEED, 0.7 + 0.1 * MechUp_CheckInv("Mechup_Speed"));
+	setactorproperty(0, APROP_DamageFactor, 1.0);
+	
+	// open marine command doors
+	door_raise(347, 10, 150, 0);
+	
+	//setActivatortoPlayer(playernumber());
+	ACS_ExecuteAlways(308, 0);
+	int ticks_use;
+	int exit_progress;
+	str dots;
+	int ticks_repair;
+	int max_armor = 1500 + 900 *MechUp_CheckInv("Mechup_Armor");
+	int auto_repair_heal = 4*MechUp_CheckInv("Mechup_AutoRepair");
+	int auto_repair_delay = 35 - 15*MechUp_CheckInv("Mechup_Efficiency"); 
+	int hp, diff;
+	while(p_TankSlot[playernumber()] == 2 && g_Status != 299)
 	{
+		if(!CheckInventory("TankGun")){ // Kill the bugs
+			GiveInventory("TankGun", 1);
+		}
+		
+		if(!CheckWeapon("TankGun")){ // Kill the bugs
+			SetWeapon("TankGun");
+		}
+		// [Samu] Hold use for 3 seconds to get out of the tank!
+		if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE) ticks_use++;
+		else ticks_use = 0;
+		
+		
+		if(ticks_use != 0){
+			dots = ProgressDot(3, ticks_use, 35);
+			f_CenterTip(strparam(s:dots, s:"Ejecting", s:dots));
+		}
+		else ClearHudMessage(78);
+		
+		if(ticks_use == 35) {
+			f_CenterTip("Ejection sucessful.");
+			ACS_ExecuteAlways(307, 0);
+		}
+		
+		if(MechUp_CheckInv("Mechup_AutoRepair")){
+			// [Samu] Auto-repair the mech, because im an impacient person.
+			ticks_repair++;
+			if(ticks_repair % auto_repair_delay == 0){ // Heh
+				hp = GetActorProperty(0, APROP_HEALTH);
+				if(hp < max_armor){
+					diff = max_armor - hp;
+					if(diff < auto_repair_heal) setactorproperty(0, APROP_HEALTH, hp + diff);
+					else 		  				setactorproperty(0, APROP_HEALTH, hp + auto_repair_heal);
+				}
+				ticks_repair = 0;
+			}
+		}
+		
+		
+		
+		
+		// display tank health and upgrades.
 		setfont("SMALLFNT");
-		print(s:"Cannot enter while Godsphere\nis in use!");
+		hudmessage(s:"Armor: \cv", d:getactorproperty(0, APROP_HEALTH), s:" / ", d:max_armor
+				,s:"\n\n\c-", s:MechUp_ReportUps(true); 0, 202, CR_lightBlue, 128.1, 300.1, 1.0);
+		delay(1);
 	}
+	
 	SetCustomPlayerValue("OnMechCol", playernumber(), false);
 }
 

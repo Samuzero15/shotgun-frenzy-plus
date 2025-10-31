@@ -29,6 +29,15 @@ Actor Inventory_Item : CustomInventory
 		TNT1 A 1 A_Jump(256, "Effect")
 		stop
 
+	Pickup:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(781, 0) >= 1,"Pickup.TankFail")
+		TNT1 A 0 A_RailWait
+		stop
+	
+	Pickup.TankFail:
+		TNT1 A 0 //A_print("You can't pick up items inside a tank!")
+		fail
+	
 	IAmOnTank:
 		TNT1 A 0 A_JumpIf(CallACS("PlayUp_CheckCvar") == true, "MechSync")
 		TNT1 A 1 A_JumpIfInventory("PlayUp_MechSync", 1, "MechSync")

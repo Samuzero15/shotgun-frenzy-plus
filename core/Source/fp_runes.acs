@@ -193,7 +193,9 @@ script "SFPlus_OnTeleport" (void) {
     int tid = ActivatorTID();
 	if(ActorIsPlayer(tid)){
 		// If a player was teleported, check if he got the spawn protection upgrade.
-		if(PlayUp_CheckActorInv(tid, "PlayUp_SpawnShield") && !CheckActorInventory(tid, "PlayUp_Spawnshield_Cooldown")){
+		if(PlayUp_CheckActorInv(tid, "PlayUp_SpawnShield") && 
+            !CheckActorInventory(tid, "PlayUp_Spawnshield_Cooldown") &&
+            !CheckActorClass(tid, "MechPlayer")){
             if(!CheckActorInventory(tid, "PlayUp_SpawnShield_Power")){
                 giveActorinventory(tid,"PlayUp_SpawnShield_Activate", 1);
                 

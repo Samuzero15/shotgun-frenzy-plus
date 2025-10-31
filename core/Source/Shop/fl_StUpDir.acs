@@ -196,7 +196,7 @@ function str StimUp_ReportUps(void){
 
 function str StimUp_StrUpgrade(int up){
 	str res;
-	int lvl_amount = CheckInventory(StimUp_getActor(up));
+	int lvl_amount = StimUp_CheckInv(StimUp_getActor(up));
     if (!lvl_amount) return res;
     str string = StimUp_getName(up);
 	str lvl_str = cond(lvl_amount == 5, "FULL", strparam(s:"LV. ", d:lvl_amount));

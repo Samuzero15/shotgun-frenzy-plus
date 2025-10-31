@@ -73,6 +73,7 @@ ACTOR MechPlayer : PlayerPawn
 	Player.AttackZOffset 96
 	Player.JumpZ 15
 	Player.SoundClass "MechPlayer"
+	Player.DamageScreenColor "00 00 ff", 0.5
 	scale 0.4
 	Species Marines
 	DamageFactor "MarineFire", 0.0
@@ -117,13 +118,16 @@ ACTOR MechPlayer : PlayerPawn
 		
 	Pain:
 	    WARM A 0 A_SpawnItem("MechLegDamage")
+		"####" "#" 0 A_PlaySound("veh/tankpain")
 		"####" "#" 4 A_Pain
 		Goto Spawn
 	Death:
 		WARM G 5 
-		TNT1 A 0 A_JumpIfInventory("MechUp_SelfDestruct", 1, 2)
+		TNT1 A 0 A_JumpIf(CallACS("MechUp_CheckCvar") == 1, "Death.SelfDestruct")
+		TNT1 A 0 A_JumpIfInventory("MechUp_SelfDestruct", 1, "Death.SelfDestruct")
 		WARM A 0 A_SpawnItem("MechExplosion")
 		goto FinishDeath
+	Death.SelfDestruct:
 		WARM A 0 A_SpawnItem("MechExplosion_lv.Fuckyou")
 		goto FinishDeath
 	FinishDeath:
@@ -137,9 +141,11 @@ ACTOR MechPlayer : PlayerPawn
 				// [Samu] Zandronum fixed that, so fuck it.
 	XDeath:
 		WARM G 5 
-		TNT1 A 0 A_JumpIfInventory("MechUp_SelfDestruct", 1, 2)
+		TNT1 A 0 A_JumpIf(CallACS("MechUp_CheckCvar") == 1, "XDeath.SelfDestruct")
+		TNT1 A 0 A_JumpIfInventory("MechUp_SelfDestruct", 1, "XDeath.SelfDestruct")
 		WARM A 0 A_SpawnItem("MechExplosion") 
 		goto FinishXDeath
+	XDeath.SelfDestruct:
 		WARM A 0 A_SpawnItem("MechExplosion_lv.Fuckyou")
 		goto FinishXDeath
 	FinishXDeath:
