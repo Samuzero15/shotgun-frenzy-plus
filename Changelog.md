@@ -9,7 +9,7 @@
 
 ## v1 - The path of the damned...
 
-#### (2 / 10 / 2025) [Input QoL changes on terminals]
+#### (2 / 11 / 2025) [Input QoL changes on terminals]
 	*) Now the jump button will be useful for a quick close button for the terminals (works in all player and CMDR terminals)
 	*) When logging in the terminal, a short message with the controls will show up on screen.
 	*) Little visual fixes on the HUD.
