@@ -87,7 +87,7 @@ function void Patcher_DisplayStats(int playnum, int range){
 }
 
 function void Patcher_ShowMsg(int msgid, int play, int value){
-	SetActivator(990+play);
+	SetActivator(CONST_TID_PLAYER+play);
 	NamedExecuteClientScript("Patcher_ShowMsg", play, msgid, value);	
 }
 
@@ -171,7 +171,7 @@ script "Patcher_ShowCosts" (int fix_price, int fix_hp, int alt_price, int mode) 
 
 script "Patcher_ShowOwner" (int tid, int player_number,int building_type) CLIENTSIDE {
 	str string;
-	int player = tid-15000;
+	int player = tid-CONST_TID_TURRET;
 	//log(s:"tid: ", d:tid);
 	if(player < 0 || player >= 200) terminate;
 
@@ -246,7 +246,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 
 			if(p_Credits[playnum] < price){
 				Patcher_ShowMsg(PATCHER_MSG_NOMONEY, playnum, 0);
-				SetActivator(990+playnum);
+				SetActivator(CONST_TID_PLAYER+playnum);
 			}else{
 				p_Credits[playnum] -= price;
 				GiveInventory("Health", fix);
@@ -294,7 +294,7 @@ script "Patcher_HandleHit" (int type, int arg1, int arg2) Event {
 			break;
 			case 2: 
 				SetActivator(0, AAPTR_Damage_Target); // Back to the turret
-				if(ActivatorTID()-15000 != playnum){
+				if(ActivatorTID()-CONST_TID_TURRET != playnum){
 					Patcher_ShowMsg(PATCHER_MSG_SELL_NOTYOURS, playnum, building_type); 
 					break;
 				}
@@ -356,15 +356,14 @@ Script "Building_UpgradeIt" (int playnum, int price_upg) {
 }
 
 Script "Building_MoveTo" (int playnum, int patcher_advanced){
-	int playTID = 990+Playnum;
-	int turret_playTID = 15000+playnum;
-	int turret_tomoveTID = 15100+playnum;
-	int turret_finalToMoveTID = 16200+playnum;
+	int playTID = CONST_TID_PLAYER+Playnum;
+	int turret_playTID = CONST_TID_TURRET+playnum;
+	int turret_tomoveTID = CONST_TID_TURRETOWNER+playnum;
+	int turret_finalToMoveTID = CONST_TID_TURRETBLURPOINT+playnum;
 	int item = "Patcher_MoveMe";
 	if(!(ActivatorTID() == turret_playTID) || CheckInventory(item)) terminate;
 
 	Thing_ChangeTID(turret_tomoveTID, turret_playTID);// Nullify selected turret to move.
-	Thing_Remove(7990);
 	Thing_ChangeTID(0, turret_tomoveTID);
 	TakeActorInventory(turret_playTID, "Patcher_MoveNow", 10);
 	TakeActorInventory(turret_playTID, item, 10); // Clear the move item from all turrets, makin' sure there is only one turret to move.
@@ -411,9 +410,9 @@ Script "Building_MoveTo" (int playnum, int patcher_advanced){
 
 Script "Building_MoveTo_Control" (int playnum){
 	// The control script, which it handles the move cost display.
-	SetActivator(990+Playnum);
-	int tid1 = 16100+playnum;
-	int tid2 = 15100+playnum;
+	SetActivator(CONST_TID_PLAYER+Playnum);
+	int tid1 = CONST_TID_TURRETMOVEPOINT+playnum;
+	int tid2 = CONST_TID_TURRETOWNER+playnum;
 	int cost;
 	while(GetActorProperty(0, APROP_Health) >= 1 &&
 		 ThingCount(0, tid2) &&
@@ -431,10 +430,10 @@ Script "Building_MoveTo_SpawnSpot" (void){
 	// Spawns the final move spot, which it triggers the teleport script.
 	int x = GetActorX(0), y = GetActorY(0), z = GetActorFloorZ(0) + 5.0;
 	SetActivatorToTarget(0); 
-	Thing_Remove(16100+PlayerNumber()); // Get rid of the last preview move spots.
-	Thing_Remove(16200+PlayerNumber());
+	Thing_Remove(CONST_TID_TURRETMOVEPOINT+PlayerNumber()); // Get rid of the last preview move spots.
+	Thing_Remove(CONST_TID_TURRETBLURPOINT+PlayerNumber());
 
-	if(!Spawn("Building_MoveSpot", x, y, z, 16200+PlayerNumber())) 
+	if(!Spawn("Building_MoveSpot", x, y, z, CONST_TID_TURRETBLURPOINT+PlayerNumber())) 
 	Patcher_ShowMsg(PATCHER_MSG_MOVE_FAILED, PlayerNumber(), 0);
 }
 
@@ -442,8 +441,8 @@ Script "Building_MoveTo_Preview" (void){
 	// Spawns the preview position of the destination move spot.
 	int x = GetActorX(0), y = GetActorY(0), z = GetActorFloorZ(0) + 5.0;
 	SetActivatorToTarget(0); 
-	ACS_NamedExecuteWithResult("Building_MoveTo_PreviewBlur", 15100, x, y, z);
-	Spawn("Building_MoveSpot", x, y, z, 16100+PlayerNumber());// Dummy move spot to calculate the move price.
+	ACS_NamedExecuteWithResult("Building_MoveTo_PreviewBlur", CONST_TID_TURRETOWNER, x, y, z);
+	Spawn("Building_MoveSpot", x, y, z, CONST_TID_TURRETMOVEPOINT+PlayerNumber());// Dummy move spot to calculate the move price.
 }
 
 Script "Building_MoveTo_PreviewBlur" (int tid, int x, int y, int z) ClientSide{

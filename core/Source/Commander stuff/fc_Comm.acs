@@ -15,9 +15,9 @@
 #import "fc_Const.acs" // Construction script
 #import "fc_GLab.acs" // Gen-lab main script
 #import "fc_Armor.acs" // Armory main script
-#import "fc_MComm.acs" // Mech Factory -  Marine Command main script
+#import "fc_MechFa.acs" // Mech Factory -  Marine Command main script
 #import "fc_Ref.acs" // Refinery main script
-#import "fc_DLab.acs" // Pulse scripts main script
+#import "fc_MComm.acs" // Pulse scripts main script
 #import "fc_NSilo.acs" // Nuclear silo scripts main script
 #import "fp_Baners.acs"
 

@@ -1,3 +1,7 @@
+///////// (v1.8rc4) //////////
+) Reduced the amount of possible rewards when a monster is killed from 4 to 2.
+) Reduced the drop chances for all monster classes.
+
 ///////// (v1.8rc3) //////////
 ) Some optimizations on the clearing hud messages.
 ) Terminals will get a cooldown after exiting from it. Just to keep it from breaking.

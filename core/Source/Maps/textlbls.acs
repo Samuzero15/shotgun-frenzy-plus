@@ -84,11 +84,11 @@ function void TextLabel_Show (int index) {
 		}
 		HudSetCameraActor(CheckPlayerCamera(ConsolePlayerNumber()));
 	} else {
-		int playerNearLabelText = ActorDistance(990+ConsolePlayerNumber(), tid) <= range;
+		int playerNearLabelText = ActorDistance(CONST_TID_PLAYER+ConsolePlayerNumber(), tid) <= range;
 		if(!playerNearLabelText){
 			return;
 		}
-		HudSetCameraActor(990+ConsolePlayerNumber());
+		HudSetCameraActor(CONST_TID_PLAYER+ConsolePlayerNumber());
 	}
 
 	if(font == 1) HudSetFont("DBIGFONT");

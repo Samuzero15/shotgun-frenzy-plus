@@ -159,8 +159,8 @@ function void p_monsterKilled(int monsterClass, int l_SplatCombo, int noProfit, 
 	}else{
 		l_Amount = p_MonsterCredits[monsterClass] + playercount();
 		//log(s:"Turret: ", d:ActivatorTID());
-		int drone_owner = ActivatorTID() - 10000;
-		int turret_owner = ActivatorTID() - 15000;
+		int drone_owner = ActivatorTID() - CONST_TID_DRONE;
+		int turret_owner = ActivatorTID() - CONST_TID_TURRET;
 		//log(s:"Drone: ", d:drone_owner);
 		if(drone_owner >= 0 && drone_owner < 32){ 
 		// Drone exeption, grant 1 kill per drone, and some money to the player.

@@ -2,470 +2,277 @@
 //      SHOTGUN FRENZY
 //   a mod by Wad'a'Holic
 
-// fc_MarineCommand.acs
+// fc_DemonicLab.acs
 // structure scripts
 #library "fc_MComm"
 
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-#import "fp_ptdir.acs"
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
-#import "fl_mupDir.acs"
 #import "fl_techs.acs"
-#import "fc_AStr.acs"
-#import "fl_IDir.acs"
-#import "constants.acs"
+#import "fp_ptdir.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
 #include "samu_tools.acs"
-
-
 // build
-script 300 (void)
+script 400 (void)
 {
 	SetActivator(0); //Preventing a major disaster
     // construction
-    c_Construct (290, 208, 128, 128, "FLOOR4_8", "CEIL4_2", "");
-    c_Construct (291, 192, 32, 128, "FLOOR4_8", "CEIL4_2", "");
-    c_Construct (292, 201, 132, 128, "GRND", "CEIL4_2", "");
-    c_Construct (197, 224, 128, 128, "FLOOR4_8", "CEIL4_2", "");
-    c_Construct (294, 176, 24, 256, "GRND", "CEIL5_2", "");
-    c_Construct (198, 144, 24, 360, "GRND", "CEIL5_2", "");
-    c_Construct (296, 224, 24, 264, "FLOOR4_8", "SHAWN2", "");
-    c_Construct (297, 255, 16, 136, "GRND", "CEIL5_1", "");
-    c_Construct (298, 224, 8, 72, "GRND", "CEIL5_2", "");
-    c_Construct (299, 208, 128, 136, "CEIL5_1", "CEIL5_1", "");
-    c_Construct (300, 176, 128, 136, "CEIL5_1", "CEIL5_1", "");
-    c_Construct (301, 208, 128, 72, "CEIL5_1", "CEIL5_2", "");
-    c_Construct (302, 255, 384, 0, "", "", "");
-    c_Construct (303, 240, 16, 160, "CEIL5_2", "CEIL5_2", "");
-    c_Construct (344, 240, 128, 0, "CEIL5_2", "", "");
-    c_Construct (346, 240, 8, 0, "GRND", "", "");
-    c_Construct (347, 240, 16, 368, "CEIL5_2", "CEIL5_2", "");
+    c_Construct (201, 176, 128, 128, "RROCK03", "FLOOR7_2", "");
+    c_Construct (202, 192, 128, 128, "RROCK03", "FLOOR7_2", "");
+    c_Construct (203, 201, 132, 128, "GRND", "FLOOR7_2", "");
+    c_Construct (204, 224, 128, 128, "FLOOR4_8", "FLOOR7_2", "");
+    c_Construct (205, 176, 24, 256, "GRND", "CEIL5_2", "");
+    c_Construct (206, 144, 24, 360, "GRND", "CEIL5_2", "");
+    c_Construct (207, 224, 24, 264, "FLOOR4_8", "SHAWN2", "");
+    c_Construct (208, 255, 16, 136, "GRND", "CEIL5_1", "");
+    c_Construct (209, 224, 8, 72, "GRND", "CEIL5_2", "");
+    c_Construct (210, 208, 128, 136, "CEIL5_1", "CEIL5_1", "");
+    c_Construct (211, 176, 128, 136, "CEIL5_1", "CEIL5_1", "");
+    c_Construct (212, 208, 128, 72, "CEIL5_1", "CEIL5_2", "");
+    c_Construct (213, 255, 384, 0, "CEIL5_2", "", "");
+    c_Construct (214, 255, 128, 128, "CEIL5_2", "CEIL5_2", "");
+    c_Construct (215, 255, 144, 160, "CEIL5_2", "CEIL5_2", "");
     
-    // line setup
-    c_LineSet (10, "TMIDWL45", 0, 0, 0);
-    c_LineSet (10, "TMIDWL45", 1, 0, 0);
-    
-    // colour swatching
-    sector_setcolor(291, 100, 100, 255);
+    // summon turrets
+    spawnspot("TurretBase", 154, 0, 0);
     
     // set techflag
-	Tech_Set(TECH_MECHFA, TECHF_DONE);
+	Tech_Set(TECH_MARCOM, TECHF_DONE);
     
-    // open heavy vehicle bay
-    door_open(155, 50);
+    // constructed message
+    //f_TipShow ("BUTTON", "Marine Command", "Construction Complete!", 1);
     
     // check bridge
     delay(35 * 2);
-    if (Tech_isDone(TECH_MARCOM) &&  Tech_isDone(TECH_MECHFA)
-		&& c_BridgeStatus_4 == 0 && f_Gametype != 5)
+    if (Tech_isDone(TECH_MARCOM) && Tech_isDone(TECH_MECHFA) &&
+		c_BridgeStatus[3] == 0 && f_Gametype != 5)
     {
-        c_BridgeStatus_4 = 1;
+        c_BridgeStatus[3] = 1;
         floor_raisetonearest(343, 125);
     }
+    
+    // morph
+    //f_TipShow ("BUTTON", "Marine Core", "Attack functions now online...", 1);
+    //morphactor(104, "", "AttackBattery", 99999999999);
 }
 
-// fire ion cannon
-script 304 (void)
-{
+#define FP_MCOM_CPULSE_CRIPPLE	"SFPLus_CripplePulse"
+#define FP_MCOM_CPULSE_HEAL		"SFPLus_HealPulse"
+#define FP_MCOM_CPULSE_SMITE	"SFPLus_SmitePulse"
+#define FP_MCOM_CPULSE_REPAIR	"SFPLus_RepairPulse"
+#define FP_MCOM_CPULSE_HALT		"SFPLus_HaltPulse"
+#define FP_MCOM_CPULSE_WARCRY		"SFPLus_WarcryPulse"
+#define FP_MCOM_CPULSE_SHOCK		"SFPLus_ShockPulse"
+
+script "SFPlus_CoreRecharge" (int delay_time){	
+	int slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, FP_PTID_CPULSE, delay_time, slot);
+	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
+	
+	Tech_Set(TECH_MARCOM_CPULSE, TECHF_DONE);
+}
+
+// Need the shock and war pulses
+// Shock: all the demons will be stunned for a while.
+// War: All players gain x2.5 Dmg Up and Fast fire. 
+
+script "SFPlus_CorePulse" (int pulse_cmd)
+{	// A Generalized script for all of the core pulses.
+	if(Tech_isLock(TECH_MARCOM_CPULSE)){
+		Notify_Message("Core pulse failed",
+		"The core pulse is still charging!", "INFO", 3);
+		terminate;
+	}
 	SetActivator(0); //Preventing a major disaster
-    // define a local container
-    int l_IonCannonTime;
+    //ambientsound("cv/corepulse", 125);
+	AnnouncerSound("command/corepulse", 125);
     
-    // switch off flags
-    Tech_SetDone(TECH_MARCOM_IONCAN, TECHF_LOCK);
-    
-    int slot = Notify_QueueFreeSpace();
-	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, FP_PTID_IONCAN_1, 5, slot);
+    // disable use of core weapons
+	Tech_SetDone(TECH_MARCOM_CPULSE, TECHF_LOCK);
+	
+	str pulse_name;
+	int execute;
+	int charge_delay;
+	switch(pulse_cmd){
+		case 1: // Buffs players with some extra 
+			pulse_name = "HEAL"; 
+			execute = FP_MCOM_CPULSE_HEAL; 
+			charge_delay = 15; 
+		break;
+		case 2: // Harms all demons with 500 dmg.
+			pulse_name = "CRIPPLE"; 
+			execute = FP_MCOM_CPULSE_CRIPPLE; 
+			charge_delay = 20; 
+		break;
+		case 3: // Stops monster spawning for a minute.
+			pulse_name = "HALT"; 
+			execute = FP_MCOM_CPULSE_HALT; 
+			charge_delay = 25; 
+		break;
+		case 4: // Harms all demons within the risked sector with 3000 dmg.
+			pulse_name = "SMITE"; 
+			execute = FP_MCOM_CPULSE_SMITE; 
+			charge_delay = 30; 
+		break;
+		case 5: // Instantly repairs the risked core.
+			pulse_name = "REPAIR"; 
+			execute = FP_MCOM_CPULSE_REPAIR; 
+			charge_delay = 30; 
+		break;
+		case 6: // Stops monster spawning for a minute.
+			pulse_name = "WARCRY"; 
+			execute = FP_MCOM_CPULSE_WARCRY; 
+			charge_delay = 30; 
+		break;
+		case 7: // Stops monster spawning for a minute.
+			pulse_name = "SHOCK"; 
+			execute = FP_MCOM_CPULSE_SHOCK; 
+			charge_delay = 25; 
+		break;
+	}
+	int startup_delay = 5-2*Tech_isDone(TECH_MARCOM_COPTIM);
+	charge_delay = charge_delay - ((floor(charge_delay * 0.25))>> 16)*Tech_isDone(TECH_MARCOM_COPTIM);
+	Notify_Message(strparam(s:pulse_name, s:" PULSE ACTIVATED"),
+		strparam(s:"Activating in ",d:startup_delay,s:" seconds..."), "INFO", 2);
+    delay(35 * (startup_delay));
+	acs_execute(126, 0, 1, 0, 0);
+    ambientsound("x1/taser", 125);
+	//Effects
+	
+	acs_NamedExecuteWait(execute, 0);
+	
+	delay(35 * 2);
+    //f_TipShow ("BUTTON", "", "", 19);
+	ACS_NamedExecuteAlways("SFPlus_CoreRecharge",0, charge_delay);
+}
+
+// core pulse: Cripple
+// Harms all demons with 500 of damage.
+script FP_MCOM_CPULSE_CRIPPLE (void)
+{
+	giveActorInventory(110, "FPMToken_NoCount", 1);
+	giveActorInventory(111, "FPMToken_NoCount", 1);
+	giveActorInventory(112, "FPMToken_NoCount", 1);
+	giveActorInventory(113, "FPMToken_NoCount", 1);
+	giveActorInventory(114, "FPMToken_NoCount", 1);
+	// Temporaly disable the credit earning of these monsters.
+	int damage = 500 * (1+2*Tech_isDone(TECH_MARCOM_CBOOST));
+	delay(2);
+	thing_damage(110, damage, "NoCount");
+	thing_damage(111, damage, "NoCount");
+	thing_damage(112, damage, "NoCount");
+	thing_damage(113, damage, "NoCount");
+	thing_damage(114, damage, "NoCount");
+	delay(2);
+	// Re-activate the credit earning.
+	takeActorInventory(110, "FPMToken_NoCount", 1);
+	takeActorInventory(111, "FPMToken_NoCount", 1);
+	takeActorInventory(112, "FPMToken_NoCount", 1);
+	takeActorInventory(113, "FPMToken_NoCount", 1);
+	takeActorInventory(114, "FPMToken_NoCount", 1);
+}
+
+// core pulse: Smite (NEW!)
+// Harms any demon inside of the risked sector with 3000 hp.
+script FP_MCOM_CPULSE_SMITE (void)
+{
+	giveActorInventory(110 + g_Status, "FPMToken_NoCount", 1);
+	// Temporaly disable the credit earning of these monsters.
+	int damage = 3000 * (1+4*Tech_isDone(TECH_MARCOM_CBOOST));
+	delay(2);
+	thing_damage(110 + g_Status, damage,  "NoCount");
+	delay(2);
+	// Re-activate the credit earning.
+	takeActorInventory(110 + g_Status, "FPMToken_NoCount", 1);
+}
+
+// halt pulse
+// Halts the demon spawning
+script FP_MCOM_CPULSE_HALT (void)
+{
+	c_HaltSpawning = 1;
+
+	ProgTip_DefaultProps(-1);
+	ProgTip_SetMsg		(-1, "HALT PULSE");
+	ProgTip_SetEndMsg1	(-1, "HALT PULSE EXPIRED!");
+	ProgTip_SetEndMsg2	(-1, "Hostiles are spawning again!");
+	int time = 60 + 30*Tech_isDone(TECH_MARCOM_CBOOST);
+
+	int slot = Notify_QueueFreeSpace();
+	ACS_NamedExecuteAlways("SFPlus_TimerScript",0, -1, time, slot);
 	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
-    
-    // fire
-    acs_executealways(126, 0, 1, 0, 0);
-    ambientsound("c/ioncannon", 100);
-    while(l_IonCannonTime < 450)
-    {
-        setactorstate(130, "Spawn_IonCannon", 0);
-        l_IonCannonTime += 6;
-        delay(5);	// was 10
-    }
-    
-    delay(35);
-    
-    // charge the cannon
-    //f_TipShow ("BUTTON", "", "", 17);
-	slot = Notify_QueueFreeSpace();
-	ACS_NamedExecuteAlways("SFPlus_ProgressScript",0, FP_PTID_IONCAN_2, 50, slot);
-	do{ delay(1); }while (p_TipProcess[slot]); // Wait for it.
-    
-	Tech_Set(TECH_MARCOM_IONCAN, TECHF_DONE);
+
+	// reactivate demons
+	c_HaltSpawning = 0;
 }
 
-
-// buy tank
-script 305 (void)
+// heal pulse
+script FP_MCOM_CPULSE_HEAL (int pslot)
 {
-    // change flags
-	p_MechTimer[playernumber()] = 0;// Initialize timer.
-	p_TankSlot[playernumber()] = 1;
-	
-    f_CenterTip("Mech Purchased!");
-    //f_TipShow("VEHIC", "", "Has purchased a War Mech!", 10);
-	Notify_Player("Has Pursached a Mech!", "VEHIC", 1);
-	LocalAmbientSound("veh/tankstartup",128);
-	delay(35);
-    localambientsound("veh/tankshutdown", 128);
-}
-
-Script "SFPlus_MechHud" (int move_state) Clientside
-{
-	int spyCam = CheckPlayerCamera(consolePlayerNumber());
-	if((consolePlayerNumber() == PlayerNumber() && PlayerInGame(PlayerNumber())) && 
-			(spyCam >= CONST_TID_PLAYER && spyCam < CONST_TID_PLAYER+32) && StrEquals(GetActorClass(spyCam), "MechPlayer")){
-
-		if(spyCam >= CONST_TID_PLAYER && spyCam < CONST_TID_PLAYER+32) SetActivator(0);
-		str img;
-		switch(move_state){
-			case 1:
-				img = "TANKH1";
-			break;
-			case 2:
-				img = "TANKH2";
-			break;
-			case 3:
-				img = "TANKH3";
-			break;
-			default:
-				img = "SMALLFNT";
-			break;
-		}
-		sethudsize(SFHUD_WIDTH, SFHUD_HEIGHT, 1);
-		setfont(img);
-		hudmessage(s:"a"; HUDMSG_LAYER_UNDERHUD, -201, 0, 400.0, 0.1, 1.0);
-	}else {
-		SetActivator(0);
-		ClearHudMessage(-201);
-	}
-}
-
-// Display Tank Huddy Hud.
-script 308 (void)
-{
-	int mech_state;
-	while(p_TankSlot[playernumber()] == 2){
-		if (GetPlayerInput(-1, INPUT_YAW) < 0)           mech_state = 3;
-		else if (GetPlayerInput(-1, INPUT_YAW) > 0)      mech_state = 2;
-		else mech_state = 1;
-			
-		ACS_NamedExecuteAlways("SFPlus_MechHud", 0, mech_state );
-		delay(6);
-	}
-	ACS_NamedExecuteAlways("SFPlus_MechHud", 0, 0);
-}
-
-function str ProgressDot(int amount, int progress, int base){
-	int intervals = 100 / amount;
-	int now = progress * 100 / base;
-	int dotamount = now / intervals;
-	str dotres = ".";
-	for(int i = 0; i < dotamount; i++){
-		dotres = strparam(s:dotres, s:".");
-	}
-	
-	return dotres;
-}
-
-// enter tank
-script 306 (void)
-{
-	// make sure godsphere is not in use
-	/*
-	int lastWeapon = saveLastWeapon();
-	p_LastWeap[playernumber()] = lastWeapon;
-	*/
-
-	if(ACS_NamedExecuteWithResult("Invul_Check")) {
-		// Nullify the active invulnerability effects.
-		TakeInventory("PowerInvulnerable", 1);
-		TakeInventory("PlayUp_Spawnshield_Power", 1);
-		TakeInventory("CorePulse_Heal_Invul", 1);
-		TakeInventory("DefenseRune_ShieldInvul", 1);
-		TakeInventory("PlayUp_Prometeo_Power_Invul", 1);
-	}
-		
-	// teleport to new location
-	teleport(142, 0, 0);
-	// change skin and class
-	//morphactor(0, "TankPlayer", "", 999999, 2, "", "");
-	takeinventory("MechMorph",1); // Just in case
-	giveinventory("MechMorph",1);
-	if(!CheckActorClass(0, "MechPlayer")){
-		// If for some reason, the morph fails. Teleport him back to the starting point.
-		GiveInventory("StartingPoint", 1);
-		Print(s:"Sorry, the morph failed for some reason, try it again.");
-	}
-	takeinventory("MechMorph",1);
-	// change flags
-	p_TankSlot[playernumber()] = 2;
-	p_MechTimer[playernumber()] = -1;// Initialize timer.
-	SetCustomPlayerValue("OnMechCol", playernumber(), true);
-	
-	Rune_SaveAndUnequip();
-
-	giveinventory("TankGun", 1);
-	Thing_ChangeTID(ActivatorTid(), CONST_TID_PLAYER+playernumber());
-	SetActivator(CONST_TID_PLAYER+playernumber());
-	// welcome message
-	if(GetUserCVar(playernumber(), "sfp_mechmsg")){
-		setfont("BIGFONT");
-		hudmessage(s:
-		"\caTo \cgexit \cathe Mech, \cbwalk up to the entrance of the Mech Factory and press use or hold \cguse \ca for 1 second!\
-		\n\n\cbQuit early \cato \cgavoid death!\
-		\n\n\cbUpon exiting, the armor will be fully repaired \cafor your next use.\
-		\n\n\cgPrimary fire \cafor your \cbNails\
-		\n\n\cgSecondary Fire \cafor your \cbRockets\
-		\n\n\n\ci Now give em' Hell!\n\n\n \ca(Disable this msg with '\cvsfp_mechmsg false\ca')"
-		; HUDMSG_TYPEON, 0, 0, 0.5, 0.4, 6.0, 0.03, 0.5);
-	}
-	//f_TipShow("VEHIC", " War Mech State", "Deployed for action!", 10);
-
-	Notify_PlayerEX(0, " Mech State", "Deployed!", "VEHIC", 0);
-	
-	//Update Stats
-	setactorproperty(0, APROP_HEALTH, 1500 + 900 * MechUp_CheckInv("Mechup_Armor"));
-	SetActorProperty(0, APROP_SPEED, 0.7 + 0.1 * MechUp_CheckInv("Mechup_Speed"));
-	setactorproperty(0, APROP_DamageFactor, 1.0);
-	
-	// open marine command doors
-	door_raise(347, 10, 150, 0);
-	
-	//setActivatortoPlayer(playernumber());
-	ACS_ExecuteAlways(308, 0);
-	int ticks_use;
-	int exit_progress;
-	str dots;
-	int ticks_repair;
-	int max_armor = 1500 + 900 *MechUp_CheckInv("Mechup_Armor");
-	int auto_repair_heal = 4*MechUp_CheckInv("Mechup_AutoRepair");
-	int auto_repair_delay = 35 - 15*MechUp_CheckInv("Mechup_Efficiency"); 
-	int hp, diff;
-	while(p_TankSlot[playernumber()] == 2 && g_Status != 299)
+	// Give an instant megasphere (Activated upon pickup), +30% resistance 20 seconds, and a 5 second short invul to all players.
+	for(int i = 0; i < 32; i++)
 	{
-		if(!CheckInventory("TankGun")){ // Kill the bugs
-			GiveInventory("TankGun", 1);
-		}
-		
-		if(!CheckWeapon("TankGun")){ // Kill the bugs
-			SetWeapon("TankGun");
-		}
-		// [Samu] Hold use for 3 seconds to get out of the tank!
-		if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE) ticks_use++;
-		else ticks_use = 0;
-		
-		
-		if(ticks_use != 0){
-			dots = ProgressDot(3, ticks_use, 35);
-			f_CenterTip(strparam(s:dots, s:"Ejecting", s:dots));
-		}
-		else ClearHudMessage(78);
-		
-		if(ticks_use == 35) {
-			f_CenterTip("Ejection sucessful.");
-			ACS_ExecuteAlways(307, 0);
-		}
-		
-		if(MechUp_CheckInv("Mechup_AutoRepair")){
-			// [Samu] Auto-repair the mech, because im an impacient person.
-			ticks_repair++;
-			if(ticks_repair % auto_repair_delay == 0){ // Heh
-				hp = GetActorProperty(0, APROP_HEALTH);
-				if(hp < max_armor){
-					diff = max_armor - hp;
-					if(diff < auto_repair_heal) setactorproperty(0, APROP_HEALTH, hp + diff);
-					else 		  				setactorproperty(0, APROP_HEALTH, hp + auto_repair_heal);
-				}
-				ticks_repair = 0;
-			}
-		}
-		
-		
-		
-		
-		// display tank health and upgrades.
-		setfont("SMALLFNT");
-		hudmessage(s:"Armor: \cv", d:getactorproperty(0, APROP_HEALTH), s:" / ", d:max_armor
-				,s:"\n\n\c-", s:MechUp_ReportUps(true); 0, 202, CR_lightBlue, 128.1, 300.1, 1.0);
-		delay(1);
-	}
-	
-	SetCustomPlayerValue("OnMechCol", playernumber(), false);
-}
-
-Script "SFPlus_MechHeal" (int amount) {
-	// Called by the soulsphere and megasphere, for a stimpack-esque item.
-	int max_armor = 1500 + 900 * MechUp_CheckInv("Mechup_Armor");
-	int hp = getactorproperty(0, APROP_HEALTH);
-	int diff = max_armor - hp;
-	if(diff < amount) setactorproperty(0, APROP_HEALTH, hp + diff);
-	else 		  	  setactorproperty(0, APROP_HEALTH, hp + amount);
-}
-
-script 309 (void){
-	TakeInventory("TankGun", 1);
-	TakeInventory("TankGunAdvanced", 1);
-    //f_TipShow("VEHIC", " War Mech State", "Has been destroyed!", 10);
-	Notify_PlayerEX(0, " Mech State", "Destroyed!", "VEHIC", 3);
-    // purge
-    setfont("SMALLFNT");
-    ACS_NamedExecuteAlways("SFPlus_MechHud", 0, 0);
-	
-	p_TankSlot[playernumber()] = 99;
-	p_MechTimer[playernumber()] = (35 * 60 * 2) + (35*30) - (35*30)*MechUp_CheckInv("Mechup_Efficiency");
-	
-	int msgtimer;
-	while(p_MechTimer[playernumber()] > 0){
-		
-		if(msgTimer == (35 * 5)) 
-			f_CenterTip ("Your mech has been destroyed and is now repairing...");
-		else if (msgTimer == (35 * 7)) 
-			f_CenterTip ("Your mech will be ready for use in 2 minutes...");
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
 			
-		p_MechTimer[playernumber()] --;
-		msgtimer++;
-		delay(1);
-	}
-	
-	p_TankSlot[playernumber()] = 1;
-	//f_TipShow("VEHIC", " War Mech State", "Reparings completed!", 10);
-	Notify_PlayerEX(0, " Mech State", "Repaired!", "VEHIC", 1);
-	f_CenterTip ("Your mech is now ready for deployment!");
-
-    
-    // purge
-    setfont("SMALLFNT");
-    hudmessagebold(s:""; 0, 201, 0, 400.0, 0.1, 1.0);
-}
-// exit tank
-script 307 (void)
-{
-	//f_TipShow("VEHIC", " War Mech State", "Returned for Maintenance.", 10);
-
-	if(CheckInventory("PowerInvulnerable")) 
-		TakeInventory("PowerInvulnerable", 3);
-
-	Notify_PlayerEX(0, " Mech State", "Returned for Maintenance", "VEHIC", 0);
-	
-	int max_armor = 1500 + 900 * MechUp_CheckInv("Mechup_Armor");
-	int hp = getactorproperty(0, APROP_HEALTH);
-	
-	int dmg_percent = ut_floor(100.0 - FixedMul(fixedDiv(hp*1.0,max_armor*1.0),100.0));
-	int extra_delay = (fixedDiv(((90 * dmg_percent) / (1 + 2*MechUp_CheckInv("Mechup_Efficiency"))), 100.0)>>16);
-	
-	int repair_delay = 35 * (10 + extra_delay);
-	//log(s:"Extra Delay: ", d:repair_delay);
-	//print(d:(repair_delay/35), s:" Seconds.");
-	//Quick maths!
-	p_MechTimer[playernumber()] = repair_delay;
-	p_TankSlot[playernumber()] = 99;
-	delay(1);
-	
-	// purge
-    ACS_NamedExecuteAlways("SFPlus_MechHud", 0, 0);
-	
-	if(MechUp_CheckInv("Mechup_LifeSave"))
-		giveInventory("StartingPoint", 1); // teleports you back to safety!
-	
-	takeinventory("MechMorph",1);
-    Unmorphactor(0, 1);
-	takeinventory("TankGun",1);
-    takeinventory("TankGunAdvanced",1);
-	
-	delay(1);
-    // fix players health
-    acs_execute(106, 0, 1, 1, 1);
-	delay(5);
-	ACS_Execute(56,0,p_LastWeap[playernumber()],0,0);
-	Rune_LoadAndEquip();
-	
-	int msgtimer;
-	while(p_MechTimer[playernumber()] > 0){
-		
-		if(msgTimer == (35 * 5)) 
-			f_CenterTip ("Your mech should be ready in a few seconds..");
-			
-		p_MechTimer[playernumber()] --;
-		msgtimer++;
-		delay(1);
-	}
-	
-	f_CenterTip ("Your mech is ready to go!");
-    // change flags
-	p_MechTimer[playernumber()] = 0;
-    p_TankSlot[playernumber()] = 1;
-    
-}
-
-int fp_mech_onentrance[32];
-// exit tank (map version)
-script 31 (void)
-{
-    // player is tank?
-    if (p_TankSlot[playernumber()] == 2){
-		if(!fp_mech_onentrance[playernumber()]){
-			fp_mech_onentrance[playernumber()] = 1;
-			print(s:"Press use to get off the tank");
-			int count = 0;
-			while(count < (35*3)){
-				//log(s:"Count: ", d:count);
-				if(GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE){
-					fp_mech_onentrance[playernumber()] = 0;
-					ACS_Terminate(306, 0);
-					ACS_Execute(307,0);
-					delay(5);
-					f_CenterTip("You exited the tank.");
-					break;
-				}
-				delay(1);
-				count++;
+			int megasphere_now = CheckInventory("Inventory_Megasphere");
+			GiveInventory("Inventory_Megasphere", 1);
+			UseInventory("Inventory_Megasphere");
+			if(CheckInventory("Inventory_Megasphere") != megasphere_now){
+				GiveInventory("Inventory_Megasphere", 1); // Check if it's on maximum, might not add the temporal megasphere, and if it does, refund it.
 			}
-			Rune_LoadAndEquip();
-			fp_mech_onentrance[playernumber()] = 0;
+			TakeInventory("CorePulse_Heal_Resistance", 1);
+			TakeInventory("CorePulse_Heal_Invul", 1);
+
+			GiveInventory("CorePulse_Heal_Resistance", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			GiveInventory("CorePulse_Heal_Invul", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			
+			
+			SetActivator(0);
 		}
-    }
+	}
 }
 
-// marker refreshing
-script 310 (int l_Type)
+script FP_MCOM_CPULSE_WARCRY (int pslot)
 {
-	SetActivator(0); //Preventing a major disaster
-    thing_remove(l_Type);
-    delay(1);
-    thing_changetid(0, l_Type);
+	// Give a x3 damage up, and fast fire for 20 seconds.
+	for(int i = 0; i < 32; i++)
+	{
+		if(PlayerInGame(i)){
+			SetActivatorToPlayer(i);
+			
+			TakeInventory("CorePulse_Warcry_RageUp", 1);
+			TakeInventory("CorePulse_Warcry_DamageUp", 1);
+
+			GiveInventory("CorePulse_Warcry_RageUp", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			GiveInventory("CorePulse_Warcry_DamageUp", 1+Tech_isDone(TECH_MARCOM_CBOOST));
+			
+			
+			SetActivator(0);
+		}
+	}
 }
 
-// tank emergency exit from marine command (the player might get locked inside)
-script 158 (void)
+script FP_MCOM_CPULSE_SHOCK (int pslot)
 {
-    if (Tech_isDone(TECH_MECHFA))
-    {
-        door_raise(347, 10, 150, 0);
-    }
+	// Paralize your enemies for a while.
+	// Eh, next update lol.
 }
 
-// mech upgrade: weapons
+// core revive
+script FP_MCOM_CPULSE_REPAIR (void)
+{
+	int extrahealth = 300*Tech_isDone(TECH_MARCOM_CBOOST);
+	int core = 100 + g_Status;
+	if ( core != 104){
+		setactorproperty(core, APROP_Health, 750 + extrahealth);
+	}       
+	else {
+		setactorproperty(core, APROP_Health, 1500 + extrahealth);
 
-script "AnnounceMechUpgrade" (int which){
-	str upg;
-	if(MechUp_getMax(which) != 1)	
-		upg = strparam(s:MechUp_getName(which), s:" Lv.", d:CheckInventory(MechUp_getActor(which)));
-	else upg = strparam(s:MechUp_getName(which));
-	str msg = strparam(s:"Installed the ", s:upg ,s:" Upgrade!");
-
-    //Notify_Message(msg, " Mech upgrade!", "VEHICA", 10);
-	Notify_PlayerEX(0, " got a Mech Upgrade!", msg, "VEHICA", 0);
-	
-    delay(35);
-    localambientsound("veh/tankshutdown", 125);
+	}                            
 }

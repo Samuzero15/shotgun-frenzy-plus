@@ -9,6 +9,12 @@
 
 ## v1 - The path of the damned...
 
+#### (31 / 10 / 2025) [Cleanup script thingies]
+	*) Used some constants defines for easier access and less use of magic numbers.
+	*) Renamed files, from fc_mcomm.acs to fc_Mechfa.acs and fc_Dlab.acs to fc_Mcomm.acs
+	-) Reduced the amount of possible rewards when a monster is killed from 4 to 2.
+	-) Reduced the drop chances for all monster classes.
+
 #### (30 / 10 / 2025) [Hotfixes, Full mech tech flag fixes, balances and few fixes]
 	*) Added some fixes, so the full mech upgrade cvar will have effect on the weapons and mech class.
 	*) Mechs will not pickup items, armor shards, health bonuses, or armor, however credits and gems can be picked up.

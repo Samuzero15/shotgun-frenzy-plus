@@ -22,7 +22,6 @@ script "SF_PickupMsgDisplay" (int howMuch, int type) clientside
 		case 0: ShowNumbers("+", howmuch, " HP", CR_CYAN, "VERVIBES", cvar); break;
 		case 1: ShowNumbers("+", howmuch, " AP", CR_GREEN, "VERVIBES", cvar); break;
 	}
-	
 }
 
 script "SF_CreditAddDisplaySmall" (int howMuch, int color) clientside

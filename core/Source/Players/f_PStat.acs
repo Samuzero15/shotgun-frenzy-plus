@@ -204,8 +204,8 @@ script 54 RESPAWN
 {
 	
     // give players the 'player' tid
-	thing_changetid(990+PlayerNumber(), 0);
-    thing_changetid(0, 990+PlayerNumber());
+	thing_changetid(CONST_TID_PLAYER+PlayerNumber(), 0);
+    thing_changetid(0, CONST_TID_PLAYER+PlayerNumber());
 	// Set the max health upon spawn.
 	
 	setactorproperty(0, APROP_SpawnHealth, getActorProperty(0, AProp_Health));
@@ -247,7 +247,7 @@ script 54 RESPAWN
 	
 	//[Samu] If you die, the teleport script will not activate the spawnshield effect.
 	// So to counter that, I should place it here.
-	if(PlayUp_CheckInv("PlayUp_SpawnShield") && !CheckActorClass(990+PlayerNumber(),"MechPlayer")){
+	if(PlayUp_CheckInv("PlayUp_SpawnShield") && !CheckActorClass(CONST_TID_PLAYER+PlayerNumber(),"MechPlayer")){
 		TakeInventory("PlayUp_SpawnShield_Power", 1);
 		delay(1);
 		giveInventory("PlayUp_SpawnShield_Activate", 1);
@@ -272,32 +272,32 @@ script 57 (int num) DISCONNECT
 	//PrintBold(d:ThingCountName("TurretFlame_Head", 0));
 	
 	// Clean things leftovers by player.
-	Thing_Damage(990+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(990+num);
+	Thing_Damage(CONST_TID_PLAYER+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_PLAYER+num);
 	
-	Thing_Damage(11000+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(11000+num);
+	Thing_Damage(CONST_TID_BUILDINGBASE+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_BUILDINGBASE+num);
 	
-	Thing_Damage(10000+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(10000+num);
+	Thing_Damage(CONST_TID_DRONE+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_DRONE+num);
 	
-	Thing_Damage(15000+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(15000+num);
+	Thing_Damage(CONST_TID_TURRET+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_TURRET+num);
 
-	Thing_Damage(15100+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(15100+num);
+	Thing_Damage(CONST_TID_TURRETOWNER+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_TURRETOWNER+num);
 
-	Thing_Damage(15200+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(15200+num);
+	Thing_Damage(CONST_TID_BUILDING+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_BUILDING+num);
 
-	Thing_Damage(16100+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(16100+num);
+	Thing_Damage(CONST_TID_TURRETMOVEPOINT+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_TURRETMOVEPOINT+num);
 
-	Thing_Damage(16200+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(16200+num);
+	Thing_Damage(CONST_TID_TURRETBLURPOINT+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_TURRETBLURPOINT+num);
 	
-	Thing_Damage(30000+num, 90000000, MOD_UNKNOWN);
-	Thing_Remove(30000+num);
+	Thing_Damage(CONST_TID_STICKYNADES+num, 90000000, MOD_UNKNOWN);
+	Thing_Remove(CONST_TID_STICKYNADES+num);
 	// Unfreeze the player, to avoid bugs.
 	SetPlayerProperty(0, 0, PROP_TOTALLYFROZEN);
 	SetPlayerProperty(0, 0, PROP_FROZEN);

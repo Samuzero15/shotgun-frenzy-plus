@@ -44,7 +44,7 @@
 #libdefine ITEM_PROP_FORCLASS  	9
 #libdefine ITEM_PROP_POWERID    10 // Internal ID For powerup reference in decorate (Just to link their activation announcer sound, I know, sounds stupid but i guess people is kinda lazy with this niche stuff).
 
-#libdefine ITEMDROP_MAX 4
+#libdefine ITEMDROP_MAX 2
 #libdefine ITEMDROP_PROPS 3
 #libdefine ITEMDROP_ITEMS 30
 #libdefine ITEMDROP_CLASSES 7

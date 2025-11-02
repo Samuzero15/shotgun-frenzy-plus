@@ -11,6 +11,7 @@
 #import "fl_techs.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
+#include "constants.acs"
 
 int rank_titles[20] = {
     "Rookie",  
@@ -112,7 +113,7 @@ function void p_IncreaseRank (int play)
 
     // message
     //f_CenterTip("You have been promoted!");
-    int playtid = 990+play;
+    int playtid = CONST_TID_PLAYER+play;
     Spawn("RankUpFx", GetActorX(playtid), GetActorY(playtid), GetActorZ(playtid));
     
     sethudsize(800, 600, 0);
@@ -180,7 +181,7 @@ function void HudMsg_Rank(str string){
 
 function void p_IncreaseRank_Grant (int l_Type, int who)
 {
-    SetActivator(990+who);
+    SetActivator(CONST_TID_PLAYER+who);
     switch(l_Type)
     {
         case 1:

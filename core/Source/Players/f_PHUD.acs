@@ -9,6 +9,7 @@
 #import "f_IntDB.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
+#include "constants.acs"
 
 // ************** CLIENTSIDE HUDMESSAGE SCRIPTS ************** 
 
@@ -121,7 +122,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 	int gametype_, kills, status, time_tics,
 		guardian_state, monsters_left, guardian_timer,
 		credits, next_range, exp, deaths, ups,
-	 	streak, histreak, msstreak, corehp, teamcredits, commander, ranknow, nuke_launched, mechtimer, survprogress;
+	 	streak, histreak, msstreak, corehp, teamcredits, commander, ranknow, nuke_launched, mechtimer, survprogress, gameover_;
 	while(1){
 		gametype_ = CheckInventory("HUD_Gametype"),
 		kills = CheckInventory("HUD_Kills"),
@@ -132,6 +133,7 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 		guardian_timer = CheckInventory("HUD_GuardianTimer");
 		nuke_launched = CheckInventory("HUD_NukeLaunched");
 		survprogress = CheckInventory("HUD_SurvProgress");
+		gameover_ = CheckInventory("HUD_GameOver");
 		/*
 		log(s:"gametype: ", d:gametype_);
 		log(s:"kills: ", d:kills);
@@ -146,41 +148,45 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 		if (f_UseScoreSystem == 1)
 			Acs_NamedExecuteAlways("HUD_ShowTeamScore", 0, kills);
 		
-		if(gametype_ == INTDB_GAMETYPE_COMBATFRENZY || gametype_ == INTDB_GAMETYPE_SHOTGUNFRENZY){
-			if(status != 0){
-				if(time_tics > 0 || nuke_launched == 1)
-					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, time_tics, nuke_launched);
-				else {
-					switch(guardian_state){
-						case INTDB_GUARDIANSTATE_STANDBY:
-							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, guardian_timer);
-						break;
-						case INTDB_GUARDIANSTATE_PREPARED: 
-							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
-						break;
-						case INTDB_GUARDIANSTATE_ATTACK: 
-							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 3);
-						break;
-						case INTDB_GUARDIANSTATE_DEFEAT:
-							Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 6);
-						break;
-					}	
+		if(gameover_ == 1){
+			Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 6);
+		} else {
+			if(gametype_ == INTDB_GAMETYPE_COMBATFRENZY || gametype_ == INTDB_GAMETYPE_SHOTGUNFRENZY){
+				if(status != 0){
+					if(time_tics > 0 || nuke_launched == 1)
+						Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, time_tics, nuke_launched);
+					else {
+						switch(guardian_state){
+							case INTDB_GUARDIANSTATE_STANDBY:
+								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, guardian_timer);
+							break;
+							case INTDB_GUARDIANSTATE_PREPARED: 
+								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
+							break;
+							case INTDB_GUARDIANSTATE_ATTACK: 
+								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 3);
+							break;
+							case INTDB_GUARDIANSTATE_DEFEAT:
+								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 6);
+							break;
+						}	
+					}
 				}
 			}
-
-		}else if (gametype_ == INTDB_GAMETYPE_SURVIVALDEFENDER){
-			if((survprogress != 0) && monsters_left != 9999)
-				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 5, survprogress);
-			else if (monsters_left == 9999)
-				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 4);
-			else if(monsters_left > 0)
-				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
-			else 
-				Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 0);
+			else if (gametype_ == INTDB_GAMETYPE_SURVIVALDEFENDER){
+				if((survprogress != 0) && monsters_left != 9999)
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 5, survprogress);
+				else if (monsters_left == 9999)
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 4);
+				else if(monsters_left > 0)
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
+				else 
+					Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 0);
+			}
 		}
 
 		if(!PlayerInGame(ConsolePlayerNumber())){
-			int specOnPlayCam = CheckPlayerCamera(ConsolePlayerNumber()) >= 990 && CheckPlayerCamera(ConsolePlayerNumber()) < 1022;
+			int specOnPlayCam = CheckPlayerCamera(ConsolePlayerNumber()) >= CONST_TID_PLAYER && CheckPlayerCamera(ConsolePlayerNumber()) < 1022;
 			int PlayerTIDCam = CheckPlayerCamera(ConsolePlayerNumber());
 			//log(s:"Now specing actor: ", d:PlayerTIDCam);
 			if(specOnPlayCam){

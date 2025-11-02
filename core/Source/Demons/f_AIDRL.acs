@@ -57,7 +57,6 @@ script 120 OPEN
     l_GameStopped = 0;
     
     int l_RemainingMonsters;
-    g_TenMinMark = 0;
 	bool l_CacoCond;
 	bool l_BossCond;
 	bool l_BossRespawn;

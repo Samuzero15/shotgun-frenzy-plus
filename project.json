@@ -40,7 +40,7 @@
     },
     "build_settings": {
         "name": "sfplus",
-        "tag": "v1.8rc4",
+        "tag": "v1.8",
         "build_dir": "",
         "zip_compress_type": "deflated",
         "zip_dir": "dist\\packed",

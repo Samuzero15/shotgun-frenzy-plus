@@ -21,8 +21,6 @@ Actor c_timer : Integer {}
 Actor c_allow_moneybag : Integer {}
 Actor f_gametype: Integer {}
 
-Actor g_TechFlags : Integer {}
-
 Actor tech_doneflags : Integer {}
 Actor tech_lockflags : Integer {}
 Actor tech_loadflags : Integer {}

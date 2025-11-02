@@ -32,7 +32,7 @@
 #include "samut_disp.acs"
 
 function bool Samuterm_InUse(void){return CheckInventory("SamuTInv_UsingTerminal");}
-function void Samuterm_LockPlayer(int player){SetPlayerProperty(0,true,PROP_TOTALLYFROZEN);SetActorVelocity(player+990,0,0,0,false,false);}
+function void Samuterm_LockPlayer(int player){SetPlayerProperty(0,true,PROP_TOTALLYFROZEN);SetActorVelocity(player+CONST_TID_PLAYER,0,0,0,false,false);}
 function void SamuTerm_SetBack(str what){imgbg = what;}
 function void SamuTerm_ResetBack(void){imgbg = STSET_BACK;}
 
@@ -124,7 +124,7 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	}
 	SamuTerm_Say(msgs[STMSGS_LOGIN]);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
-	PlaySound(990+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
+	PlaySound(CONST_TID_PLAYER+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
 
 	// Split the big bad bois. THIS should mitigate that gae ass Runaway script.
 	ACS_NamedExecuteAlways("SamuTerm_UpdateLoop", 0);
@@ -170,7 +170,7 @@ script "SamuTerm_LockPlayer" (int play, int id) NET {
 
 script "SamuTerm_FreePlayer" (int play) NET {
 
-	if(!CheckActorInventory(990+play,"SamuTInv_UsingTerminal")) terminate;
+	if(!CheckActorInventory(CONST_TID_PLAYER+play,"SamuTInv_UsingTerminal")) terminate;
 
 	if (CheckInventory("SamuTInv_ActionKey") == 0)
         terminate;
@@ -179,9 +179,9 @@ script "SamuTerm_FreePlayer" (int play) NET {
 
 	SetPlayerProperty(0,false,PROP_TOTALLYFROZEN);
 	delay(10);
-	takeActorInventory(990+play,"SamuTInv_UsingTerminal", 1);
-	takeActorInventory(990+play,"SamuTInv_OnCooldown", 1);
-	SetActorInventory(990+play,"SamuTInv_ActionKey", 0);
+	takeActorInventory(CONST_TID_PLAYER+play,"SamuTInv_UsingTerminal", 1);
+	takeActorInventory(CONST_TID_PLAYER+play,"SamuTInv_OnCooldown", 1);
+	SetActorInventory(CONST_TID_PLAYER+play,"SamuTInv_ActionKey", 0);
 }
 
 Script "SamuTerm_UpdateLoop" (void) Clientside { // Needs a busy keyword ASAP as soon as TDRR does the PR to zandronum

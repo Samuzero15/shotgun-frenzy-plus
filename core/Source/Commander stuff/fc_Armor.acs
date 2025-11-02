@@ -57,17 +57,17 @@ script 250 (void)
     // check bridge
     delay(35 * 2);
     if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_GENLAB) 
-		&& c_BridgeStatus_2 == 0)
+		&& c_BridgeStatus[1] == 0)
     {
-        c_BridgeStatus_2 = 1;
+        c_BridgeStatus[1] = 1;
         floor_raisetonearest(341, 125);
     }
     
     // check bridge
-    if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_REFINE) && c_BridgeStatus_3 == 0 
+    if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_REFINE) && c_BridgeStatus[2] == 0 
 		&& f_Gametype != 5)
     {
-        c_BridgeStatus_3 = 1;
+        c_BridgeStatus[2] = 1;
         floor_raisetonearest(342, 125);
     }
 }  

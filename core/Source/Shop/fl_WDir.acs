@@ -351,7 +351,7 @@ script "SFPlus_WDir_GiveStarterItems" (void)
 	ClearInventory();
 
 	// Get player's class name
-	str currentPlayerClass = GetActorClass(990 + PlayerNumber());
+	str currentPlayerClass = GetActorClass(CONST_TID_PLAYER + PlayerNumber());
 
 	// Find matching class index
 	int classIdx = -1;
@@ -798,8 +798,8 @@ function bool WeaponPack_IsEquipableForPClass(int wid){
 	int forplayerclass = WeaponPack_GetForClass(wid);
 
 	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
-	//log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:GetActorClass(990 + PlayerNumber()), s:"'");
-	return StrContainsI(forplayerclass, GetActorClass(990 + PlayerNumber()));
+	//log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:GetActorClass(CONST_TID_PLAYER + PlayerNumber()), s:"'");
+	return StrContainsI(forplayerclass, GetActorClass(CONST_TID_PLAYER + PlayerNumber()));
 }
 function bool WeaponPack_isOwned(int wid){
 	bool res = false;
@@ -833,7 +833,7 @@ function int Weapon_IsEquipableForPClass(int wid){
 	int forplayerclass = Weapon_GetForClass(wid);
 
 	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
-	return StrContainsI(forplayerclass, GetActorClass(990 + PlayerNumber()));
+	return StrContainsI(forplayerclass, GetActorClass(CONST_TID_PLAYER + PlayerNumber()));
 }
 function int Weapon_Find(str actor_name) {
 	for (int i = 0; i < fp_WeaponStack; i++) {

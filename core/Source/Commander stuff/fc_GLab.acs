@@ -53,11 +53,11 @@ script 200 (void)
     
     // check bridge
     delay(35 * 2);
-    //if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_GENLAB) && c_BridgeStatus_2 == 0 && f_Gametype != 5)
+    //if (isBuilt(BUILD_ARMORY) && isBuilt(BUILD_GENLAB) && c_BridgeStatus[1] == 0 && f_Gametype != 5)
 	if (Tech_isDone(TECH_ARMORY) && Tech_isDone(TECH_GENLAB)
-		&& c_BridgeStatus_2 == 0 && f_Gametype != 5)
+		&& c_BridgeStatus[1] == 0 && f_Gametype != 5)
     {
-        c_BridgeStatus_2 = 1;
+        c_BridgeStatus[1] = 1;
         floor_raisetonearest(341, 125);
     }
 }

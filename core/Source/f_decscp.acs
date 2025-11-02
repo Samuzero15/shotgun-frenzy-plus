@@ -464,25 +464,6 @@ script "MinesGoBoom" (int tid) {
 	Thing_remove(tid);
 }
 
-script "SF_SpawnADrone" (void){
-	int player = ActivatorTID();
-	if(playerNumber() == -1){ 
-		giveinventory("Inventory_SawDrone", 1);
-		terminate;
-	}
-	int drone = UniqueTID(10000 + 100*playernumber());
-	print(d:player, s:" ", d:drone);
-	Spawn("sf_SawDrone", GetActorX(player), GetActorY(player), 50.0, drone, 0);
-	SetActivator(drone);
-	SetActorProperty(drone, APROP_MasterTID, player);
-	//SetActorProperty(player, APROP_TracerTID, drone);
-	//debugTidPointers(player);
-	debugTidPointers(drone);
-	//debugTidPointersStrings(player);
-	debugTidPointersStrings(drone);
-	
-}
-
 script "InfAmmoCheck" (void)
 {
 	setResultValue(GetCvar("sv_infiniteammo") || CheckInventory("PowerInfiniteAmmo") || CheckInventory("Inv_Power_Infinity") || CheckInventory("Ammunition_InfiniteAmmo"));
@@ -542,33 +523,33 @@ Script "Turret_LinkBase" (int basetid){
 
 Script "Deploy_TID" (int tid, int type) { 
 	// Assuming the players are the only ones spawning turrets.
-	int play = tid - 990;
+	int play = tid - CONST_TID_PLAYER;
 	int dtid;
 	
 	if(play >= 0 && play < 32){
 		switch(type){
-			case 0: dtid = 11000+play; break;
-			case 1: dtid = 15000+play; break;
-			case 2: dtid = 10000+play; break;
+			case 0: dtid = CONST_TID_BUILDINGBASE+play; break;
+			case 1: dtid = CONST_TID_TURRET+play; break;
+			case 2: dtid = CONST_TID_DRONE+play; break;
 		}
 		//log(s:"Owner: ", d:play, s:" TID:", d:dtid);
 		SetResultValue(dtid);
 		terminate;
 	}else {
 		//log(s:"No owner found.");
-		SetResultValue(UniqueTID(15200));
+		SetResultValue(UniqueTID(CONST_TID_BUILDING));
 	}
 	
 }
 
 Script "Deploy_Count" (int tid, int type){
-	int play = tid - 990;
+	int play = tid - CONST_TID_PLAYER;
 	int dtid;
 	int limit;
 	if(play >= 0 && play < 32){
 		switch(type){
-			case 1: dtid = 15000+play; limit = 20; break; // Turret
-			case 2: dtid = 10000+play; limit = 8; break; // Drone
+			case 1: dtid = CONST_TID_TURRET+play; limit = 20; break; // Turret
+			case 2: dtid = CONST_TID_DRONE+play; limit = 8; break; // Drone
 		}
 		//printbold(s:"Owner: ", d:play, s:" Can i Place? :", d:ThingCount(0,dtid) < limit);
 		SetResultValue(ThingCount(0,dtid) < limit);
@@ -578,9 +559,9 @@ Script "Deploy_Count" (int tid, int type){
 }
 
 Script "Turret_Count" (int tid) {
-	int play = tid - 990;
+	int play = tid - CONST_TID_PLAYER;
 	if(play >= 0 && play < 32){
-		SetResultValue(ThingCount(0,15000+play));
+		SetResultValue(ThingCount(0,CONST_TID_TURRET+play));
 		terminate;
 	}
 	SetResultValue(0);
@@ -612,7 +593,7 @@ Script "TurretState_SyncLabels" open {
 
 script "TurretState_ShowLabels" OPEN Clientside {
 	int player = ConsolePlayerNumber();
-	if(CheckActorInventory(990+player,"SamuTInv_UsingTerminal") 
+	if(CheckActorInventory(CONST_TID_PLAYER+player,"SamuTInv_UsingTerminal") 
 		|| !GetUserCVar(player, "sfp_buildstats") 
 		|| PlayerIsSpectator(player)){
 		delay(1);
@@ -658,7 +639,7 @@ function void TurretState_Draw (int index) {
 		
 		HudSetCameraActor(CheckPlayerCamera(ConsolePlayerNumber()));
 	} else {
-		int playerNearLabelText = ActorDistance(990+ConsolePlayerNumber(), utid) <= range;
+		int playerNearLabelText = ActorDistance(CONST_TID_PLAYER+ConsolePlayerNumber(), utid) <= range;
 		if(!playerNearLabelText){
 			/*
 			ClearHudMessageBold(hp_hid);
@@ -666,7 +647,7 @@ function void TurretState_Draw (int index) {
 			*/
 			return;
 		}
-		HudSetCameraActor(990+ConsolePlayerNumber());
+		HudSetCameraActor(CONST_TID_PLAYER+ConsolePlayerNumber());
 	}
 
 	HudSetShowToEveryone(true);
