@@ -160,14 +160,12 @@ Script "SFPlus_ShowForEveryone" OPEN ClientSide
 							case INTDB_GUARDIANSTATE_STANDBY:
 								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 1, guardian_timer);
 							break;
+							case INTDB_GUARDIANSTATE_DEFEAT:
 							case INTDB_GUARDIANSTATE_PREPARED: 
 								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 2, monsters_left);
 							break;
 							case INTDB_GUARDIANSTATE_ATTACK: 
 								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 3);
-							break;
-							case INTDB_GUARDIANSTATE_DEFEAT:
-								Acs_NamedExecuteAlways("HUD_ShowGameProgress", 0, 6);
 							break;
 						}	
 					}
@@ -251,7 +249,7 @@ script "HUD_ShowGameProgress" (int showtype, int value, int nuke_launched) clien
 			case 0: string = "READY"; color = CR_WHITE;  break;
 			case 1: string = strparam(s:PlayHUD_TimerEX(value)); break;
 			case 2: string = strparam(d:value, s:" Left"); color = CR_ORANGE;  break;
-			case 3: string = "GUARDIAN"; color = CR_WHITE; break;
+			case 3: string = "GUARDIAN WAVE"; color = CR_WHITE; break;
 			case 4: string = "WAVE COMPLETE"; color = CR_GREEN; break;
 			case 5: string = strparam(d:value, s:" %"); break;
 			case 6: string = "GAME OVER"; color = CR_WHITE; break;

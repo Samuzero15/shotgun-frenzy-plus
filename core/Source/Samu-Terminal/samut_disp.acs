@@ -25,6 +25,22 @@ function void HudPrintText(int x, int y, int hid, str text, str font, int color)
 	HUDDrawText(hid, text);
 }
 
+function void SamuTerm_ShowControls(int xoff, int yoff, int text) {
+	HudSetTextTypeOn(true);
+	HudSetAppearTime(0.03);
+	HudSetStayTime(5.0);
+	HudSetDisappearTime(1.0);
+	int control_string = strparam(s:"Controls:\n",
+		 s:"\n(Mouse) Move cursor",
+		 s:"\n(", k:"+attack", s:") Click buttons",
+		 s:"\n(", k:"+moveleft", s:", ", k:"+moveright", s:", ", k:"+forward", s:", ", k:"+back", s:") Select Buttons.",
+		 s:"\n(", k:"+jump", s:") Close terminal");
+	HudSetResoultion();
+	HudSetPoint(Vars_Mid_Wid() + xoff, Vars_Mid_Hei() + yoff);
+	HUDSetTextColor(3);
+	HUDDrawText(0, text);
+}
+
 function void HudSetResoultion(void){
 	HudSetVirtualSize(STSET_WIDTH,STSET_HEIGHT);
 }

@@ -9,7 +9,12 @@
 
 ## v1 - The path of the damned...
 
-#### (31 / 10 / 2025) [Cleanup script thingies]
+#### (2 / 10 / 2025) [Input QoL changes on terminals]
+	*) Now the jump button will be useful for a quick close button for the terminals (works in all player and CMDR terminals)
+	*) When logging in the terminal, a short message with the controls will show up on screen.
+	*) Little visual fixes on the HUD.
+
+#### (31 / 10 / 2025) (v1.8-rc4 Release!)  [Cleanup script thingies]
 	*) Used some constants defines for easier access and less use of magic numbers.
 	*) Renamed files, from fc_mcomm.acs to fc_Mechfa.acs and fc_Dlab.acs to fc_Mcomm.acs
 	-) Reduced the amount of possible rewards when a monster is killed from 4 to 2.

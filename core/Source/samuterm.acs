@@ -119,9 +119,24 @@ script "SamuTerminal_Loop" (int alphatag) CLIENTSIDE {
 	//Component_PrintCount();
 	//Samuterm_HelloPrompt();
 	Input_ClearBinds();
-	if(pagetags[STTAGS_ALPHA] != 10){
-		Input_BindDirections();
+	Input_BindDirections();
+	if(pagetags[STTAGS_ALPHA] != 10) {
+		SamuTerm_ShowControls(0.0, 0.0, strparam(s:"Controls:\n",
+		 s:"\n(Mouse) Move cursor",
+		 s:"\n(", k:"+attack", s:") Click buttons",
+		 s:"\n(", k:"+moveleft", s:", ", k:"+moveright", s:", ", k:"+forward", s:", ", k:"+back", s:") Select Buttons",
+		 s:"\n(", k:"+jump", s:") Close terminal")
+		);
+	} else {
+		SamuTerm_ShowControls(0.0, 120.0, strparam(s:"Controls:\n",
+		 s:"\n(Mouse) Move cursor",
+		 s:"\n(", k:"+attack", s:") Click buttons",
+		 s:"\n(", k:"+moveleft", s:", ", k:"+moveright", s:", ", k:"+forward", s:", ", k:"+back", s:") Move camera",
+		 s:"\n(Hold ", k:"+use", s:" + ", k:"+moveleft", s:" / ", k:"+moveright", s:") Rotate camera",
+		 s:"\n(", k:"+jump", s:") Return / Close terminal")
+		);
 	}
+	
 	SamuTerm_Say(msgs[STMSGS_LOGIN]);
 	LocalAmbientSound("SamuTerm/LogIn", 127);
 	PlaySound(CONST_TID_PLAYER+playernumber(),"SamuTerm/Idle", CHAN_BODY,1.0,true);
