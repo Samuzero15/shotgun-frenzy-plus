@@ -27,7 +27,7 @@ function void HudPrintText(int x, int y, int hid, str text, str font, int color)
 
 function void SamuTerm_ShowControls(int xoff, int yoff, int text) {
 	HudSetTextTypeOn(true);
-	HudSetAppearTime(0.03);
+	HudSetAppearTime(0.006);
 	HudSetStayTime(5.0);
 	HudSetDisappearTime(1.0);
 	int control_string = strparam(s:"Controls:\n",
@@ -37,8 +37,8 @@ function void SamuTerm_ShowControls(int xoff, int yoff, int text) {
 		 s:"\n(", k:"+jump", s:") Close terminal");
 	HudSetResoultion();
 	HudSetPoint(Vars_Mid_Wid() + xoff, Vars_Mid_Hei() + yoff);
-	HUDSetTextColor(3);
-	HUDDrawText(0, text);
+	HUDSetTextColor(CR_WHITE);
+	HUDDrawText(ST_HID_CONTROLS, text);
 }
 
 function void HudSetResoultion(void){

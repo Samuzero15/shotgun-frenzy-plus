@@ -16,6 +16,7 @@
 //#include "samu_tools.acs"
 
 #define FP_STIMUP_MAX 10
+#define FP_STIMUP_HARDSHELL_APLIMIT 300
 
 int StimUpTop = 0;
 int StimUp_list[FP_STIMUP_MAX][5];
@@ -109,8 +110,13 @@ Script "Stimpack_Healme" (void)
     delay(2);
     int healme = 20 + 6*dosis;
     if(armor){ // A percentage of your dosis will be added also as armor bonuses.
-        int armor_get = ((healme*(0.5+(0.05*armor)))>>16);
-        GiveInventory("ArmorShard", armor_get);
+        int armor_get = ((healme*(0.40+(0.05*armor)))>>16);
+        if(CheckInventory("BasicArmor") < FP_STIMUP_HARDSHELL_APLIMIT) { // 300 AP cap
+            if(CheckInventory("BasicArmor") + armor_get >= FP_STIMUP_HARDSHELL_APLIMIT){
+                armor_get = FP_STIMUP_HARDSHELL_APLIMIT - CheckInventory("BasicArmor");
+            }
+            GiveInventory("ArmorShard_One", armor_get);
+        }
         //log(s:"(StimUp) Armor Repair: ", d:armor_get);
     }
     if(overheal){ // Divide the health to add some overhealing after using a stimpack.
@@ -126,13 +132,13 @@ Script "Stimpack_Healme" (void)
 Script "StimUp_CaffeinePower" (void)
 {// For some time, gain some 10% speed!
     GiveInventory("StimUp_CaffeinePowerGiver", 1);
-    if(StimUp_CheckInv("StimUpScript_Caffeine")) terminate;
+    if(CheckInventory("StimUpScript_Caffeine")) terminate;
     GiveInventory("StimUpScript_Caffeine", 1);
     int ori_speed = getactorproperty(0, APROP_Speed);
-    while(StimUp_CheckInv("StimUp_CaffeinePower")){
+    while(CheckInventory("StimUp_CaffeinePower")){
         int coffie = StimUp_CheckInv("StimUp_Caffeine");
-        setactorproperty(0, APROP_SPEED, ori_speed + 0.1*coffie);
-        //log(s:"(StimUp) Caffeine On. Speed:", f:(getActorProperty(0, APROP_SPEED)));
+        setactorproperty(0, APROP_SPEED, ori_speed + 0.1*coffie*CheckInventory("StimUp_CaffeinePower"));
+        //log(s:"(StimUp) Caffeine On. Speed Bonus:", f:(0.1*coffie*CheckInventory("StimUp_CaffeinePower")));
         delay(1);
     }
     TakeInventory("StimUpScript_Caffeine", 1);
@@ -143,10 +149,10 @@ Script "StimUp_CaffeinePower" (void)
 Script "StimUp_StimulantPower" (void)
 {// For a large time (1:30 minutes) gain +10 MaxHP per stimulant level.
     GiveInventory("StimUp_StimulantPowerGiver", 1);
-    if(StimUp_CheckInv("StimUpScript_Stimulant")) terminate;
+    if(CheckInventory("StimUpScript_Stimulant")) terminate;
     GiveInventory("StimUpScript_Stimulant", 1);
     int ori_maxHP = getactorproperty(0, APROP_SpawnHealth);
-    while(StimUp_CheckInv("StimUp_StimulantPower")){
+    while(CheckInventory("StimUp_StimulantPower")){
         int stimul = StimUp_CheckInv("StimUp_Stimulant");
         setactorproperty(0, APROP_SpawnHealth, ori_maxHP + 20*stimul);
         //log(s:"(StimUp) Stimulant On. MaxHP=", d:(getActorProperty(0, APROP_SpawnHealth)));
@@ -161,11 +167,11 @@ Script "StimUp_CicatrizatePower" (void)
 {// For 10 seconds, regenerate 1 hp. (in each 10-level tics)
 
     GiveInventory("StimUp_CicatrizatePowerGiver", 1);
-    if(StimUp_CheckInv("StimUpScript_Cicatrizate")) terminate;
+    if(CheckInventory("StimUpScript_Cicatrizate")) terminate;
     GiveInventory("StimUpScript_Cicatrizate", 1);
     int ticks = 0;
     int maxHP, nowHP;
-    while(StimUp_CheckInv("StimUp_CicatrizatePower")){
+    while(CheckInventory("StimUp_CicatrizatePower")){
         int regen = StimUp_CheckInv("StimUp_Cicatrizate");
         //log(s:"(StimUp) Regeneration On. Regen Delay=", d:(10-regen));
         if(ticks > 10-regen){

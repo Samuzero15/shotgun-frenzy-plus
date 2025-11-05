@@ -53,6 +53,8 @@
 #LibDefine ST_HID_TOOLTIPBACK  	ST_HID_GLOBAL + 8
 #LibDefine ST_HID_TOOLTIP      	ST_HID_GLOBAL + 7
 
+#LibDefine ST_HID_CONTROLS     	ST_HID_GLOBAL + 6
+
 #LibDefine ST_HID_CURSOR ST_HID_GLOBAL
 
 // Component Properties (Dont touch that.)

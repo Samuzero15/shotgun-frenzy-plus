@@ -180,24 +180,30 @@ script 505 (int l_Tag, int l_DoorOrFloor){
         lockBarricade = 0;
 }
 
-script 696 (void)
+script 696 (int getinv, int command_credits)
 {// [Samu] For debug pruposes. (and cheating, heheheh.)
 	p_Credits[playernumber()] += 100000;
 	p_Exp_Points[playernumber()] += 100;
 	/*c_Credits += 200000;
     */
-	GiveInventory("SSG",1);
-	GiveInventory("QuadShot",1);
-	GiveInventory("Spitter",1);
-	GiveInventory("Buckshot",1);
-	GiveInventory("Dualshot",1);
-	GiveInventory("Repeater",1);
-	GiveInventory("Launcher",1);
-	GiveInventory("Flinger",1);
-	GiveInventory("Plasmagun",1);
-	GiveInventory("Flamer",1);
-	GiveInventory("BFG",1);
-	GiveInventory("SF_Railgun",1);
+    if(getinv >= 1){
+        GiveInventory("SSG",1);
+        GiveInventory("QuadShot",1);
+        GiveInventory("Spitter",1);
+        GiveInventory("Buckshot",1);
+        GiveInventory("Dualshot",1);
+        GiveInventory("Repeater",1);
+        GiveInventory("Launcher",1);
+        GiveInventory("Flinger",1);
+        GiveInventory("Plasmagun",1);
+        GiveInventory("Flamer",1);
+        GiveInventory("BFG",1);
+        GiveInventory("SF_Railgun",1);
+    }
+
+   if(command_credits >= 1) {
+        c_Credits = 99999;
+   }
 }
 
 function void p_MenuPurchase_Recycle (str l_TakeWeapon, int l_GiveCash)

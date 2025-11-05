@@ -9,12 +9,20 @@
 
 ## v1 - The path of the damned...
 
-#### (2 / 11 / 2025) [Input QoL changes on terminals]
+#### (4 / 11 / 2025) (v1.8 Release!) [ItemHud Fixes, Control Text Tweaks, and other fixes]
+	*) Fixed a unblocking linedef on CF01.
+	*) Other map fixes on missing textures on SD01 and CD04 maps.
+	*) The control text should be cleared when a input is clicked on the terminal.
+	*) Now Item Hud should be redrawn with the cvar updates.
+	*) Added the control text for the prompts.
+	*) The Stimpacks upgrade effects now it should be functional once again.
+
+#### (2 / 11 / 2025) (v1.8-rc5 Release!) [Input QoL changes on terminals]
 	*) Now the jump button will be useful for a quick close button for the terminals (works in all player and CMDR terminals)
 	*) When logging in the terminal, a short message with the controls will show up on screen.
 	*) Little visual fixes on the HUD.
 
-#### (31 / 10 / 2025) (v1.8-rc4 Release!)  [Cleanup script thingies]
+#### (31 / 10 / 2025) (v1.8-rc4 Release!) [Cleanup script thingies]
 	*) Used some constants defines for easier access and less use of magic numbers.
 	*) Renamed files, from fc_mcomm.acs to fc_Mechfa.acs and fc_Dlab.acs to fc_Mcomm.acs
 	-) Reduced the amount of possible rewards when a monster is killed from 4 to 2.

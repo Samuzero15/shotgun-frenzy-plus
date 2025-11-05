@@ -42,8 +42,8 @@ script 90 (void)
     {
         spawnspot("SpiderImpHead", 115, 118, 0);
         spawnspot("SpiderImpHead", 116, 118, 0);
-       spawnspot("SpiderImpHead", 117, 118, 0);
-       spawnspot("SpiderImpHead", 15, 118, 0);
+        spawnspot("SpiderImpHead", 117, 118, 0);
+        spawnspot("SpiderImpHead", 15, 118, 0);
         spawnspot("Cacodemon", 7, 118, 0);
         spawnspot("Cacodemon", 8, 6118, 0);
 		ThrustThingZ(6118, 100, 0, 0);// Push them up, just to make it look like an ambush.

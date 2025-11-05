@@ -666,10 +666,3 @@ function void FinalFight_ScoreString(int id, str label, int number, str label_nu
 	if(number != -1)
 	hudmessagebold(d:number, s:label_number; 0, 154+id, CR_WHITE, s_ScreenSize[0] * 0.5 + 180.2, s_ScreenSize[1] * 0.5 + 55.0 + 15.0*id, 0.0);
 }
-
-// cheatz
-script 999 (void)
-{
-	p_Credits[playernumber()] = 99999;
-	c_Credits = 99999;
-}  

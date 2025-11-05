@@ -33,13 +33,21 @@ script "SFPlus_InventoryList_Respawn" RESPAWN{
 
 Script "SFPlus_InventoryList" (void) Clientside{
 	int last_itemhud_stack = 0, i = 0, j = 0;
+	int cvar_last[4];
+	int cvar_now[4];
 	if(ConsolePlayerNumber() == Playernumber()){
 		while(PlayerInGame(PlayerNumber())){
+			cvar_now[0] = GetUserCvar(PlayerNumber(), "sfp_itemhud_x");
+			cvar_now[1] = GetUserCvar(PlayerNumber(), "sfp_itemhud_y");
+			cvar_now[2] = GetUserCvar(PlayerNumber(), "sfp_itemhud_items_per_row");
+			cvar_now[3] = GetUserCvar(PlayerNumber(), "sfp_itemhud_orientation");
 			itemhud_stack = 0;
 			for (i = 0; i < fp_LastItem; i++){
 				ItemHud_CountItems(i);
 			}
-			if(itemhud_stack != last_itemhud_stack){
+			if(itemhud_stack != last_itemhud_stack || cvar_last[0] != cvar_now[0] ||
+				 cvar_last[1] != cvar_now[1] || cvar_last[2] != cvar_now[2] ||
+				 cvar_last[3] != cvar_now[3]) {
 				last_itemhud_stack = itemhud_stack;
 				ItemHud_AdjustCaret(itemhud_stack);
 			}
@@ -47,6 +55,10 @@ Script "SFPlus_InventoryList" (void) Clientside{
 			for (j = 0; j < fp_LastItem; j++){
 				slot = ItemHud_ShowItem(j, slot);
 			}
+			cvar_last[0] = cvar_now[0];
+			cvar_last[1] = cvar_now[1];
+			cvar_last[2] = cvar_now[2];
+			cvar_last[3] = cvar_now[3];
 			delay(1);
 		}
 	}

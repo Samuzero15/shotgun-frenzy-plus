@@ -1,3 +1,10 @@
+///////// (v1.8) /////////
+) Fixed a unblocking linedef on CF01.
+) The control text should be cleared when a input is clicked on the terminal.
+) Now Item Hud should be redrawn with the cvar updates.
+) Added the control text for the prompts.
+) The Stimpacks upgrade effects now it should be functional once again.
+
 ///////// (v1.8rc5) //////////
 ) Now the jump button will be useful for a quick close button for the terminals (works in all player and CMDR terminals)
 ) When logging in the terminal, a short message with the controls will show up on screen.

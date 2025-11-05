@@ -166,6 +166,10 @@ function void Prompt_AskEx(str title, str msg, str color, int virt_w, int virt_h
 	Input_AddBind(BT_USE, STEXE_YES,0,0,0);
 	Input_AddBind(BT_ALTATTACK, STEXE_NO,0,0,0);
 	Input_AddBind(BT_CROUCH, STEXE_NO,0,0,0);
+	SamuTerm_ShowControls(0.0, 100.0, strparam(
+		 s:"(\cd", k:"+use", s:"\c-) Accept / Yes",
+		 s:"\n(\cd", k:"+altattack", s:" or ", k:"+crouch", s:"\c-) Cancel / No")
+		);
 	
 	Label_setText(prompt_data[STPROMPT_DATA_LABEL], msg);
 	Label_setColor(prompt_data[STPROMPT_DATA_LABEL], color);
