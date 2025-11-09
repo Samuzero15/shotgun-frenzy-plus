@@ -146,6 +146,7 @@ Script "LumpRead_ReadFile" (int file_text, int lineread_script, int lumpread_fil
     if(next_comment_multiline[1] == -1) next_comment_multiline[1] = tex_len;
     int pos = 0;
     int delayer = 0;
+    int linenumber = 1;
     do{
         if(next_comment_multiline[0] != -1 && pos >= next_comment_multiline[0]){
             if (pos >= next_comment_multiline[1]){
@@ -155,13 +156,15 @@ Script "LumpRead_ReadFile" (int file_text, int lineread_script, int lumpread_fil
             }else{
                 pos = next_comment_multiline[1]+2;
                 next_newline = ACS_NamedExecuteWithResult("LumpRead_FindText", file_text, "\n", pos);
+                linenumber++;
                 if(pos == tex_len) break;
             }
         }
         str line = StrSlice(file_text, pos, next_newline);
-        ACS_NamedExecuteWithResult("LumpRead_ReadLine", line, lineread_script, lumpread_fileid);
+        ACS_NamedExecuteWithResult("LumpRead_ReadLine", line, linenumber, lineread_script, lumpread_fileid);
         // go to next line
         pos = next_newline+1;
+        linenumber++;
         next_newline = ACS_NamedExecuteWithResult("LumpRead_FindText", file_text, "\n", pos);
         next_newline = next_newline != -1 ? next_newline : tex_len;
         delayer ++;
@@ -175,7 +178,7 @@ Script "LumpRead_FindText" (int file_text, int char, int pos){
     SetResultValue(StrFindFrom(file_text, char, pos));
 }
 
-Script "LumpRead_ReadLine" (int line, int lineread_script, int lumpread_fileid){
+Script "LumpRead_ReadLine" (int line, int linenumber, int lineread_script, int lumpread_fileid){
     // Each parsed line, removing comments and CR's. And then, execute the lineread_script
     int next_comment;
     int next_comment1;
@@ -204,10 +207,10 @@ Script "LumpRead_ReadLine" (int line, int lineread_script, int lumpread_fileid){
         lumpread_buffer[lumpread_bufferlinecount] = line;
         //lumpread_buffernextcomma[lumpread_bufferlinecount] = res2;
         lumpread_bufferlinecount ++;
-        ACS_NamedExecuteWithResult(lineread_script, line);
+        ACS_NamedExecuteWithResult(lineread_script, line, linenumber);
     }
 }
-function int LumpRead_CountArgs(str line, int min_args, int max_args, str command) {
+function int LumpRead_CountArgs(str line, int linenumber, int min_args, int max_args, str command) {
     int count = 0;
     int in_quotes = 0;
     int len = StrLen(line);
@@ -218,11 +221,11 @@ function int LumpRead_CountArgs(str line, int min_args, int max_args, str comman
     }
     count++; // Last argument after last comma
     if (count < min_args) {
-        Log(s:"(",s:command, s:"): ", s:"Not enough arguments! Expected at least ", d:min_args, s:", got ", d:count, s:".");
+        Log(s:"#", d:linenumber, s:" - (",s:command, s:"): ", s:"Not enough arguments! Expected at least ", d:min_args, s:", got ", d:count, s:".");
         return 0;
     }
     if (count > max_args) {
-        Log(s:"(",s:command, s:"): ", s:"Too many arguments! Expected at most ", d:max_args, s:", got ", d:count, s:".");
+        Log(s:"#", d:linenumber, s:" - (",s:command, s:"): ", s:"Too many arguments! Expected at most ", d:max_args, s:", got ", d:count, s:".");
         return 0;
     }
     return count;

@@ -1,7 +1,7 @@
 {
     "project_parts": {
         "Core": {
-            "release": "v1.8",
+            "release": "v1.8.1",
             "filename": "sfplus_core",
             "sourcedir": "core",
             "distdir": "dist",
@@ -58,7 +58,7 @@
             false,
             false,
             false,
-            true,
+            false,
             false,
             true,
             true,

@@ -70,9 +70,9 @@ Script "SFPlus_ListEnemySets" (void){
 	NamedExecuteClientScript("SFPlus_ListEnemySetsClientsided", PlayerNumber(), GetCvar("sfp_monsterset"));
 }
 
-Script "SFPlus_AISet_SFMWAVESReadLine" (int line) {
+Script "SFPlus_AISet_SFMWAVESReadLine" (int line, int linenumber) {
 	//log(s:"\"", s:line, s:"\"");
-	if(!LumpRead_CountArgs (line, 3, 3, "MWaves")) terminate;
+	if(!LumpRead_CountArgs (line, linenumber, 3, 3, "MWaves")) terminate;
 	str index = LumpRead_NextArg (line,LUMPR_VALUE_STR);
 	str name = 	LumpRead_NextArg (line,LUMPR_VALUE_STR);
 	str boss_level_start = 	LumpRead_NextArg (line, LUMPR_VALUE_INT);

@@ -24,3 +24,7 @@ FP_PROTIP21 = "Megaspheres also grant blue armors, and remember, armor depletes 
 FP_PROTIP23 = "Champions may drop runes, the higher class the monster is, the higher tier the rune spawns";
 FP_PROTIP24 = "Feeling supportive? A good supplier and the patcher gun will help.";
 FP_PROTIP25 = "Patcher and Suppliers can also grant experience! Slower than killing monster tho, but it's a consistent way to farm exp.";
+FP_PROTIP26 = "Get at least 1 weapon upgrade as soon as possible, Flame SSG is a great pick for starters!";
+FP_PROTIP27 = "Buildings like turrets and dispensers can be upgraded with the patcher, up to 5 levels.";
+FP_PROTIP28 = "The stimpack upgrade Hard Shell's Armor shard gain is capped to 300AP.";
+FP_PROTIP29 = "Armor Shards can be replaced by full armors, your armor gains the overcharged armor points too.";

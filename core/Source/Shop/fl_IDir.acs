@@ -100,32 +100,32 @@ function void IDir_ReadSFITMDEF(void){
 	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFITMDEF", "SFPlus_IDir_SFITMDEFReadLine");
 }
 
-Script "SFPlus_IDir_SFITMDEFReadLine" (int line) {
+Script "SFPlus_IDir_SFITMDEFReadLine" (int line, int linenumber) {
 	//log(s:"\"", s:line, s:"\"");
 	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	int tier, actor, poweractor, langdata, btnimg;
 	if (StrIEquals(op, "AddItem")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_DEFAULT);
+		SFITMDEF_AddItem(line, FP_ITEM_T_DEFAULT, linenumber);
 	} else if (StrIEquals(op, "AddPowerup")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_POWERUP);
+		SFITMDEF_AddItem(line, FP_ITEM_T_POWERUP, linenumber);
 	} else if (StrIEquals(op, "AddDeployable")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_DEPLOY);
+		SFITMDEF_AddItem(line, FP_ITEM_T_DEPLOY, linenumber);
 	} else if (StrIEquals(op, "AddHidden")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_HIDDEN);
+		SFITMDEF_AddItem(line, FP_ITEM_T_HIDDEN, linenumber);
 	} else if (StrIEquals(op, "ItemDrop")) {
-		SFITMDEF_ItemDrop(line, 0);
+		SFITMDEF_ItemDrop(line, 0, linenumber);
 	} else if (StrIEquals(op, "ItemDropChampion")) {
-		SFITMDEF_ItemDrop(line, 1);
+		SFITMDEF_ItemDrop(line, 1, linenumber);
 	} else if (StrIEquals(op, "ItemDropRune")) {
-		SFITMDEF_ItemDrop(line, 2);
+		SFITMDEF_ItemDrop(line, 2, linenumber);
 	} else if (StrIEquals(op, "ClearAllDrops")) {
-		if(!LumpRead_CountArgs(line, 1, 1, "ClearAllDrops")) terminate;
+		if(!LumpRead_CountArgs(line, linenumber, 1, 1, "ClearAllDrops")) terminate;
 		SFITMDEF_ClearAllDrops();
 	} else if (StrIEquals(op, "ClearAllItems")) {
-		if(!LumpRead_CountArgs(line, 1, 1, "ClearAllItems")) terminate;
+		if(!LumpRead_CountArgs(line, linenumber, 1, 1, "ClearAllItems")) terminate;
 		SFITMDEF_ClearAllItems();
 	} else if (StrIEquals(op, "ClearDropsForMonsterClass")) {
-		SFITMDEF_ClearDropsForMonClass(line, LumpRead_NextArg(line, LUMPR_VALUE_INT));
+		SFITMDEF_ClearDropsForMonClass(line, LumpRead_NextArg(line, LUMPR_VALUE_INT), linenumber);
 	} else if (StrEquals(op, "ClearAllRunes")) {
         RuneDir_ClearAllRunes();
     } else if (StrEquals(op, "AddRune")) {
@@ -150,8 +150,8 @@ Script "SFPlus_IDir_SFITMDEFReadLine" (int line) {
 	}
 }
 
-function void SFITMDEF_AddItem(str line, int type){
-	if(!LumpRead_CountArgs (line, 5, 10, "AddItem")) return;
+function void SFITMDEF_AddItem(str line, int type, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 5, 10, "AddItem")) return;
 	if(fp_LastItem >= FP_ITEM_NUM) {
 		log(s:"(fl_IDir.acs):", s:" Item directory maxed out.");
 		return;
@@ -326,8 +326,8 @@ function void SFITMDEF_ClearAllItems(void) {
 	}
 }
 
-function void SFITMDEF_ClearDropsForMonClass(str line, int class) {
-	if(!LumpRead_CountArgs(line, 2, 2, "ClearDropsForMonsterClass")) return;
+function void SFITMDEF_ClearDropsForMonClass(str line, int class, int linenumber) {
+	if(!LumpRead_CountArgs(line, linenumber, 2, 2, "ClearDropsForMonsterClass")) return;
 	ItemDr_stack[class] = 0;
 	ItemDr_champStack[class] = 0;
 	for (int j = 0; j < ITEMDROP_ITEMS; j++) {
@@ -338,7 +338,7 @@ function void SFITMDEF_ClearDropsForMonClass(str line, int class) {
 	}
 }
 
-function void SFITMDEF_ItemDrop(int line, int dropType) {
+function void SFITMDEF_ItemDrop(int line, int dropType, int linenumber) {
 	// dropType: 0 = ItemDrop, 1 = ItemDropChampion, 2 = ItemDropRune
 	str funcName;
 	switch(dropType) {
@@ -347,7 +347,7 @@ function void SFITMDEF_ItemDrop(int line, int dropType) {
 		case 2: funcName = "ItemDropRune"; break;
 		default: funcName = "UnknownDrop"; break;
 	}
-	if(!LumpRead_CountArgs(line, 4, 5, funcName)) return;
+	if(!LumpRead_CountArgs(line, linenumber, 4, 5, funcName)) return;
 
 	int class = LumpRead_NextArg(line, LUMPR_VALUE_INT);
 

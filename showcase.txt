@@ -1,3 +1,6 @@
+///////// (v1.8.1) /////////
+) Supplier upgrade now it should upgrade to Supplier_Big. (Before it was replaced by SGG_Autoload)
+
 ///////// (v1.8) /////////
 ) Fixed a unblocking linedef on CF01.
 ) The control text should be cleared when a input is clicked on the terminal.

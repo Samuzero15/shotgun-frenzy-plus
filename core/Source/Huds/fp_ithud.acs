@@ -15,8 +15,8 @@
 #include "acsutils.acs"
 
 // Useful for filters.
-#libdefine ITEMHUD_ID_NUM 6200
-#libdefine ITEMHUD_ID_IMG 6300
+#libdefine ITEMHUD_ID_NUM -6300
+#libdefine ITEMHUD_ID_IMG -6200
 int itemhud_stack = 0;
 int itemhud_caretx;
 int itemhud_carety;
@@ -95,9 +95,9 @@ function int ItemHud_ShowItem(int itemid, int slot) {
 	str img = Item_GetIcon(itemid);
 	// Set position
 	if(!(num > 0 && img != 0 &&
-		!CheckInventory("SamuTInv_UsingTerminal") &&
-		Item_GetShowInHud(itemid) &&
-		getCvar("screenblocks") != 12)) {
+		//!CheckInventory("SamuTInv_UsingTerminal") &&
+		Item_GetShowInHud(itemid)
+		/*getCvar("screenblocks") != 12*/)) {
 		return slot;
 	}
 

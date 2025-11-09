@@ -36,7 +36,7 @@ function void FullHud_Hide(void){
 // display rank
 script 604 (int l_Rank) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(87);
 		terminate;
 	} 
@@ -65,7 +65,7 @@ script 604 (int l_Rank) clientside
 // display hud
 script 605 (int l_Type) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(90);
 		terminate;
 	} 
@@ -309,7 +309,7 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
 		game_type = CheckInventory("HUD_Gametype");
 		kills = next_range - exp;
 		
-		if(getCvar("screenblocks") == 12 || getCvar("screenblocks") < 11 || CheckInventory("SamuTInv_UsingTerminal")){
+		if(PlayHud_HideCondition()){
 			//[Samu] Hide the damn hud, ets annoying.
 			FullHud_Hide();
 			delay(1);
@@ -363,7 +363,7 @@ script "SFPlus_PlayerFullScreenHUD" ENTER ClientSide
 
 script "Hud_ShowCoreHealth" (int which, int hp) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(88);
 		ClearHudMessage(80);
 		terminate;
@@ -400,7 +400,7 @@ script "Hud_ShowCoreHealth" (int which, int hp) clientside
 
 script "Hud_ShowPlayerStats" (int credits, int exp, int deaths) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(89);
 		terminate;
 	}
@@ -414,7 +414,7 @@ script "Hud_ShowPlayerStats" (int credits, int exp, int deaths) clientside
 
 script "Hud_ShowPlayerStats_Streak" (int ksnow, int kshigh, int ms) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(85);
 		terminate;
 	}
@@ -470,7 +470,7 @@ function str PlayHUD_MechStatus(int mech_tics){
 
 script "HUD_ShowTeamScore" (int points) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")){
+	if(PlayHud_HideCondition()){
 		ClearHudMessage(256);
 		terminate;
 	}
@@ -481,12 +481,7 @@ script "HUD_ShowTeamScore" (int points) clientside
 
 script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_tics) clientside
 {	// Shows the team credits, and the current status about the mech.
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
-		/*
-		if(CheckInventory("SamuTInv_UsingTerminal")) //log(s:"Player is using terminal");
-		if(getCvar("screenblocks") == 12) //log(s:"Player is on no HUD mode");
-		if(getCvar("screenblocks") != 11) //log(s:"Player is in standard hud mode");
-		*/
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(86);
 		terminate;
 	}
@@ -501,7 +496,7 @@ script "Hud_ShowTeamCredits_MechInfo" (int teamcredits, int commander, int mech_
 
 script "Hud_ShowExperienceBar" (int kills, int rankexp, int currentkills) clientside
 {
-	if((getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11) || CheckInventory("SamuTInv_UsingTerminal")) {
+	if(PlayHud_HideCondition()) {
 		ClearHudMessage(91);
 		ClearHudMessage(92);
 		ClearHudMessage(84);
@@ -520,4 +515,9 @@ script "Hud_ShowExperienceBar" (int kills, int rankexp, int currentkills) client
 	setfont("SMALLFNT");
 	sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
 	hudmessage(s:"< ",d:currentkills, s:" / ", d:rankexp,s:" >"; 0, 84, CR_CYAN, 400.4, 82.4, 1.0);
+}
+
+function bool PlayHud_HideCondition(void){
+	//return (getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11 || CheckInventory("SamuTInv_UsingTerminal"));
+	return getCvar("screenblocks") == 12 || getCvar("screenblocks") != 11 ||  CheckInventory("SamuTInv_UsingTerminal");
 }

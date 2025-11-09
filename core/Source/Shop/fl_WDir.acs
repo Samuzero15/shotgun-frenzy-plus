@@ -54,6 +54,7 @@
 #libdefine FP_WDIR_WEAPON_UPSNUM 5
 #libdefine FP_WDIR_WEAPON_LANGSTRING 6
 #libdefine FP_WDIR_WEAPON_FORCLASS 7
+#libdefine FP_WDIR_WEAPON_ICON 8
 
 // Ammo definition array and constants
 #libdefine FP_AMMODEFS 200
@@ -69,6 +70,7 @@
 
 #libdefine FP_LANGUAGEPROP_NAME "NAME"
 #libdefine FP_LANGUAGEPROP_DESC "DESC"
+#libdefine FP_LANGUAGEPROP_ICON "ICON"
 
 // Starter items array and constants
 #libdefine FP_STARTER_CLASSES 50
@@ -174,33 +176,49 @@ function int StarterClass_FindOrAdd(str classPlayer) {
 	return -1; // No space left
 }
 
-Script "SFPlus_WDir_SFWEPDEFReadLine" (int line) {
+function void StarterItem_Add(int classIdx, str classPlayer, str item, int amount, bool equipweapon){
+	int itemIdx = fp_StarterItemStack[classIdx];
+	if(itemIdx < FP_STARTER_ITEMS_PER_CLASS) {
+		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_CLASSPLAYER] = classPlayer;
+		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_ITEM] = item;
+		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_AMOUNT] = amount;
+		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_EQUIPWEAPON] = equipweapon;
+		fp_StarterItemStack[classIdx]++;
+	} else {
+		log(s:"StarterItem: Maximum starter items reached for class ", d:classIdx, s:".");
+	}
+}
+
+
+Script "SFPlus_WDir_SFWEPDEFReadLine" (int line, int linenumber) {
 	//log(s:"\"", s:line, s:"\"");
 	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	//log(s:"OP: ", s:op);
 	int argcount = StrCharCount(line, ",")+1;
 	if(StrIEquals(op, "AddWeaponPack")){
-		SFWEPDEF_AddWeaponPack(line);
+		SFWEPDEF_AddWeaponPack(line, linenumber);
 	} else if(StrIEquals(op, "AddWeapon")){
-		SFWEPDEF_AddWeapon(line, false);
+		SFWEPDEF_AddWeapon(line, false, linenumber);
 	} else if(StrIEquals(op, "AddWeaponNoPack")){
-		SFWEPDEF_AddWeapon(line, true);
+		SFWEPDEF_AddWeapon(line, true, linenumber);
 	} else if(StrIEquals(op, "AddWeaponUp")){
-		SFWEPDEF_AddWeaponUpgrade(line);
+		SFWEPDEF_AddWeaponUpgrade(line, linenumber);
 	} else if(StrIEquals(op, "ClearAllWeapons")){
 		SFWEPDEF_ClearAllWeapons();
 	} else if(StrIEquals(op, "ReplaceWeapon")){
-		SFWEPDEF_ReplaceWeapon(line);
+		SFWEPDEF_ReplaceWeapon(line, linenumber);
 	} else if(StrIEquals(op, "ReplaceWeaponPack")){
-		SFWEPDEF_ReplaceWeaponPack(line);
+		SFWEPDEF_ReplaceWeaponPack(line, linenumber);
 	} else if(StrIEquals(op, "ReplaceWeaponUp")){
-		SFWEPDEF_ReplaceWeaponUpgrade(line);
+		SFWEPDEF_ReplaceWeaponUpgrade(line, linenumber);
 	} else if(StrIEquals(op, "AddAmmo")){
-		SFWEPDEF_AddAmmo(line);
+		SFWEPDEF_AddAmmo(line, linenumber);
 	} else if(StrIEquals(op, "ClearAllAmmo")){
 		SFWEPDEF_ClearAllAmmo();
 	} else if(StrIEquals(op, "StarterItem")){
-		SFWEPDEF_StarterItem(line);
+		SFWEPDEF_StarterItem(line, linenumber);
+	} else if(StrIEquals(op, "StarterWeapon")){
+		SFWEPDEF_StarterWeapon(line, linenumber);
 	} else if(StrIEquals(op, "ClearClasses")){
 		SFWEPDEF_ClearClasses();
 	}
@@ -264,8 +282,8 @@ function void WeaponUpgrades_Clear(int weapon_id){
 }
 
 /*  Adds an ammo definition  */
-function void SFWEPDEF_AddAmmo(int line) {
-	if(!LumpRead_CountArgs (line, 4, 8, "AddAmmo")) return; // 6 LumpRead_NextArg
+function void SFWEPDEF_AddAmmo(int line, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 4, 8, "AddAmmo")) return; // 6 LumpRead_NextArg
 
 	str ammo_name = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	int base_max_amount = LumpRead_NextArg(line, LUMPR_VALUE_INT);
@@ -386,8 +404,8 @@ script "SFPlus_WDir_GiveStarterItems" (void)
 }
 
 /*	Adds a weapon pack	*/
-function void SFWEPDEF_AddWeaponPack (int line) {
-	if(!LumpRead_CountArgs (line, 6, 6, "AddWeaponPack")) return;
+function void SFWEPDEF_AddWeaponPack (int line, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 5, 6, "AddWeaponPack")) return;
 
 	int cat = LumpRead_NextArg (line, LUMPR_VALUE_INT);
 	if(fp_WpCategoryStack[cat] >= FP_WEP_PACKS_PER_CATEGORY){
@@ -414,8 +432,8 @@ function void SFWEPDEF_AddWeaponPack (int line) {
 }
 
 /*	Adds a weapon  */
-function void SFWEPDEF_AddWeapon (int line, bool nopack) {
-	if(!LumpRead_CountArgs (line, 5, 7, "AddWeaponPack")) return; // 5 LumpRead_NextArg
+function void SFWEPDEF_AddWeapon (int line, bool nopack, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 4, 6, "AddWeapon")) return; // 5 LumpRead_NextArg
 
 	int weapon_pack_id = -1;
 	if(!nopack){
@@ -436,9 +454,7 @@ function void SFWEPDEF_AddWeapon (int line, bool nopack) {
 
 	fp_Wpns[wepid][FP_WDIR_WEAPON_NAME] = SFWEPDEF_WepLanguageValue (lang_wep, FP_LANGUAGEPROP_NAME);
 	fp_Wpns[wepid][FP_WDIR_WEAPON_DESCRIPTION] = SFWEPDEF_WepLanguageValue (lang_wep, FP_LANGUAGEPROP_DESC);
-	
-	 // Ignoring Icon argument for now.
-	LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	fp_Wpns[wepid][FP_WDIR_WEAPON_ICON] = SFWEPDEF_WepLanguageValue (lang_wep, FP_LANGUAGEPROP_ICON);
 	
 	if(weapon_pack_id >= 0) 
 		fp_Wpns[wepid][FP_WDIR_WEAPON_PRICE] = LumpRead_NextArg (line, LUMPR_VALUE_CVAR);
@@ -447,8 +463,8 @@ function void SFWEPDEF_AddWeapon (int line, bool nopack) {
 }
 
 /*	Adds a weapon upgrade	*/
-function void SFWEPDEF_AddWeaponUpgrade(int line){
-	if(!LumpRead_CountArgs (line, 6, 6, "AddWeaponUp")) {
+function void SFWEPDEF_AddWeaponUpgrade(int line, int linenumber){
+	if(!LumpRead_CountArgs (line, linenumber, 6, 6, "AddWeaponUp")) {
 		log(s:line);
 		return; // 6 LumpRead_NextArg
 	}
@@ -479,8 +495,8 @@ function void SFWEPDEF_AddWeaponUpgrade(int line){
 }
 
 /*	Replaces a weapon pack	*/
-function void SFWEPDEF_ReplaceWeaponPack(int line) {
-	if(!LumpRead_CountArgs (line, 6, 7, "ReplaceWeaponPack")) return; // 7 LumpRead_NextArg
+function void SFWEPDEF_ReplaceWeaponPack(int line, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 6, 7, "ReplaceWeaponPack")) return; // 7 LumpRead_NextArg
 
 	int i = 0;
 	str pack_to_replace = LumpRead_NextArg(line, LUMPR_VALUE_STR);
@@ -518,8 +534,8 @@ function void SFWEPDEF_ReplaceWeaponPack(int line) {
 }
 
 /*	Replaces a weapon	*/
-function void SFWEPDEF_ReplaceWeapon(int line) {
-	if(!LumpRead_CountArgs (line, 7, 7, "ReplaceWeapon")) return;
+function void SFWEPDEF_ReplaceWeapon(int line, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 6, 6, "ReplaceWeapon")) return;
 
 	int i = 0;
 	str weapon_to_replace = LumpRead_NextArg (line, LUMPR_VALUE_STR);
@@ -547,8 +563,7 @@ function void SFWEPDEF_ReplaceWeapon(int line) {
 
 	fp_Wpns[wepid][FP_WDIR_WEAPON_NAME] = SFWEPDEF_WepLanguageValue (lang_wep, FP_LANGUAGEPROP_NAME);
 	fp_Wpns[wepid][FP_WDIR_WEAPON_DESCRIPTION] = SFWEPDEF_WepLanguageValue (lang_wep, FP_LANGUAGEPROP_DESC);
-
-	LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	fp_Wpns[wepid][FP_WDIR_WEAPON_ICON] = SFWEPDEF_WepLanguageValue (lang_wep, FP_LANGUAGEPROP_ICON);
 	
 	if(wep_pack_id >= 0) 
 		fp_Wpns[file_wepid][FP_WDIR_WEAPON_PRICE] = LumpRead_NextArg (line, LUMPR_VALUE_CVAR);
@@ -556,8 +571,8 @@ function void SFWEPDEF_ReplaceWeapon(int line) {
 	fp_Wpns[file_wepid][FP_WDIR_WEAPON_FORCLASS] = LumpRead_NextArg (line, LUMPR_VALUE_STR);
 }
 
-function void SFWEPDEF_ReplaceWeaponUpgrade(int line) {
-	if(!LumpRead_CountArgs (line, 6, 6, "ReplaceWeaponUp")) return; // 6 LumpRead_NextArg
+function void SFWEPDEF_ReplaceWeaponUpgrade(int line, int linenumber) {
+	if(!LumpRead_CountArgs (line, linenumber, 6, 6, "ReplaceWeaponUp")) return; // 6 LumpRead_NextArg
 
 	int i, j = 0;
 	str parent_weapon = LumpRead_NextArg (line, LUMPR_VALUE_STR);
@@ -588,29 +603,33 @@ function void SFWEPDEF_ReplaceWeaponUpgrade(int line) {
 	fp_WpUps[weapon_parent_id][wepup_to_replace_id][FP_WDIR_WEPUPG_RECYPRICE] = LumpRead_NextArg (line, LUMPR_VALUE_CVAR);
 }
 
-function void SFWEPDEF_StarterItem(int line){
-	if(!LumpRead_CountArgs (line, 4, 5, "StarterItem")) return; // 3 LumpRead_NextArg, 1 LumpRead_NextArgDefault
+function void SFWEPDEF_StarterItem(int line, int linenumber){
+	if(!LumpRead_CountArgs (line, linenumber, 3, 4, "StarterItem")) return; // 3 LumpRead_NextArg, 1 LumpRead_NextArgDefault
 
 	str classPlayer = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	str inventoryItem = LumpRead_NextArg(line, LUMPR_VALUE_STR);
-	int amount = LumpRead_NextArg(line, LUMPR_VALUE_INT);
-	bool equipweapon = LumpRead_NextArgDefault(line, LUMPR_VALUE_BOOL, false);
+	int amount = LumpRead_NextArgDefault(line, LUMPR_VALUE_INT, 1);
 
 	int classIdx = StarterClass_FindOrAdd(classPlayer);
 	if(classIdx == -1) {
 		log(s:"StarterItem: Maximum player classes reached.");
 		return;
 	}
-	int itemIdx = fp_StarterItemStack[classIdx];
-	if(itemIdx < FP_STARTER_ITEMS_PER_CLASS) {
-		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_CLASSPLAYER] = classPlayer;
-		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_ITEM] = inventoryItem;
-		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_AMOUNT] = amount;
-		fp_StarterItems[classIdx][itemIdx][FP_STARTERITEM_EQUIPWEAPON] = equipweapon;
-		fp_StarterItemStack[classIdx]++;
-	} else {
-		log(s:"StarterItem: Maximum starter items reached for class ", d:classIdx, s:".");
+	StarterItem_Add(classIdx, classPlayer, inventoryItem, amount, false);
+}
+
+function void SFWEPDEF_StarterWeapon(int line, int linenumber){
+	if(!LumpRead_CountArgs (line, linenumber, 3, 3, "StarterWeapon")) return; // 2 LumpRead_NextArg
+
+	str classPlayer = LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str inventoryItem = LumpRead_NextArg(line, LUMPR_VALUE_STR);
+
+	int classIdx = StarterClass_FindOrAdd(classPlayer);
+	if(classIdx == -1) {
+		log(s:"StarterWeapon: Maximum player classes reached.");
+		return;
 	}
+	StarterItem_Add(classIdx, classPlayer, inventoryItem, 1, true);
 }
 
 function str SFWEPDEF_WepLangVal_Upgrade (str string, int up_type, str prop){
@@ -796,9 +815,10 @@ function int WeaponPack_GetPrice(int wid){ return fp_WpPacks[wid][FP_WDIR_WPPACK
 function int WeaponPack_GetForClass(int wid){ return fp_WpPacks[wid][FP_WDIR_WPPACK_FORCLASS]; }
 function bool WeaponPack_IsEquipableForPClass(int wid){ 
 	int forplayerclass = WeaponPack_GetForClass(wid);
-
-	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
 	//log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:GetActorClass(CONST_TID_PLAYER + PlayerNumber()), s:"'");
+	log(s:"forplayerclass: '", s:forplayerclass, s:"'");
+	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
+	
 	return StrContainsI(forplayerclass, GetActorClass(CONST_TID_PLAYER + PlayerNumber()));
 }
 function bool WeaponPack_isOwned(int wid){
@@ -831,7 +851,7 @@ function int Weapon_GetPrice(int wid){   return fp_Wpns[wid][FP_WDIR_WEAPON_PRIC
 function int Weapon_GetForClass(int wid){   return fp_Wpns[wid][FP_WDIR_WEAPON_FORCLASS]; }
 function int Weapon_IsEquipableForPClass(int wid){  
 	int forplayerclass = Weapon_GetForClass(wid);
-
+	log(s:"forplayerclass: ", d:forplayerclass);
 	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
 	return StrContainsI(forplayerclass, GetActorClass(CONST_TID_PLAYER + PlayerNumber()));
 }

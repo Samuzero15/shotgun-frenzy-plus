@@ -9,6 +9,14 @@
 
 ## v1 - The path of the damned...
 
+#### (9 / 11 / 2025) (v1.8.1 Release!) [Touches in SFWEPDEF and in LumpReading]
+	*) Updated the samsara patch, now every class should have their equipped starter weapons.
+	-) Removed the icon value from "addweapon" commands.
+	+) Added the "StarterWeapon" Command. A shorthand for starter item with weapons.
+	-) Removed the weapon_equip parameter, and made the amount as optional for "StarterItem" Command.
+	*) Supplier upgrade now it should upgrade to Supplier_Big. (Before it was replaced by SGG_Autoload)
+	*) Now if a line is wrong in some of the mod lumps, you can know which line is it.
+
 #### (4 / 11 / 2025) (v1.8 Release!) [ItemHud Fixes, Control Text Tweaks, and other fixes]
 	*) Fixed a unblocking linedef on CF01.
 	*) Other map fixes on missing textures on SD01 and CD04 maps.
