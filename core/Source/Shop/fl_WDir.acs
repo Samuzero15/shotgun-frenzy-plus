@@ -342,7 +342,7 @@ script "Ammo_UpdateCaps" (void) {
 			if (ammo_rune) {
 				cap = cap * 3 / 2; // Multiply by 1.5 if ammo_rune is active
 			}
-		}
+		} else continue; // TODO: Remove this Anti-crash line, after a Zandro update
 		// If max_cap is not zero, limit cap to max_cap
 		if (max_cap != 0 && cap > max_cap) {
 			cap = max_cap;
@@ -357,6 +357,11 @@ script "Ammo_ResetCaps" (void) {
 	TakeInventory("g_Backpack", 1); // Reset token.
 
 	for (int i = 0; i < fp_AmmoDefStack; i++) {
+		
+		// TODO: Remove this condition, after updating Zandronum.
+		if(fp_AmmoList[i][FP_AMMODEF_NOTEXPANDABLE]) 
+			continue;
+			
 		str ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
 		int base_max_amount = fp_AmmoList[i][FP_AMMODEF_BASEMAX];
 		SetAmmoCapacity(ammo_name, base_max_amount);
@@ -815,11 +820,24 @@ function int WeaponPack_GetPrice(int wid){ return fp_WpPacks[wid][FP_WDIR_WPPACK
 function int WeaponPack_GetForClass(int wid){ return fp_WpPacks[wid][FP_WDIR_WPPACK_FORCLASS]; }
 function bool WeaponPack_IsEquipableForPClass(int wid){ 
 	int forplayerclass = WeaponPack_GetForClass(wid);
-	//log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:GetActorClass(CONST_TID_PLAYER + PlayerNumber()), s:"'");
-	log(s:"forplayerclass: '", s:forplayerclass, s:"'");
+	str playclass = GetActorClass(CONST_TID_PLAYER + PlayerNumber());
+	str char_everyone = "#E";
+	str char_notClass = "$";
+	// #E = Everyone can use this weapon pack.
+	// $PlayerClass = Not for this class (In conjunction with the @ character.)
+
+	//log(s:"[WeaponPack_IsEquipableForPClass] forplayerclass: '", s:forplayerclass, s:"', playerclass: '", s:playclass, s:"'");
+	//log(s:"forplayerclass: '", s:forplayerclass, s:"'");
 	if(forplayerclass == 0 || StrIEquals(forplayerclass, "0")) return true;
 	
-	return StrContainsI(forplayerclass, GetActorClass(CONST_TID_PLAYER + PlayerNumber()));
+	// Check if the player class name is contained in the forplayerclass string
+	// Also check that it does not contain a '$' before the player class name.
+	if(StrContainsI(strparam(s:char_notClass, s:forplayerclass), strparam(s:char_notClass, s:playclass))){
+		//log(s:"Hey!, This guy does'nt use this pack!");
+		return false;
+	}
+
+	return StrContainsI(forplayerclass, playclass) || StrContainsI(forplayerclass, char_everyone);
 }
 function bool WeaponPack_isOwned(int wid){
 	bool res = false;

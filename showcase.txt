@@ -1,3 +1,8 @@
+///////// (v1.8.2) /////////
+) Fixed a crash when the ammo definitions are not loaded fast enough, this would be fixed in the next Zandronum version, but at least here it is a workarround.
+) Now in Forclass parameter for AddWeaponPack, now you can exclude certain classes with #E and $ tokens.
+) Also a new M_Doom graphic!
+
 ///////// (v1.8.1) /////////
 ) Supplier upgrade now it should upgrade to Supplier_Big. (Before it was replaced by SGG_Autoload)
 

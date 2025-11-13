@@ -6,7 +6,7 @@ DefaultListMenu
 
 ListMenu "MainMenu"{
 
-	StaticPatch 94, -5, "M_DOOM"
+	StaticPatch 50, 5, "M_DOOM"
 	
 	TextItem "New Game", "s", "PlayerclassMenu"
 	TextItem "SF+ Settings", "s", "SFPlusOptions"

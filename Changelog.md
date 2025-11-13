@@ -9,6 +9,11 @@
 
 ## v1 - The path of the damned...
 
+#### (13 / 11 / 2025) (v1.8.2 Release) [Fixes on Ammo resets, excluding classes for weapon packs, and a new M_Doom graphic!]
+	*) Fixed a crash when the ammo definitions are not loaded fast enough, this would be fixed in the next Zandronum version, but at least here it is a workarround.
+	+) Now in Forclass parameter for AddWeaponPack, now you can exclude certain classes with #E and $ tokens.
+	*) Also a new M_Doom graphic!
+
 #### (9 / 11 / 2025) (v1.8.1 Release!) [Touches in SFWEPDEF and in LumpReading]
 	*) Updated the samsara patch, now every class should have their equipped starter weapons.
 	-) Removed the icon value from "addweapon" commands.

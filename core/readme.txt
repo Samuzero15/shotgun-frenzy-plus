@@ -12,11 +12,15 @@ What is inside?
 	===) Lotta Fixes from the original!
 	===) Mechanical Upgrades! In the right way.
 	===) Player Upgrades on the Health terminal!
+	===) Runes on the Health terminal too!
 	===) Drop monies to the players!
 	===) New turrets like the Shotgun Turret are here!
 	===) An improved commander terminal, keeping their good old looks!
 	===) Slain more demons with a (kind-of) updated monster rooster!
-	===) Kill-Streaks are here! Break milestones and earn extra U.Ps! 
+	===) Kill-Streaks are here! Break milestones and earn extra U.Ps!
+	===) New announcer courtesy of Mikell Dover!
+	===) QoL Changes that will make your gun shoot happier
+	===) Lump reading features for your modding needs (that's still experimental, but exists!)
 
 -Samuzero15tlh-
 
