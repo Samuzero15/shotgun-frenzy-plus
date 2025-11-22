@@ -9,7 +9,17 @@
 
 ## v1 - The path of the damned...
 
-#### (13 / 11 / 2025) (v1.8.2 Release) [Fixes on Ammo resets, excluding classes for weapon packs, and a new M_Doom graphic!]
+#### (22 / 11 / 2025) [Compiler Switch to zt-bcc, compacting libraries, few refactors & some fixes]
+	!*) I need to check my head... Now the default compiler for this project will be zt-bcc.
+	// Why the compiler switch? Well, since it allows structs and dynamic arrays and many other cool things straight from C language, I had to do the switch sooner or later. ACC is limiting me up for this project, I'll have to update readme ASAP.
+	// The only thing that I'll keep it ACS pure-ish is the Samu Terminal which I'm planning to launch soon.
+	*) Now the help graphics will show in multiplayer sesions.
+	*) Now the CF02 Barrier script is generalized and now, it will not need a player menu to use the script. It's just a switch that costs credits, that's it.
+	*) The sector teleport player menu has been changed with Samu-Terminal. Cool stuff!
+	*) Nuke timer when activating the nuke goes back to 5 minutes instead of... 5 seconds, whoops.
+	-) Code cleanup, and compacting some other libraries (WIP), the ideal is to reduce the amount of libraries, so the compilation process is faster and simpler.
+
+#### (13 / 11 / 2025) (v1.8.2 Release!) [Fixes on Ammo resets, excluding classes for weapon packs, and a new M_Doom graphic!]
 	*) Fixed a crash when the ammo definitions are not loaded fast enough, this would be fixed in the next Zandronum version, but at least here it is a workarround.
 	+) Now in Forclass parameter for AddWeaponPack, now you can exclude certain classes with #E and $ tokens.
 	*) Also a new M_Doom graphic!

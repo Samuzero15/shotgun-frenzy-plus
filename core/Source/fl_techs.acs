@@ -182,3 +182,10 @@ function bool Tech_IsLock(int which){
 function bool Tech_IsLoad(int which){
 	return fp_techstate[which] & TECHF_LOAD;
 }
+
+function void setupTerminals(void){
+	Tech_Set(TECH_GENLAB, 		TECHF_DONE);
+	Tech_Set(TECH_ARMORY, 		TECHF_DONE);
+	Tech_Set(TECH_ARMORY_ARMS1, 	TECHF_DONE);
+	Tech_Set(TECH_ARMORY_ARMS2, 	TECHF_DONE);
+}

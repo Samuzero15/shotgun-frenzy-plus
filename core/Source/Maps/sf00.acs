@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////
 //      SHOTGUN FRENZY
 //   a mod by Wad'a'Holic
-
+/*
 // SF00_ACS
 // map script
 #library "sf00"
@@ -9,7 +9,7 @@
 // top priority
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-#import "fl_techs.acs"
+#include "fl_techs.acs"
 
 // minor
 //#import "fc_AStr.acs"
@@ -24,7 +24,6 @@
 #import "f_Cred.acs"
 #import "f_PStat.acs"
 #import "f_StokP.acs"
-#import "f_Battr.acs"
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
 
@@ -164,3 +163,4 @@ script 89 (void)
         delay(35 * 10);
     }
 }
+*/

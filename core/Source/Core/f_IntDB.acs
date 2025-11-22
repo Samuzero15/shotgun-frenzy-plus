@@ -22,7 +22,6 @@
 // 4 = Standard Active
 
 #library "f_IntDB"
-#import "fl_price.acs"
 #import "fl_WDir.acs"
 #import "fl_IDir.acs"
 #import "fl_MUpDir.acs"
@@ -102,6 +101,14 @@ int f_AdaptiveSpawning;
 
 int f_AllowNuke;
 int f_AllowIon;
+
+struct PricedScriptT {
+	int price;
+	bool inuse;
+	int duration;
+};
+
+PricedScriptT m_scriptPrice[10];
 
 // player
 int p_Credits[32];

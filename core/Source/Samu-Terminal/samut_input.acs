@@ -102,16 +102,25 @@ function void Input_ClearBinds(void){
 }
 
 Function void Input_BindDirections (void){
-	if(pagetags[STTAGS_ALPHA] != 10){
-		Input_AddBind(BT_MOVELEFT, STEXE_SELECT, 1, 0, 0);
-		Input_AddBind(BT_MOVERIGHT, STEXE_SELECT, 2, 0, 0);
-		Input_AddBind(BT_FORWARD, STEXE_SELECT, 4, 0, 0);
-		Input_AddBind(BT_BACK, STEXE_SELECT, 3, 0, 0);
-		Input_AddBind(BT_JUMP, STEXE_CLOSE, 0, 0, 0);
-	}
-	else {
+	if (pagetags[STTAGS_ALPHA] == 40){
+		Input_AddBind(BT_FORWARD, STEXE_TELEPORT_SECTOR, 1, 0, 0);
+		Input_AddBind(BT_MOVELEFT, STEXE_TELEPORT_SECTOR, 2, 0, 0);
+		Input_AddBind(BT_MOVERIGHT, STEXE_TELEPORT_SECTOR, 3, 0, 0);
+		Input_AddBind(BT_ALTATTACK, STEXE_SYSOFF, 0, 0, 0);
+		Input_AddBind(BT_JUMP, STEXE_SYSOFF, 0, 0, 0);
+		return;
+	} 
+
+	if(pagetags[STTAGS_ALPHA] == 10){
 		Input_AddBind(BT_JUMP, STEXE_CMDEXIT, 0, 0, 0);
-	}
+		return;
+	}	
+
+	Input_AddBind(BT_MOVELEFT, STEXE_SELECT, 1, 0, 0);
+	Input_AddBind(BT_MOVERIGHT, STEXE_SELECT, 2, 0, 0);
+	Input_AddBind(BT_FORWARD, STEXE_SELECT, 4, 0, 0);
+	Input_AddBind(BT_BACK, STEXE_SELECT, 3, 0, 0);
+	Input_AddBind(BT_JUMP, STEXE_CLOSE, 0, 0, 0);
 }
 
 function void CheckPromptClick(void){

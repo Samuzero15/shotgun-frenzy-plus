@@ -6,7 +6,7 @@
 // Mech Upgrade directory
 
 // Here it lays all of the mech upgrades on the game.
-// For the prices, take a look at fl_price.
+// For the prices, use the cvar values.
 
 #library "fl_MupDir"
 #import "f_intdb.acs"

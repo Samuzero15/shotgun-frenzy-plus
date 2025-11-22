@@ -73,7 +73,7 @@ function void RcyWpnPage_UpdateButton(int slot, int wpn){
 	int sb = 0, lbl = 0; 
 	sb = rcywpn_wepsell[slot][RWPAGE_WEAPON_STRBTN];
 	lbl = rcywpn_wepsell[slot][RWPAGE_WEAPON_LABEL];
-	int color_cat = term_catStyle[Weapon_GetCat(wpn)][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[Weapon_GetCat(wpn)].color;
 	StrButton_SetShow(sb, true);
 	//StrButton_SetTag(sb, rcywpn_vars[RWPAGE_TAG]);
 	int charcap = 10;

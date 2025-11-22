@@ -165,7 +165,7 @@ function void BuyWpnPage_UpdatePackDetails(int selected){
 	Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_NAME], Weapon_getName(weps_in_pack[selected_weapon]));
 	Label_setText(buywpn_vars[BWPAGE_WPPACK_WEAP_DESC], Weapon_getDesc(weps_in_pack[selected_weapon]));
 	
-	int color_cat = term_catStyle[WeaponPack_getCat(selected)][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[WeaponPack_getCat(selected)].color;
 
 	Panel_SetShow(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL], true);
 	Panel_setColor(buywpn_vars[BWPAGE_WPPACK_DETAILPANEL], color_cat);
@@ -260,7 +260,7 @@ function void BuyWpnPage_UpdatePackButtons(int category){
 	// Something new on the Zandro 3.1-alpha.
 	// Local arrays!
 	int stack, wp;
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	//log(s:"Category stack: ", d:fp_WpCategoryStack[category]);
 	for (i = buywpn_vars[BWPAGE_CURRENT_PAGE]*BWPAGE_WPPACK_PERPAGE; i < fp_WpCategoryStack[category] && stack < BWPAGE_WPPACK_PERPAGE; i++){
 		wp = fp_WpCategory[category][i];

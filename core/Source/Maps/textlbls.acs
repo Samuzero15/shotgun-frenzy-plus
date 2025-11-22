@@ -18,7 +18,7 @@
 #define TEXTLABELS_BOLD 2
 #define TEXTLABELS_SCALE 3
 #define TEXTLABELS_WORDWRAP 4
-#define TEXTLABELS_HID 400
+#define TEXTLABELS_HID 700
 
 int textLabelMsgs[TEXTLABELS_MSGNUM];
 int textlabelCount = 0;

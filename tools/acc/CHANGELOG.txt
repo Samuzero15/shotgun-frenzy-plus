@@ -1,0 +1,6 @@
+zt-bcc 0.10.0 alpha 7:
+* Fix broken ABI-compatibility when importing objects in namespaces from other libraries compiled with older BCC.
+* Fix broken module heap allocation in libbcs.
+
+Known bugs:
+* #if preprocessor directive causes issues with character literal parsing. It's recommended to not use it for now (#ifdef and the rest work fine, however).

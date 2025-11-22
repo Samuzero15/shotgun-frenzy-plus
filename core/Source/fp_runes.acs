@@ -147,12 +147,12 @@ Script "RuneSpread_Effect" (void) {
     int i;
     int ammoList[100];
     for (i = 0; i < fp_AmmoDefStack; i++) {
-        ammoList[i] = CheckInventory(fp_AmmoList[i][FP_AMMODEF_NAME]);
+        ammoList[i] = CheckInventory(fp_AmmoList[i].name);
 	}
 
     while(CheckInventory("RuneSpread")){
         for (i = 0; i < fp_AmmoDefStack; i++) {
-            ammoList[i] = RuneEffect_ConsumeMoreAmmo (ammoList[i], fp_AmmoList[i][FP_AMMODEF_NAME]);
+            ammoList[i] = RuneEffect_ConsumeMoreAmmo (ammoList[i], fp_AmmoList[i].name);
         }
         delay(1);
     }

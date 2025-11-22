@@ -16,6 +16,7 @@
 #include "samut_pages_stimup.acs"
 #include "samut_pages_playup.acs"
 #include "samut_pages_runep.acs"
+#include "samut_pages_teleport.acs"
 
 #include "samut_pages_cmd_main.acs"
 
@@ -23,6 +24,7 @@
 #define ST_PAGEALPHA_ATE 0
 #define ST_PAGEALPHA_HTE 20
 #define ST_PAGEALPHA_MTE 30
+#define ST_PAGEALPHA_TELEPORT 40
 
 function void SamuTerm_InitPages(void){
 
@@ -91,6 +93,9 @@ function void SamuTerm_InitPages(void){
 			Toast_SetPosition(320.0, 150.0);
 			CMDPage_Init();
 		break;
+		case ST_PAGEALPHA_TELEPORT:
+			TeleportPage_Init(pagetags[STTAGS_ALPHA]);
+		break;
 		default:
 			log(s:"(SamuTerm): This alphatag (",d:pagetags[STTAGS_ALPHA], s:") is unknown!");
 		break;
@@ -111,6 +116,8 @@ function void UpdatePages(void){
 		MechUpPage_Update(pageTags[STTAGS_ALPHA]);
 	}else if(pageTags[STTAGS_ALPHA] == 10){
 		CMDPage_Update();
+	} else if (pageTags[STTAGS_ALPHA] == 40){
+		TeleportPage_Update(pageTags[STTAGS_ALPHA]);
 	}else{
 		updateWallet();
 		BuyWpnPage_Update(1);

@@ -6,6 +6,7 @@ Actor SamuTInv_LockInput : Boolean {}
 Actor SamuTInv_ActionKey : Integer {}
 Actor SamuTInv_Action2Key : Integer {}
 Actor SamuTInv_HideSBar : Boolean {}
+Actor SamuTInv_SoundMuted : Boolean {}
 
 Actor p_Money : Integer {}
 Actor p_UpPoint : Integer {}

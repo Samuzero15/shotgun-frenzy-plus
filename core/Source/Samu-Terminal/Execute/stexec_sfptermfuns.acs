@@ -212,7 +212,7 @@ function void StExecute_LabelWepRecycle(int wep, int up) {
 	str weapon_name = Weapon_GetName(wep);
 	str wepup_type_str = "\cjBase Weapon";
 	int price = Weapon_GetPrice(wep);
-	int color = term_catStyle[Weapon_GetCat(wep)][TERM_CATSTYLE_COLOR];
+	int color = term_catStyle[Weapon_GetCat(wep)].color;
 	if(up != -1){
 		weapon_name = WeaponUpgrade_GetName(wep, up);
 		wepup_type_str = strparam(s:"\cjWeapon Upgrade type ", d:up+1);
@@ -564,4 +564,12 @@ function void STExecute_CMDGoToCatExe(int tagdest, int execute){
 	SamuTerm_Execute(execute, 0,0,0);
 	pagetags[STTAGS_LAST] = pagetags[STTAGS_NOW];
 	pagetags[STTAGS_NOW] = tagdest;
+}
+
+function void STExecute_TeleportToSector(int arg1) {
+	teleport_nostop(120 + arg1, 0, 0);
+	if(PlayerCount() < 3){
+		Notify_Player(strparam(s:"Entered to Sector ", d:arg1), "PLAYER", 0);
+	}
+	SamuTerm_Execute(STEXE_SYSOFF, 0,0,0);
 }

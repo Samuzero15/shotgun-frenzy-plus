@@ -7,284 +7,89 @@
 
 #library "f_PMen"
 #import "f_IntDB.acs"
-#import "fl_Price.acs"
-#import "f_PMenP.acs"
-#import "samuterm.acs"
+#import "f_Tip.acs"
 #import "fl_techs.acs"
 
 #include "zcommon.acs"
+#include "acsutils.acs"
 #include "samu_tools.acs"
 
 // include external scripts
 
-#Define MENU_MAX_SLOTS1 9
+script "SFPlus_PayScript" (int scriptpriceid, int execstring){
+    if(!(p_Credits[Playernumber()] >= m_scriptPrice[scriptpriceid].price)){
+        setfont("DBIGFONT");
+        print(s:"Not enough credits!");
+        terminate;
+    }
 
-
-// detect players input (1= Up, 2= Down, 3= Use)
-function int p_MenuInput (void)
-{
-    // to return
-    int l_Input;
-    
-    // key scanning
-    if (getplayerinput(playernumber(), INPUT_FORWARDMOVE) > 0)      l_Input = 1;
-    if (getplayerinput(playernumber(), INPUT_FORWARDMOVE) < 0)      l_Input = 2;
-    if (getplayerinput(playernumber(), INPUT_BUTTONS) & BT_USE)     l_Input = 3;
-    
-    return l_Input;
+    ACS_NamedExecute(execstring, 0);
 }
 
-// purge the menu
-function void p_MenuReveal_Purge (void)
-{
-    // purge it all! muahahahaha
-	//[Samu] Lazy to make a simple for huh?
-	for(int awa = 0; awa < MENU_MAX_SLOTS1; awa++){p_MenuSlot[playernumber()][awa] = 0;}
+script "SFPlus_BarrierScript" (int scriptpriceid, int l_Tag, int l_DoorOrFloor) {
+    // check if used
+    if (m_scriptPrice[scriptpriceid].inuse) terminate;
+
+    m_scriptPrice[scriptpriceid].inuse = true;
+
+    // open door?
+    if (l_DoorOrFloor == 0)        door_close(l_Tag, 5);
+    else        floor_raisetohighest(l_Tag, 80);
+
+    f_TipShow("INFO", "BATTLEFIELD BARRICADE", "Has been constructed!", 0);
+    delay (m_scriptPrice[scriptpriceid].duration);
+        
+    // open door?
+    if (l_DoorOrFloor == 0)        door_open(l_Tag, 5);
+    else        floor_lowertolowest(l_Tag, 80);
     
-    // remove text
-    for(int a = 0; a < 17; a++)
-    {
-        hudmessage(s:""; 0, 20 + a, cr_White, 0.1, 0.1, 0.1);
-    }
-    
-    hudmessage(s:""; 0, 38, cr_White, 0.1, 0.1, 0.1);
-    hudmessage(s:""; 0, 50, cr_White, 0.1, 0.1, 0.1);
+    f_TipShow("INFO", "BATTLEFIELD BARRICADE", "Has expired!", 0);
+
+    m_scriptPrice[scriptpriceid].inuse = false;
 }
 
-// change the menus category
-function void p_MenuReveal_ChangeCategory (int l_Category)
-{
-    // change category
-    p_MenuSelection_Category[playernumber()] = l_Category;
-    
-    // reset selection values
-    p_MenuSelection[playernumber()] = -1;
-    // ***** NICE VALUES GO HERE IF NEEDED *****
-}
-
-// reveals a button
-function void p_MenuReveal_Button (str l_Name, int l_ItemID, str l_SpecialNumber)
-{
-    // setup hud size and font
-    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-    setfont("SMALLFNT");
-    
-    // set to slot
-	// [Samu] I belive, by the time they did'nt know something called CONSTANTS.
-    for(int a = 0; a < MENU_MAX_SLOTS1; a++)
-    {
-        if (p_MenuSlot[playernumber()][a] == 0)
-        {
-            p_MenuSlot[playernumber()][a] = l_ItemID;
-            if (l_ItemID < 100)
-            {
-                if (f_Price[l_ItemID] > p_Credits[playernumber()])
-                {
-                    hudmessage(s:l_Name; 0, 29 + a, cr_Red, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                    hudmessage(s:"\n$", d:f_Price[l_ItemID], s:" - Not enough credits..."; 0, 20 + a, cr_Red, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                }
-                else
-                {
-                    hudmessage(s:l_Name; 0, 29 + a, cr_Cream, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                    hudmessage(s:"\n$", d:f_Price[l_ItemID]; 0, 20 + a, cr_White, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                }
-            }
-            else if (l_ItemID < 200)
-                hudmessage(s:l_Name; 0, 29 + a, cr_White, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                
-            else if (l_ItemID < 300)
-            {
-                if (p_Exp_Points[playernumber()] >= l_SpecialNumber)
-                {
-                    hudmessage(s:l_Name; 0, 29 + a, cr_Cream, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                    hudmessage(s:"\n", d:l_SpecialNumber, s:" Upgrade Points Required..."; 0, 20 + a, cr_White, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                }
-                else
-                {
-                    hudmessage(s:l_Name; 0, 29 + a, cr_Red, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                    hudmessage(s:"\n", d:l_SpecialNumber, s:" Upgrade Points Required..."; 0, 20 + a, cr_Red, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                }
-            }
-                
-            else if (l_ItemID < 400)
-            {
-                hudmessage(s:l_Name; 0, 29 + a, cr_Cream, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                hudmessage(s:"\n+", d:l_SpecialNumber, s:" cash added!"; 0, 20 + a, cr_White, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-            }
-            else if (l_ItemID > 404)
-            {
-                hudmessage(s:l_Name; 0, 29 + a, cr_Blue, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-            }
-           // else if (l_ItemID > 400)
-           // {
-                //hudmessage(s:l_Name; 0, 29 + a, cr_Red, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                //hudmessage(s:"\n$", d:f_Price[l_ItemID], s:" - Not enough credits..."; 0, 20 + a, cr_Red, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-            //}
-            else
-            {
-                hudmessage(s:l_Name; 0, 29 + a, cr_Cream, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-                hudmessage(s:"\n$", d:f_Price[l_ItemID]; 0, 20 + a, cr_White, 290.1, f_MenuSlot_Y[a], f_MenuHold);
-            }
-            break;
-        }
-    }
-}
-
-function void p_MenuReveal (int l_InputType, int l_Category)
-{
-	
-    // create limit local
-    int l_Limit;
-    
-    // set category
-    if (l_Category >= 0)      p_MenuSelection_Category[playernumber()] = l_Category;
-    
-    // compute inputs and switch menus
-    if (l_InputType == 1)   p_MenuSelection[playernumber()] --;
-    if (l_InputType == 2)   p_MenuSelection[playernumber()] ++;
-    
-    
-    
-    // get limit
-	// [Samu] Expanded to the new thingies :3
-    for(int a = 0; a < MENU_MAX_SLOTS1; a++)
-    {
-        if (p_MenuSlot[playernumber()][a] == 0)
-        {
-            l_Limit = a - 1;
-            break;
-        }
-    }
-		//print(s:"Local limit: ", d:l_limit, s:", Player Menu selection: ", d:p_MenuSelection[playernumber()]);
-    
-    // check limits
-    if (p_MenuSelection[playernumber()] > l_Limit)      p_MenuSelection[playernumber()] = 0;
-    if (p_MenuSelection[playernumber()] < 0)            p_MenuSelection[playernumber()] = l_Limit;
-    
-    
-    if (l_InputType == 3)
-    {
-		int selected = p_MenuSlot[playernumber()][p_MenuSelection[playernumber()]];
-
-            if (selected == 401)       p_MenuPurchase_ScriptBarricade (1, 51, f_Price[401]);
-            if (selected == 402)       p_MenuPurchase_ScriptBarricade (1, 52, f_Price[402]);
-            if (selected == 403)       p_MenuPurchase_ScriptBarricade (1, 53, f_Price[403]);
-            if (selected == 404)       p_MenuPurchase_ScriptBarricade (1, 54, f_Price[404]);
-            
-            if (selected == 405)       { teleport_nostop(121, 0, 0); p_MenuReveal_Kill(); }
-            if (selected == 406)       { teleport_nostop(122, 0, 0); p_MenuReveal_Kill(); }
-            if (selected == 407)       {teleport_nostop(123, 0, 0); p_MenuReveal_Kill(); }
-    }
-    
-    // purge menu
-    p_MenuReveal_Purge();
-    
-    // setup hud size
-    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-    
-    // check pointer
-    if (p_MenuSelection[playernumber()] == -1)      p_MenuSelection[playernumber()] = 0;
-    
-    // show pointer
-    setfont("SMALLFNT");
-    hudmessage(s:">"; 0, 38, cr_Red, 240.1, f_MenuSlot_Y[p_MenuSelection[playernumber()]], f_MenuHold);
-    
-    // display background
-    sethudsize(s_ScreenSize[0], s_ScreenSize[1], s_ScreenSize[2]);
-    setfont("PBUY");
-    hudmessage(s:"a"; 0, 50, 0, 0.1, 0.1, 20.0);
-    p_MenuSlot[playernumber()][p_MenuSelection[playernumber()]] = 0;
-    
-    // menu code
-    if (p_MenuSelection_Category[playernumber()] == 51)     // BATTLEFIELD BARRIER #1
-    {
-        p_MenuReveal_Button("Purchase battlefield barricade, 3 min", 401, 0);
-        p_MenuReveal_Button("Exit", 121, 0);
-    }
-    
-    if (p_MenuSelection_Category[playernumber()] == 52)     // SECTOR SELECT
-    {
-        p_MenuReveal_Button("Teleport to Sector 1", 405, 0);
-        p_MenuReveal_Button("Teleport to Sector 2", 406, 0);
-        p_MenuReveal_Button("Teleport to Sector 3", 407, 0);
-        p_MenuReveal_Button("Exit", 121, 0);
-    }
-	
-}
 
 // activate menu
 script 155 (int l_Category)
 {
-	
-    // terminate if not researched
-    if (l_Category == 10 && !Tech_IsDone(TECH_GENLAB) || l_Category == 1 && !Tech_IsDone(TECH_ARMORY) || l_Category == 20 && !Tech_IsDone(TECH_MECHFA))        terminate;
-    
-	// [Samu] I'm making an exeption.
-	// If it's the barricade or the teleporting selection, you can execute the old script.
-	if(l_Category == 51 || l_Category == 52); //print(d:l_Category, s:" This part is still in progress, sorry for the trouble.");
-	else {
-		// [Samu] Otherwise, go to my terminal and do your shiet.
-		//print(d:l_Category, s:" Terminal booted.");
-		if(l_category == 10) ACS_NamedExecuteAlways("SamuTerminal", 0, 20);
-		else if (l_Category == 20) ACS_NamedExecuteAlways("SamuTerminal", 0, 30);
-		else ACS_NamedExecuteAlways("SamuTerminal", 0, 0);
-		terminate;
-	}
-	
-    // check active
-    if (p_MenuSelection_Active[playernumber()] == 0)
-    {
-        // freeze the player
-        setplayerproperty(0, 1, PROP_TOTALLYFROZEN);
-        
-        // change menu status
-        p_MenuSelection_Active[playernumber()] = 2;
-        
-        // load menu
-        p_MenuReveal(0, l_Category);
-        delay(10);
-        
-        // detect inputs
-        while(p_MenuSelection_Active[playernumber()] > 1)
-        {
-            // detect up input
-            if (p_MenuInput() == 1)
-            {
-                // load menu
-                p_MenuReveal(1, -1);
-                while(p_MenuInput() == 1)        delay(1);
-            }
-            
-            // detect down input
-            if (p_MenuInput() == 2)
-            {
-                // load menu
-                p_MenuReveal(2, -1);
-                while(p_MenuInput() == 2)        delay(1);
-            }
-            
-            // detect use input
-            if (p_MenuInput() == 3)
-            {
-                // load menu
-                p_MenuReveal(3, -1);
-                while(p_MenuInput() == 3)        delay(1);
-            }
-            
-            delay(1);
-        }
-        
-        // purge
-        p_MenuReveal_Purge();
-        
-        delay(1);
-    
-        // unfreeze the player
-        setplayerproperty(0, 0, PROP_TOTALLYFROZEN);
-        
-        delay(5);
-        
-        // enable recall
-        p_MenuSelection_Active[playernumber()] = 0;
+    if(l_Category == 51){
+        int scrippPriceId = l_Category-51;
+        ACS_NamedExecute("SFPlus_PayScript", 0, scrippPriceId, strparam(s:"SFPlus_PayScript_ExeID", d:scrippPriceId));
+        terminate;
     }
+    
+    // [Samu] Otherwise, go to my terminal and do your shiet.
+    //print(d:l_Category, s:" Terminal booted.");
+    log(s:Tech_IsDone(TECH_ARMORY) ? "Armory Tech is DONE." : "Armory Tech is NOT done.");
+    if(l_Category == 10 && Tech_IsDone(TECH_GENLAB)) ACS_NamedExecuteAlways("SamuTerminal", 0, 20);
+    else if (l_Category == 20 && Tech_IsDone(TECH_MECHFA)) ACS_NamedExecuteAlways("SamuTerminal", 0, 30);
+    else if (l_Category == 1 && Tech_IsDone(TECH_ARMORY)) ACS_NamedExecuteAlways("SamuTerminal", 0, 0);
+
+    // old code deleted, cuz it's useless now.
+}
+
+script 696 (int getinv, int command_credits)
+{// [Samu] For debug pruposes. (and cheating, heheheh.)
+	p_Credits[playernumber()] += 100000;
+	p_Exp_Points[playernumber()] += 100;
+	/*c_Credits += 200000;
+    */
+    if(getinv >= 1){
+        GiveInventory("SSG",1);
+        GiveInventory("QuadShot",1);
+        GiveInventory("Spitter",1);
+        GiveInventory("Buckshot",1);
+        GiveInventory("Dualshot",1);
+        GiveInventory("Repeater",1);
+        GiveInventory("Launcher",1);
+        GiveInventory("Flinger",1);
+        GiveInventory("Plasmagun",1);
+        GiveInventory("Flamer",1);
+        GiveInventory("BFG",1);
+        GiveInventory("SF_Railgun",1);
+    }
+
+   if(command_credits >= 1) {
+        c_Credits = 99999;
+   }
 }

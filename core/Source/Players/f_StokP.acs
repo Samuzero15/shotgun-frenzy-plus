@@ -251,7 +251,7 @@ function void Stock_FillAmmo(bool full){
 	int ammo_dispensergive = 0;
 	if(full){
 		for (i = 0; i < fp_AmmoDefStack; i++) {
-			ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
+			ammo_name = fp_AmmoList[i].name;
 			GiveMaxInventory(ammo_name);
 		}
 	}
@@ -259,8 +259,8 @@ function void Stock_FillAmmo(bool full){
 		// [Samu] Expansive re-stock upgrades for the players.
 		int extra_ammo = (1 + PlayUp_CheckInv("PlayUp_ExpansiveRestock"));
 		for (i = 0; i < fp_AmmoDefStack; i++) {
-			ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
-			ammo_dispensergive = fp_AmmoList[i][FP_AMMODEF_DISPENSERGIVE];
+			ammo_name = fp_AmmoList[i].name;
+			ammo_dispensergive = fp_AmmoList[i].dispenser_give;
 			GiveInventory(ammo_name, ammo_dispensergive*extra_ammo);
 		}
 	}

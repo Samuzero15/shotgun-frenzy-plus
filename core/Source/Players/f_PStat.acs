@@ -9,8 +9,6 @@
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
 #import "f_Cred.acs"
-#import "fl_Price.acs"
-#import "f_PMenP.acs"
 #import "fl_techs.acs"
 #import "fl_wdir.acs"
 #import "fp_credd.acs"

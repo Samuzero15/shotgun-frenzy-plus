@@ -71,13 +71,15 @@ Script "SamuTerm_ServerExecute_Args" (int key, int arg1, int arg2, int arg3) NET
 *	stexec_handler.acs
 * 	In this switch, you can expand it to whatever handlers you need.
 *	Note: The arguments are limited to bytes. (0 - 255)
-*
+*   TODO: Need a way to create executes without needing to define and pass scripts rather than plain functions, keeping ACC Limits.
 */
 
 function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 {
 	// Eitherway, this will list all of the functions about the executions.
 	switch(cmd){
+
+		case STEXE_TELEPORT_SECTOR: STExecute_TeleportToSector(arg1); break;
 
 		case STEXE_RUNESHOP_BUY: 	STExecute_RuneBuy(arg1);	break;
 		case STEXE_RUNESHOP_GET: 	STExecute_RuneGet(arg1);	break;

@@ -6,13 +6,6 @@
 #include "players_funs.acs"
 #include "cside_scripts.acs"
 
-function void setupTerminals(void){
-	Tech_Set(TECH_GENLAB, 		TECHF_DONE);
-	Tech_Set(TECH_ARMORY, 		TECHF_DONE);
-	Tech_Set(TECH_ARMORY_ARMS1, 	TECHF_DONE);
-	Tech_Set(TECH_ARMORY_ARMS2, 	TECHF_DONE);
-}
-
 function bool IsActivatingClient(void){
 	return ConsolePlayerNumber() == PlayerNumber(); 
 }

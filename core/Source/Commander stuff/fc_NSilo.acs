@@ -8,7 +8,6 @@
 
 #import "f_IntDB.acs"
 #import "f_Tip.acs"
-#import "fl_price.acs"
 #import "fc_Const.acs"
 #import "fc_CommB.acs"
 #import "f_AIDir.acs"
@@ -100,7 +99,7 @@ script 451 (void)
 
 Script "SFPlus_NukeTimer" (void) {
     SetCvarString("sfp_scordata_status", "Launching Nuke");
-    g_GameTimer = 35 * 5;
+    g_GameTimer = 35 * 60 * 5;
     int remainingSeconds = g_GameTimer / 35;
     while(g_GameTimer > 0){ // [Samu] Here it is the game timer.
         if((g_GameTimer) % 35 == 0){
@@ -128,7 +127,7 @@ Script "SFPlus_NukeTimer" (void) {
                 case 120:
                     f_TipShow ("CM75", "NUCLEAR LAUNCH", "2 Minutes remaining...", 0);
                     break;
-                case 60: case 30: case 10:
+                case 60: case 30:
                     f_TipShow ("CM75", "NUCLEAR LAUNCH", StrParam(d:remainingSeconds, s:" Seconds remaining..."), 0);
                     break;
                 case 10: case 9: case 8: case 7: case 6: case 5: case 4: case 3: case 2: case 1:

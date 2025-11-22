@@ -15,7 +15,6 @@
 #import "fl_techs.acs"
 #import "fc_AStr.acs"
 #import "fl_IDir.acs"
-#import "constants.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"

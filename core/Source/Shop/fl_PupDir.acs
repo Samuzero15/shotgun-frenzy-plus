@@ -6,7 +6,7 @@
 // Player Upgrade directory
 
 // Here it lays all of the player upgrades on the game.
-// For the prices, take a look at fl_price.
+// For the prices, use the cvar values.
 // The prices are on UP points!
 
 #library "fl_PupDir"
@@ -48,7 +48,6 @@ function void PlayUp_Add(str name, str actor, str btnimg){
 	PlayUp_List[upg][0] = name;
 	PlayUp_List[upg][1] = strparam(l:strparam(s:"FP_PUD_",s:actor));
 	PlayUp_List[upg][2] = strparam(s:"PlayUp_",s:actor);
-	// Lookup fl_price.acs
 	PlayUp_List[upg][3] = GetCvar(strparam(s:"pr_pu_", s:actor)); 
 	PlayUp_List[upg][4] = btnimg;
 	PlayUpTop++;

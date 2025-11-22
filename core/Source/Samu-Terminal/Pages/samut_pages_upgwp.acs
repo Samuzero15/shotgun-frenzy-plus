@@ -59,7 +59,7 @@ function void ListUpPage_UpdateNoAccess(int category, int show){
 
 // Navigation buttons
 function void ListUpPage_UpdateNavButtons(int category, int show){
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	NumInput_SetShow	(listup_vars[UWPAGE_NUMINPUT_CAT], show);
 	NumInput_SetShow	(listup_vars[UWPAGE_NUMINPUT_WEP], show);
 	if(!show) return;
@@ -71,13 +71,13 @@ function void ListUpPage_UpdateNavButtons(int category, int show){
 	NumInput_SetMaxValue(listup_vars[UWPAGE_NUMINPUT_WEP], last_page+1);
 	NumInput_SetShow(listup_vars[UWPAGE_NUMINPUT_WEP], !(last_page == 0));
 	
-	Label_SetText	(listup_vars[UWPAGE_TITLE], term_catStyle[category][TERM_CATSTYLE_TEXT]);
+	Label_SetText	(listup_vars[UWPAGE_TITLE], term_catStyle[category].name);
 	Label_SetColor	(listup_vars[UWPAGE_TITLE], color_cat);
 }
 
 // Update Upgrade weapon panel.
 function void ListUpPage_UpdateUpWeapons(int category){
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_WEAPONLIST], color_cat);
 	int ihavewep = false;
 	int stack_slot = 0;
@@ -133,7 +133,7 @@ function void ListUpPage_UpdateUpWepSlot(int category, int slot, int wep, int sh
 	Label_SetShow(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], show);
 	if(!show) return;
 	ImgButton_SetArgs(listup_weplist[slot][UWPAGE_WEPUP_BUTTON], wep, 0, 0);
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	Label_SetColor(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], color_cat);
 	Label_SetText(listup_weplist[slot][UWPAGE_WEPUP_WEPNAME], Weapon_GetName(wep));
 }
@@ -142,7 +142,7 @@ function void ListUpPage_UpdateUpWepSlot(int category, int slot, int wep, int sh
 function void ListUpPage_UpdateUpDesc(int category, int wep, int show){
 	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], show);
 	if(!show) return;
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_UPDESCRIPTION], color_cat);
 	Label_SetColor(listup_vars[UWPAGE_LABEL_WEAPONDESC], color_cat);
@@ -153,7 +153,7 @@ function void ListUpPage_UpdateUpDesc(int category, int wep, int show){
 function void ListUpPage_UpdateUpTypes(int category, int wep, int show){
 	Panel_SetShow(listup_vars[UWPAGE_PANEL_UPGRADES], show);
 	if(!show) return;
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	
 	Panel_SetColor(listup_vars[UWPAGE_PANEL_UPGRADES], color_cat);
 
@@ -169,7 +169,7 @@ function void ListUpPage_UpdateUpButton(int category, int slot, int wep, int sho
 	Label_SetShow(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], show);
 	if(!show) return;
 
-	int color_cat = term_catStyle[category][TERM_CATSTYLE_COLOR];
+	int color_cat = term_catStyle[category].color;
 	Label_SetText(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], 
 		strparam(d:WeaponUpgrade_GetUpgPrice(wep, slot), s:" UP"));
 	Label_SetColor(listup_upbuttons[slot][UWPAGE_UPGRADE_LABELCOST], color_cat);

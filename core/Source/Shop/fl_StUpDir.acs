@@ -6,7 +6,7 @@
 // Stimer Upgrade directory
 
 // Here it lays all of the stimpack upgrades on the game.
-// For the prices, take a look at fl_price.
+// For the prices, use the cvar values.
 // The prices are on credits!
 
 #library "fl_StUpDir"
@@ -44,7 +44,6 @@ function void StimUp_Add (str name, str actor, str btnimg){
 	StimUp_List[upg][0] = name;
 	StimUp_List[upg][1] = strparam(l:strparam(s:"FP_SUD_",s:actor));
 	StimUp_List[upg][2] = strparam(s:"StimUp_",s:actor);
-	// Lookup fl_price.acs
 	StimUp_List[upg][3] = GetCvar(strparam(s:"pr_su_", s:actor)); 
 	StimUp_List[upg][4] = btnimg;
 	StimUpTop++;

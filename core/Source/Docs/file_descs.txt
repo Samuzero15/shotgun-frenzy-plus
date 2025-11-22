@@ -32,11 +32,6 @@ Samu's File Summary for ACS source code.
 		See the Samu-Terminal for those menus.
 	@) f_PMenP: Functions for the old global player menu. (Depercarted)
 		See the Samu-Terminal and Samu-Tools for some more functions.
-	@) fl_Price: Prices for all of the items in the game!
-		(wip) This file will also contain some prices not shown here, 
-		      and they're hard coded on Samu-Tools.
-			  Just for that guy who says: 
-			  "Hey! This is too expensive/cheap, I'll change dat."
 			  
 	@) f_Cred: Credit and item scripts for the monsters.
 		There it is some stuff that you might concern about...

@@ -6,16 +6,17 @@
 // item directory
 
 // Here it lays all of the items on the game.
-// For the prices, take a look at fl_price.
+// For the prices, use the cvar values.
 
 #library "fl_IDir"
 
 #import "f_intdb.acs"
-#import "fl_techs.acs"
 #import "fp_lumpread.acs"
 
 #include "zcommon.acs"
 #include "acsutils.acs"
+
+#import "fl_techs.acs"
 #include "samu_tools.acs"
 
 #libdefine FP_ITEM_NUM 255
@@ -100,58 +101,56 @@ function void IDir_ReadSFITMDEF(void){
 	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFITMDEF", "SFPlus_IDir_SFITMDEFReadLine");
 }
 
-Script "SFPlus_IDir_SFITMDEFReadLine" (int line, int linenumber) {
+enum {
+	IDEF_TK_AddItem = "AddItem",
+	IDEF_TK_AddPowerup = "AddPowerup",
+	IDEF_TK_AddDeployable = "AddDeployable",
+	IDEF_TK_AddHidden = "AddHidden",
+	IDEF_TK_ItemDrop = "ItemDrop",
+	IDEF_TK_ItemDropChampion = "ItemDropChampion",
+	IDEF_TK_ItemDropRune = "ItemDropRune",
+	IDEF_TK_ClearAllDrops = "ClearAllDrops",
+	IDEF_TK_ClearAllItems = "ClearAllItems",
+	IDEF_TK_ClearDropsForMonsterClass = "ClearDropsForMonsterClass",
+	IDEF_TK_ClearAllRunes = "ClearAllRunes",
+	IDEF_TK_AddRune = "AddRune",
+	IDEF_TK_ReplaceRune = "ReplaceRune"
+};
+
+#if 1
+#define SFITMDEF_FUNC( tok, call, min, max) \
+	if (StrIEquals(op, tok)) { \
+		if(!LumpRead_CountArgs (line, line_num, min, max, tok)) { \
+			terminate; \
+		} \
+		call; \
+		terminate; \
+	}
+
+#endif
+
+Script "SFPlus_IDir_SFITMDEFReadLine" (int line, int line_num) {
 	//log(s:"\"", s:line, s:"\"");
 	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 	int tier, actor, poweractor, langdata, btnimg;
-	if (StrIEquals(op, "AddItem")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_DEFAULT, linenumber);
-	} else if (StrIEquals(op, "AddPowerup")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_POWERUP, linenumber);
-	} else if (StrIEquals(op, "AddDeployable")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_DEPLOY, linenumber);
-	} else if (StrIEquals(op, "AddHidden")) {
-		SFITMDEF_AddItem(line, FP_ITEM_T_HIDDEN, linenumber);
-	} else if (StrIEquals(op, "ItemDrop")) {
-		SFITMDEF_ItemDrop(line, 0, linenumber);
-	} else if (StrIEquals(op, "ItemDropChampion")) {
-		SFITMDEF_ItemDrop(line, 1, linenumber);
-	} else if (StrIEquals(op, "ItemDropRune")) {
-		SFITMDEF_ItemDrop(line, 2, linenumber);
-	} else if (StrIEquals(op, "ClearAllDrops")) {
-		if(!LumpRead_CountArgs(line, linenumber, 1, 1, "ClearAllDrops")) terminate;
-		SFITMDEF_ClearAllDrops();
-	} else if (StrIEquals(op, "ClearAllItems")) {
-		if(!LumpRead_CountArgs(line, linenumber, 1, 1, "ClearAllItems")) terminate;
-		SFITMDEF_ClearAllItems();
-	} else if (StrIEquals(op, "ClearDropsForMonsterClass")) {
-		SFITMDEF_ClearDropsForMonClass(line, LumpRead_NextArg(line, LUMPR_VALUE_INT), linenumber);
-	} else if (StrEquals(op, "ClearAllRunes")) {
-        RuneDir_ClearAllRunes();
-    } else if (StrEquals(op, "AddRune")) {
-        tier =         LumpRead_NextArg(line, LUMPR_VALUE_INT);
-        actor =        LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        poweractor =   LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        langdata =     LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        btnimg =       LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	SFITMDEF_FUNC( IDEF_TK_AddItem, 					SFITMDEF_AddItem(line, FP_ITEM_T_DEFAULT), 		5, 10);
+	SFITMDEF_FUNC( IDEF_TK_AddPowerup, 					SFITMDEF_AddItem(line, FP_ITEM_T_POWERUP), 		5, 10);
+	SFITMDEF_FUNC( IDEF_TK_AddDeployable, 				SFITMDEF_AddItem(line, FP_ITEM_T_DEPLOY), 		5, 10);
+	SFITMDEF_FUNC( IDEF_TK_AddHidden, 					SFITMDEF_AddItem(line, FP_ITEM_T_HIDDEN), 		5, 10);
+	SFITMDEF_FUNC( IDEF_TK_ItemDrop, 					SFITMDEF_ItemDrop(line, 0), 					4, 5);
+	SFITMDEF_FUNC( IDEF_TK_ItemDropChampion, 			SFITMDEF_ItemDrop(line, 1), 					4, 5);
+	SFITMDEF_FUNC( IDEF_TK_ItemDropRune, 				SFITMDEF_ItemDrop(line, 2), 					4, 5);
+	SFITMDEF_FUNC( IDEF_TK_ClearAllDrops, 				SFITMDEF_ClearAllDrops(), 						1, 1);
+	SFITMDEF_FUNC( IDEF_TK_ClearAllItems, 				SFITMDEF_ClearAllItems(), 						1, 1);
+	SFITMDEF_FUNC( IDEF_TK_ClearDropsForMonsterClass, 	SFITMDEF_ClearDropsForMonClass(line), 			2, 2);
+	SFITMDEF_FUNC( IDEF_TK_ClearAllRunes, 				SFITMDEF_ClearAllRunes(), 						1, 1);
+	SFITMDEF_FUNC( IDEF_TK_AddRune, 					SFITMDEF_AddRune(line), 						6, 6);
+	SFITMDEF_FUNC( IDEF_TK_ReplaceRune, 				SFITMDEF_ReplaceRune(line), 					6, 7);
 
-        Rune_Add(tier, actor, poweractor, langdata, btnimg);
-    } else if (StrEquals(op, "ReplaceRune")) {
-        str actorToReplace = LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        tier =           LumpRead_NextArg(line, LUMPR_VALUE_INT);
-        actor =          LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        poweractor =     LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        langdata =       LumpRead_NextArg(line, LUMPR_VALUE_STR);
-        btnimg =         LumpRead_NextArg(line, LUMPR_VALUE_STR);
-
-        Rune_Replace(tier, actorToReplace, actor, poweractor, langdata, btnimg);
-    } else {
-		log(s:"fl_IDir: Invalid command: '", s:op, s:"'", s:", line=", s:line);
-	}
+	log(s:"fl_IDir: Invalid command: '", s:op, s:"'", s:", line=", s:line);
 }
 
-function void SFITMDEF_AddItem(str line, int type, int linenumber) {
-	if(!LumpRead_CountArgs (line, linenumber, 5, 10, "AddItem")) return;
+function void SFITMDEF_AddItem(str line, int type) {
 	if(fp_LastItem >= FP_ITEM_NUM) {
 		log(s:"(fl_IDir.acs):", s:" Item directory maxed out.");
 		return;
@@ -222,19 +221,6 @@ function void SFITMDEF_AddItem(str line, int type, int linenumber) {
 
 // Pointless function but whatever.
 Script "SFPlus_Announcer_PowerupUsed" (int powerupid) {
-	//log(s:"Sound!");
-	//delay(20);
-	/*
-	
-	StopSound(0, CHAN_ITEM );
-	log(s:"Powerup ID used: ", d:powerupId);
-	if(powerupId == 0) terminate;
-	//log(s:"Item ID:", d:Item_GetItemByPowerID(powerupId));
-	str announcer_sound = Item_GetAnnouncerSound(Item_GetItemByPowerID(powerupId));
-	log(s:"Announcer sound: '", s:announcer_sound, s:"'");
-	AnnouncerSound(announcer_sound, 1);
-	*/
-	//GiveInventory("AnnouncerSound_Soulsphere", 1);
 	delay(20);
 	int x = GetActorX(0), y = GetActorY(0), z = GetActorZ(0);
 	str announcer_sound = strparam(s:"AncrSnd_", s:Item_GetActor(Item_GetByPowerID(powerupid)));
@@ -326,8 +312,8 @@ function void SFITMDEF_ClearAllItems(void) {
 	}
 }
 
-function void SFITMDEF_ClearDropsForMonClass(str line, int class, int linenumber) {
-	if(!LumpRead_CountArgs(line, linenumber, 2, 2, "ClearDropsForMonsterClass")) return;
+function void SFITMDEF_ClearDropsForMonClass(str line) {
+	int class = LumpRead_NextArg(line, LUMPR_VALUE_INT);
 	ItemDr_stack[class] = 0;
 	ItemDr_champStack[class] = 0;
 	for (int j = 0; j < ITEMDROP_ITEMS; j++) {
@@ -338,7 +324,7 @@ function void SFITMDEF_ClearDropsForMonClass(str line, int class, int linenumber
 	}
 }
 
-function void SFITMDEF_ItemDrop(int line, int dropType, int linenumber) {
+function void SFITMDEF_ItemDrop(int line, int dropType) {
 	// dropType: 0 = ItemDrop, 1 = ItemDropChampion, 2 = ItemDropRune
 	str funcName;
 	switch(dropType) {
@@ -347,7 +333,6 @@ function void SFITMDEF_ItemDrop(int line, int dropType, int linenumber) {
 		case 2: funcName = "ItemDropRune"; break;
 		default: funcName = "UnknownDrop"; break;
 	}
-	if(!LumpRead_CountArgs(line, linenumber, 4, 5, funcName)) return;
 
 	int class = LumpRead_NextArg(line, LUMPR_VALUE_INT);
 
@@ -542,7 +527,14 @@ function void SFPlus_DefineRunes(void){
     Rune_TierPrices[3] = GetCvar("pr_rt_4");
 }
 
-function void Rune_Replace(int tier, str actorToReplace, str actor, str poweractor, str langdata, str btnimg) {
+function void SFITMDEF_ReplaceRune(int line) {
+	str actorToReplace = LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	int tier =         LumpRead_NextArg(line, LUMPR_VALUE_INT);
+	str actor =        LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str poweractor =   LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str langdata =     LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str btnimg =       LumpRead_NextArg(line, LUMPR_VALUE_STR);
+
     int found = 0;
     for (int i = 0; i < RuneTop; i++) {
         if (StrEquals(Rune_List[i][RUNE_PROP_GIVERACTOR], actorToReplace)) {
@@ -562,7 +554,7 @@ function void Rune_Replace(int tier, str actorToReplace, str actor, str poweract
     }
 }
 
-function void RuneDir_ClearAllRunes(void) {
+function void SFITMDEF_ClearAllRunes(void) {
     RuneTop = 0;
     for (int i = 0; i < FP_Rune_MAX; i++) {
         for (int j = 0; j < 7; j++) {
@@ -571,7 +563,13 @@ function void RuneDir_ClearAllRunes(void) {
     }
 }
 
-function void Rune_Add (int tier, str actor, str poweractor, str langdata, str btnimg){
+function void SFITMDEF_AddRune (str line){
+	int tier =         LumpRead_NextArg(line, LUMPR_VALUE_INT);
+	str actor =        LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str poweractor =   LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str langdata =     LumpRead_NextArg(line, LUMPR_VALUE_STR);
+	str btnimg =       LumpRead_NextArg(line, LUMPR_VALUE_STR);
+
 	int upg = RuneTop;
 	
 	if(RuneTop >= FP_Rune_MAX)
@@ -584,7 +582,6 @@ function void Rune_Add (int tier, str actor, str poweractor, str langdata, str b
 	Rune_List[upg][RUNE_PROP_NAME] = StrParam(l:strparam(s:"FP_RN_", s:langdata));
 	Rune_List[upg][RUNE_PROP_DESC] = StrParam(l:strparam(s:"FP_RD_", s:langdata));
 	Rune_List[upg][RUNE_PROP_GIVERACTOR] = actor;
-	// Lookup fl_price.acs
 	Rune_List[upg][RUNE_PROP_PRICE] = GetCvar(strparam(s:"pr_rt_", d:tier)); 
     //log(s:"Rune price: ", d:GetCvar(strparam(s:"pr_rt_", d:tier)));
 	Rune_List[upg][RUNE_PROP_BTNIMG] = btnimg;

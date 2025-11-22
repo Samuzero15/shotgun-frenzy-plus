@@ -11,14 +11,16 @@
 #library "f_decscp"
 
 
+
 #include "zcommon.acs"
 #include "acsutils.acs"
-#import "fl_techs.acs"
+
 #import "f_intdb.acs"
 #import "f_Rank.acs"
 #import "f_tip.acs"
 #import "f_stokp.acs"
 #import "fl_WDir.acs"
+#import "fl_techs.acs"
 #include "samu_tools.acs"
 #include "wep_patcher.acs"
 #include "altstates.acs"
@@ -323,8 +325,8 @@ Script "Supplier_SpawnAmmo" (int expanded) {
 	int range = expanded ? 32.0 : 16.0;
 
 	for (int i = 0; i < fp_AmmoDefStack; i++) {
-		str ammo_name = fp_AmmoList[i][FP_AMMODEF_NAME];
-		str ammo_supply_spawn = fp_AmmoList[i][FP_AMMODEF_SUPPLYSPAWN];
+		str ammo_name = fp_AmmoList[i].name;
+		str ammo_supply_spawn = fp_AmmoList[i].supply_spawn;
 		if(ammo_supply_spawn == -1) terminate; // Ammo is not given by supplier.
 		str ammo_actor = ammo_supply_spawn == 0 ? ammo_name : ammo_supply_spawn;
 		SpawnForced(ammo_actor, x + random(-range, range), y + random(-range, range), z);

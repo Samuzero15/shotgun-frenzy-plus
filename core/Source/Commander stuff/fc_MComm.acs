@@ -135,7 +135,7 @@ script "SFPlus_CorePulse" (int pulse_cmd)
 		break;
 	}
 	int startup_delay = 5-2*Tech_isDone(TECH_MARCOM_COPTIM);
-	charge_delay = charge_delay - ((floor(charge_delay * 0.25))>> 16)*Tech_isDone(TECH_MARCOM_COPTIM);
+	charge_delay = charge_delay - ((ut_floor(charge_delay * 0.25))>> 16)*Tech_isDone(TECH_MARCOM_COPTIM);
 	Notify_Message(strparam(s:pulse_name, s:" PULSE ACTIVATED"),
 		strparam(s:"Activating in ",d:startup_delay,s:" seconds..."), "INFO", 2);
     delay(35 * (startup_delay));

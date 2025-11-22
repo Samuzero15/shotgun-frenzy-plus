@@ -622,4 +622,4 @@ Script 4 (void)
 	//Reset external damage value to 0
 	HUDMessageBold (s:"\n0";HUDMSG_PLAIN,4,CR_ORANGE,xtextbox,ytextbox,0,1);
 	HUDMessageBold (s:"\n\n0";HUDMSG_PLAIN,5,CR_GOLD,xtextbox,ytextbox,0,1);
-}
+}*/

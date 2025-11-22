@@ -184,8 +184,10 @@ function void ACSUtils_ErrorHandler(int type, str message)
 
 	printbold(s:text);
 }
+/*
 #libdefine INT_MAX 0x7fffffff
 #libdefine INT_MIN 0x80000000
+*/
 #libdefine FIXED_MAX (0x7fffffff)
 #libdefine FIXED_MIN (0x80000000)
 #libdefine USHORT_MAX 65535

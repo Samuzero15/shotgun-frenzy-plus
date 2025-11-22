@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////
 //      SHOTGUN FRENZY
 //   a mod by Wad'a'Holic
-
+/*
 // CF06_ACS
 // map script
 #library "cf06"
@@ -19,10 +19,9 @@
 #import "f_Cred.acs"
 #import "f_PStat.acs"
 #import "f_StokP.acs"
-#import "f_Battr.acs"
 //#import "f_TaticalMap.acs"
 #import "f_Core.acs"
-#import "fl_techs.acs"
+#include "fl_techs.acs"
 
 #include "zcommon.acs"
 #include "samu_tools.acs"
@@ -73,3 +72,4 @@ script 2 (int l_Type, int l_Sector){
 }
     
 // ************************************************
+*/

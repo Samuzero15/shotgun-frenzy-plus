@@ -7,7 +7,7 @@
             "distdir": "dist",
             "acscomp": true,
             "notxt": false,
-            "skipped": true
+            "skipped": false
         },
         "Resources": {
             "release": "v1.8.2",
@@ -35,7 +35,7 @@
         ],
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
-        "map": "test",
+        "map": "cf01",
         "extra_params": "+skill 1 +sv_cheats 1"
     },
     "build_settings": {
@@ -106,7 +106,7 @@
     },
     "acs_compilation": {
         "type": "acc",
-        "executeable": "..\\tools\\acc\\acc.exe",
+        "executeable": "..\\tools\\acc\\zt-bcc.exe",
         "gdcc-linker_exe": "value",
         "gdcc-make_libs": false,
         "gdcc-makelib_exe": "value",
@@ -114,7 +114,8 @@
         "gdcc-target_engine": "",
         "extra_params": "",
         "library_dirs": [
-            "..\\tools\\acc"
+            "..\\tools\\acc\\lib",
+            "..\\tools\\acc\\lib\\acs"
         ]
     }
 }

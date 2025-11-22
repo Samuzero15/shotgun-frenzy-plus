@@ -1,0 +1,40 @@
+
+int telepage_vars[2];
+
+function void TeleportPage_Update(int pageTag){
+	setPageTitle_Alpha("Teleport Hub", CR_CYAN);
+}
+
+//This will initialize the page components.
+function void TeleportPage_Init(int pageTag){
+	int i;
+
+    telepage_vars[0] = pageTag;
+
+    i = Image_Add(-90.0, -40.0, "PBUY");
+    Image_setTag(i, pageTag);
+    Image_setScale(i, 1.0, 1.0);
+	
+	i = StrButton_AddMid(320.0, 180.0, "To Sector 1");
+	StrButton_setColor(i, CR_Blue);
+	StrButton_setTag(i, pageTag);
+	StrButton_setExecute(i, STEXE_TELEPORT_SECTOR);
+    StrButton_setExeArgs(i, 1, 0, 0);
+
+    i = StrButton_AddMid(320.0, 220.0, "To Sector 2");
+	StrButton_setColor(i, CR_Blue);
+	StrButton_setTag(i, pageTag);
+	StrButton_setExecute(i, STEXE_TELEPORT_SECTOR);
+    StrButton_setExeArgs(i, 2, 0, 0);
+
+    i = StrButton_AddMid(320.0, 260.0, "To Sector 3");
+	StrButton_setColor(i, CR_Blue);
+	StrButton_setTag(i, pageTag);
+	StrButton_setExecute(i, STEXE_TELEPORT_SECTOR);
+    StrButton_setExeArgs(i, 3, 0, 0);
+
+    i = StrButton_AddMid(320.0, 320.0, "Exit");
+	StrButton_setColor(i, CR_Orange);
+	StrButton_setTag(i, pageTag);
+	StrButton_setExecute(i, STEXE_SYSOFF);
+}
