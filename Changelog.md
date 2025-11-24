@@ -8,6 +8,10 @@
 	!) Pretty important stuff.
 
 ## v1 - The path of the damned...
+
+#### (24 / 11 / 2025) [Moved acs source files in their folders]
+	*) Reorganizing the sourcecode...
+
 #### (23 / 11 / 2025) [Compacted some libraries, added sfcommon.acs]
 	*) Created sfcommon.acs file, wrapping up the essentials, including zcommon.acs and acsutils altogether!
 	*) Compacted down some libraries, specially the Commander scripts.
