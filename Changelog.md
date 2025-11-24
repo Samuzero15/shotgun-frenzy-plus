@@ -8,6 +8,9 @@
 	!) Pretty important stuff.
 
 ## v1 - The path of the damned...
+#### (23 / 11 / 2025) [Compacted some libraries, added sfcommon.acs]
+	*) Created sfcommon.acs file, wrapping up the essentials, including zcommon.acs and acsutils altogether!
+	*) Compacted down some libraries, specially the Commander scripts.
 
 #### (22 / 11 / 2025) [Compiler Switch to zt-bcc, compacting libraries, few refactors & some fixes]
 	!*) I need to check my head... Now the default compiler for this project will be zt-bcc.

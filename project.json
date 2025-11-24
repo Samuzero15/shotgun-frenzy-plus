@@ -7,7 +7,7 @@
             "distdir": "dist",
             "acscomp": true,
             "notxt": false,
-            "skipped": false
+            "skipped": true
         },
         "Resources": {
             "release": "v1.8.2",
@@ -49,7 +49,12 @@
             ".backup2",
             ".backup3",
             ".bak",
-            ".dbs"
+            ".dbs",
+            ".autosave1",
+            ".autosave2",
+            ".autosave3",
+            ".autosave4",
+            ".autosave5"
         ],
         "build_add_files": [
             "..\\Changelog.md"
@@ -58,14 +63,14 @@
             false,
             false,
             false,
+            false,
+            false,
+            true,
             true,
             false,
-            true,
-            true,
             false,
             false,
-            false,
-            true
+            false
         ],
         "string_replacer": {
             "strings_to_replace": {

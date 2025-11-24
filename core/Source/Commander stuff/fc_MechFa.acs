@@ -4,22 +4,8 @@
 
 // fc_MarineCommand.acs
 // structure scripts
-#library "fc_MechFa"
-
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fp_ptdir.acs"
-#import "fc_Const.acs"
-#import "fc_CommB.acs"
 #import "fl_mupDir.acs"
-#import "fl_techs.acs"
-#import "fc_AStr.acs"
 #import "fl_IDir.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
-
 
 // build
 script 300 (void)

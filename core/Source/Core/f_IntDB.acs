@@ -27,9 +27,9 @@
 #import "fl_MUpDir.acs"
 #import "fl_StUpDir.acs"
 #import "fl_PUpDir.acs"
-#import "fl_techs.acs"
 #import "fp_kshud.acs"
-#import "fp_ptdir.acs"
+#include "f_Tip.acs"
+#include "fl_techs.acs"
 #include "zcommon.acs"
 #include "acsutils.acs"
 #include "constants.acs"
@@ -218,6 +218,31 @@ int p_MonsterCredits[7] = { 2, 10, 22, 27, 65, 90, 200 };       // { 2, 10, 20, 
 // chance of dropping item on monster death
 int p_MonsterItem[7] = { 2.0, 4.0, 7.0, 10.0, 13.0, 15.0, 18.0};//{ 5, 10, 15, 25, 50, 75, 99 };
 
+// Techflags
+int fp_techstate[99];
+int fp_techflags[2][3];
+// 32 * 2 = 64 flags.
+
+// Commander Buttons
+#libdefine FP_COM_BUTTONS 99
+
+int CmdBut_list[FP_COM_BUTTONS][9];
+int CmdButStack = 0;
+
+// CMD events
+#libdefine CMDEVT_TOTAL 80
+#libdefine CMDEVT_PROPS 6
+
+int cmd_event[CMDEVT_TOTAL][CMDEVT_PROPS];
+
+// Progress Tip Getters
+#libdefine FP_PROGTIP_PROPS 7
+#libdefine FP_PROGTIP_NUMB 10
+#libdefine FP_PROGTIP_FIELDS FP_PROGTIP_PROPS * FP_PROGTIP_NUMB
+
+int progress_tip[FP_PROGTIP_FIELDS];
+int progress_tip_tmp[FP_PROGTIP_PROPS];
+int progress_tip_stack;
 
 function int getNextStreakMilestone(void){
 	int milestonebase = 70;

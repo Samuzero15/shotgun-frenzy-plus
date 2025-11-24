@@ -5,9 +5,7 @@
 // f_Core.acs
 #library "f_Core"
 
-#import "f_Tip.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
+#include "sfcommon.acs"
 
 script 122 (void)
 {

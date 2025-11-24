@@ -10,14 +10,6 @@
 
 
 // ***********************************************************************************
-#library "f_Tip"
-#import "f_IntDB.acs"
-#import "fl_techs.acs"
-#import "fp_ptdir.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
 
 #define TIP_NOTIFY_POS 1
 #define TIP_NOTIFY_ID 2
@@ -92,7 +84,7 @@ function void f_TipShow (str l_Image, str l_Text1, str l_Text2, int l_Type)
     else */if (l_Type == 17)       acs_executealways(166, 0, l_Position, l_TipQue_Selection, l_ID);        // ion cannon charge
     else if (l_Type == 18)       acs_executealways(167, 0, l_Position, l_TipQue_Selection, l_ID);        // pulse rage charge
     else if (l_Type == 19)       acs_executealways(168, 0, l_Position, l_TipQue_Selection, l_ID);        // other core stuff
-    else                         acs_executealways(150, 0, 3, l_TipQue_Selection, 0);                    // normal tip timing
+    else                         acs_Namedexecutealways("Tip_Free", 0, 3, l_TipQue_Selection, 0);                    // normal tip timing
 }
 
 function void f_CenterTipPatcher (str l_Tip)
@@ -177,7 +169,7 @@ function void f_SmallTipPlain(str l_Tip, int color, int id)
 }
 
 // remove message after waiting period
-script 150 (int l_Delay, int l_TipQue_Selection)
+script "Tip_Free" (int l_Delay, int l_TipQue_Selection)
 {
 	SetActivator(0); //Preventing a major disaster
     // delay before restoring
@@ -251,124 +243,6 @@ script 126 (int l_Colour)
 
 Script "SFPlus_NotifyTest" (void){
 
-}
-
-Script "SFPlus_ProgressScript" (int pnid, int wait_time, int slot)
-{	
-    int l_Percent;
-	str msg = ProgTip_GetMsg(pnid);
-	str img = ProgTip_GetImg(pnid);
-	str end_msg1 = ProgTip_GetEndMsg1(pnid);
-	str end_msg2 = ProgTip_GetEndMsg2(pnid);
-	str pre_sound = ProgTip_GetPreSound(pnid);
-	str post_sound = ProgTip_GetPostSound(pnid);
-	bool silent = ProgTip_GetSilent(pnid);
-	
-	//int wait_time = 1;
-	if(wait_time < 0) wait_time = 1; // Remember, this value is on tics.
-	
-	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
-	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
-	p_TipQue[slot] ++;
-	p_TipProcess[slot] = True;
-	
-	
-    ambientsound("patch/newmessage", 56);
-	//if(pre_sound != 0) ambientsound(pre_sound, 56);
-    if(pre_sound != 0) AnnouncerSound(pre_sound, 0);
-
-	while(l_Percent < 101)
-    {
-        // display message and image
-		
-		Notify_ShowPercent(msg, l_Percent, img, id, pos, 0);
-
-        // increase percent
-        l_Percent ++;
-        
-        delay(wait_time);
-    }
-	
-	p_TipQue[slot] --;
-	p_TipProcess[slot] = False;
-	
-	ambientsound("patch/newmessage", 56);
-	//if(post_sound != 0) ambientsound(post_sound, 56);
-	if(post_sound != 0) AnnouncerSound(post_sound, 0);
-	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
-
-}
-
-Script "SFPlus_TimerScript" (int pnid, int timehit, int pslot)
-{	
-	SetActivator(0); 
-    int time = timehit; // Remember, this is in seconds!
-	str msg = ProgTip_GetMsg(pnid);
-	str img = ProgTip_GetImg(pnid);
-	str end_msg1 = ProgTip_GetEndMsg1(pnid);
-	str end_msg2 = ProgTip_GetEndMsg2(pnid);
-	str pre_sound = ProgTip_GetPreSound(pnid);
-	str post_sound = ProgTip_GetPostSound(pnid);
-	bool silent = ProgTip_GetSilent(pnid);
-	
-	// Notify_QueueFreeSpace can prioritize the timers first rather than the messages!
-	int timer_slot = Notify_QueueFreeSpace();
-	int id = Notify_QueueGet(TIP_NOTIFY_ID, timer_slot);
-	int pos = Notify_QueueGet(TIP_NOTIFY_POS, timer_slot);
-	
-    ambientsound("patch/newmessage", 56);
-	//if(pre_sound != 0) ambientsound(pre_sound, 56);
-	if(pre_sound != 0) AnnouncerSound(pre_sound, 0);
-	
-	p_TipProcess[pslot] = True;
-    p_TipQue[timer_slot] ++;
-	
-	int time_mins = time / 60;
-	int last_time = time_mins;
-	int count_slot = -1;
-	int last_count_slot = count_slot;
-	if(time > 0) do // Timer loop
-    {
-		ambientsound("beep", 56);
-		Notify_ShowTime(msg, time, img, id, pos, 0);
-		
-		if(!silent){
-			time_mins = time / 60;
-			if(last_time != time_mins && time_mins > 0){ // Remember how many minutes left
-				Notify_Message(msg, strparam(d:time_mins+1, s:" MINUTE(S) LEFT..."), img, 0);
-				last_time = time_mins;
-			}
-			else 
-			{	if(time == 10 || time == 15 || time == 30 || time == 45 || time == 60) 
-					// Remember how many seconds left
-					Notify_Message(msg, strparam(d:time, s:" SECOND(S) LEFT!"), img, 0);
-				else if(time <= 5){
-					// Check for a free space, and make a small little counter that updates in each second.
-					if(count_slot != last_count_slot || count_slot == -1){
-						Notify_Clear(last_count_slot);
-						count_slot = Notify_QueueFreeSpace();
-						p_TipQue[count_slot] ++;
-					}
-					ambientsound("TIME", 56);
-					Notify_MessageSlot(msg, strparam(d:time, s:"!"), img, TIP_NOTIFY_COLORSET_BAD, count_slot);
-					last_count_slot = count_slot;
-				}
-			}
-		}
-		
-        time--;
-        delay(35);
-    }while(time > 0);
-	
-	p_TipQue[timer_slot] --;
-	p_TipProcess[pslot] = False;
-	
-	Notify_Clear(last_count_slot);
-	ambientsound("patch/newmessage", 56);
-	//if(post_sound != 0) ambientsound(post_sound, 56);
-	if(post_sound != 0) AnnouncerSound(post_sound, 0);
-	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
-	
 }
 
 // Common player notifiers...
@@ -604,7 +478,7 @@ function int Notify_QueueFreeSpace(void){
 function void Notify_QueueAlloc(int free_space){
 	// Allocates the message in that space, and run the cleaning up script.
 	p_TipQue[free_space] ++;
-	ACS_ExecuteAlways(150, 0, 3, free_space);
+	ACS_NamedExecuteAlways("Tip_Free", 0, 3, free_space);
 }
 
 function int Notify_QueueGet(int what, int free_space){
@@ -640,3 +514,320 @@ script 129 (int l_TextType, int l_StartTime)
         l_StartTime -= 1;
     }
 }  
+
+
+// fp_ptdir.acs
+// Progressive notifications directory.
+
+// Basically, the progressive tips (notifications) hint you the progress on something.
+// Like the building of a structure, or the loading of pulses or ion cannon charges
+// This directory can pre-load the properties, and makes it easier to change them.
+// It can also hold a temporary progressive notification too, customized on any part of the script.
+// Note this is only the visuals, for the wait time, pass it through the script parameter.
+
+#libdefine FP_PTID_GENLAB 	0
+#libdefine FP_PTID_ARMORY 	1
+#libdefine FP_PTID_MECHFA 	2
+#libdefine FP_PTID_REFINE 	3
+#libdefine FP_PTID_MARCOM 	4
+#libdefine FP_PTID_NUKESY 	5
+#libdefine FP_PTID_AIRSTK 	6
+#libdefine FP_PTID_IONCAN_1 7
+#libdefine FP_PTID_IONCAN_2 8
+#libdefine FP_PTID_CPULSE 	9
+
+function void ProgTip_Init(void){
+	// Pre-Loaded progress notifications.
+	ProgTip_DefaultProps(-1);// Initialize temporary progress notification
+	
+	int ptid = ProgTip_Def(FP_PTID_GENLAB); // Genlab
+	ProgTip_SetMsg		(ptid, "Genetics Lab is building...");
+	ProgTip_SetImg		(ptid, "CC01");
+	ProgTip_SetEndMsg1	(ptid, "Genetics Lab Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Now the marines will heal themselves.");
+	ProgTip_SetPreSound	(ptid, "command/genlab/building");
+	ProgTip_SetPostSound(ptid, "command/genlab/constructed");
+	
+	ptid = ProgTip_Def(FP_PTID_ARMORY);  // Armory
+	ProgTip_SetMsg		(ptid, "Armory is building....");
+	ProgTip_SetImg		(ptid, "CC02");
+	ProgTip_SetEndMsg1	(ptid, "Armory Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Lock and load everyone.");
+	ProgTip_SetPreSound	(ptid, "command/armory/building");
+	ProgTip_SetPostSound(ptid, "command/armory/constructed");
+
+	ptid = ProgTip_Def(FP_PTID_MECHFA);  // Mech factory
+	ProgTip_SetMsg		(ptid, "Mech Factory is building....");
+	ProgTip_SetImg		(ptid, "CC03");
+	ProgTip_SetEndMsg1	(ptid, "Mech Factory Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Heavy machinery awaits you in the base.");
+	ProgTip_SetPreSound	(ptid, "cv/dem1");
+	ProgTip_SetPostSound(ptid, "cv/dem2");
+	ProgTip_SetPreSound	(ptid, "command/mechfa/building");
+	ProgTip_SetPostSound(ptid, "command/mechfa/constructed");
+
+	ptid = ProgTip_Def(FP_PTID_REFINE);  // Refinery
+	ProgTip_SetMsg		(ptid, "Refinery is building....");
+	ProgTip_SetImg		(ptid, "CC04");
+	ProgTip_SetEndMsg1	(ptid, "Refinery Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "Extra credits can now be earned periodically.");
+	ProgTip_SetPreSound	(ptid, "cv/refinery1");
+	ProgTip_SetPostSound(ptid, "cv/refinery2");
+	ProgTip_SetPreSound	(ptid, "command/refine/building");
+	ProgTip_SetPostSound(ptid, "command/refine/constructed");
+
+	ptid = ProgTip_Def(FP_PTID_MARCOM);  // Marine Command
+	ProgTip_SetMsg		(ptid, "Marine Command is building....");
+	ProgTip_SetImg		(ptid, "CC05");
+	ProgTip_SetEndMsg1	(ptid, "Marine Command Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "The commander can aid the marines with some extra support.");
+	ProgTip_SetPreSound	(ptid, "cv/mcom1");
+	ProgTip_SetPostSound(ptid, "cv/mcom2");
+	ProgTip_SetPreSound	(ptid, "command/marcom/building");
+	ProgTip_SetPostSound(ptid, "command/marcom/constructed");
+
+	ptid = ProgTip_Def(FP_PTID_NUKESY);  // Nuclear Sylo
+	ProgTip_SetMsg		(ptid, "Nuclear Silo is building....");
+	ProgTip_SetImg		(ptid, "BUTTON");
+	ProgTip_SetEndMsg1	(ptid, "Nuclear Sylo Constructed!");
+	ProgTip_SetEndMsg2	(ptid, "The doomsday-clock is ready to be launched in the command chair.");
+	ProgTip_SetPreSound	(ptid, "cv/nsilo1");
+	ProgTip_SetPostSound(ptid, "cv/nsilo2");
+	ProgTip_SetPreSound	(ptid, "command/nsilo/building");
+	ProgTip_SetPostSound(ptid, "command/nsilo/constructed");
+
+	ptid = ProgTip_Def(FP_PTID_IONCAN_1);  // Ion cannon charges
+	ProgTip_SetMsg		(ptid, "Preparing Ion Cannon...");
+	ProgTip_SetEndMsg1	(ptid, "Firing ION CANNON!");
+	ProgTip_SetEndMsg2	(ptid, "Take Cover!");
+	ProgTip_SetImg		(ptid, "CM79");
+	
+	ptid = ProgTip_Def(FP_PTID_IONCAN_2);  // Ion cannon charges
+	ProgTip_SetMsg		(ptid, "Ion Cannon is re-charging...");
+	ProgTip_SetEndMsg1	(ptid, "Ion Cannon re-charged");
+	ProgTip_SetEndMsg2	(ptid, "Ready to fire!");
+	ProgTip_SetImg		(ptid, "CM79");
+	
+	ptid = ProgTip_Def(FP_PTID_AIRSTK);  // Air Strike charges
+	ProgTip_SetMsg		(ptid, "Air-Strike cooldown...");
+	ProgTip_SetEndMsg1	(ptid, "Air-Strike ready!");
+	ProgTip_SetEndMsg2	(ptid, "Awaiting orders...");
+	ProgTip_SetImg		(ptid, "CM76");
+	ProgTip_SetSilent	(ptid, True);
+		
+	ptid = ProgTip_Def(FP_PTID_CPULSE);  // Core Pulse Charge
+	ProgTip_SetMsg		(ptid, "Core is re-charging...");
+	ProgTip_SetEndMsg1	(ptid, "Core Pulse Recharged");
+	ProgTip_SetImg		(ptid, "CM78");
+}
+
+function int ProgTip_Def(int id){
+	int res = -1;
+	if(id < 0 || id >= FP_PROGTIP_NUMB){
+		log(s:"ProgTip: Unknown identifier:",d:id,s:"!");
+	}
+	else{
+		ProgTip_DefaultProps(id);
+		res = id;
+	}
+	return res;
+}
+
+function void ProgTip_DefaultProps(int which){
+	ProgTip_SetMsg		(which, "Progress");
+	ProgTip_SetImg		(which, "INFO");
+	ProgTip_SetEndMsg1	(which, "Done!");
+	ProgTip_SetEndMsg2	(which, "Ready to go!");
+	ProgTip_SetPreSound	(which, 0);
+	ProgTip_SetPostSound(which, 0);
+	ProgTip_SetSilent	(which, false);
+}
+
+// Getters
+// -1 Will load the temporary properties of a custom notification!
+function int ProgTip_GetMsg(int ptid){
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid)]; 
+	return progress_tip_tmp[0];
+}
+function int ProgTip_GetImg(int ptid){ 	
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 1]; 
+	return progress_tip_tmp[1];
+}
+function int ProgTip_GetEndMsg1(int ptid){ 		
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 2];
+	return progress_tip_tmp[2];
+}
+function int ProgTip_GetEndMsg2(int ptid){ 		
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 3];
+	return progress_tip_tmp[3];
+}
+function int ProgTip_GetPreSound(int ptid){ 	
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 4];
+	return progress_tip_tmp[4];
+}
+function int ProgTip_GetPostSound(int ptid){ 
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 5];
+	return progress_tip_tmp[5];
+}
+
+function int ProgTip_GetSilent(int ptid){ 
+	if(ptid >= 0) return progress_tip[(FP_PROGTIP_PROPS * ptid) + 6];
+	return progress_tip_tmp[6];
+}
+
+
+// Setters
+// -1 Will save the temporary properties of a custom notification!
+// Yes, you can make a customized notification if you wish.
+function void ProgTip_SetMsg(int ptid, str msg){
+	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid)] = msg; 
+	else			progress_tip_tmp[0] = msg;
+}
+
+function void ProgTip_SetImg(int ptid, str img){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 1] = img; 
+	else			progress_tip_tmp[1] = img;
+}
+		
+function void ProgTip_SetEndMsg1(int ptid, str msg){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 2] = msg;
+	else			progress_tip_tmp[2] = msg;
+}
+
+function void ProgTip_SetEndMsg2(int ptid, str msg){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 3] = msg;
+	else			progress_tip_tmp[3] = msg;
+}
+
+function void ProgTip_SetPreSound(int ptid, str snd){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 4] = snd;
+	else			progress_tip_tmp[4] = snd;
+}
+
+function void ProgTip_SetPostSound(int ptid, str snd){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 5] = snd;
+	else			progress_tip_tmp[5] = snd;
+}
+
+function void ProgTip_SetSilent(int ptid, bool silent){
+ 	if(ptid >= 0)	progress_tip[(FP_PROGTIP_PROPS * ptid) + 6] = silent;
+	else			progress_tip_tmp[6] = silent;
+}
+
+Script "SFPlus_ProgressScript" (int pnid, int wait_time, int slot)
+{	
+    int l_Percent;
+	str msg = ProgTip_GetMsg(pnid);
+	str img = ProgTip_GetImg(pnid);
+	str end_msg1 = ProgTip_GetEndMsg1(pnid);
+	str end_msg2 = ProgTip_GetEndMsg2(pnid);
+	str pre_sound = ProgTip_GetPreSound(pnid);
+	str post_sound = ProgTip_GetPostSound(pnid);
+	bool silent = ProgTip_GetSilent(pnid);
+	
+	//int wait_time = 1;
+	if(wait_time < 0) wait_time = 1; // Remember, this value is on tics.
+	
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, slot);
+	p_TipQue[slot] ++;
+	p_TipProcess[slot] = True;
+	
+	
+    ambientsound("patch/newmessage", 56);
+	//if(pre_sound != 0) ambientsound(pre_sound, 56);
+    if(pre_sound != 0) AnnouncerSound(pre_sound, 0);
+
+	while(l_Percent < 101)
+    {
+        // display message and image
+		
+		Notify_ShowPercent(msg, l_Percent, img, id, pos, 0);
+
+        // increase percent
+        l_Percent ++;
+        
+        delay(wait_time);
+    }
+	
+	p_TipQue[slot] --;
+	p_TipProcess[slot] = False;
+	
+	ambientsound("patch/newmessage", 56);
+	//if(post_sound != 0) ambientsound(post_sound, 56);
+	if(post_sound != 0) AnnouncerSound(post_sound, 0);
+	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
+
+}
+
+Script "SFPlus_TimerScript" (int pnid, int timehit, int pslot)
+{	
+	SetActivator(0); 
+    int time = timehit; // Remember, this is in seconds!
+	str msg = ProgTip_GetMsg(pnid);
+	str img = ProgTip_GetImg(pnid);
+	str end_msg1 = ProgTip_GetEndMsg1(pnid);
+	str end_msg2 = ProgTip_GetEndMsg2(pnid);
+	str pre_sound = ProgTip_GetPreSound(pnid);
+	str post_sound = ProgTip_GetPostSound(pnid);
+	bool silent = ProgTip_GetSilent(pnid);
+	
+	// Notify_QueueFreeSpace can prioritize the timers first rather than the messages!
+	int timer_slot = Notify_QueueFreeSpace();
+	int id = Notify_QueueGet(TIP_NOTIFY_ID, timer_slot);
+	int pos = Notify_QueueGet(TIP_NOTIFY_POS, timer_slot);
+	
+    ambientsound("patch/newmessage", 56);
+	//if(pre_sound != 0) ambientsound(pre_sound, 56);
+	if(pre_sound != 0) AnnouncerSound(pre_sound, 0);
+	
+	p_TipProcess[pslot] = True;
+    p_TipQue[timer_slot] ++;
+	
+	int time_mins = time / 60;
+	int last_time = time_mins;
+	int count_slot = -1;
+	int last_count_slot = count_slot;
+	if(time > 0) do // Timer loop
+    {
+		ambientsound("beep", 56);
+		Notify_ShowTime(msg, time, img, id, pos, 0);
+		
+		if(!silent){
+			time_mins = time / 60;
+			if(last_time != time_mins && time_mins > 0){ // Remember how many minutes left
+				Notify_Message(msg, strparam(d:time_mins+1, s:" MINUTE(S) LEFT..."), img, 0);
+				last_time = time_mins;
+			}
+			else 
+			{	if(time == 10 || time == 15 || time == 30 || time == 45 || time == 60) 
+					// Remember how many seconds left
+					Notify_Message(msg, strparam(d:time, s:" SECOND(S) LEFT!"), img, 0);
+				else if(time <= 5){
+					// Check for a free space, and make a small little counter that updates in each second.
+					if(count_slot != last_count_slot || count_slot == -1){
+						Notify_Clear(last_count_slot);
+						count_slot = Notify_QueueFreeSpace();
+						p_TipQue[count_slot] ++;
+					}
+					ambientsound("TIME", 56);
+					Notify_MessageSlot(msg, strparam(d:time, s:"!"), img, TIP_NOTIFY_COLORSET_BAD, count_slot);
+					last_count_slot = count_slot;
+				}
+			}
+		}
+		
+        time--;
+        delay(35);
+    }while(time > 0);
+	
+	p_TipQue[timer_slot] --;
+	p_TipProcess[pslot] = False;
+	
+	Notify_Clear(last_count_slot);
+	ambientsound("patch/newmessage", 56);
+	//if(post_sound != 0) ambientsound(post_sound, 56);
+	if(post_sound != 0) AnnouncerSound(post_sound, 0);
+	Notify_Show(end_msg1, end_msg2, img, id, pos, TIP_NOTIFY_COLORSET_GOOD);
+	
+}

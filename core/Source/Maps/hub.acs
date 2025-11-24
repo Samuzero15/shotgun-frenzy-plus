@@ -1,7 +1,6 @@
 #library "hub"
 
-#import "f_tip.acs"
-#include "zcommon.acs"
+#include "sfcommon.acs"
 
 int map_list[50][2];
 int map_list_stack = 0;

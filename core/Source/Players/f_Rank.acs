@@ -6,12 +6,7 @@
 // rank and exp management
 #library "f_Rank"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "constants.acs"
+#include "sfcommon.acs"
 
 int rank_titles[20] = {
     "Rookie",  

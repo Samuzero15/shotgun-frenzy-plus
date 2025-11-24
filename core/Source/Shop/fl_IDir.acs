@@ -10,14 +10,8 @@
 
 #library "fl_IDir"
 
-#import "f_intdb.acs"
 #import "fp_lumpread.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-
-#import "fl_techs.acs"
-#include "samu_tools.acs"
+#include "sfcommon.acs"
 
 #libdefine FP_ITEM_NUM 255
 

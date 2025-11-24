@@ -9,14 +9,10 @@
 // For the prices, take a look at cvarinfo.prices lump.
 
 #library "fl_WDir"
-#import "f_intDB.acs"
 
 #import "fp_lumpread.acs"
-#import "fl_techs.acs"
 
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
+#include "sfcommon.acs"
 #include "libbcs.bcs"
 
 enum WEAPON_SETS {

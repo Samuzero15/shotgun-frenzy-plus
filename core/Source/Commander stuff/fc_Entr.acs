@@ -4,13 +4,6 @@
 
 // fc_Entrance.acs
 // base door control (extracted from Shotgun Frenzy 1.1)
-#library "fc_Entr"
-
-#import "f_IntDB.acs"
-#import "fl_techs.acs"
-
-#include "zcommon.acs"
-#include "samu_tools.acs"
 
 script 81 (void) { // Uh...
 

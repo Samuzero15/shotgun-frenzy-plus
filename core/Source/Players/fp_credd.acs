@@ -8,12 +8,8 @@
 // Drop sum money!
 #library "FP_CredD"
 
-#import "fl_techs.acs"
-#import "f_intdb.acs"
+#include "sfcommon.acs"
 #import "fp_hello.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
 
 int p_DropCredits[32];
 int p_DropCredits_Delay[32];

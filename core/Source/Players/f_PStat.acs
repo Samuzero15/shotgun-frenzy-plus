@@ -6,19 +6,15 @@
 // player status and respawning
 #library "f_PStat"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
+#include "sfcommon.acs"
+
 #import "f_Cred.acs"
-#import "fl_techs.acs"
 #import "fl_wdir.acs"
 #import "fp_credd.acs"
-#import "fp_cmdevt.acs"
 #import "f_StokP.acs"
 #import "fl_PupDir.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
+#import "fc_Comm.acs"
+#include "fp_comcmd.acs"
 
 str Stats_PlayerNames[32];
 

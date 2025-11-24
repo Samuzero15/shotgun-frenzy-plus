@@ -4,17 +4,8 @@
 
 // fc_NuclearSilo.acs
 // structure scripts
-#library "fc_NSilo"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fc_Const.acs"
-#import "fc_CommB.acs"
 #import "f_AIDir.acs"
-#import "fl_techs.acs"
-
-#include "zcommon.acs"
-#include "samu_tools.acs"
 
 // build
 script 450 (void)

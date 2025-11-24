@@ -6,15 +6,8 @@
 // calls the players personal menu
 
 #library "f_PMen"
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fl_techs.acs"
 
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
-
-// include external scripts
+#include "sfcommon.acs"
 
 script "SFPlus_PayScript" (int scriptpriceid, int execstring){
     if(!(p_Credits[Playernumber()] >= m_scriptPrice[scriptpriceid].price)){

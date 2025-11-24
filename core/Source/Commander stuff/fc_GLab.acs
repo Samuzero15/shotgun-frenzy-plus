@@ -4,15 +4,6 @@
 
 // fc_GeneticsLab.acs
 // structure scripts
-#library "fc_GLab"
-
-#import "f_IntDB.acs"
-#import "fc_Const.acs"
-#import "f_Tip.acs"
-#import "fc_CommB.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "samu_tools.acs"
 
 // build
 script 200 (void)

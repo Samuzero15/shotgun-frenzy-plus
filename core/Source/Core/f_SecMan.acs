@@ -6,11 +6,8 @@
 // manages the sectors
 
 #library "f_SecMan"
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "samu_tools.acs"
+
+#include "sfcommon.acs"
 
 function int m_CalcSector (void)
 { // Calculates the demon count between the risked sectors.

@@ -6,13 +6,8 @@
 // manages the sectors
 #library "f_ScManS"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
 #import "fp_AISet.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
+#include "sfcommon.acs"
 
 function int m_CalcSector (void)
 {

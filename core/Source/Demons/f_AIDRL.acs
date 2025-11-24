@@ -6,11 +6,9 @@
 // demon levels (can be customised, in a diff way.)
 #library "f_AIDRL"
 
+#include "sfcommon.acs"
 #import "f_AIDir.acs"
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
 #import "fp_AISet.acs"
-#include "zcommon.acs"
 
 int AIDirector_Demonlimit = 250; // 250 = default
 

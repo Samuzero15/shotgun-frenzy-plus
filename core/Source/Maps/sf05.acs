@@ -7,14 +7,10 @@
 #library "sf05"
 
 // top priority
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fl_techs.acs"
+#include "sfcommon.acs"
 #import "f_AIDRL.acs"
 
 #import "fp_sf.acs" // Modulize that crap!
-
-#include "zcommon.acs"
 
 script 88 OPEN
 {

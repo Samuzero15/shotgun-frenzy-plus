@@ -4,15 +4,6 @@
 
 // fc_CommandButtons.acs
 // script containing commander menu buttons
-#library "fc_CommB"
-
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fl_techs.acs"
-#import "fp_cmdevt.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
 
 //check if we're allowed to put turrets down again
 

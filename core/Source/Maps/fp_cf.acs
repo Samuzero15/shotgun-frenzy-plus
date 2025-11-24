@@ -7,18 +7,13 @@
 
 #library "fp_cf"
 
-#import "f_IntDB.acs"
-#import "fl_techs.acs"
-#import "f_Tip.acs"
+#include "sfcommon.acs"
 
 #import "fp_maplb.acs" // All the common stuff for the mod maps.
 
 #import "f_SecMan.acs"
 #import "f_AIDRL.acs"
 #import "f_FinalF.acs"
-
-#include "zcommon.acs"
-#include "samu_tools.acs"
 
 // setup techflags
 function void SFPlus_DefaultVars(void){

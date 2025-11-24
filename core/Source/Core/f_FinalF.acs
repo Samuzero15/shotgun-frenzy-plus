@@ -6,13 +6,8 @@
 // the battle before the end
 #library "f_FinalF"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
+#include "sfcommon.acs"
 #import "f_AIDir.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
 
 
 // define a useful variable (for dev purposes only, use to instantly goto the boss)

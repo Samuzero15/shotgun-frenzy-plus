@@ -1,24 +1,20 @@
 #library "samuterm"
 
-// Includes:
-#include "zcommon.acs"
-
 #define ACSUTILS_RECTLIB_USERVARS 40 // Max amount of properties.
 
 //////SF Stuff////////
-#import "f_IntDB.acs"
+
 #import "fl_WDir.acs" // HEHEh, BOI.
 #import "fl_IDir.acs" // HEHEh, BOI.
 #import "fl_MUpDir.acs" // HEHEh, BOI.
 #import "fl_PUpDir.acs" // HEHEh, BOI.
 #import "fl_StUpDir.acs" // HEHEh, BOI.
-#import "fp_comcmd.acs"
-#import "fl_techs.acs"
-#import "fc_AStr.acs"
-#import "f_Tip.acs"
+#import "fc_Comm.acs" // Everything commander related.
 
-#include "acsutils.acs"
-#include "samu_tools.acs"
+#include "sfcommon.acs"
+#include "fp_comcmd.acs" // Commander common functions.
+#include "fc_AStr.acs" // Airstrike functions.
+
 #include "acsrect.acs"
 //////SF Stuff////////
 

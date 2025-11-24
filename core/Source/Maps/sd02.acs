@@ -6,16 +6,9 @@
 // map script
 #library "sd02"
 
-// top priority
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fl_techs.acs"
+#include "sfcommon.acs"
 
 #import "fp_sd.acs" // Modulize that crap!
-
-#include "zcommon.acs"
-
-#include "samu_tools.acs"
 
 //map setup
 script 91 OPEN

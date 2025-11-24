@@ -7,13 +7,9 @@
 
 #library "fp_mSpwn"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
 #import "f_AIDir.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
+
+#include "sfcommon.acs"
 
 #include "champ_core.acs" // The whole champion making stuff. Just to do not overwhelm this script.
 #include "champ_make.acs"

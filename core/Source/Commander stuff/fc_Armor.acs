@@ -4,15 +4,6 @@
 
 // fc_Armory.acs
 // structure scripts
-#library "fc_Armor"
-
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fc_Const.acs"
-#import "fc_CommB.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-#include "samu_tools.acs"
 
 // build
 script 250 (void)

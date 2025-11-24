@@ -6,14 +6,9 @@
 // map script
 #library "cf01"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
+#include "sfcommon.acs"
 
 #import "fp_cf.acs"
-
-#include "zcommon.acs"
-#import "fl_techs.acs"
-#include "samu_tools.acs"
 
 // setup techflags and game settings
 script 91 OPEN

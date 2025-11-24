@@ -4,14 +4,6 @@
 
 // fc_Construction.acs
 // building construction functions
-#library "fc_Const"
-
-#import "f_tip.acs"
-#import "fp_ptdir.acs"
-#import "f_IntDB.acs"
-#import "fl_techs.acs"
-#include "zcommon.acs"
-
 
 Script "SFPlus_BuildStructure" (int which){
 	

@@ -6,7 +6,7 @@
 // The global scripts!
 
 #library "sfplus"
-#include "zcommon.acs"
+#include "sfcommon.acs"
 
 #import "fp_hello.acs" // Intro messages, and command helps.
 #import "samuterm.acs" // The main core for the terminals!
@@ -22,7 +22,7 @@
 #import "fp_ithud.acs" // The item hud
 #import "fp_save.acs" // Saving data from maps
 #import "fp_aquse.acs" // Auto use and quick use scripts
-#import "fp_runes.acs" // Runes stuff
+#include "fp_runes.acs" // Runes stuff
 #import "textlbls.acs" // Text Labels
 //#import "f_TMap.acs" <- intresting stuff...
 

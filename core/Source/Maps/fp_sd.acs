@@ -7,9 +7,7 @@
 
 #library "fp_sd"
 
-#import "f_IntDB.acs" // All the variables
-#import "f_Tip.acs" // Tips notifiers n stuff
-#import "fl_techs.acs" // going techy
+#include "sfcommon.acs"
 
 #import "fp_maplb.acs" // All the common stuff for the mod maps.
 
@@ -19,9 +17,6 @@
 #import "f_AIDRL.acs" // AI Director Levels
 #import "f_FinalF.acs" // The final fight
 //#import "fa_SSD01.acs"
-
-#include "zcommon.acs"
-#include "samu_tools.acs"
 
 function void SFPlus_DefaultVars(void){
 	// game settings

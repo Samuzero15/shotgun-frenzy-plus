@@ -4,18 +4,7 @@
 
 // fc_DemonicLab.acs
 // structure scripts
-#library "fc_MComm"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
-#import "fc_Const.acs"
-#import "fc_CommB.acs"
-#import "fl_techs.acs"
-#import "fp_ptdir.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
 // build
 script 400 (void)
 {

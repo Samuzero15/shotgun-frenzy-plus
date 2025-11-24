@@ -5,15 +5,6 @@
 
 // fc_Baners.acs
 // That banner on the bases on sf maps!
-#library "fp_baners"
-
-#import "f_IntDB.acs"
-#import "fc_const.acs"
-#import "fl_techs.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-#include "samu_tools.acs"
 
 script "SFPlus_BaseBanner" open{
 	str string;

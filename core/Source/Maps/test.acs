@@ -5,8 +5,7 @@
 //Testing map.
 #library "TEST"
 
-#import "f_IntDB.acs"
-#import "f_Tip.acs"
+#include "sfcommon.acs"
 
 #import "f_FinalF.acs"
 #import "f_PMen.acs"
@@ -15,14 +14,8 @@
 #import "f_Cred.acs"
 #import "f_PStat.acs"
 #import "f_StokP.acs"
-#import "fl_techs.acs"
 #import "fp_AISet.acs"
 #import "textlbls.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-
-#include "samu_tools.acs"
 
 #define List 100
 str spawnerList[List];

@@ -7,10 +7,6 @@
 
 // All of the tech you need in this.
 
-#library "fl_techs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-
 #libdefine FP_NUMBTECH 33
 #libdefine TECHF_DONE 	1<<0
 #libdefine TECHF_LOCK 	1<<1
@@ -57,9 +53,6 @@
 #libdefine TECH_REFINE_ENGINE	35
 #libdefine TECH_REFINE_COINX5	36
 
-int fp_techstate[99];
-int fp_techflags[2][3];
-// 32 * 2 = 64 flags.
 function void SFPlus_DefineTechs(void){
 	for(int i = 0; i < FP_NUMBTECH; i++){
 		Tech_Set(i, 0);
