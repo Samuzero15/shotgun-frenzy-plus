@@ -5,6 +5,7 @@
 // fp_comcmd.acs
 // All the data structure about the commander buttons are here.
 
+#include "fc_AStr.acs"
 #include "fc_CommB.acs"
 #include "fp_cmdevt.acs"
 

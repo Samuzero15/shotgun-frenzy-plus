@@ -6,13 +6,6 @@
 // SBARINFO syncing scripts.
 
 // This will be useful for syncing the sbarinfo.
-#library "FP_SBINF"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-
-#import "f_intdb.acs"
-#import "fl_MupDir.acs"
 
 Script "SFPlus_SyncVariables" OPEN {// Thank You Mr.Satan!
 	int play = 0;

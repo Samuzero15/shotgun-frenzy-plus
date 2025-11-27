@@ -7,7 +7,7 @@
             "distdir": "dist",
             "acscomp": true,
             "notxt": false,
-            "skipped": true
+            "skipped": false
         },
         "Resources": {
             "release": "v1.8.2",
@@ -35,7 +35,7 @@
         ],
         "pwads_after": [],
         "iwad_path": "..\\tools\\zandronum\\doom2.WAD",
-        "map": "cf01",
+        "map": "test",
         "extra_params": "+skill 1 +sv_cheats 1"
     },
     "build_settings": {

@@ -7,13 +7,7 @@
 
 // Cool flashy effects :3
 
-#library "FP_FLASH"
-
-#import "f_intdb.acs"
-
 #libdefine FLASH_HUDID -3
-
-#include "zcommon.acs"
 
 script "SFPlus_ScreenFlash" (int style, int time, int all) CLIENTSIDE
 {

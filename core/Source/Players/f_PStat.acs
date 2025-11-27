@@ -13,7 +13,7 @@
 #import "fp_credd.acs"
 #import "f_StokP.acs"
 #import "fl_PupDir.acs"
-#import "fc_Comm.acs"
+//#import "fc_Comm.acs"
 #include "fp_comcmd.acs"
 
 str Stats_PlayerNames[32];

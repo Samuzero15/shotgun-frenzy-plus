@@ -7,21 +7,12 @@
 
 // Display's what you got right now!
 
-#library "fp_ithud"
-
-#import "f_intdb.acs"
-#import "fl_idir.acs"
-#include "zcommon.acs"
-#include "acsutils.acs"
-
 // Useful for filters.
 #libdefine ITEMHUD_ID_NUM -6300
 #libdefine ITEMHUD_ID_IMG -6200
-int itemhud_stack = 0;
-int itemhud_caretx;
-int itemhud_carety;
-int itemhud_caret_numx;
-int itemhud_caret_numy;
+#libdefine ITEMHUD_W 640
+#libdefine ITEMHUD_H 480
+#libdefine ITEMHUD_SPACING 32.0
 
 script "SFPlus_InventoryList_Enter" ENTER{
 	NamedExecuteClientScript("SFPlus_InventoryList", PlayerNumber());
@@ -63,11 +54,6 @@ Script "SFPlus_InventoryList" (void) Clientside{
 		}
 	}
 }
-
-
-#libdefine ITEMHUD_W 640
-#libdefine ITEMHUD_H 480
-#libdefine ITEMHUD_SPACING 32.0
 
 function void ItemHud_AdjustCaret(int items){
 	int w = ITEMHUD_W, h = ITEMHUD_H;

@@ -751,26 +751,28 @@ function bool Weapon_OwnedSameKind(int asThis){
 
 function int Weapon_SaveLastUsed(void){
 	int res = -1;
-	for(int i = 0; i < fp_weaponStack; i++){
-		if(Weapon_OwnedSameKind(i)){
-			res = i;
-			break;
-		}
-	}
+	for (int i = 0; i < fp_WeaponStack && res == -1; i++)
+		if (Weapon_EquippedSameKind(i)) res = i;
 	//log(s:"Weapon style save: ", s:Weapon_GetActor(res));
 	return res;
 }
 
-function void Weapon_LoadLastUsed(int which){
-	
-	SetWeapon(Weapon_GetActor(which));
-	SetWeapon(WeaponUpgrade_GetActor(which, 0));
-	SetWeapon(WeaponUpgrade_GetActor(which, 1));
-	for(int i = 0; i < Weapon_getUpsNum(which); i++){
-		SetWeapon(WeaponUpgrade_GetActor(which, i));
+function bool Weapon_EquippedSameKind(int asThis){
+	bool iEquippedItUpgraded = false;
+	for(int i = 0; i < Weapon_getUpsNum(asThis) && !iEquippedItUpgraded; i++){
+		iEquippedItUpgraded = StrIEquals(GetWeapon(), WeaponUpgrade_getActor(asThis, i));
 	}
-	//log(s:"Weapon style load: ", s:Weapon_GetActor(which));
-	
+	return StrIEquals(GetWeapon(), Weapon_GetActor(asThis)) || iEquippedItUpgraded;
+}
+
+function void Weapon_LoadLastUsed(int which){
+	bool equipped = false;
+	// equip any upgrade variant
+	for(int i = 0; i < Weapon_getUpsNum(which) && !equipped; i++){
+		equipped = SetWeapon(WeaponUpgrade_GetActor(which, i));
+	} // If there is no upgraded weapon, pick the base weapon.
+	if(!equipped) SetWeapon(Weapon_GetActor(which));
+	//log(s:"Last Base Weapon loaded: ", s:Weapon_GetActor(which));
 }
 
 function void WPTrack_Increase(int wp){

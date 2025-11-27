@@ -53,10 +53,10 @@ script 155 (int l_Category)
     
     // [Samu] Otherwise, go to my terminal and do your shiet.
     //print(d:l_Category, s:" Terminal booted.");
-    log(s:Tech_IsDone(TECH_ARMORY) ? "Armory Tech is DONE." : "Armory Tech is NOT done.");
+    //log(s:Tech_IsDone(TECH_ARMORY) ? "Armory Tech is DONE." : "Armory Tech is NOT done.");
     if(l_Category == 10 && Tech_IsDone(TECH_GENLAB)) ACS_NamedExecuteAlways("SamuTerminal", 0, 20);
     else if (l_Category == 20 && Tech_IsDone(TECH_MECHFA)) ACS_NamedExecuteAlways("SamuTerminal", 0, 30);
-    else if (l_Category == 1 && Tech_IsDone(TECH_ARMORY)) ACS_NamedExecuteAlways("SamuTerminal", 0, 0);
+    else if (Tech_IsDone(TECH_ARMORY)) ACS_NamedExecuteAlways("SamuTerminal", 0, 0);
 
     // old code deleted, cuz it's useless now.
 }

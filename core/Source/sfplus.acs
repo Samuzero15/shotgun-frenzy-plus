@@ -13,15 +13,11 @@
 #import "f_decscp.acs" // Decorate only scripts!
 #import "fp_mkill.acs" // Monster kill script
 #import "fp_mSpwn.acs" // Monster spawn script
-#import "fp_dmhud.acs" // The Damage HUD
-#import "fp_flash.acs" // The Damage HUD
-#import "FP_SBINF.acs"  // SBarInfo Manipulation
 #import "fp_credd.acs" // The credit dropper command.
 #import "fp_music.acs" // Music changing
-#import "fp_puhud.acs" // Powerup Hud
-#import "fp_ithud.acs" // The item hud
 #import "fp_save.acs" // Saving data from maps
 #import "fp_aquse.acs" // Auto use and quick use scripts
+#import "fp_huds.acs" // All huds.
 #include "fp_runes.acs" // Runes stuff
 #import "textlbls.acs" // Text Labels
 //#import "f_TMap.acs" <- intresting stuff...

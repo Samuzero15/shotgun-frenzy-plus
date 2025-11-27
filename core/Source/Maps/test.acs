@@ -7,7 +7,6 @@
 
 #include "sfcommon.acs"
 
-#import "f_FinalF.acs"
 #import "f_PMen.acs"
 #import "f_PHUD.acs"
 #import "f_Rank.acs"
@@ -97,13 +96,41 @@ script 14 (void){
 		delay(1);
 	}
 	
-	for(i = spawnstack; i < altars; i++){
+	
+	for(i = spawnStack; i < altars; i++){
 		ACS_ExecuteAlways(15,0, i);
 		delay(1);
 	}
 	Print(s:"The monster spawner is now open!");
 	Door_Open(5, 128);
 }
+
+script 15 (int who){
+	//If the altar is not used, hide it.
+	changeFloor(300 + who,		"CEIL4_2");
+	changeCeiling(300 + who,	"BRICK8_2");
+	Floor_LowerToLowest(300 + who, 		128);
+	Ceiling_RaiseToNearest(300 + who, 	128);
+	
+	ChangeFloor(600 + who, 		"CEIL4_2");
+	ChangeCeiling(600 + who, 	"BRICK8_2");
+}
+
+script 13 (int who){
+	//Spawn the monster in the altar and then, add a button to spawn it on the arena.
+	SpawnSpot(spawnerList[who], 300 + who, 1300 + who, 0);
+	Thing_DeActivate(1300 + who);
+	//Activate buttons.
+	SetLineSpecial(300 + who, 80, 16, 0, who);
+	Thing_SetTranslation(1300 + who, TRANSLATION_ICE);
+	//Raise altars
+	Floor_RaiseByValue(300 + who, 64, 32);
+	Ceiling_LowerByValue(300 + who, 64, 64);
+	
+	//Raise button
+	Floor_RaiseByValue(600 + who, 64, 32);
+}
+
 
 #Define SYNCTID_wavelikespawn 20000
 #Define SYNCTID_x4health 20001
@@ -345,31 +372,6 @@ script 40 (int who){
 		delay(5);
 	}
 
-}
-script 15 (int who){
-	//If the altar is not used, hide it.
-	changeFloor(300 + who,		"CEIL4_2");
-	changeCeiling(300 + who,	"BRICK8_2");
-	Floor_LowerToLowest(300 + who, 		128);
-	Ceiling_RaiseToNearest(300 + who, 	128);
-	
-	ChangeFloor(600 + who, 		"CEIL4_2");
-	ChangeCeiling(600 + who, 	"BRICK8_2");
-}
-
-script 13 (int who){
-	//Spawn the monster in the altar and then, add a button to spawn it on the arena.
-	SpawnSpot(spawnerList[who], 300 + who, 1300 + who, 0);
-	Thing_DeActivate(1300 + who);
-	//Activate buttons.
-	SetLineSpecial(300 + who, 80, 16, 0, who);
-	Thing_SetTranslation(1300 + who, TRANSLATION_ICE);
-	//Raise altars
-	Floor_RaiseByValue(300 + who, 64, 32);
-	Ceiling_LowerByValue(300 + who, 64, 64);
-	
-	//Raise button
-	Floor_RaiseByValue(600 + who, 64, 32);
 }
 
 int rand_level = 1;

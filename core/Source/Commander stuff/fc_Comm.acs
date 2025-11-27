@@ -19,13 +19,8 @@
 #include "fc_MechFa.acs" // Mech Factory main scripts
 #include "fc_NSilo.acs" // Nuclear silo scripts main scripts
 #include "fc_Const.acs" // Construction scripts
-#include "fp_comcmd.acs"
-#include "fc_AStr.acs"
 #include "fp_Baners.acs"
-
-int airstk_n_targets = 0;
-int airstk_line = 0;
-int airstk_waves = 3;
+//#include "fp_comcmd.acs"
 
 int scriptpulse;
 

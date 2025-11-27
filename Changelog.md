@@ -9,6 +9,11 @@
 
 ## v1 - The path of the damned...
 
+#### (26 / 11 / 2025) [Merging hud libraries, and Auto Weapon Switch is back]
+	*) Returned the auto weapon switch function upon death and respawn scripts.
+	*) Merged up the Hud scripts in a single library.
+	*) Still merging up libraires, so it gets more easier to compile.
+
 #### (24 / 11 / 2025) [Moved acs source files in their folders]
 	*) Reorganizing the sourcecode...
 

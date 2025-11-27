@@ -9,11 +9,9 @@
 #import "fl_MUpDir.acs" // HEHEh, BOI.
 #import "fl_PUpDir.acs" // HEHEh, BOI.
 #import "fl_StUpDir.acs" // HEHEh, BOI.
-#import "fc_Comm.acs" // Everything commander related.
 
 #include "sfcommon.acs"
-#include "fp_comcmd.acs" // Commander common functions.
-#include "fc_AStr.acs" // Airstrike functions.
+#include "fp_comcmd.acs" // Commander comands and related functions.
 
 #include "acsrect.acs"
 //////SF Stuff////////

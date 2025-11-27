@@ -8,18 +8,10 @@
 // Meant to remeber you: you're still human and you could die in any minute.
 // Now, this should display correctly on different aspect ratios!
 
-#library "FP_DMHUD"
-
-#import "f_intdb.acs"
-#import "fl_MupDir.acs"
-
-#include "zcommon.acs"
-#include "acsutils.acs" 
-
-#define DMHUD_ID -2504
-#define DMHUD_PERC 0.50
-#define DMHUD_ALPHA_MIN 0.1
-#define DMHUD_ALPHA_MAX 0.4
+#libdefine DMHUD_ID -2504
+#libdefine DMHUD_PERC 0.50
+#libdefine DMHUD_ALPHA_MIN 0.1
+#libdefine DMHUD_ALPHA_MAX 0.4
 
 script "SFPlus_DamagedHud_Enter" ENTER{
 	ACS_NamedExecuteAlways("SFPlus_DamagedHud", 0);

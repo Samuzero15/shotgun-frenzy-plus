@@ -6,6 +6,10 @@
 // airstrike bomb positioning system
 // made by Tribeam
 
+int airstk_n_targets = 0;
+int airstk_line = 0;
+int airstk_waves = 3;
+
 #libdefine AIRSTRIKE_TIDSTART 500          // First bomb tid, all bombs after add up from this tid, so bomb2 is 501 and bomb3 is 502 and so on.
 #libdefine AIRSTRIKE_POINT_TIDSTART 550 
 #libdefine AIRSTRIKE_POINT_MAX 30

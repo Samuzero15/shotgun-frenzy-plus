@@ -6,20 +6,6 @@
 // Powerup HUD.
 
 // For the information about the current active powerups.
-#library "fp_puhud"
-
-#include "zcommon.acs"
-#include "acsutils.acs"
-
-#import "fl_StUpDir.acs"
-
-#libdefine PUPHUD_MAX 40
-#libdefine PUPHUD_PROP_LABEL 0
-#libdefine PUPHUD_PROP_ACTOR 1
-
-int puphud_stack;
-int puphud_amount;
-int powerup_list[PUPHUD_MAX][2];
 
 script "SFPlus_PowerupList_Enter" ENTER{
 	NamedExecuteClientScript("SFPlus_PowerupList", PlayerNumber());

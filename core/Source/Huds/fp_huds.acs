@@ -1,0 +1,31 @@
+
+#library "fp_huds"
+
+#include "sfcommon.acs"
+
+#import "fl_StUpDir.acs"
+#import "fl_MupDir.acs"
+#import "fl_Idir.acs"
+
+// Item hud vars
+int itemhud_stack = 0;
+int itemhud_caretx;
+int itemhud_carety;
+int itemhud_caret_numx;
+int itemhud_caret_numy;
+
+// Powerup hud vars
+#libdefine PUPHUD_MAX 40
+#libdefine PUPHUD_PROP_LABEL 0
+#libdefine PUPHUD_PROP_ACTOR 1
+
+int puphud_stack;
+int puphud_amount;
+int powerup_list[PUPHUD_MAX][2];
+
+#include "fp_dmhud.acs" // The Damage HUD
+#include "fp_flash.acs" // Flash effect HUD
+#include "fp_puhud.acs" // Powerup Hud
+#include "fp_ithud.acs" // The item hud
+#include "fp_sbinf.acs" // SBarInfo Manipulation
+//#include "fp_kshud.acs" // Kill Streak Hud

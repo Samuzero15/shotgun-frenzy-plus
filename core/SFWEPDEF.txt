@@ -123,6 +123,7 @@ StarterWeapon, "FrenzyPlayer", "Beretta"
 StarterWeapon, "FrenzyPlayer", "Boomstick"
 
 // Basic Weapons 
+addweaponnopack, "Beretta", "BASIC_BRTT", "FrenzyPlayer"
 addweaponnopack, "Boomstick", "BASIC_BSTK", "FrenzyPlayer"
 addweaponup, "Boomstick", 0, "Boomstick_Full", "pr_wu_boomstick_up0", ""
 
