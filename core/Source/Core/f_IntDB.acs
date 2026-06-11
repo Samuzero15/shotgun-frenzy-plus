@@ -28,6 +28,7 @@
 #import "fl_StUpDir.acs"
 #import "fl_PUpDir.acs"
 #import "fp_kshud.acs"
+#import "fp_music.acs"
 #include "f_Tip.acs"
 #include "fl_techs.acs"
 #include "zcommon.acs"
@@ -50,9 +51,6 @@ int g_GuardianState;
 int g_MonstersLeft;
 int g_GameStarted;
 int g_SurvProgress;
-//int g_AIDirector_TrackRockets;
-//int g_AIDirector_TrackPlasma;
-//int g_AIDirector_TrackFlamer;
 
 /*	[Samu]
 	Weapon trackers, for the AIDirector.
@@ -140,22 +138,11 @@ int c_Commander = 99;
 int c_Credits;
 int c_MoneyDropped;
 int c_Techflag[99];
-//int c_ButtonSel;        // selected button
-//int c_ButtonCat;        // current category
-//int c_ButtonClick;
 int c_ConstructSpeed = 50;
 int c_NukeLaunched;
 int c_BridgeStatus[6];
-//int c_BridgeStatus_1;
-//int c_BridgeStatus_2;
-//int c_BridgeStatus_3;
-//int c_BridgeStatus_4;
-//int c_BridgeStatus_5;
-//int c_BridgeStatus_6;
 int c_KickVotes;
-//int c_KickVotesNeeded;
 int c_HaltSpawning;
-//int c_ManualClick;
 int c_allow_moneybag = 1;
 int c_allow_turret;
 
@@ -341,6 +328,7 @@ function void IntDB_LoadStuff(void){
 		SFPlus_DefinePlayUps();
 	}
 	SFPlus_DefineMechUps();
+	SFPlus_DefineMusic();
 }
 
 int debug_var = 0;

@@ -8,51 +8,94 @@
 #library "FP_MUSIC"
 #include "zcommon.acs"
 #import "f_intdb.acs"
+#import "fp_lumpread.acs"
+#include "acsutils.acs"
 
 #define FP_SNDTRK_MAP 0
 #define FP_SNDTRK_MUS 1
 
-str f_OldMus[15][2];
-str f_BossMus[15][2];
 int oldmusic_stack = 0;
 int bossmusic_stack = 0;
 
-function void Music_AddOld(str map, str track){
-	f_OldMus[oldmusic_stack][0] = map;
-	f_OldMus[oldmusic_stack][1] = track;
-	oldmusic_stack++;
+enum {
+	MUSIC_CURRENTMAP = 0,
+	MUSIC_MAIN = 1,
+	MUSIC_OLD = 2,
+	MUSIC_BOSS = 3,
+	MUSIC_MAXMAPS = 30
+};
+
+struct MapMusicT {
+	str map;
+	str main_music;
+	str old_music;
+	str boss_music;
+};
+
+MapMusicT f_mapMusic[MUSIC_MAXMAPS];
+MapMusicT f_mapCurrentMusic;
+
+#if 1
+#define SFMAPMUS_FUNC(tok, call, min, max) \
+	if (StrIEquals(op, tok)) { \
+		if(!LumpRead_CountArgs (line, line_num, min, max, tok)) { \
+			terminate; \
+		} \
+		call; \
+		terminate; \
+	}
+#endif
+
+script "SFPlus_Music_SFMAPMUSReadLine" (int line, int line_num)
+{
+	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
+
+	SFMAPMUS_FUNC("AddMapMusic", Music_AddMap(line), 2, 5);
+
+	log(s:"fp_music.acs: Invalid command: '", s:op, s:"'", s:", line=", s:line);
 }
 
-function void Music_AddBoss(str map, str track){
-	f_BossMus[bossmusic_stack][0] = map;
-	f_BossMus[bossmusic_stack][1] = track;
-	bossmusic_stack++;
+function void SFPlus_DefineMusic (void){
+	oldmusic_stack = 0;
+	bossmusic_stack = 0;
+
+	Music_Initialize();
 }
 
 function void Music_Initialize(void){
-	Music_AddOld("CF01","D_MUS2");
-	Music_AddOld("CF02","D_COOL");
-	Music_AddOld("CF03","D_MUS3");
-	Music_AddOld("CF04","D_MP1");
-	Music_AddOld("CF05","D_MUS8");
-	Music_AddOld("SD01","D_MUS3");
-	Music_AddOld("SD02","D_COOL");
-	Music_AddOld("SF01","D_MUS6");
-	Music_AddOld("SF02","D_MUS4");
-	Music_AddOld("SF03","D_COOL");
-	Music_AddOld("SF04","D_MUS3");
-	Music_AddOld("SF05","D_MUS7");
+	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFMAPMUS", "SFPlus_Music_SFMAPMUSReadLine");
+}
 
-	Music_AddBoss("CF01","BVSWWTHM");
-	Music_AddBoss("CF02","NONELIVE");
-	Music_AddBoss("CF03","NONELIVE");
-	Music_AddBoss("CF04","NONELIVE");
-	Music_AddBoss("CF05","NONELIVE");
-	Music_AddBoss("SF01","BVSWWTHM");
-	Music_AddBoss("SF02","BVSWWTHM");
-	Music_AddBoss("SF03","NONELIVE");
-	Music_AddBoss("SF04","BVSWWTHM");
-	Music_AddBoss("SF05","BVSWWTHM");
+function void Music_AddMap(str line) {
+	int map = LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	int i = 0;
+	int index = -1;
+	for (i = 0; i < MUSIC_MAXMAPS; i++){
+		if(stricmp(map, f_mapMusic[i].map) == 0){
+			break;
+		}
+		if(f_mapMusic[i].map == ""){ // Empty slot, use it.
+			break;
+		}
+	}
+
+	index = index == -1 ? oldmusic_stack : index; // If no map was found, use the last slot.
+	oldmusic_stack++;
+
+	f_mapMusic[index].map = map;
+	str main_music = LumpRead_NextArgDefault (line, LUMPR_VALUE_STR, "*");
+	str old_music = LumpRead_NextArgDefault (line, LUMPR_VALUE_STR, "*");
+	str boss_music = LumpRead_NextArgDefault (line, LUMPR_VALUE_STR, "NONELIVE");
+
+	f_mapMusic[index].main_music = main_music;
+	f_mapMusic[index].old_music = old_music;
+	f_mapMusic[index].boss_music = boss_music;
+
+	Log(s:"fp_music.acs: Added map music for map '", 
+		s:map, s:"': main='", 
+		s:main_music, s:"', old='", 
+		s:old_music, s:"', boss='", 
+		s:boss_music, s:"'");
 }
 
 Script "SFPlus_PlayOldSoundtrack_Enter" Enter{
@@ -74,7 +117,13 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 	int play = ConsolePlayerNumber();
 	int game_over, game_ending, cvar, guardian_state, nuked, i;
 	int last_values[3];
-	Music_Initialize();
+	int delay_map_check = 0;
+
+	f_mapCurrentMusic.map = 0;
+	f_mapCurrentMusic.main_music = "*";
+	f_mapCurrentMusic.old_music = "*";
+	f_mapCurrentMusic.boss_music = "NONELIVE";
+
 	while(1){
 		// clientsided variables
 		game_over = CheckInventory("HUD_GameOver");
@@ -83,6 +132,35 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 		guardian_state = CheckInventory("HUD_GuardianState");
 		cvar = GetUserCvar(play , "sfp_oldsoundtrack");
 		str map = strparam(n:-2);
+
+		// Check if a game is in session, if nothing else, This is just a normal map, break the loop and stop the script.
+		if(delay_map_check <= 30 && f_mapCurrentMusic.map == 0 && g_status == 0) {
+			if(delay_map_check == 30){
+				LocalSetMusic("*");
+				break;
+			}
+			delay_map_check++;
+		}
+
+		// Search the map once the map loads, then break the loop.
+		for (i = 0; i < MUSIC_MAXMAPS && f_mapCurrentMusic.map == 0; i++){
+			if(stricmp(map, f_mapMusic[i].map) == 0){
+				f_mapCurrentMusic.map = f_mapMusic[i].map;
+				f_mapCurrentMusic.main_music = f_mapMusic[i].main_music;
+				f_mapCurrentMusic.old_music = f_mapMusic[i].old_music;
+				f_mapCurrentMusic.boss_music = f_mapMusic[i].boss_music;
+
+				log(s:"fp_music.acs: Map '", s:map, s:"' found in map music list, set music variables accordingly.");
+				log(s:"MUSIC_CURRENTMAP: ", s:f_mapCurrentMusic.map);
+				log(s:"MUSIC_MAIN: ", s:f_mapCurrentMusic.main_music);
+				log(s:"MUSIC_OLD: ", s:f_mapCurrentMusic.old_music);
+				log(s:"MUSIC_BOSS: ", s:f_mapCurrentMusic.boss_music);
+				break;
+			}
+			if(f_mapMusic[i].map == ""){ // Empty slot, break the loop.
+				break;
+			}
+		}
 
 		if(game_over){
 			switch(game_ending){
@@ -93,39 +171,31 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 				default: LocalSetMusic("D_IN"); 
 			}
 		}
-		
+
 		if (cvar 			!= 	last_values[0] || 
 			guardian_state	!= 	last_values[1] || 
 			nuked 			!= 	last_values[2]){ 
-		//print(s:"Cvar: ", d:cvar,s:" Guardian: ", d:g_GuardianWave,  s:" Nuke Active:",d:c_NukeLaunched);
 		// Activate only on guardian waves, nuke launchings or when changing the cvar.
+			Log(s:"fp_music.acs: Detected a change in music conditions, checking which track to play.", s:" cvar: ", s:cvar, s:" guardian_state: ", s:guardian_state, s:" nuked: ", s:nuked);
 			if(cvar == 1){ // Old soundtrack.
 				if(guardian_state == INTDB_GUARDIANSTATE_ATTACK || guardian_state == INTDB_GUARDIANSTATE_DEFEAT || nuked){
 					LocalSetMusic("D_BOSSo");
 				}else{
-					for (i = 0; i < 12; i++){
-						if(stricmp(map,f_OldMus[i][FP_SNDTRK_MAP]) == 0){
-							//log(s:"strcmp(",s:map, s:", ", s:f_oldMus[i][0], s:") = ", d:stricmp(map,f_OldMus[i][0]));
-							LocalSetMusic(f_OldMus[i][FP_SNDTRK_MUS]);
-							break;
-						}
-					}
+					log(s:"Playing old music in old soundtrack mode.", s:" Track: ", s:f_mapCurrentMusic.old_music);
+					LocalSetMusic(f_mapCurrentMusic.old_music);
 				}
 			}else{ // New soundtrack
 				if((guardian_state == INTDB_GUARDIANSTATE_ATTACK || guardian_state == INTDB_GUARDIANSTATE_DEFEAT) || nuked){
 					if(guardian_state == INTDB_GUARDIANSTATE_ATTACK || guardian_state == INTDB_GUARDIANSTATE_DEFEAT){
-						for (i = 0; i < 10; i++){
-							//log(s:"strcmp(",s:map, s:", ", s:f_BossMus[i][0], s:") = ", d:stricmp(map,f_BossMus[i][0]));
-							if(stricmp(map,f_BossMus[i][FP_SNDTRK_MAP]) == 0){
-								LocalSetMusic(f_BossMus[i][FP_SNDTRK_MUS]);
-								break;
-							}
-						}
+						LocalSetMusic(f_mapCurrentMusic.boss_music);
 					}
 					if(nuked){
 						LocalSetMusic("D_BOSS");
 					}
-				}else LocalSetMusic("*");
+				} else {
+					log(s:"Playing main music in new soundtrack mode.", s:" Track: ", s:f_mapCurrentMusic.main_music);
+					LocalSetMusic(f_mapCurrentMusic.main_music);
+				}
 			}
 			last_values[0] = cvar;
 			last_values[1] = guardian_state;
@@ -134,4 +204,5 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 		}
 		delay(1);
 	}
+	log(s:"fp_music.acs: No map music found for this map, or game ended, stopping the music script.");
 }

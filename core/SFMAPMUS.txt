@@ -1,0 +1,15 @@
+
+AddMapMusic, "CF01",,"D_MUS2", "BVSWWTHM"
+AddMapMusic, "CF02",,"D_COOL", "NONELIVE"
+AddMapMusic, "CF03",,"D_MUS3", "NONELIVE"
+AddMapMusic, "CF04",,"D_MP1", "NONELIVE"
+AddMapMusic, "CF05",,"D_MUS8", "NONELIVE"
+
+AddMapMusic, "SD01",,"D_MUS3", "NONELIVE"
+AddMapMusic, "SD02",,"D_COOL", "NONELIVE"
+
+AddMapMusic, "SF01",,"D_MUS6", "BVSWWTHM"
+AddMapMusic, "SF02",,"D_MUS4", "BVSWWTHM"
+AddMapMusic, "SF03",,"D_COOL", "NONELIVE"
+AddMapMusic, "SF04",,"D_MUS3", "BVSWWTHM"
+AddMapMusic, "SF05",,"D_MUS7", "NONELIVE"

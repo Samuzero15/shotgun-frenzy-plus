@@ -34,7 +34,7 @@ Actor HUD_Sector 			: Ammo { Inventory.MaxAmount 0x7fffffff }
 Actor HUD_CoreHP 			: Ammo { Inventory.MaxAmount 0x7fffffff }
 
 Actor HUD_Gamemode 			: Integer {}
-Actor HUD_NukeLaunched 		: Ammo { Inventory.MaxAmount 0x7fffffff }
+Actor HUD_NukeLaunched 		: Integer {}
 Actor HUD_Spectating 		: Integer {}
 Actor HUD_Rank 				: Integer {}
 Actor HUD_Wave 				: Integer {}

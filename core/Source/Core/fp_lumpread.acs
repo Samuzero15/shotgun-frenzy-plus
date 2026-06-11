@@ -257,17 +257,34 @@ function int LumpRead_NextArg(str line, int value_type) {
     return LumpRead_ParseValue (res1, value_type);
 }
 
-function int LumpRead_NextArgDefault(str line, int value_type, int value) {
-    if(!LumpRead_StrNextArg(line)) return value;
-    return LumpRead_ParseValue (res1, value_type);
+function int LumpRead_NextArgDefault(str line, int value_type, int defaultValue) {
+    if(!LumpRead_StrNextArg(line))
+    {
+        log(s:"Arg Empty: '", s:res1, s:"'", s:", set to Default Value: '", s:defaultValue, s:"'");
+        return defaultValue;
+    }
+    int value = LumpRead_ParseValue (res1, value_type);
+    log(s:"Current Value: '", s:value, s:"'", s:", Default Value: '", s:defaultValue, s:"'", s:", Result: ", s:(StrCheckIfEmpty(value) ? defaultValue : value));
+    return StrCheckIfEmpty(value) ? defaultValue : value;
+}
+
+function bool StrCheckIfEmpty(str string) {
+    //if(StrIsEmpty(string)) return true; // Consider empty if it's already empty, to avoid unnecessary processing.
+    int len = StrLen(string);
+    if (len == 0) return true;
+    string = StrRemove(string, " ");
+    string = StrRemove(string, "\t");
+    return StrIsEmpty(string);
 }
 
 function str StrTrim(str string){
+    //if(StrCheckIfEmpty(string) == true) return "";
     int len = StrLen(string);
     str newstring;
     int i;
     int leftchar;
     int rightchar;
+
     for(i = 0; i < len; i++){
         if(GetChar(string, i) != ' '){
             leftchar = i;
