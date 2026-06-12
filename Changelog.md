@@ -9,6 +9,15 @@
 
 ## v1 - The path of the damned...
 
+#### (11 - 10 / 06 / 2025) [SFMapMus Lump implemented, and music fixes] {music-fix}
+	// Hello! After 6 months of nothing, i got a spark of inspiration to make some stuff like this!
+	// If you see a branch like this aside of the master, it's a branch that I can experiment with, without the fear of breaking something on the game.
+	// This time I'll focus on fixing bugs before going full on mapping! Afterall, the Aenima Maps are there waiting to be added ;)
+	// Sigh... I still wonder if you guys read these commit messages... Anyway, here it is what I did.
+	+!) New Lump SFMAPMUS. With some slight changes on the syntax, to make it less of a pain to write with!
+	*) Now the music will not break itself or switch for a while if the user calls weapon cheats (Like IDFA or IDKFA).
+	*) Now maps can have (in theory) custom music played to the map with the use of the lump SFMAPMUS. And it will change depending on the state of the game!
+
 #### (26 / 11 / 2025) [Merging hud libraries, and Auto Weapon Switch is back]
 	*) Returned the auto weapon switch function upon death and respawn scripts.
 	*) Merged up the Hud scripts in a single library.

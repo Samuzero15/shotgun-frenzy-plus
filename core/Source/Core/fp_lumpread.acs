@@ -55,6 +55,8 @@ global int 34:lumpread_lastline[]; // 0: lastline, 1:lineread_script
 global int 36:lumpread_bufferlinecount;
 global int 33:lumpread_buffer[];
 global int 37:lumpread_buffernextcomma[];
+global int 38:lumpread_argcount;
+global int 39:lumpread_argbuffer[];
 
 Script "LumpRead_LoadFile" (int lumpfile, int lineread_script){
     if(lumpread_initialized == true) terminate;
@@ -235,6 +237,12 @@ function bool LumpRead_StrNextArg(str line){
     if(nextcoma == -1){
         nextcoma = strlen(line);
     }
+
+    if (nextcoma == res2) {
+        res1 = "";
+        res2 = nextcoma + 1;
+        return true;
+    }
     
     if(res2 >= strlen(line) || res2 >= nextcoma) { 
         res1 = "";
@@ -250,26 +258,172 @@ function bool LumpRead_StrNextArg(str line){
 }
 
 function int LumpRead_NextArg(str line, int value_type) {
-    if(!LumpRead_StrNextArg(line)){
-        log(s:"(LumpRead_NextArg): Required Next Argument not found in pos = ", d:res2, s:", line = '", s:line, s:"'");
-        return 0;
-    }
+    if(!LumpRead_StrNextArg(line)) return 0;
     return LumpRead_ParseValue (res1, value_type);
 }
 
 function int LumpRead_NextArgDefault(str line, int value_type, int defaultValue) {
-    if(!LumpRead_StrNextArg(line))
-    {
-        log(s:"Arg Empty: '", s:res1, s:"'", s:", set to Default Value: '", s:defaultValue, s:"'");
-        return defaultValue;
-    }
+    if(!LumpRead_StrNextArg(line))  return defaultValue;
     int value = LumpRead_ParseValue (res1, value_type);
-    log(s:"Current Value: '", s:value, s:"'", s:", Default Value: '", s:defaultValue, s:"'", s:", Result: ", s:(StrCheckIfEmpty(value) ? defaultValue : value));
     return StrCheckIfEmpty(value) ? defaultValue : value;
 }
 
+function int LumpRead_CollectArgs(str line) {
+    int saved_res1 = res1;
+    int saved_res2 = res2;
+
+    lumpread_argcount = 0;
+    while(LumpRead_StrNextArg(line)) {
+        lumpread_argbuffer[lumpread_argcount] = res1;
+        lumpread_argcount++;
+    }
+
+    res1 = saved_res1;
+    res2 = saved_res2;
+    return lumpread_argcount;
+}
+
+function int LumpRead_GetArgCount(void) {
+    return lumpread_argcount;
+}
+
+function str LumpRead_GetArg(int index) {
+    if(index < 0 || index >= lumpread_argcount) {
+        return "";
+    }
+    return lumpread_argbuffer[index];
+}
+
+function int LumpRead_GetPositionalArgCount(void) {
+    int count = 0;
+
+    for(int i = 0; i < lumpread_argcount; i++) {
+        str token = lumpread_argbuffer[i];
+        if(StrCheckIfEmpty(token)) {
+            continue;
+        }
+        if(StrFindFrom(token, "=", 0) != -1) {
+            continue;
+        }
+        count++;
+    }
+
+    return count;
+}
+
+function str LumpRead_GetPositionalArg(int position) {
+    int count = 0;
+
+    for(int i = 0; i < lumpread_argcount; i++) {
+        str token = lumpread_argbuffer[i];
+        if(StrCheckIfEmpty(token)) {
+            continue;
+        }
+        if(StrFindFrom(token, "=", 0) != -1) {
+            continue;
+        }
+        if(count == position) {
+            return token;
+        }
+        count++;
+    }
+
+    return "";
+}
+
+function str LumpRead_ArgPosDefault(int position, str defaultValue) {
+    str value = LumpRead_GetPositionalArg(position);
+    return StrCheckIfEmpty(value) ? defaultValue : value;
+}
+
+function bool LumpRead_Require(str value, int linenumber, str command, str argname) {
+    if(!StrCheckIfEmpty(value)) {
+        return true;
+    }
+
+    Log(s:"#", d:linenumber, s:" - (", s:command, s:"): Missing required argument '", s:argname, s:"'.");
+    return false;
+}
+
+function str LumpRead_ArgPosReq(int position, int linenumber, str command, str argname) {
+    str value = LumpRead_GetPositionalArg(position);
+    if(!LumpRead_Require(value, linenumber, command, argname)) {
+        return "";
+    }
+    return value;
+}
+
+function str LumpRead_ArgKeyReq(str key, int linenumber, str command, str argname) {
+    str value = LumpRead_ArgKeyDefault(key, LUMPR_VALUE_STR, "");
+    if(!LumpRead_Require(value, linenumber, command, argname)) {
+        return "";
+    }
+    return value;
+}
+
+function bool LumpRead_TryNamedArg(str token, str key) {
+    int sep = StrFindFrom(token, "=", 0);
+    if(sep == -1) {
+        return false;
+    }
+
+    str token_key = StrTrim(StrSlice(token, 0, sep));
+    if(!StrIEquals(token_key, key)) {
+        return false;
+    }
+
+    res1 = StrTrim(StrSlice(token, sep + 1, StrLen(token)));
+    return true;
+}
+
+function int LumpRead_TokKeyDefault(str token, str key, int value_type, int defaultValue) {
+    if(!LumpRead_TryNamedArg(token, key)) {
+        return defaultValue;
+    }
+
+    if(StrCheckIfEmpty(res1)) {
+        return defaultValue;
+    }
+    return LumpRead_ParseValue(res1, value_type);
+}
+
+function int LumpRead_ArgKeyDefault(str key, int value_type, int defaultValue) {
+    int value = defaultValue;
+
+    for(int i = 0; i < lumpread_argcount; i++) {
+        str token = lumpread_argbuffer[i];
+        if(LumpRead_TryNamedArg(token, key)) {
+            if(!StrCheckIfEmpty(res1)) {
+                value = LumpRead_ParseValue(res1, value_type);
+            }
+        }
+    }
+
+    return value;
+}
+
+function int LumpRead_LineKeyDefault(str line, str key, int value_type, int defaultValue) {
+    int saved_res1 = res1;
+    int saved_res2 = res2;
+    int value = defaultValue;
+
+    res2 = 0;
+    while(LumpRead_StrNextArg(line)) {
+        str token = res1;
+        if(LumpRead_TryNamedArg(token, key)) {
+            if(!StrCheckIfEmpty(res1)) {
+                value = LumpRead_ParseValue(res1, value_type);
+            }
+        }
+    }
+
+    res1 = saved_res1;
+    res2 = saved_res2;
+    return value;
+}
+
 function bool StrCheckIfEmpty(str string) {
-    //if(StrIsEmpty(string)) return true; // Consider empty if it's already empty, to avoid unnecessary processing.
+    if(StrIsEmpty(string)) return true; // Consider empty if it's already empty, to avoid unnecessary processing.
     int len = StrLen(string);
     if (len == 0) return true;
     string = StrRemove(string, " ");

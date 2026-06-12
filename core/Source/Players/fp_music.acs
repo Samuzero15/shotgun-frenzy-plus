@@ -22,7 +22,22 @@ enum {
 	MUSIC_MAIN = 1,
 	MUSIC_OLD = 2,
 	MUSIC_BOSS = 3,
-	MUSIC_MAXMAPS = 30
+	MUSIC_END_EVENT = 4,
+	MUSIC_END_VICTORY = 5,
+	MUSIC_END_DEMONCORE = 6,
+	MUSIC_END_DEFEAT = 7,
+	MUSIC_MAXMAPS = 30,
+	MUSIC_DELAYFORMAP = 5,
+	SFMAPMUS_TK_MAP = "map",
+	SFMAPMUS_TK_BOSS = "boss",
+	SFMAPMUS_TK_MAIN = "main",
+	SFMAPMUS_TK_OLD = "old",
+	SFMAPMUS_TK_END_EVENT = "endevent",
+	SFMAPMUS_TK_END_VICTORY = "endvictory",
+	SFMAPMUS_TK_END_DEMONCORE = "enddemoncore",
+	SFMAPMUS_TK_END_DEFEAT = "enddefeat",
+	SFMAPMUS_TK_END_DEFAULT = "enddefault",
+	SFMAPMUS_TK_ADDMAPMUSIC = "AddMapMusic"
 };
 
 struct MapMusicT {
@@ -30,10 +45,17 @@ struct MapMusicT {
 	str main_music;
 	str old_music;
 	str boss_music;
+	str end_event_music;
+	str end_victory_music;
+	str end_demonCore_music;
+	str end_defeat_music;
+	str end_default_music;
 };
 
 MapMusicT f_mapMusic[MUSIC_MAXMAPS];
 MapMusicT f_mapCurrentMusic;
+
+int musInitialized = 0;
 
 #if 1
 #define SFMAPMUS_FUNC(tok, call, min, max) \
@@ -50,7 +72,7 @@ script "SFPlus_Music_SFMAPMUSReadLine" (int line, int line_num)
 {
 	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 
-	SFMAPMUS_FUNC("AddMapMusic", Music_AddMap(line), 2, 5);
+	SFMAPMUS_FUNC(SFMAPMUS_TK_ADDMAPMUSIC, Music_AddMap(line, line_num), 2, 12);
 
 	log(s:"fp_music.acs: Invalid command: '", s:op, s:"'", s:", line=", s:line);
 }
@@ -60,14 +82,19 @@ function void SFPlus_DefineMusic (void){
 	bossmusic_stack = 0;
 
 	Music_Initialize();
+	musInitialized = 1;
 }
 
 function void Music_Initialize(void){
 	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFMAPMUS", "SFPlus_Music_SFMAPMUSReadLine");
 }
 
-function void Music_AddMap(str line) {
+function void Music_AddMap(str line, int line_num) {
 	int map = LumpRead_NextArg (line, LUMPR_VALUE_STR);
+	if(!LumpRead_Require(map, line_num, SFMAPMUS_TK_ADDMAPMUSIC, SFMAPMUS_TK_MAP)) {
+		Log(s:"fp_music.acs: Error in line ", s:line_num, s:": Map name is required for AddMapMusic.");
+		return;
+	}
 	int i = 0;
 	int index = -1;
 	for (i = 0; i < MUSIC_MAXMAPS; i++){
@@ -83,19 +110,28 @@ function void Music_AddMap(str line) {
 	oldmusic_stack++;
 
 	f_mapMusic[index].map = map;
-	str main_music = LumpRead_NextArgDefault (line, LUMPR_VALUE_STR, "*");
-	str old_music = LumpRead_NextArgDefault (line, LUMPR_VALUE_STR, "*");
-	str boss_music = LumpRead_NextArgDefault (line, LUMPR_VALUE_STR, "NONELIVE");
+	
+	str main_music = "*";
+	str old_music = "*";
+	str boss_music = "NONELIVE";
+
+	LumpRead_CollectArgs(line);
+	main_music = LumpRead_ArgPosDefault(0, "*");
+	old_music = LumpRead_ArgPosDefault(1, "*");
+	boss_music = LumpRead_ArgPosDefault(2, "NONELIVE");
+
+	main_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_MAIN, LUMPR_VALUE_STR, main_music);
+	old_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_OLD, LUMPR_VALUE_STR, old_music);
+	boss_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_BOSS, LUMPR_VALUE_STR, boss_music);
 
 	f_mapMusic[index].main_music = main_music;
 	f_mapMusic[index].old_music = old_music;
 	f_mapMusic[index].boss_music = boss_music;
-
-	Log(s:"fp_music.acs: Added map music for map '", 
-		s:map, s:"': main='", 
-		s:main_music, s:"', old='", 
-		s:old_music, s:"', boss='", 
-		s:boss_music, s:"'");
+	f_mapMusic[index].end_event_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_EVENT, LUMPR_VALUE_STR, "D_END1");
+	f_mapMusic[index].end_victory_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_VICTORY, LUMPR_VALUE_STR, "D_END2");
+	f_mapMusic[index].end_demonCore_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_DEMONCORE, LUMPR_VALUE_STR, "D_END3");
+	f_mapMusic[index].end_defeat_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_DEFEAT, LUMPR_VALUE_STR, "D_END4");
+	f_mapMusic[index].end_default_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_DEFAULT, LUMPR_VALUE_STR, "D_IN");
 }
 
 Script "SFPlus_PlayOldSoundtrack_Enter" Enter{
@@ -123,19 +159,28 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 	f_mapCurrentMusic.main_music = "*";
 	f_mapCurrentMusic.old_music = "*";
 	f_mapCurrentMusic.boss_music = "NONELIVE";
+	f_mapCurrentMusic.end_event_music = "D_END1";
+	f_mapCurrentMusic.end_victory_music = "D_END2";
+	f_mapCurrentMusic.end_demonCore_music = "D_END3";
+	f_mapCurrentMusic.end_defeat_music = "D_END4";
+	f_mapCurrentMusic.end_default_music = "D_IN";
 
 	while(1){
-		// clientsided variables
+		if(lumpread_initialized == 0){ // Wait for initialization.
+			delay(1);
+			continue;
+		}
+
 		game_over = CheckInventory("HUD_GameOver");
 		game_ending = CheckInventory("HUD_GameEnding");
 		nuked = CheckInventory("HUD_NukeLaunched");
 		guardian_state = CheckInventory("HUD_GuardianState");
-		cvar = GetUserCvar(play , "sfp_oldsoundtrack");
+		cvar = GetUserCvar(play, "sfp_oldsoundtrack");
 		str map = strparam(n:-2);
 
 		// Check if a game is in session, if nothing else, This is just a normal map, break the loop and stop the script.
-		if(delay_map_check <= 30 && f_mapCurrentMusic.map == 0 && g_status == 0) {
-			if(delay_map_check == 30){
+		if(delay_map_check <= MUSIC_DELAYFORMAP && f_mapCurrentMusic.map == 0 && g_status == 0) {
+			if(delay_map_check == MUSIC_DELAYFORMAP){
 				LocalSetMusic("*");
 				break;
 			}
@@ -149,12 +194,10 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 				f_mapCurrentMusic.main_music = f_mapMusic[i].main_music;
 				f_mapCurrentMusic.old_music = f_mapMusic[i].old_music;
 				f_mapCurrentMusic.boss_music = f_mapMusic[i].boss_music;
-
-				log(s:"fp_music.acs: Map '", s:map, s:"' found in map music list, set music variables accordingly.");
-				log(s:"MUSIC_CURRENTMAP: ", s:f_mapCurrentMusic.map);
-				log(s:"MUSIC_MAIN: ", s:f_mapCurrentMusic.main_music);
-				log(s:"MUSIC_OLD: ", s:f_mapCurrentMusic.old_music);
-				log(s:"MUSIC_BOSS: ", s:f_mapCurrentMusic.boss_music);
+				f_mapCurrentMusic.end_event_music = f_mapMusic[i].end_event_music;
+				f_mapCurrentMusic.end_victory_music = f_mapMusic[i].end_victory_music;
+				f_mapCurrentMusic.end_demonCore_music = f_mapMusic[i].end_demonCore_music;
+				f_mapCurrentMusic.end_defeat_music = f_mapMusic[i].end_defeat_music;
 				break;
 			}
 			if(f_mapMusic[i].map == ""){ // Empty slot, break the loop.
@@ -164,11 +207,11 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 
 		if(game_over){
 			switch(game_ending){
-				case 1: LocalSetMusic("D_END1"); break;
-				case 2: LocalSetMusic("D_END2"); break;
-				case 3: LocalSetMusic("D_END3"); break;
-				case 4: LocalSetMusic("D_END4"); break;
-				default: LocalSetMusic("D_IN"); 
+				case MUSIC_END_EVENT: LocalSetMusic(f_mapCurrentMusic.end_event_music); break; // (Nuked / Event) Ending.
+				case MUSIC_END_VICTORY: LocalSetMusic(f_mapCurrentMusic.end_victory_music); break; // Standard Victory Ending
+				case MUSIC_END_DEMONCORE: LocalSetMusic(f_mapCurrentMusic.end_demonCore_music); break; // Demon Core destroyed ending.
+				case MUSIC_END_DEFEAT: LocalSetMusic(f_mapCurrentMusic.end_defeat_music); break; // Defeat Ending
+				default: LocalSetMusic(f_mapCurrentMusic.end_default_music); // Default ending. If something goes wrong, at least it won't be silent.
 			}
 		}
 
@@ -176,12 +219,11 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 			guardian_state	!= 	last_values[1] || 
 			nuked 			!= 	last_values[2]){ 
 		// Activate only on guardian waves, nuke launchings or when changing the cvar.
-			Log(s:"fp_music.acs: Detected a change in music conditions, checking which track to play.", s:" cvar: ", s:cvar, s:" guardian_state: ", s:guardian_state, s:" nuked: ", s:nuked);
 			if(cvar == 1){ // Old soundtrack.
 				if(guardian_state == INTDB_GUARDIANSTATE_ATTACK || guardian_state == INTDB_GUARDIANSTATE_DEFEAT || nuked){
 					LocalSetMusic("D_BOSSo");
 				}else{
-					log(s:"Playing old music in old soundtrack mode.", s:" Track: ", s:f_mapCurrentMusic.old_music);
+					//log(s:"Playing old music in old soundtrack mode.", s:" Track: ", s:f_mapCurrentMusic.old_music);
 					LocalSetMusic(f_mapCurrentMusic.old_music);
 				}
 			}else{ // New soundtrack
@@ -193,7 +235,7 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 						LocalSetMusic("D_BOSS");
 					}
 				} else {
-					log(s:"Playing main music in new soundtrack mode.", s:" Track: ", s:f_mapCurrentMusic.main_music);
+					//log(s:"Playing main music in new soundtrack mode.", s:" Track: ", s:f_mapCurrentMusic.main_music);
 					LocalSetMusic(f_mapCurrentMusic.main_music);
 				}
 			}
@@ -204,5 +246,5 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 		}
 		delay(1);
 	}
-	log(s:"fp_music.acs: No map music found for this map, or game ended, stopping the music script.");
+	//log(s:"fp_music.acs: No map music found for this map, or game ended, stopping the music script.");
 }
