@@ -336,6 +336,10 @@ function str LumpRead_ArgPosDefault(int position, str defaultValue) {
     return StrCheckIfEmpty(value) ? defaultValue : value;
 }
 
+function int LumpRead_ArgPosKeyDefault(int position, str key, int value_type, int defaultValue) {
+    return LumpRead_ArgKeyDefault(key, value_type, LumpRead_ArgPosDefault(position, defaultValue));
+}
+
 function bool LumpRead_Require(str value, int linenumber, str command, str argname) {
     if(!StrCheckIfEmpty(value)) {
         return true;

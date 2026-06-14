@@ -37,6 +37,7 @@ enum {
 	SFMAPMUS_TK_END_DEMONCORE = "enddemoncore",
 	SFMAPMUS_TK_END_DEFEAT = "enddefeat",
 	SFMAPMUS_TK_END_DEFAULT = "enddefault",
+	SFMAPMUS_TK_DEFAULTMUSIC = "DefaultMusic",
 	SFMAPMUS_TK_ADDMAPMUSIC = "AddMapMusic"
 };
 
@@ -53,6 +54,7 @@ struct MapMusicT {
 };
 
 MapMusicT f_mapMusic[MUSIC_MAXMAPS];
+MapMusicT f_defaultMusic;
 MapMusicT f_mapCurrentMusic;
 
 int musInitialized = 0;
@@ -72,6 +74,7 @@ script "SFPlus_Music_SFMAPMUSReadLine" (int line, int line_num)
 {
 	str op = LumpRead_NextArg(line, LUMPR_VALUE_STR);
 
+	SFMAPMUS_FUNC(SFMAPMUS_TK_DEFAULTMUSIC, Music_SetDefaultMusic(line, line_num), 1, 9);
 	SFMAPMUS_FUNC(SFMAPMUS_TK_ADDMAPMUSIC, Music_AddMap(line, line_num), 2, 12);
 
 	log(s:"fp_music.acs: Invalid command: '", s:op, s:"'", s:", line=", s:line);
@@ -80,6 +83,7 @@ script "SFPlus_Music_SFMAPMUSReadLine" (int line, int line_num)
 function void SFPlus_DefineMusic (void){
 	oldmusic_stack = 0;
 	bossmusic_stack = 0;
+	Music_ResetDefaultMusic();
 
 	Music_Initialize();
 	musInitialized = 1;
@@ -87,6 +91,48 @@ function void SFPlus_DefineMusic (void){
 
 function void Music_Initialize(void){
 	ACS_NamedExecuteWithResult("LumpRead_LoadFile", "SFMAPMUS", "SFPlus_Music_SFMAPMUSReadLine");
+}
+
+function void Music_ResetDefaultMusic(void) {
+	f_defaultMusic.map = "";
+	f_defaultMusic.main_music = "*";
+	f_defaultMusic.old_music = "*";
+	f_defaultMusic.boss_music = "NONELIVE";
+	f_defaultMusic.end_event_music = "D_END1";
+	f_defaultMusic.end_victory_music = "D_END2";
+	f_defaultMusic.end_demonCore_music = "D_END3";
+	f_defaultMusic.end_defeat_music = "D_END4";
+	f_defaultMusic.end_default_music = "D_IN";
+}
+
+function void Music_SetDefaultMusic(str line, int line_num) {
+	str main_music = f_defaultMusic.main_music;
+	str old_music = f_defaultMusic.old_music;
+	str boss_music = f_defaultMusic.boss_music;
+	str end_event_music = f_defaultMusic.end_event_music;
+	str end_victory_music = f_defaultMusic.end_victory_music;
+	str end_demonCore_music = f_defaultMusic.end_demonCore_music;
+	str end_defeat_music = f_defaultMusic.end_defeat_music;
+	str end_default_music = f_defaultMusic.end_default_music;
+
+	LumpRead_CollectArgs(line);
+	main_music = LumpRead_ArgPosKeyDefault(0, SFMAPMUS_TK_MAIN, LUMPR_VALUE_STR, main_music);
+	old_music = LumpRead_ArgPosKeyDefault(1, SFMAPMUS_TK_OLD, LUMPR_VALUE_STR, old_music);
+	boss_music = LumpRead_ArgPosKeyDefault(2, SFMAPMUS_TK_BOSS, LUMPR_VALUE_STR, boss_music);
+	end_event_music = LumpRead_ArgPosKeyDefault(3, SFMAPMUS_TK_END_EVENT, LUMPR_VALUE_STR, end_event_music);
+	end_victory_music = LumpRead_ArgPosKeyDefault(4, SFMAPMUS_TK_END_VICTORY, LUMPR_VALUE_STR, end_victory_music);
+	end_demonCore_music = LumpRead_ArgPosKeyDefault(5, SFMAPMUS_TK_END_DEMONCORE, LUMPR_VALUE_STR, end_demonCore_music);
+	end_defeat_music = LumpRead_ArgPosKeyDefault(6, SFMAPMUS_TK_END_DEFEAT, LUMPR_VALUE_STR, end_defeat_music);
+	end_default_music = LumpRead_ArgPosKeyDefault(7, SFMAPMUS_TK_END_DEFAULT, LUMPR_VALUE_STR, end_default_music);
+
+	f_defaultMusic.main_music = main_music;
+	f_defaultMusic.old_music = old_music;
+	f_defaultMusic.boss_music = boss_music;
+	f_defaultMusic.end_event_music = end_event_music;
+	f_defaultMusic.end_victory_music = end_victory_music;
+	f_defaultMusic.end_demonCore_music = end_demonCore_music;
+	f_defaultMusic.end_defeat_music = end_defeat_music;
+	f_defaultMusic.end_default_music = end_default_music;
 }
 
 function void Music_AddMap(str line, int line_num) {
@@ -111,27 +157,33 @@ function void Music_AddMap(str line, int line_num) {
 
 	f_mapMusic[index].map = map;
 	
-	str main_music = "*";
-	str old_music = "*";
-	str boss_music = "NONELIVE";
+	str main_music = f_defaultMusic.main_music;
+	str old_music = f_defaultMusic.old_music;
+	str boss_music = f_defaultMusic.boss_music;
+	str end_event_music = f_defaultMusic.end_event_music;
+	str end_victory_music = f_defaultMusic.end_victory_music;
+	str end_demonCore_music = f_defaultMusic.end_demonCore_music;
+	str end_defeat_music = f_defaultMusic.end_defeat_music;
+	str end_default_music = f_defaultMusic.end_default_music;
 
 	LumpRead_CollectArgs(line);
-	main_music = LumpRead_ArgPosDefault(0, "*");
-	old_music = LumpRead_ArgPosDefault(1, "*");
-	boss_music = LumpRead_ArgPosDefault(2, "NONELIVE");
-
-	main_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_MAIN, LUMPR_VALUE_STR, main_music);
-	old_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_OLD, LUMPR_VALUE_STR, old_music);
-	boss_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_BOSS, LUMPR_VALUE_STR, boss_music);
+	main_music = LumpRead_ArgPosKeyDefault(0, SFMAPMUS_TK_MAIN, LUMPR_VALUE_STR, main_music);
+	old_music = LumpRead_ArgPosKeyDefault(1, SFMAPMUS_TK_OLD, LUMPR_VALUE_STR, old_music);
+	boss_music = LumpRead_ArgPosKeyDefault(2, SFMAPMUS_TK_BOSS, LUMPR_VALUE_STR, boss_music);
+	end_event_music = LumpRead_ArgPosKeyDefault(3, SFMAPMUS_TK_END_EVENT, LUMPR_VALUE_STR, end_event_music);
+	end_victory_music = LumpRead_ArgPosKeyDefault(4, SFMAPMUS_TK_END_VICTORY, LUMPR_VALUE_STR, end_victory_music);
+	end_demonCore_music = LumpRead_ArgPosKeyDefault(5, SFMAPMUS_TK_END_DEMONCORE, LUMPR_VALUE_STR, end_demonCore_music);
+	end_defeat_music = LumpRead_ArgPosKeyDefault(6, SFMAPMUS_TK_END_DEFEAT, LUMPR_VALUE_STR, end_defeat_music);
+	end_default_music = LumpRead_ArgPosKeyDefault(7, SFMAPMUS_TK_END_DEFAULT, LUMPR_VALUE_STR, end_default_music);
 
 	f_mapMusic[index].main_music = main_music;
 	f_mapMusic[index].old_music = old_music;
 	f_mapMusic[index].boss_music = boss_music;
-	f_mapMusic[index].end_event_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_EVENT, LUMPR_VALUE_STR, "D_END1");
-	f_mapMusic[index].end_victory_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_VICTORY, LUMPR_VALUE_STR, "D_END2");
-	f_mapMusic[index].end_demonCore_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_DEMONCORE, LUMPR_VALUE_STR, "D_END3");
-	f_mapMusic[index].end_defeat_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_DEFEAT, LUMPR_VALUE_STR, "D_END4");
-	f_mapMusic[index].end_default_music = LumpRead_ArgKeyDefault(SFMAPMUS_TK_END_DEFAULT, LUMPR_VALUE_STR, "D_IN");
+	f_mapMusic[index].end_event_music = end_event_music;
+	f_mapMusic[index].end_victory_music = end_victory_music;
+	f_mapMusic[index].end_demonCore_music = end_demonCore_music;
+	f_mapMusic[index].end_defeat_music = end_defeat_music;
+	f_mapMusic[index].end_default_music = end_default_music;
 }
 
 Script "SFPlus_PlayOldSoundtrack_Enter" Enter{
@@ -156,14 +208,14 @@ Script "SFPlus_PlayOldSoundtrack" OPEN ClientSide {
 	int delay_map_check = 0;
 
 	f_mapCurrentMusic.map = 0;
-	f_mapCurrentMusic.main_music = "*";
-	f_mapCurrentMusic.old_music = "*";
-	f_mapCurrentMusic.boss_music = "NONELIVE";
-	f_mapCurrentMusic.end_event_music = "D_END1";
-	f_mapCurrentMusic.end_victory_music = "D_END2";
-	f_mapCurrentMusic.end_demonCore_music = "D_END3";
-	f_mapCurrentMusic.end_defeat_music = "D_END4";
-	f_mapCurrentMusic.end_default_music = "D_IN";
+	f_mapCurrentMusic.main_music = f_defaultMusic.main_music;
+	f_mapCurrentMusic.old_music = f_defaultMusic.old_music;
+	f_mapCurrentMusic.boss_music = f_defaultMusic.boss_music;
+	f_mapCurrentMusic.end_event_music = f_defaultMusic.end_event_music;
+	f_mapCurrentMusic.end_victory_music = f_defaultMusic.end_victory_music;
+	f_mapCurrentMusic.end_demonCore_music = f_defaultMusic.end_demonCore_music;
+	f_mapCurrentMusic.end_defeat_music = f_defaultMusic.end_defeat_music;
+	f_mapCurrentMusic.end_default_music = f_defaultMusic.end_default_music;
 
 	while(1){
 		if(lumpread_initialized == 0){ // Wait for initialization.

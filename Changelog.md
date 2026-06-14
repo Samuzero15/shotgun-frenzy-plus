@@ -9,7 +9,11 @@
 
 ## v1 - The path of the damned...
 
-#### (11 - 10 / 06 / 2025) [SFMapMus Lump implemented, and music fixes] {music-fix}
+#### (14 / 06 / 2026) [Added DefaultMusic command for SFMAPMUS] {music-fix}
+	+) New Command 'DefaultMusic' added, now you can skip the optional parameters for the AddMapMusic command.
+	*) Some few updates on the Wiki are up! Still in a WIP.
+
+#### (11 - 10 / 06 / 2026) [SFMAPMUS Lump implemented, and music fixes] {music-fix}
 	// Hello! After 6 months of nothing, i got a spark of inspiration to make some stuff like this!
 	// If you see a branch like this aside of the master, it's a branch that I can experiment with, without the fear of breaking something on the game.
 	// This time I'll focus on fixing bugs before going full on mapping! Afterall, the Aenima Maps are there waiting to be added ;)
