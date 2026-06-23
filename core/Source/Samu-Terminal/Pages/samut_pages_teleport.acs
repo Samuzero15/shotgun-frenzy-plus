@@ -38,3 +38,15 @@ function void TeleportPage_Init(int pageTag){
 	StrButton_setTag(i, pageTag);
 	StrButton_setExecute(i, STEXE_SYSOFF);
 }
+
+function void TeleportPage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_TELEPORT_SECTOR, "TeleportPage_ScriptExec_ToSector");
+}
+
+script "TeleportPage_ScriptExec_ToSector" (int arg1, int arg2, int arg3){
+	teleport_nostop(120 + arg1, 0, 0);
+	if(PlayerCount() < 3){
+		Notify_Player(strparam(s:"Entered to Sector ", d:arg1), "PLAYER", 0);
+	}
+	SamuTerm_Execute(STEXE_SYSOFF, 0,0,0);
+}

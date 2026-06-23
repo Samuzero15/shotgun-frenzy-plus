@@ -42,6 +42,10 @@ function void NumInput_setShowNumber(int id, int shownum){SetRectUserData(NumInp
 function void NumInput_setLabelText(int id, str string) {SetRectUserData(NumInput_getRect(id), ST_CPROP12, string);}
 function void NumInput_setColor(int id, int color) {SetRectUserData(NumInput_getRect(id), ST_CPROP13, color);}
 function void NumInput_setLoopValues(int id, int loop) {SetRectUserData(NumInput_getRect(id), ST_CPROP14, loop);}
+function void NumInput_SetLabelOffsets(int ni, int offx, int offy){
+    SetRectUserData(NumInput_getRect(ni), ST_CPROP15, offx);
+    SetRectUserData(NumInput_getRect(ni), ST_CPROP16, offy);
+}
 
 
 ///////////////////
@@ -60,6 +64,8 @@ function void NumInput_SetDefaultProps(int i){
     NumInput_SetLabelText(i, "{n} / {M}");
     NumInput_SetColor(i, CR_WHITE);
     NumInput_setLoopValues(i, false);
+    SetRectUserData(NumInput_getRect(i), ST_CPROP15, 0);
+    SetRectUserData(NumInput_getRect(i), ST_CPROP16, 0);
 
 	int btn_dist_navs = NumInput_GetBtnDistance(i);
     int tag = NumInput_getTag(i);
@@ -151,7 +157,9 @@ function void NumInput_Update(int i){
     
     StrButton_SetPosition  (np_prev, RectX1(rect), RectY1(rect));
 	StrButton_SetPosition  (np_next, RectX1(rect) + btn_width + btn_dist_navs, RectY1(rect));
-	Label_SetPosition      (np_lbl,  RectX1(rect) + btn_width + btn_dist_navs/2, RectY1(rect) + StrButton_GetHeight(np_prev)/2);
+	int offx_lbl = RectGetUserData(rect, ST_CPROP15);
+	int offy_lbl = RectGetUserData(rect, ST_CPROP16);
+	Label_SetPosition      (np_lbl,  RectX1(rect) + btn_width + btn_dist_navs/2 + offx_lbl, RectY1(rect) + StrButton_GetHeight(np_prev)/2 + offy_lbl);
 
     StrButton_SetColor  (np_prev, NumInput_getColor(i));
     StrButton_SetColor  (np_next, NumInput_getColor(i));

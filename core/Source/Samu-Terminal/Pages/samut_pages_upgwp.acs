@@ -358,3 +358,84 @@ function void ListUpPage_MakeUpDescription(void){
 	Label_SetShow(i, true);
 	listup_vars[UWPAGE_LABEL_WEAPONDESC] = i;
 }
+
+function void ListUpPage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_UPGPAGEDESC, "ListUpPage_ScriptExec_Desc");
+	SamuTerm_RegisterScriptExec(STEXE_UPGPAGECAT, "ListUpPage_ScriptExec_Category");
+	SamuTerm_RegisterScriptExec(STEXE_UPWEPOPENUPS, "ListUpPage_ScriptExec_OpenUps");
+	SamuTerm_RegisterScriptExec(STEXE_ASKUP, "ListUpPage_ScriptExec_AskUpgrade");
+	SamuTerm_RegisterScriptExec(STEXE_MSGUP, "ListUpPage_ScriptExec_AcceptUpgrade");
+	SamuTerm_RegisterScriptExec(STEXE_GETUP, "ListUpPage_ScriptExec_ApplyUpgrade");
+}
+
+function void StExecute_UpgPageDesc(int weapon, int uptype)
+{
+	str textd = WeaponUpgrade_GetDesc(weapon, uptype);
+	str textt = WeaponUpgrade_GetName(weapon, uptype);
+	Label_setText(listup_vars[UWPAGE_LABEL_WEAPONNAME], textt);
+	Label_setText(listup_vars[UWPAGE_LABEL_WEAPONDESC], textd);
+	listup_vars[UWPAGE_VAR_HOVEREDUPTYPE] = uptype;
+}
+
+function void StExecute_UpgPageCat(int npid, int dir){
+	STExecute_NumInputBtns(npid, dir);
+	listup_vars[UWPAGE_VAR_CURRENTCATEGORY] = NumInput_getValue(npid);
+	listup_vars[UWPAGE_VAR_CURRENTWEPPAGE] = 0;
+	listup_vars[UWPAGE_VAR_SELECTEDWEP] = -1;
+	listup_vars[UWPAGE_VAR_HOVEREDUPTYPE] = -1;
+}
+
+function void StExecute_UpPageOpenUps(int wep){
+	listup_vars[UWPAGE_VAR_SELECTEDWEP] = wep;
+}
+
+function void STExecute_UpgradeWeapon(int which, int type){
+	int payprice = WeaponUpgrade_getUpgPrice(which, type);
+	sf_RemoveUpPoints(payprice, PlayerNumber());
+	fp_UpTrack += payprice;
+	Weapon_Upgrade(which, type);
+}
+
+function void STExecute_UpgradeAccepted(int which, int type){
+	listup_vars[UWPAGE_VAR_SELECTEDWEP] = -1;
+	listup_vars[UWPAGE_VAR_HOVEREDUPTYPE] = -1;
+	SamuTerm_CallOpExecute(STEXE_GETUP, which, type, 0);
+	Toaster_ShowToastLog("Upgrade implemented sucessfully!", CR_GOLD);
+	LocalAmbientSound("p/upgrade",128);
+}
+
+function void STExecute_AskForUpgrade(int which, int type){
+	int price = WeaponUpgrade_getUpgPrice(which, type);
+	if(SFPlus_getPlayUPts() < price){
+		Toaster_ShowToast("You need more \cgUpgrade Points\c-!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	} else {
+		Prompt_Ask("Conf. Upgrade",
+			"Are you sure you want to apply this upgrade to your weapon?", CR_GREEN);
+		Prompt_ExecuteOnTrue(STEXE_MSGUP, which, type, 0);
+	}
+}
+
+script "ListUpPage_ScriptExec_Desc" (int weapon, int uptype, int arg3){
+	StExecute_UpgPageDesc(weapon, uptype);
+}
+
+script "ListUpPage_ScriptExec_Category" (int npid, int dir, int arg3){
+	StExecute_UpgPageCat(npid, dir);
+}
+
+script "ListUpPage_ScriptExec_OpenUps" (int wep, int arg2, int arg3){
+	StExecute_UpPageOpenUps(wep);
+}
+
+script "ListUpPage_ScriptExec_AskUpgrade" (int which, int type, int arg3){
+	STExecute_AskForUpgrade(which, type);
+}
+
+script "ListUpPage_ScriptExec_AcceptUpgrade" (int which, int type, int arg3){
+	STExecute_UpgradeAccepted(which, type);
+}
+
+script "ListUpPage_ScriptExec_ApplyUpgrade" (int which, int type, int arg3){
+	STExecute_UpgradeWeapon(which, type);
+}

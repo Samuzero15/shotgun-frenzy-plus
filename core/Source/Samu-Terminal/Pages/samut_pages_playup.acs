@@ -150,3 +150,72 @@ function void PlayUpPage_AddButtons(int pageTag, int posx, int posy){
 			PlayUpPage_SaveGroup(btn, 1, i);
 	}
 }
+
+function void PlayUpPage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_PLAYUP_BTNHOVER, "PlayUpPage_ScriptExec_TitleHover");
+	SamuTerm_RegisterScriptExec(STEXE_PLAYUP_SETDESC, "PlayUpPage_ScriptExec_SetDesc");
+	SamuTerm_RegisterScriptExec(STEXE_PLAYUP_ASK, "PlayUpPage_ScriptExec_Ask");
+	SamuTerm_RegisterScriptExec(STEXE_PLAYUP_SET, "PlayUpPage_ScriptExec_Set");
+	SamuTerm_RegisterScriptExec(STEXE_PLAYUP_GET, "PlayUpPage_ScriptExec_Get");
+}
+
+function void STExecute_PlayUpTitleHover(int title, int btndata){
+	bool alreadygot = PlayUp_CheckInv(PlayUp_getActor(btndata));
+	bool canigetit = SFPlus_getPlayUPts() >= PlayUp_getPrice(btndata);
+	
+	int color = alreadygot ? CR_CYAN : (canigetit ? CR_WHITE : CR_ORANGE);
+	Label_SetText(title, PlayUp_GetName(btndata));
+	Label_setColor(title, color);
+}
+
+function void STExecute_PlayUpSetDesc(int up){
+	playup_vars[6] = up;
+	PlayUpPage_SetDetails(up);
+}
+
+function void STExecute_PlayUpGet(int which){
+	int payprice;
+	payprice = PlayUp_getPrice(which);
+	sf_RemoveUpPoints(payprice, PlayerNumber());
+	fp_PlayUpTrack += payprice; 
+	GiveInventory(PlayUp_getActor(which), 1);
+}
+
+function void STExecute_PlayUpSet(int which){
+	SamuTerm_CallOpExecute(STEXE_PLAYUP_GET, which, 0, 0);
+	Toaster_ShowToast("Upgrade implemented sucessfully!", CR_PURPLE);
+	LocalAmbientSound("p/heal",128);
+}
+
+function void STExecute_PlayUpAsk(int up){
+	int affordable = SFPlus_getPlayUPts() >= PlayUp_getPrice(up);
+	if(!affordable){
+		Toaster_ShowToast("You need more \cvUpgrade Points\c-!",CR_ORANGE);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		Prompt_Ask("Conf. Upgrade", 
+			"Are you sure you want to apply this upgrade to your unit?", CR_CYAN);
+		Prompt_ExecuteOnTrue(STEXE_PLAYUP_SET, up, 0, 0);
+	}
+}
+
+script "PlayUpPage_ScriptExec_TitleHover" (int title, int btndata, int arg3){
+	STExecute_PlayUpTitleHover(title, btndata);
+}
+
+script "PlayUpPage_ScriptExec_SetDesc" (int up, int arg2, int arg3){
+	STExecute_PlayUpSetDesc(up);
+}
+
+script "PlayUpPage_ScriptExec_Ask" (int up, int arg2, int arg3){
+	STExecute_PlayUpAsk(up);
+}
+
+script "PlayUpPage_ScriptExec_Set" (int which, int arg2, int arg3){
+	STExecute_PlayUpSet(which);
+}
+
+script "PlayUpPage_ScriptExec_Get" (int which, int arg2, int arg3){
+	STExecute_PlayUpGet(which);
+}

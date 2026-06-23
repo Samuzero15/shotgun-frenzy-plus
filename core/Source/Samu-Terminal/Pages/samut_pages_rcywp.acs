@@ -170,3 +170,57 @@ function void RcyWpnPage_MakeRWButtons(int panel){
 	}
 	
 }
+
+function void RcyWpnPage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_ASKRC, "RcyWpnPage_ScriptExec_AskRecycle");
+	SamuTerm_RegisterScriptExec(STEXE_MSGRC, "RcyWpnPage_ScriptExec_AcceptRecycle");
+	SamuTerm_RegisterScriptExec(STEXE_WEPRC, "RcyWpnPage_ScriptExec_RecycleWeapon");
+	SamuTerm_RegisterScriptExec(STEXE_LABELRC, "RcyWpnPage_ScriptExec_LabelRecycle");
+}
+
+function void STExecute_AskForRecycle(int weapon, int uptype){
+	Prompt_Ask("Conf. Recycling",
+			"Are you sure you want to recycle this weapon?", CR_GREEN);
+	Prompt_ExecuteOnTrue(STEXE_MSGRC, weapon, uptype, 0);
+}
+
+function void STExecute_RecycleAccepted(int which, int uptype){
+	LocalAmbientSound("monies",128);
+	SamuTerm_CallOpExecute(STEXE_WEPRC, which, uptype, playerNumber());
+	Toaster_ShowToastLog("Recycling process completed!", CR_GOLD);
+}
+
+function void STExecute_RecycleWeapon(int weapon, int uptype, int play){
+	Weapon_Recycle(weapon, uptype, play);
+}
+
+function void StExecute_LabelWepRecycle(int wep, int up) {
+	str weapon_name = Weapon_GetName(wep);
+	str wepup_type_str = "\cjBase Weapon";
+	int price = Weapon_GetPrice(wep);
+	int color = term_catStyle[Weapon_GetCat(wep)].color;
+	if(up != -1){
+		weapon_name = WeaponUpgrade_GetName(wep, up);
+		wepup_type_str = strparam(s:"\cjWeapon Upgrade type ", d:up+1);
+		price = WeaponUpgrade_GetRcyPrice(wep, up);
+	}
+	Label_SetText(rcywpn_vars[RWPAGE_LABEL_WEAPONRCY],
+		strparam(s:wepup_type_str, s:"\n", s:weapon_name, s:"\n\cfRecycle Price: ", d:price, s:" Credits"));
+	Label_SetColor(rcywpn_vars[RWPAGE_LABEL_WEAPONRCY], color);
+}
+
+script "RcyWpnPage_ScriptExec_AskRecycle" (int weapon, int uptype, int arg3){
+	STExecute_AskForRecycle(weapon, uptype);
+}
+
+script "RcyWpnPage_ScriptExec_AcceptRecycle" (int which, int uptype, int arg3){
+	STExecute_RecycleAccepted(which, uptype);
+}
+
+script "RcyWpnPage_ScriptExec_RecycleWeapon" (int weapon, int uptype, int play){
+	STExecute_RecycleWeapon(weapon, uptype, play);
+}
+
+script "RcyWpnPage_ScriptExec_LabelRecycle" (int wep, int up, int arg3){
+	StExecute_LabelWepRecycle(wep, up);
+}

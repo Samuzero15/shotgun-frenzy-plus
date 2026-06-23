@@ -316,3 +316,82 @@ function void BuyWpnPage_InitPackPanelList(void){
 	buywpn_vars[BWPAGE_WPPACK_NEXTPAGE] = i;
 	
 }
+
+function void BuyWpnPage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_BUYWP_PSHOW, "BuyWpnPage_ScriptExec_SetCat");
+	SamuTerm_RegisterScriptExec(STEXE_BUYWP_PDESC, "BuyWpnPage_ScriptExec_ShowPackData");
+	SamuTerm_RegisterScriptExec(STEXE_BUYWP_MOVEWPPAGE, "BuyWpnPage_ScriptExec_MovePackPage");
+	SamuTerm_RegisterScriptExec(STEXE_BUYWP, "BuyWpnPage_ScriptExec_BuyPack");
+	SamuTerm_RegisterScriptExec(STEXE_GETWP, "BuyWpnPage_ScriptExec_GetPack");
+	SamuTerm_RegisterScriptExec(STEXE_GIVEWP, "BuyWpnPage_ScriptExec_GivePack");
+}
+
+function void STExecute_BuyWeapon(int which){
+	int price = WeaponPack_getPrice(which);
+	if(SFPlus_getPlayCredits() < price)
+	{
+		Toaster_ShowToast("Ya dont have enough!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		Prompt_Ask("Confirm", "Are you sure to buy this weapon pack?", CR_BRICK);
+		Prompt_ExecuteOnTrue(STEXE_GETWP, which, 0, 0);
+	}
+}
+
+function void STExecute_GetWeapon(int which){
+	Toaster_ShowToastLog("Weapon pack equipped!",CR_GOLD);
+	buywpn_vars[BWPAGE_UPDATE_NOW] = -99;
+	SamuTerm_CallOpExecute(STEXE_GIVEWP, which, 0, 0);
+	LocalAmbientSound("p/deploy",128);
+}
+
+function void STExecute_GiveWeapon(int which){
+	int payprice = WeaponPack_getPrice(which);
+	sf_RemoveCredits(payprice, PlayerNumber());
+	WeaponPack_Give(which);
+}
+
+function void STExecute_BuyWepChangeWPPage(int dir){
+	buywpn_vars[BWPAGE_CURRENT_PAGE] =
+		clamp(buywpn_vars[BWPAGE_CURRENT_PAGE] + dir,
+		 0, (fp_WpCategoryStack[buywpn_vars[BWPAGE_SELECTED_CATEGORY]]/BWPAGE_WPPACK_PERPAGE));
+	Panel_ResetVirtualOffset(buywpn_vars[BWPAGE_WPPACK_LISTPANEL]);
+}
+
+function void STExecute_BuyWepShowData(int which){
+	buywpn_vars[BWPAGE_UPDATE_NOW] = buywpn_vars[BWPAGE_SELECTED_PACK];
+	buywpn_vars[BWPAGE_SELECTED_PACK] = which;
+	buywpn_vars[BWPAGE_SELECTED_WEAPON] = 0;
+	NumInput_SetValue(buywpn_vars[BWPAGE_NUMINPUT_SELECTWP], 0);
+}
+
+function void STExecute_BuyWepSetCat(int which){
+	buywpn_vars[BWPAGE_SELECTED_CATEGORY] = which;
+	buywpn_vars[BWPAGE_CURRENT_PAGE] = 0;
+	Panel_ResetVirtualOffset(buywpn_vars[BWPAGE_WPPACK_LISTPANEL]);
+}
+
+script "BuyWpnPage_ScriptExec_SetCat" (int which, int arg2, int arg3){
+	STExecute_BuyWepSetCat(which);
+}
+
+script "BuyWpnPage_ScriptExec_ShowPackData" (int which, int arg2, int arg3){
+	STExecute_BuyWepShowData(which);
+}
+
+script "BuyWpnPage_ScriptExec_MovePackPage" (int dir, int arg2, int arg3){
+	STExecute_BuyWepChangeWPPage(dir);
+}
+
+script "BuyWpnPage_ScriptExec_BuyPack" (int which, int arg2, int arg3){
+	STExecute_BuyWeapon(which);
+}
+
+script "BuyWpnPage_ScriptExec_GetPack" (int which, int arg2, int arg3){
+	STExecute_GetWeapon(which);
+}
+
+script "BuyWpnPage_ScriptExec_GivePack" (int which, int arg2, int arg3){
+	STExecute_GiveWeapon(which);
+}

@@ -24,16 +24,6 @@ function void Samuterm_HelloPrompt(void){
 	"Now, on prompts, you can \ciaccept or dismiss\c- this message with  the \cguse \c-key, and \cidecline or cancel\c- with either the \cgalt-fire or crouch\c- key!\n\n Try dismissing this message with the use key."
 	, CR_GREEN);
 }
-
-function void STExecute_SayHi(void){
-	//Prompt_Resize(40,20);
-
-	Panel_setVirtualSize(prompt_data[STPROMPT_DATA_PANEL],0.0,128.0);
-	Panel_SetScrollAmount(prompt_data[STPROMPT_DATA_PANEL],0.0,8.0);
-	Prompt_Notify("Greetings", 
-	" I am Amy, your computarizated voice, and welcome to the Systemic Advanced Monitored User-frendly Terminal. S.A.M.U. Terminal for short.\n\n My duty is to serve you for any needings you'd wish.\n\n Try interacting with the \cgPrimary Click \c-button to gain acesss for many functions for you.\n\n Now, tell me, what do you need this time?"
-	, CR_GREEN);
-}
 function void STExecute_Ask(void){
 	Prompt_Ask("A simple question", 
 	"Do you love me?", 
@@ -271,5 +261,3 @@ function void StExecute_SelectComponent(int selectDirection, int y){
 		SetCursorPosition(pos_tomove[0], pos_tomove[1]);
 	}
 }
-
-#include "stexec_sfptermfuns.acs"

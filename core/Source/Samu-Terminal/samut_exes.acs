@@ -15,6 +15,58 @@ function bool SamuTerm_ClientCheck (int key) { return CheckInventory("SamuTInv_A
 function void SamuTerm_ServerCheck2 (int key) { SetInventory("SamuTInv_Action2Key", key); }
 function bool SamuTerm_ClientCheck2 (int key){ return CheckInventory("SamuTInv_Action2Key") >= key; }
 
+// Script-exec registry (incremental migration path):
+// Register cmd -> named script pairs here, then keep legacy switch as fallback.
+#define STSCRIPTEXEC_MAX 128
+int stscript_exec_initialized = 0;
+int stscript_exec_count = 0;
+int stscript_exec_cmd[STSCRIPTEXEC_MAX];
+int stscript_exec_script[STSCRIPTEXEC_MAX];
+
+function void SamuTerm_RegisterScriptExec(int cmd, str scriptname){
+	for(int i = 0; i < stscript_exec_count; i++){
+		if(stscript_exec_cmd[i] == cmd || StrICmp(stscript_exec_script[i], scriptname) == 0){
+			stscript_exec_cmd[i] = cmd;
+			stscript_exec_script[i] = scriptname;
+			return;
+		}
+	}
+
+	if(stscript_exec_count >= STSCRIPTEXEC_MAX) return;
+	stscript_exec_cmd[stscript_exec_count] = cmd;
+	stscript_exec_script[stscript_exec_count] = scriptname;
+	stscript_exec_count++;
+}
+
+function void SamuTerm_InitScriptExecs(void){
+	if(stscript_exec_initialized) return;
+	stscript_exec_initialized = 1;
+
+	// Page-owned script-exec registrations keep the central dispatcher small.
+	BuyWpnPage_RegisterScriptExecs();
+	ListUpPage_RegisterScriptExecs();
+	RcyWpnPage_RegisterScriptExecs();
+	ArmItmPage_RegisterScriptExecs();
+	PowBuyPage_RegisterScriptExecs();
+	PlayUpPage_RegisterScriptExecs();
+	StimUpPage_RegisterScriptExecs();
+	RunePage_RegisterScriptExecs();
+	MechUpPage_RegisterScriptExecs();
+	CMDPage_RegisterScriptExecs();
+	TeleportPage_RegisterScriptExecs();
+}
+
+function bool SamuTerm_TryScriptExec(int cmd, int arg1, int arg2, int arg3){
+	SamuTerm_InitScriptExecs();
+	for(int i = 0; i < stscript_exec_count; i++){
+		if(stscript_exec_cmd[i] == cmd){
+			ACS_NamedExecuteWithResult(stscript_exec_script[i], arg1, arg2, arg3);
+			return true;
+		}
+	}
+	return false;
+}
+
 function void SamuTerm_CallOpExecute (int cmd, int arg1, int arg2, int arg3){
 	// Depends on what you wanna do.
 	// Wanna give items, open doors? Use a negative value.
@@ -76,66 +128,15 @@ Script "SamuTerm_ServerExecute_Args" (int key, int arg1, int arg2, int arg3) NET
 
 function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 {
+	// Script-exec dispatch first; legacy switch remains as fallback while migrating.
+	if(SamuTerm_TryScriptExec(cmd, arg1, arg2, arg3)) return;
+
 	// Eitherway, this will list all of the functions about the executions.
 	switch(cmd){
-
-		case STEXE_TELEPORT_SECTOR: STExecute_TeleportToSector(arg1); break;
-
-		case STEXE_RUNESHOP_BUY: 	STExecute_RuneBuy(arg1);	break;
-		case STEXE_RUNESHOP_GET: 	STExecute_RuneGet(arg1);	break;
-		case STEXE_RUNESHOP_GIVE: 	STExecute_RuneGive(arg1);	break;
-		case STEXE_RUNESHOP_HOVER: 	STExecute_RuneDesc(arg1);	break;
-		case STEXE_RUNESHOP_BUYTIER: 	STExecute_RuneTierBuy();	break;
-		case STEXE_RUNESHOP_GIVETIER: 	STExecute_RuneTierGive();	break;
-
-		case STEXE_STIMUP_BUY: 	 STExecute_StimUpBuy(arg1);		break;
-		case STEXE_STIMUP_GIVE:  STExecute_StimUpGive(arg1);	break;
-		case STEXE_STIMUP_HOVER: STExecute_StimUpDesc(arg1);	break;
 		
-		case STEXE_PLAYUP_GET: STExecute_PlayUpGet(arg1); break;
-		case STEXE_PLAYUP_SET: STExecute_PlayUpSet(arg1); break;
-		case STEXE_PLAYUP_ASK: STExecute_PlayUpAsk(arg1); break;
-		case STEXE_PLAYUP_SETDESC: STExecute_PlayUpSetDesc(arg1); break;
-		case STEXE_PLAYUP_BTNHOVER: STExecute_PlayUpTitleHover(arg1, arg2); break;
+		// Health and armory executes are registered by page script-execs.
 		
-		case STEXE_BUYWP_PSHOW: STExecute_BuyWepSetCat(arg1); break;
-		case STEXE_BUYWP_PDESC: STExecute_BuyWepShowData(arg1); break;
-		case STEXE_BUYWP_MOVEWPPAGE: STExecute_BuyWepChangeWPPage(arg1); break;
-		case STEXE_GETWP: STExecute_getWeapon(arg1); break;
-		case STEXE_GIVEWP: STExecute_giveWeapon(arg1); break;
-		case STEXE_BUYWP: STExecute_BuyWeapon(arg1); break;
-	
-		case STEXE_UPGPAGEDESC: StExecute_UpgPageDesc(arg1, arg2); break;
-		case STEXE_UPGPAGECAT: StExecute_UpgPageCat(arg1, arg2); break;
-		//case STEXE_UPGPAGEWEPS: StExecute_UpgPageWeps(arg1); break;
-		case STEXE_UPWEPOPENUPS: StExecute_UpPageOpenUps(arg1); break;
-		
-		case STEXE_CMDEVENT_CHECK: STExecute_CMDEvent_Check(arg1, arg2); break;
-		case STEXE_CMDEVENT_DOIT: STExecute_CMDEvent_DoIt(arg1); break;
-		case STEXE_CMDEXIT: StExecute_CMDExit(); break;
-		case STEXE_CMDBTNDESC: StExecute_CMDBtnDesc(arg1, arg2, arg3); break;
-		case STEXE_CMDCAT: STExecute_CMDGotToCat(arg1, arg2); break;
-		case STEXE_CMDCAT2: STExecute_CMDGotToCat2(arg1, arg2); break;
-		
-		case STEXE_BUYMECHTANK: StExecute_BuyMechTank(); break;
-		case STEXE_GETMECHTANK: StExecute_GetMechTank(); break;
-		case STEXE_UPGMECHTANK: StExecute_UpgradeMech(arg1); break;
-		case STEXE_GETMECHUPG: StExecute_GetMechUpgrade(arg1); break;
-		case STEXE_EnterMECHTANK: StExecute_EnterMechTank(); break;
-		
-		case STEXE_POWBUY: StExecute_BuyPowerup(arg1); break;
-	
-		case STEXE_ITEMBUY: StExecute_BuyItem(arg1); break;
-		case STEXE_ITEMGET: StExecute_GetItem(arg1); break;
-		
-		case STEXE_WEPRC: StExecute_RecycleWeapon(arg1, arg2, arg3); break;
-		case STEXE_MSGRC: StExecute_RecycleAccepted(arg1, arg2); break;
-		case STEXE_ASKRC: StExecute_AskForRecycle(arg1, arg2); break;
-		case STEXE_LABELRC: StExecute_LabelWepRecycle(arg1, arg2); break;
-		
-		case STEXE_GETUP: StExecute_UpgradeWeapon(arg1, arg2); break;
-		case STEXE_MSGUP: StExecute_UpgradeAccepted(arg1, arg2); break;
-		case STEXE_ASKUP: StExecute_AskForUpgrade(arg1, arg2); break;
+		// Commander, mech, and teleport executes are registered by page script-execs.
 		/*
 		case STEXE_ShowBuyPage: STExecute_ShowBuyPage(arg1); break;
 		*/
@@ -146,7 +147,6 @@ function void SamuTerm_Execute(int cmd, int arg1, int arg2, int arg3)
 		case STEXE_YES: STExecute_YesAction(); break;
 		case STEXE_NO: STExecute_NoAction(); break;
 		case STEXE_OKAY: STExecute_OkayAction(); break;
-		case STEXE_SAYHI: STExecute_SayHi(); break;
 		case STEXE_ASK: STExecute_Ask(); break;
 		case STEXE_CLOSE: STExecute_Close(); break;
 		case STEXE_SYSOFF: STExecute_Shutdown(); break;

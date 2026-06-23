@@ -149,3 +149,57 @@ function void StimUpPage_SaveToGroup(int up, int id, int comp){
 function int StimUpPage_LoadFromGroup(int up, int id){
 	return stimpage_vars[STIMPAGE_NCOMPGROUP * up + STIMPAGE_NPRIVARS + (id-1)];
 }
+
+function void StimUpPage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_STIMUP_BUY, "StimUpPage_ScriptExec_Buy");
+	SamuTerm_RegisterScriptExec(STEXE_STIMUP_GIVE, "StimUpPage_ScriptExec_Give");
+	SamuTerm_RegisterScriptExec(STEXE_STIMUP_HOVER, "StimUpPage_ScriptExec_Hover");
+}
+
+function void STExecute_StimUpBuy(int upgrade) {
+	int name = StimUp_getName(upgrade);
+	int price = StimUp_getPrice(upgrade);
+
+	if(SFPlus_getPlayCredits() < price){
+		Toaster_ShowToast("Not enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = upgrade + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(stradd(stradd("Sure to apply the ", name), "?"),CR_ORANGE);
+		else{
+			localambientsound("vehicle/mechupgrade",128);
+			Toaster_ShowToast(stradd(name," added! (click for more)"),CR_GREEN);
+			SamuTerm_CallOpExecute(STEXE_STIMUP_GIVE, upgrade, 0, 0);
+		}
+		
+		tmp[6] = tmp[5];
+	}
+}
+
+function void STExecute_StimUpGive(int upgrade) {
+	str actor = StimUp_getActor(upgrade);
+	int payprice = StimUp_getPrice(upgrade);
+
+	sf_RemoveCredits(payprice, PlayerNumber());
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(actor, 1);
+}
+
+function void STExecute_StimUpDesc(int upgrade) {
+	str desc = StimUp_GetDesc(upgrade);
+	Label_SetText(stimpage_vars[2], desc);
+}
+
+script "StimUpPage_ScriptExec_Buy" (int upgrade, int arg2, int arg3){
+	STExecute_StimUpBuy(upgrade);
+}
+
+script "StimUpPage_ScriptExec_Give" (int upgrade, int arg2, int arg3){
+	STExecute_StimUpGive(upgrade);
+}
+
+script "StimUpPage_ScriptExec_Hover" (int upgrade, int arg2, int arg3){
+	STExecute_StimUpDesc(upgrade);
+}

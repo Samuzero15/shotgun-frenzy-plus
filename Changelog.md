@@ -9,6 +9,11 @@
 
 ## v1 - The path of the damned...
 
+#### (22 / 06 / 2026) [SamuTerm Script Execute and a new Rune Terminal is here!]
+	!+) Now, you can use a new way to define executables from samu terminal!
+	// Instead of adding it in a big ass switch, you can define them with a script call, and with the same id assign it to a component! This is huge because it will let you define new STExecutes in a much more flexible and semi-dynamic way to do it :D.
+	!+) Also, a new updated Rune Page is ready! Check it out!
+
 #### (14 / 06 / 2026) [Added DefaultMusic command for SFMAPMUS] {music-fix}
 	+) New Command 'DefaultMusic' added, now you can skip the optional parameters for the AddMapMusic command.
 	*) Some few updates on the Wiki are up! Still in a WIP.

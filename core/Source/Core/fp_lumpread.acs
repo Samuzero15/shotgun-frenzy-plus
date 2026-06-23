@@ -264,8 +264,8 @@ function int LumpRead_NextArg(str line, int value_type) {
 
 function int LumpRead_NextArgDefault(str line, int value_type, int defaultValue) {
     if(!LumpRead_StrNextArg(line))  return defaultValue;
-    int value = LumpRead_ParseValue (res1, value_type);
-    return StrCheckIfEmpty(value) ? defaultValue : value;
+    if(StrCheckIfEmpty(res1)) return defaultValue;
+    return LumpRead_ParseValue(res1, value_type);
 }
 
 function int LumpRead_CollectArgs(str line) {

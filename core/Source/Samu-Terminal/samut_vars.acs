@@ -180,7 +180,6 @@
 
 #libDefine STEXE_BUYWP_PDESC 8
 #libDefine STEXE_BUYWP_PSHOW 35
-#libDefine STEXE_BUYWP_MOVEWEP 60
 #libDefine STEXE_BUYWP_MOVEWPPAGE 61
 #libdefine STEXE_BUYWP 9
 #libdefine STEXE_GETWP 10
@@ -202,7 +201,6 @@
 #LibDefine STEXE_CLOSE -2
 #LibDefine STEXE_SYSOFF -3
 //DoNotTouch_End.
-#LibDefine STEXE_SAYHI -4
 #LibDefine STEXE_SELECT 99
 
 #libdefine FIRE1 BT_ATTACK

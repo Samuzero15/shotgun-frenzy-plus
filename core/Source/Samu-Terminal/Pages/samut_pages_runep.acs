@@ -1,42 +1,104 @@
 
-int runepage_vars[60];
+int runepage_vars[100];
 
-#define RUNEPAGE_NCOMPGROUP 1
-#define RUNEPAGE_NPRIVARS 15
+#define RUNEPAGE_HOVERPANEL 30
+#define RUNEPAGE_HOVERNAME 31
+#define RUNEPAGE_HOVERDESC 32
+#define RUNEPAGE_NPRIVARS 35
 
 #define RUNEPAGE_TIERSTRINGS 9
+#define RUNEPAGE_TIERPRICES 13
+#define RUNEPAGE_TIERPAGESEL 17
+#define RUNEPAGE_TIERPAGENUM 21
+
+#define RUNEPAGE_BTN_SLOTS_PERTIER 5
+
+function int RunePage_GetBtnSlot(int tier, int slot){
+	return RUNEPAGE_NPRIVARS + tier * RUNEPAGE_BTN_SLOTS_PERTIER + slot;
+}
 
 function void RunePage_Update(int pageTag) {
 	setPageTitle(pageTag, "Rune shop", CR_CYAN);
-	
+
 	if(SamuTerminal_isOnSamePage(pageTag) && Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
-		//log(s:"Rune tier: ", d:CheckInventory("RuneTier"));
-		int runetier = 0;
-		runetier = CheckInventory("RuneTier");
-		for(int k = 0; k < 4; k++){
-			if(k >= 1 && k <= 3){
-				if(runetier >= k) 	Label_setShow(runepage_vars[RUNEPAGE_TIERSTRINGS+k], true);
-				else 				Label_setShow(runepage_vars[RUNEPAGE_TIERSTRINGS+k], false);
-			}
-			
-			Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k], 
-			strparam(s:"Tier ", d:k+1, s:" - (",d:Rune_getTierPrice(k), s:" $)"));
-		}
+		int p = runepage_vars[1];
+		int s = 0;
+		Panel_setShow(p, true);
 
-		if(cursor_hover[STCURSOR_HOVER_COMP] == -1) {
-			Label_setText(runepage_vars[3], "");
-			Label_setText(runepage_vars[4], "");
-		}
-
+		int runetier = CheckInventory("RuneTier");
+		int runes_by_tier[4] = {0, 0, 0, 0};
+		int rune_list_by_tier[4][50];
 		for(int j = 0; j < RuneTop; j++){
-			RunePage_UpdateComps(j);
+			int t = Rune_GetTier(j) - 1;
+			if(t >= 0 && t < 4){
+				runes_by_tier[t]++;
+				rune_list_by_tier[t][runes_by_tier[t]-1] = j;
+			}
+		}
+	
+	int s2 = 0;
+	for(int k = 0; k < 4; k++){
+			bool unlocked = runetier >= k;
+			Label_setShow(runepage_vars[RUNEPAGE_TIERSTRINGS+k], unlocked);
+			Label_setShow(runepage_vars[RUNEPAGE_TIERPRICES+k], unlocked);
+
+			int page_sel = runepage_vars[RUNEPAGE_TIERPAGESEL+k];
+			int pan_x = Panel_getX(p);
+			int pan_y = Panel_getY(p);
+			NumInput_setPosition(page_sel, pan_x + 12.0, pan_y + 168.0 + (3.0-k)*48.0);
+			NumInput_SetLabelOffsets(page_sel, 0.0, 20.0);
+
+			if(!unlocked){
+				for(s2 = 0; s2 < RUNEPAGE_BTN_SLOTS_PERTIER; s2++){
+					ImgButton_setShow(runepage_vars[RunePage_GetBtnSlot(k, s2)], false);
+				}
+				NumInput_setShow(page_sel, false);
+				continue;
+			}
+
+			int max_pages = (runes_by_tier[k] + RUNEPAGE_BTN_SLOTS_PERTIER - 1) / RUNEPAGE_BTN_SLOTS_PERTIER;
+			if(max_pages < 1) max_pages = 1;
+			NumInput_setMaxValue(page_sel, max_pages);
+			int cur_page = NumInput_getValue(page_sel);
+			int base_idx = (cur_page - 1) * RUNEPAGE_BTN_SLOTS_PERTIER;
+			bool show_sel = runes_by_tier[k] > RUNEPAGE_BTN_SLOTS_PERTIER;
+			NumInput_setShow(page_sel, show_sel);
+
+			for(s2 = 0; s2 < RUNEPAGE_BTN_SLOTS_PERTIER; s2++){
+				int comp = runepage_vars[RunePage_GetBtnSlot(k, s2)];
+				int abs_rune_idx = base_idx + s2;
+				if(abs_rune_idx < runes_by_tier[k]){
+					int ridx = rune_list_by_tier[k][abs_rune_idx];
+					int price = Rune_GetPrice(ridx);
+					bool isaffordable = SFPlus_getPlayCredits() >= price;
+					ImgButton_setImage(comp, cond(isaffordable, Rune_GetIcon(ridx), "BTNDEN"));
+					ImgButton_setArgs(comp, ridx, 0, 0);
+					ImgButton_setArgsHover(comp, ridx, 0, 0);
+					ImgButton_setShow(comp, true);
+				}else{
+					ImgButton_setShow(comp, false);
+				}
+			}
+		}
+
+		if(Panel_getShow(runepage_vars[RUNEPAGE_HOVERPANEL]) == true){
+			int hover_comp = cursor_hover[STCURSOR_HOVER_COMP];
+			bool is_rune_hover = false;
+			for(int ht = 0; ht < 4 && !is_rune_hover; ht++){
+				for(int hs = 0; hs < RUNEPAGE_BTN_SLOTS_PERTIER && !is_rune_hover; hs++){
+					if(runepage_vars[RunePage_GetBtnSlot(ht, hs)] == hover_comp)
+						is_rune_hover = true;
+				}
+			}
+			if(!is_rune_hover) Panel_setShow(runepage_vars[RUNEPAGE_HOVERPANEL], false);
 		}
 
 		if(runetier < 3){
 			StrButton_setText(runepage_vars[5], strparam(s:"Unlock Tier ", d:runetier+2));
 			Label_setText(runepage_vars[6], strparam(d:Rune_getTierUnlockPrice(runetier+2),s:"UP"));
-		}else
-		{
+			StrButton_setShow(runepage_vars[5], true);
+			Label_setShow(runepage_vars[6], true);
+		}else{
 			StrButton_setShow(runepage_vars[5], false);
 			Label_setShow(runepage_vars[6], false);
 		}
@@ -56,57 +118,105 @@ function void RunePage_Update(int pageTag) {
 function void RunePage_Init(int pageTag) {
 	runepage_vars[0] = pageTag;
 	if(Tech_IsDoneC(TECH_GENLAB_RUSYNC)){
-	Grid_SetPosition(125.0,280.0);
-	Grid_SetDimensions(4,5);
-	Grid_SetCellSize(64.0, -64.0);
-	runepage_vars[1] = Grid_Generate();
+	int p = Panel_Add(75.0, 60.0, 58, 29);
+	Panel_SetTitle(p, "Runes");
+	Panel_setColor(p, CR_CYAN);
+	Panel_setTag(p, runepage_vars[0]);
+	Panel_setColumns(p, 5);
+	Panel_setSpacing(p, 48.0, 48.0);
+	Panel_setAnchorOffset(p, 12.0, 4.0);
+	runepage_vars[1] = p;
 
-	for(int j = 0; j < RuneTop; j++){
-		RunePage_AddComps(j, runepage_vars[0], runepage_vars[1], Rune_GetTier(j), (j % 5)+1);
+	// Create 3 fixed image button slots per tier (absolute inside panel).
+	for(int k = 0; k < 4; k++){
+		int row_y = 16.0 + (3-k)*48.0;
+		for(int s = 0; s < RUNEPAGE_BTN_SLOTS_PERTIER; s++){
+			int slot_comp = RunePage_GetBtnSlot(k, s);
+			int bx = 44.0 + s * 48.0;
+			runepage_vars[slot_comp] = ImgButton_AddToPanelAbs(32.0, 32.0, p, bx, row_y);
+			ImgButton_setImage(runepage_vars[slot_comp], "");
+			ImgButton_setHoverImage(runepage_vars[slot_comp], "btnhov");
+			ImgButton_setTag(runepage_vars[slot_comp], runepage_vars[0]);
+			ImgButton_setExecute(runepage_vars[slot_comp], STEXE_RUNESHOP_BUY);
+			ImgButton_setExeHover(runepage_vars[slot_comp], STEXE_RUNESHOP_HOVER);
+			ImgButton_setShow(runepage_vars[slot_comp], false);
+		}
+
+		// NumInput page selector per tier (children added to panel as absolute).
+		runepage_vars[RUNEPAGE_TIERPAGESEL+k] = NumInput_Add(0, 0);
+		NumInput_setBtnDistance(runepage_vars[RUNEPAGE_TIERPAGESEL+k], 240.0);
+		NumInput_setLoopValues(runepage_vars[RUNEPAGE_TIERPAGESEL+k], true);
+		Label_setFont(NumInput_getLabelNum(runepage_vars[RUNEPAGE_TIERPAGESEL+k]), "SMALLFNT");
+		runepage_vars[RUNEPAGE_TIERPAGENUM+k] = 0;
 	}
-	
-	Card_SetPosition(176.0,270.0);
-	Card_SetCells(4);
-	Card_SetStep(-64.0);
-	Card_SetVerticalOri(true);
-	runepage_vars[2] = Card_Generate();
 
-	// Title
-	runepage_vars[3] = Label_Add(320.0,348.0); 
-	Label_setText(runepage_vars[3], "");
-	Label_setFont(runepage_vars[3],"DBIGFONT");
-	Label_setColor(runepage_vars[3],CR_CYAN);
-	Label_setTag(runepage_vars[3], runepage_vars[0]);
+	// Tier strings (absolute inside panel, 6th column area).
+	for(int k2 = 0; k2 < 4; k2++){
+		runepage_vars[RUNEPAGE_TIERSTRINGS+k2] = Label_AddToPanelAbs(p, 354.0, 28.0 + (3-k2)*48.0);
+		Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k2], strparam(s:"Tier ", d:k2+1));
+		Label_setFont(runepage_vars[RUNEPAGE_TIERSTRINGS+k2],"DBIGFONT");
+		Label_setTag(runepage_vars[RUNEPAGE_TIERSTRINGS+k2], runepage_vars[0]);
 
-	// Description
-	runepage_vars[4] = Label_Dup(runepage_vars[3],320.0,360.0); 
-	Label_setFont(runepage_vars[4],"SMALLFNT");
-	Label_setColor(runepage_vars[4],CR_WHITE);
+		runepage_vars[RUNEPAGE_TIERPRICES+k2] = Label_AddToPanelAbs(p, 354.0, 38.0 + (3-k2)*48.0);
+		Label_setText(runepage_vars[RUNEPAGE_TIERPRICES+k2], strparam(d:Rune_getTierPrice(k2), s:" $"));
+		Label_setColor(runepage_vars[RUNEPAGE_TIERPRICES+k2], CR_GOLD);
+		Label_setFont(runepage_vars[RUNEPAGE_TIERPRICES+k2],"SMALLFNT");
+		Label_setTag(runepage_vars[RUNEPAGE_TIERPRICES+k2], runepage_vars[0]);
+	}
 
-	runepage_vars[5] = StrButton_AddMid (500.0, 275.0, "Unlock Tier ");
+	// Hover panel (same width as runes panel).
+	int hp = Panel_Add(75.0, 315.0, 58, 6);
+	Panel_setTitle(hp, "Rune Description");
+	Panel_setColor(hp, CR_CYAN);
+	Panel_setTag(hp, runepage_vars[0]);
+	Panel_setShow(hp, false);
+	Panel_setColumns(hp, 1);
+	Panel_setSpacing(hp, 0.0, 18.0);
+	Panel_setAnchors(hp, STPANEL_ANCHOR_CENTER, STPANEL_ANCHOR_TOP);
+	Panel_setAnchorOffset(hp, 0.0, 8.0);
+	runepage_vars[RUNEPAGE_HOVERPANEL] = hp;
+
+	int hi = Label_AddToPanel(hp);
+	Label_setFont(hi, "DBIGFONT");
+	Label_setColor(hi, CR_CYAN);
+	Label_setTag(hi, runepage_vars[0]);
+	Label_setAligns(hi, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
+	runepage_vars[RUNEPAGE_HOVERNAME] = hi;
+
+	hi = Label_AddToPanel(hp);
+	Label_setFont(hi, "SMALLFNT");
+	Label_setColor(hi, CR_WHITE);
+	Label_setTag(hi, runepage_vars[0]);
+	Label_setAligns(hi, HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
+	Label_setWrapWidth(hi, 440);
+	runepage_vars[RUNEPAGE_HOVERDESC] = hi;
+
+	int upgr_x = 272.0;
+	int upgr_y = 202.0;
+	runepage_vars[5] = StrButton_AddToPanelAbs("Unlock Tier ", p, upgr_x, upgr_y);
 	StrButton_setColor	(runepage_vars[5], CR_CYAN);
 	StrButton_setTag	(runepage_vars[5], runepage_vars[0]);
 	StrButton_setExecute(runepage_vars[5], STEXE_RUNESHOP_BUYTIER);
 
-	runepage_vars[6] = Label_Dup(runepage_vars[4], 500.0,285.0); 
+	runepage_vars[6] = Label_AddToPanelAbs(p, upgr_x + 88.0, upgr_y + 26.0);
+	Label_setText(runepage_vars[6], "");
+	Label_setFont(runepage_vars[6],"SMALLFNT");
 	Label_setColor(runepage_vars[6],CR_CYAN);
+	Label_setTag(runepage_vars[6], runepage_vars[0]);
 
-	runepage_vars[7] = Label_Dup(runepage_vars[6], 500.0,185.0); 
+	runepage_vars[7] = Label_AddToPanelAbs(p, 40.0, upgr_y + 3.0);
 	Label_setText(runepage_vars[7], "Linked Rune");
 	Label_setFont(runepage_vars[7],"DBIGFONT");
 	Label_setColor(runepage_vars[7],CR_White);
+	Label_setAligns(runepage_vars[7], HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_setTag(runepage_vars[7], runepage_vars[0]);
 
-	runepage_vars[8] = Label_Dup(runepage_vars[7], 500.0,200.0); 
+	runepage_vars[8] = Label_AddToPanelAbs(p, 40.0, upgr_y + 18.0);
 	Label_setText(runepage_vars[8], "");
+	Label_setFont(runepage_vars[8],"DBIGFONT");
 	Label_setColor(runepage_vars[8], CR_CYAN);
-
-	// Tier strings.
-		for(int k = 0; k < 4; k++){
-			runepage_vars[RUNEPAGE_TIERSTRINGS+k] = Label_AddCard(runepage_vars[2], k+1); 
-			Label_setText(runepage_vars[RUNEPAGE_TIERSTRINGS+k], strparam(s:"Tier ", d:k+1));
-			Label_setFont(runepage_vars[RUNEPAGE_TIERSTRINGS+k],"DBIGFONT");
-			Label_setTag(runepage_vars[RUNEPAGE_TIERSTRINGS+k], runepage_vars[0]);
-		}
+	Label_setAligns(runepage_vars[8], HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	Label_setTag(runepage_vars[8], runepage_vars[0]);
 	}else{
 		int i;
 
@@ -127,35 +237,97 @@ function void RunePage_Init(int pageTag) {
 	}
 }
 
-function void RunePage_UpdateComps(int rune){
-	int ibut = RunePage_LoadFromGroup(rune, 1);
-	int price = Rune_GetPrice(rune);
-	bool isaffordable = SFPlus_getPlayCredits() >= price;
-
-	ImgButton_setImage(ibut, cond(isaffordable, Rune_GetIcon(rune), "BTNDEN"));
-	ImgButton_setShow(ibut, cond(CheckInventory("RuneTier") >= Rune_GetTier(rune)-1, true, false));
-	
+function void RunePage_RegisterScriptExecs(void){
+	SamuTerm_RegisterScriptExec(STEXE_RUNESHOP_HOVER, "RunePage_ScriptExec_Hover");
+	SamuTerm_RegisterScriptExec(STEXE_RUNESHOP_BUY, "RunePage_ScriptExec_Buy");
+	SamuTerm_RegisterScriptExec(STEXE_RUNESHOP_GET, "RunePage_ScriptExec_Get");
+	SamuTerm_RegisterScriptExec(STEXE_RUNESHOP_GIVE, "RunePage_ScriptExec_Give");
+	SamuTerm_RegisterScriptExec(STEXE_RUNESHOP_BUYTIER, "RunePage_ScriptExec_BuyTier");
+	SamuTerm_RegisterScriptExec(STEXE_RUNESHOP_GIVETIER, "RunePage_ScriptExec_GiveTier");
 }
 
-function void RunePage_AddComps(int rune, int tag, int grid, int r, int c){
-	int i;
-	str actor = Rune_GetActor(rune);
-	
-	i = ImgButton_AddGrid(grid, r, c, 32.0, 32.0);
-	ImgButton_setImage(i, Rune_GetIcon(rune));
-	ImgButton_setHoverImage(i, "btnhov");
-	ImgButton_setTag(i, tag);
-	ImgButton_setExecute(i, STEXE_RUNESHOP_BUY);
-	ImgButton_setArgs(i, rune, 0 ,0);
-	ImgButton_setExeHover(i, STEXE_RUNESHOP_HOVER);
-	ImgButton_setArgsHover(i, rune, 0 ,0);
-	RunePage_SaveToGroup(rune, 1, i);
+function void STExecute_RuneBuy(int r){
+	int price = Rune_getPrice(r);
+	if(SFPlus_getPlayCredits() < price)
+	{
+		Toaster_ShowToast("You don't have enough credits!",CR_RED);
+		localAmbientSound("SamuTerm/Error",127);
+	}else if (CheckInventory(Rune_getPowerActor(r))){
+		Toaster_ShowToast("You already have this rune linked!",CR_ORANGE);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		str title = strparam(s:"Buy ", s:Rune_GetName(r) ,s:"?");
+		Prompt_Ask(title, "\nAre you sure you want to buy this rune? \n\n\cfYour current rune will be replaced!", CR_CYAN);
+		Prompt_ExecuteOnTrue(STEXE_RUNESHOP_GET, r, 0, 0);
+	}
 }
 
-function void RunePage_SaveToGroup(int rune, int id, int comp){
-	runepage_vars[RUNEPAGE_NCOMPGROUP * rune + RUNEPAGE_NPRIVARS + (id-1)] = comp;
+function void STExecute_RuneGet(int r){
+	str msg = strparam(s:Rune_GetName(r), s:" Rune linked!");
+	Toaster_ShowToastLog(msg, CR_CYAN);
+	SamuTerm_CallOpExecute(STEXE_RUNESHOP_GIVE, r, 0, 0);
+	LocalAmbientSound("p/deploy",128);
 }
 
-function int RunePage_LoadFromGroup(int rune, int id){
-	return runepage_vars[RUNEPAGE_NCOMPGROUP * rune + RUNEPAGE_NPRIVARS + (id-1)];
+function void STExecute_RuneGive(int r){
+	sf_RemoveCredits(Rune_getPrice(r), PlayerNumber());
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory(Rune_getActor(r), 1);
+}
+
+function void STExecute_RuneDesc(int r){
+	Panel_setShow(runepage_vars[RUNEPAGE_HOVERPANEL], true);
+	Label_setText(runepage_vars[RUNEPAGE_HOVERNAME], Rune_GetName(r));
+	Label_setText(runepage_vars[RUNEPAGE_HOVERDESC], Rune_GetDesc(r));
+}
+
+function void STExecute_RuneTierBuy(void){
+	int tierup = CheckInventory("RuneTier");
+	if(SFPlus_getPlayUPts() < Rune_getTierUnlockPrice(tierup+2)){
+		Toaster_ShowToast("You need more \cvUpgrade Points\c-!",CR_ORANGE);
+		localAmbientSound("SamuTerm/Error",127);
+	}
+	else{
+		tmp[5] = tierup + 1;
+		if(tmp[5] != tmp[6]) 
+			Toaster_ShowToast(strparam(s:"Sure to unlock the tier ", d:tierup+2, s:" of runes?"),CR_ORANGE);
+		else{
+			Toaster_ShowToast(strparam(s:"Tier ",d:tierup+2,s:" unlocked! (click for more)"),CR_PURPLE);
+			SamuTerm_CallOpExecute(STEXE_RUNESHOP_GIVETIER, 0, 0, 0);
+		}
+		tmp[6] = tmp[5];
+	}
+}
+
+function void STExecute_RuneTierGive(void){
+	int tierup = CheckInventory("RuneTier");
+	RuneTrack++;
+	sf_RemoveUpPoints(Rune_getTierUnlockPrice(tierup+2), PlayerNumber());
+	SetActivatorToPlayer(PlayerNumber());
+	GiveInventory("RuneTier", 1);
+}
+
+script "RunePage_ScriptExec_Hover" (int r, int arg2, int arg3){
+	STExecute_RuneDesc(r);
+}
+
+script "RunePage_ScriptExec_Buy" (int r, int arg2, int arg3){
+	STExecute_RuneBuy(r);
+}
+
+script "RunePage_ScriptExec_Get" (int r, int arg2, int arg3){
+	STExecute_RuneGet(r);
+}
+
+script "RunePage_ScriptExec_Give" (int r, int arg2, int arg3){
+	STExecute_RuneGive(r);
+}
+
+script "RunePage_ScriptExec_BuyTier" (int arg1, int arg2, int arg3){
+	STExecute_RuneTierBuy();
+}
+
+script "RunePage_ScriptExec_GiveTier" (int arg1, int arg2, int arg3){
+	STExecute_RuneTierGive();
 }

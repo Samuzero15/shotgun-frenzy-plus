@@ -29,7 +29,6 @@
 function void SamuTerm_InitPages(void){
 
 	int card;
-	int b;
 	Card_SetPosition(176.0, 424.0);
 	Card_SetStep(64.0);
 	Card_SetCells(5);
@@ -77,6 +76,7 @@ function void SamuTerm_InitPages(void){
 			make_menubutton(card, 3, 3, "BTN3", "Recycle Weapons");
 			make_menubutton(card, 4, 4, "BTNOK", "Extra Items");
 			make_exitbutton(card, 5, "BTNEXIT");
+
 			setPageTitle_Alpha("Ammuniton Terminal", CR_CYAN);
 			BuyWpnPage_Init(1);
 			RcyWpnPage_Init(3);
