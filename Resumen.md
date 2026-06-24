@@ -90,17 +90,29 @@ shotgun-frenzy-plus/
 - **`LumpRead_NextArgDefault` int→str conversion bug** (`core/Source/Core/fp_lumpread.acs:265`): `StrCheckIfEmpty(value)` recibía un `int` convertido a `str`, pero zt-bcc no convierte int→str en parámetros de función — el entero se interpretaba como dirección de string inválida, causando que `StrIsEmpty` retornara `true` siempre. Arreglado verificando `res1` (string crudo) en lugar de `value` (int parseado). Esto afectaba a `LumpRead_NextArgDefault` con `LUMPR_VALUE_INT` (como `ibtn`/`powerupid` en powerups de `SFITMDEF.shop`).
 
 ## Recent Changes
-- **Rune page panel refactor** (`core/Source/Samu-Terminal/Pages/samut_pages_runep.acs`):
-  - Replaced Grid + Card layout with absolute-positioned components inside a `Panel` (75, 60, 58, 29).
-  - Rune buttons: 5 fixed `ImgButton_AddToPanelAbs` slots per tier (20 total), repurposed dynamically per page.
-  - Pagination: 4 `NumInput` selectors (one per tier, loop enabled, BtnDistance=240) with `NumInput_SetLabelOffsets(0,20)`; shown when tier >5 runes.
-  - Tier names (`DBIGFONT`, X=354, Y=28+...) and tier prices (`SMALLFNT`, CR_GOLD, X=354, Y=38+...) as absolute labels, ordered Tier 4→1.
-  - "Unlock Tier" button (X=272, Y=`upgr_y`) + price label (X=360) using `upgr_x`/`upgr_y` vars.
-  - "Linked Rune" + name as absolute labels (X=40, Y=`upgr_y+8/+24`, LEFT TOP).
-  - Hover panel (75, 315, 58, 6) with "Rune Description" title, rune name (`DBIGFONT`) and desc (`SMALLFNT`, word wrap 440, CENTER TOP). Only shows on rune button hover.
-  - **New:** `NumInput_SetLabelOffsets(ni, offx, offy)` in `samut_comps_numinput.acs` using `ST_CPROP15/16`.
-  - Array: `[100]`, `RUNEPAGE_NPRIVARS=35`, `RUNEPAGE_HOVERPANEL=30`.
-  - Removed old `RunePage_AddComps`/`RunePage_SaveToGroup`/`RunePage_LoadFromGroup`.
+
+### Rune page panel refactor (`core/Source/Samu-Terminal/Pages/samut_pages_runep.acs`)
+- Replaced Grid + Card with absolute components inside a Panel (75, 60, 58, 29).
+- 5 rune button slots per tier (20 total), repurposed dynamically per page.
+- 4 NumInput paginators (loop, BtnDistance=240) with `NumInput_SetLabelOffsets(0,20)`.
+- Tier names (DBIGFONT) and prices (SMALLFNT, CR_GOLD) as absolute labels at X=354.
+- "Unlock Tier" button + price label using `upgr_x`/`upgr_y` vars.
+- "Linked Rune" as absolute labels (X=40, LEFT TOP).
+- Hover panel (75, 315, 58, 6) with rune name + word-wrapped description.
+- Array: `[100]`, `RUNEPAGE_NPRIVARS=35`.
+- **New:** `NumInput_SetLabelOffsets()` via `ST_CPROP15/16`.
+
+### Cursor system overhaul (`core/Source/Samu-Terminal/`)
+- **Cursor trail** with configurable count, max alpha, step dist, idle tics (cursor props via ST_CPROP15-18).
+- Trail interpolates positions when cursor jumps; fades on idle; resets positions to cursor when idle expires; render skip after idle.
+- `ST_HID_CURSOR = 10050` (higher priority), `ST_HID_CURSORTRAIL = 10100` (lower priority), trails use HID = CURSORTRAIL - ti.
+- **Tooltip fade in/out** via `tooltip_alpha_timer`, `Cursor_SetTooltipAlphaTics()`, `Cursor_SetTooltipMaxAlpha()`. Last position preserved during fade-out.
+- **Tooltip back** fixed: word-wrap aware, max_line = longest wrapped line, not wrap width.
+- **`Cursor_SetPositionNoTrail(x, y)`** to teleport cursor without trail artifacts.
+- **`StripControlChars()`** in `samut_comps_cursor.acs` for cleaning tooltip text.
+- Tooltip & trail logic split: `UpdateTooltip()` + `UpdateTrail()` in `samut_update.acs`, rendering in `samut_disp.acs`. Variables shared via global scope.
+- Trail init on `Cursor_Initialize()`: fills buffer with current position using `Cursor_getTrailCount()`.
+- On idle complete (idle == TrailIdleTics+1): resets trail positions to cursor. On re-move before idle expires: sets idle = 0 (does not restore previous alpha).
 
 ## Development TODO (from Todo.txt)
 - Achievements system

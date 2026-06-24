@@ -326,42 +326,81 @@ function void ShowCursor(void){
 	int y = CursorY();
 	int icon = Cursor_getIcon();
 	int tooltip = 0;
+	int alphatics = Cursor_getTooltipAlphaTics();
 	
 	if(cursor_hover[STCURSOR_HOVER_COMP] != -1 
 		&& cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN){
 		tooltip = ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_COMP]);
-		// Check if the tooltip has changed.
 		if(StrCmp(tooltip, ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_LAST]), 0) == 0)
 			Cursor_GenerateBack(tooltip);
+		if(tooltip_alpha_timer < alphatics) tooltip_alpha_timer++;
+		last_tooltip_string = tooltip;
+		last_tooltip_x = x;
+		last_tooltip_y = y;
 	} else {
-		Cursor_SetBack(0);
+		if(tooltip_alpha_timer > 0){
+			tooltip = last_tooltip_string;
+			tooltip_alpha_timer--;
+		}else{
+			last_tooltip_string = 0;
+			Cursor_SetBack(0);
+		}
 	}
-	
-	//print(s:icon);
-	
+
 	HudPushState();
     HudResetState();
 	HudSetAlignX(HUD_ALIGN_LEFT);
 	HudSetAlignY(HUD_ALIGN_TOP);
-	HudPrintImage(x, y, ST_HID_CURSOR,icon);
+	if(cursor_trail_idle <= Cursor_getTrailIdleTics()){
+		int tr_count = Cursor_getTrailCount();
+		int ti = 0;
+		int trail_idx = 0;
+		int trail_idle_factor = 0;
+		if(cursor_trail_idle > 0){
+			trail_idle_factor = FixedDiv(cursor_trail_idle, Cursor_getTrailIdleTics() + 5);
+		}
+		int tr_maxalpha = Cursor_getTrailMaxAlpha();
+		for(ti = 0; ti < tr_count; ti++){
+			trail_idx = (cursor_trail_head - 1 - ti + tr_count) % tr_count;
+			int trail_alpha = 0.0;
+			if(cursor_trail_x[trail_idx] != x || cursor_trail_y[trail_idx] != y){
+				trail_alpha = tr_maxalpha - FixedMul(FixedDiv(ti, tr_count), tr_maxalpha);
+				if(trail_alpha < 0.0) trail_alpha = 0.0;
+				trail_alpha = trail_alpha - trail_idle_factor;
+				if(trail_alpha < 0.0) trail_alpha = 0.0;
+			}
+			HudSetAlpha(trail_alpha);
+			HudPrintImage(cursor_trail_x[trail_idx], cursor_trail_y[trail_idx], ST_HID_CURSOR + 1 + ti, icon);
+		}
+	}
+	HudSetAlpha(1.0);
+	HudPrintImage(x, y, ST_HID_CURSOR, icon);
+
+	int tip_pos_x = cursor_hover[STCURSOR_HOVER_COMP] != -1 ? x : last_tooltip_x;
+	int tip_pos_y = cursor_hover[STCURSOR_HOVER_COMP] != -1 ? y : last_tooltip_y;
+
 	if(tooltip != 0){ // Tooltip
-		int halfchars = StrLen(tooltip) / 2;
-		int back_xoff = 0, back_yoff = 0, back_off = halfchars*8.0;
+		int tip_alpha = FixedDiv(tooltip_alpha_timer, alphatics);
+		int max_alpha = Cursor_getTooltipMaxAlpha();
+		if(tip_alpha > max_alpha) tip_alpha = max_alpha;
+		HudSetAlpha(tip_alpha);
+		int halfchars = Cursor_getBackWidth() / 2;
+		int back_xoff = 0, back_yoff = 0, back_off = halfchars*1.0 + 4.0;
 		HudSetAlignX(HUD_ALIGN_CENTER);
 		HudSetAlignY(HUD_ALIGN_CENTER);
-		if(x < STSET_WIDTH && x > STSET_WIDTH - Cursor_getToolTipXAlignFix()){
+		if(tip_pos_x < STSET_WIDTH && tip_pos_x > STSET_WIDTH - Cursor_getToolTipXAlignFix()){
 			back_xoff = -back_off;
-		} else if( x >= 0 && x < Cursor_getToolTipXAlignFix()) {
+		} else if(tip_pos_x >= 0 && tip_pos_x < Cursor_getToolTipXAlignFix()) {
 			back_xoff = back_off;
 		}
 
-		if(y < STSET_HEIGHT && y > STSET_HEIGHT - Cursor_getToolTipYAlignFix()){
+		if(tip_pos_y < STSET_HEIGHT && tip_pos_y > STSET_HEIGHT - Cursor_getToolTipYAlignFix()){
 			back_yoff = -back_off;
-		} else if( y >= 0 && y < Cursor_getToolTipYAlignFix()) {
+		} else if(tip_pos_y >= 0 && tip_pos_y < Cursor_getToolTipYAlignFix()) {
 			back_yoff = back_off;
 		}
 		
-		HUDSetPoint(x + Cursor_getToolTipOffX() + back_xoff, y + Cursor_getToolTipOffY() + back_yoff);
+		HUDSetPoint(tip_pos_x + Cursor_getToolTipOffX() + back_xoff, tip_pos_y + Cursor_getToolTipOffY() + back_yoff);
 		HudSetTextColor(CR_WHITE);
 		
 		int ww = Cursor_getTooltipWrapWidth();

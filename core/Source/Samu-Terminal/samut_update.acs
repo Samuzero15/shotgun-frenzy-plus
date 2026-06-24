@@ -8,23 +8,80 @@
 *	Nifty for counting your money, or to show dynamic labels to the user!
 *
 **/
+
 function void SamuTerm_Update(void){
-	//Here, change stuff before drawing!
-	// (Like, dunno, showing your money n stuff?)
 	UpdateCursor();
-	//log(s:"Last tag hiding...");
 	HideOrShowByTag(pagetags[STTAGS_LAST], false);
-	//log(s:"Current tag showing...");
 	HideOrShowByTag(pagetags[STTAGS_NOW], true);
 	
 	showByAlphaTag();
 	UpdatePrompt();
-	//UpdateDragBtns();
 	UpdatePages();
 
-	// Update numpages.
 	for (int i = 0; i < comp_count[STCOMP_NUMINPUT]; i++){
 		NumInput_Update(i);
+	}
+	
+	UpdateTooltip();
+	UpdateTrail();
+}
+
+function void UpdateTooltip(void){
+	int x = CursorX();
+	int y = CursorY();
+	int alphatics = Cursor_getTooltipAlphaTics();
+	if(cursor_hover[STCURSOR_HOVER_COMP] != -1 
+		&& cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN){
+		tooltip_visible = ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_COMP]);
+		if(StrCmp(tooltip_visible, ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_LAST]), 0) == 0)
+			Cursor_GenerateBack(tooltip_visible);
+		if(tooltip_alpha_timer < alphatics) tooltip_alpha_timer++;
+		last_tooltip_string = tooltip_visible;
+		last_tooltip_x = x;
+		last_tooltip_y = y;
+	} else {
+		if(tooltip_alpha_timer > 0){
+			tooltip_visible = last_tooltip_string;
+			tooltip_alpha_timer--;
+		}else{
+			last_tooltip_string = 0;
+			Cursor_SetBack(0);
+		}
+	}
+}
+
+function void UpdateTrail(void){
+	int x = CursorX();
+	int y = CursorY();
+	int trail_prev = (cursor_trail_head - 1 + Cursor_getTrailCount()) % Cursor_getTrailCount();
+	bool trail_moved = cursor_trail_x[trail_prev] != x || cursor_trail_y[trail_prev] != y;
+	if(trail_moved){
+		int tdx = x - cursor_trail_x[trail_prev];
+		int tdy = y - cursor_trail_y[trail_prev];
+		int tdist = FixedSqrt(FixedMul(tdx, tdx) + FixedMul(tdy, tdy));
+		int tsteps = tdist / (Cursor_getTrailStepDist() << 16);
+		if(tsteps > Cursor_getTrailCount()) tsteps = Cursor_getTrailCount();
+		if(tsteps < 1) tsteps = 1;
+		for(int si = 0; si < tsteps; si++){
+			int tfrac = FixedDiv(si + 1, tsteps);
+			int txp = cursor_trail_x[trail_prev] + FixedMul(tdx, tfrac);
+			int typ = cursor_trail_y[trail_prev] + FixedMul(tdy, tfrac);
+			cursor_trail_x[cursor_trail_head] = txp;
+			cursor_trail_y[cursor_trail_head] = typ;
+			cursor_trail_head = (cursor_trail_head + 1) % Cursor_getTrailCount();
+		}
+		if(cursor_trail_idle > 0) cursor_trail_idle = 0;
+	}else{
+		if(cursor_trail_idle < Cursor_getTrailIdleTics() + 5) cursor_trail_idle++;
+	}
+
+	int tr_count = Cursor_getTrailCount();
+	if(cursor_trail_idle == Cursor_getTrailIdleTics() + 1){
+		for(int ti = 0; ti < tr_count; ti++){
+			int trail_idx = (cursor_trail_head - 1 - ti + tr_count) % tr_count;
+			cursor_trail_x[trail_idx] = x;
+			cursor_trail_y[trail_idx] = y;
+		}
 	}
 }
 

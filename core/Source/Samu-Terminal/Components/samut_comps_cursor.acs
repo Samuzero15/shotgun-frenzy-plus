@@ -15,9 +15,17 @@ function str Cursor_getIcon(void){return RectGetUserData(Cursor_getRect(), ST_CP
 function int Cursor_getToolTipXAlignFix(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP5);}
 function int Cursor_getToolTipYAlignFix(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP6);}
 function int Cursor_getTooltipWrapWidth(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP7);}
+function int Cursor_getBackWidth(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP8);}
+function int Cursor_getBackHeight(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP9);}
+function int Cursor_getTooltipAlphaTics(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP10);}
 function int Cursor_getToolTipOffX(void){return RectGetUserData(Cursor_getRect(), ST_CPROP11);}
 function int Cursor_getToolTipOffY(void){return RectGetUserData(Cursor_getRect(), ST_CPROP12);}
 function int Cursor_getBack(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP13);}
+function int Cursor_getTooltipMaxAlpha(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP14);}
+function int Cursor_getTrailCount(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP15);}
+function int Cursor_getTrailMaxAlpha(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP16);}
+function int Cursor_getTrailStepDist(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP17);}
+function int Cursor_getTrailIdleTics(void) {return RectGetUserData(Cursor_getRect(), ST_CPROP18);}
 
 ///////////////////////////////////////
 // Setters for teh Cursor!
@@ -28,9 +36,17 @@ function void Cursor_setIcon(str icon){SetRectUserData(Cursor_getRect(), ST_CPRO
 function void Cursor_SetToolTipXAlignFix(int range){SetRectUserData(Cursor_getRect(), ST_CPROP5, range);}
 function void Cursor_SetToolTipYAlignFix(int range){SetRectUserData(Cursor_getRect(), ST_CPROP6, range);}
 function void Cursor_SetTooltipWrapWidth(int width) {SetRectUserData(Cursor_getRect(), ST_CPROP7, width);}
+function void Cursor_SetBackWidth(int w) {SetRectUserData(Cursor_getRect(), ST_CPROP8, w);}
+function void Cursor_SetBackHeight(int h) {SetRectUserData(Cursor_getRect(), ST_CPROP9, h);}
+function void Cursor_SetTooltipAlphaTics(int tics) {SetRectUserData(Cursor_getRect(), ST_CPROP10, tics);}
 function void Cursor_SetToolTipOffX(int offset){SetRectUserData(Cursor_getRect(), ST_CPROP11, offset);}
 function void Cursor_SetToolTipOffY(int offset){SetRectUserData(Cursor_getRect(), ST_CPROP12, offset);}
 function void Cursor_SetBack (str string) { SetRectUserData(Cursor_getRect(), ST_CPROP13, string); }
+function void Cursor_SetTooltipMaxAlpha(int maxAlpha) {SetRectUserData(Cursor_getRect(), ST_CPROP14, maxAlpha);}
+function void Cursor_SetTrailCount(int count) {SetRectUserData(Cursor_getRect(), ST_CPROP15, count);}
+function void Cursor_SetTrailMaxAlpha(int maxAlpha) {SetRectUserData(Cursor_getRect(), ST_CPROP16, maxAlpha);}
+function void Cursor_SetTrailStepDist(int dist) {SetRectUserData(Cursor_getRect(), ST_CPROP17, dist);}
+function void Cursor_SetTrailIdleTics(int tics) {SetRectUserData(Cursor_getRect(), ST_CPROP18, tics);}
 
 ///////////////////////////////////////
 // Cursor functions!				 //
@@ -40,6 +56,14 @@ function void Cursor_Initialize(int w, int h){
 	int rect = RectCreate(CursorX(),CursorY(),w,h);
 	Cursor_setRect(rect);
 	Cursor_SetDefaultProps();
+	int cx = CursorX();
+	int cy = CursorY();
+	int tr_count = Cursor_getTrailCount();
+	for(int ti = 0; ti < tr_count; ti++){
+		cursor_trail_x[ti] = cx;
+		cursor_trail_y[ti] = cy;
+	}
+	cursor_trail_head = 0;
 }
 
 function void Cursor_SetDefaultProps (void){
@@ -49,6 +73,12 @@ function void Cursor_SetDefaultProps (void){
 	Cursor_SetToolTipXAlignFix(64.0);
 	Cursor_SetToolTipYAlignFix(0.0);
 	Cursor_SetTooltipWrapWidth(8*24); // 24 characters per wrap
+	Cursor_SetTooltipAlphaTics(6); // 6 tics for fade in/out
+	Cursor_SetTooltipMaxAlpha(1.0); // max alpha 1.0 (fully opaque)
+	Cursor_SetTrailCount(8); // 8 trail shadows (Update the cursor trail arrays accordingly)
+	Cursor_SetTrailMaxAlpha(0.50);
+	Cursor_SetTrailStepDist(24); // 24px per interpolation step
+	Cursor_SetTrailIdleTics(35); // 105 tics before trail render skip
 }
 
 function void Cursor_UpdatePosition(void){
@@ -67,6 +97,11 @@ function void Cursor_MoveToPoint(int x, int y){
 	setRectPosition(Cursor_getRect(), x, y);
 }
 
+function void Cursor_SetPositionNoTrail(int x, int y){
+	setCursorPosition(x, y);
+	setRectPosition(Cursor_getRect(), x, y);
+}
+
 function void Cursor_GenerateBack(str string) {
 	if(string == 0) {
 		return;
@@ -74,42 +109,47 @@ function void Cursor_GenerateBack(str string) {
 	int w = 0;
 	int h = 0;
 	
-	int charw = 0, charh = 0, chars = 0;
+	int charw = 0, charh = 0, chars = 0, max_line = 0, word_start = 0;
+	bool in_word = false;
 	str btnstring = "A";
 	string = StripColorCodes(string);
-	bool wordwrapped = false;
-	bool in_word = false;
-	int word_length = 0;
 	for(int i = 0; i < StrLen(string); i++){
 		int c = GetChar(string, i);
 		
 		if(c == '\n'){
 			charh += 8;
+			if(max_line < chars) max_line = chars;
 			chars = 0;
-		}else chars += 8;
-		if(chars > 8*24) {
-			charh += 8;
-			if(!wordwrapped) {
-				charw = chars;
-				wordwrapped = true;
+			in_word = false;
+			word_start = 0;
+		}else if(c == ' '){
+			chars += 8;
+			in_word = false;
+		}else{
+			if(!in_word){
+				in_word = true;
+				word_start = chars;
 			}
-			chars = 0;
-			//charw += 8;
+			chars += 8;
 		}
-		else if(charw < chars) {
-			charw = chars;
+		if(chars > Cursor_getTooltipWrapWidth() && in_word) {
+			if(max_line < word_start) max_line = word_start;
+			charh += 8;
+			chars = chars - word_start;
+			in_word = true;
+			word_start = 0;
 		}
 	}
+	if(max_line < chars) max_line = chars;
+	charh += 8;
 
-	//log(s:string, s:" charw: ", d:charw, s:", charh: ", d:charh);
-	if(charw > 2){
-		w = (charw/8)-1;
-		if(charw%8 != 0) w++;
+	if(max_line > 2){
+		w = (max_line/8)-1;
+		if(max_line%8 != 0) w++;
 	}
 	h = (charh/8);
 	if(charh%8 != 0) h++;
 
-	//log(s:"w: ", d:w, s:", h:", d:h);
 	if(w != 0){
 		for(int j = 0; j < w; j++){
 			btnstring = StrAdd(btnstring, "B");
@@ -136,4 +176,6 @@ function void Cursor_GenerateBack(str string) {
 
 	btnstring = StrAdd(btnstring, "I");
 	Cursor_SetBack(btnstring);
+	Cursor_SetBackWidth(max_line);
+	Cursor_SetBackHeight(charh);
 }

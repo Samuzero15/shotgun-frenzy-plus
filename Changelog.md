@@ -9,6 +9,11 @@
 
 ## v1 - The path of the damned...
 
+#### (23 / 06 / 2026) [QoL fixes on Tooltips, and Cursor trails on SamuTerm!]
+	+) Now tooltips can have a fade-in-and-out when hovering the cursor over a interactable component! (ImgButton / StrButton)
+	*) Tooltip wordwrap has been fixed up to the longest line after the word-wrap goes.
+	+) New cool functions to make cursor trails :D. Just for the style points!
+
 #### (22 / 06 / 2026) [SamuTerm Script Execute and a new Rune Terminal is here!]
 	!+) Now, you can use a new way to define executables from samu terminal!
 	// Instead of adding it in a big ass switch, you can define them with a script call, and with the same id assign it to a component! This is huge because it will let you define new STExecutes in a much more flexible and semi-dynamic way to do it :D.

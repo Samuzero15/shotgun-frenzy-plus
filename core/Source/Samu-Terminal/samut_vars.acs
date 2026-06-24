@@ -35,27 +35,28 @@
 #LibDefine ST_HID_IBTN 	 		ST_HID_GLOBAL + ST_NCOMPS*10
 #LibDefine ST_HID_LBL 			ST_HID_GLOBAL + ST_NCOMPS*5
 
-#LibDefine ST_HID_PROMPT_BACK 	ST_HID_GLOBAL + 21
-#LibDefine ST_HID_PROMPT_SCRBTN_DOWN 	ST_HID_GLOBAL + 20
-#LibDefine ST_HID_PROMPT_SCRBTN_UP 		ST_HID_GLOBAL + 19
-#LibDefine ST_HID_PROMPT_SCRBTN_RIGHT 	ST_HID_GLOBAL + 18
-#LibDefine ST_HID_PROMPT_SCRBTN_LEFT 	ST_HID_GLOBAL + 17
-#LibDefine ST_HID_PROMPT_TITLE  ST_HID_GLOBAL + 16
-#LibDefine ST_HID_PROMPT_BTNYES ST_HID_GLOBAL + 15
-#LibDefine ST_HID_PROMPT_BTNNO  ST_HID_GLOBAL + 14
-#LibDefine ST_HID_PROMPT_BTNOK  ST_HID_GLOBAL + 13
-#LibDefine ST_HID_PROMPT_LBL    ST_HID_GLOBAL + 12
+#LibDefine ST_HID_PROMPT_BACK 	ST_HID_GLOBAL + 41
+#LibDefine ST_HID_PROMPT_SCRBTN_DOWN 	ST_HID_GLOBAL + 40
+#LibDefine ST_HID_PROMPT_SCRBTN_UP 		ST_HID_GLOBAL + 39
+#LibDefine ST_HID_PROMPT_SCRBTN_RIGHT 	ST_HID_GLOBAL + 38
+#LibDefine ST_HID_PROMPT_SCRBTN_LEFT 	ST_HID_GLOBAL + 37
+#LibDefine ST_HID_PROMPT_TITLE  ST_HID_GLOBAL + 36
+#LibDefine ST_HID_PROMPT_BTNYES ST_HID_GLOBAL + 35
+#LibDefine ST_HID_PROMPT_BTNNO  ST_HID_GLOBAL + 34
+#LibDefine ST_HID_PROMPT_BTNOK  ST_HID_GLOBAL + 33
+#LibDefine ST_HID_PROMPT_LBL    ST_HID_GLOBAL + 32
 
-#LibDefine ST_HID_TOAST_BACK	ST_HID_GLOBAL + 11
-#LibDefine ST_HID_TOAST_TEXT 	ST_HID_GLOBAL + 10
+#LibDefine ST_HID_TOAST_BACK	ST_HID_GLOBAL + 31
+#LibDefine ST_HID_TOAST_TEXT 	ST_HID_GLOBAL + 30
 
-#LibDefine ST_HID_HILI      	ST_HID_GLOBAL + 9
-#LibDefine ST_HID_TOOLTIPBACK  	ST_HID_GLOBAL + 8
-#LibDefine ST_HID_TOOLTIP      	ST_HID_GLOBAL + 7
+#LibDefine ST_HID_HILI      	ST_HID_GLOBAL + 29
+#LibDefine ST_HID_TOOLTIPBACK  	ST_HID_GLOBAL + 28
+#LibDefine ST_HID_TOOLTIP      	ST_HID_GLOBAL + 27
 
-#LibDefine ST_HID_CONTROLS     	ST_HID_GLOBAL + 6
+#LibDefine ST_HID_CONTROLS     	ST_HID_GLOBAL + 26
 
-#LibDefine ST_HID_CURSOR ST_HID_GLOBAL
+#LibDefine ST_HID_CURSORTRAIL	ST_HID_CURSOR + 20
+#LibDefine ST_HID_CURSOR 		ST_HID_GLOBAL
 
 // Component Properties (Dont touch that.)
 #LibDefine ST_CPROP0 0
@@ -332,6 +333,14 @@ int pagetags[5];
 str imgbg = STSET_BACK;
 int exitResult = 0;
 int msgs[2];
+
+// Cursor Trail and TooltipVariables
+int tooltip_alpha_timer = 0;
+str last_tooltip_string = 0;
+int last_tooltip_x = 0;
+int last_tooltip_y = 0;
+int cursor_trail_x[8], cursor_trail_y[8], cursor_trail_head = 0, cursor_trail_idle = 0;
+int tooltip_visible = 0;
 
 #LibDefine STMSGS_LOGIN 0
 #LibDefine STMSGS_LOGOUT 1
