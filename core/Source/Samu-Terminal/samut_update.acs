@@ -11,10 +11,7 @@
 
 function void SamuTerm_Update(void){
 	UpdateCursor();
-	HideOrShowByTag(pagetags[STTAGS_LAST], false);
-	HideOrShowByTag(pagetags[STTAGS_NOW], true);
-	
-	showByAlphaTag();
+	UpdateVisibility();
 	UpdatePrompt();
 	UpdatePages();
 
@@ -24,13 +21,62 @@ function void SamuTerm_Update(void){
 	
 	UpdateTooltip();
 	UpdateTrail();
+	STBuilder_Update();
+}
+
+// Single-pass visibility: a component is shown when its tag is the current
+// page, the always-visible tag 0, or the terminal's home (alpha) tag.
+// Components tagged -1 (internals like the wallet/frame) keep their state,
+// and dead (deleted) components are left hidden.
+function void UpdateVisibility(void){
+	int now = pagetags[STTAGS_NOW];
+	int alpha = pagetags[STTAGS_ALPHA];
+	int i, tag;
+	for(i = 0; i < comp_count[STCOMP_IBTN]; i++){
+		if(STBuilder_IsDead(STCOMP_IBTN, i)) continue;
+		if(i == prompt_data[STPROMPT_DATA_YESBTN] || i == prompt_data[STPROMPT_DATA_NOBTN] || i == prompt_data[STPROMPT_DATA_OKBTN]) continue;
+		tag = ImgButton_getTag(i);
+		if(tag == -1) continue;
+		ImgButton_setShow(i, (tag == now || tag == 0 || tag == alpha));
+	}
+	for(i = 0; i < comp_count[STCOMP_SBTN]; i++){
+		if(STBuilder_IsDead(STCOMP_SBTN, i)) continue;
+		tag = StrButton_getTag(i);
+		if(tag == -1) continue;
+		StrButton_setShow(i, (tag == now || tag == 0 || tag == alpha));
+	}
+	for(i = 0; i < comp_count[STCOMP_LBL]; i++){
+		if(STBuilder_IsDead(STCOMP_LBL, i)) continue;
+		if(i == prompt_data[STPROMPT_DATA_LABEL]) continue;
+		tag = Label_getTag(i);
+		if(tag == -1) continue;
+		Label_setShow(i, (tag == now || tag == 0 || tag == alpha));
+	}
+	for(i = 0; i < comp_count[STCOMP_IMG]; i++){
+		if(STBuilder_IsDead(STCOMP_IMG, i)) continue;
+		tag = Image_getTag(i);
+		if(tag == -1) continue;
+		Image_setShow(i, (tag == now || tag == 0 || tag == alpha));
+	}
+	for(i = 0; i < comp_count[STCOMP_PANEL]; i++){
+		if(STBuilder_IsDead(STCOMP_PANEL, i)) continue;
+		tag = Panel_GetTag(i);
+		if(tag == -1) continue;
+		UpdatePanel(i, (tag == now || tag == 0 || tag == alpha));
+	}
+	for(i = 0; i < comp_count[STCOMP_NUMINPUT]; i++){
+		if(STBuilder_IsDead(STCOMP_NUMINPUT, i)) continue;
+		tag = NumInput_getTag(i);
+		if(tag == -1) continue;
+		NumInput_setShow(i, (tag == now || tag == 0 || tag == alpha));
+	}
 }
 
 function void UpdateTooltip(void){
 	int x = CursorX();
 	int y = CursorY();
 	int alphatics = Cursor_getTooltipAlphaTics();
-	if(cursor_hover[STCURSOR_HOVER_COMP] != -1 
+	if(tooltip_enabled && cursor_hover[STCURSOR_HOVER_COMP] != -1 
 		&& cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN){
 		tooltip_visible = ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_COMP]);
 		if(StrCmp(tooltip_visible, ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_LAST]), 0) == 0)

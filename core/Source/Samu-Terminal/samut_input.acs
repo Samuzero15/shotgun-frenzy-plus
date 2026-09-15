@@ -35,6 +35,13 @@ function void SamuTerm_Input(int play){
 			CheckClick();
 		else CheckPromptClick();
 	}
+
+	// In build mode, alt-fire interacts with the hovered button (runs its
+	// action) instead of selecting it.
+	if(PlayerKeyDown(play, FIRE2) && PlayerKeyPressed(play, FIRE2)){
+		if(!Prompt_GetState() && STB_IsActive() && !STB_IsPlacing())
+			STBuilder_InteractUnderCursor();
+	}
 	//CheckGrab();
 }
 
@@ -102,6 +109,19 @@ function void Input_ClearBinds(void){
 }
 
 Function void Input_BindDirections (void){
+	if(STB_IsActive()){
+		// Movement is polled every tic by STBuilder_Update so holding a
+		// direction keeps moving the selected component.
+		if(STB_IsPlacing()){
+			Input_AddBind(BT_JUMP, STEXE_BUILDER_CYCLE, 1, 0, 0);
+			Input_AddBind(BT_CROUCH, STEXE_BUILDER_CYCLE, -1, 0, 0);
+			Input_AddBind(BT_USE, STEXE_BUILDER_CANCEL, 0, 0, 0);
+		}else{
+			Input_AddBind(BT_JUMP, STEXE_CLOSE, 0, 0, 0);
+		}
+		return;
+	}
+
 	if (pagetags[STTAGS_ALPHA] == 40){
 		Input_AddBind(BT_FORWARD, STEXE_TELEPORT_SECTOR, 1, 0, 0);
 		Input_AddBind(BT_MOVELEFT, STEXE_TELEPORT_SECTOR, 2, 0, 0);
@@ -159,6 +179,20 @@ function bool ExecuteOnClick_IBtn(int i){
 			ImgButton_getExeArg1(i), ImgButton_getExeArg2(i),  ImgButton_getExeArg3(i));
 		localAmbientSound("SamuTerm/Select",127);
 		sucess = true;
+		int toggleType = ImgButton_GetIsToggleable(i);
+		if(toggleType != ST_BTNTYPE_NORMAL){
+			ImgButton_Toggle(i);
+			if(toggleType == ST_BTNTYPE_RADIO && ImgButton_GetToggleState(i) == 1){
+				int gid = ImgButton_GetGroup(i);
+				if(gid > 0){
+					for(int j = 0; j < comp_count[STCOMP_IBTN]; j++){
+						if(j == i) continue;
+						if(ImgButton_GetGroup(j) == gid)
+							ImgButton_SetToggleState(j, 0);
+					}
+				}
+			}
+		}
 	}
 	return sucess;
 }
@@ -187,11 +221,30 @@ function bool ExecuteOnClick_SBtn(int i){
 			StrButton_getExeArg1(i), StrButton_getExeArg2(i),  StrButton_getExeArg3(i));
 		localAmbientSound("SamuTerm/Select",127);
 		sucess = true;
+		int toggleType = StrButton_GetIsToggleable(i);
+		if(toggleType != ST_BTNTYPE_NORMAL){
+			StrButton_Toggle(i);
+			if(toggleType == ST_BTNTYPE_RADIO && StrButton_GetToggleState(i) == 1){
+				int gid = StrButton_GetGroup(i);
+				if(gid > 0){
+					for(int j = 0; j < comp_count[STCOMP_SBTN]; j++){
+						if(j == i) continue;
+						if(StrButton_GetGroup(j) == gid)
+							StrButton_SetToggleState(j, 0);
+					}
+				}
+			}
+		}
 	}
 	return sucess;
 }
 
 function void CheckClick(void){
+	if(STB_IsActive()){
+		if(STB_IsPlacing()) STBuilder_PlaceConfirm();
+		else STBuilder_SelectUnderCursor();
+		return;
+	}
 	int comp = cursor_hover[STCURSOR_HOVER_COMP];
 	bool inputDone = false;
 
@@ -225,7 +278,7 @@ function void CheckHover(void){
 		if(panel != -1) hovered = Panel_GetShow(panel) && Panel_ImgBtnIsHovered(panel, i);
 		if(!hovered) continue;
 
-		ExecuteOnHover_IBtn(i);
+		if(!STB_IsActive()) ExecuteOnHover_IBtn(i);
 		cursor_hover[STCURSOR_HOVER_COMP] = i;
 		cursor_hover[STCURSOR_HOVER_COMPTYPE] = STCOMP_IBTN;
 		hoverDone = true;
@@ -242,7 +295,7 @@ function void CheckHover(void){
 		if(panel != -1) hovered = Panel_GetShow(panel) && Panel_StrBtnIsHovered(panel, i);
 		if(!hovered) continue;
 
-		ExecuteOnHover_SBtn(i);
+		if(!STB_IsActive()) ExecuteOnHover_SBtn(i);
 		cursor_hover[STCURSOR_HOVER_COMP] = i;
 		cursor_hover[STCURSOR_HOVER_COMPTYPE] = STCOMP_SBTN;
 		hoverDone = true;

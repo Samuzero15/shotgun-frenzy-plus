@@ -26,12 +26,13 @@
 #libDefine ST_HID_GLOBAL 10000
 
 #LibDefine ST_HID_BACK 			ST_HID_GLOBAL*ST_HID_GLOBAL
-#LibDefine ST_HID_PAN_BACKG 		ST_HID_GLOBAL + ST_NCOMPS*40
-#LibDefine ST_HID_PAN_TITLE 		ST_HID_GLOBAL + ST_NCOMPS*35
-#LibDefine ST_HID_PAN_FOREG 		ST_HID_GLOBAL + ST_NCOMPS*30
-#LibDefine ST_HID_IMG 			ST_HID_GLOBAL + ST_NCOMPS*25
-#LibDefine ST_HID_SBTNB 		ST_HID_GLOBAL + ST_NCOMPS*20
-#LibDefine ST_HID_SBTNF 		ST_HID_GLOBAL + ST_NCOMPS*15
+#LibDefine ST_HID_PAN_BACKG 		ST_HID_GLOBAL + ST_NCOMPS*45
+#LibDefine ST_HID_PAN_TITLE 		ST_HID_GLOBAL + ST_NCOMPS*40
+#LibDefine ST_HID_PAN_FOREG 		ST_HID_GLOBAL + ST_NCOMPS*35
+#LibDefine ST_HID_IMG 			ST_HID_GLOBAL + ST_NCOMPS*30
+#LibDefine ST_HID_SBTNB 		ST_HID_GLOBAL + ST_NCOMPS*25
+#LibDefine ST_HID_SBTNF 		ST_HID_GLOBAL + ST_NCOMPS*20
+#LibDefine ST_HID_TOGGLE		ST_HID_GLOBAL + ST_NCOMPS*15
 #LibDefine ST_HID_IBTN 	 		ST_HID_GLOBAL + ST_NCOMPS*10
 #LibDefine ST_HID_LBL 			ST_HID_GLOBAL + ST_NCOMPS*5
 
@@ -108,6 +109,10 @@
 #LibDefine ST_Disabled 0
 #LibDefine ST_Show 1
 #LibDefine ST_Hide 0
+
+#LibDefine ST_BTNTYPE_NORMAL   0
+#LibDefine ST_BTNTYPE_TOGGLE   1
+#LibDefine ST_BTNTYPE_RADIO    2
 
 #LibDefine ST_CompAlign_North 1
 #LibDefine ST_CompAlign_South 2
@@ -247,6 +252,7 @@
 #libdefine STTAGS_ALPHA 0
 #libdefine STTAGS_LAST 1
 #libdefine STTAGS_NOW 2
+#libdefine STTAGS_CACHEHOME 3 // home tag of the cached component set + 1 (0 = no cache)
 
 // Variables
 
@@ -341,6 +347,7 @@ int last_tooltip_x = 0;
 int last_tooltip_y = 0;
 int cursor_trail_x[8], cursor_trail_y[8], cursor_trail_head = 0, cursor_trail_idle = 0;
 int tooltip_visible = 0;
+int tooltip_enabled = 1;
 
 #LibDefine STMSGS_LOGIN 0
 #LibDefine STMSGS_LOGOUT 1
@@ -379,11 +386,12 @@ function void Vars_ClearCompCounts(void){
 	for (i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++){
 		comp_propsave[i] = 0;
 	}
+	// Only the counters need resetting. comp_rects_many[type][id] and
+	// panels_comps_index are always overwritten up to their live counts before
+	// being read (and the panel count lives in the panel rect, which
+	// RectsDelete already clears), so wiping the whole arrays is wasted work.
 	for (i = 0; i < STVARS_COMPCOUNT; i++){
 		comp_count[i] = 0;
-		for (j = 0; j < ST_NCOMPS; j++){
-			comp_rects_many[i][j] = 0;
-		}
 	}
 	
 	for (i = 0; i < STVARS_COMPCOUNT1; i++){
@@ -395,15 +403,6 @@ function void Vars_ClearCompCounts(void){
 		numpages[i] = 0;
 		for (j = 0; j < STPANEL_COUNT_SCROLLBTNS; j++){
 			panels_scrollbuttons[i][j] = 0;
-		}
-		for (j = 0; j < STPANEL_COUNT_CONTENT; j++){
-			panels_comps_index[i][j][STPANEL_COMPDATA_TYPE] = -1;
-			panels_comps_index[i][j][STPANEL_COMPDATA_ID] = -1;
-			panels_comps_index[i][j][STPANEL_COMPDATA_ISABSOLUTE] = -1;
-			panels_comps_index[i][j][STPANEL_COMPDATA_SHOWSTATUS] = false;
-			panels_comps_index[i][j][STPANEL_COMPDATA_ISANCHORED] = -1;
-			panels_comps_index[i][j][STPANEL_COMPDATA_ANCHORX] = -1;
-			panels_comps_index[i][j][STPANEL_COMPDATA_ANCHORY] = -1;
 		}
 	}
 }

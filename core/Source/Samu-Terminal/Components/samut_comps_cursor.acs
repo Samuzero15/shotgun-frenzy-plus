@@ -66,6 +66,20 @@ function void Cursor_Initialize(int w, int h){
 	cursor_trail_head = 0;
 }
 
+// Resets the trail to the current cursor position without creating a new rect
+// (used when the terminal is reopened and components are cached).
+function void Cursor_ResetTrail(void){
+	int cx = CursorX();
+	int cy = CursorY();
+	int tr_count = Cursor_getTrailCount();
+	for(int ti = 0; ti < tr_count; ti++){
+		cursor_trail_x[ti] = cx;
+		cursor_trail_y[ti] = cy;
+	}
+	cursor_trail_head = 0;
+	cursor_trail_idle = 0;
+}
+
 function void Cursor_SetDefaultProps (void){
 	Cursor_setIcon("PNTR");
 	Cursor_SetToolTipOffX(0.0);

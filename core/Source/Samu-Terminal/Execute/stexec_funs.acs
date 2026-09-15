@@ -113,6 +113,7 @@ function void STExecute_Shutdown(void){
 	cursor_hover[STCURSOR_HOVER_COMPTYPE] = -1;
 	cursor_hover[STCURSOR_HOVER_LAST] = -2;
 	exitResult = -1;
+	STBuilder_ResetState(); // never leave the builder in a broken state
 }
 
 function void STExecute_Close(void){
@@ -126,6 +127,7 @@ function void STExecute_Close(void){
 	cursor_hover[STCURSOR_HOVER_COMPTYPE] = -1;
 	cursor_hover[STCURSOR_HOVER_LAST] = -2;
 	exitResult = 0;
+	STBuilder_ResetState(); // never leave the builder in a broken state
 	//localambientsound("Amy/Farewell", 127);
 }
 

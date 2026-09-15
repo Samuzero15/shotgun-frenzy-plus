@@ -1,0 +1,27 @@
+/**
+*
+*	samut_builder_chat.acs
+*	STBuilder chat command layer.
+*
+*	Captures player chat messages that start with the builder prefix ('!'),
+*	hides them, and relays the body to the sender's client as a network
+*	string. All parsing happens clientside (see samut_comps_builder.acs).
+*
+*	NOTE: EVENT scripts cannot be CLIENTSIDE, so this runs on the server.
+*
+**/
+
+//#define STBUILDER_DEBUG 1
+
+script "STBuilder_ChatEvent" (int type, int arg1, int arg2) EVENT {
+	if(type != GAMEEVENT_CHAT) terminate;
+	if(GameType() != GAME_SINGLE_PLAYER) terminate; // debug tool: single player only
+	if(arg1 < 0) terminate; // Server/RCON message, ignore.
+
+	str msg = GetChatMessage(arg1, 0);
+	if(StrLen(msg) < 2) terminate;
+	if(GetChar(msg, 0) != '!') terminate; // Not a builder command.
+
+	NamedSendNetworkString("STBuilder_ChatNet", StrRightFrom(msg, 1), arg1);
+	SetResultValue(0); // Hide the raw chat message.
+}

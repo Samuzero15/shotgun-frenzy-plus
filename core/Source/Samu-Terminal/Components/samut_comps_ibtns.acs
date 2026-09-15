@@ -42,6 +42,9 @@ function int ImgButton_getOffsetX(int bid){return RectGetUserData(ImgButton_getR
 function int ImgButton_getOffsetY(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP17);}
 function int ImgButton_getColor(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP18);}
 function int ImgButton_getGrabable(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP19);}
+function int ImgButton_GetIsToggleable(int bid){ return RectGetUserData(ImgButton_getRect(bid), ST_CPROP24); }
+function int ImgButton_GetToggleState(int bid){ return RectGetUserData(ImgButton_getRect(bid), ST_CPROP25); }
+function int ImgButton_GetGroup(int bid){ return RectGetUserData(ImgButton_getRect(bid), ST_CPROP26); }
 function int ImgButton_getGrabState(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP20);}
 function int ImgButton_getTooltip(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP21);}
 function int ImgButton_getDrawMode(int bid){return RectGetUserData(ImgButton_getRect(bid), ST_CPROP22);}
@@ -68,6 +71,10 @@ function void ImgButton_setParentId(int bid, int parent){SetRectUserData(ImgButt
 function void ImgButton_setColor(int bid, int color){SetRectUserData(ImgButton_getRect(bid), ST_CPROP18, color);}
 function void ImgButton_setGrabable(int bid, int state){SetRectUserData(ImgButton_getRect(bid), ST_CPROP19, state);}
 function void ImgButton_setGrabState(int bid, int state){SetRectUserData(ImgButton_getRect(bid), ST_CPROP20, state);}
+function void ImgButton_SetIsToggleable(int bid, int type){ SetRectUserData(ImgButton_getRect(bid), ST_CPROP24, type); }
+function void ImgButton_SetToggleState(int bid, int state){ SetRectUserData(ImgButton_getRect(bid), ST_CPROP25, state); }
+function void ImgButton_Toggle(int bid){ SetRectUserData(ImgButton_getRect(bid), ST_CPROP25, !ImgButton_GetToggleState(bid)); }
+function void ImgButton_SetGroup(int bid, int groupId){ SetRectUserData(ImgButton_getRect(bid), ST_CPROP26, groupId); }
 function void ImgButton_setTooltip(int bid, str stringme){SetRectUserData(ImgButton_getRect(bid), ST_CPROP21, stringme);}
 function void ImgButton_setDrawMode(int bid, int mode){SetRectUserData(ImgButton_getRect(bid), ST_CPROP22, mode);}
 function void ImgButton_setDispCharacter(int bid, str character){SetRectUserData(ImgButton_getRect(bid), ST_CPROP23, character);}
@@ -328,6 +335,9 @@ function void ImgButton_SetDefaultProps(int i){
 		ImgButton_setGrabState(i, false);
 		ImgButton_setDrawMode(i, 0);
 		ImgButton_setDispCharacter(i, "A");
+		ImgButton_SetIsToggleable(i, ST_BTNTYPE_NORMAL);
+		ImgButton_SetToggleState(i, 0);
+		ImgButton_SetGroup(i, 0);
 		//ImgButton_setOffsets(i, 0.0, 0.0);
 }
 

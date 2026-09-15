@@ -1,0 +1,1807 @@
+/**
+*
+*	samut_comps_builder.acs
+*	STBuilder clientside logic: add / move / delete / select components.
+*
+*	Placement works as a preview: no component is allocated until the
+*	player confirms with attack. Jump/Crouch cycle the type, Use cancels.
+*
+**/
+
+//////////////////////////////////
+// Component property helpers   //
+//////////////////////////////////
+
+function int STBuilder_CompRect(int type, int id){
+	switch(type){
+		case STCOMP_IBTN:	return ImgButton_getRect(id);
+		case STCOMP_LBL:	return Label_getRect(id);
+		case STCOMP_IMG:	return Image_getRect(id);
+		case STCOMP_SBTN:	return StrButton_getRect(id);
+		case STCOMP_PANEL:	return Panel_getRect(id);
+		case STCOMP_NUMINPUT:	return NumInput_getRect(id);
+	}
+	return -1;
+}
+
+function bool STBuilder_IsDead(int type, int id){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return true;
+	return RectGetUserData(rect, ST_CPROP39) == 1;
+}
+
+function void STBuilder_SetDead(int type, int id, int dead){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return;
+	SetRectUserData(rect, ST_CPROP39, dead);
+}
+
+function int STBuilder_GetCompShow(int type, int id){
+	switch(type){
+		case STCOMP_IBTN:	return ImgButton_getShow(id);
+		case STCOMP_LBL:	return Label_getShow(id);
+		case STCOMP_IMG:	return Image_getShow(id);
+		case STCOMP_SBTN:	return StrButton_getShow(id);
+		case STCOMP_PANEL:	return Panel_getShow(id);
+		case STCOMP_NUMINPUT:	return NumInput_getShow(id);
+	}
+	return false;
+}
+
+function void STBuilder_SetCompShow(int type, int id, bool show){
+	switch(type){
+		case STCOMP_IBTN:	ImgButton_setShow(id, show); break;
+		case STCOMP_LBL:	Label_setShow(id, show); break;
+		case STCOMP_IMG:	Image_setShow(id, show); break;
+		case STCOMP_SBTN:	StrButton_setShow(id, show); break;
+		case STCOMP_PANEL:	Panel_setShow(id, show); break;
+		case STCOMP_NUMINPUT:	NumInput_setShow(id, show); break;
+	}
+}
+
+function void STBuilder_SetCompTag(int type, int id, int tag){
+	switch(type){
+		case STCOMP_IBTN:	ImgButton_setTag(id, tag); break;
+		case STCOMP_LBL:	Label_setTag(id, tag); break;
+		case STCOMP_IMG:	Image_setTag(id, tag); break;
+		case STCOMP_SBTN:	StrButton_setTag(id, tag); break;
+		case STCOMP_PANEL:	Panel_setTag(id, tag); break;
+		case STCOMP_NUMINPUT:	NumInput_setTag(id, tag); break;
+	}
+}
+
+function int STBuilder_GetCompTag(int type, int id){
+	switch(type){
+		case STCOMP_IBTN:	return ImgButton_getTag(id);
+		case STCOMP_LBL:	return Label_getTag(id);
+		case STCOMP_IMG:	return Image_getTag(id);
+		case STCOMP_SBTN:	return StrButton_getTag(id);
+		case STCOMP_PANEL:	return Panel_getTag(id);
+		case STCOMP_NUMINPUT:	return NumInput_getTag(id);
+	}
+	return -1;
+}
+
+// Parent panel id of a component, or -1 if it has none.
+function int STBuilder_GetParent(int type, int id){
+	switch(type){
+		case STCOMP_IBTN: return ImgButton_GetParent(id);
+		case STCOMP_SBTN: return StrButton_GetParent(id);
+		case STCOMP_LBL: return Label_getParent(id);
+		case STCOMP_IMG: return Image_getParent(id);
+	}
+	return -1;
+}
+
+// True if the component belongs to a panel.
+function bool STBuilder_HasParent(int type, int id){
+	return STBuilder_GetParent(type, id) != -1;
+}
+
+// Reparents a component (copy uses this to detach the duplicate from a panel).
+function void STBuilder_SetParent(int type, int id, int parent){
+	switch(type){
+		case STCOMP_IBTN: ImgButton_setParent(id, parent); break;
+		case STCOMP_SBTN: StrButton_setParent(id, parent); break;
+		case STCOMP_LBL:  Label_setParent(id, parent); break;
+		case STCOMP_IMG:  Image_setParent(id, parent); break;
+	}
+}
+
+// A component is only selectable if it is alive, shown, and its tag is one
+// of the tags currently visible on screen (current page, home/alpha tag, or 0).
+// Panel children are governed by their panel instead of their own tag, so any
+// page's panel children behave the same (tagged or not).
+// Hidden components are never selectable (ghost mode is visual only).
+function bool STBuilder_IsVisible(int type, int id){
+	if(STBuilder_IsDead(type, id)) return false;
+	if(!STBuilder_GetCompShow(type, id)) return false;
+	if(STBuilder_HasParent(type, id)){
+		return Panel_GetShow(STBuilder_GetParent(type, id));
+	}
+	int tag = STBuilder_GetCompTag(type, id);
+	// Internals tagged -1 (the home frame, wallet labels...) are editable too,
+	// as long as they are currently shown.
+	if(tag == -1) return true;
+	return tag == pagetags[STTAGS_NOW] || tag == pagetags[STTAGS_ALPHA] || tag == 0;
+}
+
+// Hidden (but not deleted) components are drawn as translucent ghosts when
+// the visibility toggle is on. Framework internals (tag -1) and panel
+// children are skipped.
+function bool STBuilder_ShouldGhost(int type, int id){
+	if(!STB_IsActive() || !STB_IsGhost()) return false;
+	if(STBuilder_IsDead(type, id)) return false;
+	if(STBuilder_GetCompShow(type, id)) return false;
+	if(STBuilder_GetCompTag(type, id) == -1) return false;
+	if(STBuilder_HasParent(type, id)) return false;
+	return true;
+}
+
+function str STBuilder_TypeName(int type){
+	switch(type){
+		case STCOMP_IBTN:	return "ibtn";
+		case STCOMP_LBL:	return "label";
+		case STCOMP_IMG:	return "image";
+		case STCOMP_SBTN:	return "sbtn";
+		case STCOMP_PANEL:	return "panel";
+		case STCOMP_NUMINPUT:	return "numinput";
+	}
+	return "unknown";
+}
+
+// Feedback helper: writes to the console/log AND shows a toast on screen.
+function void STBuilder_Notify(str msg, int color){
+	Log(s:msg);
+	Toaster_ShowToast(msg, color);
+}
+
+// Builder edits must not survive a reopen: invalidate the terminal's
+// component cache so the next open rebuilds the pages from scratch.
+function void STBuilder_InvalidateCache(void){
+	pagetags[STTAGS_CACHEHOME] = 0;
+}
+
+//////////////////////////////////
+// Undo / Redo (up to 10 steps) //
+//////////////////////////////////
+
+// Pushes a new undo entry and returns its index. Entries past the cursor are
+// dropped (a new action truncates the redo history); when the log is full the
+// oldest entry is dropped so the most recent STBUILDER_UNDO_MAX actions stay.
+function int STBuilder_UndoPush(int action, int type, int id, int dx, int dy){
+	if(undo_pos < undo_count) undo_count = undo_pos;
+	if(undo_count >= STBUILDER_UNDO_MAX){
+		for(int i = 1; i < STBUILDER_UNDO_MAX; i++){
+			undo_meta[i-1][0] = undo_meta[i][0];
+			undo_meta[i-1][1] = undo_meta[i][1];
+			undo_meta[i-1][2] = undo_meta[i][2];
+			undo_meta[i-1][3] = undo_meta[i][3];
+			undo_meta[i-1][4] = undo_meta[i][4];
+			for(int j = 0; j < ACSUTILS_RECTLIB_USERVARS; j++){
+				undo_snap[STBUILDER_SNAP_BEFORE][i-1][j] = undo_snap[STBUILDER_SNAP_BEFORE][i][j];
+				undo_snap[STBUILDER_SNAP_AFTER][i-1][j] = undo_snap[STBUILDER_SNAP_AFTER][i][j];
+			}
+		}
+		undo_count = STBUILDER_UNDO_MAX - 1;
+	}
+	int e = undo_count;
+	undo_meta[e][0] = action;
+	undo_meta[e][1] = type;
+	undo_meta[e][2] = id;
+	undo_meta[e][3] = dx;
+	undo_meta[e][4] = dy;
+	undo_count++;
+	undo_pos = undo_count;
+	return e;
+}
+
+// Snapshot every userdata slot of a component into entry `e` (BEFORE/AFTER) so
+// an add/delete/property change can be undone and redone.
+function void STBuilder_SaveSnapTo(int type, int id, int e, int which){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return;
+	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++)
+		undo_snap[which][e][i] = RectGetUserData(rect, i);
+}
+
+function void STBuilder_RestoreSnapFrom(int type, int id, int e, int which){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return;
+	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++)
+		SetRectUserData(rect, i, undo_snap[which][e][i]);
+}
+
+function void STBuilder_RecordAdd(int type, int id){
+	int e = STBuilder_UndoPush(1, type, id, 0, 0);
+	STBuilder_SaveSnapTo(type, id, e, STBUILDER_SNAP_AFTER);
+}
+
+function void STBuilder_RecordDelete(int type, int id){
+	int e = STBuilder_UndoPush(2, type, id, 0, 0);
+	STBuilder_SaveSnapTo(type, id, e, STBUILDER_SNAP_BEFORE);
+}
+
+// Consecutive moves of the same component accumulate into one undo entry, so a
+// drag (or a held movement key) reverts as a single action.
+function void STBuilder_RecordMove(int type, int id, int dx, int dy){
+	if(dx == 0 && dy == 0) return;
+	if(undo_pos == undo_count && undo_pos > 0){
+		int e = undo_pos - 1;
+		if(undo_meta[e][0] == 3 && undo_meta[e][1] == type && undo_meta[e][2] == id){
+			undo_meta[e][3] += dx;
+			undo_meta[e][4] += dy;
+			return;
+		}
+	}
+	STBuilder_UndoPush(3, type, id, dx, dy);
+}
+
+function void STBuilder_ClearUndo(void){
+	undo_count = 0;
+	undo_pos = 0;
+}
+
+function str STBuilder_ActionName(int act){
+	switch(act){
+		case 1: return "add";
+		case 2: return "delete";
+		case 3: return "move";
+		case 4: return "set-prop";
+	}
+	return "action";
+}
+
+// Clears every marker HID currently on screen.
+function void STBuilder_ClearMarkers(void){
+	for(int i = 0; i < stbuilder_state[STBS_MARKERPREV]; i++)
+		ClearHudMessage(ST_HID_BUILDER_MARK + i);
+	stbuilder_state[STBS_MARKERPREV] = 0;
+}
+
+// Full builder state reset. Safe to call on open, close or forced exits.
+function void STBuilder_ResetState(void){
+	STBuilder_ClearMarkers();
+	STB_SetActive(0);
+	STB_SetPlacing(0);
+	stbuilder_state[STBS_SELTYPE] = STBUILDER_NONE;
+	stbuilder_state[STBS_SELID] = STBUILDER_NONE;
+	STB_SetGhost(0);
+	STB_SetOverlay(0);
+	for(int i = 0; i < stbuilder_state[STBS_DBGPREV]; i++) ClearHudMessage(ST_HID_BUILDER_DBG + i);
+	stbuilder_state[STBS_DBGPREV] = 0;
+	stbuilder_drag[0] = 0;
+	stbuilder_drag[1] = 0;
+	stbuilder_drag[2] = 0;
+	stbuilder_drag[3] = 0;
+	stbuilder_state[STBS_MOVETIMER] = 0;
+	stbuilder_state[STBS_MOVEDIR] = 0;
+	stbuilder_state[STBS_PLACETYPE] = STCOMP_IBTN;
+	stbuilder_state[STBS_MARKERPREV] = 0;
+	stbuilder_step[0] = 4.0;
+	stbuilder_step[1] = 1.0;
+	undo_count = 0;
+	undo_pos = 0;
+	clip_paste = 0;
+}
+
+//////////////////////////////////
+// Selection                    //
+//////////////////////////////////
+
+function void STBuilder_Select(int type, int id){
+	stbuilder_state[STBS_SELTYPE] = type;
+	stbuilder_state[STBS_SELID] = id;
+	STBuilder_Notify(StrParam(s:"STBuilder: selected ", s:STBuilder_TypeName(type), s:" #", d:id, s:"."), CR_GREEN);
+}
+
+function void STBuilder_Deselect(void){
+	stbuilder_state[STBS_SELTYPE] = STBUILDER_NONE;
+	stbuilder_state[STBS_SELID] = STBUILDER_NONE;
+}
+
+function bool STBuilder_HasSize(int type, int id){
+	if(type == STCOMP_LBL || type == STCOMP_IMG || type == STCOMP_NUMINPUT){
+		int rect = STBuilder_CompRect(type, id);
+		if(RectWidth(rect) <= 0 || RectHeight(rect) <= 0) return false;
+	}
+	return true;
+}
+
+function int STBuilder_HitWidth(int type, int id){
+	if(!STBuilder_HasSize(type, id)) return 32.0;
+	return RectWidth(STBuilder_CompRect(type, id));
+}
+
+function int STBuilder_HitHeight(int type, int id){
+	if(!STBuilder_HasSize(type, id)) return 32.0;
+	return RectHeight(STBuilder_CompRect(type, id));
+}
+
+function int STBuilder_GetOffsetX(int type, int id){
+	switch(type){
+		case STCOMP_IBTN: return ImgButton_getOffsetX(id);
+		case STCOMP_SBTN: return StrButton_getOffsetX(id);
+		case STCOMP_LBL: return Label_getOffsetX(id);
+		case STCOMP_IMG: return Image_getOffsetX(id);
+	}
+	return 0;
+}
+
+function int STBuilder_GetOffsetY(int type, int id){
+	switch(type){
+		case STCOMP_IBTN: return ImgButton_getOffsetY(id);
+		case STCOMP_SBTN: return StrButton_getOffsetY(id);
+		case STCOMP_LBL: return Label_getOffsetY(id);
+		case STCOMP_IMG: return Image_getOffsetY(id);
+	}
+	return 0;
+}
+
+// Rendered origin of the component: base rect position plus the panel offset
+// (panel children are drawn at base + offset).
+function int STBuilder_OriginX(int type, int id){
+	int rect = STBuilder_CompRect(type, id);
+	int x = RectX1(rect);
+	if(STBuilder_HasParent(type, id)) x += STBuilder_GetOffsetX(type, id);
+	return x;
+}
+
+function int STBuilder_OriginY(int type, int id){
+	int rect = STBuilder_CompRect(type, id);
+	int y = RectY1(rect);
+	if(STBuilder_HasParent(type, id)) y += STBuilder_GetOffsetY(type, id);
+	return y;
+}
+
+// Top-left of the hitbox. Size-less components get a 32x32 box centered on
+// their origin instead of anchored to it.
+function int STBuilder_HitX1(int type, int id){
+	if(!STBuilder_HasSize(type, id)) return STBuilder_OriginX(type, id) - 16.0;
+	return STBuilder_OriginX(type, id);
+}
+
+function int STBuilder_HitY1(int type, int id){
+	if(!STBuilder_HasSize(type, id)) return STBuilder_OriginY(type, id) - 16.0;
+	return STBuilder_OriginY(type, id);
+}
+
+function bool STBuilder_PointInComp(int type, int id){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return false;
+	int x1 = STBuilder_HitX1(type, id), y1 = STBuilder_HitY1(type, id);
+	int x2 = x1 + STBuilder_HitWidth(type, id);
+	int y2 = y1 + STBuilder_HitHeight(type, id);
+	return CursorX() > x1 && CursorX() < x2 && CursorY() > y1 && CursorY() < y2;
+}
+
+function void STBuilder_SelectUnderCursor(void){
+	int hit_type = STBUILDER_NONE;
+	int hit_id = STBUILDER_NONE;
+	// Components take priority over panels. Within components, topmost first
+	// (reverse draw order: IMG > LBL > SBTN > IBTN). Panel children are ignored.
+	int order[4] = {STCOMP_IMG, STCOMP_LBL, STCOMP_SBTN, STCOMP_IBTN};
+	for(int o = 0; o < 4 && hit_type == STBUILDER_NONE; o++){
+		int type = order[o];
+		for(int id = 0; id < comp_count[type]; id++){
+			if(!STBuilder_IsVisible(type, id)) continue;
+			if(STBuilder_PointInComp(type, id)){
+				hit_type = type;
+				hit_id = id; // keep the last (topmost id) within this type
+			}
+		}
+	}
+	// Only if no component was hit, fall back to panels.
+	if(hit_type == STBUILDER_NONE){
+		for(int pid = 0; pid < comp_count[STCOMP_PANEL]; pid++){
+			if(!STBuilder_IsVisible(STCOMP_PANEL, pid)) continue;
+			if(STBuilder_PointInComp(STCOMP_PANEL, pid)){
+				hit_type = STCOMP_PANEL;
+				hit_id = pid;
+			}
+		}
+	}
+	if(hit_type == STBUILDER_NONE){
+		STBuilder_Deselect();
+		STBuilder_Notify("STBuilder: nothing selected.", CR_ORANGE);
+		return;
+	}
+	STBuilder_Select(hit_type, hit_id);
+}
+
+// Alt-fire interaction: run the hovered button's action (and toggle state)
+// instead of selecting it. Used to test buttons while in build mode.
+function void STBuilder_InteractIBtn(int i){
+	ClearHudMessage(ST_HID_CONTROLS);
+	SamuTerm_CallOpExecute(ImgButton_getExecute(i), ImgButton_getExeArg1(i), ImgButton_getExeArg2(i), ImgButton_getExeArg3(i));
+	localAmbientSound("SamuTerm/Select",127);
+	int toggleType = ImgButton_GetIsToggleable(i);
+	if(toggleType != ST_BTNTYPE_NORMAL){
+		ImgButton_Toggle(i);
+		if(toggleType == ST_BTNTYPE_RADIO && ImgButton_GetToggleState(i) == 1){
+			int gid = ImgButton_GetGroup(i);
+			if(gid > 0){
+				for(int j = 0; j < comp_count[STCOMP_IBTN]; j++){
+					if(j == i) continue;
+					if(ImgButton_GetGroup(j) == gid) ImgButton_SetToggleState(j, 0);
+				}
+			}
+		}
+	}
+}
+
+function void STBuilder_InteractSBtn(int i){
+	ClearHudMessage(ST_HID_CONTROLS);
+	SamuTerm_CallOpExecute(StrButton_getExecute(i), StrButton_getExeArg1(i), StrButton_getExeArg2(i), StrButton_getExeArg3(i));
+	localAmbientSound("SamuTerm/Select",127);
+	int toggleType = StrButton_GetIsToggleable(i);
+	if(toggleType != ST_BTNTYPE_NORMAL){
+		StrButton_Toggle(i);
+		if(toggleType == ST_BTNTYPE_RADIO && StrButton_GetToggleState(i) == 1){
+			int gid = StrButton_GetGroup(i);
+			if(gid > 0){
+				for(int j = 0; j < comp_count[STCOMP_SBTN]; j++){
+					if(j == i) continue;
+					if(StrButton_GetGroup(j) == gid) StrButton_SetToggleState(j, 0);
+				}
+			}
+		}
+	}
+}
+
+function void STBuilder_InteractUnderCursor(void){
+	int comp = cursor_hover[STCURSOR_HOVER_COMP];
+	if(comp == -1) return;
+	switch(cursor_hover[STCURSOR_HOVER_COMPTYPE]){
+		case STCOMP_IBTN: STBuilder_InteractIBtn(comp); break;
+		case STCOMP_SBTN: STBuilder_InteractSBtn(comp); break;
+	}
+}
+
+//////////////////////////////////
+// Placement                    //
+//////////////////////////////////
+
+function void STBuilder_CenterOnCursor(int type, int id){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return;
+	SetRectPosition(rect,
+		CursorX() - FixedDiv(RectWidth(rect), 2.0),
+		CursorY() - FixedDiv(RectHeight(rect), 2.0));
+}
+
+function void STBuilder_Add(int type){
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off. Use STBuilder_Mode first.", CR_RED);
+		return;
+	}
+	if(type < 0 || type >= STVARS_COMPCOUNT){
+		STBuilder_Notify("STBuilder: unknown type. Try: ibtn, sbtn, label, image, panel, numinput.", CR_RED);
+		return;
+	}
+	STB_SetPlacing(1);
+	stbuilder_state[STBS_PLACETYPE] = type;
+	STBuilder_Deselect();
+	STBuilder_Notify(StrParam(s:"STBuilder: placing ", s:STBuilder_TypeName(type),
+		s:". Attack=place, Jump/Crouch=cycle, Use=cancel."), CR_GREEN);
+}
+
+function void STBuilder_PlaceConfirm(void){
+	if(!STB_IsPlacing()) return;
+	STBuilder_InvalidateCache();
+	int type = stbuilder_state[STBS_PLACETYPE];
+	int x = CursorX();
+	int y = CursorY();
+	int id = -1;
+	bool pasting = clip_paste && clip_type == type;
+
+	if(pasting){
+		// Paste: recreate the clipboard component at the cursor.
+		switch(type){
+			case STCOMP_IBTN: id = ImgButton_Add(x, y, clip_geom[0], clip_geom[1]); break;
+			case STCOMP_SBTN: id = StrButton_Add(x, y, ""); break;
+			case STCOMP_LBL:  id = Label_Add(x, y); break;
+			case STCOMP_IMG:  id = Image_Add(x, y, ""); break;
+			case STCOMP_PANEL: id = Panel_Add(x, y, ((clip_geom[0] >> 16) - 16) / 8, ((clip_geom[1] >> 16) - 16) / 8); break;
+		}
+		if(id != -1){
+			int nrect = STBuilder_CompRect(type, id);
+			for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++)
+				SetRectUserData(nrect, i, clip_data[i]);
+			if(type != STCOMP_PANEL) SetRectSize(nrect, clip_geom[0], clip_geom[1]);
+			// Restore the per-component ids that must stay unique.
+			switch(type){
+				case STCOMP_IBTN: ImgButton_setHudId(id, ST_HID_IBTN + id); break;
+				case STCOMP_SBTN: StrButton_setHudId(id, ST_HID_SBTNF + id); StrButton_setBackHudId(id, ST_HID_SBTNB + id); break;
+				case STCOMP_LBL:  Label_setHUDID(id, ST_HID_LBL + id); break;
+				case STCOMP_IMG:  Image_setHUDID(id, ST_HID_IMG + id); break;
+				case STCOMP_PANEL: Panel_setHudId(id, ST_HID_PAN_BACKG + id); Panel_SetTitleHudId(id, ST_HID_PAN_TITLE + id); break;
+			}
+			STBuilder_SetParent(type, id, -1);
+		}
+	} else {
+		switch(type){
+			case STCOMP_IBTN:
+				id = ImgButton_Add(x, y, 32.0, 32.0);
+				if(id != -1) ImgButton_setImage(id, "BTN1");
+			break;
+			case STCOMP_SBTN:
+				id = StrButton_Add(x, y, "Button");
+			break;
+			case STCOMP_LBL:
+				id = Label_Add(x, y);
+				if(id != -1){
+					Label_setText(id, "Label");
+					Label_setFont(id, "DBIGFONT");
+					Label_setColor(id, CR_WHITE);
+					SetRectSize(Label_getRect(id), 32.0, 32.0);
+				}
+			break;
+			case STCOMP_IMG:
+				id = Image_Add(x, y, "TFRAME");
+				if(id != -1) SetRectSize(Image_getRect(id), 32.0, 32.0);
+			break;
+			case STCOMP_PANEL:
+				id = Panel_Add(x, y, 6, 3);
+			break;
+			case STCOMP_NUMINPUT:
+				id = NumInput_Add(x, y);
+			break;
+		}
+	}
+
+	if(id == -1){
+		STBuilder_Notify("STBuilder: no room for more components.", CR_RED);
+		STB_SetPlacing(0);
+		clip_paste = 0;
+		return;
+	}
+
+	STBuilder_SetCompTag(type, id, pagetags[STTAGS_NOW]);
+	STBuilder_SetCompShow(type, id, true);
+	if(type != STCOMP_NUMINPUT) STBuilder_CenterOnCursor(type, id);
+
+	STBuilder_RecordAdd(type, id);
+	STB_SetPlacing(0);
+	clip_paste = 0;
+	STBuilder_Select(type, id);
+}
+
+function void STBuilder_CycleType(int dir){
+	if(!STB_IsPlacing()) return;
+	clip_paste = 0; // cycling abandons a pending paste
+	stbuilder_state[STBS_PLACETYPE] += dir;
+	if(stbuilder_state[STBS_PLACETYPE] >= STVARS_COMPCOUNT) stbuilder_state[STBS_PLACETYPE] = 0;
+	if(stbuilder_state[STBS_PLACETYPE] < 0) stbuilder_state[STBS_PLACETYPE] = STVARS_COMPCOUNT - 1;
+	STBuilder_Notify(StrParam(s:"STBuilder: type ", s:STBuilder_TypeName(stbuilder_state[STBS_PLACETYPE]), s:"."), CR_GOLD);
+}
+
+function void STBuilder_CancelPlace(void){
+	if(!STB_IsPlacing()) return;
+	STB_SetPlacing(0);
+	clip_paste = 0;
+	STBuilder_Notify("STBuilder: placement cancelled.", CR_ORANGE);
+}
+
+//////////////////////////////////
+// Editing                      //
+//////////////////////////////////
+
+function void STBuilder_MovePanel(int pan, int dx, int dy){
+	int rect = Panel_getRect(pan);
+	SetRectPosition(rect, RectX1(rect) + dx, RectY1(rect) + dy);
+	// Keep the clip rect aligned with the panel.
+	SetRectUserData(rect, ST_CPROP19, Panel_GetClipX1(pan) + dx);
+	SetRectUserData(rect, ST_CPROP20, Panel_GetClipY1(pan) + dy);
+	// Move every child component by the same delta.
+	for(int i = 0; i < Panel_GetNumberOfComps(pan); i++){
+		int ctype = panels_comps_index[pan][i][STPANEL_COMPDATA_TYPE];
+		int cid = panels_comps_index[pan][i][STPANEL_COMPDATA_ID];
+		int crect = STBuilder_CompRect(ctype, cid);
+		if(crect == -1) continue;
+		SetRectPosition(crect, RectX1(crect) + dx, RectY1(crect) + dy);
+	}
+	// Scroll buttons are re-derived from the panel position.
+	Panel_UpdateScrollButtons(pan);
+}
+
+function void STBuilder_MoveComp(int type, int id, int dx, int dy){
+	STBuilder_InvalidateCache();
+	if(type == STCOMP_PANEL){
+		STBuilder_MovePanel(id, dx, dy);
+		return;
+	}
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return;
+	SetRectPosition(rect, RectX1(rect) + dx, RectY1(rect) + dy);
+}
+
+function void STBuilder_Move(int dx, int dy){
+	if(stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE) return;
+	STBuilder_RecordMove(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID], dx, dy);
+	STBuilder_MoveComp(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID], dx, dy);
+}
+
+function void STBuilder_ClearCompHud(int type, int id){
+	switch(type){
+		case STCOMP_IBTN:
+			ClearHudMessage(ImgButton_getHudId(id));
+			ClearHudMessage(ST_HID_TOGGLE + id);
+		break;
+		case STCOMP_SBTN:
+			ClearHudMessage(StrButton_getHudId(id));
+			ClearHudMessage(StrButton_getBackHudId(id));
+			ClearHudMessage(ST_HID_TOGGLE + id);
+		break;
+		case STCOMP_LBL:	ClearHudMessage(Label_getHudID(id)); break;
+		case STCOMP_IMG:	ClearHudMessage(Image_getHudID(id)); break;
+		case STCOMP_PANEL:	ClearHudMessage(Panel_getHudId(id)); break;
+	}
+}
+
+// Wipes every stored property and flags the component as dead, so nothing
+// stale survives the soft delete.
+function void STBuilder_ResetCompData(int type, int id){
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1) return;
+	for(int i = 1; i < ACSUTILS_RECTLIB_USERVARS; i++){
+		SetRectUserData(rect, i, 0);
+	}
+	SetRectUserData(rect, ST_CPROP0, type);   // keep the type
+	SetRectUserData(rect, ST_CPROP39, 1);     // dead
+}
+
+function void STBuilder_Delete(void){
+	if(stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE){
+		STBuilder_Notify("STBuilder: nothing selected to delete.", CR_RED);
+		return;
+	}
+	int type = stbuilder_state[STBS_SELTYPE];
+	int id = stbuilder_state[STBS_SELID];
+	STBuilder_InvalidateCache();
+	STBuilder_RecordDelete(type, id);
+	STBuilder_ClearCompHud(type, id);
+	STBuilder_ResetCompData(type, id);
+	STBuilder_Notify(StrParam(s:"STBuilder: deleted ", s:STBuilder_TypeName(type), s:" #", d:id, s:"."), CR_GREEN);
+	STBuilder_Deselect();
+}
+
+function void STBuilder_Clear(void){
+	STB_SetPlacing(0);
+	clip_paste = 0;
+	STBuilder_Deselect();
+	STBuilder_Notify("STBuilder: cleared.", CR_GREEN);
+}
+
+// Stores the selected component in the clipboard. Returns false (with a toast)
+// when there is nothing to copy or the type is unsupported.
+function bool STBuilder_ClipFromSelection(void){
+	if(stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE){
+		STBuilder_Notify("STBuilder: nothing selected to copy.", CR_RED);
+		return false;
+	}
+	int type = stbuilder_state[STBS_SELTYPE];
+	int id = stbuilder_state[STBS_SELID];
+	if(type == STCOMP_NUMINPUT){
+		STBuilder_Notify("STBuilder: copy is not supported for numinput.", CR_ORANGE);
+		return false;
+	}
+	int rect = STBuilder_CompRect(type, id);
+	if(rect == -1){
+		STBuilder_Notify("STBuilder: copy failed.", CR_RED);
+		return false;
+	}
+	clip_type = type;
+	for(int i = 0; i < ACSUTILS_RECTLIB_USERVARS; i++)
+		clip_data[i] = RectGetUserData(rect, i);
+	clip_geom[0] = RectWidth(rect);
+	clip_geom[1] = RectHeight(rect);
+	return true;
+}
+
+// Enters placement preview using the clipboard; Attack places it at the cursor.
+function void STBuilder_Paste(void){
+	if(clip_type == STBUILDER_NONE){
+		STBuilder_Notify("STBuilder: clipboard is empty. Use !copy first.", CR_RED);
+		return;
+	}
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off. Use STBuilder_Mode first.", CR_RED);
+		return;
+	}
+	clip_paste = 1;
+	STB_SetPlacing(1);
+	stbuilder_state[STBS_PLACETYPE] = clip_type;
+	STBuilder_Deselect();
+	STBuilder_Notify(StrParam(s:"STBuilder: pasting ", s:STBuilder_TypeName(clip_type), s:". Attack=place, Use=cancel."), CR_GREEN);
+}
+
+// Saves the selected component to the clipboard. Use !paste to place a copy.
+function void STBuilder_Copy(void){
+	if(!STBuilder_ClipFromSelection()) return;
+	clip_paste = 0;
+	STBuilder_Notify(StrParam(s:"STBuilder: copied ", s:STBuilder_TypeName(clip_type), s:" (use !paste)."), CR_GREEN);
+}
+
+// Duplicates the selected component: it is saved to the clipboard and enters
+// placement preview, so the user clicks where to drop the copy.
+function void STBuilder_Duplicate(void){
+	if(!STBuilder_ClipFromSelection()) return;
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off. Use STBuilder_Mode first.", CR_RED);
+		return;
+	}
+	clip_paste = 1;
+	STB_SetPlacing(1);
+	stbuilder_state[STBS_PLACETYPE] = clip_type;
+	STBuilder_Deselect();
+	STBuilder_Notify(StrParam(s:"STBuilder: duplicating ", s:STBuilder_TypeName(clip_type), s:". Attack=place, Use=cancel."), CR_GREEN);
+}
+// Applies a single log entry: dir = -1 restores BEFORE (undo), +1 restores
+// AFTER (redo).
+function void STBuilder_ApplyEntry(int e, int dir){
+	int act = undo_meta[e][0];
+	int type = undo_meta[e][1];
+	int id = undo_meta[e][2];
+	STBuilder_InvalidateCache();
+	if(act == 3){
+		// Move: undo steps back, redo steps forward by the same delta.
+		STBuilder_MoveComp(type, id, dir * undo_meta[e][3], dir * undo_meta[e][4]);
+		return;
+	}
+	if(dir < 0 && act == 1){
+		// Undo add = delete the new component.
+		STBuilder_ClearCompHud(type, id);
+		STBuilder_ResetCompData(type, id);
+	} else if(dir > 0 && act == 2){
+		// Redo delete = delete it again.
+		STBuilder_ClearCompHud(type, id);
+		STBuilder_ResetCompData(type, id);
+	} else {
+		int which = (dir < 0) ? STBUILDER_SNAP_BEFORE : STBUILDER_SNAP_AFTER;
+		STBuilder_RestoreSnapFrom(type, id, e, which);
+	}
+}
+
+// Reverts the last mutating action (add / delete / move / set-prop).
+function void STBuilder_Undo(void){
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off.", CR_RED);
+		return;
+	}
+	if(undo_pos <= 0){
+		STBuilder_Notify("STBuilder: nothing to undo.", CR_ORANGE);
+		return;
+	}
+	int e = undo_pos - 1;
+	int act = undo_meta[e][0];
+	int type = undo_meta[e][1];
+	int id = undo_meta[e][2];
+	STBuilder_ApplyEntry(e, -1);
+	if(act == 1 && stbuilder_state[STBS_SELTYPE] == type && stbuilder_state[STBS_SELID] == id)
+		STBuilder_Deselect();
+	undo_pos--;
+	STBuilder_Notify(StrParam(s:"STBuilder: undid ", s:STBuilder_ActionName(act), s:" ", s:STBuilder_TypeName(type), s:" #", d:id, s:" (", d:undo_pos, s:" undo / ", d:undo_count - undo_pos, s:" redo)."), CR_GOLD);
+}
+
+// Re-applies the action that was last undone.
+function void STBuilder_Redo(void){
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off.", CR_RED);
+		return;
+	}
+	if(undo_pos >= undo_count){
+		STBuilder_Notify("STBuilder: nothing to redo.", CR_ORANGE);
+		return;
+	}
+	int e = undo_pos;
+	int act = undo_meta[e][0];
+	int type = undo_meta[e][1];
+	int id = undo_meta[e][2];
+	STBuilder_ApplyEntry(e, 1);
+	if(act == 1) STBuilder_Select(type, id);
+	undo_pos++;
+	STBuilder_Notify(StrParam(s:"STBuilder: redid ", s:STBuilder_ActionName(act), s:" ", s:STBuilder_TypeName(type), s:" #", d:id, s:" (", d:undo_pos, s:" undo / ", d:undo_count - undo_pos, s:" redo)."), CR_GOLD);
+}
+
+function void STBuilder_ToggleVisibility(void){
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off. Use STBuilder_Mode first.", CR_RED);
+		return;
+	}
+	STB_SetGhost(!STB_IsGhost());
+	if(STB_IsGhost())
+		STBuilder_Notify("STBuilder: showing hidden elements (ghost).", CR_GREEN);
+	else
+		STBuilder_Notify("STBuilder: hidden elements off.", CR_ORANGE);
+}
+
+// Debug overlay: prints type#id, tag and size next to every component.
+function void STBuilder_ToggleOverlay(void){
+	if(!STB_IsActive()){
+		STBuilder_Notify("STBuilder: build mode is off. Use STBuilder_Mode first.", CR_RED);
+		return;
+	}
+	STB_SetOverlay(!STB_IsOverlay());
+	if(STB_IsOverlay())
+		STBuilder_Notify("STBuilder: debug overlay ON.", CR_GREEN);
+	else
+		STBuilder_Notify("STBuilder: debug overlay OFF.", CR_ORANGE);
+}
+
+// Enables/disables the cursor tooltip (terminal-wide, does not need build mode).
+function void STBuilder_ToggleTooltip(void){
+	tooltip_enabled = !tooltip_enabled;
+	if(tooltip_enabled)
+		STBuilder_Notify("STBuilder: tooltip ON.", CR_GREEN);
+	else
+		STBuilder_Notify("STBuilder: tooltip OFF.", CR_ORANGE);
+}
+
+function void STBuilder_MoveDir(int dir, int step){
+	switch(dir){
+		case 1: STBuilder_Move(0, -step); break;
+		case 2: STBuilder_Move(0, step); break;
+		case 3: STBuilder_Move(-step, 0); break;
+		case 4: STBuilder_Move(step, 0); break;
+	}
+}
+
+function void STBuilder_Update(void){
+	int play = PlayerNumber();
+	bool fireDown = PlayerKeyDown(play, FIRE1);
+
+	// Drag mode: hold attack ~1s on a selected component and it follows the
+	// cursor until the button is released.
+	if(STB_IsActive() && !STB_IsPlacing() && stbuilder_state[STBS_SELTYPE] != STBUILDER_NONE){
+		if(fireDown){
+			if(stbuilder_drag[0]){
+				int curX = STBuilder_OriginX(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+				int curY = STBuilder_OriginY(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+				STBuilder_Move((CursorX() - stbuilder_drag[2]) - curX,
+				               (CursorY() - stbuilder_drag[3]) - curY);
+			} else {
+				stbuilder_drag[1]++;
+				if(stbuilder_drag[1] >= 35){ // ~1 second
+					stbuilder_drag[0] = 1;
+					stbuilder_drag[2] = CursorX() - STBuilder_OriginX(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+					stbuilder_drag[3] = CursorY() - STBuilder_OriginY(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+				}
+			}
+		} else {
+			stbuilder_drag[1] = 0;
+			stbuilder_drag[0] = 0;
+		}
+	} else {
+		stbuilder_drag[1] = 0;
+		stbuilder_drag[0] = 0;
+	}
+
+	// Keyboard movement (skipped while dragging).
+	if(stbuilder_drag[0]) return;
+	if(!STB_IsActive() || stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE){
+		stbuilder_state[STBS_MOVETIMER] = 0;
+		stbuilder_state[STBS_MOVEDIR] = 0;
+		return;
+	}
+	int dir = 0;
+	if(PlayerKeyDown(play, BT_FORWARD)) dir = 1;
+	else if(PlayerKeyDown(play, BT_BACK)) dir = 2;
+	else if(PlayerKeyDown(play, BT_MOVELEFT)) dir = 3;
+	else if(PlayerKeyDown(play, BT_MOVERIGHT)) dir = 4;
+	if(dir == 0){
+		stbuilder_state[STBS_MOVETIMER] = 0;
+		stbuilder_state[STBS_MOVEDIR] = 0;
+		return;
+	}
+	int step = stbuilder_step[0];
+	if(PlayerKeyDown(play, BT_SPEED)) step = stbuilder_step[1];
+	if(dir != stbuilder_state[STBS_MOVEDIR]){
+		// First press moves immediately.
+		stbuilder_state[STBS_MOVEDIR] = dir;
+		stbuilder_state[STBS_MOVETIMER] = 0;
+		STBuilder_MoveDir(dir, step);
+		return;
+	}
+	// Held: keep moving every few tics.
+	stbuilder_state[STBS_MOVETIMER]++;
+	if(stbuilder_state[STBS_MOVETIMER] >= 4){
+		stbuilder_state[STBS_MOVETIMER] = 0;
+		STBuilder_MoveDir(dir, step);
+	}
+}
+
+//////////////////////////////////
+// Script-exec handlers         //
+//////////////////////////////////
+
+script "STBuilder_ScriptExec_Move" (int dir, int a2, int a3) CLIENTSIDE {
+	int step = stbuilder_step[0];
+	if(PlayerKeyDown(PlayerNumber(), BT_SPEED)) step = stbuilder_step[1];
+	switch(dir){
+		case 1: STBuilder_Move(0, -step); break;
+		case 2: STBuilder_Move(0, step); break;
+		case 3: STBuilder_Move(-step, 0); break;
+		case 4: STBuilder_Move(step, 0); break;
+	}
+}
+
+script "STBuilder_ScriptExec_Cycle" (int dir, int a2, int a3) CLIENTSIDE {
+	STBuilder_CycleType(dir);
+}
+
+script "STBuilder_ScriptExec_Cancel" (int a1, int a2, int a3) CLIENTSIDE {
+	STBuilder_CancelPlace();
+}
+
+//////////////////////////////////
+// Chat parsing (clientside)    //
+//////////////////////////////////
+
+function int STBuilder_StrToInt(str s){
+	int res = 0;
+	int neg = 0;
+	int i = 0;
+	int len = StrLen(s);
+	if(len > 0 && GetChar(s, 0) == '-'){ neg = 1; i = 1; }
+	for(; i < len; i++){
+		int c = GetChar(s, i);
+		if(c < '0' || c > '9') break;
+		res = res * 10 + (c - '0');
+	}
+	if(neg) res = -res;
+	return res;
+}
+
+function int STBuilder_KeywordToType(str kw){
+	if(StrICmp(kw, "ibtn") == 0 || StrICmp(kw, "button") == 0 || StrICmp(kw, "imgbutton") == 0) return STCOMP_IBTN;
+	if(StrICmp(kw, "sbtn") == 0 || StrICmp(kw, "strbutton") == 0) return STCOMP_SBTN;
+	if(StrICmp(kw, "label") == 0 || StrICmp(kw, "lbl") == 0) return STCOMP_LBL;
+	if(StrICmp(kw, "image") == 0 || StrICmp(kw, "img") == 0) return STCOMP_IMG;
+	if(StrICmp(kw, "panel") == 0) return STCOMP_PANEL;
+	if(StrICmp(kw, "numinput") == 0 || StrICmp(kw, "numpage") == 0) return STCOMP_NUMINPUT;
+	return STBUILDER_NONE;
+}
+
+function void STBuilder_LogProps(int type){
+	Log(s:"\cgSTBuilder:\c- props for \cd", s:STBuilder_TypeName(type), s:"\c-:");
+	switch(type){
+		case STCOMP_IBTN:
+			Log(s:"  x, y, w, h, tag, show, color, image, hover, execute, arg1, arg2, arg3, toggle, state, group");
+		break;
+		case STCOMP_SBTN:
+			Log(s:"  x, y, w, h, tag, show, color, text, execute, arg1, arg2, arg3, toggle, state, group");
+		break;
+		case STCOMP_LBL:
+			Log(s:"  x, y, w, h, tag, show, color, text, font, alignx, aligny, wrap");
+		break;
+		case STCOMP_IMG:
+			Log(s:"  x, y, w, h, tag, show, image, alignx, aligny, scale");
+		break;
+		case STCOMP_PANEL:
+			Log(s:"  x, y, w, h, tag, show, color");
+		break;
+		case STCOMP_NUMINPUT:
+			Log(s:"  x, y, w, h, tag, show, color");
+		break;
+	}
+}
+
+// Maps a CR_* constant name to its value, otherwise treats the text as a
+// color string (e.g. "red", "\c[red]", "#ff0000") and returns it as-is.
+function int STBuilder_ParseColor(str value){
+	if(StrICmp(value, "CR_UNTRANSLATED") == 0) return CR_UNTRANSLATED;
+	if(StrICmp(value, "CR_BRICK") == 0) return CR_BRICK;
+	if(StrICmp(value, "CR_TAN") == 0) return CR_TAN;
+	if(StrICmp(value, "CR_GRAY") == 0 || StrICmp(value, "CR_GREY") == 0) return CR_GRAY;
+	if(StrICmp(value, "CR_GREEN") == 0) return CR_GREEN;
+	if(StrICmp(value, "CR_BROWN") == 0) return CR_BROWN;
+	if(StrICmp(value, "CR_GOLD") == 0) return CR_GOLD;
+	if(StrICmp(value, "CR_RED") == 0) return CR_RED;
+	if(StrICmp(value, "CR_BLUE") == 0) return CR_BLUE;
+	if(StrICmp(value, "CR_ORANGE") == 0) return CR_ORANGE;
+	if(StrICmp(value, "CR_WHITE") == 0) return CR_WHITE;
+	if(StrICmp(value, "CR_YELLOW") == 0) return CR_YELLOW;
+	if(StrICmp(value, "CR_CYAN") == 0) return CR_CYAN;
+	if(StrICmp(value, "CR_PURPLE") == 0) return CR_PURPLE;
+	if(StrICmp(value, "CR_BLACK") == 0) return CR_BLACK;
+	if(StrICmp(value, "CR_DARKGREEN") == 0) return CR_DARKGREEN;
+	if(StrICmp(value, "CR_DARKRED") == 0) return CR_DARKRED;
+	if(StrICmp(value, "CR_DARKBROWN") == 0) return CR_DARKBROWN;
+	if(StrICmp(value, "CR_DARKGRAY") == 0 || StrICmp(value, "CR_DARKGREY") == 0) return CR_DARKGRAY;
+	if(StrICmp(value, "CR_LIGHTBLUE") == 0) return CR_LIGHTBLUE;
+	if(StrICmp(value, "CR_TEAL") == 0) return CR_TEAL;
+	if(StrICmp(value, "CR_OLIVE") == 0) return CR_OLIVE;
+	if(StrICmp(value, "CR_CREAM") == 0) return CR_CREAM;
+	if(StrICmp(value, "CR_FIRE") == 0) return CR_FIRE;
+	if(StrICmp(value, "CR_ICE") == 0) return CR_ICE;
+	if(StrICmp(value, "CR_SAPPHIRE") == 0) return CR_SAPPHIRE;
+	return value; // Color string.
+}
+
+function str STBuilder_ColorToStr(int c){
+	if(c > 25) return StrParam(s:c); // string color reference
+	return StrParam(d:c);            // CR_* constant value
+}
+
+function str STBuilder_GetPropValue(int type, int id, str prop){
+	int rect = STBuilder_CompRect(type, id);
+	if(StrICmp(prop, "x") == 0) return StrParam(d:RectX1(rect) >> 16);
+	if(StrICmp(prop, "y") == 0) return StrParam(d:RectY1(rect) >> 16);
+	if(StrICmp(prop, "w") == 0) return StrParam(d:RectWidth(rect) >> 16);
+	if(StrICmp(prop, "h") == 0) return StrParam(d:RectHeight(rect) >> 16);
+	if(StrICmp(prop, "tag") == 0) return StrParam(d:STBuilder_GetCompTag(type, id));
+	if(StrICmp(prop, "show") == 0) return StrParam(d:STBuilder_GetCompShow(type, id));
+	if(StrICmp(prop, "color") == 0){
+		switch(type){
+			case STCOMP_IBTN: return STBuilder_ColorToStr(ImgButton_getColor(id));
+			case STCOMP_SBTN: return STBuilder_ColorToStr(StrButton_getColor(id));
+			case STCOMP_LBL: return STBuilder_ColorToStr(Label_getColor(id));
+			case STCOMP_PANEL: return STBuilder_ColorToStr(Panel_getColor(id));
+			case STCOMP_NUMINPUT: return STBuilder_ColorToStr(NumInput_getColor(id));
+		}
+	}
+	if(StrICmp(prop, "text") == 0){
+		if(type == STCOMP_SBTN) return StrButton_getText(id);
+		if(type == STCOMP_LBL) return Label_getText(id);
+	}
+	if(StrICmp(prop, "image") == 0){ if(type == STCOMP_IBTN) return ImgButton_getImage(id); }
+	if(StrICmp(prop, "hover") == 0){ if(type == STCOMP_IBTN) return ImgButton_getHoverImage(id); }
+	if(StrICmp(prop, "font") == 0){ if(type == STCOMP_LBL) return Label_getFont(id); }
+	if(StrICmp(prop, "execute") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_getExecute(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_getExecute(id));
+	}
+	if(StrICmp(prop, "arg1") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_getExeArg1(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_getExeArg1(id));
+	}
+	if(StrICmp(prop, "arg2") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_getExeArg2(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_getExeArg2(id));
+	}
+	if(StrICmp(prop, "arg3") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_getExeArg3(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_getExeArg3(id));
+	}
+	if(StrICmp(prop, "toggle") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_GetIsToggleable(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_GetIsToggleable(id));
+	}
+	if(StrICmp(prop, "state") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_GetToggleState(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_GetToggleState(id));
+	}
+	if(StrICmp(prop, "group") == 0){
+		if(type == STCOMP_IBTN) return StrParam(d:ImgButton_GetGroup(id));
+		if(type == STCOMP_SBTN) return StrParam(d:StrButton_GetGroup(id));
+	}
+	if(StrICmp(prop, "alignx") == 0){
+		if(type == STCOMP_LBL) return StrParam(d:Label_getAlignX(id));
+		if(type == STCOMP_IMG) return StrParam(d:Image_getAlignX(id));
+	}
+	if(StrICmp(prop, "aligny") == 0){
+		if(type == STCOMP_LBL) return StrParam(d:Label_getAlignY(id));
+		if(type == STCOMP_IMG) return StrParam(d:Image_getAlignY(id));
+	}
+	if(StrICmp(prop, "wrap") == 0){ if(type == STCOMP_LBL) return StrParam(d:Label_getWrapWidth(id)); }
+	if(StrICmp(prop, "scale") == 0){ if(type == STCOMP_IMG) return StrParam(d:Image_getScaleX(id) >> 16); }
+	return "<n/a>";
+}
+
+// Human readable description of the accepted values for a prop.
+function str STBuilder_PropHelp(int type, str prop){
+	if(StrICmp(prop, "x") == 0 || StrICmp(prop, "y") == 0 ||
+	   StrICmp(prop, "w") == 0 || StrICmp(prop, "h") == 0)
+		return "number in pixels (e.g. 100)";
+	if(StrICmp(prop, "tag") == 0) return "number: page tag (0 = always visible)";
+	if(StrICmp(prop, "show") == 0) return "0 (hidden) or 1 (visible)";
+	if(StrICmp(prop, "color") == 0) return "a CR_* constant (e.g. CR_BRICK) or a color string (e.g. red)";
+	if(StrICmp(prop, "text") == 0) return "any string (spaces allowed)";
+	if(StrICmp(prop, "image") == 0 || StrICmp(prop, "hover") == 0) return "patch name (e.g. BTN1, TFRAME)";
+	if(StrICmp(prop, "font") == 0) return "font lump name (e.g. DBIGFONT, SMALLFNT)";
+	if(StrICmp(prop, "execute") == 0) return "execute id number (STEXE_*)";
+	if(StrICmp(prop, "arg1") == 0 || StrICmp(prop, "arg2") == 0 || StrICmp(prop, "arg3") == 0) return "byte value 0-255";
+	if(StrICmp(prop, "toggle") == 0) return "0 = normal, 1 = toggle (checkbox), 2 = radio";
+	if(StrICmp(prop, "state") == 0) return "0 (unchecked) or 1 (checked)";
+	if(StrICmp(prop, "group") == 0) return "number: radio group id (0 = none)";
+	if(StrICmp(prop, "alignx") == 0) return "HUD_ALIGN_LEFT, HUD_ALIGN_CENTER or HUD_ALIGN_RIGHT";
+	if(StrICmp(prop, "aligny") == 0) return "HUD_ALIGN_TOP, HUD_ALIGN_MIDDLE or HUD_ALIGN_BOTTOM";
+	if(StrICmp(prop, "wrap") == 0) return "number in pixels (0 = no wrap)";
+	if(StrICmp(prop, "scale") == 0) return "number (e.g. 2 = double size)";
+	return "";
+}
+
+function void STBuilder_SetProp(str args){
+	if(stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE){
+		STBuilder_Notify("STBuilder: nothing selected.", CR_RED);
+		return;
+	}
+	int type = stbuilder_state[STBS_SELTYPE];
+	int id = stbuilder_state[STBS_SELID];
+	StrSplit(args, " ");
+	str prop = r1;
+	str value = r2;
+	if(StrLen(prop) == 0){
+		STBuilder_Notify(StrParam(s:"STBuilder: props for ", s:STBuilder_TypeName(type), s:" (see console)."), CR_GOLD);
+		STBuilder_LogProps(type);
+		return;
+	}
+	if(StrLen(value) == 0){
+		str help = STBuilder_PropHelp(type, prop);
+		if(StrLen(help) == 0){
+			STBuilder_Notify(StrParam(s:"STBuilder: unknown prop '", s:prop, s:"'."), CR_RED);
+			STBuilder_LogProps(type);
+			return;
+		}
+		STBuilder_Notify(StrParam(s:"STBuilder: ", s:prop, s:" = ", s:STBuilder_GetPropValue(type, id, prop)), CR_GOLD);
+		STBuilder_Notify(StrParam(s:"  values: ", s:help), CR_GOLD);
+		return;
+	}
+	int rect = STBuilder_CompRect(type, id);
+	int num = STBuilder_StrToInt(value);
+	bool ok = true;
+	int e = STBuilder_UndoPush(4, type, id, 0, 0);
+	STBuilder_SaveSnapTo(type, id, e, STBUILDER_SNAP_BEFORE);
+
+	if(StrICmp(prop, "x") == 0){
+		SetRectPosition(rect, num << 16, RectY1(rect));
+	} else if(StrICmp(prop, "y") == 0){
+		SetRectPosition(rect, RectX1(rect), num << 16);
+	} else if(StrICmp(prop, "w") == 0){
+		SetRectSize(rect, num << 16, RectHeight(rect));
+	} else if(StrICmp(prop, "h") == 0){
+		SetRectSize(rect, RectWidth(rect), num << 16);
+	} else if(StrICmp(prop, "tag") == 0){
+		STBuilder_SetCompTag(type, id, num);
+	} else if(StrICmp(prop, "show") == 0){
+		STBuilder_SetCompShow(type, id, num != 0);
+	} else if(StrICmp(prop, "text") == 0){
+		if(type == STCOMP_SBTN) StrButton_setTextAdjust(id, value);
+		else if(type == STCOMP_LBL) Label_setText(id, value);
+		else ok = false;
+	} else if(StrICmp(prop, "image") == 0){
+		if(type == STCOMP_IBTN) ImgButton_setImage(id, value); else ok = false;
+	} else if(StrICmp(prop, "hover") == 0){
+		if(type == STCOMP_IBTN) ImgButton_setHoverImage(id, value); else ok = false;
+	} else if(StrICmp(prop, "font") == 0){
+		if(type == STCOMP_LBL) Label_setFont(id, value); else ok = false;
+	} else if(StrICmp(prop, "color") == 0){
+		int color = STBuilder_ParseColor(value);
+		switch(type){
+			case STCOMP_IBTN: ImgButton_setColor(id, color); break;
+			case STCOMP_SBTN: StrButton_setColor(id, color); break;
+			case STCOMP_LBL: Label_setColor(id, color); break;
+			case STCOMP_PANEL: Panel_setColor(id, color); break;
+			case STCOMP_NUMINPUT: NumInput_setColor(id, color); break;
+			default: ok = false;
+		}
+	} else if(StrICmp(prop, "execute") == 0){
+		if(type == STCOMP_IBTN) ImgButton_setExecute(id, num);
+		else if(type == STCOMP_SBTN) StrButton_setExecute(id, num);
+		else ok = false;
+	} else if(StrICmp(prop, "arg1") == 0){
+		if(type == STCOMP_IBTN) ImgButton_setArgs(id, num, ImgButton_getExeArg2(id), ImgButton_getExeArg3(id));
+		else if(type == STCOMP_SBTN) StrButton_setExeArgs(id, num, StrButton_getExeArg2(id), StrButton_getExeArg3(id));
+		else ok = false;
+	} else if(StrICmp(prop, "arg2") == 0){
+		if(type == STCOMP_IBTN) ImgButton_setArgs(id, ImgButton_getExeArg1(id), num, ImgButton_getExeArg3(id));
+		else if(type == STCOMP_SBTN) StrButton_setExeArgs(id, StrButton_getExeArg1(id), num, StrButton_getExeArg3(id));
+		else ok = false;
+	} else if(StrICmp(prop, "arg3") == 0){
+		if(type == STCOMP_IBTN) ImgButton_setArgs(id, ImgButton_getExeArg1(id), ImgButton_getExeArg2(id), num);
+		else if(type == STCOMP_SBTN) StrButton_setExeArgs(id, StrButton_getExeArg1(id), StrButton_getExeArg2(id), num);
+		else ok = false;
+	} else if(StrICmp(prop, "toggle") == 0){
+		if(type == STCOMP_IBTN) ImgButton_SetIsToggleable(id, num);
+		else if(type == STCOMP_SBTN) StrButton_SetIsToggleable(id, num);
+		else ok = false;
+	} else if(StrICmp(prop, "state") == 0){
+		if(type == STCOMP_IBTN) ImgButton_SetToggleState(id, num);
+		else if(type == STCOMP_SBTN) StrButton_SetToggleState(id, num);
+		else ok = false;
+	} else if(StrICmp(prop, "group") == 0){
+		if(type == STCOMP_IBTN) ImgButton_SetGroup(id, num);
+		else if(type == STCOMP_SBTN) StrButton_SetGroup(id, num);
+		else ok = false;
+	} else if(StrICmp(prop, "alignx") == 0){
+		if(type == STCOMP_LBL) Label_setAligns(id, num, Label_getAlignY(id));
+		else if(type == STCOMP_IMG) Image_setAligns(id, num, Image_getAlignY(id));
+		else ok = false;
+	} else if(StrICmp(prop, "aligny") == 0){
+		if(type == STCOMP_LBL) Label_setAligns(id, Label_getAlignX(id), num);
+		else if(type == STCOMP_IMG) Image_setAligns(id, Image_getAlignX(id), num);
+		else ok = false;
+	} else if(StrICmp(prop, "wrap") == 0){
+		if(type == STCOMP_LBL) Label_setWrapWidth(id, num); else ok = false;
+	} else if(StrICmp(prop, "scale") == 0){
+		if(type == STCOMP_IMG) Image_setScale(id, num << 16, num << 16); else ok = false;
+	} else {
+		ok = false;
+	}
+
+	if(ok){
+		STBuilder_SaveSnapTo(type, id, e, STBUILDER_SNAP_AFTER);
+		STBuilder_Notify(StrParam(s:"STBuilder: set ", s:prop, s:" on ", s:STBuilder_TypeName(type), s:" #", d:id, s:"."), CR_GREEN);
+	}
+	else {
+		// Discard the pushed entry, nothing changed.
+		undo_count = e;
+		undo_pos = e;
+		STBuilder_Notify(StrParam(s:"STBuilder: unknown prop '", s:prop, s:"' for ", s:STBuilder_TypeName(type), s:"."), CR_RED);
+		STBuilder_LogProps(type);
+	}
+}
+
+function void STBuilder_GetProp(str args){
+	if(stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE){
+		STBuilder_Notify("STBuilder: nothing selected.", CR_RED);
+		return;
+	}
+	int type = stbuilder_state[STBS_SELTYPE];
+	int id = stbuilder_state[STBS_SELID];
+	StrSplit(args, " ");
+	str prop = r1;
+	if(StrLen(prop) == 0){
+		STBuilder_Notify(StrParam(s:"STBuilder: get-prop needs a prop for ", s:STBuilder_TypeName(type), s:"."), CR_RED);
+		STBuilder_LogProps(type);
+		return;
+	}
+	STBuilder_Notify(StrParam(s:"STBuilder: ", s:STBuilder_TypeName(type), s:" #", d:id, s:" ",
+		s:prop, s:" = ", s:STBuilder_GetPropValue(type, id, prop)), CR_GOLD);
+}
+
+//////////////////////////////////
+// Export (Phase 4 - essential)  //
+//////////////////////////////////
+
+// Reverse lookups so the export prints symbolic names, not magic numbers.
+function str STBuilder_ColorName(int c){
+	switch(c){
+		case CR_UNTRANSLATED: return "CR_UNTRANSLATED";
+		case CR_BRICK: return "CR_BRICK";
+		case CR_TAN: return "CR_TAN";
+		case CR_GRAY: return "CR_GRAY";
+		case CR_GREEN: return "CR_GREEN";
+		case CR_BROWN: return "CR_BROWN";
+		case CR_GOLD: return "CR_GOLD";
+		case CR_RED: return "CR_RED";
+		case CR_BLUE: return "CR_BLUE";
+		case CR_ORANGE: return "CR_ORANGE";
+		case CR_WHITE: return "CR_WHITE";
+		case CR_YELLOW: return "CR_YELLOW";
+		case CR_CYAN: return "CR_CYAN";
+		case CR_PURPLE: return "CR_PURPLE";
+		case CR_BLACK: return "CR_BLACK";
+		case CR_DARKGREEN: return "CR_DARKGREEN";
+		case CR_DARKRED: return "CR_DARKRED";
+		case CR_DARKBROWN: return "CR_DARKBROWN";
+		case CR_DARKGRAY: return "CR_DARKGRAY";
+		case CR_LIGHTBLUE: return "CR_LIGHTBLUE";
+		case CR_TEAL: return "CR_TEAL";
+		case CR_OLIVE: return "CR_OLIVE";
+		case CR_CREAM: return "CR_CREAM";
+		case CR_FIRE: return "CR_FIRE";
+		case CR_ICE: return "CR_ICE";
+		case CR_SAPPHIRE: return "CR_SAPPHIRE";
+	}
+	return StrParam(d:c);
+}
+
+function str STBuilder_ExecName(int e){
+	switch(e){
+		case STEXE_TELEPORT_SECTOR: return "STEXE_TELEPORT_SECTOR";
+		case STEXE_RUNESHOP_BUYTIER: return "STEXE_RUNESHOP_BUYTIER";
+		case STEXE_RUNESHOP_GIVETIER: return "STEXE_RUNESHOP_GIVETIER";
+		case STEXE_RUNESHOP_BUY: return "STEXE_RUNESHOP_BUY";
+		case STEXE_RUNESHOP_GET: return "STEXE_RUNESHOP_GET";
+		case STEXE_RUNESHOP_GIVE: return "STEXE_RUNESHOP_GIVE";
+		case STEXE_RUNESHOP_HOVER: return "STEXE_RUNESHOP_HOVER";
+		case STEXE_STIMUP_BUY: return "STEXE_STIMUP_BUY";
+		case STEXE_STIMUP_GIVE: return "STEXE_STIMUP_GIVE";
+		case STEXE_STIMUP_HOVER: return "STEXE_STIMUP_HOVER";
+		case STEXE_PLAYUP_ASK: return "STEXE_PLAYUP_ASK";
+		case STEXE_PLAYUP_SET: return "STEXE_PLAYUP_SET";
+		case STEXE_PLAYUP_GET: return "STEXE_PLAYUP_GET";
+		case STEXE_PLAYUP_SETDESC: return "STEXE_PLAYUP_SETDESC";
+		case STEXE_PLAYUP_BTNHOVER: return "STEXE_PLAYUP_BTNHOVER";
+		case STEXE_UPWEPOPENUPS: return "STEXE_UPWEPOPENUPS";
+		case STEXE_UPGPAGECAT: return "STEXE_UPGPAGECAT";
+		case STEXE_UPGPAGEDESC: return "STEXE_UPGPAGEDESC";
+		case STEXE_CMDEXIT: return "STEXE_CMDEXIT";
+		case STEXE_CMDDEPLOY: return "STEXE_CMDDEPLOY";
+		case STEXE_CMDSUPPORT: return "STEXE_CMDSUPPORT";
+		case STEXE_CMDSUPPORT_MARK: return "STEXE_CMDSUPPORT_MARK";
+		case STEXE_CMDRESEARCH: return "STEXE_CMDRESEARCH";
+		case STEXE_CMDBUILD: return "STEXE_CMDBUILD";
+		case STEXE_CMDEXECUTE: return "STEXE_CMDEXECUTE";
+		case STEXE_CMDEVENT_DOIT: return "STEXE_CMDEVENT_DOIT";
+		case STEXE_CMDEVENT_CHECK: return "STEXE_CMDEVENT_CHECK";
+		case STEXE_CMDBTNDESC: return "STEXE_CMDBTNDESC";
+		case STEXE_CMDCAT: return "STEXE_CMDCAT";
+		case STEXE_CMDCAT2: return "STEXE_CMDCAT2";
+		case STEXE_BUYMECHTANK: return "STEXE_BUYMECHTANK";
+		case STEXE_GETMECHTANK: return "STEXE_GETMECHTANK";
+		case STEXE_UPGMECHTANK: return "STEXE_UPGMECHTANK";
+		case STEXE_GETMECHUPG: return "STEXE_GETMECHUPG";
+		case STEXE_ENTERMECHTANK: return "STEXE_ENTERMECHTANK";
+		case STEXE_POWBUY: return "STEXE_POWBUY";
+		case STEXE_HOWKIND: return "STEXE_HOWKIND";
+		case STEXE_HOWRUDE: return "STEXE_HOWRUDE";
+		case STEXE_BUYWP: return "STEXE_BUYWP";
+		case STEXE_GETWP: return "STEXE_GETWP";
+		case STEXE_GIVEWP: return "STEXE_GIVEWP";
+		case STEXE_ASKUP: return "STEXE_ASKUP";
+		case STEXE_MSGUP: return "STEXE_MSGUP";
+		case STEXE_GETUP: return "STEXE_GETUP";
+		case STEXE_PANEL_SCROLL: return "STEXE_PANEL_SCROLL";
+		case STEXE_NUMINPUT_MOVE: return "STEXE_NUMINPUT_MOVE";
+		case STEXE_ASK: return "STEXE_ASK";
+		case STEXE_NO: return "STEXE_NO";
+		case STEXE_YES: return "STEXE_YES";
+		case STEXE_OKAY: return "STEXE_OKAY";
+		case STEXE_GTCAT: return "STEXE_GTCAT";
+		case STEXE_OPEN: return "STEXE_OPEN";
+		case STEXE_CLOSE: return "STEXE_CLOSE";
+		case STEXE_SYSOFF: return "STEXE_SYSOFF";
+		case STEXE_SELECT: return "STEXE_SELECT";
+	}
+	return StrParam(d:e);
+}
+
+function str STBuilder_AlignXName(int a){
+	switch(a){
+		case HUD_ALIGN_LEFT: return "HUD_ALIGN_LEFT";
+		case HUD_ALIGN_CENTER: return "HUD_ALIGN_CENTER";
+		case HUD_ALIGN_RIGHT: return "HUD_ALIGN_RIGHT";
+	}
+	return StrParam(d:a);
+}
+
+function str STBuilder_AlignYName(int a){
+	switch(a){
+		case HUD_ALIGN_TOP: return "HUD_ALIGN_TOP";
+		case HUD_ALIGN_CENTER: return "HUD_ALIGN_CENTER";
+		case HUD_ALIGN_BOTTOM: return "HUD_ALIGN_BOTTOM";
+	}
+	return StrParam(d:a);
+}
+
+function str STBuilder_ToggleName(int t){
+	switch(t){
+		case ST_BTNTYPE_NORMAL: return "ST_BTNTYPE_NORMAL";
+		case ST_BTNTYPE_TOGGLE: return "ST_BTNTYPE_TOGGLE";
+		case ST_BTNTYPE_RADIO: return "ST_BTNTYPE_RADIO";
+	}
+	return StrParam(d:t);
+}
+
+function str STBuilder_ColorExpr(int c){
+	if(c > 25) return StrParam(s:"\"", s:c, s:"\""); // string color
+	return STBuilder_ColorName(c);
+}
+
+// Parses keyword export flags (space separated). Unknown words are ignored.
+// Keywords: visible, currenttag, alphatag, tag0, alltags, offsets, hover,
+//           toggle, nomarkers.
+function int STBuilder_ParseExportFlags(str keywords){
+	int flags = 0;
+	int start = 0;
+	int len = StrLen(keywords);
+	for(int i = 0; i <= len; i++){
+		if(i == len || GetChar(keywords, i) == ' '){
+			if(i > start){
+				str kw = StrMid(keywords, start, i - start);
+				if(StrICmp(kw, "visible") == 0) flags |= STBUILD_EXPF_VISIBLE;
+				else if(StrICmp(kw, "currenttag") == 0 || StrICmp(kw, "current") == 0) flags |= STBUILD_EXPF_CURRENTTAG;
+				else if(StrICmp(kw, "alphatag") == 0 || StrICmp(kw, "alpha") == 0) flags |= STBUILD_EXPF_ALPHATAG;
+				else if(StrICmp(kw, "tag0") == 0) flags |= STBUILD_EXPF_TAG0;
+				else if(StrICmp(kw, "alltags") == 0 || StrICmp(kw, "all") == 0) flags |= STBUILD_EXPF_ALLTAGS;
+				else if(StrICmp(kw, "offsets") == 0) flags |= STBUILD_EXPF_OFFSETS;
+				else if(StrICmp(kw, "hover") == 0) flags |= STBUILD_EXPF_HOVER;
+				else if(StrICmp(kw, "toggle") == 0) flags |= STBUILD_EXPF_TOGGLE;
+				else if(StrICmp(kw, "nomarkers") == 0) flags |= STBUILD_EXPF_NOMARKERS;
+			}
+			start = i + 1;
+		}
+	}
+	if(flags == 0) flags = STBUILD_EXPF_DEFAULT;
+	return flags;
+}
+
+// Export filter: dead components are always skipped.
+function bool STBuilder_ExportInclude(int type, int id, int flags){
+	if(STBuilder_IsDead(type, id)) return false;
+	if((flags & STBUILD_EXPF_VISIBLE) && !STBuilder_GetCompShow(type, id)) return false;
+	if(!(flags & STBUILD_EXPF_ALLTAGS)){
+		bool tagok = false;
+		int tag = STBuilder_GetCompTag(type, id);
+		if(flags & STBUILD_EXPF_CURRENTTAG){ if(tag == pagetags[STTAGS_NOW]) tagok = true; }
+		if(flags & STBUILD_EXPF_ALPHATAG){ if(tag == pagetags[STTAGS_ALPHA]) tagok = true; }
+		if(flags & STBUILD_EXPF_TAG0){ if(tag == 0) tagok = true; }
+		if(!(flags & (STBUILD_EXPF_CURRENTTAG | STBUILD_EXPF_ALPHATAG | STBUILD_EXPF_TAG0))) tagok = true;
+		if(!tagok) return false;
+	}
+	return true;
+}
+
+function str STBuilder_AnchorNameX(int a){
+	switch(a){
+		case STPANEL_ANCHOR_CENTER: return "STPANEL_ANCHOR_CENTER";
+		case STPANEL_ANCHOR_LEFT: return "STPANEL_ANCHOR_LEFT";
+		case STPANEL_ANCHOR_RIGHT: return "STPANEL_ANCHOR_RIGHT";
+	}
+	return StrParam(d:a);
+}
+
+function str STBuilder_AnchorNameY(int a){
+	switch(a){
+		case STPANEL_ANCHOR_CENTER: return "STPANEL_ANCHOR_CENTER";
+		case STPANEL_ANCHOR_TOP: return "STPANEL_ANCHOR_TOP";
+		case STPANEL_ANCHOR_BOTTOM: return "STPANEL_ANCHOR_BOTTOM";
+	}
+	return StrParam(d:a);
+}
+
+// True if the component was auto-created by a NumInput (prev/next/label).
+function bool STBuilder_IsNumInputChild(int type, int id){
+	for(int i = 0; i < comp_count[STCOMP_NUMINPUT]; i++){
+		if(type == STCOMP_SBTN && (NumInput_getPrevButton(i) == id || NumInput_getNextButton(i) == id)) return true;
+		if(type == STCOMP_LBL && NumInput_getLabelNum(i) == id) return true;
+	}
+	return false;
+}
+
+// ----- per-type property emitters (shared by top-level and panel children) -----
+
+function void STBuilder_ExpIBtnProps(int id, str var, int flags){
+	Log(s:"    ImgButton_setImage(", s:var, s:", \"", s:ImgButton_getImage(id), s:"\");");
+	if((flags & STBUILD_EXPF_HOVER) && StrLen(ImgButton_getHoverImage(id)) > 0)
+		Log(s:"    ImgButton_setHoverImage(", s:var, s:", \"", s:ImgButton_getHoverImage(id), s:"\");");
+	Log(s:"    ImgButton_setTag(", s:var, s:", ", d:ImgButton_getTag(id), s:");");
+	Log(s:"    ImgButton_setExecute(", s:var, s:", ", s:STBuilder_ExecName(ImgButton_getExecute(id)), s:");");
+	Log(s:"    ImgButton_setArgs(", s:var, s:", ", d:ImgButton_getExeArg1(id), s:", ",
+		d:ImgButton_getExeArg2(id), s:", ", d:ImgButton_getExeArg3(id), s:");");
+	Log(s:"    ImgButton_setColor(", s:var, s:", ", s:STBuilder_ColorExpr(ImgButton_getColor(id)), s:");");
+	if(flags & STBUILD_EXPF_TOGGLE){
+		int itog = ImgButton_GetIsToggleable(id);
+		if(itog != ST_BTNTYPE_NORMAL){
+			Log(s:"    ImgButton_SetIsToggleable(", s:var, s:", ", s:STBuilder_ToggleName(itog), s:");");
+			Log(s:"    ImgButton_SetToggleState(", s:var, s:", ", d:ImgButton_GetToggleState(id), s:");");
+			Log(s:"    ImgButton_SetGroup(", s:var, s:", ", d:ImgButton_GetGroup(id), s:");");
+		}
+	}
+	if((flags & STBUILD_EXPF_OFFSETS) && (ImgButton_getOffsetX(id) != 0 || ImgButton_getOffsetY(id) != 0))
+		Log(s:"    ImgButton_setOffsets(", s:var, s:", ", f:ImgButton_getOffsetX(id), s:", ", f:ImgButton_getOffsetY(id), s:");");
+	Log(s:"    ImgButton_setShow(", s:var, s:", true);");
+}
+
+function void STBuilder_ExpSBtnProps(int id, str var, int flags){
+	Log(s:"    StrButton_setColor(", s:var, s:", ", s:STBuilder_ColorExpr(StrButton_getColor(id)), s:");");
+	Log(s:"    StrButton_setTag(", s:var, s:", ", d:StrButton_getTag(id), s:");");
+	Log(s:"    StrButton_setExecute(", s:var, s:", ", s:STBuilder_ExecName(StrButton_getExecute(id)), s:");");
+	Log(s:"    StrButton_setExeArgs(", s:var, s:", ", d:StrButton_getExeArg1(id), s:", ",
+		d:StrButton_getExeArg2(id), s:", ", d:StrButton_getExeArg3(id), s:");");
+	if((flags & STBUILD_EXPF_HOVER) && StrButton_getExeHover(id) != 0){
+		Log(s:"    StrButton_setExeHover(", s:var, s:", ", s:STBuilder_ExecName(StrButton_getExeHover(id)), s:");");
+		Log(s:"    StrButton_setExeHoverArgs(", s:var, s:", ", d:StrButton_getExeHoverArg1(id), s:", ",
+			d:StrButton_getExeHoverArg2(id), s:", ", d:StrButton_getExeHoverArg3(id), s:");");
+	}
+	if(flags & STBUILD_EXPF_TOGGLE){
+		int stog = StrButton_GetIsToggleable(id);
+		if(stog != ST_BTNTYPE_NORMAL){
+			Log(s:"    StrButton_SetIsToggleable(", s:var, s:", ", s:STBuilder_ToggleName(stog), s:");");
+			Log(s:"    StrButton_SetToggleState(", s:var, s:", ", d:StrButton_GetToggleState(id), s:");");
+			Log(s:"    StrButton_SetGroup(", s:var, s:", ", d:StrButton_GetGroup(id), s:");");
+		}
+	}
+	if((flags & STBUILD_EXPF_OFFSETS) && (StrButton_getOffsetX(id) != 0 || StrButton_getOffsetY(id) != 0))
+		Log(s:"    StrButton_setOffsets(", s:var, s:", ", f:StrButton_getOffsetX(id), s:", ", f:StrButton_getOffsetY(id), s:");");
+	Log(s:"    StrButton_setShow(", s:var, s:", true);");
+}
+
+function void STBuilder_ExpLabelProps(int id, str var, int flags){
+	Log(s:"    Label_setText(", s:var, s:", \"", s:Label_getText(id), s:"\");");
+	Log(s:"    Label_setFont(", s:var, s:", \"", s:Label_getFont(id), s:"\");");
+	Log(s:"    Label_setColor(", s:var, s:", ", s:STBuilder_ColorExpr(Label_getColor(id)), s:");");
+	Log(s:"    Label_setTag(", s:var, s:", ", d:Label_getTag(id), s:");");
+	Log(s:"    Label_setAligns(", s:var, s:", ", s:STBuilder_AlignXName(Label_getAlignX(id)), s:", ",
+		s:STBuilder_AlignYName(Label_getAlignY(id)), s:");");
+	if((flags & STBUILD_EXPF_OFFSETS) && (Label_getOffsetX(id) != 0 || Label_getOffsetY(id) != 0))
+		Log(s:"    Label_setOffsets(", s:var, s:", ", f:Label_getOffsetX(id), s:", ", f:Label_getOffsetY(id), s:");");
+	Log(s:"    Label_setShow(", s:var, s:", true);");
+}
+
+function void STBuilder_ExpImageProps(int id, str var, int flags){
+	Log(s:"    Image_setTag(", s:var, s:", ", d:Image_getTag(id), s:");");
+	Log(s:"    Image_setAligns(", s:var, s:", ", s:STBuilder_AlignXName(Image_getAlignX(id)), s:", ",
+		s:STBuilder_AlignYName(Image_getAlignY(id)), s:");");
+	Log(s:"    Image_setScale(", s:var, s:", ", f:Image_getScaleX(id), s:", ", f:Image_getScaleY(id), s:");");
+	if((flags & STBUILD_EXPF_OFFSETS) && (Image_getOffsetX(id) != 0 || Image_getOffsetY(id) != 0))
+		Log(s:"    Image_setOffsets(", s:var, s:", ", f:Image_getOffsetX(id), s:", ", f:Image_getOffsetY(id), s:");");
+	Log(s:"    Image_setShow(", s:var, s:", true);");
+}
+
+function void STBuilder_ExpPanelProps(int pid, str var, int flags){
+	Log(s:"    Panel_SetTitle(", s:var, s:", \"", s:Panel_GetTitle(pid), s:"\");");
+	Log(s:"    Panel_setColor(", s:var, s:", ", s:STBuilder_ColorExpr(Panel_getColor(pid)), s:");");
+	Log(s:"    Panel_setTag(", s:var, s:", ", d:Panel_GetTag(pid), s:");");
+	Log(s:"    Panel_SetAnchors(", s:var, s:", ", s:STBuilder_AnchorNameX(Panel_GetAnchorX(pid)), s:", ",
+		s:STBuilder_AnchorNameY(Panel_GetAnchorY(pid)), s:");");
+	Log(s:"    Panel_SetColumns(", s:var, s:", ", d:Panel_GetColumns(pid), s:");");
+	Log(s:"    Panel_SetSpacing(", s:var, s:", ", f:Panel_GetSpacingX(pid), s:", ", f:Panel_GetSpacingY(pid), s:");");
+	Log(s:"    Panel_SetVirtualSize(", s:var, s:", ", f:Panel_GetVirtualWidth(pid), s:", ", f:Panel_GetVirtualHeight(pid), s:");");
+	Log(s:"    Panel_SetScrollAmount(", s:var, s:", ", f:Panel_GetScrollX(pid), s:", ", f:Panel_GetScrollY(pid), s:");");
+	Log(s:"    Panel_SetAutoscroll(", s:var, s:", ", d:Panel_GetAutoscroll(pid), s:");");
+	Log(s:"    Panel_setShow(", s:var, s:", true);");
+}
+
+function void STBuilder_ExpNumInputProps(int id, str var, int flags){
+	Log(s:"    NumInput_setTag(", s:var, s:", ", d:NumInput_getTag(id), s:");");
+	Log(s:"    NumInput_SetBtnDistance(", s:var, s:", ", f:NumInput_GetBtnDistance(id), s:");");
+	Log(s:"    NumInput_SetValue(", s:var, s:", ", d:NumInput_GetValue(id), s:");");
+	Log(s:"    NumInput_SetMinValue(", s:var, s:", ", d:NumInput_GetMinValue(id), s:");");
+	Log(s:"    NumInput_SetMaxValue(", s:var, s:", ", d:NumInput_GetMaxValue(id), s:");");
+	Log(s:"    NumInput_SetStepValue(", s:var, s:", ", d:NumInput_GetStepValue(id), s:");");
+	Log(s:"    NumInput_SetShowNumber(", s:var, s:", ", d:NumInput_GetShowNumber(id), s:");");
+	Log(s:"    NumInput_SetLabelText(", s:var, s:", \"", s:NumInput_GetLabelText(id), s:"\");");
+	Log(s:"    NumInput_setColor(", s:var, s:", ", s:STBuilder_ColorExpr(NumInput_getColor(id)), s:");");
+	Log(s:"    NumInput_setLoopValues(", s:var, s:", ", d:NumInput_GetLoopValues(id), s:");");
+	Log(s:"    NumInput_setShow(", s:var, s:", true);");
+}
+
+// Dumps the exported components as ready-to-paste ACS, split into
+// INIT / UPDATE / EXECUTE batches. `flags` selects what gets exported.
+function void STBuilder_Export(int flags){
+	int tag = pagetags[STTAGS_NOW];
+	bool markers = !(flags & STBUILD_EXPF_NOMARKERS);
+	if(markers){
+		Log(s:"// ===== STBUILDER-EXPORT-TAG-", d:tag, s:" =====");
+		Log(s:"// STBuilder export - page tag ", d:tag, s:" - flags ", d:flags);
+		Log(s:"// Tip: run 'logfile stbuilder_export.txt' in the console before exporting to save it to a file.");
+		Log(s:"");
+	}
+
+	// -------------------- BATCH 1: INIT --------------------
+	if(markers) Log(s:"// BATCH 1 - INIT: component definitions");
+	Log(s:"function void STBuilder_Page_", d:tag, s:"_Init(void){");
+
+	// IButtons (top-level)
+	for(int id = 0; id < comp_count[STCOMP_IBTN]; id++){
+		if(STBuilder_HasParent(STCOMP_IBTN, id)) continue;
+		if(!STBuilder_ExportInclude(STCOMP_IBTN, id, flags)) continue;
+		int rect = STBuilder_CompRect(STCOMP_IBTN, id);
+		Log(s:"    int ibtn_", d:id, s:" = ImgButton_Add(",
+			f:RectX1(rect), s:", ", f:RectY1(rect), s:", ",
+			f:RectWidth(rect), s:", ", f:RectHeight(rect), s:");");
+		STBuilder_ExpIBtnProps(id, StrParam(s:"ibtn_", d:id), flags);
+		Log(s:"");
+	}
+
+	// String buttons (top-level)
+	for(int sid = 0; sid < comp_count[STCOMP_SBTN]; sid++){
+		if(STBuilder_HasParent(STCOMP_SBTN, sid)) continue;
+		if(STBuilder_IsNumInputChild(STCOMP_SBTN, sid)) continue;
+		if(!STBuilder_ExportInclude(STCOMP_SBTN, sid, flags)) continue;
+		int srect = STBuilder_CompRect(STCOMP_SBTN, sid);
+		Log(s:"    int sbtn_", d:sid, s:" = StrButton_Add(", f:RectX1(srect), s:", ", f:RectY1(srect),
+			s:", \"", s:StrButton_getText(sid), s:"\");");
+		STBuilder_ExpSBtnProps(sid, StrParam(s:"sbtn_", d:sid), flags);
+		Log(s:"");
+	}
+
+	// Labels (top-level)
+	for(int lid = 0; lid < comp_count[STCOMP_LBL]; lid++){
+		if(STBuilder_HasParent(STCOMP_LBL, lid)) continue;
+		if(STBuilder_IsNumInputChild(STCOMP_LBL, lid)) continue;
+		if(!STBuilder_ExportInclude(STCOMP_LBL, lid, flags)) continue;
+		int lrect = STBuilder_CompRect(STCOMP_LBL, lid);
+		Log(s:"    int lbl_", d:lid, s:" = Label_Add(", f:RectX1(lrect), s:", ", f:RectY1(lrect), s:");");
+		STBuilder_ExpLabelProps(lid, StrParam(s:"lbl_", d:lid), flags);
+		Log(s:"");
+	}
+
+	// Images (top-level)
+	for(int iid = 0; iid < comp_count[STCOMP_IMG]; iid++){
+		if(STBuilder_HasParent(STCOMP_IMG, iid)) continue;
+		if(!STBuilder_ExportInclude(STCOMP_IMG, iid, flags)) continue;
+		int irect = STBuilder_CompRect(STCOMP_IMG, iid);
+		Log(s:"    int img_", d:iid, s:" = Image_Add(", f:RectX1(irect), s:", ", f:RectY1(irect),
+			s:", \"", s:Image_getFile(iid), s:"\");");
+		STBuilder_ExpImageProps(iid, StrParam(s:"img_", d:iid), flags);
+		Log(s:"");
+	}
+
+	// Panels and their children
+	for(int pid = 0; pid < comp_count[STCOMP_PANEL]; pid++){
+		if(!STBuilder_ExportInclude(STCOMP_PANEL, pid, flags)) continue;
+		int prect = STBuilder_CompRect(STCOMP_PANEL, pid);
+		int wx8 = ((RectWidth(prect) >> 16) - 16) / 8;
+		int hx8 = ((RectHeight(prect) >> 16) - 16) / 8;
+		Log(s:"    int pn_", d:pid, s:" = Panel_Add(", f:RectX1(prect), s:", ", f:RectY1(prect),
+			s:", ", d:wx8, s:", ", d:hx8, s:");");
+		STBuilder_ExpPanelProps(pid, StrParam(s:"pn_", d:pid), flags);
+		Log(s:"");
+		for(int ci = 0; ci < Panel_GetNumberOfComps(pid); ci++){
+			int ctype = panels_comps_index[pid][ci][STPANEL_COMPDATA_TYPE];
+			int cid = panels_comps_index[pid][ci][STPANEL_COMPDATA_ID];
+			if(!STBuilder_ExportInclude(ctype, cid, flags)) continue;
+			int relx = STBuilder_OriginX(ctype, cid) - Panel_GetClipX1(pid);
+			int rely = STBuilder_OriginY(ctype, cid) - Panel_GetClipY1(pid);
+			switch(ctype){
+				case STCOMP_IBTN:
+					Log(s:"    int ibtn_", d:cid, s:" = ImgButton_AddToPanelAbs(",
+						f:RectWidth(STBuilder_CompRect(ctype, cid)), s:", ", f:RectHeight(STBuilder_CompRect(ctype, cid)),
+						s:", pn_", d:pid, s:", ", f:relx, s:", ", f:rely, s:");");
+					STBuilder_ExpIBtnProps(cid, StrParam(s:"ibtn_", d:cid), flags);
+				break;
+				case STCOMP_SBTN:
+					Log(s:"    int sbtn_", d:cid, s:" = StrButton_AddToPanelAbs(\"", s:StrButton_getText(cid),
+						s:"\", pn_", d:pid, s:", ", f:relx, s:", ", f:rely, s:");");
+					STBuilder_ExpSBtnProps(cid, StrParam(s:"sbtn_", d:cid), flags);
+				break;
+				case STCOMP_LBL:
+					Log(s:"    int lbl_", d:cid, s:" = Label_AddToPanelAbs(pn_", d:pid, s:", ", f:relx, s:", ", f:rely, s:");");
+					STBuilder_ExpLabelProps(cid, StrParam(s:"lbl_", d:cid), flags);
+				break;
+				case STCOMP_IMG:
+					Log(s:"    int img_", d:cid, s:" = Image_AddToPanelAbs(\"", s:Image_getFile(cid),
+						s:"\", pn_", d:pid, s:", ", f:relx, s:", ", f:rely, s:");");
+					STBuilder_ExpImageProps(cid, StrParam(s:"img_", d:cid), flags);
+				break;
+			}
+			Log(s:"");
+		}
+	}
+
+	// NumInputs
+	for(int nid = 0; nid < comp_count[STCOMP_NUMINPUT]; nid++){
+		if(!STBuilder_ExportInclude(STCOMP_NUMINPUT, nid, flags)) continue;
+		int nrect = STBuilder_CompRect(STCOMP_NUMINPUT, nid);
+		Log(s:"    int ni_", d:nid, s:" = NumInput_Add(", f:RectX1(nrect), s:", ", f:RectY1(nrect), s:");");
+		STBuilder_ExpNumInputProps(nid, StrParam(s:"ni_", d:nid), flags);
+		Log(s:"");
+	}
+
+	Log(s:"}");
+	Log(s:"");
+
+	// -------------------- BATCH 2: UPDATE --------------------
+	if(markers) Log(s:"// BATCH 2 - UPDATE: visibility / logic for components using STEXE_*");
+	Log(s:"function void STBuilder_Page_", d:tag, s:"_Update(void){");
+	bool any_upd = false;
+	for(int uid = 0; uid < comp_count[STCOMP_IBTN]; uid++){
+		if(!STBuilder_ExportInclude(STCOMP_IBTN, uid, flags)) continue;
+		int uexe = ImgButton_getExecute(uid);
+		if(uexe == 0) continue;
+		Log(s:"    // ibtn_", d:uid, s:" -> ", s:STBuilder_ExecName(uexe), s:"  (update its visibility/logic here)");
+		any_upd = true;
+	}
+	for(int usid = 0; usid < comp_count[STCOMP_SBTN]; usid++){
+		if(STBuilder_IsNumInputChild(STCOMP_SBTN, usid)) continue;
+		if(!STBuilder_ExportInclude(STCOMP_SBTN, usid, flags)) continue;
+		int usexe = StrButton_getExecute(usid);
+		if(usexe == 0) continue;
+		Log(s:"    // sbtn_", d:usid, s:" -> ", s:STBuilder_ExecName(usexe), s:"  (update its visibility/logic here)");
+		any_upd = true;
+	}
+	if(!any_upd) Log(s:"    // (no components with an execute)");
+	Log(s:"}");
+	Log(s:"");
+
+	// -------------------- BATCH 3: EXECUTE --------------------
+	if(markers) Log(s:"// BATCH 3 - EXECUTE: custom execute handlers (register with SamuTerm_RegisterScriptExec)");
+	int seen[64];
+	int seen_n = 0;
+	bool any_exec = false;
+	for(int eid = 0; eid < comp_count[STCOMP_IBTN]; eid++){
+		if(!STBuilder_ExportInclude(STCOMP_IBTN, eid, flags)) continue;
+		int exe = ImgButton_getExecute(eid);
+		if(exe == 0) continue;
+		bool dup = false;
+		for(int s = 0; s < seen_n; s++) if(seen[s] == exe){ dup = true; break; }
+		if(dup) continue;
+		if(seen_n < 64) seen[seen_n++] = exe;
+		any_exec = true;
+		str ename = STBuilder_ExecName(exe);
+		str regname = SamuTerm_GetScriptExecName(exe);
+		Log(s:"// ", s:ename, s:" (used by ibtn_", d:eid, s:")");
+		if(StrLen(regname) > 0) Log(s:"//   originally handled by: \"", s:regname, s:"\"");
+		Log(s:"SamuTerm_RegisterScriptExec(", s:ename, s:", \"STBuilder_Page_", d:tag, s:"_Exec_", s:ename, s:"\");");
+		Log(s:"script \"STBuilder_Page_", d:tag, s:"_Exec_", s:ename, s:"\" (int arg1, int arg2, int arg3){");
+		Log(s:"    // TODO: implement ", s:ename, s:" logic here.");
+		Log(s:"}");
+		Log(s:"");
+	}
+	for(int esid = 0; esid < comp_count[STCOMP_SBTN]; esid++){
+		if(STBuilder_IsNumInputChild(STCOMP_SBTN, esid)) continue;
+		if(!STBuilder_ExportInclude(STCOMP_SBTN, esid, flags)) continue;
+		int sexe = StrButton_getExecute(esid);
+		if(sexe == 0) continue;
+		bool sdup = false;
+		for(int s2 = 0; s2 < seen_n; s2++) if(seen[s2] == sexe){ sdup = true; break; }
+		if(sdup) continue;
+		if(seen_n < 64) seen[seen_n++] = sexe;
+		any_exec = true;
+		str sname = STBuilder_ExecName(sexe);
+		str sreg = SamuTerm_GetScriptExecName(sexe);
+		Log(s:"// ", s:sname, s:" (used by sbtn_", d:esid, s:")");
+		if(StrLen(sreg) > 0) Log(s:"//   originally handled by: \"", s:sreg, s:"\"");
+		Log(s:"SamuTerm_RegisterScriptExec(", s:sname, s:", \"STBuilder_Page_", d:tag, s:"_Exec_", s:sname, s:"\");");
+		Log(s:"script \"STBuilder_Page_", d:tag, s:"_Exec_", s:sname, s:"\" (int arg1, int arg2, int arg3){");
+		Log(s:"    // TODO: implement ", s:sname, s:" logic here.");
+		Log(s:"}");
+		Log(s:"");
+	}
+	if(!any_exec) Log(s:"// (no custom executes)");
+	if(markers) Log(s:"// ===== end STBUILDER-EXPORT-TAG-", d:tag, s:" =====");
+	STBuilder_Notify("STBuilder: export written to the console/log.", CR_GREEN);
+}
+
+// Works regardless of the script's activator (server-triggered clientside
+// scripts may be activated by the world, not the player).
+function bool STBuilder_LocalInTerminal(void){
+	int play = ConsolePlayerNumber();	if(play < 0) return false;
+	return CheckActorInventory(CONST_TID_PLAYER + play, "SamuTInv_UsingTerminal");
+}
+
+// Sets the terminal background for this session (reset on reopen).
+function void STBuilder_SetBg(str name){
+	if(StrLen(name) == 0){
+		STBuilder_Notify("STBuilder: usage !bg <patch>", CR_RED);
+		return;
+	}
+	imgbg = name;
+	STBuilder_Notify(StrParam(s:"STBuilder: background set to \"", s:name, s:"\"."), CR_GREEN);
+}
+
+// Moves the builder to another tag (affects visibility, placement and export).
+function void STBuilder_SetTag(int tag){
+	pagetags[STTAGS_NOW] = tag;
+	STBuilder_Notify(StrParam(s:"STBuilder: now on tag ", d:tag, s:"."), CR_GOLD);
+}
+
+script "STBuilder_ChatNet" (int s) CLIENTSIDE {
+	if(GameType() != GAME_SINGLE_PLAYER) terminate;
+	if(!STBuilder_LocalInTerminal()){ STBuilder_Notify("STBuilder: open the terminal first.", CR_RED); terminate; }
+	str body = s;
+	StrSplit(body, " ");
+	str kw = r1;
+	str rest = r2;
+
+	if(StrICmp(kw, "add") == 0){
+		STBuilder_Add(STBuilder_KeywordToType(rest));
+	} else if(StrICmp(kw, "delete") == 0 || StrICmp(kw, "del") == 0){
+		STBuilder_Delete();
+	} else if(StrICmp(kw, "clear") == 0 || StrICmp(kw, "cancel") == 0){
+		STBuilder_Clear();
+	} else if(StrICmp(kw, "set-prop") == 0 || StrICmp(kw, "set") == 0){
+		STBuilder_SetProp(rest);
+	} else if(StrICmp(kw, "get-prop") == 0 || StrICmp(kw, "get") == 0){
+		STBuilder_GetProp(rest);
+	} else if(StrICmp(kw, "toggle-visibility") == 0 || StrICmp(kw, "vis") == 0 || StrICmp(kw, "ghost") == 0){
+		STBuilder_ToggleVisibility();
+	} else if(StrICmp(kw, "export") == 0){
+		STBuilder_Export(STBuilder_ParseExportFlags(rest));
+	} else if(StrICmp(kw, "bg") == 0 || StrICmp(kw, "background") == 0){
+		STBuilder_SetBg(rest);
+	} else if(StrICmp(kw, "set-tag") == 0){
+		STBuilder_SetTag(STBuilder_StrToInt(rest));
+	} else if(StrICmp(kw, "undo") == 0){
+		STBuilder_Undo();
+	} else if(StrICmp(kw, "redo") == 0){
+		STBuilder_Redo();
+	} else if(StrICmp(kw, "copy") == 0){
+		STBuilder_Copy();
+	} else if(StrICmp(kw, "paste") == 0){
+		STBuilder_Paste();
+	} else if(StrICmp(kw, "dup") == 0 || StrICmp(kw, "duplicate") == 0){
+		STBuilder_Duplicate();
+	} else if(StrICmp(kw, "toggle-tooltip") == 0 || StrICmp(kw, "tooltip") == 0){
+		STBuilder_ToggleTooltip();
+	} else if(StrICmp(kw, "overlay") == 0 || StrICmp(kw, "debug") == 0){
+		STBuilder_ToggleOverlay();
+	} else {
+		STBuilder_Notify(StrParam(s:"STBuilder: unknown command '", s:kw, s:"'. Try: add, delete, copy, paste, dup, clear, undo, redo, set-prop, get-prop, toggle-visibility, toggle-tooltip, overlay, export, bg, set-tag."), CR_RED);
+	}
+}

@@ -1,5 +1,7 @@
 #library "samuterm"
 
+#nocompact // samuterm aggregates many included modules; lift the 256-function cap.
+
 #define ACSUTILS_RECTLIB_USERVARS 40 // Max amount of properties.
 
 //////SF Stuff////////
@@ -17,6 +19,7 @@
 //////SF Stuff////////
 
 #include "samut_vars.acs"
+#include "stbuilder_vars.acs"
 #include "samut_layouts.acs"
 #include "samut_comps.acs"
 #include "samut_pages.acs"
@@ -24,11 +27,54 @@
 #include "samut_input.acs"
 #include "samut_update.acs"
 #include "samut_disp.acs"
+#include "samut_builder_chat.acs"
 
 function bool Samuterm_InUse(void){return CheckInventory("SamuTInv_UsingTerminal");}
 function void Samuterm_LockPlayer(int player){SetPlayerProperty(0,true,PROP_TOTALLYFROZEN);SetActorVelocity(player+CONST_TID_PLAYER,0,0,0,false,false);}
 function void SamuTerm_SetBack(str what){imgbg = what;}
 function void SamuTerm_ResetBack(void){imgbg = STSET_BACK;}
+
+// STBuilder entry points (single-player debug tool).
+Script "STBuilder_ModeScript" (void) NET {
+	if(GameType() != GAME_SINGLE_PLAYER) terminate;
+	if(PlayerNumber() < 0) terminate;
+	NamedExecuteClientScript("STBuilder_ModeClient", PlayerNumber());
+}
+
+script "STBuilder_ModeClient" CLIENTSIDE {
+	if(GameType() != GAME_SINGLE_PLAYER) terminate;
+	if(!STBuilder_LocalInTerminal()){
+		STBuilder_Notify("STBuilder: open the terminal first.", CR_RED);
+		terminate;
+	}
+	STB_SetActive(!STB_IsActive());
+	if(!STB_IsActive()){
+		STB_SetPlacing(0);
+		STBuilder_Deselect();
+	}
+	Input_ClearBinds();
+	Input_BindDirections();
+	if(STB_IsActive())
+		STBuilder_Notify("STBuilder: build mode ON.", CR_GREEN);
+	else
+		STBuilder_Notify("STBuilder: build mode OFF.", CR_ORANGE);
+}
+
+Script "STBuilder_ExportScript" (int flags) NET {
+	if(GameType() != GAME_SINGLE_PLAYER) terminate;
+	if(PlayerNumber() < 0) terminate;
+	NamedExecuteClientScript("STBuilder_ExportClient", PlayerNumber(), flags);
+}
+
+script "STBuilder_ExportClient" (int flags) CLIENTSIDE {
+	if(GameType() != GAME_SINGLE_PLAYER) terminate;
+	if(!STBuilder_LocalInTerminal()){
+		STBuilder_Notify("STBuilder: open the terminal first.", CR_RED);
+		terminate;
+	}
+	if(flags == 0) flags = STBUILD_EXPF_DEFAULT;
+	STBuilder_Export(flags);
+}
 
 script "Samuterm_PlayerDiesSomehow" Death {if(Samuterm_InUse()) SamuTerm_Execute(STEXE_SYSOFF, 0, 0, 0);}  
 script "SamuTerminal_IntDB" OPEN ClientSide {if(GameType() != GAME_SINGLE_PLAYER) IntDB_LoadStuff();}

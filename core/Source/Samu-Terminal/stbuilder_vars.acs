@@ -1,0 +1,84 @@
+/**
+*
+* 	stbuilder_vars.acs
+* 	STBuilder constants, HUD ids and state.
+*
+* 	Plain include, pulled in by samuterm.acs (after samut_vars).
+*
+**/
+
+// STBuilder HUD ids
+#LibDefine ST_HID_BUILDER		ST_HID_GLOBAL - 50
+#LibDefine ST_HID_BUILDER_OUT	ST_HID_GLOBAL - 100
+#LibDefine ST_HID_BUILDER_HELP	ST_HID_GLOBAL - 60
+#LibDefine ST_HID_BUILDER_MARK	ST_HID_GLOBAL + 42
+#LibDefine ST_HID_BUILDER_DBG	ST_HID_GLOBAL - 1000
+
+// STBuilder executes
+#LibDefine STEXE_BUILDER_SELECT   1002
+#LibDefine STEXE_BUILDER_MOVE     1003
+#LibDefine STEXE_BUILDER_DESELECT 1004
+#LibDefine STEXE_BUILDER_PLACE    1005
+#LibDefine STEXE_BUILDER_CYCLE    1006
+#LibDefine STEXE_BUILDER_CANCEL   1007
+
+// STBuilder chat commands
+#LibDefine STBUILDER_NONE    -1
+#LibDefine STBUILDCMD_ADD     1
+#LibDefine STBUILDCMD_DELETE  2
+#LibDefine STBUILDCMD_CLEAR   3
+
+// STBuilder export flags
+#LibDefine STBUILD_EXPF_VISIBLE     1
+#LibDefine STBUILD_EXPF_CURRENTTAG  2
+#LibDefine STBUILD_EXPF_ALPHATAG    4
+#LibDefine STBUILD_EXPF_TAG0        8
+#LibDefine STBUILD_EXPF_ALLTAGS     16
+#LibDefine STBUILD_EXPF_OFFSETS     32
+#LibDefine STBUILD_EXPF_HOVER       64
+#LibDefine STBUILD_EXPF_TOGGLE      128
+#LibDefine STBUILD_EXPF_NOMARKERS   256
+#LibDefine STBUILD_EXPF_DEFAULT     (STBUILD_EXPF_VISIBLE | STBUILD_EXPF_CURRENTTAG | STBUILD_EXPF_OFFSETS | STBUILD_EXPF_HOVER | STBUILD_EXPF_TOGGLE)
+
+// STBuilder state (grouped into arrays to save globals)
+#LibDefine STBS_FLAGS      0 // bitmask (see STBFLAG_*)
+#LibDefine STBS_SELTYPE    1
+#LibDefine STBS_SELID      2
+#LibDefine STBS_PLACETYPE  3
+#LibDefine STBS_MARKERPREV 4
+#LibDefine STBS_MOVETIMER  5
+#LibDefine STBS_MOVEDIR    6
+#LibDefine STBS_DBGPREV    7
+
+#LibDefine STBFLAG_ACTIVE     1
+#LibDefine STBFLAG_PLACING    2
+#LibDefine STBFLAG_SHOWHIDDEN 4
+#LibDefine STBFLAG_OVERLAY    8
+
+int stbuilder_state[8]; // 0=flags, 1=seltype, 2=selid, 3=placetype, 4=markerprev, 5=movetimer, 6=movedir, 7=dbgprev
+int stbuilder_step[2];  // 0=normal, 1=fine
+int stbuilder_drag[4];  // 0=active, 1=hold_timer, 2=offx, 3=offy
+
+// STBuilder undo/redo log (up to STBUILDER_UNDO_MAX steps)
+#LibDefine STBUILDER_UNDO_MAX 10
+#LibDefine STBUILDER_SNAP_BEFORE 0
+#LibDefine STBUILDER_SNAP_AFTER  1
+int undo_meta[STBUILDER_UNDO_MAX][5];     // [i] 0=action(1 add,2 del,3 move,4 setprop), 1=type, 2=id, 3=dx, 4=dy
+int undo_snap[2][STBUILDER_UNDO_MAX][40]; // [before/after][i] component userdata snapshot
+int undo_count;                           // total entries in the log
+int undo_pos;                             // entries [0,undo_pos) are applied (redo cursor)
+
+// STBuilder clipboard (copy / paste)
+int clip_type = STBUILDER_NONE; // copied component type (-1 = empty)
+int clip_data[40];              // copied component userdata
+int clip_geom[2];               // copied width, height
+int clip_paste;                 // 1 = the next place confirm recreates the clipboard
+
+function bool STB_IsActive(void){ return (stbuilder_state[STBS_FLAGS] & STBFLAG_ACTIVE) != 0; }
+function void STB_SetActive(int on){ if(on) stbuilder_state[STBS_FLAGS] |= STBFLAG_ACTIVE; else stbuilder_state[STBS_FLAGS] &= ~STBFLAG_ACTIVE; }
+function bool STB_IsPlacing(void){ return (stbuilder_state[STBS_FLAGS] & STBFLAG_PLACING) != 0; }
+function void STB_SetPlacing(int on){ if(on) stbuilder_state[STBS_FLAGS] |= STBFLAG_PLACING; else stbuilder_state[STBS_FLAGS] &= ~STBFLAG_PLACING; }
+function bool STB_IsGhost(void){ return (stbuilder_state[STBS_FLAGS] & STBFLAG_SHOWHIDDEN) != 0; }
+function void STB_SetGhost(int on){ if(on) stbuilder_state[STBS_FLAGS] |= STBFLAG_SHOWHIDDEN; else stbuilder_state[STBS_FLAGS] &= ~STBFLAG_SHOWHIDDEN; }
+function bool STB_IsOverlay(void){ return (stbuilder_state[STBS_FLAGS] & STBFLAG_OVERLAY) != 0; }
+function void STB_SetOverlay(int on){ if(on) stbuilder_state[STBS_FLAGS] |= STBFLAG_OVERLAY; else stbuilder_state[STBS_FLAGS] &= ~STBFLAG_OVERLAY; }

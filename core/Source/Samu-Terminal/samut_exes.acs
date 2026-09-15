@@ -54,6 +54,20 @@ function void SamuTerm_InitScriptExecs(void){
 	MechUpPage_RegisterScriptExecs();
 	CMDPage_RegisterScriptExecs();
 	TeleportPage_RegisterScriptExecs();
+
+	// STBuilder
+	SamuTerm_RegisterScriptExec(STEXE_BUILDER_MOVE, "STBuilder_ScriptExec_Move");
+	SamuTerm_RegisterScriptExec(STEXE_BUILDER_CYCLE, "STBuilder_ScriptExec_Cycle");
+	SamuTerm_RegisterScriptExec(STEXE_BUILDER_CANCEL, "STBuilder_ScriptExec_Cancel");
+}
+
+// Returns the registered script name for an execute id, or "" if none.
+function str SamuTerm_GetScriptExecName(int cmd){
+	SamuTerm_InitScriptExecs();
+	for(int i = 0; i < stscript_exec_count; i++){
+		if(stscript_exec_cmd[i] == cmd) return stscript_exec_script[i];
+	}
+	return "";
 }
 
 function bool SamuTerm_TryScriptExec(int cmd, int arg1, int arg2, int arg3){

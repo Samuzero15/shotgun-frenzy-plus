@@ -93,7 +93,11 @@ function void SamuTerm_Say(str msg){
 
 function void ShowImgButton (int bid){
 	//log(s:"I am Being called.");
-	if(!ImgButton_GetShow(bid)) return;
+	bool ghost = false;
+	if(!ImgButton_GetShow(bid)){
+		if(!STBuilder_ShouldGhost(STCOMP_IBTN, bid)) return;
+		ghost = true;
+	}
 	int p = ImgButton_getParent(bid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 
@@ -129,7 +133,7 @@ function void ShowImgButton (int bid){
 		 ) hilight = true;
 	}
 
-	if(hilight && cursor_hover[STCURSOR_HOVER_COMP] != -1){
+	if(!ghost && hilight && cursor_hover[STCURSOR_HOVER_COMP] != -1){
 		HudPushState();
     	HudResetState();
 		HUDSetHiliTimes();
@@ -157,17 +161,36 @@ function void ShowImgButton (int bid){
 	HudPushState();
     HudResetState();
 	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	if(ghost){ HudSetBlendStyle(HUD_BLENDSTYLE_NORMAL); HudSetAlpha(0.35); }
 
 	if(drawmode == 1)
 		HudPrintText(x, y, hid, char, img, color);
 	else 
 		HudPrintImage(x, y, hid, img);
 	
+	int toggleType = ImgButton_GetIsToggleable(bid);
+	if(!ghost && toggleType != ST_BTNTYPE_NORMAL){
+		str ind;
+		if(ImgButton_GetToggleState(bid)){
+			if(toggleType == ST_BTNTYPE_TOGGLE) ind = "[\cGX\c-]";
+			else ind = "[\cGT\c-]";
+		}else ind = "[ ]";
+		HUDSetTextColor(CR_GREEN);
+		HUDSetPoint(x + 2.0, y + 2.0);
+		HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+		HUDSetFont("SMALLFONT");
+		HUDDrawText(ST_HID_TOGGLE + bid, ind);
+	}
+	
     HudPopState();
 }
 
 function void ShowLabel (int lid){
-	if(!Label_GetShow(lid)) return;
+	bool ghost = false;
+	if(!Label_GetShow(lid)){
+		if(!STBuilder_ShouldGhost(STCOMP_LBL, lid)) return;
+		ghost = true;
+	}
 	int p = Label_getParent(lid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 
@@ -185,6 +208,7 @@ function void ShowLabel (int lid){
 
 	HudPushState();
     HudResetState();
+	if(ghost){ HudSetBlendStyle(HUD_BLENDSTYLE_NORMAL); HudSetAlpha(0.35); }
 	HudSetWordWrap(true);
 	HudSetAlign(alignx,aligny);
 	
@@ -196,7 +220,11 @@ function void ShowLabel (int lid){
 }
 
 function void ShowImage (int iid){
-	if(!Image_GetShow(iid)) return;
+	bool ghost = false;
+	if(!Image_GetShow(iid)){
+		if(!STBuilder_ShouldGhost(STCOMP_IMG, iid)) return;
+		ghost = true;
+	}
 	int p = Image_getParent(iid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 	
@@ -218,6 +246,7 @@ function void ShowImage (int iid){
 	//log(d:hid);
 	HudPushState();
     HudResetState();
+	if(ghost){ HudSetBlendStyle(HUD_BLENDSTYLE_NORMAL); HudSetAlpha(0.35); }
 	HudSetAlign(alignx,aligny);
 	HudSetScaleXY(scalex, scaley);
 	HudPrintImage(x, y, hid, img);
@@ -227,7 +256,11 @@ function void ShowImage (int iid){
 function void ShowStrButton (int sbid){
 	//log(s:"Printing string button: ", d:sbid);
 	//if(sbid == 18) log(s:"Showing state: ", d:StrButton_GetShow(sbid));
-	if(!StrButton_GetShow(sbid)) return;
+	bool ghost = false;
+	if(!StrButton_GetShow(sbid)){
+		if(!STBuilder_ShouldGhost(STCOMP_SBTN, sbid)) return;
+		ghost = true;
+	}
 	int p = StrButton_GetParent(sbid);
 	if(p != -1 && !Panel_GetShow(p)) return;
 
@@ -259,7 +292,7 @@ function void ShowStrButton (int sbid){
 		}
 	}
 
-	if(hilight && cursor_hover[STCURSOR_HOVER_COMP] != -1){
+	if(!ghost && hilight && cursor_hover[STCURSOR_HOVER_COMP] != -1){
 		HudPushState();
     	HudResetState();
 		HUDSetHiliTimes();
@@ -276,12 +309,30 @@ function void ShowStrButton (int sbid){
 	HudPushState();
     HudResetState();
 	HUDSetTimes();
+	if(ghost){ HudSetBlendStyle(HUD_BLENDSTYLE_NORMAL); HudSetAlpha(0.35); }
 	if(color > 25)	HUDSetTextColorString(color);
 	else 			HUDSetTextColor(color);
 	HUDSetPoint(xpos + fixedDiv(w, 2.0), ypos + fixedDiv(h, 2.0));
 	HudSetAlign(HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
 	HUDSetFont("DBIGFONT");
 	HUDDrawText(hudid,text);
+	int toggleType = StrButton_GetIsToggleable(sbid);
+	if(!ghost && toggleType != ST_BTNTYPE_NORMAL){
+		str ind;
+		if(StrButton_GetToggleState(sbid)){
+			if(toggleType == ST_BTNTYPE_TOGGLE) ind = "X";
+			else ind = "@";
+		}else ind = " ";
+		if(StrButton_GetToggleState(sbid)) HUDSetTextColor(CR_GREEN);
+		else HUDSetTextColor(CR_GRAY);
+		HUDSetPoint(xpos + 4.0, ypos + 8.0);
+		HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+		HUDSetFont("DBIGFONT");
+		HUDDrawText(ST_HID_TOGGLE + sbid, ind);
+	}
+	// Restore the text color for the backing frame.
+	if(color > 25)	HUDSetTextColorString(color);
+	else 			HUDSetTextColor(color);
 	HudSetScale(1.0);
 	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
 	HUDSetPoint(xpos, ypos);
@@ -328,7 +379,7 @@ function void ShowCursor(void){
 	int tooltip = 0;
 	int alphatics = Cursor_getTooltipAlphaTics();
 	
-	if(cursor_hover[STCURSOR_HOVER_COMP] != -1 
+	if(tooltip_enabled && cursor_hover[STCURSOR_HOVER_COMP] != -1 
 		&& cursor_hover[STCURSOR_HOVER_COMPTYPE] == STCOMP_IBTN){
 		tooltip = ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_COMP]);
 		if(StrCmp(tooltip, ImgButton_GetTooltip(cursor_hover[STCURSOR_HOVER_LAST]), 0) == 0)
@@ -520,22 +571,186 @@ function void ShowPanel (int pid){
 }
 
 //////////////////////////////////////
+// STBuilder display overlay		//
+//////////////////////////////////////
+
+function void STBuilder_ShowBanner(void){
+	if(!STB_IsActive()) return;
+	HudPushState();
+	HudResetState();
+	HudSetTimes();
+	HUDSetTextColor(CR_GREEN);
+	HUDSetPoint(Vars_Mid_Wid(), 8.0);
+	HudSetAlign(HUD_ALIGN_CENTER, HUD_ALIGN_TOP);
+	HUDSetFont("DBIGFONT");
+	str txt = "BUILD MODE";
+	if(STB_IsPlacing()) txt = StrParam(s:"BUILD MODE - ", s:STBuilder_TypeName(stbuilder_state[STBS_PLACETYPE]));
+	HUDDrawText(ST_HID_BUILDER, txt);
+	HudPopState();
+}
+
+// Context-sensitive on-screen help, bottom-left, while build mode is on.
+function void STBuilder_ShowHelp(void){
+	if(!STB_IsActive()) return;
+	str txt;
+	int col = CR_WHITE;
+	if(STB_IsPlacing()){
+		txt = StrParam(s:"Place: ", s:STBuilder_TypeName(stbuilder_state[STBS_PLACETYPE]),
+			s:"   |   Attack: place   Jump/Crouch: cycle   Use: cancel");
+		col = CR_GREEN;
+	} else if(stbuilder_drag[0]){
+		txt = "Drag: release the click to drop";
+		col = CR_BLUE;
+	} else {
+		txt = "Select: Click   |   Interact: AltFire   |   Drag: Hold click\nMove: Forward/Back/Left/Right (hold Speed = fine step)";
+		col = CR_GOLD;
+	}
+	txt = StrParam(s:txt, s:"\nChat: !add  !delete  !copy  !paste  !dup  !clear  !undo  !redo  !set-prop  !get-prop  !vis  !overlay  !tooltip  !export");
+	HudPushState();
+	HudResetState();
+	HudSetTimes();
+	HUDSetTextColor(col);
+	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_BOTTOM);
+	HUDSetPoint(8.0, STSET_HEIGHT - 8.0);
+	HUDSetFont("SMALLFONT");
+	HudSetScale(0.5);
+	HUDDrawText(ST_HID_BUILDER_HELP, txt);
+	HudPopState();
+}
+
+function void STBuilder_ShowOutline(void){
+	if(stbuilder_state[STBS_SELTYPE] == STBUILDER_NONE) return;
+	int rect = STBuilder_CompRect(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+	if(rect == -1) return;
+	int x1 = STBuilder_HitX1(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+	int y1 = STBuilder_HitY1(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+	int x2 = x1 + STBuilder_HitWidth(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+	int y2 = y1 + STBuilder_HitHeight(stbuilder_state[STBS_SELTYPE], stbuilder_state[STBS_SELID]);
+	HudPushState();
+	HudResetState();
+	HudSetTimes();
+	HUDSetTextColor(stbuilder_drag[0] ? CR_BLUE : CR_YELLOW);
+	HUDSetFont("SMALLFONT");
+	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	HUDSetPoint(x1 - 4.0, y1 - 4.0); HUDDrawText(ST_HID_BUILDER_OUT + 0, "+");
+	HUDSetPoint(x2 - 4.0, y1 - 4.0); HUDDrawText(ST_HID_BUILDER_OUT + 1, "+");
+	HUDSetPoint(x1 - 4.0, y2 - 4.0); HUDDrawText(ST_HID_BUILDER_OUT + 2, "+");
+	HUDSetPoint(x2 - 4.0, y2 - 4.0); HUDDrawText(ST_HID_BUILDER_OUT + 3, "+");
+	HudPopState();
+}
+
+function void STBuilder_ShowGhost(void){
+	if(!STB_IsPlacing()) return;
+	HudPushState();
+	HudResetState();
+	HudSetTimes();
+	HUDSetTextColor(CR_GREEN);
+	HUDSetFont("SMALLFONT");
+	HudSetAlign(HUD_ALIGN_CENTER, HUD_ALIGN_CENTER);
+	HUDSetPoint(CursorX(), CursorY());
+	HUDDrawText(ST_HID_BUILDER_OUT + 4, StrParam(s:"[", s:STBuilder_TypeName(stbuilder_state[STBS_PLACETYPE]), s:"]"));
+	HudPopState();
+}
+
+// Marks every movable component with a small marker at the top-left of its
+// hitbox while build mode is active. Green = visible/selectable, gray = not
+// visible (ghost). Panel children are ignored; the panel itself is marked.
+function void STBuilder_ShowMarkers(void){
+	if(!STB_IsActive()){
+		if(stbuilder_state[STBS_MARKERPREV] > 0) STBuilder_ClearMarkers();
+		return;
+	}
+	int marker = 0;
+	int order[5] = {STCOMP_IBTN, STCOMP_SBTN, STCOMP_LBL, STCOMP_IMG, STCOMP_PANEL};
+	HudPushState();
+	HudResetState();
+	HudSetTimes();
+	HUDSetFont("SMALLFONT");
+	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	bool full = false;
+	for(int o = 0; o < 5 && !full; o++){
+		int type = order[o];
+		for(int id = 0; id < comp_count[type]; id++){
+			bool visible = STBuilder_IsVisible(type, id);
+			if(!visible && !STBuilder_ShouldGhost(type, id)) continue;
+			if(visible) HUDSetTextColor(CR_GREEN);
+			else HUDSetTextColor(CR_GRAY);
+			HUDSetPoint(STBuilder_HitX1(type, id), STBuilder_HitY1(type, id));
+			HUDDrawText(ST_HID_BUILDER_MARK + marker, "+");
+			marker++;
+			if(marker >= 1900){ full = true; break; }
+		}
+	}
+	// Clear any marker HIDs left over from the previous frame (deletions,
+	// ghost toggle, etc.) so no orphan "+" stays on screen.
+	for(int i = marker; i < stbuilder_state[STBS_MARKERPREV]; i++)
+		ClearHudMessage(ST_HID_BUILDER_MARK + i);
+	stbuilder_state[STBS_MARKERPREV] = marker;
+	HudPopState();
+}
+
+// Debug overlay: prints type#id, tag and size at each component's hitbox.
+// Only drawn while the overlay toggle is on.
+function void STBuilder_ShowOverlay(void){
+	if(!STB_IsActive() || !STB_IsOverlay()){
+		if(stbuilder_state[STBS_DBGPREV] > 0){
+			for(int i = 0; i < stbuilder_state[STBS_DBGPREV]; i++) ClearHudMessage(ST_HID_BUILDER_DBG + i);
+			stbuilder_state[STBS_DBGPREV] = 0;
+		}
+		return;
+	}
+	int marker = 1; // index 0 is reserved for the debug header
+	int order[5] = {STCOMP_IBTN, STCOMP_SBTN, STCOMP_LBL, STCOMP_IMG, STCOMP_PANEL};
+	HudPushState();
+	HudResetState();
+	HudSetTimes();
+	HUDSetFont("SMALLFONT");
+	HudSetAlign(HUD_ALIGN_LEFT, HUD_ALIGN_TOP);
+	HudSetScale(0.5);
+	// Debug header: the current page tag and the home (alpha) tag.
+	HUDSetTextColor(CR_CYAN);
+	HUDSetPoint(8.0, 24.0);
+	HUDDrawText(ST_HID_BUILDER_DBG + 0, StrParam(s:"page tag: ", d:pagetags[STTAGS_NOW], s:"   alpha tag: ", d:pagetags[STTAGS_ALPHA]));
+	for(int o = 0; o < 5 && marker < 200; o++){
+		int type = order[o];
+		for(int id = 0; id < comp_count[type] && marker < 200; id++){
+			if(STBuilder_IsDead(type, id)) continue;
+			bool visible = STBuilder_IsVisible(type, id);
+			if(!visible && !STBuilder_ShouldGhost(type, id)) continue;
+			int tag = STBuilder_GetCompTag(type, id);
+			if(visible && tag == pagetags[STTAGS_NOW]) HUDSetTextColor(CR_GREEN);
+			else if(visible) HUDSetTextColor(CR_GOLD);
+			else HUDSetTextColor(CR_GRAY);
+			HUDSetPoint(STBuilder_HitX1(type, id), STBuilder_HitY1(type, id));
+			HUDDrawText(ST_HID_BUILDER_DBG + marker, StrParam(s:STBuilder_TypeName(type), s:"#", d:id,
+				s:" t", d:tag, s:" ", d:STBuilder_HitWidth(type, id) >> 16, s:"x", d:STBuilder_HitHeight(type, id) >> 16));
+			marker++;
+		}
+	}
+	for(int ci = marker; ci < stbuilder_state[STBS_DBGPREV]; ci++)
+		ClearHudMessage(ST_HID_BUILDER_DBG + ci);
+	stbuilder_state[STBS_DBGPREV] = marker;
+	HudPopState();
+}
+
+//////////////////////////////////////
 // The display core loop			//
 //////////////////////////////////////
 
 function void SamuTerm_Display(void){
 	ShowBackground();
-	
-	int i = 0;
-	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_IBTN);
-	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_SBTN);
-	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_LBL);
-	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_IMG);
-	ACS_NamedExecuteAlways("SamuTerm_Display_Comps", 0, STCOMP_PANEL);
-	
+	// One spawned script for all component types (was 5 spawns per tic).
+	ACS_NamedExecuteAlways("SamuTerm_Display_All", 0);
+
 	//if(Prompt_GetState()) ShowPrompt();
 	if(Prompt_GetState()) ShowPanel(prompt_data[STPROMPT_DATA_PANEL]);
 	ShowCursor();
+	STBuilder_ShowMarkers();
+	STBuilder_ShowOverlay();
+	STBuilder_ShowGhost();
+	STBuilder_ShowOutline();
+	STBuilder_ShowBanner();
+	STBuilder_ShowHelp();
 }
 
 function void SamuTerm_Display_Comp(int type, int id){
@@ -548,8 +763,11 @@ function void SamuTerm_Display_Comp(int type, int id){
 	}
 }
 
-Script "SamuTerm_Display_Comps" (int type) Clientside{
-	for (int i = 0; i < comp_count[type]; i++){
-		SamuTerm_Display_Comp(type, i);
-	}
+Script "SamuTerm_Display_All" (void) Clientside{
+	int i;
+	for(i = 0; i < comp_count[STCOMP_IBTN]; i++) SamuTerm_Display_Comp(STCOMP_IBTN, i);
+	for(i = 0; i < comp_count[STCOMP_SBTN]; i++) SamuTerm_Display_Comp(STCOMP_SBTN, i);
+	for(i = 0; i < comp_count[STCOMP_LBL]; i++) SamuTerm_Display_Comp(STCOMP_LBL, i);
+	for(i = 0; i < comp_count[STCOMP_IMG]; i++) SamuTerm_Display_Comp(STCOMP_IMG, i);
+	for(i = 0; i < comp_count[STCOMP_PANEL]; i++) SamuTerm_Display_Comp(STCOMP_PANEL, i);
 }

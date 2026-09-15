@@ -27,6 +27,11 @@
 #define ST_PAGEALPHA_TELEPORT 40
 
 function void SamuTerm_InitPages(void){
+	if(SamuTerm_CacheValid()){
+		// Cache hit: components already exist; only refresh the home title.
+		SamuTerm_RefreshHomeTitle();
+		return;
+	}
 
 	int card;
 	Card_SetPosition(176.0, 424.0);
@@ -99,6 +104,19 @@ function void SamuTerm_InitPages(void){
 		default:
 			log(s:"(SamuTerm): This alphatag (",d:pagetags[STTAGS_ALPHA], s:") is unknown!");
 		break;
+	}
+
+	pagetags[STTAGS_CACHEHOME] = pagetags[STTAGS_ALPHA] + 1;
+}
+
+// Re-applies only the home terminal's title when the component cache is reused.
+function void SamuTerm_RefreshHomeTitle(void){
+	switch(pagetags[STTAGS_ALPHA]){
+		case ST_PAGEALPHA_ATE:      setPageTitle_Alpha("Ammunition Terminal", CR_CYAN); break;
+		case ST_PAGEALPHA_HTE:      setPageTitle_Alpha("Health Terminal", CR_CYAN); break;
+		case ST_PAGEALPHA_MTE:      setPageTitle_Alpha("Mecha Factory Terminal", CR_CYAN); break;
+		case ST_PAGEALPHA_CMD:      setPageTitle_Alpha("Commander mode", CR_CYAN); break;
+		case ST_PAGEALPHA_TELEPORT: setPageTitle_Alpha("Teleport Hub", CR_CYAN); break;
 	}
 }
 

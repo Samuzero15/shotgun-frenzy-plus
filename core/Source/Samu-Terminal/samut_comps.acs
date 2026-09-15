@@ -15,11 +15,47 @@
 #include "samut_comps_cursor.acs"
 #include "samut_comps_panels.acs"
 #include "samut_comps_numinput.acs"
+#include "samut_comps_builder.acs"
+
+// Component cache: valid when the same terminal (home tag) was initialized
+// before and its components are still alive. pagetags[STTAGS_CACHEHOME]
+// stores home+1 so the initial 0 means "no cache".
+function bool SamuTerm_CacheValid(void){
+	return pagetags[STTAGS_CACHEHOME] == pagetags[STTAGS_ALPHA] + 1;
+}
+
+// Hides every page-managed component so the update loop re-shows only what
+// the current page needs (used on a cache hit instead of recreating
+// everything). Components tagged -1 (wallet, frame, internals) are kept.
+function void SamuTerm_ResetVisibility(void){
+	int i;
+	for(i = 0; i < comp_count[STCOMP_IBTN]; i++) if(ImgButton_getTag(i) != -1) ImgButton_setShow(i, false);
+	for(i = 0; i < comp_count[STCOMP_SBTN]; i++) if(StrButton_getTag(i) != -1) StrButton_setShow(i, false);
+	for(i = 0; i < comp_count[STCOMP_LBL]; i++) if(Label_getTag(i) != -1) Label_setShow(i, false);
+	for(i = 0; i < comp_count[STCOMP_IMG]; i++) if(Image_getTag(i) != -1) Image_setShow(i, false);
+	for(i = 0; i < comp_count[STCOMP_PANEL]; i++) if(Panel_GetTag(i) != -1) Panel_setShow(i, false);
+	for(i = 0; i < comp_count[STCOMP_NUMINPUT]; i++) if(NumInput_getTag(i) != -1) NumInput_setShow(i, false);
+}
 
 function void SamuTerm_InitComps(void){
+	if(SamuTerm_CacheValid()){
+		// Cache hit: reuse the existing components, only reset runtime state.
+		STBuilder_ResetState();
+		SamuTerm_ResetVisibility();
+		pagetags[STTAGS_LAST] = pagetags[STTAGS_ALPHA];
+		pagetags[STTAGS_NOW] = pagetags[STTAGS_ALPHA];
+		Cursor_ResetTrail();
+		Prompt_SetState(false);
+		SamuTerm_InitPages(); // cache hit -> only refreshes the home title
+		return;
+	}
+
 	Components_Clear();
 	pagetags[STTAGS_NOW] = pagetags[STTAGS_ALPHA];
 	Cursor_Initialize(32.0, 32.0);
+	
+	// Reset builder state on every terminal open.
+	STBuilder_ResetState();
 	
 	initTitle();
 	Toaster_Initialize();

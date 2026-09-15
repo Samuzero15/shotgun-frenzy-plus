@@ -9,6 +9,13 @@
 
 ## v1 - The path of the damned...
 
+#### (15 / 09 / 2026) [Optimizations, QoL fixes, Toggle-Radio buttons, and STBuilder]
+	+) STBuilder? you might ask. Well it's a ingame command that will help you to toy arround with the GUI for the Terminals! [WIP] (Definitly not a stolen idea nooou :p)
+	// Kudos to StardustMotion for the GUI showcase from the projects page! Give him some support, and wish him/her good luck!
+	*) Done some nice permormance fixes for the Terminal Startup. So it does'nt get stuck in less time than before
+	+) Implemented some props for Ibtns and SBtns for enabling Toggleable and Radio buttons!
+	*) Some few fixes more.
+
 #### (23 / 06 / 2026) [QoL fixes on Tooltips, and Cursor trails on SamuTerm!]
 	+) Now tooltips can have a fade-in-and-out when hovering the cursor over a interactable component! (ImgButton / StrButton)
 	*) Tooltip wordwrap has been fixed up to the longest line after the word-wrap goes.

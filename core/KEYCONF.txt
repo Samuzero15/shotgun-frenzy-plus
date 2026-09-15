@@ -45,6 +45,10 @@ alias sfp_dropcredits "pukename SFPlus_DropCredits %1"
 alias sfp_ccmdlist "pukename SFPlus_CCmdList"
 alias sfp_changelog "pukename SFPlus_Changelog"
 
+// STBuilder console commands
+alias STBuilder_Mode "pukename STBuilder_ModeScript"
+alias STBuilder_Export "pukename STBuilder_ExportScript 0"
+
 //alias TestWeapon "take weapons; give Spitter_GLauncher; give Ammo"
 //alias TestActor "Summon sf_SawDrone"
 
